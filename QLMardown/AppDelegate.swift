@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  QLMardown
 //
-//  Created by Simone Baldissini on 09/12/20.
+//  Created by Sbarex on 09/12/20.
 //
 
 import Cocoa
