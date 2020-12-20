@@ -1,0 +1,5 @@
+module HTMLConverter {
+	header "HTMLConverter/htmlconverter.h"
+	link "htmlconverter"
+	export *
+}

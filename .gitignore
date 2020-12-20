@@ -1,0 +1,6 @@
+.DS_Store
+
+HTMLConverter/htmlconverter.a
+HTMLConverter/htmlconverter_arm64.a
+HTMLConverter/htmlconverter_x86_64.a
+

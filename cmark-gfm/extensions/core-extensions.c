@@ -7,6 +7,12 @@
 #include "registry.h"
 #include "plugin.h"
 
+#include "mention.h"
+// #include "checkbox.h"
+#include "syntaxhighlight.h"
+#include "inlineimage.h"
+#include "emoji.h"
+
 static int core_extensions_registration(cmark_plugin *plugin) {
   cmark_plugin_register_syntax_extension(plugin, create_table_extension());
   cmark_plugin_register_syntax_extension(plugin,
@@ -14,6 +20,15 @@ static int core_extensions_registration(cmark_plugin *plugin) {
   cmark_plugin_register_syntax_extension(plugin, create_autolink_extension());
   cmark_plugin_register_syntax_extension(plugin, create_tagfilter_extension());
   cmark_plugin_register_syntax_extension(plugin, create_tasklist_extension());
+    
+    
+  cmark_plugin_register_syntax_extension(plugin, create_mention_extension());
+  //cmark_plugin_register_syntax_extension(plugin, create_checkbox_extension());
+  cmark_plugin_register_syntax_extension(plugin, create_inlineimage_extension());
+    
+  cmark_plugin_register_syntax_extension(plugin, create_syntaxhighlight_extension());
+    
+  cmark_plugin_register_syntax_extension(plugin, create_emoji_extension());
   return 1;
 }
 
