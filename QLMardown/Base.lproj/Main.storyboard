@@ -738,16 +738,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="13" y="525" width="1019" height="222"/>
+                                <rect key="frame" x="13" y="535" width="1019" height="212"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Options &amp; Extensions" identifier="" id="XgS-T3-Gpv">
                                         <view key="view" id="z2a-cF-5GG">
-                                            <rect key="frame" x="10" y="33" width="999" height="176"/>
+                                            <rect key="frame" x="10" y="33" width="999" height="166"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <box borderType="line" title="Options" translatesAutoresizingMaskIntoConstraints="NO" id="HUa-5g-v1F">
-                                                    <rect key="frame" x="17" y="54" width="322" height="114"/>
+                                                    <rect key="frame" x="17" y="44" width="322" height="114"/>
                                                     <view key="contentView" id="q7Q-cR-89Z">
                                                         <rect key="frame" x="3" y="3" width="316" height="96"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -859,7 +859,7 @@
                                                     </view>
                                                 </box>
                                                 <box borderType="line" title="Extensions" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-BV-KNe">
-                                                    <rect key="frame" x="341" y="54" width="529" height="114"/>
+                                                    <rect key="frame" x="341" y="44" width="529" height="114"/>
                                                     <view key="contentView" id="3GB-sq-hAW">
                                                         <rect key="frame" x="3" y="3" width="523" height="96"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1045,12 +1045,12 @@
                                                         </textField>
                                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L7y-Db-zfY">
                                                             <rect key="frame" x="112" y="-4" width="94" height="25"/>
-                                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="QKM-jZ-QWK" id="C1f-dO-5go">
+                                                            <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="QKM-jZ-QWK" id="C1f-dO-5go">
                                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                 <font key="font" metaFont="menu"/>
                                                                 <menu key="menu" id="chu-Ym-WeH">
                                                                     <items>
-                                                                        <menuItem isSeparatorItem="YES" id="QKM-jZ-QWK"/>
+                                                                        <menuItem isSeparatorItem="YES" state="on" id="QKM-jZ-QWK"/>
                                                                         <menuItem title="Browse…" id="qml-CJ-m8L"/>
                                                                     </items>
                                                                 </menu>
@@ -1108,7 +1108,7 @@
                                                 <constraint firstItem="IZh-uP-gdJ" firstAttribute="leading" secondItem="y9s-1O-xCD" secondAttribute="trailing" constant="8" symbolic="YES" id="B7I-AZ-JwA"/>
                                                 <constraint firstAttribute="bottom" secondItem="IZh-uP-gdJ" secondAttribute="bottom" constant="20" symbolic="YES" id="D0l-7X-kzi"/>
                                                 <constraint firstItem="tjE-BV-KNe" firstAttribute="leading" secondItem="HUa-5g-v1F" secondAttribute="trailing" constant="8" symbolic="YES" id="FWn-f3-Oup"/>
-                                                <constraint firstItem="IZh-uP-gdJ" firstAttribute="top" secondItem="HUa-5g-v1F" secondAttribute="bottom" constant="18" id="Gxh-ES-WIR"/>
+                                                <constraint firstItem="IZh-uP-gdJ" firstAttribute="top" secondItem="HUa-5g-v1F" secondAttribute="bottom" constant="8" symbolic="YES" id="Gxh-ES-WIR"/>
                                                 <constraint firstItem="HUa-5g-v1F" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="JW3-As-YqB"/>
                                                 <constraint firstItem="y9s-1O-xCD" firstAttribute="centerY" secondItem="IZh-uP-gdJ" secondAttribute="centerY" id="Ksa-sU-5f0"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tjE-BV-KNe" secondAttribute="trailing" constant="20" symbolic="YES" id="Lcc-ZM-Vfg"/>
@@ -1335,8 +1335,8 @@
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="5oi-fg-eTu"/>
                                                                     <binding destination="XfG-lQ-9wD" name="value" keyPath="self.guessEnabled" id="ETA-Fx-AVF"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="5oi-fg-eTu"/>
                                                                 </connections>
                                                             </button>
                                                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F3K-eG-jad">
@@ -1593,28 +1593,28 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="524" width="1045" height="5"/>
+                                <rect key="frame" x="0.0" y="534" width="1045" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="61" width="1045" height="465"/>
+                                <rect key="frame" x="0.0" y="61" width="1045" height="475"/>
                                 <subviews>
-                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="521" height="465"/>
+                                    <customView id="GDJ-WJ-HAB">
+                                        <rect key="frame" x="0.0" y="0.0" width="521" height="475"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="41" width="521" height="465"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="521" height="475"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="521" height="465"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="521" height="475"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="501" height="445"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="501" height="455"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="501" height="445"/>
-                                                            <size key="maxSize" width="505" height="10000000"/>
+                                                            <size key="minSize" width="501" height="455"/>
+                                                            <size key="maxSize" width="521" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
                                                     </subviews>
@@ -1625,7 +1625,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="495" y="10" width="16" height="445"/>
+                                                    <rect key="frame" x="495" y="10" width="16" height="455"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -1637,12 +1637,12 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView misplaced="YES" id="sp3-sm-w1y">
-                                        <rect key="frame" x="531" y="0.0" width="514" height="465"/>
+                                    <customView id="sp3-sm-w1y">
+                                        <rect key="frame" x="531" y="0.0" width="514" height="475"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="0.0" width="514" height="465"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="514" height="475"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -1653,7 +1653,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="249" y="266" width="16" height="16"/>
+                                                <rect key="frame" x="249" y="230" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
@@ -1767,6 +1767,7 @@
                         <outlet property="styleSegementedControl" destination="Qgu-4m-xR7" id="vB4-Ca-v67"/>
                         <outlet property="styleSeparatorMenu" destination="TWm-A2-b4h" id="eT8-lg-9bR"/>
                         <outlet property="stylesPopup" destination="L7y-Db-zfY" id="va2-Xv-N69"/>
+                        <outlet property="tabView" destination="buS-Ph-8Qs" id="6nG-3b-WFz"/>
                         <outlet property="textView" destination="Q3Q-a2-tMH" id="Glk-S5-qdQ"/>
                         <outlet property="unsafeButton" destination="Yvy-aE-Sho" id="UmS-Os-ggW"/>
                         <outlet property="versionLabel" destination="DtZ-dg-C2s" id="mdP-Cs-C2E"/>
@@ -2203,7 +2204,7 @@ Gw
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ezd-Qq-GnH"/>
+        <segue reference="ijf-fx-OSL"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="NSActionTemplate" width="15" height="15"/>

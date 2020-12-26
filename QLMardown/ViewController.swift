@@ -215,6 +215,8 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBOutlet weak var tabView: NSTabView!
+    
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var stylesPopup: NSPopUpButton!
@@ -415,6 +417,8 @@ document.addEventListener('scroll', function(e) {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tabView.selectTabViewItem(at: 0)
         
         if let path = Bundle.main.resourceURL?.appendingPathComponent("highlight").path {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))

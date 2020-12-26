@@ -133,6 +133,7 @@
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
 		83F4B99225868A7400FC58A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		83F4B9962586AB9700FC58A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83D4B1C3258675D0000745DB /* README.md */; };
+		83F881612597E902008C5071 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -709,6 +710,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F881612597E902008C5071 /* magic.mgc in Resources */,
 				831A8CC5258AC4A900E36182 /* markdown.css in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
 				83E7FEF2258FBF37003ECF9B /* highlight in Resources */,
@@ -938,7 +940,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
@@ -956,6 +958,7 @@
 					"$(PROJECT_DIR)/GoLibraries",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -971,7 +974,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
@@ -989,6 +992,7 @@
 					"$(PROJECT_DIR)/GoLibraries",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1124,7 +1128,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
@@ -1162,7 +1166,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
