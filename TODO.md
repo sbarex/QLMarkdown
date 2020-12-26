@@ -1,5 +1,11 @@
 #  TODO
 
-- migrate to a different source file highlight library. Chroma works well but all element of a style inherit the undefined properties from the parent. So it is not easy to override the background color.
-- theme editor
-
+- theme editor (custom themes)
+- sparkle update engine
+- insert the highlight library on the build process
+- application screenshot in the docs
+- check code signature and app group access
+- check inline images on network / mounted disk
+- @rpath libwrapper
+- investigate CMARK_OPT_UNSAFE form inline images
+- investigate font family override for fanced blocks

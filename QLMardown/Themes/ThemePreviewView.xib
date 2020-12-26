@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="contentView" destination="c22-O7-iKe" id="65w-pZ-Ban"/>
                 <outlet property="examplesPopup" destination="7JE-Hc-tGd" id="nZn-1c-RuL"/>
+                <outlet property="messageLabel" destination="oTy-yr-viC" id="kmZ-0a-yjN"/>
                 <outlet property="refreshButton" destination="HJi-W7-iX2" id="xfW-8j-cyV"/>
                 <outlet property="webView" destination="VUa-Uv-YhH" id="y3S-2s-DWU"/>
             </connections>
@@ -21,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <wkWebView wantsLayer="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUa-Uv-YhH">
+                <wkWebView hidden="YES" wantsLayer="YES" allowsLinkPreview="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUa-Uv-YhH">
                     <rect key="frame" x="0.0" y="31" width="480" height="241"/>
                     <wkWebViewConfiguration key="configuration" allowsAirPlayForMediaPlayback="NO">
                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -31,6 +32,14 @@
                         <outlet property="navigationDelegate" destination="-2" id="JVx-bM-HC4"/>
                     </connections>
                 </wkWebView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oTy-yr-viC">
+                    <rect key="frame" x="187" y="127" width="107" height="19"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Select a theme" id="O6M-gu-skb">
+                        <font key="font" metaFont="system" size="15"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="rFf-F1-KNP">
                     <rect key="frame" x="0.0" y="28" width="480" height="5"/>
                 </box>
@@ -48,6 +57,9 @@
                                     </items>
                                 </menu>
                             </popUpButtonCell>
+                            <connections>
+                                <action selector="refreshPreview:" target="-2" id="lxS-aT-8Uh"/>
+                            </connections>
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HJi-W7-iX2">
                             <rect key="frame" x="460" y="8.5" width="12" height="14"/>
@@ -81,7 +93,9 @@
                 <constraint firstAttribute="trailing" secondItem="rFf-F1-KNP" secondAttribute="trailing" id="Bze-41-fEG"/>
                 <constraint firstAttribute="bottom" secondItem="zJz-Dg-ud8" secondAttribute="bottom" id="ROh-NX-d1Q"/>
                 <constraint firstAttribute="trailing" secondItem="VUa-Uv-YhH" secondAttribute="trailing" id="SYq-pP-E8Y"/>
+                <constraint firstItem="oTy-yr-viC" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="bMl-2c-6wG"/>
                 <constraint firstItem="rFf-F1-KNP" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="bza-qW-m6f"/>
+                <constraint firstItem="oTy-yr-viC" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="lsH-Hy-3Ix"/>
                 <constraint firstAttribute="trailing" secondItem="zJz-Dg-ud8" secondAttribute="trailing" id="rsf-ZK-hEF"/>
                 <constraint firstItem="VUa-Uv-YhH" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="xg7-Bw-v7f"/>
                 <constraint firstItem="rFf-F1-KNP" firstAttribute="top" secondItem="VUa-Uv-YhH" secondAttribute="bottom" id="zMY-wO-RFl"/>

@@ -11,7 +11,6 @@
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
 		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
 		831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		831A8C53258ABD1D00E36182 /* htmlconverter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83598F0A25825C65004664D3 /* htmlconverter.a */; };
 		831A8C56258ABD6200E36182 /* autolink.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E802581883A004664D3 /* autolink.c */; };
 		831A8C59258ABD6800E36182 /* core-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E892581883B004664D3 /* core-extensions.c */; };
 		831A8C5C258ABD6F00E36182 /* ext_scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E852581883B004664D3 /* ext_scanners.c */; };
@@ -25,11 +24,9 @@
 		831A8C74258ABD9600E36182 /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		831A8C77258ABD9D00E36182 /* blocks.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB42581884C004664D3 /* blocks.c */; };
 		831A8C7A258ABDA100E36182 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC82581884D004664D3 /* buffer.c */; };
-		831A8C7D258ABDA500E36182 /* case_fold_switch.inc in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAE2581884B004664D3 /* case_fold_switch.inc */; };
 		831A8C80258ABDAC00E36182 /* cmark_ctype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAA2581884B004664D3 /* cmark_ctype.c */; };
 		831A8C83258ABDB300E36182 /* cmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA22581884B004664D3 /* cmark.c */; };
 		831A8C86258ABDB600E36182 /* commonmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC02581884C004664D3 /* commonmark.c */; };
-		831A8C89258ABDBB00E36182 /* entities.inc in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBA2581884C004664D3 /* entities.inc */; };
 		831A8C8C258ABDBE00E36182 /* footnotes.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9A2581884A004664D3 /* footnotes.c */; };
 		831A8C8F258ABDC300E36182 /* houdini_href_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA72581884B004664D3 /* houdini_href_e.c */; };
 		831A8C90258ABDC300E36182 /* houdini_html_u.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA12581884B004664D3 /* houdini_html_u.c */; };
@@ -53,11 +50,23 @@
 		831A8CA6258ABDDB00E36182 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB02581884B004664D3 /* utf8.c */; };
 		831A8CBE258AC0D200E36182 /* arena.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB82581884C004664D3 /* arena.c */; };
 		831A8CC1258AC18300E36182 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
-		831A8CC4258AC4A900E36182 /* syntax.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F21258263C0004664D3 /* syntax.css */; };
 		831A8CC5258AC4A900E36182 /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* markdown.css */; };
 		831A8CD1258ACB3300E36182 /* ThemePropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */; };
+		83327D202593FCEB00E76CF6 /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
+		83327D222593FCEC00E76CF6 /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
+		83327D312594087100E76CF6 /* MIMEtype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83327D2E2594066300E76CF6 /* MIMEtype.c */; };
+		83327D332594087100E76CF6 /* MIMEtype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83327D2E2594066300E76CF6 /* MIMEtype.c */; };
+		83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83327D452595E15700E76CF6 /* Settings+ext.swift */; };
 		8342418B25894328000093EC /* ThemesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8342418A25894328000093EC /* ThemesView.xib */; };
 		8342418E2589432E000093EC /* ThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342418D2589432E000093EC /* ThemesView.swift */; };
+		834CAB8A259167D100673002 /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB89259167B800673002 /* examples */; };
+		834CAB8E2591DE0F00673002 /* SaveAsFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */; };
+		834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */; };
+		834CAB9225923D2200673002 /* ThemeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9125923D2200673002 /* ThemeSelectorViewController.swift */; };
+		834CAB9625923D3000673002 /* ThemeCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9525923D3000673002 /* ThemeCollectionViewItem.swift */; };
+		834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB9425923D3000673002 /* ThemeCollectionViewItem.xib */; };
+		834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
+		834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		8357EB782587DBED002C2C45 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB772587DBED002C2C45 /* ThemesViewController.swift */; };
 		8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7B2587F8EB002C2C45 /* Theme.swift */; };
 		8357EB7F2588262C002C2C45 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7E2588262C002C2C45 /* String+ext.swift */; };
@@ -86,7 +95,6 @@
 		83598ED52581884D004664D3 /* houdini_href_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA72581884B004664D3 /* houdini_href_e.c */; };
 		83598ED62581884D004664D3 /* cmark_ctype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAA2581884B004664D3 /* cmark_ctype.c */; };
 		83598ED82581884D004664D3 /* houdini_html_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAD2581884B004664D3 /* houdini_html_e.c */; };
-		83598ED92581884D004664D3 /* case_fold_switch.inc in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAE2581884B004664D3 /* case_fold_switch.inc */; };
 		83598EDA2581884D004664D3 /* scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAF2581884B004664D3 /* scanners.c */; };
 		83598EDB2581884D004664D3 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB02581884B004664D3 /* utf8.c */; };
 		83598EDC2581884D004664D3 /* iterator.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB12581884C004664D3 /* iterator.c */; };
@@ -96,7 +104,6 @@
 		83598EE12581884D004664D3 /* linked_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB72581884C004664D3 /* linked_list.c */; };
 		83598EE22581884D004664D3 /* arena.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB82581884C004664D3 /* arena.c */; };
 		83598EE32581884D004664D3 /* plugin.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB92581884C004664D3 /* plugin.c */; };
-		83598EE42581884D004664D3 /* entities.inc in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBA2581884C004664D3 /* entities.inc */; };
 		83598EE52581884D004664D3 /* render.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBB2581884C004664D3 /* render.c */; };
 		83598EE62581884D004664D3 /* node.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBE2581884C004664D3 /* node.c */; };
 		83598EE72581884D004664D3 /* commonmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC02581884C004664D3 /* commonmark.c */; };
@@ -108,19 +115,20 @@
 		83598EF625818BCB004664D3 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
 		83598EFC25820A72004664D3 /* test2.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EFA258209C7004664D3 /* test2.md */; };
 		83598EFD25820A72004664D3 /* test1.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EF92582098A004664D3 /* test1.md */; };
-		83598F0125820B0F004664D3 /* test.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598F0025820B0F004664D3 /* test.c */; };
-		83598F0B25825C65004664D3 /* htmlconverter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83598F0A25825C65004664D3 /* htmlconverter.a */; };
-		83598F23258263C0004664D3 /* syntax.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F21258263C0004664D3 /* syntax.css */; };
 		83598F24258263C0004664D3 /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* markdown.css */; };
 		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		83760302258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
-		8376030C258D5A97004799ED /* SaveAsFormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8376030B258D5A97004799ED /* SaveAsFormatView.xib */; };
-		8376030D258D5A97004799ED /* SaveAsFormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8376030B258D5A97004799ED /* SaveAsFormatView.xib */; };
-		83760311258D5AA0004799ED /* SaveAsFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83760310258D5AA0004799ED /* SaveAsFormatView.swift */; };
-		83760312258D5AA0004799ED /* SaveAsFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83760310258D5AA0004799ED /* SaveAsFormatView.swift */; };
 		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
+		837F28E82597765900A5F7DE /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
+		837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837F290E2597950900A5F7DE /* libgoutils.a */; };
+		837F29122597975500A5F7DE /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837F290E2597950900A5F7DE /* libgoutils.a */; };
 		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
 		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
+		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
+		83E7FEF2258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
+		83E7FEF8258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
+		83E7FEF9258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
+		83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
 		83F4B99225868A7400FC58A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
@@ -134,6 +142,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 831A8C3E258ABADA00E36182;
 			remoteInfo = QLExtension;
+		};
+		837F29192597A0B300A5F7DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 837F28EF2597817300A5F7DE;
+			remoteInfo = GoLibraries;
+		};
+		837F291B2597A0B800A5F7DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 837F28EF2597817300A5F7DE;
+			remoteInfo = GoLibraries;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -149,6 +171,17 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83E7FF07258FCCF9003ECF9B /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -159,8 +192,30 @@
 		831A8C48258ABADA00E36182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831A8C49258ABADA00E36182 /* QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QLExtension.entitlements; sourceTree = "<group>"; };
 		831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePropertyViewController.swift; sourceTree = "<group>"; };
+		83327D1D2593FB0700E76CF6 /* url.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = url.hpp; sourceTree = "<group>"; };
+		83327D1E2593FB0700E76CF6 /* url.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = url.cpp; sourceTree = "<group>"; };
+		83327D262594066300E76CF6 /* MIME-sources.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MIME-sources.md"; sourceTree = "<group>"; };
+		83327D272594066300E76CF6 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		83327D282594066300E76CF6 /* mimes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimes.h; sourceTree = "<group>"; };
+		83327D292594066300E76CF6 /* mimesX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimesX.h; sourceTree = "<group>"; };
+		83327D2A2594066300E76CF6 /* mimes4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimes4.h; sourceTree = "<group>"; };
+		83327D2B2594066300E76CF6 /* mimes0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimes0.h; sourceTree = "<group>"; };
+		83327D2C2594066300E76CF6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		83327D2D2594066300E76CF6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		83327D2E2594066300E76CF6 /* MIMEtype.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MIMEtype.c; sourceTree = "<group>"; };
+		83327D2F2594077200E76CF6 /* MIMEType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIMEType.h; sourceTree = "<group>"; };
+		83327D452595E15700E76CF6 /* Settings+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ext.swift"; sourceTree = "<group>"; };
 		8342418A25894328000093EC /* ThemesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesView.xib; sourceTree = "<group>"; };
 		8342418D2589432E000093EC /* ThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesView.swift; sourceTree = "<group>"; };
+		834CAB89259167B800673002 /* examples */ = {isa = PBXFileReference; lastKnownFileType = text; path = examples; sourceTree = SOURCE_ROOT; };
+		834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveAsFormatView.swift; sourceTree = "<group>"; };
+		834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveAsFormatView.xib; sourceTree = "<group>"; };
+		834CAB9125923D2200673002 /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
+		834CAB9425923D3000673002 /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
+		834CAB9525923D3000673002 /* ThemeCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCollectionViewItem.swift; sourceTree = "<group>"; };
+		834CAB9A2593650800673002 /* emoji_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = emoji_utils.cpp; sourceTree = "<group>"; };
+		834CAB9B2593650800673002 /* emoji_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = emoji_utils.hpp; sourceTree = "<group>"; };
+		834CABA02593C57B00673002 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		8357EB772587DBED002C2C45 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		8357EB7B2587F8EB002C2C45 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8357EB7E2588262C002C2C45 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
@@ -253,25 +308,28 @@
 		83598EF525818BCB004664D3 /* syntaxhighlight.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = syntaxhighlight.c; sourceTree = "<group>"; };
 		83598EF92582098A004664D3 /* test1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test1.md; sourceTree = "<group>"; };
 		83598EFA258209C7004664D3 /* test2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test2.md; sourceTree = "<group>"; };
-		83598EFF25820B0F004664D3 /* test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = test.h; sourceTree = "<group>"; };
-		83598F0025820B0F004664D3 /* test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = test.c; sourceTree = "<group>"; };
-		83598F0425825B6F004664D3 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
-		83598F0A25825C65004664D3 /* htmlconverter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = htmlconverter.a; path = HTMLConverter/htmlconverter.a; sourceTree = "<group>"; };
-		83598F1225825CB9004664D3 /* htmlconverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = htmlconverter.h; sourceTree = "<group>"; };
-		83598F1325825CB9004664D3 /* htmlconverter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = htmlconverter.a; sourceTree = "<group>"; };
-		83598F21258263C0004664D3 /* syntax.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = syntax.css; sourceTree = "<group>"; };
 		83598F22258263C0004664D3 /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
 		837602FF258C1813004799ED /* inlineimage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inlineimage.h; sourceTree = "<group>"; };
 		83760300258C1813004799ED /* inlineimage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inlineimage.c; sourceTree = "<group>"; };
-		8376030B258D5A97004799ED /* SaveAsFormatView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SaveAsFormatView.xib; sourceTree = "<group>"; };
-		83760310258D5AA0004799ED /* SaveAsFormatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveAsFormatView.swift; sourceTree = "<group>"; };
 		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
+		837F28E72597762C00A5F7DE /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = "<group>"; };
+		837F28FB2597817400A5F7DE /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
+		837F28FC2597817400A5F7DE /* goutils.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = goutils.go; sourceTree = "<group>"; };
+		837F28FD2597817400A5F7DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		837F28FE2597817400A5F7DE /* go.sum */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.sum; sourceTree = "<group>"; };
+		837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = GoLibraries.xcodeproj; sourceTree = "<group>"; };
+		837F290D259794FF00A5F7DE /* goutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goutils.h; sourceTree = "<group>"; };
+		837F290E2597950900A5F7DE /* libgoutils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgoutils.a; sourceTree = "<group>"; };
+		837F291E2597AAC000A5F7DE /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		838109C1258403CA000AFE3C /* mention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mention.h; sourceTree = "<group>"; };
 		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
 		838109C525840429000AFE3C /* checkbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checkbox.h; sourceTree = "<group>"; };
 		838109C625840429000AFE3C /* checkbox.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = checkbox.c; sourceTree = "<group>"; };
 		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		83E7FEED258FBE54003ECF9B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		83E7FEF0258FBF37003ECF9B /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
+		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwrapper_highlight.dylib; path = "highlight wrapper/libwrapper_highlight.dylib"; sourceTree = "<group>"; };
+		83E7FF11258FE4DF003ECF9B /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		83EF951C2585367500B56FA3 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		83EF95212585476800B56FA3 /* emoji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = emoji.h; sourceTree = "<group>"; };
 		83EF95222585476800B56FA3 /* emoji.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emoji.c; sourceTree = "<group>"; };
@@ -284,7 +342,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
-				831A8C53258ABD1D00E36182 /* htmlconverter.a in Frameworks */,
+				83E7FEF9258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
+				837F29122597975500A5F7DE /* libgoutils.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +351,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83598F0B25825C65004664D3 /* htmlconverter.a in Frameworks */,
+				83E7FEF8258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
+				837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +370,23 @@
 			path = QLExtension;
 			sourceTree = "<group>";
 		};
+		83327D252594066300E76CF6 /* MIMEtype */ = {
+			isa = PBXGroup;
+			children = (
+				83327D262594066300E76CF6 /* MIME-sources.md */,
+				83327D272594066300E76CF6 /* LICENSE */,
+				83327D282594066300E76CF6 /* mimes.h */,
+				83327D292594066300E76CF6 /* mimesX.h */,
+				83327D2A2594066300E76CF6 /* mimes4.h */,
+				83327D2B2594066300E76CF6 /* mimes0.h */,
+				83327D2C2594066300E76CF6 /* README.md */,
+				83327D2D2594066300E76CF6 /* .gitignore */,
+				83327D2E2594066300E76CF6 /* MIMEtype.c */,
+				83327D2F2594077200E76CF6 /* MIMEType.h */,
+			);
+			path = MIMEtype;
+			sourceTree = "<group>";
+		};
 		8357EB762587DBDE002C2C45 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
@@ -317,13 +394,16 @@
 				8357EB772587DBED002C2C45 /* ThemesViewController.swift */,
 				8357EB812588A8D3002C2C45 /* ThemeTableView.xib */,
 				8357EB852588AB88002C2C45 /* ThemeTableView.swift */,
-				8376030B258D5A97004799ED /* SaveAsFormatView.xib */,
-				83760310258D5AA0004799ED /* SaveAsFormatView.swift */,
 				8357EB892588AE10002C2C45 /* ThemePreviewView.xib */,
 				8357EB8C2588AE16002C2C45 /* ThemePreviewView.swift */,
 				8342418A25894328000093EC /* ThemesView.xib */,
 				8342418D2589432E000093EC /* ThemesView.swift */,
 				831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */,
+				834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */,
+				834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */,
+				834CAB9125923D2200673002 /* ThemeSelectorViewController.swift */,
+				834CAB9525923D3000673002 /* ThemeCollectionViewItem.swift */,
+				834CAB9425923D3000673002 /* ThemeCollectionViewItem.xib */,
 			);
 			path = Themes;
 			sourceTree = "<group>";
@@ -332,16 +412,17 @@
 			isa = PBXGroup;
 			children = (
 				83D4B1C3258675D0000745DB /* README.md */,
+				834CABA02593C57B00673002 /* CHANGELOG.md */,
+				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
-				83598F0425825B6F004664D3 /* module.modulemap */,
-				83598F22258263C0004664D3 /* markdown.css */,
-				83598F21258263C0004664D3 /* syntax.css */,
-				83598F0D25825CB9004664D3 /* HTMLConverter */,
+				837F28FA2597817300A5F7DE /* GoLibraries */,
+				83E7FEF5258FBF77003ECF9B /* highlight wrapper */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMardown */,
 				831A8C42258ABADA00E36182 /* QLExtension */,
-				83598E6225818808004664D3 /* Products */,
+				837F29172597A01F00A5F7DE /* Resources */,
 				83598F0525825B8D004664D3 /* Frameworks */,
+				83598E6225818808004664D3 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -357,6 +438,10 @@
 		83598E6325818808004664D3 /* QLMardown */ = {
 			isa = PBXGroup;
 			children = (
+				83598E6D2581880A004664D3 /* Info.plist */,
+				83598E6E2581880A004664D3 /* QLMardown.entitlements */,
+				83598E7925818839004664D3 /* QLMardown-Bridging-Header.h */,
+				834CAB89259167B800673002 /* examples */,
 				8357EB762587DBDE002C2C45 /* Themes */,
 				83598E6425818808004664D3 /* AppDelegate.swift */,
 				83598E6625818808004664D3 /* ViewController.swift */,
@@ -367,11 +452,8 @@
 				83598EF92582098A004664D3 /* test1.md */,
 				83598EFA258209C7004664D3 /* test2.md */,
 				837D20D5258362A5008FC698 /* example.jpg */,
-				83598E6D2581880A004664D3 /* Info.plist */,
-				83598E6E2581880A004664D3 /* QLMardown.entitlements */,
-				83598EFF25820B0F004664D3 /* test.h */,
-				83598F0025820B0F004664D3 /* test.c */,
 				83F4B99125868A7400FC58A7 /* Settings.swift */,
+				83327D452595E15700E76CF6 /* Settings+ext.swift */,
 			);
 			path = QLMardown;
 			sourceTree = "<group>";
@@ -379,7 +461,9 @@
 		83598E7525818812004664D3 /* cmark-gfm */ = {
 			isa = PBXGroup;
 			children = (
-				83598E7925818839004664D3 /* QLMardown-Bridging-Header.h */,
+				83327D1E2593FB0700E76CF6 /* url.cpp */,
+				83327D1D2593FB0700E76CF6 /* url.hpp */,
+				83327D252594066300E76CF6 /* MIMEtype */,
 				83598E7825818828004664D3 /* extensions */,
 				83598E762581881B004664D3 /* src */,
 			);
@@ -473,6 +557,8 @@
 				83598EF525818BCB004664D3 /* syntaxhighlight.c */,
 				83EF95212585476800B56FA3 /* emoji.h */,
 				83EF95222585476800B56FA3 /* emoji.c */,
+				834CAB9A2593650800673002 /* emoji_utils.cpp */,
+				834CAB9B2593650800673002 /* emoji_utils.hpp */,
 				837602FF258C1813004799ED /* inlineimage.h */,
 				83760300258C1813004799ED /* inlineimage.c */,
 				838109C1258403CA000AFE3C /* mention.h */,
@@ -486,19 +572,49 @@
 		83598F0525825B8D004664D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				83598F0A25825C65004664D3 /* htmlconverter.a */,
+				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
 				831A8C40258ABADA00E36182 /* Quartz.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		83598F0D25825CB9004664D3 /* HTMLConverter */ = {
+		837F28FA2597817300A5F7DE /* GoLibraries */ = {
 			isa = PBXGroup;
 			children = (
-				83598F1225825CB9004664D3 /* htmlconverter.h */,
-				83598F1325825CB9004664D3 /* htmlconverter.a */,
+				837F290E2597950900A5F7DE /* libgoutils.a */,
+				837F290D259794FF00A5F7DE /* goutils.h */,
+				837F28FB2597817400A5F7DE /* go.mod */,
+				837F28FC2597817400A5F7DE /* goutils.go */,
+				837F28FD2597817400A5F7DE /* Makefile */,
+				837F28FE2597817400A5F7DE /* go.sum */,
+				837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */,
 			);
-			path = HTMLConverter;
+			path = GoLibraries;
+			sourceTree = "<group>";
+		};
+		837F29002597817400A5F7DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		837F29172597A01F00A5F7DE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83598F22258263C0004664D3 /* markdown.css */,
+				83E7FEF0258FBF37003ECF9B /* highlight */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		83E7FEF5258FBF77003ECF9B /* highlight wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				837F28E72597762C00A5F7DE /* magic.mgc */,
+				83E7FF11258FE4DF003ECF9B /* wrapper_highlight.h */,
+			);
+			path = "highlight wrapper";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -508,7 +624,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 831A8C50258ABADA00E36182 /* Build configuration list for PBXNativeTarget "Markdown QL Extension" */;
 			buildPhases = (
-				831A8CB9258AC05F00E36182 /* ShellScript */,
+				83E7FEFC258FCBE2003ECF9B /* ShellScript */,
 				831A8C3B258ABADA00E36182 /* Sources */,
 				831A8C3C258ABADA00E36182 /* Frameworks */,
 				831A8C3D258ABADA00E36182 /* Resources */,
@@ -516,6 +632,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				837F291A2597A0B300A5F7DE /* PBXTargetDependency */,
 			);
 			name = "Markdown QL Extension";
 			productName = QLExtension;
@@ -526,15 +643,17 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83598E712581880A004664D3 /* Build configuration list for PBXNativeTarget "QLMardown" */;
 			buildPhases = (
-				83598F0325825AE4004664D3 /* ShellScript */,
+				83E7FEFD258FCBF9003ECF9B /* ShellScript */,
 				83598E5D25818808004664D3 /* Sources */,
 				83598E5E25818808004664D3 /* Frameworks */,
 				83598E5F25818808004664D3 /* Resources */,
 				831A8C4C258ABADA00E36182 /* Embed App Extensions */,
+				83E7FF07258FCCF9003ECF9B /* Embed Libraries */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				837F291C2597A0B800A5F7DE /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
 			);
 			name = QLMardown;
@@ -571,6 +690,12 @@
 			mainGroup = 83598E5825818808004664D3;
 			productRefGroup = 83598E6225818808004664D3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 837F29002597817400A5F7DE /* Products */;
+					ProjectRef = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				83598E6025818808004664D3 /* QLMardown */,
@@ -584,10 +709,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8376030D258D5A97004799ED /* SaveAsFormatView.xib in Resources */,
-				831A8CC4258AC4A900E36182 /* syntax.css in Resources */,
 				831A8CC5258AC4A900E36182 /* markdown.css in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
+				83E7FEF2258FBF37003ECF9B /* highlight in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,24 +720,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				83598EFC25820A72004664D3 /* test2.md in Resources */,
-				83598F23258263C0004664D3 /* syntax.css in Resources */,
+				837F28E82597765900A5F7DE /* magic.mgc in Resources */,
 				83F4B9962586AB9700FC58A7 /* README.md in Resources */,
 				83598EFD25820A72004664D3 /* test1.md in Resources */,
 				83598E692581880A004664D3 /* Assets.xcassets in Resources */,
 				83598E6C2581880A004664D3 /* Main.storyboard in Resources */,
 				8342418B25894328000093EC /* ThemesView.xib in Resources */,
 				837D20D6258362A5008FC698 /* example.jpg in Resources */,
-				8376030C258D5A97004799ED /* SaveAsFormatView.xib in Resources */,
+				834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */,
+				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */,
 				83598F24258263C0004664D3 /* markdown.css in Resources */,
 				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
+				834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */,
+				834CAB8A259167D100673002 /* examples in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		831A8CB9258AC05F00E36182 /* ShellScript */ = {
+		83E7FEFC258FCBE2003ECF9B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -628,9 +755,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ./HTMLConverter/\nmake\n";
+			shellScript = "cd \"highlight wrapper\"\ninstall_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\n";
 		};
-		83598F0325825AE4004664D3 /* ShellScript */ = {
+		83E7FEFD258FCBF9003ECF9B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -645,7 +772,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ./HTMLConverter/\nmake\n";
+			shellScript = "cd \"highlight wrapper\"\ninstall_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -654,6 +781,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83327D222593FCEC00E76CF6 /* url.cpp in Sources */,
 				831A8CA5258ABDDB00E36182 /* xml.c in Sources */,
 				831A8C9F258ABDD500E36182 /* html.c in Sources */,
 				831A8C80258ABDAC00E36182 /* cmark_ctype.c in Sources */,
@@ -669,12 +797,10 @@
 				831A8C8C258ABDBE00E36182 /* footnotes.c in Sources */,
 				831A8C9C258ABDD500E36182 /* plugin.c in Sources */,
 				831A8CBE258AC0D200E36182 /* arena.c in Sources */,
-				831A8C89258ABDBB00E36182 /* entities.inc in Sources */,
 				831A8C91258ABDC300E36182 /* houdini_html_e.c in Sources */,
 				831A8C74258ABD9600E36182 /* checkbox.c in Sources */,
 				831A8CA0258ABDD500E36182 /* iterator.c in Sources */,
 				831A8CC1258AC18300E36182 /* Settings.swift in Sources */,
-				83760312258D5AA0004799ED /* SaveAsFormatView.swift in Sources */,
 				831A8C68258ABD8400E36182 /* tasklist.c in Sources */,
 				831A8C6B258ABD8900E36182 /* syntaxhighlight.c in Sources */,
 				831A8C71258ABD9300E36182 /* mention.c in Sources */,
@@ -682,7 +808,7 @@
 				831A8C95258ABDD400E36182 /* map.c in Sources */,
 				831A8C83258ABDB300E36182 /* cmark.c in Sources */,
 				831A8C9E258ABDD500E36182 /* registry.c in Sources */,
-				831A8C7D258ABDA500E36182 /* case_fold_switch.inc in Sources */,
+				834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */,
 				831A8C7A258ABDA100E36182 /* buffer.c in Sources */,
 				831A8C56258ABD6200E36182 /* autolink.c in Sources */,
 				831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */,
@@ -692,6 +818,7 @@
 				831A8C94258ABDD400E36182 /* man.c in Sources */,
 				831A8C8F258ABDC300E36182 /* houdini_href_e.c in Sources */,
 				831A8C65258ABD8200E36182 /* tagfilter.c in Sources */,
+				83327D332594087100E76CF6 /* MIMEtype.c in Sources */,
 				831A8C6E258ABD8D00E36182 /* emoji.c in Sources */,
 				831A8C9B258ABDD400E36182 /* references.c in Sources */,
 				831A8C9A258ABDD400E36182 /* inlines.c in Sources */,
@@ -709,9 +836,10 @@
 				831A8CD1258ACB3300E36182 /* ThemePropertyViewController.swift in Sources */,
 				83598EDF2581884D004664D3 /* blocks.c in Sources */,
 				83598EED2581884D004664D3 /* registry.c in Sources */,
-				83760311258D5AA0004799ED /* SaveAsFormatView.swift in Sources */,
+				834CAB8E2591DE0F00673002 /* SaveAsFormatView.swift in Sources */,
 				83598ECD2581884D004664D3 /* xml.c in Sources */,
 				83598EE32581884D004664D3 /* plugin.c in Sources */,
+				83327D202593FCEB00E76CF6 /* url.cpp in Sources */,
 				83598EE12581884D004664D3 /* linked_list.c in Sources */,
 				83598E8E2581883B004664D3 /* ext_scanners.c in Sources */,
 				8357EB8D2588AE16002C2C45 /* ThemePreviewView.swift in Sources */,
@@ -722,9 +850,9 @@
 				83598ED82581884D004664D3 /* houdini_html_e.c in Sources */,
 				8357EB782587DBED002C2C45 /* ThemesViewController.swift in Sources */,
 				83598E902581883B004664D3 /* tasklist.c in Sources */,
+				83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */,
 				83598EEB2581884D004664D3 /* buffer.c in Sources */,
 				83598E8F2581883B004664D3 /* table.c in Sources */,
-				83598F0125820B0F004664D3 /* test.c in Sources */,
 				83598E8C2581883B004664D3 /* autolink.c in Sources */,
 				83598EDA2581884D004664D3 /* scanners.c in Sources */,
 				83598ECC2581884D004664D3 /* footnotes.c in Sources */,
@@ -741,16 +869,18 @@
 				83760301258C1813004799ED /* inlineimage.c in Sources */,
 				83598ED32581884D004664D3 /* inlines.c in Sources */,
 				83598ED12581884D004664D3 /* houdini_html_u.c in Sources */,
+				834CAB9225923D2200673002 /* ThemeSelectorViewController.swift in Sources */,
 				83598E6525818808004664D3 /* AppDelegate.swift in Sources */,
 				83598EE82581884D004664D3 /* references.c in Sources */,
-				83598ED92581884D004664D3 /* case_fold_switch.inc in Sources */,
 				83EF95232585476800B56FA3 /* emoji.c in Sources */,
+				834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */,
+				834CAB9625923D3000673002 /* ThemeCollectionViewItem.swift in Sources */,
 				83598ED52581884D004664D3 /* houdini_href_e.c in Sources */,
 				83598EDB2581884D004664D3 /* utf8.c in Sources */,
 				8357EB862588AB88002C2C45 /* ThemeTableView.swift in Sources */,
 				83598EEA2581884D004664D3 /* latex.c in Sources */,
+				83327D312594087100E76CF6 /* MIMEtype.c in Sources */,
 				83598EDD2581884D004664D3 /* syntax_extension.c in Sources */,
-				83598EE42581884D004664D3 /* entities.inc in Sources */,
 				83598EE62581884D004664D3 /* node.c in Sources */,
 				838109C725840429000AFE3C /* checkbox.c in Sources */,
 				83598E912581883B004664D3 /* core-extensions.c in Sources */,
@@ -769,6 +899,16 @@
 			isa = PBXTargetDependency;
 			target = 831A8C3E258ABADA00E36182 /* Markdown QL Extension */;
 			targetProxy = 831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */;
+		};
+		837F291A2597A0B300A5F7DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoLibraries;
+			targetProxy = 837F29192597A0B300A5F7DE /* PBXContainerItemProxy */;
+		};
+		837F291C2597A0B800A5F7DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoLibraries;
+			targetProxy = 837F291B2597A0B800A5F7DE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -797,7 +937,9 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
@@ -810,13 +952,15 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HTMLConverter",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "cmark-gfm/QLMardown-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMardown/QLMardown-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -826,7 +970,9 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
@@ -839,13 +985,15 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/HTMLConverter",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "cmark-gfm/QLMardown-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMardown/QLMardown-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -974,26 +1122,30 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QLMardown/QLMardown.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
 				);
 				INFOPLIST_FILE = QLMardown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
+					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/QLMardown/HTMLConverter",
-					"$(PROJECT_DIR)/HTMLConverter",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "cmark-gfm/QLMardown-Bridging-Header.h";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMardown/QLMardown-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1008,26 +1160,30 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QLMardown/QLMardown.entitlements;
 				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
 				);
 				INFOPLIST_FILE = QLMardown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
+					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
+					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/QLMardown/HTMLConverter",
-					"$(PROJECT_DIR)/HTMLConverter",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "cmark-gfm/QLMardown-Bridging-Header.h";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMardown/QLMardown-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

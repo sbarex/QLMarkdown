@@ -2,16 +2,21 @@
 
 This app provide a quicklook extension to handle markdown files from macOS 10.15 onwards.
 
-For maximum compatibility with the format, the [`cmark-gfm`](https://github.com/github/cmark-gfm) library is used[^footnote]. 
+**The software is provided "as is", without any warranty of any kind.**
 
-Since `cmark-gfm` is developed in C, part of the functionality of the app is offered through libraries written in golang to take advantage of a higher level language.
+You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases). 
+
+To use the quicklook preview you must launch the application at least once. In this way the quicklook extension will be discovered by the system. 
+After the first execution, the quicklook extension will be available (and enabled) among those present in the System preferences/Extensions.
+
+For maximum compatibility with the markdown format, the [`cmark-gfm`](https://github.com/github/cmark-gfm) library is used[^footnote]. 
 
 Compared to the standard `cmark-gfm` equipment, these extensions have been added:
-- `emoji`: translate all emoji placeholder like ```:smile:``` defined by Github (see [this list](https://api.github.com/emojis)).
-- `syntax highlight`: colorize the code inside fanced block using [Chroma](https://github.com/alecthomas/chroma) engine.
-- `inline local images`: to embed linked image inside the formatted output.
+- `Emoji`: translate the emoji placeholder like ```:smile:```.
+- `Source code highlight`: colorize the code inside fenced block.
+- `Inline local images`: embed the image files inside the formatted output.
 
-From the Preferences window you can configure the options, enable the desidered extensions and set the output style.
+From the Preferences window you can configure the options, enable the desired extensions and set the style.
 
 ## Options
 The options follow those offered by the `cmark-gfm`:
@@ -23,36 +28,94 @@ The options follow those offered by the `cmark-gfm`:
 - `footnotes`: Parse footnotes.
 
 ## Extensions
-- `table`: parse table as defined by the Github extension to the standard markdown language.
-- `autolink`: automatically tranlate url to link.
-- `tag filter`: strip potentially dangerous html tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`,
-`<noembed>`, `<noframes>`, `<script>`, `<plaintext>`).
-- `task list`: parse task list as defined by the Github extension to the standard markdown language.
-- `Github mentions`: tranlate mentions to link to the github account.
-- `Strikethrough`: strikethrough text inside tildes. You can choose to detect single or doble tilde delimiters.
-- `Emoji`: parse the emoji placeholder defined by [Github](https://api.github.com/emojis). You can render the emoji with an emoticons glyph or using the image provided by Github. It is possible that some placeholders (especially if they require a sequence of several unicode codes) are not supported by the system font.
-- `inline local images`: inject in the html code the local images as base64 data[^footnote_inlineimages]. For security reasons are handled only urls without schema (e.g. `./image.jpg` or `image.jpg`), or with the `file` schema (e.g.  `file:///Users/username/Documents/image.jpg`)[^footnote_file_scheme] referring to existing files with an image type mime. This extension is required to render local images inside the quicklook preview.
-- `Syntax Highlight`: colorize the source code inside a fenced box. The rendering engine is based on the [Chroma](https://github.com/alecthomas/chroma) library which is a golang project based on [Pygments](https://pygments.org/).
+- `Autolink`: automatically translate url to link.
+- `Emoji`: parse the emoji placeholder defined by GitHub. You can render the emoji with an emoticons glyph or using the image provided by GitHub. It is possible that some placeholders (especially if they require a sequence of several unicode codes) are not supported by the system font.
+- `GitHub mentions`: translate mentions to link to the GitHub account.
+- `Inline local images`: inject in the html code the local images as base64 data[^footnote_inlineimages]. For security reasons are handled only urls without schema (e.g. `./image.jpg` or `image.jpg`), or with the `file` schema (e.g.  `file:///Users/username/Documents/image.jpg`)[^footnote_file_scheme] referring to existing files with an image mime type. This extension is required to render local images inside the quicklook preview.
+- `Source code highlight`: colorize the source code inside a fenced box. 
+- `Strikethrough`: strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.
+- `Table`: parse table as defined by the GitHub extension to the standard markdown language.
+- `Tag filter`: strip potentially dangerous html tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`).
+- `Task list`: parse task list as defined by the GitHub extension to the standard markdown language.
+
+### Emoji extension
+This extension translate the placeholder defined by [GitHub](https://api.github.com/emojis) into the corresponding emoji. 
+It is possible to translate with the system emoji font or using the image provided by GitHub (internet connection required). 
+
+Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. Some multibyte sequence may not be supported by the system font, in this case it is recommended to set the substitution with GitHub images.
+
+### Inline local images extension
+This extension is required only to render local images on the quicklook preview.
+
+For security reason the quicklook preview (based on an html view) do not load local files. During the rendering process, the extension then embed the contents of the file on the html code as a base64 encoded data. This process operate only on local images (url without a scheme or with the `file://` scheme[^footnote_file_scheme]).
+
+### Source code highlight extension
+This extension highlight the source code inside a fenced box.
+
+The rendering engine is based on the [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php). No external program is called, the engine is embedded in a library.
+
+In the settings you can customize:
+
+- the theme, for both light and dark appearance,
+- show/hide the line numbers,
+- word wrap options,
+- use spaces instead of tabs for indentation,
+- choose a font[^footnote_font],
+- guess undefined language.
+
+Some themes (especially those for light appearance) uses a white background that is the same of the markdown document, making the code block not immediately recognizable. For this reason it is possible to override the theme background color in order to use a personal one or the one defined by the markdown document. It is also possible to customize the theme used for language highlighting as desired. 
+
+When the code block does not specify the language it is possible to activate a guessing function. Two engines are available:
+
+- fast guess: it is based on the `magic` library
+- accurate guess: it is based on the [`Enry`](https://github.com/go-enry/go-enry) library, that is a golang porting of the ruby [`linguist`](https://github.com/github/linguist/) library used by GitHub.
+
+If no language is defined and the gueessing fail, the code is rendered as normal text.
 
 ## Style
-You can choose a css theme to render the markdown file. The app is provided with a predefined theme valid both for light and dark theme. You can also use a customized style sheet.
+You can choose a css theme to render the markdown file. The app is provided with a predefined theme valid both for light and dark theme. 
 
-In the `Syntax Highlight extension` is enabled you can choose the theme for formatting the source code. There as some predefined themes but you can provide a customizes style. 
-You can also choose to use the background defined by the langhuage theme or the background color defined for the source box inside the markdown style or a customized colour. This setting allows you to overwrite the background color in cases where it is the same as the background color of the document which would make the box with the source code difficult to recognize.
+Also it is possible to use a style to extend the standard theme or to complete override. 
+User customized style sheet must have the settings for both light and dark appearance using the css media query:
 
+```css
+@media (prefers-color-scheme: dark) { 
+    /* … */ 
+}
+``` 
+The custom style is appended after the css used for the source code. In this way you can customize also the style of the language code. 
+
+
+# Source highlight theme editor
+
+TODO
 
 # Build from source
-To build the app from source you must have the `go` compiler installed (you can use `brew install go`).
-The build process compile the `Chroma` library as a universal binary (tested with go 1.15.5 on macOS Big Sur).
-Also the empji extension uses some tools compiled from go code.
 
+## Dependency
+
+The app uses two extra libraries:
+
+- `highlight wrapper`: a custom c++ shared library that expose the `highlight` functionality and the emoji replacement
+- `go utils`: a custom static library developed in go for the accurate guess language type engine.
+
+The two libraries are build as universal binary.
+
+The `highlight wrapper` is provided as precompiled (*TODO: insert the build process on the project*). It has statically linked these libraries:
+- [`highlight` v3.60](http://www.andre-simon.de/doku/highlight/en/highlight.php) (for source code highlight)
+- [`lua` v5.4.1](https://www.lua.org/) (required by `highlight`)
+- [`magic` v5.39](https://www.darwinsys.com/file/)  (used to guess the source code language when the guess mode is set to _fast_).
+
+The `go utils` library is build with the Xcode project. So you must have the `go` compiler installed (you can use `brew install go`). It has linked the [`Enry`](https://github.com/go-enry/go-enry) library used to guess the source code language when the guess mode is set to _accurate_.
 
 # Note about security
-To allow the quicklook view of local images the extension has an exception to allow *only read access* to the entire system. 
+To allow the quicklook view of local images the extension has an entitlement exception to allow *only read access* to the entire system. 
 
+On Big Sur there is a bug in the quicklook engine and webkit that cause the immediate crash of any WebView inside a quicklook preview. To temporary fix this problem this quicklook extension uses a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement. 
 
 ---
 
-[^footnote]: The library is a Github fork of the standard cmark tool to process the markdown files.
-[^footnote_inlineimages]: The quick llok extension do not access to the local images defined inside the markdown code. 
-[^footnote_file_scheme]: With the `file` scheme you always set the fullpath. For relative path (`./` or `../`) do not use the prefix  `file://`, also `./` is optional.
+[^footnote]: The library is a GitHub fork of the standard cmark tool to process the markdown files.
+[^footnote_inlineimages]: The quick look extension can not access to the local images defined inside the markdown code, so embedding the data it's a way around the limitation. 
+[^footnote_file_scheme]: With the `file://` scheme you *always set the fullpath*. For images inside the same folder of the markdown file do not use the scheme  `file://` and also `./` is optional.
+[^footnote_font]: Setting a custom font also change the font used in the code blocks enclosed by back-ticks (\`).

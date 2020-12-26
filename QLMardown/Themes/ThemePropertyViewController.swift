@@ -11,130 +11,64 @@ class ThemePropertyViewController: NSViewController {
     weak var popover: NSPopover?
     @IBOutlet weak var boxView: NSBox!
     
-    var italic = false {
-        willSet {
-            self.willChangeValue(forKey: #keyPath(italic_index))
-        }
-        didSet {
-            self.didChangeValue(forKey: #keyPath(italic_index))
-        }
-    }
-    @objc dynamic var italic_overriden = false
-    @objc dynamic var italic_index: Int {
-        get {
-            return italic ? 0 : 1
-        }
-        set {
-            italic = newValue == 0
-        }
-    }
+    @objc dynamic var italic: Int = 0
+    @objc dynamic var bold: Int = 0
+    @objc dynamic var underline: Int = 0
     
-    var bold = false {
-        willSet {
-            self.willChangeValue(forKey: #keyPath(bold_index))
-        }
-        didSet {
-            self.didChangeValue(forKey: #keyPath(bold_index))
-        }
-    }
-    @objc dynamic var bold_overriden = false
-    @objc dynamic var bold_index: Int {
-        get {
-            return bold ? 0 : 1
-        }
-        set {
-            bold = newValue == 0
-        }
-    }
+    @objc dynamic var isEditable: Bool = false
     
-    var underline = false {
+    var color = "#ffffff" {
         willSet {
-            self.willChangeValue(forKey: #keyPath(underline_index))
+            self.willChangeValue(forKey: #keyPath(color_color))
         }
         didSet {
-            self.didChangeValue(forKey: #keyPath(underline_index))
+            self.didChangeValue(forKey: #keyPath(color_color))
         }
     }
-    @objc dynamic var underline_overriden = false
-    @objc dynamic var underline_index: Int {
+    @objc dynamic var color_color: NSColor? {
         get {
-            return underline ? 0 : 1
-        }
-        set {
-            underline = newValue == 0
-        }
-    }
-    
-    var background = "#ffffff" {
-        willSet {
-            self.willChangeValue(forKey: #keyPath(background_color))
-        }
-        didSet {
-            self.didChangeValue(forKey: #keyPath(background_color))
-        }
-    }
-    @objc dynamic var background_overriden = false
-    @objc dynamic var background_color: NSColor? {
-        get {
-            return NSColor(css: background)
+            return NSColor(css: color)
         }
         set {
             if let css = newValue?.css() {
-                background = css
-            }
-        }
-    }
-    @objc dynamic var foreground = "#000000"
-    @objc dynamic var foreground_overriden = false
-    @objc dynamic var foreground_color: NSColor? {
-        get {
-            return NSColor(css: foreground)
-        }
-        set {
-            if let css = newValue?.css() {
-                foreground = css
-            }
-        }
-    }
-    @objc dynamic var border = "#cccccc"
-    @objc dynamic var border_overriden = false
-    @objc dynamic var border_color: NSColor? {
-        get {
-            return NSColor(css: border)
-        }
-        set {
-            if let css = newValue?.css() {
-                border = css
+                color = css
             }
         }
     }
     
-    var themeProperty: Theme.PropertyStyle? {
-        didSet {
-            italic = themeProperty?.italic ?? false
-            italic_overriden = themeProperty?.italic != nil
-            bold = themeProperty?.bold ?? false
-            bold_overriden = themeProperty?.bold != nil
-            underline = themeProperty?.underline ?? false
-            underline_overriden = themeProperty?.underline != nil
-            
-            background = themeProperty?.background ?? "#ffffff"
-            background_overriden = themeProperty?.background != nil
-            foreground = themeProperty?.foreground ?? "#000000"
-            foreground_overriden = themeProperty?.foreground != nil
-            border = themeProperty?.border ?? "#cccccc"
-            border_overriden = themeProperty?.border != nil
+    var theme: Theme?
+    var name: Theme.PropertyName?
+    func setTheme(_ theme: Theme, property name: Theme.PropertyName) {
+        self.theme = theme
+        self.name = name
+        let property = theme[name]
+        
+        if let i = property?.italic {
+            italic = i ? 1 : 2
+        } else {
+            italic = 0
         }
-    }
-    var themePropertyKey: Theme.PropertyName? {
-        didSet {
-            self.boxView?.title = themePropertyKey?.name ?? ""
+        if let i = property?.bold {
+            bold = i ? 1 : 2
+        } else {
+            bold = 0
         }
+        if let i = property?.underline {
+            underline = i ? 1 : 2
+        } else {
+            underline = 0
+        }
+        
+        color = property?.color ?? "#ffffff"
+        
+        self.boxView?.title = "\(name.name) property"
+        
+        isEditable = !theme.isStandalone
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let name = self.themePropertyKey?.name {
+        if let name = self.name?.name {
             self.boxView.title = "\(name) property"
         } else {
             self.boxView.title = "Property"
@@ -144,6 +78,7 @@ class ThemePropertyViewController: NSViewController {
     @IBAction func doSave(_ sender: Any) {
         
     }
+    
     @IBAction func doCancel(_ sender: Any) {
         if let popover = self.popover {
             popover.performClose(sender)

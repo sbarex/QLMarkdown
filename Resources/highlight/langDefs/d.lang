@@ -1,0 +1,67 @@
+
+Description="D"
+
+Categories = {"source"}
+
+Digits=[[ (?:0x|0X)[0-9a-fA-F]+|\d*[\.\_]?\d+(?:[eE][\-\+]\d+)?[lLuUbfdm]* ]]
+
+Keywords={
+  { Id=1,
+    List={
+    "abstract","alias","align","asm","assert","auto","body","break",
+    "case","cast","catch","class","const",
+    "continue","debug","default","delegate","delete","deprecated",
+    "do","else","enum","export","extern","false",
+    "final","finally","for","foreach","foreach_reverse","function","goto",
+    "if","immutable","import","in","inout",
+    "interface","invariant","is","lazy","macro","mixin",
+    "module","new","nothrow","null","out","override","package","pragma","private",
+    "protected","public","pure","ref","return","scope","shared",
+    "static","struct","super","switch","synchronized","template","this","throw",
+    "true","try","typedef","typeid","typeof","union",
+    "unittest","version","volatile","while","with"
+    },
+  },
+  { Id=2,
+    List={"bool","byte","cdouble","char","creal","dchar","double","float","ifloat",
+    "idouble","int","ireal","long","real","short","ubyte","ucent","uint","ulong",
+    "cent","cfloat","ushort","wchar","void"},
+  },
+    { Id=3,
+    Regex=[[\@\w+]],
+  },
+  { Id=4,
+    Regex=[[(\w+)\s*\(]],
+  },
+
+}
+
+Strings={
+  Delimiter=[["|'|`]],
+  RawPrefix="r",
+    Interpolation=[[ %\w ]],
+    DelimiterPairs= {
+      { Open=[[ q"[\[\(\<\{] ]], Close=[[ "[\]\)\>\}] ]], Raw=true }
+    }
+}
+
+IgnoreCase=false
+
+Comments={
+  { Block=false,
+    Delimiter= { [[//]] },
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\*]],[[\*\/]],}
+  },
+  { Block=true,
+    Nested=false,
+    Delimiter= { [[\/\+]],[[\+\/]],}
+  }
+}
+
+Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|\=|\/|\*|\%|\+|\-|\~|\$|\^]]
+
+Digits=[[ (?:0x|0X|0b)[0-9a-fA-F_]+|\d*[\.\_]?\d+(?:[eE][\-\+]?\d+)?[fFlLuU]? ]]
+

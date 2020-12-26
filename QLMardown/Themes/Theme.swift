@@ -8,259 +8,80 @@
 import Cocoa
 
 
-class Theme: Equatable {
-    enum PropertyName: String {
-        case background = "Background"
-                    
-        case lineNumbers = "LineNumbers"
-        case lineNumbersTable = "LineNumbersTable"
-        case lineHighlight = "LineHighlight"
-        case lineTable = "LineTable"
-        case lineTableTD = "LineTableTD"
-        case error = "Error"
-        case other = "Other"
-        case none = "None"
-        case EOFType = "EOFType"
+@objc class Theme: NSObject {
+    enum ThemeAppearance: Int {
+        case undefined
+        case light
+        case dark
+    }
+    
+    enum PropertyName: Hashable {
+        case plain
+        case canvas
+        case number
+        case string
+        case escape
+        case preProcessor
+        case stringPreProc
+        case blockComment
+        case lineComment
+        case lineNum
+        case `operator`
+        case interpolation
+        case keyword(index: Int)
         
-        // Keywords.
-        case keyword = "Keyword"
-        case keywordConstant = "KeywordConstant"
-        case keywordDeclaration = "KeywordDeclaration"
-        case keywordNamespace = "KeywordNamespace"
-        case keywordPseudo = "KeywordPseudo"
-        case keywordReserved = "KeywordReserved"
-        case keywordType = "KeywordType"
-        
-        // Names.
-        case name = "Name"
-        case nameAttribute = "NameAttribute"
-        case nameBuiltin = "NameBuiltin"
-        case nameBuiltinPseudo = "NameBuiltinPseudo"
-        case nameClass = "NameClass"
-        case nameConstant = "NameConstant"
-        case nameDecorator = "NameDecorator"
-        case nameEntity = "NameEntity"
-        case nameException = "NameException"
-        case nameFunction = "NameFunction"
-        case nameFunctionMagic = "NameFunctionMagic"
-        case nameKeyword = "NameKeyword"
-        case nameLabel = "NameLabel"
-        case nameNamespace = "NameNamespace"
-        case nameOperator = "NameOperator"
-        case nameOther = "NameOther"
-        case namePseudo = "NamePseudo"
-        case nameProperty = "NameProperty"
-        case nameTag = "NameTag"
-        case nameVariable = "NameVariable"
-        case nameVariableAnonymous = "NameVariableAnonymous"
-        case nameVariableClass = "NameVariableClass"
-        case nameVariableGlobal = "NameVariableGlobal"
-        case nameVariableInstance = "NameVariableInstance"
-        case nameVariableMagic = "NameVariableMagic"
-        
-        // Literals.
-        case literal = "Literal"
-        case literalDate = "LiteralDate"
-        case literalOther = "LiteralOther"
-        
-        // Strings.
-        case literalString = "LiteralString"
-        case literalStringAffix = "LiteralStringAffix"
-        case literalStringAtom = "LiteralStringAtom"
-        case literalStringBacktick = "LiteralStringBacktick"
-        case literalStringBoolean = "LiteralStringBoolean"
-        case literalStringChar = "LiteralStringChar"
-        case literalStringDelimiter = "LiteralStringDelimiter"
-        case literalStringDoc = "LiteralStringDoc"
-        case literalStringDouble = "LiteralStringDouble"
-        case literalStringEscape = "LiteralStringEscape"
-        case literalStringHeredoc = "LiteralStringHeredoc"
-        case literalStringInterpol = "LiteralStringInterpol"
-        case literalStringName = "LiteralStringName"
-        case literalStringOther = "LiteralStringOther"
-        case literalStringRegex = "LiteralStringRegex"
-        case literalStringSingle = "LiteralStringSingle"
-        case literalStringSymbol = "LiteralStringSymbol"
-        
-        // Numbers.
-        case literalNumber = "LiteralNumber"
-        case literalNumberBin = "LiteralNumberBin"
-        case literalNumberFloat = "LiteralNumberFloat"
-        case literalNumberHex = "LiteralNumberHex"
-        case literalNumberInteger = "LiteralNumberInteger"
-        case literalNumberIntegerLong = "LiteralNumberIntegerLong"
-        case literalNumberOct = "LiteralNumberOct"
-        
-        // Operators.
-        case `operator` = "Operator"
-        case operatorWord = "OperatorWord"
-        
-        // Punctuation.
-        case punctuation = "Punctuation"
-        
-        // Comments.
-        case comment = "Comment"
-        case commentHashbang = "CommentHashbang"
-        case commentMultiline = "CommentMultiline"
-        case commentSingle = "CommentSingle"
-        case commentSpecial = "CommentSpecial"
-        
-        // Preprocessor "comments".
-        case commentPreproc = "CommentPreproc"
-        case commentPreprocFile = "CommentPreprocFile"
-        
-        // Generic tokens.
-        case generic = "Generic"
-        case genericDeleted = "GenericDeleted"
-        case genericEmph = "GenericEmph"
-        case genericError = "GenericError"
-        case genericHeading = "GenericHeading"
-        case genericInserted = "GenericInserted"
-        case genericOutput = "GenericOutput"
-        case genericPrompt = "GenericPrompt"
-        case genericStrong = "GenericStrong"
-        case genericSubheading = "GenericSubheading"
-        case genericTraceback = "GenericTraceback"
-        case genericUnderline = "GenericUnderline"
-        
-        // Text.
-        case text = "Text"
-        case textWhitespace = "TextWhitespace"
-        case textSymbol = "TextSymbol"
-        case textPunctuation = "TextPunctuation"
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(self.name)
+        }
         
         var name: String {
             switch self {
-            case .EOFType:
-                return "EOF"
-            
-            default:
-                return self.rawValue.decamelizing(separator: " ").capitalizingFirstLetter()
+            case .plain: return "Default"
+            case .canvas: return "Background"
+            case .number: return "Number"
+            case .string: return "String"
+            case .escape: return "Escape"
+            case .preProcessor: return "Preprocessor"
+            case .stringPreProc: return "String preprocessor"
+            case .blockComment: return "Block comment"
+            case .lineComment: return "Line comment"
+            case .lineNum: return "Line number"
+            case .operator: return "Operator"
+            case .interpolation: return "Interpolation"
+            case .keyword(let index):
+                return "Keyword \(index+1)"
             }
         }
         
         /// CSS class used to render the token.
-        var cssClass: String {
+        var cssClass: [String] {
             switch self {
-            case .background: return "chroma"
-                        
-            case .lineNumbers: return "ln"
-            case .lineNumbersTable: return "lnt"
-            case .lineHighlight: return "hl"
-            case .lineTable: return "lntable"
-            case .lineTableTD: return "lntd"
+            case .plain: return ["hl"]
+            case .canvas: return ["hl"]
+            case .number: return ["hl", "num"]
+            case .escape: return ["hl", "esc"]
+            case .string: return ["hl", "str"]
+            case .preProcessor: return ["hl", "ppc"]
+            case .stringPreProc: return ["hl", "pps"]
+            case .blockComment: return ["hl", "com"]
+            case .lineComment: return ["hl", "slc"]
+            case .lineNum: return ["hl", "lin"]
+            case .operator:
+                return ["hl", "opt"]
+            case .interpolation:
+                return ["hl", "ipl"]
                 
-            case .error: return "err"
-            case .other: return "x"
-            case .none: return ""
-            case .EOFType: return ""
-            
-            // Keywords.
-            case .keyword: return "k"
-            case .keywordConstant: return "kc"
-            case .keywordDeclaration: return "kd"
-            case .keywordNamespace: return "kn"
-            case .keywordPseudo: return "kp"
-            case .keywordReserved: return "kr"
-            case .keywordType: return "kt"
-            
-            // Names.
-            case .name: return "n"
-            case .nameAttribute: return "na"
-            case .nameBuiltin: return "nb"
-            case .nameBuiltinPseudo: return "bp"
-            case .nameClass: return "nc"
-            case .nameConstant: return "no"
-            case .nameDecorator: return "nd"
-            case .nameEntity: return "ni"
-            case .nameException: return "ne"
-            case .nameFunction: return "nf"
-            case .nameFunctionMagic: return "fm"
-                case .nameKeyword: return "n" // fixme
-            case .nameLabel: return "nl"
-            case .nameNamespace: return "nn"
-                case .nameOperator: return "o" // fixme
-            case .nameOther: return "nx"
-                case .namePseudo: return "bp" // fixme
-            case .nameProperty: return "py"
-            case .nameTag: return "nt"
-            case .nameVariable: return "nv"
-                case .nameVariableAnonymous: return "nv" // fixme
-            case .nameVariableClass: return "vc"
-            case .nameVariableGlobal: return "vg"
-            case .nameVariableInstance: return "vi"
-            case .nameVariableMagic: return "vm"
-            
-            // Literals.
-            case .literal: return "l"
-            case .literalDate: return "ld"
-                case .literalOther: return "l" // fixme
-            
-            // Strings.
-            case .literalString: return "s"
-            case .literalStringAffix: return "sa"
-                case .literalStringAtom: return "s" // fixme
-            case .literalStringBacktick: return "sb"
-                case .literalStringBoolean: return "s" // fixme
-            case .literalStringChar: return "sc"
-            case .literalStringDelimiter: return "dl"
-            case .literalStringDoc: return "sd"
-            case .literalStringDouble: return "s2"
-            case .literalStringEscape: return "se"
-            case .literalStringHeredoc: return "sh"
-            case .literalStringInterpol: return "si"
-                case .literalStringName: return "s" // fixme
-            case .literalStringOther: return "sx"
-            case .literalStringRegex: return "sr"
-            case .literalStringSingle: return "s1"
-            case .literalStringSymbol: return "ss"
-            
-            // Numbers.
-            case .literalNumber: return "m"
-            case .literalNumberBin: return "mb"
-            case .literalNumberFloat: return "mf"
-            case .literalNumberHex: return "mh"
-            case .literalNumberInteger: return "mi"
-            case .literalNumberIntegerLong: return "il"
-            case .literalNumberOct: return "mo"
-            
-            // Operators.
-            case .`operator`: return "o"
-            case .operatorWord: return "ow"
-            
-            // Punctuation.
-            case .punctuation: return "p"
-            
-            // Comments.
-            case .comment: return "c"
-            case .commentHashbang: return "ch"
-            case .commentMultiline: return "cm"
-            case .commentSingle: return "c1"
-            case .commentSpecial: return "cs"
-            
-            // Preprocessor "comments".
-            case .commentPreproc: return "cp"
-            case .commentPreprocFile: return "cpf"
-            
-            // Generic tokens.
-            case .generic: return "g"
-            case .genericDeleted: return "gd"
-            case .genericEmph: return "ge"
-            case .genericError: return "gr"
-            case .genericHeading: return "gh"
-            case .genericInserted: return "gi"
-            case .genericOutput: return "go"
-            case .genericPrompt: return "gp"
-            case .genericStrong: return "gs"
-            case .genericSubheading: return "gu"
-            case .genericTraceback: return "gt"
-            case .genericUnderline: return "gl"
-            
-            // Text.
-            case .text: return ""
-            case .textWhitespace: return "w"
-                case .textSymbol: return "" // fixme
-                case .textPunctuation: return "" // fixme
+            case .keyword(let index):
+                return ["hl", "kw" + String(UnicodeScalar(UInt8(97 + index)))]
+            }
+        }
+        
+        var isKeyword: Bool {
+            switch self {
+            case .keyword(_):
+                return true
+            default:
+                return false
             }
         }
     }
@@ -271,59 +92,32 @@ class Theme: Equatable {
             case bold = "bold"
             case underline = "underline"
             
-            case foreground = "foreground"
-            case background = "background"
-            case border = "border"
+            case color = "color"
         }
         
         var italic: Bool?
         var bold: Bool?
         var underline: Bool?
-        var foreground: String?
-        var background: String?
-        var border: String?
+        var color: String?
         
-        init(style: String) {
-            var italic: Bool?
-            var bold: Bool?
-            var underline: Bool?
-            var border: String?
-            var foreground: String?
-            var background: String?
-            let tokens = style.split(separator: " ")
-            
-            for token in tokens {
-                if token == "italic" {
-                    italic = true;
-                } else if token == "noitalic" {
-                    italic = false;
-                } else if token == "bold" {
-                    bold = true;
-                } else if token == "nobold" {
-                    bold = false;
-                } else if token == "underline" {
-                    underline = true;
-                } else if token == "nounderline" {
-                    underline = false;
-                } else if token.hasPrefix("bg:#") {
-                    background = String(token[token.index(token.startIndex, offsetBy: 3) ..< token.endIndex])
-                } else if token.hasPrefix("#") {
-                    foreground = String(token)
-                } else if token.hasPrefix("border:#") {
-                    border = String(token[token.index(token.startIndex, offsetBy: 7) ..< token.endIndex])
-                } else {
-                    print("Unknown token \(token)!")
-                }
-            }
+        init(color: String?, italic: Bool?, bold: Bool?, underline: Bool?) {
+            self.color = color
             self.italic = italic
             self.bold = bold
             self.underline = underline
-            self.foreground = foreground
-            self.background = background
-            self.border = border
         }
         
-        func getCSSStyle() -> String {
+        convenience init(property: HThemeProperty) {
+            let color = property.color != nil ? String(cString: property.color) : nil
+            
+            let bold: Bool? = property.bold < 0 ? nil : property.bold > 0
+            let italic: Bool? = property.italic < 0 ? nil : property.italic > 0
+            let underline: Bool? = property.underline < 0 ? nil : property.underline > 0
+            
+            self.init(color: color, italic: italic, bold: bold, underline: underline)
+        }
+        
+        func getCSSStyle(withColor: Bool = true) -> String {
             var style = ""
             if let italic = self.italic {
                 style += "font-style: \(italic ? "italic" : "normal"); "
@@ -334,14 +128,8 @@ class Theme: Equatable {
             if let underline = self.underline {
                 style += "text-decoration: \(underline ? "underline" : "none"); "
             }
-            if let background = self.background {
-                style += "background-color: \(background); "
-            }
-            if let foreground = self.foreground {
-                style += "color: \(foreground); "
-            }
-            if let border = self.border {
-                style += "border: 1px solid \(border); "
+            if withColor, let color = self.color {
+                style += "color: \(color); "
             }
             
             return style
@@ -356,12 +144,8 @@ class Theme: Equatable {
                     return italic
                 case .underline:
                     return underline
-                case .foreground:
-                    return foreground;
-                case .background:
-                    return background
-                case .border:
-                    return border
+                case .color:
+                    return color;
                 }
             }
             set {
@@ -384,23 +168,11 @@ class Theme: Equatable {
                     } else if let v = newValue as? Bool {
                         underline = v
                     }
-                case .foreground:
+                case .color:
                     if newValue == nil {
-                        foreground = nil
+                        color = nil
                     } else if let v = newValue as? String {
-                        foreground = v
-                    }
-                case .background:
-                    if newValue == nil {
-                        background = nil
-                    } else if let v = newValue as? String {
-                        background = v
-                    }
-                case .border:
-                    if newValue == nil {
-                        border = nil
-                    } else if let v = newValue as? String {
-                        border = v
+                        color = v
                     }
                 }
             }
@@ -417,14 +189,8 @@ class Theme: Equatable {
             if let underline = self.underline {
                 export += underline ? "underline " : "nounderline "
             }
-            if let foreground = self.foreground {
-                export += "\(foreground) "
-            }
-            if let background = self.background {
-                export += "bg:\(background) "
-            }
-            if let border = self.border {
-                export += "border:\(border) "
+            if let color = self.color {
+                export += "\(color) "
             }
             if export.count > 0 {
                 export.removeLast()
@@ -432,17 +198,10 @@ class Theme: Equatable {
             return export
         }
         
-        func getFormattedString(_ text: String, font: NSFont, defaultBackground background: NSColor, foreground: NSColor) -> NSAttributedString {
+        func getFormattedString(_ text: String, font: NSFont) -> NSAttributedString {
             var attributes: [NSAttributedString.Key: Any] = [:]
-            if let c = self.background, let cc = NSColor(css: c) {
-                attributes[.backgroundColor] = cc
-            } else {
-                attributes[.backgroundColor] = background
-            }
-            if let c = self.foreground, let cc = NSColor(css: c) {
+            if let cc = NSColor(css: self.color) {
                 attributes[.foregroundColor] = cc
-            } else {
-                attributes[.foregroundColor] = foreground
             }
             if let underline = self.underline {
                 attributes[.underlineStyle] = underline ? NSUnderlineStyle.single : 0
@@ -455,7 +214,7 @@ class Theme: Equatable {
             if let italic = self.italic {
                 fontTraits.insert(italic ? .italicFontMask : .unitalicFontMask)
             }
-            if !fontTraits.isEmpty, let f = NSFontManager.shared.font(withFamily: font.familyName ?? font.fontName, traits: fontTraits, weight: 0, size: font.pointSize) {
+            if !fontTraits.isEmpty, let f = NSFontManager.shared.font(withFamily: font.familyName ?? font.fontName, traits: fontTraits, weight: 5, size: font.pointSize) {
                 attributes[.font] = f
             } else {
                 attributes[.font] = font
@@ -469,219 +228,231 @@ class Theme: Equatable {
     }
     
     var name: String
-    var styles: [PropertyName: PropertyStyle] = [:]
+    var desc: String
+    var path: String
+    var appearance: ThemeAppearance = .undefined
     
-    var isStandalone: Bool {
-        return !name.hasPrefix("*")
-    }
+    var plain: PropertyStyle
+    var canvas: PropertyStyle
+    var number: PropertyStyle
+    var string: PropertyStyle
+    var escape: PropertyStyle
+    var preProcessor: PropertyStyle
+    var stringPreProc: PropertyStyle
+    var blockComment: PropertyStyle
+    var lineComment: PropertyStyle
+    var lineNum: PropertyStyle
+    var `operator`: PropertyStyle
+    var interpolation: PropertyStyle
+    var keywords: [PropertyStyle]
     
+    var isBase16: Bool = false
+    var isStandalone: Bool = false
     var isDirty: Bool = false
     
-    fileprivate(set) var image: NSImage?
-    
-    convenience init (name: String, styles: [String: String]) {
-        var s: [PropertyName: PropertyStyle] = [:]
-        for (key, value) in styles {
-            if let p = PropertyName(rawValue: key) {
-                s[p] = PropertyStyle(style: value)
+    convenience init (theme: HTheme) {
+        let import_prop = { ( p: inout PropertyStyle, property: HThemeProperty) in
+            p.color = property.color != nil ? String(cString: property.color) : nil
+            if property.bold < 0 {
+                p.bold = nil
+            } else {
+                p.bold = property.bold > 0
+            }
+            if property.italic < 0 {
+                p.italic = nil
+            } else {
+                p.italic = property.italic > 0
+            }
+            if property.underline < 0 {
+                p.underline = nil
+            } else {
+                p.underline = property.underline > 0
             }
         }
-        self.init(name: name, styles: s)
+        
+        self.init(name: theme.name != nil ? String(cString: theme.name) : "")
+        self.desc = theme.desc != nil ? String(cString: theme.desc) : ""
+        self.path = theme.path != nil ? String(cString: theme.path) : ""
+    
+        self.appearance = theme.appearance == HThemeAppearance(1) ? .light : (theme.appearance == HThemeAppearance(2) ? .dark : .undefined)
+        self.isStandalone = theme.standalone > 0
+        self.isBase16 = theme.base16 > 0
+        
+        import_prop(&self.plain, theme.plain.pointee)
+        import_prop(&self.canvas, theme.canvas.pointee)
+        import_prop(&self.number, theme.number.pointee)
+        import_prop(&self.string, theme.string.pointee)
+        import_prop(&self.escape, theme.escape.pointee)
+        import_prop(&self.preProcessor, theme.preProcessor.pointee)
+        import_prop(&self.stringPreProc, theme.stringPreProc.pointee)
+        import_prop(&self.blockComment, theme.blockComment.pointee)
+        import_prop(&self.lineComment, theme.lineComment.pointee)
+        import_prop(&self.lineNum, theme.lineNum.pointee)
+        import_prop(&self.operator, theme.operatorProp.pointee)
+        import_prop(&self.interpolation, theme.interpolation.pointee)
+        self.keywords = []
+        for i in 0 ..< Int(theme.keyword_count) {
+            if let k = theme.keywords[i]?.pointee {
+                self.keywords.append(PropertyStyle(property: k))
+            }
+        }
+        
     }
     
-    init(name: String, styles: [PropertyName: PropertyStyle] = [:]) {
+    init(name: String) {
         self.name = name
-        self.styles = styles
+        self.desc = ""
+        self.path = ""
+        self.appearance = .undefined
+        self.isBase16 = false
+        self.isStandalone = false
+        
+        self.plain = PropertyStyle(color: "#000000", italic: nil, bold: nil, underline: nil)
+        self.canvas = PropertyStyle(color: "#ffffff", italic: nil, bold: nil, underline: nil)
+        
+        self.number = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.string = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.escape = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.preProcessor = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.stringPreProc = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.blockComment = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.lineComment = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.lineNum = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.`operator` = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.interpolation = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
+        self.keywords = []
     }
     
     func getHtmlExample() -> String {
+        let formatPropertyCss = { (name: PropertyName, property: PropertyStyle) -> String in
+            var css = "." + name.cssClass.joined(separator: ".") + " {"
+            if name == .canvas {
+                css += "background-color: \(property.color ?? "#ffffff");"
+            } else {
+                css += property.getCSSStyle()
+            }
+            css += "}\n"
+            return css
+        }
+        let formatProperty = { (name: PropertyName, property: PropertyStyle) -> String in
+            return "<div class='\(name.cssClass.joined(separator: " "))'>\(name.name)</div>\n"
+        }
+        
         var css = ""
-        if let backgroundStyle = self.styles[.background], let background = backgroundStyle.background {
-            css += "body { background-color: \(background); }"
+        
+        if let background = self.canvas.color {
+            css += "body { background-color: \(background); }\n"
         }
-        if let backgroundStyle = self.styles[.background], let color = backgroundStyle.foreground {
-            css += "body { color: \(color); }"
+        if let color = self.plain.color {
+            css += "body { color: \(color); }\n"
         }
+        
+        css += formatPropertyCss(.canvas, self.canvas)
+        css += formatPropertyCss(.plain, self.plain)
+        css += formatPropertyCss(.number, self.number)
+        css += formatPropertyCss(.string, self.string)
+        css += formatPropertyCss(.escape, self.escape)
+        css += formatPropertyCss(.preProcessor, self.preProcessor)
+        css += formatPropertyCss(.stringPreProc, self.stringPreProc)
+        css += formatPropertyCss(.blockComment, self.blockComment)
+        css += formatPropertyCss(.lineComment, self.lineComment)
+        css += formatPropertyCss(.lineNum, self.lineNum)
+        css += formatPropertyCss(.operator, self.operator)
+        css += formatPropertyCss(.interpolation, self.interpolation)
+        for (i, keyword) in self.keywords.enumerated() {
+            css += formatPropertyCss(.keyword(index: i), keyword)
+        }
+        
         var s = """
 <html>
 <head>
         <title>\(self.name)</title>
 <style type="text/css">
-\(css)
-</style>
-</style>
-</head>
-<body>
-    <pre><table style="width: 100%">
-"""
-        for (key, style) in self.styles  {
-            s += """
-        <tr>
-            <td style="\(style.getCSSStyle())" id="\(key.rawValue)">\(key.name)</td>
-        </tr>
-"""
-        }
-        
-        s += """
-    </table></pre>
-</body>
-</html>
-"""
-        return s
-    }
-    
-    /*
-    /// Get a html code for preview the theme settings.
-    public func getHtmlExample(fontName: String = "Menlo", fontSize: CGFloat = 12, smartCaption: Bool = false, showColorCodes: Bool = true, extraCSS css: String = "") -> String {
-        var cssFont = ""
-        if fontName != "" {
-            cssFont = "    font-family: \(fontName);\n    font-size: \(fontSize)pt;\n"
-        }
-        
-        let exportProperty = { (name: Property.Name, property: SCSHThemePropertyProtocol)->String in
-            return "." + name.getCSSClasses().joined(separator: ".") + " {\n" + property.toCSSStyle() + cssFont + " } \n"
-        }
-        var style = ""
-        
-        for name in Property.Name.allCases {
-            guard !name.isKeyword else {
-                break
-            }
-            guard let prop = self[name] else {
-                continue
-            }
-            
-            style += exportProperty(name, prop)
-        }
-        
-        for (i, keyword) in keywords.enumerated() {
-            if let name = Property.Name.keywordAtIndex(i) {
-                style += exportProperty(name, keyword)
-            }
-        }
-        
-        let textColor = plain.toCSSStyle()
-        var s = """
-<html>
-<head>
-        <title>\(self.name).theme :: \(self.desc)</title>
-<style>
-* {
-    box-sizing: border-box;
-}
-html, body {
-    background-color: \(self.canvas.color);
-\(cssFont)
-    user-select: none;
-    -webkit-user-select: none;
-    margin: 0;
-    height: 100%;
-}
 body {
-    padding: 1em;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    user-select: none;
 }
-.color_code {
-\(cssFont)
-\(textColor)
-    display: \(showColorCodes ? "initial" : "none");
-    text-align: right;
-}
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-td {
-    padding: 2px;
-    background-color: \(self.canvas.color);
-}
-        
-\(style)
-        
 \(css)
 </style>
 </head>
-<body class="hl">
-    <pre class="hl"><table>
+
+<body>
+    <pre>
 """
-        for name in Property.Name.allCases  {
-            if name == .canvas {
-                continue
-            }
-            guard let prop = self[name] else {
-                break
-            }
-            s += """
-        <tr>
-            <td class="\(name.getCSSClasses().joined(separator: " "))">\(smartCaption ? name.rawValue : name.description)</td>
-            <td class="color_code">\(prop.color)</td>
-        </tr>
-"""
+        s += formatProperty(.plain, self.plain)
+        s += formatProperty(.canvas, self.canvas)
+        s += formatProperty(.number, self.number)
+        s += formatProperty(.string, self.string)
+        s += formatProperty(.escape, self.escape)
+        s += formatProperty(.preProcessor, self.preProcessor)
+        s += formatProperty(.stringPreProc, self.stringPreProc)
+        s += formatProperty(.blockComment, self.blockComment)
+        s += formatProperty(.lineComment, self.lineComment)
+        s += formatProperty(.lineNum, self.lineNum)
+        s += formatProperty(.operator, self.operator)
+        s += formatProperty(.interpolation, self.interpolation)
+        for (i, keyword) in self.keywords.enumerated() {
+            s += formatProperty(.keyword(index: i), keyword)
         }
         
         s += """
-    </table></pre>
+    </pre>
 </body>
 </html>
 """
         return s
     }
-    */
+
     
     /// Get a NSAttributedString for preview the theme settings in the icon.
     /// This code don't call internally the getHtmlExample and is more (about 6x)  fast!
     internal func getAttributedExampleForIcon(font: NSFont) -> NSAttributedString {
-        let background: NSColor
-        if let c = self.styles[.background]?.background, let cc = NSColor(css: c) {
-            background = cc
-        } else {
-            background = NSColor.clear
-        }
+        let background_color = NSColor(css: self.canvas.color) ?? .white
         
-        let s = NSMutableAttributedString()
-        for (key, style) in self.styles {
-            var attributes: [NSAttributedString.Key: Any] = [:]
-            if let c = style.background, let cc = NSColor(css: c) {
-                attributes[.backgroundColor] = cc
-            } else {
-                attributes[.backgroundColor] = background
+        let formatProperty = { (name: PropertyName, property: PropertyStyle) -> NSAttributedString in
+            var attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .backgroundColor: background_color,
+                .foregroundColor: NSColor(css: property.color) ?? NSColor.black
+            ]
+            if let u = property.underline {
+                attributes[.underlineStyle] = u ? NSUnderlineStyle.single : 0
             }
-            if let c = style.foreground, let cc = NSColor(css: c) {
-                attributes[.foregroundColor] = cc
-            } else {
-                attributes[.foregroundColor] = NSColor.clear
-            }
-            /*
-            if let underline = style.underline {
-                attributes[.underlineStyle] = underline ? NSUnderlineStyle.single : 0
-                if let c = style.foreground, let cc = NSColor(css: c) {
-                    attributes[.underlineColor] = cc
-                } else {
-                    attributes[.underlineColor] = NSColor.black
-                }
-            }
-            */
             var fontTraits: NSFontTraitMask = []
-            if let bold = style.bold {
-                fontTraits.insert(bold ? .boldFontMask : .unboldFontMask)
+            if let b = property.bold, b {
+                fontTraits.insert(.boldFontMask)
             }
-            if let italic = style.italic {
-                fontTraits.insert(italic ? .italicFontMask : .unitalicFontMask)
+            if let i = property.italic, i {
+                fontTraits.insert(.italicFontMask)
             }
             if !fontTraits.isEmpty, let f = NSFontManager.shared.font(withFamily: font.familyName ?? font.fontName, traits: fontTraits, weight: 0, size: font.pointSize) {
                 attributes[.font] = f
-            } else {
-                attributes[.font] = font
             }
-            s.append(NSAttributedString(string: key.rawValue + "\n", attributes: attributes))
+            
+            return NSAttributedString(string: name.name + "\n", attributes: attributes)
         }
+        
+        let s = NSMutableAttributedString()
+        s.append(formatProperty(.plain, self.plain))
+        s.append(formatProperty(.number, self.number))
+        s.append(formatProperty(.string, self.string))
+        s.append(formatProperty(.escape, self.escape))
+        s.append(formatProperty(.preProcessor, self.preProcessor))
+        s.append(formatProperty(.stringPreProc, self.stringPreProc))
+        s.append(formatProperty(.blockComment, self.blockComment))
+        s.append(formatProperty(.lineComment, self.lineComment))
+        s.append(formatProperty(.lineNum, self.lineNum))
+        s.append(formatProperty(.operator, self.operator))
+        s.append(formatProperty(.interpolation, self.interpolation))
+        for (i, keyword) in self.keywords.enumerated() {
+            s.append(formatProperty(.keyword(index: i), keyword))
+        }
+        
         
         return s
     }
     
-    
-    func generateImage(forSize size: CGSize, font: NSFont) {
-        self.image = nil
-        
+    func getImage(forSize size: CGSize, font: NSFont) -> NSImage? {
         let format = getAttributedExampleForIcon(font: font)
         
         let rect = CGRect(origin: .zero, size: size)
@@ -697,7 +468,7 @@ td {
             space: colorSpace,
             bitmapInfo: bitmapInfo.rawValue) {
             
-            if let c = self.styles[.background]?.background, let cc = NSColor(css: c) {
+            if let cc = NSColor(css: self.canvas.color) {
                 context.setFillColor(cc.cgColor)
                 context.fill(rect)
             }
@@ -722,8 +493,178 @@ td {
             }
             
             if let image = context.makeImage() {
-                self.image = NSImage(cgImage: image, size: CGSize(width: context.width, height: context.height))
+                return NSImage(cgImage: image, size: CGSize(width: context.width, height: context.height))
+            }
+        }
+        return nil
+    }
+    
+    subscript(name: PropertyName) -> PropertyStyle? {
+        switch name {
+        case .plain:
+            return self.plain
+        case .canvas:
+            return self.canvas
+        case .number:
+            return self.number
+        case .string:
+            return self.string
+        case .escape:
+            return self.escape
+        case .preProcessor:
+            return self.preProcessor
+        case .stringPreProc:
+            return self.stringPreProc
+        case .blockComment:
+            return self.blockComment
+        case .lineComment:
+            return self.lineComment
+        case .lineNum:
+            return self.lineNum
+        case .operator:
+            return self.operator
+        case .interpolation:
+            return self.interpolation
+        case .keyword(let index):
+            if index >= 0 || index < self.keywords.count {
+                return self.keywords[index]
+            } else {
+                return nil
             }
         }
     }
+    
+    func write(toFile file: String) throws {
+        var s = ""
+        s += "Description = \"\(self.desc.escapingForLua())\"\n\n"
+
+        if self.appearance != .undefined {
+            s += "Categories = { \"\(self.appearance == .light ? "light" : "dark")\" }\n\n"
+        }
+        
+        let exportProperty = { (property: PropertyStyle, name: String) -> String in
+            var s = ""
+            if !name.isEmpty {
+                s += "\(name)\t= "
+            } else {
+                s += "\t"
+            }
+            s += "{ "
+            var n = 0
+            if let c = property.color {
+                s += "Colour=\"\(c)\""
+                n += 1
+            }
+            if let v = property.bold {
+                if n > 0 {
+                    s += ", "
+                }
+                s += "Bold=\"\(v ? "true" : "false")\""
+                n += 1
+            }
+            if let v = property.italic {
+                if n > 0 {
+                    s += ", "
+                }
+                s += "Italic=\"\(v ? "true" : "false")\""
+                n += 1
+            }
+            if let v = property.underline {
+                if n > 0 {
+                    s += ", "
+                }
+                s += "Underline=\"\(v ? "true" : "false")\""
+                n += 1
+            }
+            s += " }"
+            if name.isEmpty {
+                s += ", "
+            }
+            s += "\n"
+            return s
+        }
+        
+        s += exportProperty(self.plain, "Default")
+        s += exportProperty(self.canvas, "Canvas")
+        s += exportProperty(self.number, "Number")
+        s += exportProperty(self.escape, "Escape")
+        s += exportProperty(self.string, "String")
+        s += exportProperty(self.stringPreProc, "StringPreProc")
+        s += exportProperty(self.blockComment, "BlockComment")
+        s += exportProperty(self.lineComment, "LineComment")
+        s += exportProperty(self.preProcessor, "PreProcessor")
+        s += exportProperty(self.lineNum, "LineNum")
+        s += exportProperty(self.operator, "Operator")
+        s += exportProperty(self.interpolation, "Interpolation")
+        if self.keywords.count > 0 {
+            s += "\nKeywords = {\n"
+            for keyword in self.keywords {
+                s += exportProperty(keyword, "")
+            }
+            s += "}\n"
+        }
+        s += "\n"
+        
+        try s.write(toFile: file, atomically: true, encoding: .utf8)
+    }
+    
+    func duplicate() -> Theme {
+        let t = Theme(name: self.name)
+        t.desc = self.desc
+        
+        let exportProperty = { (dstTheme: Theme, name: PropertyName) in
+            let src = self[name]!
+            let dst = dstTheme[name]!
+            dst.color = src.color
+            dst.bold = src.bold
+            dst.italic = src.italic
+            dst.underline = src.underline
+        }
+        exportProperty(t, .plain)
+        exportProperty(t, .canvas)
+        exportProperty(t, .number)
+        exportProperty(t, .string)
+        exportProperty(t, .escape)
+        exportProperty(t, .preProcessor)
+        exportProperty(t, .stringPreProc)
+        exportProperty(t, .blockComment)
+        exportProperty(t, .lineComment)
+        exportProperty(t, .lineNum)
+        exportProperty(t, .operator)
+        exportProperty(t, .interpolation)
+        for keyword in self.keywords {
+            let k = PropertyStyle(color: keyword.color, italic: keyword.italic, bold: keyword.bold, underline: keyword.underline)
+            t.keywords.append(k)
+        }
+        return t
+    }
 }
+
+class ThemePreview: Theme {
+    fileprivate var _image_is_set = false
+    fileprivate var _image: NSImage? = nil
+    
+    @objc dynamic var image: NSImage? {
+        if !_image_is_set {
+            _image = self.getImage(forSize: CGSize(width: 100, height: 100), font: NSFont.systemFont(ofSize: 8))
+            _image_is_set = true
+        }
+        return _image
+    }
+    
+    func invalidateImage() {
+        self.willChangeValue(forKey: #keyPath(image))
+        _image = nil
+        _image_is_set = false
+        self.didChangeValue(forKey: #keyPath(image))
+    }
+    
+    func getAttributedTitle() -> NSAttributedString {
+        let s = NSMutableAttributedString(string: self.name)
+        if !desc.isEmpty {
+            s.append(NSAttributedString(string: "\n\(desc)", attributes: [.font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)]))
+        }
+        return s
+    }
+}
+

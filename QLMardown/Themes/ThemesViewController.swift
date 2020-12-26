@@ -11,7 +11,7 @@ import Cocoa
 import WebKit
 
 protocol ThemesViewDelegate: class {
-    var theme: Theme? { get set }
+    var theme: ThemePreview? { get set }
 }
 
 class ThemesViewController: NSViewController, ThemesViewDelegate {
@@ -28,7 +28,7 @@ class ThemesViewController: NSViewController, ThemesViewDelegate {
     */
     
     /// Current theme.
-    var theme: Theme? {
+    var theme: ThemePreview? {
         didSet {
             guard theme != oldValue else {
                 return

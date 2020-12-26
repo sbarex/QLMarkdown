@@ -10,6 +10,7 @@ import Cocoa
 class SaveAsFormatView: NSView {
     @IBOutlet weak var popupButton: NSPopUpButton!
     @IBOutlet weak var contentView: NSView!
+    weak var savePanel: NSSavePanel?
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -29,5 +30,9 @@ class SaveAsFormatView: NSView {
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.width, .height]
+    }
+    
+    @IBAction func formatChange(_ sender: NSPopUpButton) {
+        savePanel?.allowedFileTypes =  [sender.indexOfSelectedItem == 0 ? "theme" : "css"]
     }
 }

@@ -10,7 +10,7 @@
 #include <render.h>
 #include <html.h>
 #include "ext_scanners.h"
-#include "htmlconverter.h"
+#include "emoji_utils.hpp"
 #include <houdini.h>
 
 typedef struct {
@@ -94,29 +94,31 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         node = cmark_iter_get_node(iter);
         
         cmark_node_type type;
-        type = node->type;
+        // type = node->type;
         
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_TEXT) {
             const char *t = cmark_node_get_literal(node);
             if (use_characters) {
                 if (t) {
-                    char *s = replaceEmoji((char *)t, 1);
-                    // char *s = str_replace(t, ":smile:", "😄");
-                    cmark_node_set_literal(node, s);
-                    free(s);
+                    char *s = replaceEmoji2((char *)t, 1);
+                    if (s) {
+                        cmark_node_set_literal(node, s);
+                        free(s);
+                    }
                 }
-            } else if (containsEmoji((char *)t) == 1) {
+            } else if (containsEmoji2((char *)t) > 0) {
                 cmark_mem *mem = cmark_get_default_mem_allocator();
                 cmark_strbuf dest;
                 cmark_strbuf_init(mem, &dest, 0);
                 houdini_escape_html0(&dest, (const uint8_t *)t, (int)strlen(t), 0);
                 
-                char *s = replaceEmoji((char *)dest.ptr, 0);
+                char *s = replaceEmoji2((char *)dest.ptr, 0);
+                if (s) {
+                    cmark_node_set_type(node, CMARK_NODE_HTML_INLINE);
+                    cmark_node_set_literal(node, s);
                 
-                cmark_node_set_type(node, CMARK_NODE_HTML_INLINE);
-                cmark_node_set_literal(node, s);
-                
-                free(s);
+                    free(s);
+                }
                 cmark_strbuf_free(&dest);
                 
                 // cmark_node_set_syntax_extension(node, ext);
@@ -131,7 +133,7 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
 
 bool cmark_syntax_extension_emoji_get_use_characters(cmark_syntax_extension *extension) {
     emoji_settings *settings = (emoji_settings *)cmark_syntax_extension_get_private(extension);
-    return !settings->use_images;
+    return settings->use_images ? false : true;
 }
 
 void cmark_syntax_extension_emoji_set_use_characters(cmark_syntax_extension *extension, bool use_characters) {

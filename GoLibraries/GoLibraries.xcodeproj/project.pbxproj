@@ -1,0 +1,195 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXFileReference section */
+		837F28F02597817300A5F7DE /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
+		837F28F12597817300A5F7DE /* goutils.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = goutils.go; sourceTree = "<group>"; };
+		837F28F22597817300A5F7DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		837F28F32597817300A5F7DE /* go.sum */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.sum; sourceTree = "<group>"; };
+		837F28F42597817300A5F7DE /* goutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goutils.h; sourceTree = "<group>"; };
+		837F28F52597817300A5F7DE /* goutils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = goutils.a; sourceTree = "<group>"; };
+		837F28F62597817300A5F7DE /* .idea */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .idea; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		837F28EA2597817300A5F7DE = {
+			isa = PBXGroup;
+			children = (
+				837F28F02597817300A5F7DE /* go.mod */,
+				837F28F12597817300A5F7DE /* goutils.go */,
+				837F28F22597817300A5F7DE /* Makefile */,
+				837F28F32597817300A5F7DE /* go.sum */,
+				837F28F42597817300A5F7DE /* goutils.h */,
+				837F28F52597817300A5F7DE /* goutils.a */,
+				837F28F62597817300A5F7DE /* .idea */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		837F28EF2597817300A5F7DE /* GoLibraries */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 837F28F72597817300A5F7DE /* Build configuration list for PBXLegacyTarget "GoLibraries" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = /Users/sbaldiss/Develop/OSX/QLMardown/GoLibraries;
+			dependencies = (
+			);
+			name = GoLibraries;
+			passBuildSettingsInEnvironment = 1;
+			productName = GoLibraries;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		837F28EB2597817300A5F7DE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1230;
+			};
+			buildConfigurationList = 837F28EE2597817300A5F7DE /* Build configuration list for PBXProject "GoLibraries" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 837F28EA2597817300A5F7DE;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				837F28EF2597817300A5F7DE /* GoLibraries */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		837F28EC2597817300A5F7DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		837F28ED2597817300A5F7DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+			};
+			name = Release;
+		};
+		837F28F82597817300A5F7DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = GoLibraries;
+			};
+			name = Debug;
+		};
+		837F28F92597817300A5F7DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = GoLibraries;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		837F28EE2597817300A5F7DE /* Build configuration list for PBXProject "GoLibraries" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				837F28EC2597817300A5F7DE /* Debug */,
+				837F28ED2597817300A5F7DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		837F28F72597817300A5F7DE /* Build configuration list for PBXLegacyTarget "GoLibraries" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				837F28F82597817300A5F7DE /* Debug */,
+				837F28F92597817300A5F7DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 837F28EB2597817300A5F7DE /* Project object */;
+}

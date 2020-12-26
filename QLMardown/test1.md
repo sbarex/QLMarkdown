@@ -2,17 +2,20 @@
 
 ## Autolink extension
 
-If the extension `autolink` is enable the url https://www.github.com is rendered as a link.
+If the extension `autolink` is enabled the url https://www.github.com is rendered as a link.
 
 ## Emoji extension
 
-Using the emoji extension you can  translate the `:smile:` to :smile:.
+Using the emoji extension you can replace the `:smile:` to :smile:. 
 
-## Github mentions extension
+You can choose to use the standard emoji font or the Github images.
+Multibyte emoji are also supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:.
 
-With the mentions extension @sbarex is rendered as a link.
+## GitHub mentions extension
 
-## Inline image extensione
+With the mentions extension @sbarex is rendered as a link to the GitHub account.
+
+## Inline image extension
 
 The extension embed the local image inside the html output. Is required for the quicklook preview.
 
@@ -42,12 +45,12 @@ You can choose to recognize the single tile on ~test~ or only the double tile on
 
 ## Syntax Highlight extension
 
-This fanced block uses the php syntax hightlight:
+This fenced block uses the php syntax highlight:
 
 ```php
 phpinfo();
 $a = [];
-$a[] = "hello worls";
+$a[] = "hello world";
 function test(array $a, string $b, $c = null): boolean {
     return true;
 }

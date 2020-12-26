@@ -9,9 +9,9 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ThemesView" customModule="QLMardown" customModuleProvider="target">
             <connections>
                 <outlet property="addThemeButton" destination="8hv-eo-HQn" id="vn4-w6-1XK"/>
-                <outlet property="changedFilterButton" destination="h80-nS-l6H" id="d3X-zb-bNQ"/>
                 <outlet property="contentView" destination="c22-O7-iKe" id="qxg-eL-OFQ"/>
                 <outlet property="delThemeButton" destination="wK6-To-dUR" id="wgJ-UB-SXT"/>
+                <outlet property="filterThemePopup" destination="kZp-oX-aid" id="dQQ-H6-6xR"/>
                 <outlet property="outlineView" destination="SC8-7R-nO8" id="sev-hM-9gK"/>
                 <outlet property="searchField" destination="TpP-Gd-jiA" id="T6i-MK-8Hp"/>
             </connections>
@@ -159,7 +159,7 @@
                             </connections>
                         </button>
                         <searchField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="248" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpP-Gd-jiA">
-                            <rect key="frame" x="66" y="4" width="155" height="22"/>
+                            <rect key="frame" x="66" y="4" width="143" height="22"/>
                             <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" focusRingType="none" usesSingleLineMode="YES" bezelStyle="round" id="Xh6-78-aBg">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -169,16 +169,25 @@
                                 <outlet property="delegate" destination="-2" id="ibD-zv-zkM"/>
                             </connections>
                         </searchField>
-                        <button toolTip="Show only unsaved themes." verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="h80-nS-l6H">
-                            <rect key="frame" x="236" y="7" width="16" height="16"/>
-                            <buttonCell key="cell" type="inline" bezelStyle="inline" image="NSStatusNone" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="DpR-Dx-Fn4">
+                        <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="kZp-oX-aid">
+                            <rect key="frame" x="219" y="8" width="33" height="15"/>
+                            <popUpButtonCell key="cell" type="bevel" bezelStyle="rounded" imagePosition="only" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" arrowPosition="arrowAtCenter" selectedItem="PZx-s6-5td" id="73w-Or-C0h">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="smallSystemBold"/>
-                            </buttonCell>
+                                <font key="font" metaFont="smallSystem"/>
+                                <menu key="menu" id="P3i-NB-6OX">
+                                    <items>
+                                        <menuItem state="on" image="style_mixed15" toolTip="All styles." id="PZx-s6-5td"/>
+                                        <menuItem image="style_light15" toolTip="Only light themes." id="hPA-ap-Hki"/>
+                                        <menuItem image="style_dark15" toolTip="Only dark themes." id="qOo-aU-tob">
+                                            <attributedString key="attributedTitle"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </popUpButtonCell>
                             <connections>
-                                <action selector="handleOnlyChangedFilter:" target="-2" id="uuX-jz-S4t"/>
+                                <action selector="handleFilterStyle:" target="-2" id="f1n-mz-dyF"/>
                             </connections>
-                        </button>
+                        </popUpButton>
                     </subviews>
                     <edgeInsets key="edgeInsets" left="8" right="8" top="0.0" bottom="0.0"/>
                     <constraints>
@@ -217,6 +226,8 @@
         <image name="NSAddTemplate" width="14" height="13"/>
         <image name="NSRemoveTemplate" width="14" height="4"/>
         <image name="NSStatusAvailable" width="16" height="16"/>
-        <image name="NSStatusNone" width="16" height="16"/>
+        <image name="style_dark15" width="15" height="15"/>
+        <image name="style_light15" width="15" height="15"/>
+        <image name="style_mixed15" width="15" height="15"/>
     </resources>
 </document>

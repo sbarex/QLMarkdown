@@ -13,18 +13,21 @@ typealias ExampleItem = (url: URL, title: String, uti: String)
 class ThemePreviewView: NSView {
     @IBOutlet weak var contentView: NSView!
     @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var messageLabel: NSTextField!
     @IBOutlet weak var examplesPopup: NSPopUpButton!
     @IBOutlet weak var refreshButton: NSButton!
     
-    var theme: Theme? {
+    var theme: ThemePreview? {
         didSet {
             examplesPopup.isEnabled = theme != nil
             refreshButton.isEnabled = theme != nil
             
             if theme == nil {
                 webView.isHidden = true
+                messageLabel.isHidden = false
             } else {
                 webView.isHidden = false
+                messageLabel.isHidden = true
                 refreshPreview(self)
             }
         }
@@ -68,6 +71,7 @@ class ThemePreviewView: NSView {
         
         // Register a custom js handler.
         webView.configuration.userContentController.add(self, name: "jsHandler")
+        self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
     }
     
     /// Get the list of available source file example.
@@ -78,7 +82,15 @@ class ThemePreviewView: NSView {
             let fileManager = FileManager.default
             if let files = try? fileManager.contentsOfDirectory(at: examplesDirURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
                 for file in files {
-                    let title  = file.lastPathComponent
+                    let title: String
+                    if let uti = UTTypeCreatePreferredIdentifierForTag(
+                        kUTTagClassFilenameExtension,
+                        file.pathExtension as CFString,
+                        nil)?.takeRetainedValue(), let desc = UTTypeCopyDescription(uti)?.takeRetainedValue() as String? {
+                        title = desc.prefix(1).uppercased() + desc.dropFirst() + " (.\(file.pathExtension))"
+                    } else {
+                        title = file.lastPathComponent
+                    }
                     examples.append((url: file, title: title, uti: ""))
                 }
                 examples.sort { (a, b) -> Bool in
@@ -114,7 +126,7 @@ class ThemePreviewView: NSView {
             ]
             */
             
-            if let s = colorizeCode(code.cString(using: .utf8)!, url.pathExtension, theme.name) {
+            if let s = colorizeCode(code.cString(using: .utf8)!, url.pathExtension, theme.name, false, true) {
                 defer {
                     free(s);
                 }

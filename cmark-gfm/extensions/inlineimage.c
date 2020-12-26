@@ -5,23 +5,19 @@
 //  Created by Sbarex on 17/12/20.
 //
 
-#define USE_GO_ENCODING
-
 #include "inlineimage.h"
+#include "MIMEType.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 
-#ifdef USE_GO_ENCODING
-#include "htmlconverter.h"
-#else
 #include <unistd.h>
-#endif
+#include <string.h>
+#include "url.hpp"
 
 #include <parser.h>
 #include <render.h>
 
-#ifndef USE_GO_ENCODING
 static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
                                 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
@@ -30,20 +26,18 @@ static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
                                 'w', 'x', 'y', 'z', '0', '1', '2', '3',
                                 '4', '5', '6', '7', '8', '9', '+', '/'};
-static char *decoding_table = NULL;
 static int mod_table[] = {0, 2, 1};
 
-char *base64_encode(const unsigned char *data,
+char *base64_encode(const char *data,
                     size_t input_length,
                     size_t *output_length) {
 
     *output_length = 4 * ((input_length + 2) / 3);
 
-    char *encoded_data = malloc(*output_length);
+    char *encoded_data = calloc(1, *output_length);
     if (encoded_data == NULL) return NULL;
 
     for (int i = 0, j = 0; i < input_length;) {
-
         uint32_t octet_a = i < input_length ? (unsigned char)data[i++] : 0;
         uint32_t octet_b = i < input_length ? (unsigned char)data[i++] : 0;
         uint32_t octet_c = i < input_length ? (unsigned char)data[i++] : 0;
@@ -56,12 +50,12 @@ char *base64_encode(const unsigned char *data,
         encoded_data[j++] = encoding_table[(triple >> 0 * 6) & 0x3F];
     }
 
-    for (int i = 0; i < mod_table[input_length % 3]; i++)
+    for (int i = 0; i < mod_table[input_length % 3]; i++) {
         encoded_data[*output_length - 1 - i] = '=';
+    }
 
     return encoded_data;
 }
-#endif
 
 
 typedef struct {
@@ -88,6 +82,13 @@ static void release_settings(cmark_mem *mem, void *user_data)
     }
 }
 
+static bool startsWith(const char *pre, const char *str)
+{
+    size_t lenpre = strlen(pre),
+           lenstr = strlen(str);
+    return lenstr < lenpre ? false : memcmp(pre, str, lenpre) == 0;
+}
+
 static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser, cmark_node *root) {
     cmark_iter *iter;
     cmark_event_type ev;
@@ -96,29 +97,45 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
     cmark_consolidate_text_nodes(root);
     iter = cmark_iter_new(root);
     
+    char cwd[PATH_MAX];
+    getcwd(cwd, sizeof(cwd));
+    
+    const char *basedir = cmark_syntax_extension_inlineimage_get_wd(ext);
+    if (basedir) {
+        // Change current dir to resolve local files.
+        chdir(basedir);
+    }
+    
     while ((ev = cmark_iter_next(iter)) != CMARK_EVENT_DONE) {
         node = cmark_iter_get_node(iter);
         
         cmark_node_type type;
-        type = node->type;
+        // type = node->type;
         
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_IMAGE) {
-            const char *basedir = cmark_syntax_extension_inlineimage_get_wd(ext);
-#ifdef USE_GO_ENCODING
-            char *encoded = base64encoding((char *)node->as.link.url.data, (char *)basedir);
-            if (encoded) {
-                cmark_mem *mem = cmark_get_default_mem_allocator();
-                cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
-                free(encoded);
+            const char *url = (const char *)node->as.link.url.data;
+            char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
+            const char *image_path;
+            char *mime = NULL;
+            parse_url(url, &protocol, &host, &path, &query);
+            if (strcmp(protocol, "file") == 0) {
+                // The url path is the local file path.
+                image_path = path;
+            } else if (strlen(host) == 0) {
+                // No host, the url is a local file path.
+                image_path = (const char *)url;
+            } else {
+                // Not a local file.
+                goto continue_loop;
             }
-#else
-            char cwd[PATH_MAX];
-            getcwd(cwd, sizeof(cwd));
-            if (basedir) {
-                chdir(basedir);
+            
+            mime = get_mime(image_path, 2);
+            
+            if (!startsWith("image/", mime)) {
+                fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
+                goto continue_loop;
             }
-            unsigned char *url = node->as.link.url.data;
-            if (access((const char *)url, F_OK) == 0) {
+            if (access(image_path, F_OK) == 0) {
                 char * buffer = 0;
                 long length = 0;
                 FILE * f = fopen((const char *)url, "rb");
@@ -135,34 +152,36 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
                     char *encoded = 0;
                     size_t encoded_length = 0;
                     encoded = base64_encode(buffer, length, &encoded_length);
-                    free(buffer);
                     
-                    const char *prefix = "data:image/jpeg;base64,";
+                    
+                    char *prefix = (char *)calloc(strlen(mime)+strlen("data:;base64,"), sizeof(char));
+                    sprintf(prefix, "data:%s;base64,", mime);
                     size_t prefix_length = sizeof(char)*strlen(prefix);
                     encoded = realloc(encoded, encoded_length + prefix_length);
                     memmove(encoded + prefix_length, encoded, encoded_length);
-                    memmove(encoded, prefix, prefix_length);
+                    memcpy(encoded, prefix, prefix_length);
+                    free(prefix);
                     
                     cmark_mem *mem = cmark_get_default_mem_allocator();
-                    
+                    // Replace the original url with the encoded data.
                     cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
                     
-                    printf("%s", encoded);
+                    free(buffer);
                     free(encoded);
                 }
-                printf("exists\n");
-             
-            }
-            if (url[0] == '.' && url[1] == '/') {
-                printf("locale\n");
             }
             
-            if (basedir) {
-                chdir(cwd);
-            }
-#endif
+        continue_loop:
+            free(mime);
+            
+            free(protocol);
+            free(path);
+            free(host);
+            free(query);
         }
     }
+    
+    chdir(cwd); // Restore previous current dir.
 
     cmark_iter_free(iter);
     
@@ -180,9 +199,8 @@ void cmark_syntax_extension_inlineimage_set_wd(cmark_syntax_extension *ext, cons
     if (settings->path) {
         mem->free(settings->path);
     }
-    size_t len = strlen(path);
-    settings->path = mem->calloc(strlen(path), sizeof(char));
-    memcpy(settings->path, path, len * sizeof(char));
+    settings->path = mem->calloc(strlen(path)+1, sizeof(char));
+    strcpy(settings->path, path);
 }
 
 char *cmark_syntax_extension_inlineimage_get_wd(cmark_syntax_extension *extension) {

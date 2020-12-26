@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="SaveAsFormatView" customModule="Markdown_QL_Extension" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner" customClass="SaveAsFormatView" customModule="QLMardown" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="c22-O7-iKe" id="CmS-eB-nQS"/>
                 <outlet property="popupButton" destination="8nT-3f-CDn" id="27R-Iw-9xv"/>
@@ -28,16 +28,19 @@
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8nT-3f-CDn">
                     <rect key="frame" x="86" y="0.0" width="378" height="25"/>
-                    <popUpButtonCell key="cell" type="push" title="JSON" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="yPr-jP-u5s" id="HpT-UP-4lM">
+                    <popUpButtonCell key="cell" type="push" title="Highlight theme" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="yPr-jP-u5s" id="HpT-UP-4lM">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" id="5D6-pF-Hwe">
                             <items>
-                                <menuItem title="JSON" state="on" id="yPr-jP-u5s"/>
-                                <menuItem title="Go" id="Lmi-6w-SwN"/>
+                                <menuItem title="Highlight theme" state="on" id="yPr-jP-u5s"/>
+                                <menuItem title="CSS" id="Lmi-6w-SwN"/>
                             </items>
                         </menu>
                     </popUpButtonCell>
+                    <connections>
+                        <action selector="formatChange:" target="-2" id="UAE-Jf-crs"/>
+                    </connections>
                 </popUpButton>
             </subviews>
             <constraints>

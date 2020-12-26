@@ -12,14 +12,13 @@ class ThemesView: NSView {
     @IBOutlet weak var outlineView: NSOutlineView!
     @IBOutlet weak var filterThemePopup: NSPopUpButton!
     @IBOutlet weak var searchField: NSSearchField!
-    @IBOutlet weak var changedFilterButton: NSButton!
     
     @IBOutlet weak var addThemeButton: NSButton!
     @IBOutlet weak var delThemeButton: NSButton!
     
     weak var delegate: ThemesViewDelegate?
     
-    var theme: Theme? {
+    var theme: ThemePreview? {
         didSet {
             if oldValue != theme {
                 delThemeButton.isEnabled = !(theme?.isStandalone ?? true)
@@ -48,20 +47,20 @@ class ThemesView: NSView {
     }
     
     /// All (unfiltered) standard themes.
-    var allThemes: [Theme] = [] {
+    var allThemes: [ThemePreview] = [] {
         didSet {
             refreshThemes(custom: false)
         }
     }
     /// All (unfiltered) custom themes.
-    var allCustomThemes: [Theme] = [] {
+    var allCustomThemes: [ThemePreview] = [] {
         didSet {
             refreshThemes(custom: true)
         }
     }
     
     /// Filtered standard themes.
-    var themes: [Theme] = [] {
+    var themes: [ThemePreview] = [] {
         didSet {
             if oldValue != themes {
                 self.outlineView?.reloadItem("Standard", reloadChildren: true)
@@ -77,7 +76,7 @@ class ThemesView: NSView {
     }
     
     /// Filtered custom themes.
-    var customThemes: [Theme] = [] {
+    var customThemes: [ThemePreview] = [] {
         didSet {
             if oldValue != customThemes {
                 self.outlineView?.reloadItem("Custom", reloadChildren: true)
@@ -99,11 +98,9 @@ class ThemesView: NSView {
         }
     }
     
-    /// Filter for only changed themes.
-    var showOnlyChanged: Bool = false {
+    /// Filter for theme style (light/dark).
+    var style: Theme.ThemeAppearance = .undefined {
         didSet {
-            self.changedFilterButton.image = NSImage(named: showOnlyChanged ? NSImage.statusAvailableName : NSImage.statusNoneName)
-            
             refreshThemes()
         }
     }
@@ -130,23 +127,10 @@ class ThemesView: NSView {
         self.outlineView.beginUpdates()
         
         // Fetch the themes.
-        if let s = getStyles() {
-            let t = String(cString: s)
-            s.deallocate()
-            
-            let themes: [String] = try! JSONDecoder().decode([String].self, from: t.data(using: .utf8)!)
-            for theme in themes {
-                if let s = themeInfo(theme) {
-                    if let t = String(cString: s, encoding: .utf8), let data = t.data(using: .utf8), let j = try? JSONDecoder().decode([String: String].self, from: data) {
-                        self.themes.append(Theme(name: theme, styles: j))
-                    }
-                    free(s)
-                }
-            }
-        }
+        self.themes = Settings.shared.getAvailableThemes() 
         
-        self.allThemes = themes.filter({ $0.isStandalone })
-        self.allCustomThemes = themes.filter({ !$0.isStandalone })
+        self.allThemes = self.themes.filter({ $0.isStandalone })
+        self.allCustomThemes = self.themes.filter({ !$0.isStandalone })
         
         if self.allThemes.count > 0 {
             self.outlineView.expandItem("Standard")
@@ -167,26 +151,24 @@ class ThemesView: NSView {
                 }
             }
             
-            if self.showOnlyChanged && !theme.isStandalone && !theme.isDirty {
+            if !theme.isStandalone && !theme.isDirty {
                 // Theme is not changed or is not standalone.
                 return false
             }
-            /*
             switch self.style {
             case .light:
-                if !theme.theme.isLight {
+                if theme.appearance != .light {
                     // Theme is not light.
                     return false
                 }
             case .dark:
-                if !theme.theme.isDark {
+                if theme.appearance != .dark {
                     // Theme is not dark.
                     return false
                 }
             default:
                 break
             }
-            */
             return true
         }
         
@@ -199,7 +181,7 @@ class ThemesView: NSView {
     }
     
     /// Append a custom theme to the list.
-    func appendCustomTheme(_ newTheme: Theme) {
+    func appendCustomTheme(_ newTheme: ThemePreview) {
         // newTheme.isStandalone = false
         // newTheme.addObserver(self, forKeyPath: "isDirty", options: [], context: nil)
         
@@ -290,11 +272,6 @@ class ThemesView: NSView {
  */
     }
     
-    /// Update the list of themes showing only changed themes.
-    @IBAction func handleOnlyChangedFilter(_ sender: NSButton) {
-        showOnlyChanged = !showOnlyChanged
-    }
-    
     /// Duplicate the current theme.
     @IBAction func handleDuplicate(_ sender: Any) {
         guard let theme = self.theme else {
@@ -324,7 +301,7 @@ class ThemesView: NSView {
     /// Add a new empty theme.
     @IBAction func handleAddTheme(_ sender: Any) {
         let themeName = "new_theme".duplicate(format: "%@_%d", suffixPattern: #"_(?<n>\d+)"#, list: customThemes.map({ $0.name }))
-        let newTheme = Theme(name: themeName)
+        let newTheme = ThemePreview(name: themeName)
         newTheme.isDirty = true
         
         appendCustomTheme(newTheme)
@@ -353,18 +330,16 @@ class ThemesView: NSView {
         }
     }
     
-    /*
     /// Update the list of themes based of the requested style.
     @IBAction func handleFilterStyle(_ sender: NSPopUpButton) {
         if sender.indexOfSelectedItem == 0 {
-            style = .all
+            style = .undefined
         } else if sender.indexOfSelectedItem == 1 {
             style = .light
         } else if sender.indexOfSelectedItem == 2 {
             style = .dark
         }
     }
-    */
     
 }
 
@@ -443,7 +418,7 @@ extension ThemesView: NSOutlineViewDelegate {
                 cell.textField?.stringValue = s
                 return cell
             }
-        } else if let _ = item as? Theme {
+        } else if let _ = item as? ThemePreview {
             if let cell = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "ThemeCell"), owner: self) as? ThemeTableCellView {
                 // The value for cell is passed with objectValue.
                 return cell
@@ -453,7 +428,7 @@ extension ThemesView: NSOutlineViewDelegate {
     }
     
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        if let _ = item as? Theme {
+        if let _ = item as? ThemePreview {
             return 70
         } else {
             return 20
@@ -461,11 +436,11 @@ extension ThemesView: NSOutlineViewDelegate {
     }
     
     func outlineView(_ outlineView: NSOutlineView, shouldSelectItem item: Any) -> Bool {
-        return item is Theme // Are selectable only theme rows.
+        return item is ThemePreview // Are selectable only theme rows.
     }
     
     func outlineViewSelectionDidChange(_ notification: Notification) {
-        if outlineView.selectedRow >= 0, let item = outlineView.item(atRow: outlineView.selectedRow) as? Theme {
+        if outlineView.selectedRow >= 0, let item = outlineView.item(atRow: outlineView.selectedRow) as? ThemePreview {
             self.theme = item
         }
     }
@@ -479,11 +454,7 @@ class ThemeTableCellView: NSTableCellView {
     
     override var objectValue: Any? {
         didSet {
-            if let theme = objectValue as? Theme {
-                if theme.image == nil {
-                    theme.generateImage(forSize: CGSize(width: 100, height: 100), font: NSFont(name: "Menlo", size: 8) ?? NSFont.systemFont(ofSize: 8))
-                }
-                
+            if let theme = objectValue as? ThemePreview {
                 imageView?.image = theme.image
                 let label = NSMutableAttributedString(string: theme.name, attributes: [.font: NSFont.labelFont(ofSize: NSFont.smallSystemFontSize)])
                     
