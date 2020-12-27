@@ -68,6 +68,7 @@ class Settings {
     @objc var debug: Bool = false
     
     @objc var guessEngine: GuessEngine = .none
+    @objc var openInlineLink: Bool = false
     
     class var applicationSupportUrl: URL? {
         let sharedContainerURL: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Domain)?.appendingPathComponent("Library/Application Support")
@@ -200,6 +201,10 @@ class Settings {
         
         if let opt = defaultsDomain["debug"] as? Bool {
             debug = opt
+        }
+        
+        if let opt = defaultsDomain["inline-link"] as? Bool {
+            openInlineLink = opt
         }
         
         sanitizeEmojiOption()
@@ -610,6 +615,8 @@ table.debug td {
             html_debug += "off"
         }
         html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>link</td><td>" + (self.openInlineLink ? "open inline" : "open in standard browser") + "</td></tr>\n"
         
         html_debug += "</table>\n"
         

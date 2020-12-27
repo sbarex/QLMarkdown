@@ -267,6 +267,7 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
     @IBOutlet weak var saveButton: NSButton!
+    @IBOutlet weak var inlineLinkPopup: NSPopUpButton!
     
     @IBOutlet weak var styleSegementedControl: NSSegmentedControl!
     
@@ -666,6 +667,7 @@ document.addEventListener('scroll', function(e) {
         
         self.guessEnginePopup.isEnabled = self.guessEnabled && self.syntaxHighlightExtension
         
+        inlineLinkPopup.selectItem(at: settings.openInlineLink ? 0 : 1)
         isDirty = false
     }
     
@@ -736,6 +738,8 @@ document.addEventListener('scroll', function(e) {
         
         settings.customCSSOverride = styleFlag == 2
         settings.customCSS = styleFlag == 0 ? nil : self.customizedCSSFile
+        
+        settings.openInlineLink = inlineLinkPopup.indexOfSelectedItem == 0
         
         return settings
     }

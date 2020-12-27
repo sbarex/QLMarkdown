@@ -52,6 +52,7 @@ extension Settings {
         defaultsDomain["guess-engine"] = guessEngine.rawValue
         
         defaultsDomain["debug"] = self.debug
+        defaultsDomain["inline-link"] = openInlineLink
         
         let file: String
         if let url = customCSS {

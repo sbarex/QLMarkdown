@@ -697,16 +697,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="13" y="484" width="1019" height="263"/>
+                                <rect key="frame" x="13" y="495" width="1019" height="252"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Options &amp; Extensions" identifier="" id="XgS-T3-Gpv">
                                         <view key="view" id="z2a-cF-5GG">
-                                            <rect key="frame" x="10" y="33" width="999" height="166"/>
+                                            <rect key="frame" x="10" y="33" width="999" height="206"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <box borderType="line" title="Options" translatesAutoresizingMaskIntoConstraints="NO" id="HUa-5g-v1F">
-                                                    <rect key="frame" x="17" y="44" width="322" height="114"/>
+                                                    <rect key="frame" x="17" y="84" width="322" height="114"/>
                                                     <view key="contentView" id="q7Q-cR-89Z">
                                                         <rect key="frame" x="3" y="3" width="316" height="96"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -818,7 +818,7 @@
                                                     </view>
                                                 </box>
                                                 <box borderType="line" title="Extensions" translatesAutoresizingMaskIntoConstraints="NO" id="tjE-BV-KNe">
-                                                    <rect key="frame" x="341" y="44" width="529" height="114"/>
+                                                    <rect key="frame" x="341" y="84" width="529" height="114"/>
                                                     <view key="contentView" id="3GB-sq-hAW">
                                                         <rect key="frame" x="3" y="3" width="523" height="96"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -967,7 +967,7 @@
                                                     </view>
                                                 </box>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="y9s-1O-xCD">
-                                                    <rect key="frame" x="18" y="22" width="39" height="16"/>
+                                                    <rect key="frame" x="18" y="62" width="39" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Style:" id="DOY-0a-MQk">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -975,7 +975,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IZh-uP-gdJ">
-                                                    <rect key="frame" x="63" y="20" width="235" height="20"/>
+                                                    <rect key="frame" x="63" y="60" width="235" height="20"/>
                                                     <subviews>
                                                         <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CTX-6L-I3O">
                                                             <rect key="frame" x="-3" y="-4" width="88" height="25"/>
@@ -1062,15 +1062,41 @@
                                                     </customSpacing>
                                                 </stackView>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e9k-wZ-1js">
-                                                    <rect key="frame" x="861" y="22" width="74" height="16"/>
+                                                    <rect key="frame" x="861" y="23" width="74" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Debug info:" id="cpm-mm-drv">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YM7-TW-B58">
+                                                    <rect key="frame" x="18" y="23" width="136" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Open external link on:" id="oIx-xI-afZ">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Tua-nf-FeV">
+                                                    <rect key="frame" x="157" y="16" width="200" height="25"/>
+                                                    <popUpButtonCell key="cell" type="push" title="Default browser" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="9Zi-0O-62s" id="AQP-wB-0iU">
+                                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="menu"/>
+                                                        <menu key="menu" id="YVA-Xu-sOc">
+                                                            <items>
+                                                                <menuItem title="Quicklook preview window" id="a6s-h9-8pK">
+                                                                    <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                                                </menuItem>
+                                                                <menuItem title="Default browser" state="on" id="9Zi-0O-62s"/>
+                                                            </items>
+                                                        </menu>
+                                                    </popUpButtonCell>
+                                                    <connections>
+                                                        <action selector="doDirty:" target="XfG-lQ-9wD" id="SY4-Hp-RwT"/>
+                                                    </connections>
+                                                </popUpButton>
                                                 <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="Gkg-sf-8nu">
-                                                    <rect key="frame" x="939" y="17" width="42" height="25"/>
+                                                    <rect key="frame" x="939" y="18" width="42" height="25"/>
                                                     <connections>
                                                         <binding destination="XfG-lQ-9wD" name="value" keyPath="self.debugMode" id="GEC-ag-Wim"/>
                                                     </connections>
@@ -1078,19 +1104,23 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="y9s-1O-xCD" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="1ng-mI-wgn"/>
+                                                <constraint firstItem="YM7-TW-B58" firstAttribute="firstBaseline" secondItem="Tua-nf-FeV" secondAttribute="firstBaseline" id="2sX-WQ-z1Z"/>
                                                 <constraint firstAttribute="trailing" secondItem="Gkg-sf-8nu" secondAttribute="trailing" constant="20" symbolic="YES" id="67u-qy-jOV"/>
                                                 <constraint firstItem="e9k-wZ-1js" firstAttribute="centerY" secondItem="Gkg-sf-8nu" secondAttribute="centerY" id="99v-Pw-rJU"/>
                                                 <constraint firstItem="IZh-uP-gdJ" firstAttribute="leading" secondItem="y9s-1O-xCD" secondAttribute="trailing" constant="8" symbolic="YES" id="B7I-AZ-JwA"/>
-                                                <constraint firstAttribute="bottom" secondItem="IZh-uP-gdJ" secondAttribute="bottom" constant="20" symbolic="YES" id="D0l-7X-kzi"/>
+                                                <constraint firstAttribute="bottom" secondItem="Gkg-sf-8nu" secondAttribute="bottom" constant="20" symbolic="YES" id="DXp-EL-bfi"/>
                                                 <constraint firstItem="tjE-BV-KNe" firstAttribute="leading" secondItem="HUa-5g-v1F" secondAttribute="trailing" constant="8" symbolic="YES" id="FWn-f3-Oup"/>
                                                 <constraint firstItem="IZh-uP-gdJ" firstAttribute="top" secondItem="HUa-5g-v1F" secondAttribute="bottom" constant="8" symbolic="YES" id="Gxh-ES-WIR"/>
+                                                <constraint firstItem="YM7-TW-B58" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="H11-q5-IJr"/>
                                                 <constraint firstItem="HUa-5g-v1F" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="JW3-As-YqB"/>
                                                 <constraint firstItem="y9s-1O-xCD" firstAttribute="centerY" secondItem="IZh-uP-gdJ" secondAttribute="centerY" id="Ksa-sU-5f0"/>
+                                                <constraint firstItem="Tua-nf-FeV" firstAttribute="top" secondItem="IZh-uP-gdJ" secondAttribute="bottom" constant="20" symbolic="YES" id="KtZ-Yt-oZ3"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tjE-BV-KNe" secondAttribute="trailing" constant="20" symbolic="YES" id="Lcc-ZM-Vfg"/>
+                                                <constraint firstItem="Tua-nf-FeV" firstAttribute="leading" secondItem="YM7-TW-B58" secondAttribute="trailing" constant="8" symbolic="YES" id="aXg-3z-KeQ"/>
                                                 <constraint firstItem="HUa-5g-v1F" firstAttribute="top" secondItem="z2a-cF-5GG" secondAttribute="top" constant="8" id="dag-3x-Sej"/>
+                                                <constraint firstAttribute="bottom" secondItem="Tua-nf-FeV" secondAttribute="bottom" constant="20" symbolic="YES" id="etq-a3-Chh"/>
                                                 <constraint firstItem="Gkg-sf-8nu" firstAttribute="leading" secondItem="e9k-wZ-1js" secondAttribute="trailing" constant="8" symbolic="YES" id="god-YX-hvm"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="IZh-uP-gdJ" secondAttribute="trailing" constant="20" symbolic="YES" id="nHI-sq-GBm"/>
-                                                <constraint firstItem="Gkg-sf-8nu" firstAttribute="centerY" secondItem="IZh-uP-gdJ" secondAttribute="centerY" id="q9y-Pl-hep"/>
                                                 <constraint firstItem="tjE-BV-KNe" firstAttribute="top" secondItem="z2a-cF-5GG" secondAttribute="top" constant="8" id="sdZ-HR-8wh"/>
                                             </constraints>
                                         </view>
@@ -1580,27 +1610,27 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="483" width="1045" height="5"/>
+                                <rect key="frame" x="0.0" y="494" width="1045" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="61" width="1045" height="424"/>
+                                <rect key="frame" x="0.0" y="61" width="1045" height="435"/>
                                 <subviews>
-                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="521" height="424"/>
+                                    <customView id="GDJ-WJ-HAB">
+                                        <rect key="frame" x="0.0" y="0.0" width="521" height="435"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="-51" width="521" height="424"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="521" height="435"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="521" height="424"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="521" height="435"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="501" height="404"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="501" height="415"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="501" height="404"/>
+                                                            <size key="minSize" width="501" height="415"/>
                                                             <size key="maxSize" width="521" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
@@ -1612,7 +1642,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="495" y="10" width="16" height="404"/>
+                                                    <rect key="frame" x="495" y="10" width="16" height="415"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -1624,12 +1654,12 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView misplaced="YES" id="sp3-sm-w1y">
-                                        <rect key="frame" x="531" y="0.0" width="514" height="424"/>
+                                    <customView id="sp3-sm-w1y">
+                                        <rect key="frame" x="531" y="0.0" width="514" height="435"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="0.0" width="514" height="424"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="514" height="435"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -1640,7 +1670,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="249" y="153" width="16" height="16"/>
+                                                <rect key="frame" x="249" y="210" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
@@ -1732,6 +1762,7 @@
                         <outlet property="guessButton" destination="agC-MB-cJ3" id="TPg-l4-N1C"/>
                         <outlet property="guessEnginePopup" destination="F3K-eG-jad" id="3Kd-1t-mL6"/>
                         <outlet property="highlightBackground" destination="MnB-ts-g82" id="HRy-gH-bqV"/>
+                        <outlet property="inlineLinkPopup" destination="Tua-nf-FeV" id="qcy-hx-9R2"/>
                         <outlet property="progressIndicator" destination="uLU-em-oOP" id="dGS-gr-g2v"/>
                         <outlet property="saveButton" destination="Rua-gy-ZVE" id="Qc1-Pb-qaH"/>
                         <outlet property="sourceBackgroundLabel" destination="NaO-zg-zdN" id="zyh-Fi-rjV"/>

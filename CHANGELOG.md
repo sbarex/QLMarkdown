@@ -1,3 +1,9 @@
+1.0.b5
+New features:
+- Experimental option to choose to open links inside the quicklook preview window or in the default browser (but on big sur do not works).
+Bugfix:
+- Fix missing sparkle framework.
+
 1.0.b4
 New features:
 - Auto update with Sparkle framework. Auto updated works only when run the main application and not from the quicklook extension. You must have launched the application at least twice for the update checks to begin, or you can use the appropriate item in the application menu.
