@@ -834,11 +834,8 @@
                                                                 <constraints>
                                                                     <constraint firstItem="DUz-Fp-otB" firstAttribute="width" secondItem="KyI-3E-OKU" secondAttribute="width" id="Qe6-sM-EMc"/>
                                                                     <constraint firstItem="S6v-v5-DSF" firstAttribute="width" secondItem="DUz-Fp-otB" secondAttribute="width" id="UtG-cJ-Mf8"/>
-                                                                    <constraint firstItem="KyI-3E-OKU" firstAttribute="width" secondItem="Xox-Lp-rdG" secondAttribute="width" id="XO8-Hq-Zag"/>
-                                                                    <constraint firstItem="Xox-Lp-rdG" firstAttribute="width" secondItem="CpD-Lh-T8Y" secondAttribute="width" id="dHn-Pn-bDw"/>
                                                                     <constraint firstItem="r2q-tV-F9m" firstAttribute="width" secondItem="IGm-CZ-RF1" secondAttribute="width" id="hGW-Ey-YwZ"/>
                                                                     <constraint firstItem="qjs-0q-8kD" firstAttribute="width" secondItem="IGm-CZ-RF1" secondAttribute="width" id="mNw-MM-Ucc"/>
-                                                                    <constraint firstItem="ezJ-Fb-Lc9" firstAttribute="width" secondItem="S6v-v5-DSF" secondAttribute="width" id="ovO-L2-NL9"/>
                                                                     <constraint firstItem="CpD-Lh-T8Y" firstAttribute="width" secondItem="r2q-tV-F9m" secondAttribute="width" id="zlq-SQ-YRj"/>
                                                                 </constraints>
                                                                 <rows>
@@ -889,20 +886,49 @@
                                                                         </button>
                                                                     </gridCell>
                                                                     <gridCell row="gjW-hp-7VQ" column="f8W-89-7cz" id="4Zn-pV-47D">
-                                                                        <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xox-Lp-rdG">
-                                                                            <rect key="frame" x="-2" y="19" width="159" height="18"/>
-                                                                            <buttonCell key="cell" type="check" title="Emoji" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="SRR-HK-KEN">
-                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                                <font key="font" metaFont="system"/>
-                                                                            </buttonCell>
-                                                                            <connections>
-                                                                                <binding destination="XfG-lQ-9wD" name="value" keyPath="self.emojiExtension" id="LMw-yS-YbQ"/>
-                                                                            </connections>
-                                                                        </button>
+                                                                        <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qvD-0e-Lpo">
+                                                                            <rect key="frame" x="0.0" y="20" width="157" height="16"/>
+                                                                            <subviews>
+                                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xox-Lp-rdG">
+                                                                                    <rect key="frame" x="-2" y="-1" width="18" height="18"/>
+                                                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="SRR-HK-KEN">
+                                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.emojiExtension" id="LMw-yS-YbQ"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="JGy-Pe-xUK" customClass="CustomPopUpButton" customModule="QLMardown" customModuleProvider="target">
+                                                                                    <rect key="frame" x="13" y="0.0" width="144" height="16"/>
+                                                                                    <popUpButtonCell key="cell" type="roundTextured" title="Emoji with font" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="vhj-hi-hUF" id="GSp-td-FPq">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="menu"/>
+                                                                                        <menu key="menu" id="oBg-zg-XWW">
+                                                                                            <items>
+                                                                                                <menuItem title="Emoji with font" state="on" id="vhj-hi-hUF"/>
+                                                                                                <menuItem title="Emoji with images" toolTip="Require unsafe option and internet connection." id="fON-ma-hre"/>
+                                                                                            </items>
+                                                                                        </menu>
+                                                                                    </popUpButtonCell>
+                                                                                    <connections>
+                                                                                        <action selector="doEmojiChanged:" target="XfG-lQ-9wD" id="M3a-k7-iCu"/>
+                                                                                    </connections>
+                                                                                </popUpButton>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
                                                                     </gridCell>
                                                                     <gridCell row="gjW-hp-7VQ" column="8X5-t9-dm0" id="0Zd-9X-udd">
                                                                         <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KyI-3E-OKU">
-                                                                            <rect key="frame" x="161" y="19" width="159" height="18"/>
+                                                                            <rect key="frame" x="161" y="19" width="159" height="17"/>
                                                                             <buttonCell key="cell" type="check" title="Source code highlight" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wiE-xZ-fV0">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -915,7 +941,7 @@
                                                                     </gridCell>
                                                                     <gridCell row="gjW-hp-7VQ" column="mEo-jk-Ld2" id="CCo-vG-BQP">
                                                                         <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DUz-Fp-otB">
-                                                                            <rect key="frame" x="324" y="19" width="159" height="18"/>
+                                                                            <rect key="frame" x="324" y="19" width="159" height="17"/>
                                                                             <buttonCell key="cell" type="check" title="Tag filter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Pf4-6j-qjO">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -927,7 +953,7 @@
                                                                     </gridCell>
                                                                     <gridCell row="XvD-69-jfm" column="f8W-89-7cz" id="dFk-pR-tcG">
                                                                         <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="S6v-v5-DSF">
-                                                                            <rect key="frame" x="-2" y="-1" width="159" height="18"/>
+                                                                            <rect key="frame" x="-2" y="-1" width="159" height="17"/>
                                                                             <buttonCell key="cell" type="check" title="GitHub mention" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Mne-Ix-QOK">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -938,20 +964,49 @@
                                                                         </button>
                                                                     </gridCell>
                                                                     <gridCell row="XvD-69-jfm" column="8X5-t9-dm0" id="6D1-tr-CcS">
-                                                                        <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ezJ-Fb-Lc9">
-                                                                            <rect key="frame" x="161" y="-1" width="159" height="18"/>
-                                                                            <buttonCell key="cell" type="check" title="Strikethrough" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Y9B-Fi-WmV">
-                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                                <font key="font" metaFont="system"/>
-                                                                            </buttonCell>
-                                                                            <connections>
-                                                                                <binding destination="XfG-lQ-9wD" name="value" keyPath="self.strikethroughExtension" id="Ax4-cH-uea"/>
-                                                                            </connections>
-                                                                        </button>
+                                                                        <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jsr-bN-lSQ">
+                                                                            <rect key="frame" x="163" y="0.0" width="157" height="16"/>
+                                                                            <subviews>
+                                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ezJ-Fb-Lc9">
+                                                                                    <rect key="frame" x="-2" y="-1" width="18" height="18"/>
+                                                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Y9B-Fi-WmV">
+                                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.strikethroughExtension" id="Ax4-cH-uea"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="xG6-kZ-87p" customClass="CustomPopUpButton" customModule="QLMardown" customModuleProvider="target">
+                                                                                    <rect key="frame" x="13" y="0.0" width="144" height="16"/>
+                                                                                    <popUpButtonCell key="cell" type="roundTextured" title="Strikethrough (~)" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="YVX-hr-LPv" id="QA1-iO-ddX">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                        <menu key="menu" id="Wtj-kq-EPS">
+                                                                                            <items>
+                                                                                                <menuItem title="Strikethrough (~)" state="on" toolTip="Recognize single tilde." id="YVX-hr-LPv"/>
+                                                                                                <menuItem title="Strikethrough (~~)" toolTip="Recognize double tilde." id="RL7-SR-ifz"/>
+                                                                                            </items>
+                                                                                        </menu>
+                                                                                    </popUpButtonCell>
+                                                                                    <connections>
+                                                                                        <action selector="doDirty:" target="XfG-lQ-9wD" id="qLR-wu-bkA"/>
+                                                                                    </connections>
+                                                                                </popUpButton>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
                                                                     </gridCell>
                                                                     <gridCell row="XvD-69-jfm" column="mEo-jk-Ld2" id="yWy-WT-cpD">
                                                                         <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qjs-0q-8kD">
-                                                                            <rect key="frame" x="324" y="-1" width="159" height="18"/>
+                                                                            <rect key="frame" x="324" y="-1" width="159" height="17"/>
                                                                             <buttonCell key="cell" type="check" title="Task list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="XV9-vD-V2m">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -1131,57 +1186,6 @@
                                             </constraints>
                                         </view>
                                     </tabViewItem>
-                                    <tabViewItem label="Emoji" identifier="" id="heA-cd-8bq">
-                                        <view key="view" id="YI2-Qk-6js">
-                                            <rect key="frame" x="10" y="33" width="999" height="60"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rgx-N2-IpR">
-                                                    <rect key="frame" x="18" y="23" width="196" height="16"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Replace emoji placeholder with:" id="otl-qP-Res">
-                                                        <font key="font" usesAppearanceFont="YES"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JGy-Pe-xUK">
-                                                    <rect key="frame" x="217" y="16" width="261" height="25"/>
-                                                    <popUpButtonCell key="cell" type="push" title="Characters" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="vhj-hi-hUF" id="GSp-td-FPq">
-                                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
-                                                        <menu key="menu" id="oBg-zg-XWW">
-                                                            <items>
-                                                                <menuItem title="Characters" state="on" id="vhj-hi-hUF"/>
-                                                                <menuItem title="Images (require internet connection)" toolTip="Require unsafe option." id="fON-ma-hre"/>
-                                                            </items>
-                                                        </menu>
-                                                    </popUpButtonCell>
-                                                    <connections>
-                                                        <action selector="doEmojiChanged:" target="XfG-lQ-9wD" id="M3a-k7-iCu"/>
-                                                        <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.emojiExtension" id="82Q-AO-KJm"/>
-                                                    </connections>
-                                                </popUpButton>
-                                                <imageView hidden="YES" toolTip="Replacing emoji with images require internet access and unsafe html content can be formatted." horizontalHuggingPriority="248" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="MyI-68-ECg">
-                                                    <rect key="frame" x="482" y="22" width="16" height="16"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="FkO-AX-YVb"/>
-                                                        <constraint firstAttribute="width" constant="16" id="G31-T0-V6W"/>
-                                                    </constraints>
-                                                    <imageCell key="cell" controlSize="mini" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSCaution" id="HhQ-pb-8uV"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="rgx-N2-IpR" firstAttribute="leading" secondItem="YI2-Qk-6js" secondAttribute="leading" constant="20" symbolic="YES" id="RhR-at-7Rw"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MyI-68-ECg" secondAttribute="trailing" constant="20" symbolic="YES" id="XXH-Uv-bZF"/>
-                                                <constraint firstAttribute="bottom" secondItem="JGy-Pe-xUK" secondAttribute="bottom" constant="20" symbolic="YES" id="YFd-qq-zwx"/>
-                                                <constraint firstItem="JGy-Pe-xUK" firstAttribute="firstBaseline" secondItem="rgx-N2-IpR" secondAttribute="firstBaseline" id="bqA-fW-tss"/>
-                                                <constraint firstItem="MyI-68-ECg" firstAttribute="centerY" secondItem="JGy-Pe-xUK" secondAttribute="centerY" id="fTB-kT-vha"/>
-                                                <constraint firstItem="JGy-Pe-xUK" firstAttribute="top" secondItem="YI2-Qk-6js" secondAttribute="top" constant="20" symbolic="YES" id="hfD-A2-dHm"/>
-                                                <constraint firstItem="MyI-68-ECg" firstAttribute="leading" secondItem="JGy-Pe-xUK" secondAttribute="trailing" constant="8" symbolic="YES" id="hwR-6g-PI6"/>
-                                                <constraint firstItem="JGy-Pe-xUK" firstAttribute="leading" secondItem="rgx-N2-IpR" secondAttribute="trailing" constant="8" symbolic="YES" id="sdU-SV-hgj"/>
-                                            </constraints>
-                                        </view>
-                                    </tabViewItem>
                                     <tabViewItem label="Source code" identifier="" id="l22-Z5-gTI">
                                         <view key="view" id="yWq-U2-9bw">
                                             <rect key="frame" x="10" y="33" width="999" height="217"/>
@@ -1257,9 +1261,9 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="editable" keyPath="self.syntaxWrapEnabled" id="9hg-B4-qyA"/>
                                                                     <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" previousBinding="9hg-B4-qyA" id="TLT-bS-zeV"/>
                                                                     <binding destination="XfG-lQ-9wD" name="value" keyPath="self.syntaxWrapCharacters" id="fou-Hv-2er"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="editable" keyPath="self.syntaxWrapEnabled" id="9hg-B4-qyA"/>
                                                                 </connections>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XSh-jl-Pq7">
@@ -1274,6 +1278,8 @@
                                                                 <rect key="frame" x="200" y="99" width="19" height="28"/>
                                                                 <stepperCell key="cell" continuous="YES" alignment="left" minValue="20" maxValue="100000" doubleValue="20" id="ZBv-Ii-ffq"/>
                                                                 <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="JLr-Wm-zxl"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.syntaxWrapCharacters" id="HZf-BN-RzU"/>
                                                                     <binding destination="XfG-lQ-9wD" name="enabled2" keyPath="self.syntaxWrapEnabled" previousBinding="JLr-Wm-zxl" id="Xv9-oh-od2">
                                                                         <dictionary key="options">
                                                                             <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -1282,8 +1288,6 @@
                                                                             <integer key="NSNullPlaceholder" value="-1"/>
                                                                         </dictionary>
                                                                     </binding>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="JLr-Wm-zxl"/>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.syntaxWrapCharacters" id="HZf-BN-RzU"/>
                                                                 </connections>
                                                             </stepper>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qz9-FQ-Iyb">
@@ -1572,47 +1576,6 @@
                                             </constraints>
                                         </view>
                                     </tabViewItem>
-                                    <tabViewItem label="Strikethrough" identifier="" id="PfE-A1-aFA">
-                                        <view key="view" id="FDX-ki-R4W">
-                                            <rect key="frame" x="10" y="33" width="999" height="60"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5PT-Fv-2Lz">
-                                                    <rect key="frame" x="18" y="23" width="71" height="16"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Recognize:" id="SEb-pX-ffN">
-                                                        <font key="font" usesAppearanceFont="YES"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xG6-kZ-87p">
-                                                    <rect key="frame" x="92" y="16" width="142" height="25"/>
-                                                    <popUpButtonCell key="cell" type="push" title="Single tilde (~)" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="YVX-hr-LPv" id="QA1-iO-ddX">
-                                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
-                                                        <menu key="menu" id="Wtj-kq-EPS">
-                                                            <items>
-                                                                <menuItem title="Single tilde (~)" state="on" id="YVX-hr-LPv"/>
-                                                                <menuItem title="Double tilde (~~)" id="RL7-SR-ifz"/>
-                                                            </items>
-                                                        </menu>
-                                                    </popUpButtonCell>
-                                                    <connections>
-                                                        <action selector="doDirty:" target="XfG-lQ-9wD" id="qLR-wu-bkA"/>
-                                                        <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.strikethroughExtension" id="Fzc-A0-5T6"/>
-                                                    </connections>
-                                                </popUpButton>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xG6-kZ-87p" secondAttribute="trailing" constant="20" symbolic="YES" id="A2I-5T-F2f"/>
-                                                <constraint firstItem="5PT-Fv-2Lz" firstAttribute="leading" secondItem="FDX-ki-R4W" secondAttribute="leading" constant="20" symbolic="YES" id="ZQG-az-cnQ"/>
-                                                <constraint firstItem="xG6-kZ-87p" firstAttribute="leading" secondItem="5PT-Fv-2Lz" secondAttribute="trailing" constant="8" symbolic="YES" id="ajF-4D-gfR"/>
-                                                <constraint firstAttribute="bottom" secondItem="xG6-kZ-87p" secondAttribute="bottom" constant="20" symbolic="YES" id="f7h-lz-O4y"/>
-                                                <constraint firstItem="5PT-Fv-2Lz" firstAttribute="firstBaseline" secondItem="xG6-kZ-87p" secondAttribute="firstBaseline" id="gNS-Ju-boF"/>
-                                                <constraint firstItem="xG6-kZ-87p" firstAttribute="top" secondItem="FDX-ki-R4W" secondAttribute="top" constant="20" symbolic="YES" id="iNc-Lg-RtF"/>
-                                            </constraints>
-                                        </view>
-                                    </tabViewItem>
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
@@ -1798,7 +1761,6 @@
                         <outlet property="textView" destination="Q3Q-a2-tMH" id="Glk-S5-qdQ"/>
                         <outlet property="unsafeButton" destination="Yvy-aE-Sho" id="UmS-Os-ggW"/>
                         <outlet property="versionLabel" destination="DtZ-dg-C2s" id="mdP-Cs-C2E"/>
-                        <outlet property="warningImageView" destination="MyI-68-ECg" id="QrD-xH-70c"/>
                         <outlet property="webView" destination="bs7-Op-UnU" id="zXJ-Jb-TMr"/>
                     </connections>
                 </viewController>
@@ -1815,7 +1777,7 @@
                     </items>
                 </menu>
             </objects>
-            <point key="canvasLocation" x="102" y="948.5"/>
+            <point key="canvasLocation" x="101.5" y="948.5"/>
         </scene>
         <!--Theme Property View Controller-->
         <scene sceneID="TZh-cK-kEk">
@@ -2231,11 +2193,10 @@ Gw
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ijf-fx-OSL"/>
+        <segue reference="ezd-Qq-GnH"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="NSActionTemplate" width="15" height="15"/>
-        <image name="NSCaution" width="32" height="32"/>
         <image name="NSFontPanel" width="32" height="32"/>
         <image name="NSRefreshTemplate" width="14" height="16"/>
         <image name="ThemeOrigin_All_Normal" width="15" height="15"/>

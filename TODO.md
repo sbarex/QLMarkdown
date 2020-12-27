@@ -10,5 +10,6 @@
 - [ ] investigate font family override for fanced blocks
 - [ ] localization support
 - [ ] extension to generate anchor link for heads
+- [ ] emoji extension: better code that parse the single placeholder and generate the AST
 
 - [x] sparkle update engine

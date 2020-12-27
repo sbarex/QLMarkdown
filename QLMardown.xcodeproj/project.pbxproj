@@ -450,15 +450,15 @@
 			children = (
 				83D4B1C3258675D0000745DB /* README.md */,
 				834CABA02593C57B00673002 /* CHANGELOG.md */,
-				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
+				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
 				837F28FA2597817300A5F7DE /* GoLibraries */,
 				83E7FEF5258FBF77003ECF9B /* highlight wrapper */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMardown */,
 				831A8C42258ABADA00E36182 /* QLExtension */,
-				83F881632597EE2B008C5071 /* Sparkle */,
 				837F29172597A01F00A5F7DE /* Resources */,
+				83F881632597EE2B008C5071 /* Sparkle */,
 				83598F0525825B8D004664D3 /* Frameworks */,
 				83598E6225818808004664D3 /* Products */,
 			);
@@ -831,7 +831,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"highlight wrapper\"\ninstall_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\n";
+			shellScript = "cd \"highlight wrapper\"\nid=`/usr/bin/otool -D libwrapper_highlight.dylib`\nid=\"${id##*$'\\n'}\" # get the last output line\nif [ \"${id:0:7}\" = \"@rpath/\" ]\nthen\n    echo \"Install name valid for libwrapper_highlight.dylib\"\nelse\n    echo \"Changing the install name for libwrapper_highlight.dylib\"\n    echo ${id}\n    echo ${id:0:7}\n    install_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -997,7 +998,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1032,7 +1033,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1187,7 +1188,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1208,6 +1209,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight wrapper\"",
 					"$(PROJECT_DIR)/GoLibraries",
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown;
@@ -1230,7 +1232,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1251,6 +1253,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight wrapper\"",
 					"$(PROJECT_DIR)/GoLibraries",
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMardown;

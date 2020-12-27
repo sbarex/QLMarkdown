@@ -32,6 +32,7 @@ class ViewController: NSViewController {
     @objc dynamic var strikethroughExtension: Bool = true {
         didSet {
             isDirty = true
+            strikethroughPopupButton.mode = strikethroughExtension ? .popup : .button
         }
     }
     @objc dynamic var mentionExtension: Bool = false {
@@ -121,6 +122,7 @@ class ViewController: NSViewController {
     @objc dynamic var emojiExtension: Bool = true {
         didSet {
             updateEmojiStatus()
+            emojiPopupButton.mode = emojiExtension ? .popup : .button
             isDirty = true
         }
     }
@@ -259,9 +261,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var guessButton: NSButton!
     @IBOutlet weak var guessEnginePopup: NSPopUpButton!
     
-    @IBOutlet weak var strikethroughPopupButton: NSPopUpButton!
-    @IBOutlet weak var emojiPopupButton: NSPopUpButton!
-    @IBOutlet weak var warningImageView: NSImageView!
+    @IBOutlet weak var strikethroughPopupButton: CustomPopUpButton!
+    @IBOutlet weak var emojiPopupButton: CustomPopUpButton!
     @IBOutlet weak var unsafeButton: NSButton!
     @IBOutlet weak var versionLabel: NSTextField!
     
@@ -485,6 +486,15 @@ document.addEventListener('scroll', function(e) {
         
         self.initFromSettings(settings)
         
+        self.strikethroughPopupButton.actionButton = { sender in
+            self.strikethroughExtension = true
+        }
+        self.strikethroughPopupButton.mode = self.strikethroughExtension ? .popup : .button
+        self.emojiPopupButton.actionButton = { sender in
+            self.emojiExtension = true
+        }
+        self.emojiPopupButton.mode = self.emojiExtension ? .popup : .button
+        
         tabView.selectTabViewItem(at: 0)
     }
     
@@ -574,7 +584,6 @@ document.addEventListener('scroll', function(e) {
     }
     
     internal func updateEmojiStatus() {
-        warningImageView.isHidden = !emojiExtension || emojiPopupButton.indexOfSelectedItem == 0
         if emojiExtension && emojiPopupButton.indexOfSelectedItem == 1 {
             unsafeHTMLOption = true
             unsafeButton.state = .on
@@ -831,5 +840,34 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             }
         }
         return true
+    }
+}
+
+
+enum CustomPopUpButtonMode {
+    case popup
+    case button
+}
+
+class CustomPopUpButton: NSPopUpButton {
+    var mode: CustomPopUpButtonMode = .popup {
+        didSet {
+            guard let c = self.cell as? NSPopUpButtonCell else {
+                return
+            }
+            c.arrowPosition = mode == .popup ? .arrowAtCenter : .noArrow
+        }
+    }
+    
+    var actionButton: ((CustomPopUpButton) -> Void)?
+    
+    override func willOpenMenu(_ menu: NSMenu, with event: NSEvent) {
+        if mode == .popup {
+            super.willOpenMenu(menu, with: event)
+        } else {
+            // this grant the popup menu to not showup (or disappear so quickly)
+            menu.cancelTrackingWithoutAnimation()
+            actionButton?(self)
+        }
     }
 }

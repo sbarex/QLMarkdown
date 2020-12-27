@@ -1,3 +1,11 @@
+1.0.b6
+New Features:
+- better ui.
+Bug fix:
+- Fix for bug on theme icon with underline style.
+- Fix missing close menu item.
+- Fix bug with "base16" source code themes.
+
 1.0.b5
 New features:
 - Experimental option to choose to open links inside the quicklook preview window or in the default browser (but on big sur do not works).
