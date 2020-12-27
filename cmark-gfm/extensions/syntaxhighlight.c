@@ -15,7 +15,7 @@
 #include <houdini.h>
 
 // Local constants
-static const char *TYPE_STRING = "syntaxhighlight";
+// static const char *TYPE_STRING = "syntaxhighlight";
 
 typedef struct {
     char *theme_name;
@@ -382,9 +382,11 @@ char *cmark_syntax_extension_get_style(cmark_syntax_extension *extension) {
     return highlight_format_style2(&exit_code, background);
 }
 
+/*
 static void postprocess_text(cmark_parser *parser, cmark_node *node, int offset, int depth) {
     printf("postprocess_text\n");
 }
+*/
 
 static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser, cmark_node *root) {
     // printf("POSTPROCESS SYNTAX\n");
@@ -432,7 +434,7 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
     while ((ev = cmark_iter_next(iter)) != CMARK_EVENT_DONE) {
         node = cmark_iter_get_node(iter);
         
-        cmark_node_type type;
+        // cmark_node_type type;
         // type = node->type;
         
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_CODE_BLOCK) {

@@ -49,6 +49,7 @@ class ViewController: NSViewController {
             self.sourceFontLabel.textColor = syntaxHighlightExtension && isFontCustomized ? .labelColor : .disabledControlTextColor
         }
     }
+    
     @objc dynamic var syntaxThemeLight: ThemePreview? {
         didSet {
             isDirty = true
@@ -76,6 +77,12 @@ class ViewController: NSViewController {
     }
     
     @objc dynamic var backgroundColorDark: NSColor = NSColor.textBackgroundColor {
+        didSet {
+            isDirty = true
+        }
+    }
+    
+    @objc dynamic var syntaxWrapEnabled: Bool = false {
         didSet {
             isDirty = true
         }
@@ -165,6 +172,12 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
+    
+    @objc dynamic var debugMode: Bool = false {
+        didSet {
+            isDirty = true
+        }
+    }
 
     
     var styleFlag: Int = 0 {
@@ -211,6 +224,7 @@ class ViewController: NSViewController {
         didSet {
             if oldValue != isDirty {
                 self.view.window?.isDocumentEdited = isDirty
+                saveButton.isEnabled = isDirty
             }
         }
     }
@@ -234,6 +248,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var sourceThemeDarkLabel: NSTextField!
     @IBOutlet weak var sourceThemeDarkColor: NSColorWell!
     @IBOutlet weak var sourceWrapButton: NSButton!
+    @IBOutlet weak var sourceWrapField: NSTextField!
+    @IBOutlet weak var sourceWrapStepper: NSStepper!
     @IBOutlet weak var sourceCharactersLabel: NSTextField!
     @IBOutlet weak var sourceLineNumbersButton: NSButton!
     @IBOutlet weak var sourceTabsPopup: NSPopUpButton!
@@ -243,7 +259,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var guessButton: NSButton!
     @IBOutlet weak var guessEnginePopup: NSPopUpButton!
     
-    
     @IBOutlet weak var strikethroughPopupButton: NSPopUpButton!
     @IBOutlet weak var emojiPopupButton: NSPopUpButton!
     @IBOutlet weak var warningImageView: NSImageView!
@@ -251,6 +266,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var versionLabel: NSTextField!
     
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
+    @IBOutlet weak var saveButton: NSButton!
     
     @IBOutlet weak var styleSegementedControl: NSSegmentedControl!
     
@@ -276,11 +292,27 @@ class ViewController: NSViewController {
         self.doRefresh(sender)
     }
     
+    @IBAction func saveDocument(_ sender: Any) {
+        saveAction(sender)
+    }
+    
+    @IBAction func revertDocumentToSaved(_ sender: Any) {
+        let settings = Settings.shared
+        settings.reset()
+        self.initFromSettings(settings)
+    }
+    
     @IBAction func saveAction(_ sender: Any) {
         let settings = self.updateSettings()
         
         if settings.synchronize() {
             isDirty = false
+        } else {
+            let panel = NSAlert()
+            panel.messageText = "Error saving the settings!"
+            panel.alertStyle = .warning
+            panel.addButton(withTitle: "OK")
+            panel.runModal()
         }
     }
     
@@ -418,8 +450,6 @@ document.addEventListener('scroll', function(e) {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tabView.selectTabViewItem(at: 0)
-        
         if let path = Bundle.main.resourceURL?.appendingPathComponent("highlight").path {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
         }
@@ -443,89 +473,18 @@ document.addEventListener('scroll', function(e) {
         let contentController = self.webView.configuration.userContentController
         contentController.add(self, name: "scrollHandler")
         
-        versionLabel.stringValue = "lib cmark-gfm version \(String(cString: cmark_version_string())) (\(cmark_version()))"
-        
-        let settings = Settings.shared
-        
-        for url in settings.getAvailableStyles() {
-            addStyleSheet(url)
-        }
-        
-        self.tableExtension = settings.tableExtension
-        self.autoLinkExtension = settings.autoLinkExtension
-        self.tagFilterExtension = settings.tagFilterExtension
-        self.taskListExtension = settings.taskListExtension
-        self.strikethroughExtension = settings.strikethroughExtension
-        self.mentionExtension = settings.mentionExtension
-        self.syntaxHighlightExtension = settings.syntaxHighlightExtension
-        self.emojiExtension = settings.emojiExtension
-        self.inlineImageExtension = settings.inlineImageExtension
-        
-        let themes = Settings.shared.getAvailableThemes()
-        
-        let searchTheme = { (name: String, appearance: Theme.ThemeAppearance) -> ThemePreview? in
-            let base16 = name.hasPrefix("base16/")
-            let t_name = base16 ? String(name.dropLast("base16/".count)) : name
-            let fullpath = t_name.contains("/")
-            if let t = themes.first(where: {
-                    if fullpath {
-                        return $0.path == t_name
-                    } else {
-                        return $0.name == t_name && $0.isBase16 == base16
-                    }
-                }) {
-                return t;
-            } else {
-                return themes.first(where: {$0.appearance == appearance}) ?? themes.first
-            }
-        }
-        
-        self.syntaxThemeLight = searchTheme(settings.syntaxThemeLight, .light)
-        self.syntaxThemeDark = searchTheme(settings.syntaxThemeDark, .dark)
-        self.sourceLineNumbersButton.state = settings.syntaxLineNumbersOption ? .on : .off
-        self.sourceWrapButton.state = settings.syntaxWordWrapOption > 0 ? .on : .off
-        self.syntaxWrapCharacters = settings.syntaxWordWrapOption > 0 ? settings.syntaxWordWrapOption : 80
-        if let i = self.sourceTabsPopup.itemArray.firstIndex(where: { $0.tag == settings.syntaxTabsOption}) {
-            self.sourceTabsPopup.selectItem(at: i)
-        }
-        self.syntaxFontFamily = settings.syntaxFontFamily
-        self.syntaxFontSize = settings.syntaxFontSize
-        
-        if settings.syntaxBackgroundColorLight == "ignore" {
-            highlightBackground.selectItem(at: 1)
-        } else if settings.syntaxBackgroundColorLight == "" {
-            highlightBackground.selectItem(at: 0)
-        } else {
-            highlightBackground.selectItem(at: 2)
-            customBackgroundColor = true
-        }
-        self.backgroundColorLight = NSColor(css: settings.syntaxBackgroundColorLight) ?? NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.9, alpha: 1)
-        self.backgroundColorDark = NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.4, alpha: 1)
-        
-        self.sourceLineNumbersButton.state = settings.syntaxLineNumbersOption ? .on : .off
-        self.guessEnabled = settings.guessEngine != .none
-        self.guessEngine = settings.guessEngine == .accurate ? 1 : 0
-        
-        self.hardBreakOption = settings.hardBreakOption
-        self.noSoftBreakOption = settings.noSoftBreakOption
-        self.unsafeHTMLOption = settings.unsafeHTMLOption
-        self.validateUTFOption = settings.validateUTFOption
-        self.smartQuotesOption = settings.smartQuotesOption
-        self.footnotesOption = settings.footnotesOption
-        
-        self.styleFlag = settings.customCSS != nil ? (settings.customCSSOverride ? 2 : 1) : 0
-        self.customizedCSSFile = settings.customCSS
-        
         let filename = "test1"
         let markdown_string = getBundleContents(forResource: filename, ofType: "md") ?? "*error*"
         
         self.textView.string = markdown_string
         
-        self.doRefresh(self)
+        versionLabel.stringValue = "lib cmark-gfm version \(String(cString: cmark_version_string())) (\(cmark_version()))"
         
-        self.guessEnginePopup.isEnabled = self.guessEnabled && self.syntaxHighlightExtension
+        let settings = Settings.shared
         
-        isDirty = false
+        self.initFromSettings(settings)
+        
+        tabView.selectTabViewItem(at: 0)
     }
     
     @IBAction func showThemeSelector(_ sender: NSButton) {
@@ -624,6 +583,92 @@ document.addEventListener('scroll', function(e) {
         }
     }
     
+    internal func initFromSettings(_ settings: Settings) {
+        while stylesPopup.numberOfItems > 2 {
+            stylesPopup.removeItem(at: 0)
+        }
+        for url in settings.getAvailableStyles() {
+            addStyleSheet(url)
+        }
+        
+        self.debugMode = settings.debug
+        
+        self.tableExtension = settings.tableExtension
+        self.autoLinkExtension = settings.autoLinkExtension
+        self.tagFilterExtension = settings.tagFilterExtension
+        self.taskListExtension = settings.taskListExtension
+        self.strikethroughExtension = settings.strikethroughExtension
+        self.mentionExtension = settings.mentionExtension
+        self.syntaxHighlightExtension = settings.syntaxHighlightExtension
+        self.emojiExtension = settings.emojiExtension
+        self.inlineImageExtension = settings.inlineImageExtension
+        
+        let themes = Settings.shared.getAvailableThemes()
+        
+        let searchTheme = { (name: String, appearance: Theme.ThemeAppearance) -> ThemePreview? in
+            let base16 = name.hasPrefix("base16/")
+            let t_name = base16 ? String(name.dropLast("base16/".count)) : name
+            let fullpath = t_name.contains("/")
+            if let t = themes.first(where: {
+                    if fullpath {
+                        return $0.path == t_name
+                    } else {
+                        return $0.name == t_name && $0.isBase16 == base16
+                    }
+                }) {
+                return t;
+            } else {
+                return themes.first(where: {$0.appearance == appearance}) ?? themes.first
+            }
+        }
+        
+        self.syntaxThemeLight = searchTheme(settings.syntaxThemeLight, .light)
+        self.syntaxThemeDark = searchTheme(settings.syntaxThemeDark, .dark)
+        self.sourceLineNumbersButton.state = settings.syntaxLineNumbersOption ? .on : .off
+        self.syntaxWrapEnabled = settings.syntaxWordWrapOption > 0
+        self.sourceWrapField.isEnabled = self.syntaxHighlightExtension
+        self.sourceWrapField.isEnabled = syntaxWrapEnabled
+        self.sourceWrapStepper.isEnabled = self.sourceWrapField.isEnabled
+        
+        self.syntaxWrapCharacters = settings.syntaxWordWrapOption > 0 ? settings.syntaxWordWrapOption : 80
+        if let i = self.sourceTabsPopup.itemArray.firstIndex(where: { $0.tag == settings.syntaxTabsOption}) {
+            self.sourceTabsPopup.selectItem(at: i)
+        }
+        self.syntaxFontFamily = settings.syntaxFontFamily
+        self.syntaxFontSize = settings.syntaxFontSize
+        
+        if settings.syntaxBackgroundColorLight == "ignore" {
+            highlightBackground.selectItem(at: 1)
+        } else if settings.syntaxBackgroundColorLight == "" {
+            highlightBackground.selectItem(at: 0)
+        } else {
+            highlightBackground.selectItem(at: 2)
+            customBackgroundColor = true
+        }
+        self.backgroundColorLight = NSColor(css: settings.syntaxBackgroundColorLight) ?? NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.9, alpha: 1)
+        self.backgroundColorDark = NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.4, alpha: 1)
+        
+        self.sourceLineNumbersButton.state = settings.syntaxLineNumbersOption ? .on : .off
+        self.guessEnabled = settings.guessEngine != .none
+        self.guessEngine = settings.guessEngine == .accurate ? 1 : 0
+        
+        self.hardBreakOption = settings.hardBreakOption
+        self.noSoftBreakOption = settings.noSoftBreakOption
+        self.unsafeHTMLOption = settings.unsafeHTMLOption
+        self.validateUTFOption = settings.validateUTFOption
+        self.smartQuotesOption = settings.smartQuotesOption
+        self.footnotesOption = settings.footnotesOption
+        
+        self.styleFlag = settings.customCSS != nil ? (settings.customCSSOverride ? 2 : 1) : 0
+        self.customizedCSSFile = settings.customCSS
+        
+        self.doRefresh(self)
+        
+        self.guessEnginePopup.isEnabled = self.guessEnabled && self.syntaxHighlightExtension
+        
+        isDirty = false
+    }
+    
     internal func updateSettings() -> Settings {
         let themeName = { (theme: Theme) -> String in
             var name: String
@@ -639,6 +684,9 @@ document.addEventListener('scroll', function(e) {
         }
         
         let settings = Settings.shared
+        
+        settings.debug = self.debugMode
+        
         settings.tableExtension = self.tableExtension
         settings.autoLinkExtension = self.autoLinkExtension
         settings.tagFilterExtension = self.tagFilterExtension
@@ -657,7 +705,7 @@ document.addEventListener('scroll', function(e) {
         settings.syntaxThemeLight = self.syntaxThemeLight != nil ? themeName(self.syntaxThemeLight!) : "acid"
         settings.syntaxThemeDark = self.syntaxThemeDark != nil ? themeName(self.syntaxThemeDark!) : "zenburn"
         settings.syntaxLineNumbersOption = self.sourceLineNumbersButton.state == .on
-        settings.syntaxWordWrapOption = self.sourceWrapButton.state == .on ? self.syntaxWrapCharacters : 0
+        settings.syntaxWordWrapOption = syntaxWrapEnabled ? self.syntaxWrapCharacters : 0
         settings.syntaxTabsOption = self.sourceTabsPopup.selectedItem?.tag ?? 0
         settings.syntaxFontFamily = sourceFontButton.state == .on ?  self.syntaxFontFamily : ""
         settings.syntaxFontSize = sourceFontButton.state == .on ?  self.syntaxFontSize : 0

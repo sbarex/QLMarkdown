@@ -65,6 +65,8 @@ class Settings {
     @objc var customCSS: URL?
     @objc var customCSSOverride: Bool = false
     
+    @objc var debug: Bool = false
+    
     @objc var guessEngine: GuessEngine = .none
     
     class var applicationSupportUrl: URL? {
@@ -83,6 +85,10 @@ class Settings {
     }
     
     private init() {
+        self.reset()
+    }
+    
+    func reset() {
         print("Shared preferences stored in \(Settings.applicationSupportUrl?.path ?? "??").")
         
         let defaults = UserDefaults.standard
@@ -190,6 +196,10 @@ class Settings {
         
         if let opt = defaultsDomain["guess-engine"] as? Int, let guess = GuessEngine(rawValue: opt) {
             guessEngine = guess
+        }
+        
+        if let opt = defaultsDomain["debug"] as? Bool {
+            debug = opt
         }
         
         sanitizeEmojiOption()
@@ -424,16 +434,186 @@ class Settings {
             cmark_node_free(doc)
         }
         
+        let html_debug = self.renderDebugInfo(forAppearance: appearance, baseDir: baseDir)
         // Render
         if let html2 = cmark_render_html(doc, options, nil) {
             defer {
                 free(html2)
             }
             
-            return String(cString: html2)
+            return html_debug + String(cString: html2)
         } else {
+            return html_debug + "<p>RENDER FAILED!</p>"
+        }
+    }
+    
+    internal func renderDebugInfo(forAppearance appearance: Appearance, baseDir: String) -> String
+    {
+        guard debug else {
             return ""
         }
+        var html_debug = ""
+        html_debug += """
+<style type="text/css">
+table.debug td {
+    vertical-align: top;
+    font-size: .8rem;
+}
+</style>
+"""
+        html_debug += "<table class='debug'>\n<caption>Debug info</caption>"
+        var html_options = ""
+        if self.unsafeHTMLOption || (self.emojiExtension && self.emojiImageOption) {
+            html_options += "CMARK_OPT_UNSAFE "
+        }
+        
+        if self.hardBreakOption {
+            html_options += "CMARK_OPT_HARDBREAKS "
+        }
+        if self.noSoftBreakOption {
+            html_options += "CMARK_OPT_NOBREAKS "
+        }
+        if self.validateUTFOption {
+            html_options += "CMARK_OPT_VALIDATE_UTF8 "
+        }
+        if self.smartQuotesOption {
+            html_options += "CMARK_OPT_SMART "
+        }
+        if self.footnotesOption {
+            html_options += "CMARK_OPT_FOOTNOTES "
+        }
+        
+        if self.strikethroughExtension && self.strikethroughDoubleTildeOption {
+            html_options += "CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE "
+        }
+
+        html_debug += "<tr><td>options</td><td>\(html_options)</td></tr>\n"
+        
+        html_debug += "<tr><td>table extension</td><td>"
+        if self.tableExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("table") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+
+        html_debug += "<tr><td>autolink extension</td><td>"
+        if self.autoLinkExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("autolink") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>tagfilter extension</td><td>"
+        if self.tagFilterExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("tagfilter") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+
+        html_debug += "<tr><td>tasklist extension</td><td>"
+        if self.taskListExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("tasklist") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>strikethrough extension</td><td>"
+        if self.strikethroughExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("strikethrough") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>mention extension</td><td>"
+        if self.mentionExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("mention") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>inlineimage extension</td><td>"
+        if self.inlineImageExtension {
+            html_debug += "on" + (cmark_find_syntax_extension("inlineimage") == nil ? " (NOT AVAILABLE" : "")
+            html_debug += "<br />basedir: \(baseDir)"
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>emoji extension</td><td>"
+        if self.emojiExtension {
+            html_debug += "on" + (cmark_find_syntax_extension("emoji") == nil ? " (NOT AVAILABLE" : "")
+            html_debug += " / \(self.emojiImageOption ? "using images" : "using emoji")"
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>source code highlight</td><td>"
+        if self.syntaxHighlightExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("syntaxhighlight") == nil ? " (NOT AVAILABLE" : "")
+            
+            let theme: String
+            var background: String
+            switch appearance {
+            case .light:
+                theme = self.syntaxThemeLight
+                background = self.syntaxBackgroundColorLight
+            case .dark:
+                theme = self.syntaxThemeDark
+                background = self.syntaxBackgroundColorDark
+            case .undefined:
+                let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                if mode == "Light" {
+                    theme = self.syntaxThemeLight
+                    background = self.syntaxBackgroundColorLight
+                } else {
+                    theme = self.syntaxThemeDark
+                    background = self.syntaxBackgroundColorDark
+                }
+            }
+            if background.isEmpty {
+                background = "use theme settings"
+            } else if background == "ignore" {
+                background = "use markdown settings"
+            }
+            
+            html_debug += "<table>\n"
+            html_debug += "<tr><td>datadir</td><td>\(Bundle.main.resourceURL?.appendingPathComponent("highlight").path ?? "missing")</td></tr>\n"
+            html_debug += "<tr><td>theme</td><td>\(theme)</td></tr>\n"
+            html_debug += "<tr><td>background</td><td>\(background)</td></tr>\n"
+            html_debug += "<tr><td>line numbers</td><td>\(self.syntaxLineNumbersOption ? "on" : "off")</td></tr>\n"
+            html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
+            html_debug += "<tr><td>wrap</td><td> \(self.syntaxWordWrapOption > 0 ? "after \(self.syntaxWordWrapOption) characters" : "disabled")</td></tr>\n"
+            html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
+            html_debug += "<tr><td>guess language</td><td>"
+            switch self.guessEngine {
+            case .none:
+                html_debug += "off"
+            case .fast:
+                html_debug += "fast<br />"
+                html_debug += "magic db: \(Bundle.main.path(forResource: "magic", ofType: "mgc") ?? "missing")"
+            case .accurate:
+                html_debug += "accurate"
+            }
+            html_debug += "</td></tr>\n"
+            html_debug += "<tr><td>font family</td><td>\(self.syntaxFontFamily.isEmpty ? "not set" : self.syntaxFontFamily)</td></tr>\n"
+            html_debug += "<tr><td>font size</td><td>\(self.syntaxFontSize > 0 ? "\(self.syntaxFontSize)" : "not set")</td></tr>\n"
+            html_debug += "</table>\n"
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "</table>\n"
+        
+        return html_debug
     }
     
     internal func getBundleContents(forResource: String, ofType: String) -> String?

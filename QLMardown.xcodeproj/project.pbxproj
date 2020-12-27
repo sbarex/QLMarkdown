@@ -134,6 +134,15 @@
 		83F4B99225868A7400FC58A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		83F4B9962586AB9700FC58A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83D4B1C3258675D0000745DB /* README.md */; };
 		83F881612597E902008C5071 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
+		83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
+		83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
+		83F882382598A8B3008C5071 /* org.sparkle-project.InstallerStatus.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */; };
+		83F882392598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */; };
+		83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F882362598A8B3008C5071 /* Sparkle.framework */; };
+		83F8823B2598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */; };
+		83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +190,19 @@
 				83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83F8816F2597EE45008C5071 /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
+				83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
+				83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
+			);
+			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -335,6 +357,15 @@
 		83EF95212585476800B56FA3 /* emoji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = emoji.h; sourceTree = "<group>"; };
 		83EF95222585476800B56FA3 /* emoji.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emoji.c; sourceTree = "<group>"; };
 		83F4B99125868A7400FC58A7 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		83F881642597EE2B008C5071 /* BinaryDelta */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = BinaryDelta; sourceTree = "<group>"; };
+		83F881672597EE2C008C5071 /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
+		83F881682597EE2C008C5071 /* sign_update */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sign_update; sourceTree = "<group>"; };
+		83F881692597EE2C008C5071 /* generate_keys */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_keys; sourceTree = "<group>"; };
+		83F8822C2598A5C0008C5071 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
+		83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
+		83F882362598A8B3008C5071 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerConnection.xpc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +375,7 @@
 			files = (
 				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
 				83E7FEF9258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
+				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
 				837F29122597975500A5F7DE /* libgoutils.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,7 +385,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				83E7FEF8258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
+				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
 				837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */,
+				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +455,7 @@
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMardown */,
 				831A8C42258ABADA00E36182 /* QLExtension */,
+				83F881632597EE2B008C5071 /* Sparkle */,
 				837F29172597A01F00A5F7DE /* Resources */,
 				83598F0525825B8D004664D3 /* Frameworks */,
 				83598E6225818808004664D3 /* Products */,
@@ -573,6 +608,7 @@
 		83598F0525825B8D004664D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83F8822C2598A5C0008C5071 /* WebKit.framework */,
 				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
 				831A8C40258ABADA00E36182 /* Quartz.framework */,
 			);
@@ -618,6 +654,21 @@
 			path = "highlight wrapper";
 			sourceTree = "<group>";
 		};
+		83F881632597EE2B008C5071 /* Sparkle */ = {
+			isa = PBXGroup;
+			children = (
+				83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */,
+				83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */,
+				83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */,
+				83F882362598A8B3008C5071 /* Sparkle.framework */,
+				83F881642597EE2B008C5071 /* BinaryDelta */,
+				83F881672597EE2C008C5071 /* generate_appcast */,
+				83F881682597EE2C008C5071 /* sign_update */,
+				83F881692597EE2C008C5071 /* generate_keys */,
+			);
+			path = Sparkle;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -650,6 +701,7 @@
 				83598E5F25818808004664D3 /* Resources */,
 				831A8C4C258ABADA00E36182 /* Embed App Extensions */,
 				83E7FF07258FCCF9003ECF9B /* Embed Libraries */,
+				83F8816F2597EE45008C5071 /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
@@ -731,8 +783,11 @@
 				837D20D6258362A5008FC698 /* example.jpg in Resources */,
 				834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
+				83F8823B2598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc in Resources */,
 				8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */,
 				83598F24258263C0004664D3 /* markdown.css in Resources */,
+				83F882382598A8B3008C5071 /* org.sparkle-project.InstallerStatus.xpc in Resources */,
+				83F882392598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Resources */,
 				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
 				834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */,
 				834CAB8A259167D100673002 /* examples in Resources */,
@@ -940,7 +995,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
@@ -974,7 +1029,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
@@ -1128,8 +1183,13 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sparkle",
+				);
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
@@ -1166,8 +1226,13 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sparkle",
+				);
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",

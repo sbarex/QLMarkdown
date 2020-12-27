@@ -51,6 +51,8 @@ extension Settings {
         defaultsDomain["footnote"] = footnotesOption
         defaultsDomain["guess-engine"] = guessEngine.rawValue
         
+        defaultsDomain["debug"] = self.debug
+        
         let file: String
         if let url = customCSS {
             if let folder = Settings.stylesFolder?.path, url.path.hasPrefix(folder) {

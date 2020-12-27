@@ -23,6 +23,11 @@
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Check for Updates…" keyEquivalent="u" id="YYv-je-P9H">
+                                            <connections>
+                                                <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="JWB-gK-Wfw"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                                         <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
@@ -61,60 +66,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="File" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
-                                            <connections>
-                                                <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
-                                            <connections>
-                                                <action selector="openDocument:" target="Ady-hI-5gd" id="bVn-NM-KNZ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Open Recent" id="tXI-mr-wws">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="oas-Oc-fiZ">
-                                                <items>
-                                                    <menuItem title="Clear Menu" id="vNY-rz-j42">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="clearRecentDocuments:" target="Ady-hI-5gd" id="Daa-9d-B3U"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                                        <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
-                                            <connections>
-                                                <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
                                             <connections>
                                                 <action selector="saveDocument:" target="Ady-hI-5gd" id="teZ-XB-qJY"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
-                                            <connections>
-                                                <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="mDf-zr-I0C"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
                                             <connections>
                                                 <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="iJ3-Pv-kwq"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                                        <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="runPageLayout:" target="Ady-hI-5gd" id="Din-rz-gC5"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
-                                            <connections>
-                                                <action selector="print:" target="Ady-hI-5gd" id="qaZ-4w-aoO"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -738,7 +697,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="13" y="535" width="1019" height="212"/>
+                                <rect key="frame" x="13" y="484" width="1019" height="263"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Options &amp; Extensions" identifier="" id="XgS-T3-Gpv">
@@ -1102,9 +1061,25 @@
                                                         <real value="3.4028234663852886e+38"/>
                                                     </customSpacing>
                                                 </stackView>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e9k-wZ-1js">
+                                                    <rect key="frame" x="861" y="22" width="74" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Debug info:" id="cpm-mm-drv">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="Gkg-sf-8nu">
+                                                    <rect key="frame" x="939" y="17" width="42" height="25"/>
+                                                    <connections>
+                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.debugMode" id="GEC-ag-Wim"/>
+                                                    </connections>
+                                                </switch>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="y9s-1O-xCD" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="1ng-mI-wgn"/>
+                                                <constraint firstAttribute="trailing" secondItem="Gkg-sf-8nu" secondAttribute="trailing" constant="20" symbolic="YES" id="67u-qy-jOV"/>
+                                                <constraint firstItem="e9k-wZ-1js" firstAttribute="centerY" secondItem="Gkg-sf-8nu" secondAttribute="centerY" id="99v-Pw-rJU"/>
                                                 <constraint firstItem="IZh-uP-gdJ" firstAttribute="leading" secondItem="y9s-1O-xCD" secondAttribute="trailing" constant="8" symbolic="YES" id="B7I-AZ-JwA"/>
                                                 <constraint firstAttribute="bottom" secondItem="IZh-uP-gdJ" secondAttribute="bottom" constant="20" symbolic="YES" id="D0l-7X-kzi"/>
                                                 <constraint firstItem="tjE-BV-KNe" firstAttribute="leading" secondItem="HUa-5g-v1F" secondAttribute="trailing" constant="8" symbolic="YES" id="FWn-f3-Oup"/>
@@ -1113,7 +1088,9 @@
                                                 <constraint firstItem="y9s-1O-xCD" firstAttribute="centerY" secondItem="IZh-uP-gdJ" secondAttribute="centerY" id="Ksa-sU-5f0"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="tjE-BV-KNe" secondAttribute="trailing" constant="20" symbolic="YES" id="Lcc-ZM-Vfg"/>
                                                 <constraint firstItem="HUa-5g-v1F" firstAttribute="top" secondItem="z2a-cF-5GG" secondAttribute="top" constant="8" id="dag-3x-Sej"/>
+                                                <constraint firstItem="Gkg-sf-8nu" firstAttribute="leading" secondItem="e9k-wZ-1js" secondAttribute="trailing" constant="8" symbolic="YES" id="god-YX-hvm"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="IZh-uP-gdJ" secondAttribute="trailing" constant="20" symbolic="YES" id="nHI-sq-GBm"/>
+                                                <constraint firstItem="Gkg-sf-8nu" firstAttribute="centerY" secondItem="IZh-uP-gdJ" secondAttribute="centerY" id="q9y-Pl-hep"/>
                                                 <constraint firstItem="tjE-BV-KNe" firstAttribute="top" secondItem="z2a-cF-5GG" secondAttribute="top" constant="8" id="sdZ-HR-8wh"/>
                                             </constraints>
                                         </view>
@@ -1226,6 +1203,7 @@
                                                                 <connections>
                                                                     <action selector="doDirty:" target="XfG-lQ-9wD" id="DQh-JK-zz3"/>
                                                                     <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="mrO-VL-qGG"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.syntaxWrapEnabled" id="xLS-ZR-MAp"/>
                                                                 </connections>
                                                             </button>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bEk-Au-dLX">
@@ -1243,7 +1221,8 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                                 <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="editable" keyPath="self.syntaxHighlightExtension" id="0jW-mK-txD"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="editable" keyPath="self.syntaxWrapEnabled" id="9hg-B4-qyA"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" previousBinding="9hg-B4-qyA" id="TLT-bS-zeV"/>
                                                                     <binding destination="XfG-lQ-9wD" name="value" keyPath="self.syntaxWrapCharacters" id="fou-Hv-2er"/>
                                                                 </connections>
                                                             </textField>
@@ -1259,6 +1238,14 @@
                                                                 <rect key="frame" x="200" y="99" width="19" height="28"/>
                                                                 <stepperCell key="cell" continuous="YES" alignment="left" minValue="20" maxValue="100000" doubleValue="20" id="ZBv-Ii-ffq"/>
                                                                 <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled2" keyPath="self.syntaxWrapEnabled" previousBinding="JLr-Wm-zxl" id="Xv9-oh-od2">
+                                                                        <dictionary key="options">
+                                                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                                                        </dictionary>
+                                                                    </binding>
                                                                     <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="JLr-Wm-zxl"/>
                                                                     <binding destination="XfG-lQ-9wD" name="value" keyPath="self.syntaxWrapCharacters" id="HZf-BN-RzU"/>
                                                                 </connections>
@@ -1593,27 +1580,27 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="534" width="1045" height="5"/>
+                                <rect key="frame" x="0.0" y="483" width="1045" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="61" width="1045" height="475"/>
+                                <rect key="frame" x="0.0" y="61" width="1045" height="424"/>
                                 <subviews>
-                                    <customView id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="521" height="475"/>
+                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
+                                        <rect key="frame" x="0.0" y="0.0" width="521" height="424"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="0.0" width="521" height="475"/>
+                                                <rect key="frame" x="0.0" y="-51" width="521" height="424"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="521" height="475"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="521" height="424"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH">
-                                                            <rect key="frame" x="0.0" y="0.0" width="501" height="455"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="501" height="404"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="501" height="455"/>
+                                                            <size key="minSize" width="501" height="404"/>
                                                             <size key="maxSize" width="521" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         </textView>
@@ -1625,7 +1612,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="495" y="10" width="16" height="455"/>
+                                                    <rect key="frame" x="495" y="10" width="16" height="404"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -1637,12 +1624,12 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView id="sp3-sm-w1y">
-                                        <rect key="frame" x="531" y="0.0" width="514" height="475"/>
+                                    <customView misplaced="YES" id="sp3-sm-w1y">
+                                        <rect key="frame" x="531" y="0.0" width="514" height="424"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="0.0" width="514" height="475"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="514" height="424"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -1653,7 +1640,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="249" y="230" width="16" height="16"/>
+                                                <rect key="frame" x="249" y="153" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
@@ -1698,7 +1685,7 @@
                             </segmentedControl>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Rua-gy-ZVE">
                                 <rect key="frame" x="968" y="13" width="64" height="32"/>
-                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uqT-c1-rz3">
+                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uqT-c1-rz3">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -1746,6 +1733,7 @@
                         <outlet property="guessEnginePopup" destination="F3K-eG-jad" id="3Kd-1t-mL6"/>
                         <outlet property="highlightBackground" destination="MnB-ts-g82" id="HRy-gH-bqV"/>
                         <outlet property="progressIndicator" destination="uLU-em-oOP" id="dGS-gr-g2v"/>
+                        <outlet property="saveButton" destination="Rua-gy-ZVE" id="Qc1-Pb-qaH"/>
                         <outlet property="sourceBackgroundLabel" destination="NaO-zg-zdN" id="zyh-Fi-rjV"/>
                         <outlet property="sourceCharactersLabel" destination="XSh-jl-Pq7" id="UIY-qX-lV9"/>
                         <outlet property="sourceFontButton" destination="RLO-pM-QGJ" id="Vjx-Fd-QZ5"/>
@@ -1760,6 +1748,8 @@
                         <outlet property="sourceThemeLightColor" destination="kDy-g4-j1P" id="pV8-Bd-aPm"/>
                         <outlet property="sourceThemeLightLabel" destination="qkz-e2-hok" id="BlE-Ud-MDI"/>
                         <outlet property="sourceWrapButton" destination="hdA-pt-887" id="fK5-ty-MgI"/>
+                        <outlet property="sourceWrapField" destination="bEk-Au-dLX" id="PkP-Vw-BUr"/>
+                        <outlet property="sourceWrapStepper" destination="RIV-Gg-sKD" id="aru-oQ-ToZ"/>
                         <outlet property="strikethroughPopupButton" destination="xG6-kZ-87p" id="hky-Dq-ec4"/>
                         <outlet property="styleLabel" destination="6ef-XR-10J" id="Yit-ef-h69"/>
                         <outlet property="styleModePopup" destination="CTX-6L-I3O" id="Igi-dq-qWK"/>

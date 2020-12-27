@@ -109,7 +109,7 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
     while ((ev = cmark_iter_next(iter)) != CMARK_EVENT_DONE) {
         node = cmark_iter_get_node(iter);
         
-        cmark_node_type type;
+        // cmark_node_type type;
         // type = node->type;
         
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_IMAGE) {
