@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>QLMarkdown</title> 
+        <item>
+            <title>1.0</title>
+            <pubDate>dom, 06 dic 2020 11:12:25 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b2/QLMardown.zip" sparkle:version="3" sparkle:shortVersionString="1.0" length="14530485" type="application/octet-stream" sparkle:edSignature="Irh4XpVkGNuOqI30m3DFRTPRgDAQuwM62zVH1ONUWpYYHyMCfYkELQH6y8vTkyH3tq9+XIpJWE0fg9Ax3hk+CQ=="/>
+            <description><![CDATA[
+                <p>First version.</p>
+            ]]>
+            </description>
+        </item>
+    </channel>
+</rss>
