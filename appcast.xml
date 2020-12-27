@@ -4,11 +4,21 @@
         <title>QLMarkdown</title> 
         <item>
             <title>1.0</title>
-            <pubDate>dom, 06 dic 2020 11:12:25 +0100</pubDate>
+            <pubDate>sab, 26 dic 2020 11:12:25 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b2/QLMardown.zip" sparkle:version="3" sparkle:shortVersionString="1.0" length="14530485" type="application/octet-stream" sparkle:edSignature="Irh4XpVkGNuOqI30m3DFRTPRgDAQuwM62zVH1ONUWpYYHyMCfYkELQH6y8vTkyH3tq9+XIpJWE0fg9Ax3hk+CQ=="/>
             <description><![CDATA[
                 <p>First version.</p>
+            ]]>
+            </description>
+        </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>dom, 27 dic 2020 12:14:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b4/QLMardown.zip" sparkle:version="4" sparkle:shortVersionString="1.0" type="application/octet-stream" sparkle:edSignature="OGauStX9L1R5Fabd8A4UkCVR5avBwYPjFKdswCI39MnhGs/g4Pu8nGqxmF33SLZRjef5OZRezQ5noLkal/NeDA==" length="15841541"/>
+            <description><![CDATA[
+                <p>Auto update with Sparkle framework and bugfix.</p>
             ]]>
             </description>
         </item>
