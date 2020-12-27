@@ -32,5 +32,15 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>dom, 27 dic 2020 17:49:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b6/QLMardown.zip" sparkle:version="6" sparkle:shortVersionString="1.0" type="application/octet-stream" sparkle:edSignature="kmSuZ3yP1fOgP5dgwk0HCK07U+VsIvGSlQkW51zuyzy6B8H/X1Z10pzyaxz/ndLu2frJklVmew26CfSK5PE4AQ==" length="17622232"/>
+            <description><![CDATA[
+                <p>Fix missed Sparkle framework.</p>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
