@@ -76,6 +76,12 @@
                                                 <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="iJ3-Pv-kwq"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="hEs-Pe-tDS"/>
+                                        <menuItem title="Close" keyEquivalent="w" id="2wd-Ew-wQh">
+                                            <connections>
+                                                <action selector="performClose:" target="Ady-hI-5gd" id="7R7-tx-3cM"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
