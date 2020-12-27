@@ -257,7 +257,6 @@
   --email-quoted-color: var(--blockquote-color);
   --keyword-color: var(--gray-400);
   --code-font: Menlo, monospace;
-  --text-font: Helvetica, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -288,7 +287,7 @@ html {
   margin: 0;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-  font: -apple-system-body;
+  font-family: -apple-system;
 }
 
 body {
@@ -296,7 +295,6 @@ body {
   padding: 1em;
   color: var(--textPrimary);
   background-color: var(--background);
-  font-family: var(--text-font);
 }
 
 a {
