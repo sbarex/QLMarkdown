@@ -198,13 +198,13 @@ import Cocoa
             return export
         }
         
-        func getFormattedString(_ text: String, font: NSFont) -> NSAttributedString {
+        func getFormattedString(_ text: String, font: NSFont, forIcon: Bool = false) -> NSAttributedString {
             var attributes: [NSAttributedString.Key: Any] = [:]
             if let cc = NSColor(css: self.color) {
                 attributes[.foregroundColor] = cc
             }
-            if let underline = self.underline {
-                attributes[.underlineStyle] = underline ? NSUnderlineStyle.single : 0
+            if !forIcon, let underline = self.underline {
+                attributes[.underlineStyle] = underline ? NSUnderlineStyle.double : NSUnderlineStyle(rawValue: 0)
                 attributes[.underlineColor] = attributes[.foregroundColor]
             }
             var fontTraits: NSFontTraitMask = []
@@ -409,45 +409,21 @@ body {
     internal func getAttributedExampleForIcon(font: NSFont) -> NSAttributedString {
         let background_color = NSColor(css: self.canvas.color) ?? .white
         
-        let formatProperty = { (name: PropertyName, property: PropertyStyle) -> NSAttributedString in
-            var attributes: [NSAttributedString.Key: Any] = [
-                .font: font,
-                .backgroundColor: background_color,
-                .foregroundColor: NSColor(css: property.color) ?? NSColor.black
-            ]
-            if let u = property.underline {
-                attributes[.underlineStyle] = u ? NSUnderlineStyle.single : 0
-            }
-            var fontTraits: NSFontTraitMask = []
-            if let b = property.bold, b {
-                fontTraits.insert(.boldFontMask)
-            }
-            if let i = property.italic, i {
-                fontTraits.insert(.italicFontMask)
-            }
-            if !fontTraits.isEmpty, let f = NSFontManager.shared.font(withFamily: font.familyName ?? font.fontName, traits: fontTraits, weight: 0, size: font.pointSize) {
-                attributes[.font] = f
-            }
-            
-            return NSAttributedString(string: name.name + "\n", attributes: attributes)
-        }
-        
         let s = NSMutableAttributedString()
-        s.append(formatProperty(.plain, self.plain))
-        s.append(formatProperty(.number, self.number))
-        s.append(formatProperty(.string, self.string))
-        s.append(formatProperty(.escape, self.escape))
-        s.append(formatProperty(.preProcessor, self.preProcessor))
-        s.append(formatProperty(.stringPreProc, self.stringPreProc))
-        s.append(formatProperty(.blockComment, self.blockComment))
-        s.append(formatProperty(.lineComment, self.lineComment))
-        s.append(formatProperty(.lineNum, self.lineNum))
-        s.append(formatProperty(.operator, self.operator))
-        s.append(formatProperty(.interpolation, self.interpolation))
+        s.append(self.plain.getFormattedString(PropertyName.plain.name, font: font, forIcon: true))
+        s.append(self.number.getFormattedString(PropertyName.number.name, font: font, forIcon: true))
+        s.append(self.string.getFormattedString(PropertyName.string.name, font: font, forIcon: true))
+        s.append(self.escape.getFormattedString(PropertyName.escape.name, font: font, forIcon: true))
+        s.append(self.preProcessor.getFormattedString(PropertyName.preProcessor.name, font: font, forIcon: true))
+        s.append(self.stringPreProc.getFormattedString(PropertyName.stringPreProc.name, font: font, forIcon: true))
+        s.append(self.blockComment.getFormattedString(PropertyName.blockComment.name, font: font, forIcon: true))
+        s.append(self.lineComment.getFormattedString(PropertyName.lineComment.name, font: font, forIcon: true))
+        s.append(self.lineNum.getFormattedString(PropertyName.lineNum.name, font: font, forIcon: true))
+        s.append(self.operator.getFormattedString(PropertyName.operator.name, font: font, forIcon: true))
+        s.append(self.interpolation.getFormattedString(PropertyName.interpolation.name, font: font, forIcon: true))
         for (i, keyword) in self.keywords.enumerated() {
-            s.append(formatProperty(.keyword(index: i), keyword))
+            s.append(keyword.getFormattedString(PropertyName.keyword(index: i).name, font: font, forIcon: true))
         }
-        
         
         return s
     }
