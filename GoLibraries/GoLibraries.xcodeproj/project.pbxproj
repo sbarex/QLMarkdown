@@ -40,7 +40,7 @@
 			buildPhases = (
 			);
 			buildToolPath = /usr/bin/make;
-			buildWorkingDirectory = /Users/sbaldiss/Develop/OSX/QLMardown/GoLibraries;
+			buildWorkingDirectory = "";
 			dependencies = (
 			);
 			name = GoLibraries;
