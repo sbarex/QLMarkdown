@@ -42,5 +42,29 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mar, 29 dic 2020 18:36:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b7/QLMarkdown.zip" sparkle:version="7" sparkle:shortVersionString="1.0" type="application/octet-stream" sparkle:edSignature="hrB1y5SY9+2yHidU6wzobdt1o2yX3p+DCbhjIPwHaiZAOpntNEbW5yCXRQLgY68I6iqOXWZERosTxO00f/qIBQ==" length="17682806"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+    <li><code>Heads extension</code> to auto create anchor for the heads.</li>
+    <li>Redesigned UI.</li>
+    <li>Auto refresh menu to automatically update the preview when an option is changed (the auto refresh do not apply when you change the example text). </li>
+    <li>The quicklook extension detects the settings changed on the host application. Remember that macOS can store the quicklook preview in a cache, so to see the new settings applied try to open the preview of a different file.</li>
+    <li>On the host application you can open a .md file to view in the preview (you can also drag & drop the over the text editor).</li>
+    <li>Import css inside the support folder.</li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+    <li>Typo in application name.</li>
+    <li>Null pointer bug on inlineimage extension.</li>
+    <li>Fix on the image mime detection.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
