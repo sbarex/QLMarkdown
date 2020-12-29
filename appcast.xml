@@ -72,7 +72,7 @@
             <title>1.0</title>
             <pubDate>mar, 29 dic 2020 20:00:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b7/QLMarkdown.zip" sparkle:version="8" sparkle:edSignature="pdGKJmGSSuz9I/2QSUqOzWfDex3ucmCXSTLeWreQCBflSb6gOY58MHY7EQ8sOxxspiBAKUEWrI+th6kXms9PAA==" length="17683533"/>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b8/QLMarkdown.zip" sparkle:version="8" sparkle:edSignature="pdGKJmGSSuz9I/2QSUqOzWfDex3ucmCXSTLeWreQCBflSb6gOY58MHY7EQ8sOxxspiBAKUEWrI+th6kXms9PAA==" length="17683533"/>
             <description><![CDATA[
 <p>Fixed standard cmark task list extension not inserting class style. </p>
             ]]>
