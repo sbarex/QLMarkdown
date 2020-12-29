@@ -1,6 +1,6 @@
 //
 //  inlineimage.c
-//  QLMardown
+//  QLMarkdown
 //
 //  Created by Sbarex on 17/12/20.
 //
@@ -17,6 +17,8 @@
 
 #include <parser.h>
 #include <render.h>
+
+#include <errno.h>
 
 static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
                                 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
@@ -84,6 +86,10 @@ static void release_settings(cmark_mem *mem, void *user_data)
 
 static bool startsWith(const char *pre, const char *str)
 {
+    if (pre == NULL || str == NULL) { // Saninty check.
+        return 0;
+    }
+    
     size_t lenpre = strlen(pre),
            lenstr = strlen(str);
     return lenstr < lenpre ? false : memcmp(pre, str, lenpre) == 0;
@@ -129,13 +135,14 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
                 goto continue_loop;
             }
             
-            mime = get_mime(image_path, 2);
-            
-            if (!startsWith("image/", mime)) {
-                fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
-                goto continue_loop;
-            }
             if (access(image_path, F_OK) == 0) {
+                mime = get_mime(image_path, 2);
+                
+                if (!mime || !startsWith("image/", mime)) {
+                    fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
+                    goto continue_loop;
+                }
+                
                 char * buffer = 0;
                 long length = 0;
                 FILE * f = fopen((const char *)url, "rb");
@@ -168,6 +175,8 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
                     
                     free(buffer);
                     free(encoded);
+                } else {
+                    fprintf(stderr, "Error to get magic for file %s: #%d, %s\n", path, errno, strerror(errno));
                 }
             }
             

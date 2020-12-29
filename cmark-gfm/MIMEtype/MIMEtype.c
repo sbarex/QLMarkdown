@@ -40,11 +40,14 @@ static const char *mime_from_ext(const char *ext){
     if (ext==NULL) {
         return NULL;
     }
-     
+    //int i, len = LEN(mimes);
 	size_t bot=0, len=LEN(mimes), top=len, i=(top>>1)&(~1);
 	int cmp;
 	for (; bot<=top && i<=len; i=((bot+top)>>1)&(~1)) {
-		cmp = strcmp(ext,mimes[i]);
+    //for (i = 0; i<=len; i += 2) {
+        const char *mime = mimes[i];
+        // printf("%s\n", mime);
+		cmp = strcmp(ext, mime);
         if (!cmp) {
              return mimes[i+1]; //match found
         } else if (cmp>0) {
@@ -117,7 +120,7 @@ char *get_mime(const char *path, MIME_MAGICK_CHECK check_magic) {
                 }
             } else {
                 //else return something more useful than NULL?
-                printf("Error to get magic for file %s: #%d, %s", path, errno, strerror(errno));
+                fprintf(stderr, "Error to get magic for file %s: #%d, %s\n", path, errno, strerror(errno));
             }
         }
     }

@@ -1,3 +1,17 @@
+1.0.b7
+New features:
+- `Heads extension` to auto create anchor for the heads.
+- Redesigned UI. 
+- Auto refresh menu to automatically update the preview when an option is changed (the auto refresh do not apply when you change the example text). 
+- The quicklook extension detects the settings changed on the host application. Remember that macOS can store the quicklook preview in a cache, so to see the new settings applied try to open the preview of a different file.
+- On the host application you can open a .md file to view in the preview (you can also drag & drop the over the text editor).
+- Import css inside the support folder.
+
+Bugfix:
+- Typo in application name.
+- Null pointer bug on inlineimage extension.
+- Fix on the image mime detection.
+
 1.0.b6
 New Features:
 - better ui.
@@ -8,7 +22,7 @@ Bug fix:
 
 1.0.b5
 New features:
-- Experimental option to choose to open links inside the quicklook preview window or in the default browser (but on big sur do not works).
+- Experimental option to choose to open links inside the quicklook preview window or in the default browser (but on Big Sur do not works).
 Bugfix:
 - Fix missing sparkle framework.
 
@@ -18,7 +32,7 @@ New features:
 - Save button enabled only when there are some changed settings. in case of error a warning panel will be shown.
 - Debug options.
 
-Buf fix:
+Bug fix:
 - fix missing WKWebView class on Catalina 
 
 

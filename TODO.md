@@ -9,7 +9,7 @@
 - [ ] investigate CMARK_OPT_UNSAFE form inline images
 - [ ] investigate font family override for fanced blocks
 - [ ] localization support
-- [ ] extension to generate anchor link for heads
-- [ ] emoji extension: better code that parse the single placeholder and generate the AST
+- [ ] emoji extension: better code that parse the single placeholder and generate nodes inside the AST
 
+- [x] extension to generate anchor link for heads
 - [x] sparkle update engine

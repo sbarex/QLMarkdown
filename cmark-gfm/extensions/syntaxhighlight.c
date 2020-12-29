@@ -1,6 +1,6 @@
 //
 //  syntaxhighlight.c
-//  QLMardown
+//  QLMarkdown
 //
 //  Created by Sbarex on 09/12/20.
 //

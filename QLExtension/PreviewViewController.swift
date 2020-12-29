@@ -25,6 +25,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     override func loadView() {
         super.loadView()
         // Do any additional setup after loading the view.
+        
+        Settings.shared.startMonitorChange()
     }
     
     internal func getBundleContents(forResource: String, ofType: String) -> String?

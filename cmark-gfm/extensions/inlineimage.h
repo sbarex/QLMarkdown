@@ -1,6 +1,6 @@
 //
 //  inlineimage.h
-//  QLMardown
+//  QLMarkdown
 //
 //  Created by Sbarex on 17/12/20.
 //

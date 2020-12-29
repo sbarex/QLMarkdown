@@ -1,0 +1,1330 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
+		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
+		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
+		831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		831A8C56258ABD6200E36182 /* autolink.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E802581883A004664D3 /* autolink.c */; };
+		831A8C59258ABD6800E36182 /* core-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E892581883B004664D3 /* core-extensions.c */; };
+		831A8C5C258ABD6F00E36182 /* ext_scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E852581883B004664D3 /* ext_scanners.c */; };
+		831A8C5F258ABD7900E36182 /* strikethrough.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E7E2581883A004664D3 /* strikethrough.c */; };
+		831A8C62258ABD7F00E36182 /* table.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E862581883B004664D3 /* table.c */; };
+		831A8C65258ABD8200E36182 /* tagfilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E7F2581883A004664D3 /* tagfilter.c */; };
+		831A8C68258ABD8400E36182 /* tasklist.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E882581883B004664D3 /* tasklist.c */; };
+		831A8C6B258ABD8900E36182 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
+		831A8C6E258ABD8D00E36182 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
+		831A8C71258ABD9300E36182 /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
+		831A8C74258ABD9600E36182 /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
+		831A8C77258ABD9D00E36182 /* blocks.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB42581884C004664D3 /* blocks.c */; };
+		831A8C7A258ABDA100E36182 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC82581884D004664D3 /* buffer.c */; };
+		831A8C80258ABDAC00E36182 /* cmark_ctype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAA2581884B004664D3 /* cmark_ctype.c */; };
+		831A8C83258ABDB300E36182 /* cmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA22581884B004664D3 /* cmark.c */; };
+		831A8C86258ABDB600E36182 /* commonmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC02581884C004664D3 /* commonmark.c */; };
+		831A8C8C258ABDBE00E36182 /* footnotes.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9A2581884A004664D3 /* footnotes.c */; };
+		831A8C8F258ABDC300E36182 /* houdini_href_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA72581884B004664D3 /* houdini_href_e.c */; };
+		831A8C90258ABDC300E36182 /* houdini_html_u.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA12581884B004664D3 /* houdini_html_u.c */; };
+		831A8C91258ABDC300E36182 /* houdini_html_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAD2581884B004664D3 /* houdini_html_e.c */; };
+		831A8C94258ABDD400E36182 /* man.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB32581884C004664D3 /* man.c */; };
+		831A8C95258ABDD400E36182 /* map.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA52581884B004664D3 /* map.c */; };
+		831A8C96258ABDD400E36182 /* render.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBB2581884C004664D3 /* render.c */; };
+		831A8C97258ABDD400E36182 /* linked_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB72581884C004664D3 /* linked_list.c */; };
+		831A8C98258ABDD400E36182 /* node.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBE2581884C004664D3 /* node.c */; };
+		831A8C99258ABDD400E36182 /* plaintext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC32581884C004664D3 /* plaintext.c */; };
+		831A8C9A258ABDD400E36182 /* inlines.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA32581884B004664D3 /* inlines.c */; };
+		831A8C9B258ABDD400E36182 /* references.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC12581884C004664D3 /* references.c */; };
+		831A8C9C258ABDD500E36182 /* plugin.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB92581884C004664D3 /* plugin.c */; };
+		831A8C9D258ABDD500E36182 /* scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAF2581884B004664D3 /* scanners.c */; };
+		831A8C9E258ABDD500E36182 /* registry.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598ECA2581884D004664D3 /* registry.c */; };
+		831A8C9F258ABDD500E36182 /* html.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9F2581884B004664D3 /* html.c */; };
+		831A8CA0258ABDD500E36182 /* iterator.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB12581884C004664D3 /* iterator.c */; };
+		831A8CA1258ABDD500E36182 /* latex.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC72581884D004664D3 /* latex.c */; };
+		831A8CA4258ABDDB00E36182 /* syntax_extension.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB22581884C004664D3 /* syntax_extension.c */; };
+		831A8CA5258ABDDB00E36182 /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9D2581884A004664D3 /* xml.c */; };
+		831A8CA6258ABDDB00E36182 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB02581884B004664D3 /* utf8.c */; };
+		831A8CBE258AC0D200E36182 /* arena.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB82581884C004664D3 /* arena.c */; };
+		831A8CC1258AC18300E36182 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
+		831A8CC5258AC4A900E36182 /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* markdown.css */; };
+		831A8CD1258ACB3300E36182 /* ThemePropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */; };
+		83327D202593FCEB00E76CF6 /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
+		83327D222593FCEC00E76CF6 /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
+		83327D312594087100E76CF6 /* MIMEtype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83327D2E2594066300E76CF6 /* MIMEtype.c */; };
+		83327D332594087100E76CF6 /* MIMEtype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83327D2E2594066300E76CF6 /* MIMEtype.c */; };
+		83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83327D452595E15700E76CF6 /* Settings+ext.swift */; };
+		8342418B25894328000093EC /* ThemesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8342418A25894328000093EC /* ThemesView.xib */; };
+		8342418E2589432E000093EC /* ThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342418D2589432E000093EC /* ThemesView.swift */; };
+		834CAB8A259167D100673002 /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB89259167B800673002 /* examples */; };
+		834CAB8E2591DE0F00673002 /* SaveAsFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */; };
+		834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */; };
+		834CAB9225923D2200673002 /* ThemeSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9125923D2200673002 /* ThemeSelectorViewController.swift */; };
+		834CAB9625923D3000673002 /* ThemeCollectionViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9525923D3000673002 /* ThemeCollectionViewItem.swift */; };
+		834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB9425923D3000673002 /* ThemeCollectionViewItem.xib */; };
+		834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
+		834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
+		8357EB782587DBED002C2C45 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB772587DBED002C2C45 /* ThemesViewController.swift */; };
+		8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7B2587F8EB002C2C45 /* Theme.swift */; };
+		8357EB7F2588262C002C2C45 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7E2588262C002C2C45 /* String+ext.swift */; };
+		8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8357EB812588A8D3002C2C45 /* ThemeTableView.xib */; };
+		8357EB862588AB88002C2C45 /* ThemeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB852588AB88002C2C45 /* ThemeTableView.swift */; };
+		8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8357EB892588AE10002C2C45 /* ThemePreviewView.xib */; };
+		8357EB8D2588AE16002C2C45 /* ThemePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB8C2588AE16002C2C45 /* ThemePreviewView.swift */; };
+		83598E6525818808004664D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83598E6425818808004664D3 /* AppDelegate.swift */; };
+		83598E6725818808004664D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83598E6625818808004664D3 /* ViewController.swift */; };
+		83598E692581880A004664D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83598E682581880A004664D3 /* Assets.xcassets */; };
+		83598E6C2581880A004664D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83598E6A2581880A004664D3 /* Main.storyboard */; };
+		83598E8A2581883B004664D3 /* strikethrough.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E7E2581883A004664D3 /* strikethrough.c */; };
+		83598E8B2581883B004664D3 /* tagfilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E7F2581883A004664D3 /* tagfilter.c */; };
+		83598E8C2581883B004664D3 /* autolink.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E802581883A004664D3 /* autolink.c */; };
+		83598E8E2581883B004664D3 /* ext_scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E852581883B004664D3 /* ext_scanners.c */; };
+		83598E8F2581883B004664D3 /* table.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E862581883B004664D3 /* table.c */; };
+		83598E902581883B004664D3 /* tasklist.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E882581883B004664D3 /* tasklist.c */; };
+		83598E912581883B004664D3 /* core-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E892581883B004664D3 /* core-extensions.c */; };
+		83598ECC2581884D004664D3 /* footnotes.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9A2581884A004664D3 /* footnotes.c */; };
+		83598ECD2581884D004664D3 /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9D2581884A004664D3 /* xml.c */; };
+		83598ECF2581884D004664D3 /* html.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9F2581884B004664D3 /* html.c */; };
+		83598ED12581884D004664D3 /* houdini_html_u.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA12581884B004664D3 /* houdini_html_u.c */; };
+		83598ED22581884D004664D3 /* cmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA22581884B004664D3 /* cmark.c */; };
+		83598ED32581884D004664D3 /* inlines.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA32581884B004664D3 /* inlines.c */; };
+		83598ED42581884D004664D3 /* map.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA52581884B004664D3 /* map.c */; };
+		83598ED52581884D004664D3 /* houdini_href_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA72581884B004664D3 /* houdini_href_e.c */; };
+		83598ED62581884D004664D3 /* cmark_ctype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAA2581884B004664D3 /* cmark_ctype.c */; };
+		83598ED82581884D004664D3 /* houdini_html_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAD2581884B004664D3 /* houdini_html_e.c */; };
+		83598EDA2581884D004664D3 /* scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAF2581884B004664D3 /* scanners.c */; };
+		83598EDB2581884D004664D3 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB02581884B004664D3 /* utf8.c */; };
+		83598EDC2581884D004664D3 /* iterator.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB12581884C004664D3 /* iterator.c */; };
+		83598EDD2581884D004664D3 /* syntax_extension.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB22581884C004664D3 /* syntax_extension.c */; };
+		83598EDE2581884D004664D3 /* man.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB32581884C004664D3 /* man.c */; };
+		83598EDF2581884D004664D3 /* blocks.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB42581884C004664D3 /* blocks.c */; };
+		83598EE12581884D004664D3 /* linked_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB72581884C004664D3 /* linked_list.c */; };
+		83598EE22581884D004664D3 /* arena.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB82581884C004664D3 /* arena.c */; };
+		83598EE32581884D004664D3 /* plugin.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB92581884C004664D3 /* plugin.c */; };
+		83598EE52581884D004664D3 /* render.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBB2581884C004664D3 /* render.c */; };
+		83598EE62581884D004664D3 /* node.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBE2581884C004664D3 /* node.c */; };
+		83598EE72581884D004664D3 /* commonmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC02581884C004664D3 /* commonmark.c */; };
+		83598EE82581884D004664D3 /* references.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC12581884C004664D3 /* references.c */; };
+		83598EE92581884D004664D3 /* plaintext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC32581884C004664D3 /* plaintext.c */; };
+		83598EEA2581884D004664D3 /* latex.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC72581884D004664D3 /* latex.c */; };
+		83598EEB2581884D004664D3 /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC82581884D004664D3 /* buffer.c */; };
+		83598EED2581884D004664D3 /* registry.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598ECA2581884D004664D3 /* registry.c */; };
+		83598EF625818BCB004664D3 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
+		83598EFC25820A72004664D3 /* test2.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EFA258209C7004664D3 /* test2.md */; };
+		83598EFD25820A72004664D3 /* test1.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EF92582098A004664D3 /* test1.md */; };
+		83598F24258263C0004664D3 /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* markdown.css */; };
+		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
+		83760302258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
+		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
+		837F28E82597765900A5F7DE /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
+		837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837F290E2597950900A5F7DE /* libgoutils.a */; };
+		837F29122597975500A5F7DE /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837F290E2597950900A5F7DE /* libgoutils.a */; };
+		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
+		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
+		83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */; };
+		83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
+		83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
+		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
+		83E7FEF2258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
+		83E7FEF8258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
+		83E7FEF9258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
+		83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
+		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
+		83F4B99225868A7400FC58A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
+		83F4B9962586AB9700FC58A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83D4B1C3258675D0000745DB /* README.md */; };
+		83F881612597E902008C5071 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
+		83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
+		83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
+		83F882382598A8B3008C5071 /* org.sparkle-project.InstallerStatus.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */; };
+		83F882392598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */; };
+		83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F882362598A8B3008C5071 /* Sparkle.framework */; };
+		83F8823B2598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */; };
+		83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83F882482598C5F3008C5071 /* Sparkle.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83F882362598A8B3008C5071 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		83F88259259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
+		83F8825A259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
+		83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
+		83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 831A8C3E258ABADA00E36182;
+			remoteInfo = QLExtension;
+		};
+		837F29192597A0B300A5F7DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 837F28EF2597817300A5F7DE;
+			remoteInfo = GoLibraries;
+		};
+		837F291B2597A0B800A5F7DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 837F28EF2597817300A5F7DE;
+			remoteInfo = GoLibraries;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		831A8C4C258ABADA00E36182 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83E7FF07258FCCF9003ECF9B /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */,
+				83F882482598C5F3008C5071 /* Sparkle.framework in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83F8816F2597EE45008C5071 /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
+				83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
+				83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
+			);
+			name = "Embed XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		831A8C43258ABADA00E36182 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		831A8C46258ABADA00E36182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreviewViewController.xib; sourceTree = "<group>"; };
+		831A8C48258ABADA00E36182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		831A8C49258ABADA00E36182 /* QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QLExtension.entitlements; sourceTree = "<group>"; };
+		831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePropertyViewController.swift; sourceTree = "<group>"; };
+		83327D1D2593FB0700E76CF6 /* url.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = url.hpp; sourceTree = "<group>"; };
+		83327D1E2593FB0700E76CF6 /* url.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = url.cpp; sourceTree = "<group>"; };
+		83327D262594066300E76CF6 /* MIME-sources.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MIME-sources.md"; sourceTree = "<group>"; };
+		83327D272594066300E76CF6 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		83327D282594066300E76CF6 /* mimes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimes.h; sourceTree = "<group>"; };
+		83327D292594066300E76CF6 /* mimesX.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimesX.h; sourceTree = "<group>"; };
+		83327D2A2594066300E76CF6 /* mimes4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimes4.h; sourceTree = "<group>"; };
+		83327D2B2594066300E76CF6 /* mimes0.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mimes0.h; sourceTree = "<group>"; };
+		83327D2C2594066300E76CF6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		83327D2D2594066300E76CF6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		83327D2E2594066300E76CF6 /* MIMEtype.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MIMEtype.c; sourceTree = "<group>"; };
+		83327D2F2594077200E76CF6 /* MIMEType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIMEType.h; sourceTree = "<group>"; };
+		83327D452595E15700E76CF6 /* Settings+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ext.swift"; sourceTree = "<group>"; };
+		8342418A25894328000093EC /* ThemesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesView.xib; sourceTree = "<group>"; };
+		8342418D2589432E000093EC /* ThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesView.swift; sourceTree = "<group>"; };
+		834CAB89259167B800673002 /* examples */ = {isa = PBXFileReference; lastKnownFileType = text; path = examples; sourceTree = SOURCE_ROOT; };
+		834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveAsFormatView.swift; sourceTree = "<group>"; };
+		834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveAsFormatView.xib; sourceTree = "<group>"; };
+		834CAB9125923D2200673002 /* ThemeSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSelectorViewController.swift; sourceTree = "<group>"; };
+		834CAB9425923D3000673002 /* ThemeCollectionViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCollectionViewItem.xib; sourceTree = "<group>"; };
+		834CAB9525923D3000673002 /* ThemeCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCollectionViewItem.swift; sourceTree = "<group>"; };
+		834CAB9A2593650800673002 /* emoji_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = emoji_utils.cpp; sourceTree = "<group>"; };
+		834CAB9B2593650800673002 /* emoji_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = emoji_utils.hpp; sourceTree = "<group>"; };
+		834CABA02593C57B00673002 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
+		8357EB772587DBED002C2C45 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
+		8357EB7B2587F8EB002C2C45 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		8357EB7E2588262C002C2C45 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
+		8357EB812588A8D3002C2C45 /* ThemeTableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeTableView.xib; sourceTree = "<group>"; };
+		8357EB852588AB88002C2C45 /* ThemeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTableView.swift; sourceTree = "<group>"; };
+		8357EB892588AE10002C2C45 /* ThemePreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePreviewView.xib; sourceTree = "<group>"; };
+		8357EB8C2588AE16002C2C45 /* ThemePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePreviewView.swift; sourceTree = "<group>"; };
+		83598E6125818808004664D3 /* QLMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		83598E6425818808004664D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		83598E6625818808004664D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		83598E682581880A004664D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		83598E6B2581880A004664D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		83598E6D2581880A004664D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83598E6E2581880A004664D3 /* QLMarkdown.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QLMarkdown.entitlements; sourceTree = "<group>"; };
+		83598E7925818839004664D3 /* QLMarkdown-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QLMarkdown-Bridging-Header.h"; sourceTree = "<group>"; };
+		83598E7A2581883A004664D3 /* tasklist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tasklist.h; sourceTree = "<group>"; };
+		83598E7B2581883A004664D3 /* cmark-gfm-core-extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cmark-gfm-core-extensions.h"; sourceTree = "<group>"; };
+		83598E7C2581883A004664D3 /* strikethrough.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strikethrough.h; sourceTree = "<group>"; };
+		83598E7D2581883A004664D3 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
+		83598E7E2581883A004664D3 /* strikethrough.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = strikethrough.c; sourceTree = "<group>"; };
+		83598E7F2581883A004664D3 /* tagfilter.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tagfilter.c; sourceTree = "<group>"; };
+		83598E802581883A004664D3 /* autolink.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = autolink.c; sourceTree = "<group>"; };
+		83598E812581883A004664D3 /* cmark-gfm-extensions_export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cmark-gfm-extensions_export.h"; sourceTree = "<group>"; };
+		83598E822581883A004664D3 /* ext_scanners.re */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ext_scanners.re; sourceTree = "<group>"; };
+		83598E832581883A004664D3 /* table.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = table.h; sourceTree = "<group>"; };
+		83598E842581883A004664D3 /* ext_scanners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ext_scanners.h; sourceTree = "<group>"; };
+		83598E852581883B004664D3 /* ext_scanners.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ext_scanners.c; sourceTree = "<group>"; };
+		83598E862581883B004664D3 /* table.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = table.c; sourceTree = "<group>"; };
+		83598E872581883B004664D3 /* tagfilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tagfilter.h; sourceTree = "<group>"; };
+		83598E882581883B004664D3 /* tasklist.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tasklist.c; sourceTree = "<group>"; };
+		83598E892581883B004664D3 /* core-extensions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "core-extensions.c"; sourceTree = "<group>"; };
+		83598E932581884A004664D3 /* node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node.h; sourceTree = "<group>"; };
+		83598E942581884A004664D3 /* cmark-gfm_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cmark-gfm_version.h"; sourceTree = "<group>"; };
+		83598E952581884A004664D3 /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render.h; sourceTree = "<group>"; };
+		83598E962581884A004664D3 /* map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = map.h; sourceTree = "<group>"; };
+		83598E972581884A004664D3 /* cmark-gfm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cmark-gfm.h"; sourceTree = "<group>"; };
+		83598E982581884A004664D3 /* inlines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inlines.h; sourceTree = "<group>"; };
+		83598E992581884A004664D3 /* cmark_ctype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmark_ctype.h; sourceTree = "<group>"; };
+		83598E9A2581884A004664D3 /* footnotes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = footnotes.c; sourceTree = "<group>"; };
+		83598E9B2581884A004664D3 /* houdini.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = houdini.h; sourceTree = "<group>"; };
+		83598E9C2581884A004664D3 /* footnotes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = footnotes.h; sourceTree = "<group>"; };
+		83598E9D2581884A004664D3 /* xml.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xml.c; sourceTree = "<group>"; };
+		83598E9E2581884A004664D3 /* config.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
+		83598E9F2581884B004664D3 /* html.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = html.c; sourceTree = "<group>"; };
+		83598EA02581884B004664D3 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		83598EA12581884B004664D3 /* houdini_html_u.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = houdini_html_u.c; sourceTree = "<group>"; };
+		83598EA22581884B004664D3 /* cmark.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmark.c; sourceTree = "<group>"; };
+		83598EA32581884B004664D3 /* inlines.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = inlines.c; sourceTree = "<group>"; };
+		83598EA42581884B004664D3 /* buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buffer.h; sourceTree = "<group>"; };
+		83598EA52581884B004664D3 /* map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = map.c; sourceTree = "<group>"; };
+		83598EA62581884B004664D3 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		83598EA72581884B004664D3 /* houdini_href_e.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = houdini_href_e.c; sourceTree = "<group>"; };
+		83598EA82581884B004664D3 /* registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registry.h; sourceTree = "<group>"; };
+		83598EA92581884B004664D3 /* references.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = references.h; sourceTree = "<group>"; };
+		83598EAA2581884B004664D3 /* cmark_ctype.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cmark_ctype.c; sourceTree = "<group>"; };
+		83598EAB2581884B004664D3 /* cmark-gfm_version.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cmark-gfm_version.h.in"; sourceTree = "<group>"; };
+		83598EAC2581884B004664D3 /* scanners.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scanners.h; sourceTree = "<group>"; };
+		83598EAD2581884B004664D3 /* houdini_html_e.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = houdini_html_e.c; sourceTree = "<group>"; };
+		83598EAE2581884B004664D3 /* case_fold_switch.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = case_fold_switch.inc; sourceTree = "<group>"; };
+		83598EAF2581884B004664D3 /* scanners.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = scanners.c; sourceTree = "<group>"; };
+		83598EB02581884B004664D3 /* utf8.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utf8.c; sourceTree = "<group>"; };
+		83598EB12581884C004664D3 /* iterator.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = iterator.c; sourceTree = "<group>"; };
+		83598EB22581884C004664D3 /* syntax_extension.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = syntax_extension.c; sourceTree = "<group>"; };
+		83598EB32581884C004664D3 /* man.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = man.c; sourceTree = "<group>"; };
+		83598EB42581884C004664D3 /* blocks.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = blocks.c; sourceTree = "<group>"; };
+		83598EB52581884C004664D3 /* scanners.re */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scanners.re; sourceTree = "<group>"; };
+		83598EB62581884C004664D3 /* plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plugin.h; sourceTree = "<group>"; };
+		83598EB72581884C004664D3 /* linked_list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = linked_list.c; sourceTree = "<group>"; };
+		83598EB82581884C004664D3 /* arena.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = arena.c; sourceTree = "<group>"; };
+		83598EB92581884C004664D3 /* plugin.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plugin.c; sourceTree = "<group>"; };
+		83598EBA2581884C004664D3 /* entities.inc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.pascal; path = entities.inc; sourceTree = "<group>"; };
+		83598EBB2581884C004664D3 /* render.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = render.c; sourceTree = "<group>"; };
+		83598EBC2581884C004664D3 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
+		83598EBD2581884C004664D3 /* cmark-gfm_export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cmark-gfm_export.h"; sourceTree = "<group>"; };
+		83598EBE2581884C004664D3 /* node.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = node.c; sourceTree = "<group>"; };
+		83598EBF2581884C004664D3 /* html.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = html.h; sourceTree = "<group>"; };
+		83598EC02581884C004664D3 /* commonmark.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = commonmark.c; sourceTree = "<group>"; };
+		83598EC12581884C004664D3 /* references.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = references.c; sourceTree = "<group>"; };
+		83598EC22581884C004664D3 /* cmark-gfm-extension_api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cmark-gfm-extension_api.h"; sourceTree = "<group>"; };
+		83598EC32581884C004664D3 /* plaintext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plaintext.c; sourceTree = "<group>"; };
+		83598EC42581884D004664D3 /* chunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chunk.h; sourceTree = "<group>"; };
+		83598EC52581884D004664D3 /* syntax_extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = syntax_extension.h; sourceTree = "<group>"; };
+		83598EC62581884D004664D3 /* iterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iterator.h; sourceTree = "<group>"; };
+		83598EC72581884D004664D3 /* latex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = latex.c; sourceTree = "<group>"; };
+		83598EC82581884D004664D3 /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
+		83598EC92581884D004664D3 /* libcmark-gfm.pc.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "libcmark-gfm.pc.in"; sourceTree = "<group>"; };
+		83598ECA2581884D004664D3 /* registry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = registry.c; sourceTree = "<group>"; };
+		83598ECB2581884D004664D3 /* parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parser.h; sourceTree = "<group>"; };
+		83598EF425818B8B004664D3 /* syntaxhighlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = syntaxhighlight.h; sourceTree = "<group>"; };
+		83598EF525818BCB004664D3 /* syntaxhighlight.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = syntaxhighlight.c; sourceTree = "<group>"; };
+		83598EF92582098A004664D3 /* test1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test1.md; sourceTree = "<group>"; };
+		83598EFA258209C7004664D3 /* test2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test2.md; sourceTree = "<group>"; };
+		83598F22258263C0004664D3 /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
+		837602FF258C1813004799ED /* inlineimage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inlineimage.h; sourceTree = "<group>"; };
+		83760300258C1813004799ED /* inlineimage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inlineimage.c; sourceTree = "<group>"; };
+		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
+		837F28E72597762C00A5F7DE /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = "<group>"; };
+		837F28FB2597817400A5F7DE /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
+		837F28FC2597817400A5F7DE /* goutils.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = goutils.go; sourceTree = "<group>"; };
+		837F28FD2597817400A5F7DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		837F28FE2597817400A5F7DE /* go.sum */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.sum; sourceTree = "<group>"; };
+		837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = GoLibraries.xcodeproj; sourceTree = "<group>"; };
+		837F290D259794FF00A5F7DE /* goutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goutils.h; sourceTree = "<group>"; };
+		837F290E2597950900A5F7DE /* libgoutils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgoutils.a; sourceTree = "<group>"; };
+		837F291E2597AAC000A5F7DE /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		838109C1258403CA000AFE3C /* mention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mention.h; sourceTree = "<group>"; };
+		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
+		838109C525840429000AFE3C /* checkbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checkbox.h; sourceTree = "<group>"; };
+		838109C625840429000AFE3C /* checkbox.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = checkbox.c; sourceTree = "<group>"; };
+		83870BC1259B95A90065543D /* main_interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_interface.png; sourceTree = "<group>"; };
+		83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesSelectorViewController.swift; sourceTree = "<group>"; };
+		83C44B3C259A70EE004C1367 /* string_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_utils.cpp; sourceTree = "<group>"; };
+		83C44B3D259A70EE004C1367 /* string_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string_utils.hpp; sourceTree = "<group>"; };
+		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		83E7FEED258FBE54003ECF9B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
+		83E7FEF0258FBF37003ECF9B /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
+		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwrapper_highlight.dylib; path = "highlight wrapper/libwrapper_highlight.dylib"; sourceTree = "<group>"; };
+		83E7FF11258FE4DF003ECF9B /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
+		83EF951C2585367500B56FA3 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
+		83EF95212585476800B56FA3 /* emoji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = emoji.h; sourceTree = "<group>"; };
+		83EF95222585476800B56FA3 /* emoji.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emoji.c; sourceTree = "<group>"; };
+		83F4B99125868A7400FC58A7 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		83F881642597EE2B008C5071 /* BinaryDelta */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = BinaryDelta; sourceTree = "<group>"; };
+		83F881672597EE2C008C5071 /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
+		83F881682597EE2C008C5071 /* sign_update */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sign_update; sourceTree = "<group>"; };
+		83F881692597EE2C008C5071 /* generate_keys */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_keys; sourceTree = "<group>"; };
+		83F8822C2598A5C0008C5071 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
+		83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
+		83F882362598A8B3008C5071 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerConnection.xpc"; sourceTree = "<group>"; };
+		83F88257259906C7008C5071 /* heads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = heads.h; sourceTree = "<group>"; };
+		83F88258259906C7008C5071 /* heads.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = heads.c; sourceTree = "<group>"; };
+		83F8825C25991BFC008C5071 /* heads_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = heads_utils.cpp; sourceTree = "<group>"; };
+		83F8825D25991BFC008C5071 /* heads_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = heads_utils.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		831A8C3C258ABADA00E36182 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
+				83E7FEF9258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
+				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
+				837F29122597975500A5F7DE /* libgoutils.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83598E5E25818808004664D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83E7FEF8258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
+				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
+				837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */,
+				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		831A8C42258ABADA00E36182 /* QLExtension */ = {
+			isa = PBXGroup;
+			children = (
+				831A8C43258ABADA00E36182 /* PreviewViewController.swift */,
+				831A8C45258ABADA00E36182 /* PreviewViewController.xib */,
+				831A8C48258ABADA00E36182 /* Info.plist */,
+				831A8C49258ABADA00E36182 /* QLExtension.entitlements */,
+			);
+			path = QLExtension;
+			sourceTree = "<group>";
+		};
+		83327D252594066300E76CF6 /* MIMEtype */ = {
+			isa = PBXGroup;
+			children = (
+				83327D262594066300E76CF6 /* MIME-sources.md */,
+				83327D272594066300E76CF6 /* LICENSE */,
+				83327D282594066300E76CF6 /* mimes.h */,
+				83327D292594066300E76CF6 /* mimesX.h */,
+				83327D2A2594066300E76CF6 /* mimes4.h */,
+				83327D2B2594066300E76CF6 /* mimes0.h */,
+				83327D2C2594066300E76CF6 /* README.md */,
+				83327D2D2594066300E76CF6 /* .gitignore */,
+				83327D2E2594066300E76CF6 /* MIMEtype.c */,
+				83327D2F2594077200E76CF6 /* MIMEType.h */,
+			);
+			path = MIMEtype;
+			sourceTree = "<group>";
+		};
+		8357EB762587DBDE002C2C45 /* Themes */ = {
+			isa = PBXGroup;
+			children = (
+				8357EB7B2587F8EB002C2C45 /* Theme.swift */,
+				8357EB772587DBED002C2C45 /* ThemesViewController.swift */,
+				8357EB812588A8D3002C2C45 /* ThemeTableView.xib */,
+				8357EB852588AB88002C2C45 /* ThemeTableView.swift */,
+				8357EB892588AE10002C2C45 /* ThemePreviewView.xib */,
+				8357EB8C2588AE16002C2C45 /* ThemePreviewView.swift */,
+				8342418A25894328000093EC /* ThemesView.xib */,
+				8342418D2589432E000093EC /* ThemesView.swift */,
+				831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */,
+				834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */,
+				834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */,
+				834CAB9525923D3000673002 /* ThemeCollectionViewItem.swift */,
+				834CAB9425923D3000673002 /* ThemeCollectionViewItem.xib */,
+				834CAB9125923D2200673002 /* ThemeSelectorViewController.swift */,
+				83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */,
+			);
+			path = Themes;
+			sourceTree = "<group>";
+		};
+		83598E5825818808004664D3 = {
+			isa = PBXGroup;
+			children = (
+				83D4B1C3258675D0000745DB /* README.md */,
+				834CABA02593C57B00673002 /* CHANGELOG.md */,
+				83E7FEED258FBE54003ECF9B /* TODO.md */,
+				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
+				83870BC1259B95A90065543D /* main_interface.png */,
+				837F28FA2597817300A5F7DE /* GoLibraries */,
+				83E7FEF5258FBF77003ECF9B /* highlight wrapper */,
+				83598E7525818812004664D3 /* cmark-gfm */,
+				83598E6325818808004664D3 /* QLMarkdown */,
+				831A8C42258ABADA00E36182 /* QLExtension */,
+				837F29172597A01F00A5F7DE /* Resources */,
+				83F881632597EE2B008C5071 /* Sparkle */,
+				83598F0525825B8D004664D3 /* Frameworks */,
+				83598E6225818808004664D3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		83598E6225818808004664D3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				83598E6125818808004664D3 /* QLMarkdown.app */,
+				831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		83598E6325818808004664D3 /* QLMarkdown */ = {
+			isa = PBXGroup;
+			children = (
+				83598E6D2581880A004664D3 /* Info.plist */,
+				83598E6E2581880A004664D3 /* QLMarkdown.entitlements */,
+				83598E7925818839004664D3 /* QLMarkdown-Bridging-Header.h */,
+				834CAB89259167B800673002 /* examples */,
+				8357EB762587DBDE002C2C45 /* Themes */,
+				83598E6425818808004664D3 /* AppDelegate.swift */,
+				83598E6625818808004664D3 /* ViewController.swift */,
+				83598E6A2581880A004664D3 /* Main.storyboard */,
+				83598E682581880A004664D3 /* Assets.xcassets */,
+				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
+				8357EB7E2588262C002C2C45 /* String+ext.swift */,
+				83598EF92582098A004664D3 /* test1.md */,
+				83598EFA258209C7004664D3 /* test2.md */,
+				837D20D5258362A5008FC698 /* example.jpg */,
+				83F4B99125868A7400FC58A7 /* Settings.swift */,
+				83327D452595E15700E76CF6 /* Settings+ext.swift */,
+			);
+			path = QLMarkdown;
+			sourceTree = "<group>";
+		};
+		83598E7525818812004664D3 /* cmark-gfm */ = {
+			isa = PBXGroup;
+			children = (
+				83327D1E2593FB0700E76CF6 /* url.cpp */,
+				83327D1D2593FB0700E76CF6 /* url.hpp */,
+				83C44B3C259A70EE004C1367 /* string_utils.cpp */,
+				83C44B3D259A70EE004C1367 /* string_utils.hpp */,
+				83327D252594066300E76CF6 /* MIMEtype */,
+				83598E7825818828004664D3 /* extensions */,
+				83598E762581881B004664D3 /* src */,
+			);
+			path = "cmark-gfm";
+			sourceTree = "<group>";
+		};
+		83598E762581881B004664D3 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				83598EB82581884C004664D3 /* arena.c */,
+				83598EB42581884C004664D3 /* blocks.c */,
+				83598EC82581884D004664D3 /* buffer.c */,
+				83598EA42581884B004664D3 /* buffer.h */,
+				83598EAE2581884B004664D3 /* case_fold_switch.inc */,
+				83598EC42581884D004664D3 /* chunk.h */,
+				83598EA02581884B004664D3 /* CMakeLists.txt */,
+				83598EAA2581884B004664D3 /* cmark_ctype.c */,
+				83598E992581884A004664D3 /* cmark_ctype.h */,
+				83598EBD2581884C004664D3 /* cmark-gfm_export.h */,
+				83598E942581884A004664D3 /* cmark-gfm_version.h */,
+				83598EAB2581884B004664D3 /* cmark-gfm_version.h.in */,
+				83598EC22581884C004664D3 /* cmark-gfm-extension_api.h */,
+				83598E972581884A004664D3 /* cmark-gfm.h */,
+				83598EA22581884B004664D3 /* cmark.c */,
+				83598EC02581884C004664D3 /* commonmark.c */,
+				83598EA62581884B004664D3 /* config.h */,
+				83598E9E2581884A004664D3 /* config.h.in */,
+				83598EBA2581884C004664D3 /* entities.inc */,
+				83598E9A2581884A004664D3 /* footnotes.c */,
+				83598E9C2581884A004664D3 /* footnotes.h */,
+				83598EA72581884B004664D3 /* houdini_href_e.c */,
+				83598EAD2581884B004664D3 /* houdini_html_e.c */,
+				83598EA12581884B004664D3 /* houdini_html_u.c */,
+				83598E9B2581884A004664D3 /* houdini.h */,
+				83598E9F2581884B004664D3 /* html.c */,
+				83598EBF2581884C004664D3 /* html.h */,
+				83598EA32581884B004664D3 /* inlines.c */,
+				83598E982581884A004664D3 /* inlines.h */,
+				83598EB12581884C004664D3 /* iterator.c */,
+				83598EC62581884D004664D3 /* iterator.h */,
+				83598EC72581884D004664D3 /* latex.c */,
+				83598EC92581884D004664D3 /* libcmark-gfm.pc.in */,
+				83598EB72581884C004664D3 /* linked_list.c */,
+				83598EB32581884C004664D3 /* man.c */,
+				83598EA52581884B004664D3 /* map.c */,
+				83598E962581884A004664D3 /* map.h */,
+				83598EBE2581884C004664D3 /* node.c */,
+				83598E932581884A004664D3 /* node.h */,
+				83598ECB2581884D004664D3 /* parser.h */,
+				83598EC32581884C004664D3 /* plaintext.c */,
+				83598EB92581884C004664D3 /* plugin.c */,
+				83598EB62581884C004664D3 /* plugin.h */,
+				83598EC12581884C004664D3 /* references.c */,
+				83598EA92581884B004664D3 /* references.h */,
+				83598ECA2581884D004664D3 /* registry.c */,
+				83598EA82581884B004664D3 /* registry.h */,
+				83598EBB2581884C004664D3 /* render.c */,
+				83598E952581884A004664D3 /* render.h */,
+				83598EAF2581884B004664D3 /* scanners.c */,
+				83598EAC2581884B004664D3 /* scanners.h */,
+				83598EB52581884C004664D3 /* scanners.re */,
+				83598EB22581884C004664D3 /* syntax_extension.c */,
+				83598EC52581884D004664D3 /* syntax_extension.h */,
+				83598EB02581884B004664D3 /* utf8.c */,
+				83598EBC2581884C004664D3 /* utf8.h */,
+				83598E9D2581884A004664D3 /* xml.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		83598E7825818828004664D3 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				83598E802581883A004664D3 /* autolink.c */,
+				83598E7D2581883A004664D3 /* autolink.h */,
+				83598E7B2581883A004664D3 /* cmark-gfm-core-extensions.h */,
+				83598E812581883A004664D3 /* cmark-gfm-extensions_export.h */,
+				83598E892581883B004664D3 /* core-extensions.c */,
+				83598E852581883B004664D3 /* ext_scanners.c */,
+				83598E842581883A004664D3 /* ext_scanners.h */,
+				83598E822581883A004664D3 /* ext_scanners.re */,
+				83598E7E2581883A004664D3 /* strikethrough.c */,
+				83598E7C2581883A004664D3 /* strikethrough.h */,
+				83598E862581883B004664D3 /* table.c */,
+				83598E832581883A004664D3 /* table.h */,
+				83598E7F2581883A004664D3 /* tagfilter.c */,
+				83598E872581883B004664D3 /* tagfilter.h */,
+				83598E882581883B004664D3 /* tasklist.c */,
+				83598E7A2581883A004664D3 /* tasklist.h */,
+				83598EF425818B8B004664D3 /* syntaxhighlight.h */,
+				83598EF525818BCB004664D3 /* syntaxhighlight.c */,
+				83EF95212585476800B56FA3 /* emoji.h */,
+				83EF95222585476800B56FA3 /* emoji.c */,
+				834CAB9A2593650800673002 /* emoji_utils.cpp */,
+				834CAB9B2593650800673002 /* emoji_utils.hpp */,
+				837602FF258C1813004799ED /* inlineimage.h */,
+				83760300258C1813004799ED /* inlineimage.c */,
+				838109C1258403CA000AFE3C /* mention.h */,
+				838109C2258403CA000AFE3C /* mention.c */,
+				838109C525840429000AFE3C /* checkbox.h */,
+				838109C625840429000AFE3C /* checkbox.c */,
+				83F88257259906C7008C5071 /* heads.h */,
+				83F88258259906C7008C5071 /* heads.c */,
+				83F8825C25991BFC008C5071 /* heads_utils.cpp */,
+				83F8825D25991BFC008C5071 /* heads_utils.hpp */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		83598F0525825B8D004664D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				83F8822C2598A5C0008C5071 /* WebKit.framework */,
+				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
+				831A8C40258ABADA00E36182 /* Quartz.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		837F28FA2597817300A5F7DE /* GoLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				837F290E2597950900A5F7DE /* libgoutils.a */,
+				837F290D259794FF00A5F7DE /* goutils.h */,
+				837F28FB2597817400A5F7DE /* go.mod */,
+				837F28FC2597817400A5F7DE /* goutils.go */,
+				837F28FD2597817400A5F7DE /* Makefile */,
+				837F28FE2597817400A5F7DE /* go.sum */,
+				837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */,
+			);
+			path = GoLibraries;
+			sourceTree = "<group>";
+		};
+		837F29002597817400A5F7DE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		837F29172597A01F00A5F7DE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				83598F22258263C0004664D3 /* markdown.css */,
+				83E7FEF0258FBF37003ECF9B /* highlight */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		83E7FEF5258FBF77003ECF9B /* highlight wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				837F28E72597762C00A5F7DE /* magic.mgc */,
+				83E7FF11258FE4DF003ECF9B /* wrapper_highlight.h */,
+			);
+			path = "highlight wrapper";
+			sourceTree = "<group>";
+		};
+		83F881632597EE2B008C5071 /* Sparkle */ = {
+			isa = PBXGroup;
+			children = (
+				83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */,
+				83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */,
+				83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */,
+				83F882362598A8B3008C5071 /* Sparkle.framework */,
+				83F881642597EE2B008C5071 /* BinaryDelta */,
+				83F881672597EE2C008C5071 /* generate_appcast */,
+				83F881682597EE2C008C5071 /* sign_update */,
+				83F881692597EE2C008C5071 /* generate_keys */,
+			);
+			path = Sparkle;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		831A8C3E258ABADA00E36182 /* Markdown QL Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 831A8C50258ABADA00E36182 /* Build configuration list for PBXNativeTarget "Markdown QL Extension" */;
+			buildPhases = (
+				83E7FEFC258FCBE2003ECF9B /* ShellScript */,
+				831A8C3B258ABADA00E36182 /* Sources */,
+				831A8C3C258ABADA00E36182 /* Frameworks */,
+				831A8C3D258ABADA00E36182 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				837F291A2597A0B300A5F7DE /* PBXTargetDependency */,
+			);
+			name = "Markdown QL Extension";
+			productName = QLExtension;
+			productReference = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		83598E6025818808004664D3 /* QLMarkdown */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83598E712581880A004664D3 /* Build configuration list for PBXNativeTarget "QLMarkdown" */;
+			buildPhases = (
+				83E7FEFD258FCBF9003ECF9B /* ShellScript */,
+				83598E5D25818808004664D3 /* Sources */,
+				83598E5E25818808004664D3 /* Frameworks */,
+				83598E5F25818808004664D3 /* Resources */,
+				831A8C4C258ABADA00E36182 /* Embed App Extensions */,
+				83E7FF07258FCCF9003ECF9B /* Embed Libraries */,
+				83F8816F2597EE45008C5071 /* Embed XPC Services */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				837F291C2597A0B800A5F7DE /* PBXTargetDependency */,
+				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
+			);
+			name = QLMarkdown;
+			productName = QLMarkdown;
+			productReference = 83598E6125818808004664D3 /* QLMarkdown.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83598E5925818808004664D3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1230;
+				LastUpgradeCheck = 1230;
+				TargetAttributes = {
+					831A8C3E258ABADA00E36182 = {
+						CreatedOnToolsVersion = 12.3;
+					};
+					83598E6025818808004664D3 = {
+						CreatedOnToolsVersion = 12.2;
+						LastSwiftMigration = 1220;
+					};
+				};
+			};
+			buildConfigurationList = 83598E5C25818808004664D3 /* Build configuration list for PBXProject "QLMarkdown" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83598E5825818808004664D3;
+			productRefGroup = 83598E6225818808004664D3 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 837F29002597817400A5F7DE /* Products */;
+					ProjectRef = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				83598E6025818808004664D3 /* QLMarkdown */,
+				831A8C3E258ABADA00E36182 /* Markdown QL Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		831A8C3D258ABADA00E36182 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83F881612597E902008C5071 /* magic.mgc in Resources */,
+				831A8CC5258AC4A900E36182 /* markdown.css in Resources */,
+				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
+				83E7FEF2258FBF37003ECF9B /* highlight in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83598E5F25818808004664D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83598EFC25820A72004664D3 /* test2.md in Resources */,
+				837F28E82597765900A5F7DE /* magic.mgc in Resources */,
+				83F4B9962586AB9700FC58A7 /* README.md in Resources */,
+				83598EFD25820A72004664D3 /* test1.md in Resources */,
+				83598E692581880A004664D3 /* Assets.xcassets in Resources */,
+				83598E6C2581880A004664D3 /* Main.storyboard in Resources */,
+				8342418B25894328000093EC /* ThemesView.xib in Resources */,
+				837D20D6258362A5008FC698 /* example.jpg in Resources */,
+				834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */,
+				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
+				83F8823B2598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc in Resources */,
+				8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */,
+				83598F24258263C0004664D3 /* markdown.css in Resources */,
+				83F882382598A8B3008C5071 /* org.sparkle-project.InstallerStatus.xpc in Resources */,
+				83F882392598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Resources */,
+				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
+				834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */,
+				834CAB8A259167D100673002 /* examples in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		83E7FEFC258FCBE2003ECF9B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"highlight wrapper\"\ninstall_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\n";
+		};
+		83E7FEFD258FCBF9003ECF9B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"highlight wrapper\"\nid=`/usr/bin/otool -D libwrapper_highlight.dylib`\nid=\"${id##*$'\\n'}\" # get the last output line\nif [ \"${id:0:7}\" = \"@rpath/\" ]\nthen\n    echo \"Install name valid for libwrapper_highlight.dylib\"\nelse\n    echo \"Changing the install name for libwrapper_highlight.dylib\"\n    echo ${id}\n    echo ${id:0:7}\n    install_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		831A8C3B258ABADA00E36182 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83327D222593FCEC00E76CF6 /* url.cpp in Sources */,
+				831A8CA5258ABDDB00E36182 /* xml.c in Sources */,
+				831A8C9F258ABDD500E36182 /* html.c in Sources */,
+				831A8C80258ABDAC00E36182 /* cmark_ctype.c in Sources */,
+				831A8C86258ABDB600E36182 /* commonmark.c in Sources */,
+				831A8C99258ABDD400E36182 /* plaintext.c in Sources */,
+				831A8CA4258ABDDB00E36182 /* syntax_extension.c in Sources */,
+				83760302258C1813004799ED /* inlineimage.c in Sources */,
+				831A8CA1258ABDD500E36182 /* latex.c in Sources */,
+				83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */,
+				83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */,
+				83F8825A259906C7008C5071 /* heads.c in Sources */,
+				831A8C62258ABD7F00E36182 /* table.c in Sources */,
+				831A8C97258ABDD400E36182 /* linked_list.c in Sources */,
+				831A8C77258ABD9D00E36182 /* blocks.c in Sources */,
+				831A8C5C258ABD6F00E36182 /* ext_scanners.c in Sources */,
+				831A8C8C258ABDBE00E36182 /* footnotes.c in Sources */,
+				831A8C9C258ABDD500E36182 /* plugin.c in Sources */,
+				831A8CBE258AC0D200E36182 /* arena.c in Sources */,
+				831A8C91258ABDC300E36182 /* houdini_html_e.c in Sources */,
+				831A8C74258ABD9600E36182 /* checkbox.c in Sources */,
+				831A8CA0258ABDD500E36182 /* iterator.c in Sources */,
+				831A8CC1258AC18300E36182 /* Settings.swift in Sources */,
+				831A8C68258ABD8400E36182 /* tasklist.c in Sources */,
+				831A8C6B258ABD8900E36182 /* syntaxhighlight.c in Sources */,
+				831A8C71258ABD9300E36182 /* mention.c in Sources */,
+				831A8C98258ABDD400E36182 /* node.c in Sources */,
+				831A8C95258ABDD400E36182 /* map.c in Sources */,
+				831A8C83258ABDB300E36182 /* cmark.c in Sources */,
+				831A8C9E258ABDD500E36182 /* registry.c in Sources */,
+				834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */,
+				831A8C7A258ABDA100E36182 /* buffer.c in Sources */,
+				831A8C56258ABD6200E36182 /* autolink.c in Sources */,
+				831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */,
+				831A8C9D258ABDD500E36182 /* scanners.c in Sources */,
+				831A8C5F258ABD7900E36182 /* strikethrough.c in Sources */,
+				831A8CA6258ABDDB00E36182 /* utf8.c in Sources */,
+				831A8C94258ABDD400E36182 /* man.c in Sources */,
+				831A8C8F258ABDC300E36182 /* houdini_href_e.c in Sources */,
+				831A8C65258ABD8200E36182 /* tagfilter.c in Sources */,
+				83327D332594087100E76CF6 /* MIMEtype.c in Sources */,
+				831A8C6E258ABD8D00E36182 /* emoji.c in Sources */,
+				831A8C9B258ABDD400E36182 /* references.c in Sources */,
+				831A8C9A258ABDD400E36182 /* inlines.c in Sources */,
+				831A8C59258ABD6800E36182 /* core-extensions.c in Sources */,
+				831A8C90258ABDC300E36182 /* houdini_html_u.c in Sources */,
+				831A8C96258ABDD400E36182 /* render.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83598E5D25818808004664D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83598ED62581884D004664D3 /* cmark_ctype.c in Sources */,
+				831A8CD1258ACB3300E36182 /* ThemePropertyViewController.swift in Sources */,
+				83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */,
+				83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */,
+				83F88259259906C7008C5071 /* heads.c in Sources */,
+				83598EDF2581884D004664D3 /* blocks.c in Sources */,
+				83598EED2581884D004664D3 /* registry.c in Sources */,
+				834CAB8E2591DE0F00673002 /* SaveAsFormatView.swift in Sources */,
+				83598ECD2581884D004664D3 /* xml.c in Sources */,
+				83598EE32581884D004664D3 /* plugin.c in Sources */,
+				83327D202593FCEB00E76CF6 /* url.cpp in Sources */,
+				83598EE12581884D004664D3 /* linked_list.c in Sources */,
+				83598E8E2581883B004664D3 /* ext_scanners.c in Sources */,
+				8357EB8D2588AE16002C2C45 /* ThemePreviewView.swift in Sources */,
+				83598EDE2581884D004664D3 /* man.c in Sources */,
+				83598ED22581884D004664D3 /* cmark.c in Sources */,
+				83598E6725818808004664D3 /* ViewController.swift in Sources */,
+				83598ED42581884D004664D3 /* map.c in Sources */,
+				83598ED82581884D004664D3 /* houdini_html_e.c in Sources */,
+				8357EB782587DBED002C2C45 /* ThemesViewController.swift in Sources */,
+				83598E902581883B004664D3 /* tasklist.c in Sources */,
+				83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */,
+				83598EEB2581884D004664D3 /* buffer.c in Sources */,
+				83598E8F2581883B004664D3 /* table.c in Sources */,
+				83598E8C2581883B004664D3 /* autolink.c in Sources */,
+				83598EDA2581884D004664D3 /* scanners.c in Sources */,
+				83598ECC2581884D004664D3 /* footnotes.c in Sources */,
+				83598EF625818BCB004664D3 /* syntaxhighlight.c in Sources */,
+				83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */,
+				83598EE72581884D004664D3 /* commonmark.c in Sources */,
+				83598EE92581884D004664D3 /* plaintext.c in Sources */,
+				83598E8A2581883B004664D3 /* strikethrough.c in Sources */,
+				83598EE52581884D004664D3 /* render.c in Sources */,
+				83F4B99225868A7400FC58A7 /* Settings.swift in Sources */,
+				83598ECF2581884D004664D3 /* html.c in Sources */,
+				8342418E2589432E000093EC /* ThemesView.swift in Sources */,
+				83598EDC2581884D004664D3 /* iterator.c in Sources */,
+				83598E8B2581883B004664D3 /* tagfilter.c in Sources */,
+				83760301258C1813004799ED /* inlineimage.c in Sources */,
+				83598ED32581884D004664D3 /* inlines.c in Sources */,
+				83598ED12581884D004664D3 /* houdini_html_u.c in Sources */,
+				834CAB9225923D2200673002 /* ThemeSelectorViewController.swift in Sources */,
+				83598E6525818808004664D3 /* AppDelegate.swift in Sources */,
+				83598EE82581884D004664D3 /* references.c in Sources */,
+				83EF95232585476800B56FA3 /* emoji.c in Sources */,
+				834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */,
+				834CAB9625923D3000673002 /* ThemeCollectionViewItem.swift in Sources */,
+				83598ED52581884D004664D3 /* houdini_href_e.c in Sources */,
+				83598EDB2581884D004664D3 /* utf8.c in Sources */,
+				8357EB862588AB88002C2C45 /* ThemeTableView.swift in Sources */,
+				83598EEA2581884D004664D3 /* latex.c in Sources */,
+				83327D312594087100E76CF6 /* MIMEtype.c in Sources */,
+				83598EDD2581884D004664D3 /* syntax_extension.c in Sources */,
+				83598EE62581884D004664D3 /* node.c in Sources */,
+				838109C725840429000AFE3C /* checkbox.c in Sources */,
+				83598E912581883B004664D3 /* core-extensions.c in Sources */,
+				8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */,
+				83598EE22581884D004664D3 /* arena.c in Sources */,
+				83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */,
+				8357EB7F2588262C002C2C45 /* String+ext.swift in Sources */,
+				838109C3258403CA000AFE3C /* mention.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		831A8C4B258ABADA00E36182 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 831A8C3E258ABADA00E36182 /* Markdown QL Extension */;
+			targetProxy = 831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */;
+		};
+		837F291A2597A0B300A5F7DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoLibraries;
+			targetProxy = 837F29192597A0B300A5F7DE /* PBXContainerItemProxy */;
+		};
+		837F291C2597A0B800A5F7DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoLibraries;
+			targetProxy = 837F291B2597A0B800A5F7DE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		831A8C45258ABADA00E36182 /* PreviewViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				831A8C46258ABADA00E36182 /* Base */,
+			);
+			name = PreviewViewController.xib;
+			sourceTree = "<group>";
+		};
+		83598E6A2581880A004664D3 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83598E6B2581880A004664D3 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		831A8C4E258ABADA00E36182 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				HEADER_SEARCH_PATHS = (
+					"cmark-gfm/src",
+					"cmark-gfm/extensions",
+				);
+				INFOPLIST_FILE = QLExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		831A8C4F258ABADA00E36182 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				HEADER_SEARCH_PATHS = (
+					"cmark-gfm/src",
+					"cmark-gfm/extensions",
+				);
+				INFOPLIST_FILE = QLExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		83598E6F2581880A004664D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		83598E702581880A004664D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		83598E722581880A004664D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = QLMarkdown/QLMarkdown.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sparkle",
+				);
+				HEADER_SEARCH_PATHS = (
+					"cmark-gfm/src",
+					"cmark-gfm/extensions",
+				);
+				INFOPLIST_FILE = QLMarkdown/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
+					"$(PROJECT_DIR)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		83598E732581880A004664D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = QLMarkdown/QLMarkdown.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sparkle",
+				);
+				HEADER_SEARCH_PATHS = (
+					"cmark-gfm/src",
+					"cmark-gfm/extensions",
+				);
+				INFOPLIST_FILE = QLMarkdown/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"$(PROJECT_DIR)/GoLibraries",
+					"$(PROJECT_DIR)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		831A8C50258ABADA00E36182 /* Build configuration list for PBXNativeTarget "Markdown QL Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				831A8C4E258ABADA00E36182 /* Debug */,
+				831A8C4F258ABADA00E36182 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83598E5C25818808004664D3 /* Build configuration list for PBXProject "QLMarkdown" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83598E6F2581880A004664D3 /* Debug */,
+				83598E702581880A004664D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83598E712581880A004664D3 /* Build configuration list for PBXNativeTarget "QLMarkdown" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83598E722581880A004664D3 /* Debug */,
+				83598E732581880A004664D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83598E5925818808004664D3 /* Project object */;
+}

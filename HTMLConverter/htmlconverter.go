@@ -30,7 +30,7 @@ import (
 
 // Remember to release the logger!
 func getLogger() *ul.Logger {
-	lo := ul.New_object("org.sbarex.QLMardown.GoLibrary", "quicklook.qlmarkdown-extension")
+	lo := ul.New_object("org.sbarex.QLMarkdown.GoLibrary", "quicklook.qlmarkdown-extension")
 	return lo
 }
 

@@ -1,6 +1,6 @@
 //
 //  emoji_utils.hpp
-//  QLMardown
+//  QLMarkdown
 //
 //  Created by Sbarex on 23/12/20.
 //
