@@ -78,5 +78,19 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mar, 29 dic 2020 20:48:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b9/QLMarkdown.zip" sparkle:version="9" sparkle:edSignature="ipYWJqck7KdadlC5QWR9/WWwCZ3sE1vBf3B72qcE4nRxYj9AB9AvCS37+0bAaRHwGd8qkeivRz0o+ZgwwIEeBQ==" length="17682527"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Updated the default css style (thanks to <a href="https://github.com/hazarek">hazarek</a>).</li>
+<li>For source highlight, option to choose the document style or a specific language style.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
