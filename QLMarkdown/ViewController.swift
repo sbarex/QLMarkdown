@@ -766,9 +766,19 @@ document.addEventListener('scroll', function(e) {
         }
     }
     
+    @IBAction func doResetSourceThemes(_ sender: Any) {
+        self.syntaxThemeLight = nil
+        self.syntaxThemeDark = nil
+    }
+    
     internal func updateThemes() {
-        sourceThemesPopup.itemArray.first?.image = Theme.getCombinedImage2(light: syntaxThemeLight, dark: syntaxThemeDark, size: 100, space: 10)
-        sourceThemesPopup.itemArray.first?.title = (syntaxThemeLight?.name ?? "") + " / " + (syntaxThemeDark?.name ?? "")
+        if syntaxThemeLight == nil && syntaxThemeDark == nil {
+            sourceThemesPopup.itemArray.first?.image = nil
+            sourceThemesPopup.itemArray.first?.title = "Inherit from document style"
+        } else {
+            sourceThemesPopup.itemArray.first?.image = Theme.getCombinedImage2(light: syntaxThemeLight, dark: syntaxThemeDark, size: 100, space: 10)
+            sourceThemesPopup.itemArray.first?.title = (syntaxThemeLight?.name ?? "") + " / " + (syntaxThemeDark?.name ?? "")
+        }
     }
     
     internal func initFromSettings(_ settings: Settings) {
@@ -802,7 +812,7 @@ document.addEventListener('scroll', function(e) {
                 }) {
                 return t;
             } else {
-                return themes.first(where: {$0.appearance == appearance}) ?? themes.first
+                return nil
             }
         }
         
@@ -889,8 +899,8 @@ document.addEventListener('scroll', function(e) {
         
         settings.syntaxHighlightExtension = self.syntaxHighlightExtension
         
-        settings.syntaxThemeLight = self.syntaxThemeLight != nil ? themeName(self.syntaxThemeLight!) : "acid"
-        settings.syntaxThemeDark = self.syntaxThemeDark != nil ? themeName(self.syntaxThemeDark!) : "zenburn"
+        settings.syntaxThemeLight = self.syntaxThemeLight != nil ? themeName(self.syntaxThemeLight!) : ""
+        settings.syntaxThemeDark = self.syntaxThemeDark != nil ? themeName(self.syntaxThemeDark!) : ""
         settings.syntaxLineNumbersOption = self.sourceLineNumbersButton.state == .on
         settings.syntaxWordWrapOption = syntaxWrapEnabled ? self.syntaxWrapCharacters : 0
         settings.syntaxTabsOption = self.sourceTabsPopup.selectedItem?.tag ?? 0

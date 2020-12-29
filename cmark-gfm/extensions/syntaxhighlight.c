@@ -372,8 +372,7 @@ static void html_render(cmark_syntax_extension *extension,
 char *cmark_syntax_extension_get_style(cmark_syntax_extension *extension) {
     const char *theme = cmark_syntax_extension_highlight_get_theme_name(extension);
     if (highlight_set_current_theme(theme) == EXIT_FAILURE) {
-        // Missing theme.
-        cmark_syntax_extension_highlight_set_theme_name(extension, "acid");
+        // Missing theme, but a theme is required to analyze the code.
         highlight_set_current_theme("acid");
     }
     
@@ -413,8 +412,7 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
     
     // Is required to set the theme for parsing the code.
     if (highlight_set_current_theme(theme) == EXIT_FAILURE) {
-        // Missing theme.
-        cmark_syntax_extension_highlight_set_theme_name(ext, "acid");
+        // Missing theme, but a theme is required to analyze the code.
         highlight_set_current_theme("acid");
     }
     

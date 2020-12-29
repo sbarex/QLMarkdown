@@ -1,5 +1,6 @@
 #  TODO
 
+- [ ] investigate if export source code style as css var overriding the default style
 - [ ] theme editor (custom themes)
 - [ ] insert the `highlight` library on the build process
 - [ ] application screenshot in the docs

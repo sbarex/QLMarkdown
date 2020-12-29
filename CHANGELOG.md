@@ -1,3 +1,8 @@
+1.0.b9
+New features:
+- Updated the default css style (thanks to [hazarek](https://github.com/hazarek)). 
+- For source highlight, option to choose the document style or a specific language style.
+
 1.0.b8
 Bugfix:
 - Fixed standard cmark tasklist extension not inserting class style in html output.

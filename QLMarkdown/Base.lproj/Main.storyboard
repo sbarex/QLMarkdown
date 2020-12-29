@@ -928,8 +928,20 @@
                                                             </button>
                                                         </gridCell>
                                                         <gridCell row="b1T-4W-Sf6" column="Iup-Ze-LYm" id="Jaa-RC-wEA">
-                                                            <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CPv-Ar-3VO">
+                                                            <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V1O-A3-p8C">
                                                                 <rect key="frame" x="110" y="2" width="126" height="18"/>
+                                                                <buttonCell key="cell" type="check" title="Table" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZTh-0e-tfH">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.tableExtension" id="oXt-BX-W6o"/>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="b1T-4W-Sf6" column="VZo-jz-i40" id="UjJ-UE-xyn">
+                                                            <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CPv-Ar-3VO">
+                                                                <rect key="frame" x="240" y="2" width="140" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Source code" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="enD-89-zoO">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -937,18 +949,6 @@
                                                                 <connections>
                                                                     <action selector="doHighlightExtensionChanged:" target="XfG-lQ-9wD" id="jAa-a9-qCp"/>
                                                                     <binding destination="XfG-lQ-9wD" name="value" keyPath="self.syntaxHighlightExtension" id="J91-pi-B5W"/>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="b1T-4W-Sf6" column="VZo-jz-i40" id="UjJ-UE-xyn">
-                                                            <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V1O-A3-p8C">
-                                                                <rect key="frame" x="240" y="2" width="140" height="18"/>
-                                                                <buttonCell key="cell" type="check" title="Table" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZTh-0e-tfH">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.tableExtension" id="oXt-BX-W6o"/>
                                                                 </connections>
                                                             </button>
                                                         </gridCell>
@@ -971,15 +971,21 @@
                                                         </gridCell>
                                                         <gridCell row="b1T-4W-Sf6" column="KrJ-af-HRv" id="1hc-mg-8KF">
                                                             <popUpButton key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4rb-b0-TUI">
-                                                                <rect key="frame" x="522" y="-4" width="76" height="25"/>
-                                                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="rSx-NQ-1pj">
+                                                                <rect key="frame" x="522" y="-4" width="114" height="25"/>
+                                                                <popUpButtonCell key="cell" type="push" title="Source style" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="rSx-NQ-1pj">
                                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="menu"/>
                                                                     <menu key="menu" id="KNY-JP-eD4">
                                                                         <items>
-                                                                            <menuItem title="Item 1" state="on" hidden="YES" id="1IU-3a-W51"/>
+                                                                            <menuItem title="Source style" state="on" hidden="YES" id="1IU-3a-W51"/>
                                                                             <menuItem isSeparatorItem="YES" id="MlJ-Aj-V2w"/>
-                                                                            <menuItem title="Choose…" id="jYX-si-rEd">
+                                                                            <menuItem title="Inherit from document style" id="Pwl-RP-VMg">
+                                                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                <connections>
+                                                                                    <action selector="doResetSourceThemes:" target="XfG-lQ-9wD" id="EYD-Jt-pjp"/>
+                                                                                </connections>
+                                                                            </menuItem>
+                                                                            <menuItem title="Choose a source code style…" id="jYX-si-rEd">
                                                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                                                                 <connections>
                                                                                     <segue destination="bDv-hV-JLo" kind="modal" identifier="ThemesSegue" id="pmm-Ry-RqF"/>
@@ -995,6 +1001,13 @@
                                                                         </items>
                                                                     </menu>
                                                                 </popUpButtonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.syntaxHighlightExtension" id="EDC-We-rB0">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
                                                             </popUpButton>
                                                         </gridCell>
                                                     </gridCells>
@@ -1539,12 +1552,12 @@
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
                                 <rect key="frame" x="0.0" y="0.0" width="1342" height="621"/>
                                 <subviews>
-                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
+                                    <customView id="GDJ-WJ-HAB">
                                         <rect key="frame" x="0.0" y="0.0" width="671" height="621"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="166" width="671" height="621"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="671" height="621"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
                                                     <rect key="frame" x="0.0" y="0.0" width="671" height="621"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1581,7 +1594,7 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView misplaced="YES" id="sp3-sm-w1y">
+                                    <customView id="sp3-sm-w1y">
                                         <rect key="frame" x="681" y="0.0" width="661" height="621"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
@@ -1597,13 +1610,13 @@
                                                 </connections>
                                             </wkWebView>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="67x-X7-c0k">
-                                                <rect key="frame" x="0.0" y="195" width="661" height="5"/>
+                                                <rect key="frame" x="0.0" y="29" width="661" height="5"/>
                                             </box>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="323" y="469" width="16" height="16"/>
+                                                <rect key="frame" x="323" y="303" width="16" height="16"/>
                                             </progressIndicator>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2s4-sQ-wsc">
-                                                <rect key="frame" x="630" y="173" width="23" height="19"/>
+                                                <rect key="frame" x="630" y="7" width="23" height="19"/>
                                                 <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FkI-ch-SsE">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="cellTitle"/>
@@ -1613,7 +1626,7 @@
                                                 </connections>
                                             </button>
                                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qgu-4m-xR7">
-                                                <rect key="frame" x="552" y="173" width="71" height="20"/>
+                                                <rect key="frame" x="552" y="7" width="71" height="20"/>
                                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="MPN-Af-7mu">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <segments>

@@ -10,14 +10,24 @@ import Cocoa
 class ThemesSelectorViewController: NSViewController {
     var lightTheme: ThemePreview? {
         didSet {
-            lighThemeButton?.image = lightTheme?.image
-            lighThemeLabel?.attributedStringValue = lightTheme?.getAttributedTitle() ?? NSAttributedString()
+            if let theme = lightTheme {
+                lighThemeButton?.image = theme.image
+                lighThemeLabel?.attributedStringValue = theme.getAttributedTitle()
+            } else {
+                lighThemeButton?.image = nil
+                lighThemeLabel?.stringValue = "inherit from document style"
+            }
         }
     }
     var darkTheme: ThemePreview? {
         didSet {
-            darkThemeButton?.image = darkTheme?.image
-            darkThemeLabel?.attributedStringValue = darkTheme?.getAttributedTitle() ?? NSAttributedString()
+            if let theme = darkTheme {
+                darkThemeButton?.image = theme.image
+                darkThemeLabel?.attributedStringValue = theme.getAttributedTitle()
+            } else {
+                darkThemeButton?.image = nil
+                darkThemeLabel?.stringValue = "inherit from document style"
+            }
         }
     }
     

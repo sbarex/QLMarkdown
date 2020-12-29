@@ -46,8 +46,8 @@
             filePath = "cmark-gfm/extensions/syntaxhighlight.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "387"
-            endingLineNumber = "387"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "cmark-gfm/extensions/syntaxhighlight.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "460"
-            endingLineNumber = "460"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
             landmarkName = "postprocess(ext, parser, root)"
             landmarkType = "9">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "cmark-gfm/extensions/syntaxhighlight.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "postprocess(ext, parser, root)"
             landmarkType = "9">
          </BreakpointContent>
@@ -286,8 +286,8 @@
             filePath = "cmark-gfm/extensions/syntaxhighlight.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "406"
-            endingLineNumber = "406"
+            startingLineNumber = "405"
+            endingLineNumber = "405"
             landmarkName = "postprocess(ext, parser, root)"
             landmarkType = "9">
          </BreakpointContent>
@@ -318,8 +318,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "960"
-            endingLineNumber = "960"
+            startingLineNumber = "970"
+            endingLineNumber = "970"
             landmarkName = "changeFont(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -334,8 +334,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "949"
-            endingLineNumber = "949"
+            startingLineNumber = "959"
+            endingLineNumber = "959"
             landmarkName = "ViewController"
             landmarkType = "21">
             <Locations>
@@ -414,8 +414,8 @@
             filePath = "cmark-gfm/extensions/syntaxhighlight.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "488"
+            endingLineNumber = "488"
             landmarkName = "cmark_syntax_highlight_init(search_dir)"
             landmarkType = "9">
          </BreakpointContent>
@@ -786,6 +786,38 @@
             endingLineNumber = "230"
             landmarkName = "-extractUpdate:"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "BAF5BFA3-9F30-462D-BFAA-19DB19F37281 - 393babac7302c9ac"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[SPUCoreBasedUpdateDriver extractUpdate:]"
+                  moduleName = "Sparkle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbaldiss/Downloads/Sparkle/Sparkle/SPUCoreBasedUpdateDriver.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "230"
+                  endingLineNumber = "230"
+                  offsetFromSymbolStart = "149">
+               </Location>
+               <Location
+                  uuid = "BAF5BFA3-9F30-462D-BFAA-19DB19F37281 - 87a6233778a4cfd"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__42-[SPUCoreBasedUpdateDriver extractUpdate:]_block_invoke"
+                  moduleName = "Sparkle"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/sbaldiss/Downloads/Sparkle/Sparkle/SPUCoreBasedUpdateDriver.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "231"
+                  endingLineNumber = "231"
+                  offsetFromSymbolStart = "29">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -878,8 +910,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "914"
-            endingLineNumber = "914"
+            startingLineNumber = "924"
+            endingLineNumber = "924"
             landmarkName = "updateSettings()"
             landmarkType = "7">
          </BreakpointContent>
@@ -959,8 +991,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1036"
-            endingLineNumber = "1036"
+            startingLineNumber = "1046"
+            endingLineNumber = "1046"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1103,8 +1135,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1072"
-            endingLineNumber = "1072"
+            startingLineNumber = "1082"
+            endingLineNumber = "1082"
             landmarkName = "endDrag(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1119,8 +1151,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1070"
-            endingLineNumber = "1070"
+            startingLineNumber = "1080"
+            endingLineNumber = "1080"
             landmarkName = "endDrag(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1135,8 +1167,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1106"
-            endingLineNumber = "1106"
+            startingLineNumber = "1116"
+            endingLineNumber = "1116"
             landmarkName = "prepareForDragOperation(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1151,8 +1183,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1080"
-            endingLineNumber = "1080"
+            startingLineNumber = "1090"
+            endingLineNumber = "1090"
             landmarkName = "init(frame:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1167,8 +1199,8 @@
             filePath = "QLMarkdown/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1112"
-            endingLineNumber = "1112"
+            startingLineNumber = "1122"
+            endingLineNumber = "1122"
             landmarkName = "performDragOperation(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1183,8 +1215,8 @@
             filePath = "QLMarkdown/Themes/ThemesSelectorViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "doCancel(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1256,17 +1288,49 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9C3F7FD6-5FC2-4411-9B41-244E78214A78"
+            uuid = "EB076762-286D-4634-AEFB-CDFB205FA4E6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QLMarkdown/Settings.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "707"
+            endingLineNumber = "707"
+            landmarkName = "getCompleteHTML(title:body:header:footer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F6810258-F0BD-4E4E-A210-2E199500CAD8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "cmark-gfm/src/html.c"
+            filePath = "QLMarkdown/Settings+ext.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
-            landmarkName = "S_render_node(renderer, node, ev_type, options)"
-            landmarkType = "9">
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "synchronize()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A4C16E0D-AED3-4475-9628-D016115419F1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QLMarkdown/Settings.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "reset()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

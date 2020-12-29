@@ -46,10 +46,10 @@ class Settings {
     @objc var strikethroughDoubleTildeOption: Bool = false
     
     @objc var syntaxHighlightExtension: Bool = true
-    @objc var syntaxThemeLight: String = "edit-xcode"
+    @objc var syntaxThemeLight: String = ""
     @objc var syntaxBackgroundColorLight: String = ""
     @objc var syntaxThemeDark: String = ""
-    @objc var syntaxBackgroundColorDark: String = "neon"
+    @objc var syntaxBackgroundColorDark: String = ""
     @objc var syntaxWordWrapOption: Int = 0
     @objc var syntaxLineNumbersOption: Bool = false
     @objc var syntaxTabsOption: Int = 4
@@ -602,8 +602,9 @@ table.debug td {
         if self.syntaxHighlightExtension {
             html_debug += "on " + (cmark_find_syntax_extension("syntaxhighlight") == nil ? " (NOT AVAILABLE" : "")
             
-            let theme: String
+            var theme: String
             var background: String
+            
             switch appearance {
             case .light:
                 theme = self.syntaxThemeLight
@@ -621,10 +622,16 @@ table.debug td {
                     background = self.syntaxBackgroundColorDark
                 }
             }
-            if background.isEmpty {
-                background = "use theme settings"
-            } else if background == "ignore" {
-                background = "use markdown settings"
+            
+            if theme.isEmpty {
+                theme = "Inherit from document style"
+                background = "Inherit from document style"
+            } else {
+                if background.isEmpty {
+                    background = "use theme settings"
+                } else if background == "ignore" {
+                    background = "use markdown settings"
+                }
             }
             
             html_debug += "<table>\n"
@@ -694,22 +701,22 @@ table.debug td {
         }
         // css_doc = "<style type=\"text/css\">\n\(css_doc)\n</style>\n"
             
-        var css_highlight: String
-        if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight"), cmark_syntax_extension_highlight_get_rendered_count(ext) > 0, let p = cmark_syntax_extension_get_style(ext) {
-            
-            let font = self.syntaxFontFamily
-            css_highlight = String(cString: p)
-            if font != "" {
-                css_highlight += """
-:root {
-  --code-font: "\(font)", -apple-system, Menlo, monospace;
-}
-""";
+        var css_highlight: String = ""
+        if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight"), cmark_syntax_extension_highlight_get_rendered_count(ext) > 0 {
+            let theme = String(cString: cmark_syntax_extension_highlight_get_theme_name(ext))
+            if !theme.isEmpty, let p = cmark_syntax_extension_get_style(ext) {
+                let font = self.syntaxFontFamily
+                css_highlight = String(cString: p)
+                if font != "" {
+                    css_highlight += """
+    :root {
+    --code-font: "\(font)", -apple-system, Menlo, monospace;
+    }
+    """;
+                }
+                css_highlight = formatCSS(css_highlight);
+                p.deallocate();
             }
-            css_highlight = formatCSS(css_highlight);
-            p.deallocate();
-        } else {
-            css_highlight = ""
         }
         
         let style = css_doc + css_highlight + css_doc_extended
