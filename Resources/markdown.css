@@ -1,278 +1,121 @@
-/* Primer Colors */
-
 :root {
-  --blue-900: #05264c;
-  --blue-800: #032f62;
-  --blue-700: #044289;
-  --blue-600: #005cc5;
-  --blue-500: #0366d6;
-  --blue-400: #2188ff;
-  --blue-300: #79b8ff;
-  --blue-200: #c8e1ff;
-  --blue-100: #dbedff;
-  --blue-000: #f1f8ff;
-  --gray-1000: #050505;
-  --gray-950: #0b0b0d;
-  --gray-900: #17181a;
-  --gray-850: #242528;
-  --gray-800: #2f3037;
-  --gray-750: #383a42;
-  --gray-700: #41434e;
-  --gray-650: #4b4d58;
-  --gray-600: #525560;
-  --gray-550: #5e616e;
-  --gray-500: #6a6d7c;
-  --gray-450: #787c8c;
-  --gray-400: #9194a1;
-  --gray-350: #a9abb6;
-  --gray-300: #bfc1c9;
-  --gray-250: #d6d7dc;
-  --gray-200: #e3e4e8;
-  --gray-150: #eff0f5;
-  --gray-100: #f7f7f9;
-  --gray-050: #fbfbfc;
-  --gray-000: #ffffff;
-  --green-900: #144620;
-  --green-800: #165c26;
-  --green-700: #176f2c;
-  --green-600: #22863a;
-  --green-500: #28a745;
-  --green-400: #34d058;
-  --green-300: #85e89d;
-  --green-200: #bef5cb;
-  --green-100: #dcffe4;
-  --green-000: #f0fff4;
-  --yellow-900: #735c0f;
-  --yellow-800: #b08800;
-  --yellow-700: #dbab09;
-  --yellow-600: #f9c513;
-  --yellow-500: #ffd33d;
-  --yellow-400: #ffdf5d;
-  --yellow-300: #ffea7f;
-  --yellow-200: #fff5b1;
-  --yellow-100: #fffbdd;
-  --yellow-000: #fffdef;
-  --orange-900: #a04100;
-  --orange-800: #c24e00;
-  --orange-700: #d15704;
-  --orange-600: #e36209;
-  --orange-500: #f66a0a;
-  --orange-400: #fb8532;
-  --orange-300: #ffab70;
-  --orange-200: #ffd1ac;
-  --orange-100: #ffebda;
-  --orange-000: #fff8f2;
-  --red-900: #86181d;
-  --red-800: #9e1c23;
-  --red-700: #b31d28;
-  --red-600: #cb2431;
-  --red-500: #d73a49;
-  --red-400: #ea4a5a;
-  --red-300: #f97583;
-  --red-200: #fdaeb7;
-  --red-100: #ffdce0;
-  --red-000: #ffeef0;
-  --pink-900: #6d224f;
-  --pink-800: #99306f;
-  --pink-700: #b93a86;
-  --pink-600: #d03592;
-  --pink-500: #ea4aaa;
-  --pink-400: #ec6cb9;
-  --pink-300: #f692ce;
-  --pink-200: #f9b3dd;
-  --pink-100: #fedbf0;
-  --pink-000: #ffeef8;
-  --purple-900: #29134e;
-  --purple-800: #3a1d6e;
-  --purple-700: #4c2888;
-  --purple-600: #5a32a3;
-  --purple-500: #6f42c1;
-  --purple-400: #8a63d2;
-  --purple-300: #b392f0;
-  --purple-200: #d1bcf9;
-  --purple-100: #e6dcfd;
-  --purple-000: #f5f0ff;
-  --textPrimary: var(--gray-1000);
-  --textSecondary: var(--gray-800);
-  --textTertiary: var(--gray-600);
-  --textQuarternary: var(--gray-400);
-  --textPlaceholder: rgba(82, 85, 96, 0.5);
-  --link: var(--blue-500);
-  --appBackground: var(--gray-000);
-  --backgroundSecondary: var(--gray-000);
-  --backgroundTertiary: var(--gray-000);
-  --border: rgba(65, 67, 78, 0.25);
-  --borderOpaque: var(--gray-300);
-  --iconPrimary: var(--gray-600);
-  --iconSecondary: var(--gray-400);
-  --iconTertiary: var(--gray-300);
-  --inputBackground: rgba(65, 67, 78, 0.12);
-  --backgroundPrimary: var(--gray-150);
-  --backgroundElevatedPrimary: var(--gray-150);
-  --backgroundElevatedSecondary: var(--gray-000);
-  --backgroundElevatedTertiary: var(--gray-000);
-  --backgroundInset: var(--gray-200);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --blue-900: #082a52;
-    --blue-800: #063366;
-    --blue-700: #0b498f;
-    --blue-600: #0c65c9;
-    --blue-500: #0d6edb;
-    --blue-400: #2e8fff;
-    --blue-300: #85beff;
-    --blue-200: #d1e6ff;
-    --blue-100: #e5f2ff;
-    --blue-000: #f5faff;
-    --gray-1000: #050505;
-    --gray-950: #0b0b0d;
-    --gray-900: #17181a;
-    --gray-850: #242528;
-    --gray-800: #2e2f37;
-    --gray-750: #383a42;
-    --gray-700: #41434e;
-    --gray-650: #4b4d58;
-    --gray-600: #525560;
-    --gray-550: #5e616e;
-    --gray-500: #6c6f7e;
-    --gray-450: #787c8c;
-    --gray-400: #9194a1;
-    --gray-350: #a9abb6;
-    --gray-300: #bfc1c9;
-    --gray-250: #d6d7dc;
-    --gray-200: #e3e4e8;
-    --gray-150: #eff0f5;
-    --gray-100: #f7f7f9;
-    --gray-050: #fbfbfc;
-    --gray-000: #ffffff;
-    --green-900: #184d25;
-    --green-800: #1b612b;
-    --green-700: #1e7533;
-    --green-600: #2b8f43;
-    --green-500: #32b24f;
-    --green-400: #40d663;
-    --green-300: #95f0ab;
-    --green-200: #cbf7d5;
-    --green-100: #e5ffeb;
-    --green-000: #f5fff8;
-    --yellow-900: #755f13;
-    --yellow-800: #b89007;
-    --yellow-700: #e0b112;
-    --yellow-600: #ffcb1a;
-    --yellow-500: #ffd74d;
-    --yellow-400: #ffe166;
-    --yellow-300: #ffec8a;
-    --yellow-200: #fff6b8;
-    --yellow-100: #fffce5;
-    --yellow-000: #fffef5;
-    --orange-900: #a84603;
-    --orange-800: #c75204;
-    --orange-700: #d65c09;
-    --orange-600: #eb680e;
-    --orange-500: #fa6f0f;
-    --orange-400: #ff8a38;
-    --orange-300: #ffae75;
-    --orange-200: #ffd5b2;
-    --orange-100: #ffeee0;
-    --orange-000: #fffaf5;
-    --red-900: #8f1d22;
-    --red-800: #a82229;
-    --red-700: #bd222d;
-    --red-600: #d62b38;
-    --red-500: #e04352;
-    --red-400: #f55363;
-    --red-300: #ff808d;
-    --red-200: #ffb2bb;
-    --red-100: #ffe0e4;
-    --red-000: #fff0f2;
-    --pink-900: #702653;
-    --pink-800: #9e3674;
-    --pink-700: #c2428e;
-    --pink-600: #d63c99;
-    --pink-500: #f051b0;
-    --pink-400: #f576c2;
-    --pink-300: #fa9bd4;
-    --pink-200: #ffbde4;
-    --pink-100: #fee0f2;
-    --pink-000: #fff0f9;
-    --purple-900: #2e1757;
-    --purple-800: #3f2175;
-    --purple-700: #522e8f;
-    --purple-600: #6139a8;
-    --purple-500: #7548c7;
-    --purple-400: #916bd6;
-    --purple-300: #b899f0;
-    --purple-200: #dac7ff;
-    --purple-100: #eae0ff;
-    --purple-000: #f6f2ff;
-    --textPrimary: var(--gray-050);
-    --textSecondary: var(--gray-200);
-    --textTertiary: var(--gray-350);
-    --textQuarternary: var(--gray-500);
-    --textPlaceholder: rgba(145, 148, 161, 0.5);
-    --link: var(--blue-400);
-    --appBackground: var(--gray-1000);
-    --backgroundSecondary: var(--gray-900);
-    --backgroundTertiary: var(--gray-850);
-    --border: rgba(191, 193, 201, 0.16);
-    --borderOpaque: var(--gray-700);
-    --iconPrimary: var(--gray-400);
-    --iconSecondary: var(--gray-550);
-    --iconTertiary: var(--gray-700);
-    --inputBackground: rgba(191, 193, 201, 0.12);
-    --backgroundPrimary: var(--gray-1000);
-    --backgroundElevatedPrimary: var(--gray-900);
-    --backgroundElevatedSecondary: rgba(191, 193, 201, 0.04);
-    --backgroundElevatedTertiary: rgba(191, 193, 201, 0.08);
-    --backgroundInset: var(--gray-900);
-  }
-}
-
-/* Custom Base Styles */
-
-:root {
-  --background: var(--backgroundSecondary);
+  /* Base Light */
+  --textPrimary: #24292E;
+  --background: #ffffff;
+  --link: #0366d6;
   --link-highlight: rgba(3, 102, 214, 0.08);
-  --pre-background: var(--gray-100);
-  --code-background: var(--pre-background);
-  --hr-background: var(--gray-200);
-  --thead-background: var(--pre-background);
-  --thead-border: var(--hr-background);
-  --tr-border: var(--gray-300);
-  --tr-alt-background: var(--pre-background);
-  --kbd-background: var(--pre-background);
-  --kbd-color: var(--gray-650);
-  --kbd-border: var(--gray-250);
-  --blockquote-color: var(--gray-500);
-  --blockquote-border: var(--hr-background);
-  --heading-color: var(--gray-900);
-  --h6-color: var(--gray-500);
-  --frame-border: var(--hr-background);
-  --frame-color: var(--gray-850);
-  --mention-color: var(--gray-850);
-  --email-toggle-color: var(--kbd-color);
-  --email-toggle-background: var(--blockquote-border);
-  --email-quoted-color: var(--blockquote-color);
-  --keyword-color: var(--gray-400);
+  --code-background: #f7f7f9;
+  --hr-background: #e3e4e8;
+  --thead-background: #f7f7f9;
+  --thead-border: #e3e4e8;
+  --tr-border: #bfc1c9; /* unused variable */
+  --tr-alt-background: #f7f7f9;
+  --kbd-background: #f7f7f9;
+  --kbd-color: #4b4d58;
+  --kbd-border: #d6d7dc;
+  --blockquote-color: #6a6d7c;
+  --blockquote-border: #e3e4e8;
+  --heading-color: #17181a;
+  --header-bottom-border: #e3e4e8;
+  --h6-color: #6a6d7c;
+  --frame-border: #e3e4e8;
+  --frame-color: #242528;
+  --mention-color: #242528;
+  --email-toggle-color: #4b4d58; /* unused variable */
+  --email-toggle-background: #e3e4e8; /* unused variable */
+  --email-quoted-color: #6a6d7c; /* unused variable */
+  --keyword-color: #9194a1;
   --code-font: Menlo, monospace;
+  
+  /* Highlight Light */
+  --hl_Background: #F6F8FA ;
+  --hl_Number: #79c0ff ;
+  --hl_Escape: #a5d6ff ;
+  --hl_String: #549ef1 ;
+  --hl_String_Pre_Processor: #549ef1 ;
+  --hl_Block_Comment: #8b949e ;
+  --hl_Line_Comment: #8b949e ;
+  --hl_Pre_Processor: #FF7B72 ; /* #include */
+  --hl_Line_Number:  #52565C ;
+  --hl_Operator: #79c0ff ; /* +,-,(){} */
+  --hl_Interpolation:  #79c0ff ;
+  --hl_Keyword-1: #FF7B72 ; /* import | func */
+  --hl_Keyword-2: #FF7B72 ; /* int | str */
+  --hl_Keyword-3: #c9d1d9 ; /* ??? */
+  --hl_Keyword-4: #eea8ff ; /* ??? */
+  --hl_Keyword-5: #FF7B72 ; /* ??? */
+  --hl_Keyword-6: #FF7B72 ; /* ??? */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --link-highlight: rgba(46, 143, 255, 0.08);
-    --pre-background: var(--backgroundElevatedTertiary);
-    --blockquote-color: var(--gray-400);
-    --kbd-color: var(--gray-350);
-    --kbd-border: var(--gray-750);
-    --hr-background: var(--borderOpaque);
-    --heading-color: var(--gray-100);
-    --keyword-color: var(--gray-600);
-    --frame-color: var(--gray-200);
-    --mention-color: var(--textPrimary);
+    /* Base Dark */
+  --textPrimary: #c9d1d9;
+  --background: #0d1117;
+  --link: #58a6ff;
+  --link-highlight: rgba(3, 102, 214, 0.08);
+  --code-background: #2f3438;
+  --hr-background: #30363d;
+  --thead-background: #f7f7f9;
+  --thead-border: #3b434b;
+  --tr-border: #3b434b; /* unused variable */
+  --tr-alt-background: #161c23;
+  --kbd-background: #f7f7f9;
+  --kbd-color: #4b4d58;
+  --kbd-border: #050505;
+  --blockquote-color: #8b949e;
+  --blockquote-border: #3D434A;
+  --heading-color: #17181a;
+  --header-bottom-border: #21272c;
+  --h6-color: #6a6d7c;
+  --frame-border: #ff08d6;
+  --frame-color: #242528;
+  --mention-color: #242528;
+  --email-toggle-color: #4b4d58;
+  --email-toggle-background: #e3e4e8;
+  --email-quoted-color: #6a6d7c;
+  --keyword-color: #9194a1;
+  --code-font: Menlo, monospace;
+
+      /* Highlight Dark */
+  --hl_Background: #161b22 ;
+  --hl_Number: #79c0ff ;
+  --hl_Escape: #a5d6ff ;
+  --hl_String: #549ef1 ;
+  --hl_String_Pre_Processor: #549ef1 ;
+  --hl_Block_Comment: #8b949e ;
+  --hl_Line_Comment: #8b949e ;
+  --hl_Pre_Processor: #FF7B72 ; /* #include */
+  --hl_Line_Number:  #52565C ;
+  --hl_Operator: #79c0ff ; /* +,-,(){} */
+  --hl_Interpolation:  #79c0ff ;
+  --hl_Keyword-1: #FF7B72 ; /* import | func */
+  --hl_Keyword-2: #FF7B72 ; /* int | str */
+  --hl_Keyword-3: #c9d1d9 ; /* ??? */
+  --hl_Keyword-4: #eea8ff ; /* ??? */
+  --hl_Keyword-5: #FF7B72 ; /* ??? */
+  --hl_Keyword-6: #FF7B72 ; /* ??? */
   }
 }
+
+/*Syntax Highlight*/
+pre.hl	{ background-color: var(--hl_Background); }
+.hl.num { color: var(--hl_Number); }
+.hl.esc { color: var(--hl_Escape); }
+.hl.str { color: var(--hl_String); }
+.hl.pps { color: var(--hl_String_Pre_Processor); }
+.hl.com { color: var(--hl_Block_Comment); }
+.hl.slc { color: var(--hl_Line_Comment); }
+.hl.ppc { color: var(--hl_Pre_Processor); }
+.hl.lin { color: var(--hl_Line_Number); }
+.hl.opt { color: var(--hl_Operator); }
+.hl.ipl { color: var(--hl_Interpolation); }
+.hl.kwa { color: var(--hl_Keyword-1); }
+.hl.kwb { color: var(--hl_Keyword-2); }
+.hl.kwc { color: var(--hl_Keyword-3); }
+.hl.kwd { color: var(--hl_Keyword-4); }
+.hl.kwe { color: var(--hl_Keyword-5); }
+.hl.kwf { color: var(--hl_Keyword-6); }
 
 * {
   box-sizing: border-box;
@@ -301,6 +144,10 @@ a {
   color: var(--link);
   text-decoration: none;
   -webkit-tap-highlight-color: var(--link-highlight);
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 details summary {
@@ -466,7 +313,7 @@ input[type="checkbox"] {
 
 .markdown-body h1, .markdown-body h2 {
   padding-bottom: .3em;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--header-bottom-border);
 }
 
 .markdown-body h2 {
@@ -550,7 +397,7 @@ input[type="checkbox"] {
 
 .markdown-body table tr {
   background-color: var(--background);
-  border-top: 1px solid var(--tr-border);
+  border-top: 1px solid var(--tr-border); /* unused variable */
 }
 
 .markdown-body table tr:nth-child(2n) {
@@ -713,7 +560,7 @@ input[type="checkbox"] {
   overflow: auto;
   font-size: 85%;
   line-height: 1.45;
-  background-color: var(--pre-background);
+  background-color: var(--hl_Background);
   border-radius: 6px;
 }
 
