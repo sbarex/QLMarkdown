@@ -1,3 +1,7 @@
+1.0.b8
+Bugfix:
+- Fixed standard cmark tasklist extension not inserting class style in html output.
+
 1.0.b7
 New features:
 - `Heads extension` to auto create anchor for the heads.

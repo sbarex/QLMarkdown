@@ -139,6 +139,9 @@ Also I am not a native English speaker :sweat_smile:.
 ---
 
 [^footnote]: The library is a GitHub fork of the standard cmark tool to process the markdown files.
+
 [^footnote_inlineimages]: The quick look extension can not access to the local images defined inside the markdown code, so embedding the data it's a way around the limitation. 
+
 [^footnote_file_scheme]: With the `file://` scheme you *always set the fullpath*. For images inside the same folder of the markdown file do not use the scheme  `file://` and also `./` is optional.
+
 [^footnote_font]: Setting a custom font also change the font used in the code blocks enclosed by back-ticks (\`).

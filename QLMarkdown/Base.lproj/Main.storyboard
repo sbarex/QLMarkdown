@@ -732,7 +732,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="13" y="478" width="1316" height="284"/>
+                                <rect key="frame" x="13" y="644" width="1316" height="118"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Basic options" identifier="" id="XgS-T3-Gpv">
@@ -1534,27 +1534,27 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="453" width="1342" height="5"/>
+                                <rect key="frame" x="0.0" y="619" width="1342" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="0.0" width="1342" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1342" height="621"/>
                                 <subviews>
-                                    <customView id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="671" height="455"/>
+                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
+                                        <rect key="frame" x="0.0" y="0.0" width="671" height="621"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="0.0" width="671" height="455"/>
+                                                <rect key="frame" x="0.0" y="166" width="671" height="621"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="671" height="455"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="671" height="621"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH" customClass="DropableTextView" customModule="QLMarkdown" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="651" height="435"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="651" height="601"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="651" height="435"/>
+                                                            <size key="minSize" width="651" height="601"/>
                                                             <size key="maxSize" width="678" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>
@@ -1569,7 +1569,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="645" y="10" width="16" height="435"/>
+                                                    <rect key="frame" x="645" y="10" width="16" height="601"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -1581,12 +1581,12 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView id="sp3-sm-w1y">
-                                        <rect key="frame" x="681" y="0.0" width="661" height="455"/>
+                                    <customView misplaced="YES" id="sp3-sm-w1y">
+                                        <rect key="frame" x="681" y="0.0" width="661" height="621"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="31" width="661" height="424"/>
+                                                <rect key="frame" x="0.0" y="31" width="661" height="590"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -1597,13 +1597,13 @@
                                                 </connections>
                                             </wkWebView>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="67x-X7-c0k">
-                                                <rect key="frame" x="0.0" y="29" width="661" height="5"/>
+                                                <rect key="frame" x="0.0" y="195" width="661" height="5"/>
                                             </box>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="323" y="220" width="16" height="16"/>
+                                                <rect key="frame" x="323" y="469" width="16" height="16"/>
                                             </progressIndicator>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2s4-sQ-wsc">
-                                                <rect key="frame" x="630" y="7" width="23" height="19"/>
+                                                <rect key="frame" x="630" y="173" width="23" height="19"/>
                                                 <buttonCell key="cell" type="roundRect" bezelStyle="roundedRect" image="NSRefreshTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FkI-ch-SsE">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="cellTitle"/>
@@ -1613,7 +1613,7 @@
                                                 </connections>
                                             </button>
                                             <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Qgu-4m-xR7">
-                                                <rect key="frame" x="552" y="7" width="71" height="20"/>
+                                                <rect key="frame" x="552" y="173" width="71" height="20"/>
                                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="roundRect" trackingMode="selectOne" id="MPN-Af-7mu">
                                                     <font key="font" metaFont="cellTitle"/>
                                                     <segments>
@@ -1649,7 +1649,7 @@
                                 </holdingPriorities>
                             </splitView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fSx-Bb-M3z">
-                                <rect key="frame" x="20" y="463" width="139" height="17"/>
+                                <rect key="frame" x="20" y="629" width="139" height="17"/>
                                 <buttonCell key="cell" type="roundRect" title="Show advanced options" bezelStyle="roundedRect" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mwk-rW-hd7">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="smallSystem"/>

@@ -141,6 +141,29 @@ static int S_render_node(cmark_html_renderer *renderer, cmark_node *node,
       if (list_type == CMARK_BULLET_LIST) {
         cmark_strbuf_puts(html, "<ul");
         cmark_html_render_sourcepos(node, html, options);
+          // FIX missing class for tasklist
+          cmark_iter *iter;
+          iter = cmark_iter_new(node);
+          cmark_event_type ev;
+          cmark_node *child;
+          bool found = false;
+          while ((ev = cmark_iter_next(iter)) != CMARK_EVENT_DONE) {
+              child = cmark_iter_get_node(iter);
+              cmark_syntax_extension *ext;
+              ext = cmark_node_get_syntax_extension(child);
+              if (ext == NULL || ext->name == NULL) {
+                  continue;
+              }
+              if (strcmp(ext->name, "tasklist") == 0) {
+                  found = true;
+                  break;
+              }
+          }
+          cmark_iter_free(iter);
+          if (found) {
+              cmark_strbuf_puts(html, " class='contains-task-list'");
+          }
+          // END FIX
         cmark_strbuf_puts(html, ">\n");
       } else if (start == 1) {
         cmark_strbuf_puts(html, "<ol");
