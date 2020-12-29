@@ -46,7 +46,7 @@
             <title>1.0</title>
             <pubDate>mar, 29 dic 2020 18:36:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b7/QLMarkdown.zip" sparkle:version="7" sparkle:shortVersionString="1.0" type="application/octet-stream" sparkle:edSignature="hrB1y5SY9+2yHidU6wzobdt1o2yX3p+DCbhjIPwHaiZAOpntNEbW5yCXRQLgY68I6iqOXWZERosTxO00f/qIBQ==" length="17682806"/>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b7/QLMarkdown.zip" sparkle:version="7" sparkle:shortVersionString="1.0" type="application/octet-stream" sparkle:edSignature="e+jzbC/6vyrH/NGtcFigt6biD+vv4XVO4ALAb+Ljc2PbJz3Z+f7z6MjB+Cst+8KPv+1iJsRfiM3T2x734UdmBg==" length="17682841"/>
             <description><![CDATA[
 <p>New features:</p>
 <ul>
@@ -63,6 +63,8 @@
     <li>Null pointer bug on inlineimage extension.</li>
     <li>Fix on the image mime detection.</li>
 </ul>
+
+<p><b>Warning</b>: I fix a typo in the application name. The autoupdate can fail. In this case please redownload the app. </p>
             ]]>
             </description>
         </item>
