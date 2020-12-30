@@ -134,6 +134,12 @@
 		83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
+		83F1FE4C259CEE7400257DAC /* external-launcher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83F1FE53259CEEC900257DAC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE52259CEEC900257DAC /* main.swift */; };
+		83F1FE57259CEF0100257DAC /* external_launcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE56259CEF0100257DAC /* external_launcherProtocol.swift */; };
+		83F1FE5B259CEF4300257DAC /* external_launcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE5A259CEF4300257DAC /* external_launcher.swift */; };
+		83F1FE5F259CEF6C00257DAC /* external_launcher_delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE5E259CEF6C00257DAC /* external_launcher_delegate.swift */; };
+		83F1FE6F259CF03B00257DAC /* external-launcher.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83F4B99225868A7400FC58A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		83F4B9962586AB9700FC58A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83D4B1C3258675D0000745DB /* README.md */; };
 		83F881612597E902008C5071 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
@@ -175,6 +181,20 @@
 			remoteGlobalIDString = 837F28EF2597817300A5F7DE;
 			remoteInfo = GoLibraries;
 		};
+		83F1FE4A259CEE7400257DAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 83F1FE40259CEE7400257DAC;
+			remoteInfo = "external-launcher";
+		};
+		83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 83F1FE40259CEE7400257DAC;
+			remoteInfo = "external-launcher";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -201,12 +221,23 @@
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83F1FE6E259CF03000257DAC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				83F1FE6F259CF03B00257DAC /* external-launcher.xpc in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83F8816F2597EE45008C5071 /* Embed XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
+				83F1FE4C259CEE7400257DAC /* external-launcher.xpc in Embed XPC Services */,
 				83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
 				83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
 				83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
@@ -369,6 +400,12 @@
 		83EF951C2585367500B56FA3 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		83EF95212585476800B56FA3 /* emoji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = emoji.h; sourceTree = "<group>"; };
 		83EF95222585476800B56FA3 /* emoji.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emoji.c; sourceTree = "<group>"; };
+		83F1FE41259CEE7400257DAC /* external-launcher.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "external-launcher.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83F1FE49259CEE7400257DAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83F1FE52259CEEC900257DAC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		83F1FE56259CEF0100257DAC /* external_launcherProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcherProtocol.swift; sourceTree = "<group>"; };
+		83F1FE5A259CEF4300257DAC /* external_launcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcher.swift; sourceTree = "<group>"; };
+		83F1FE5E259CEF6C00257DAC /* external_launcher_delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcher_delegate.swift; sourceTree = "<group>"; };
 		83F4B99125868A7400FC58A7 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		83F881642597EE2B008C5071 /* BinaryDelta */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = BinaryDelta; sourceTree = "<group>"; };
 		83F881672597EE2C008C5071 /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
@@ -405,6 +442,13 @@
 				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
 				837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */,
 				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83F1FE3E259CEE7400257DAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +520,7 @@
 				831A8C42258ABADA00E36182 /* QLExtension */,
 				837F29172597A01F00A5F7DE /* Resources */,
 				83F881632597EE2B008C5071 /* Sparkle */,
+				83F1FE42259CEE7400257DAC /* external-launcher */,
 				83598F0525825B8D004664D3 /* Frameworks */,
 				83598E6225818808004664D3 /* Products */,
 			);
@@ -486,6 +531,7 @@
 			children = (
 				83598E6125818808004664D3 /* QLMarkdown.app */,
 				831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */,
+				83F1FE41259CEE7400257DAC /* external-launcher.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -679,6 +725,18 @@
 			path = "highlight wrapper";
 			sourceTree = "<group>";
 		};
+		83F1FE42259CEE7400257DAC /* external-launcher */ = {
+			isa = PBXGroup;
+			children = (
+				83F1FE56259CEF0100257DAC /* external_launcherProtocol.swift */,
+				83F1FE5A259CEF4300257DAC /* external_launcher.swift */,
+				83F1FE5E259CEF6C00257DAC /* external_launcher_delegate.swift */,
+				83F1FE49259CEE7400257DAC /* Info.plist */,
+				83F1FE52259CEEC900257DAC /* main.swift */,
+			);
+			path = "external-launcher";
+			sourceTree = "<group>";
+		};
 		83F881632597EE2B008C5071 /* Sparkle */ = {
 			isa = PBXGroup;
 			children = (
@@ -705,11 +763,13 @@
 				831A8C3B258ABADA00E36182 /* Sources */,
 				831A8C3C258ABADA00E36182 /* Frameworks */,
 				831A8C3D258ABADA00E36182 /* Resources */,
+				83F1FE6E259CF03000257DAC /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				837F291A2597A0B300A5F7DE /* PBXTargetDependency */,
+				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
 			);
 			name = "Markdown QL Extension";
 			productName = QLExtension;
@@ -733,11 +793,29 @@
 			dependencies = (
 				837F291C2597A0B800A5F7DE /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
+				83F1FE4B259CEE7400257DAC /* PBXTargetDependency */,
 			);
 			name = QLMarkdown;
 			productName = QLMarkdown;
 			productReference = 83598E6125818808004664D3 /* QLMarkdown.app */;
 			productType = "com.apple.product-type.application";
+		};
+		83F1FE40259CEE7400257DAC /* external-launcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83F1FE4F259CEE7400257DAC /* Build configuration list for PBXNativeTarget "external-launcher" */;
+			buildPhases = (
+				83F1FE3D259CEE7400257DAC /* Sources */,
+				83F1FE3E259CEE7400257DAC /* Frameworks */,
+				83F1FE3F259CEE7400257DAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "external-launcher";
+			productName = "external-launcher";
+			productReference = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */;
+			productType = "com.apple.product-type.xpc-service";
 		};
 /* End PBXNativeTarget section */
 
@@ -754,6 +832,10 @@
 					83598E6025818808004664D3 = {
 						CreatedOnToolsVersion = 12.2;
 						LastSwiftMigration = 1220;
+					};
+					83F1FE40259CEE7400257DAC = {
+						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 				};
 			};
@@ -778,6 +860,7 @@
 			targets = (
 				83598E6025818808004664D3 /* QLMarkdown */,
 				831A8C3E258ABADA00E36182 /* Markdown QL Extension */,
+				83F1FE40259CEE7400257DAC /* external-launcher */,
 			);
 		};
 /* End PBXProject section */
@@ -816,6 +899,13 @@
 				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
 				834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */,
 				834CAB8A259167D100673002 /* examples in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		83F1FE3F259CEE7400257DAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -982,6 +1072,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		83F1FE3D259CEE7400257DAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83F1FE5F259CEF6C00257DAC /* external_launcher_delegate.swift in Sources */,
+				83F1FE5B259CEF4300257DAC /* external_launcher.swift in Sources */,
+				83F1FE57259CEF0100257DAC /* external_launcherProtocol.swift in Sources */,
+				83F1FE53259CEEC900257DAC /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -999,6 +1100,16 @@
 			isa = PBXTargetDependency;
 			name = GoLibraries;
 			targetProxy = 837F291B2597A0B800A5F7DE /* PBXContainerItemProxy */;
+		};
+		83F1FE4B259CEE7400257DAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 83F1FE40259CEE7400257DAC /* external-launcher */;
+			targetProxy = 83F1FE4A259CEE7400257DAC /* PBXContainerItemProxy */;
+		};
+		83F1FE6D259CF02900257DAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 83F1FE40259CEE7400257DAC /* external-launcher */;
+			targetProxy = 83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1028,7 +1139,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1063,7 +1174,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1218,7 +1329,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1262,7 +1373,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1294,6 +1405,57 @@
 			};
 			name = Release;
 		};
+		83F1FE4D259CEE7400257DAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "external-launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+					"@loader_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.qlmarkdown.external-launcher";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		83F1FE4E259CEE7400257DAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = "external-launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+					"@loader_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.qlmarkdown.external-launcher";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1320,6 +1482,15 @@
 			buildConfigurations = (
 				83598E722581880A004664D3 /* Debug */,
 				83598E732581880A004664D3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83F1FE4F259CEE7400257DAC /* Build configuration list for PBXNativeTarget "external-launcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83F1FE4D259CEE7400257DAC /* Debug */,
+				83F1FE4E259CEE7400257DAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

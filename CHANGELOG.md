@@ -1,3 +1,7 @@
+1.0b11
+Bugfix:
+- Fixed open external link to the default browser on Big Sur (via an external XPC service).
+
 1.0b10
 New features:
 - Implemented reset to factory settings.

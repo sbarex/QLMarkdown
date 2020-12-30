@@ -9,6 +9,7 @@ import Cocoa
 import Quartz
 import WebKit
 import OSLog
+import external_launcher
 
 class MyWKWebView: WKWebView {
     override var canBecomeKeyView: Bool {
@@ -43,12 +44,25 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     override var nibName: NSNib.Name? {
         return NSNib.Name("PreviewViewController")
     }
+    
+    var launcherService: ExternalLauncherProtocol?
 
     override func loadView() {
         super.loadView()
         // Do any additional setup after loading the view.
         
         Settings.shared.startMonitorChange()
+        
+        if #available(macOS 11, *) {
+            let connection = NSXPCConnection(serviceName: "org.sbarex.qlmarkdown.external-launcher")
+            
+            connection.remoteObjectInterface = NSXPCInterface(with: ExternalLauncherProtocol.self)
+            connection.resume()
+            
+            self.launcherService = connection.synchronousRemoteObjectProxyWithErrorHandler { error in
+                print("Received error:", error)
+            } as? ExternalLauncherProtocol
+        }
     }
     
     internal func getBundleContents(forResource: String, ofType: String) -> String?
@@ -109,7 +123,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             /*
             if #available(macOS 11, *) {
                 // On Big Sur there are some bugs with the current WKWebView:
-                // - WKWebView crash on launch becaouse ignore the com.apple.security.network.client entitlement (workaround setting the com.apple.security.temporary-exception.mach-lookup.global-name exception for com.apple.nsurlsessiond
+                // - WKWebView crash on launch because ignore the com.apple.security.network.client entitlement (workaround setting the com.apple.security.temporary-exception.mach-lookup.global-name exception for com.apple.nsurlsessiond
                 // - WKWebView cannot scroll when QL preview window is in fullscreen.
                 // Old WebView API works.
                 let webView = MyWebView(frame: previewRect)
@@ -132,8 +146,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                 let configuration = WKWebViewConfiguration()
                 //configuration.preferences = preferences
                 configuration.allowsAirPlayForMediaPlayback = false
-                // configuration.userContentController.add(self, name: "jsHandler")
-                
+            
                 let webView = MyWKWebView(frame: previewRect, configuration: configuration)
                 webView.autoresizingMask = [.height, .width]
                 
@@ -195,13 +208,22 @@ extension PreviewViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if !Settings.shared.openInlineLink, navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
-            // FIXME: on big sur fail with this error on Console:
-            // Launch Services generated an error at +[_LSRemoteOpenCall(PrivateCSUIAInterface) invokeWithXPCConnection:object:]:455, converting to OSStatus -54: Error Domain=NSOSStatusErrorDomain Code=-54 "The sandbox profile of this process is missing "(allow lsopen)", so it cannot invoke Launch Services' open API." UserInfo={NSDebugDescription=The sandbox profile of this process is missing "(allow lsopen)", so it cannot invoke Launch Services' open API., _LSLine=455, _LSFunction=+[_LSRemoteOpenCall(PrivateCSUIAInterface) invokeWithXPCConnection:object:]}
-            let r = NSWorkspace.shared.open(url)
-            print(r, url.absoluteString)
-            if r {
+            if #available(macOS 11, *) {
+                // On Big Sur NSWorkspace.shared.open fail with this error on Console:
+                // Launch Services generated an error at +[_LSRemoteOpenCall(PrivateCSUIAInterface) invokeWithXPCConnection:object:]:455, converting to OSStatus -54: Error Domain=NSOSStatusErrorDomain Code=-54 "The sandbox profile of this process is missing "(allow lsopen)", so it cannot invoke Launch Services' open API." UserInfo={NSDebugDescription=The sandbox profile of this process is missing "(allow lsopen)", so it cannot invoke Launch Services' open API., _LSLine=455, _LSFunction=+[_LSRemoteOpenCall(PrivateCSUIAInterface) invokeWithXPCConnection:object:]}
+                // Using a XPC service is a valid workaround.
+                launcherService?.open(url, withReply: { r in
+                    // print("open result: \(r)")
+                })
                 decisionHandler(.cancel)
                 return
+            } else {
+                let r = NSWorkspace.shared.open(url)
+                // print(r, url.absoluteString)
+                if r {
+                    decisionHandler(.cancel)
+                    return
+                }
             }
         }
         decisionHandler(.allow)
