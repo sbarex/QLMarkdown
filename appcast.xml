@@ -92,5 +92,23 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mar, 30 dic 2020 17:10:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b10/QLMarkdown.zip" sparkle:version="10" sparkle:edSignature="JWzjW5WsJ1l2cuovUK3KFalBHOfBXIAlaUs+bH1uqibzNGzzWJyQGEBIq5hbWU/MuUURghyhfQ1YHAv2dpXTCA==" length="17706862"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Implemented reset to factory settings.</li>
+</ul>
+<p>Bug fix:</p>
+<ul>
+<li>Incomplete saving settings.</li>
+<li>UI fix.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
