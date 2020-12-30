@@ -33,15 +33,15 @@ class Settings {
     static let Domain: String = "org.sbarex.qlmarkdown"
     
     static let shared = Settings()
+    static let factorySettings = Settings(noInitFromDefault: true)
     
-    @objc var tableExtension: Bool = true
     @objc var autoLinkExtension: Bool = true
-    @objc var tagFilterExtension: Bool = true
-    @objc var taskListExtension: Bool = true
-    @objc var mentionExtension: Bool = false
     @objc var checkboxExtension: Bool = false
-    @objc var headsExtension: Bool = false
-    
+    @objc var emojiExtension: Bool = true
+    @objc var emojiImageOption: Bool = false
+    @objc var headsExtension: Bool = true
+    @objc var inlineImageExtension: Bool = true
+    @objc var mentionExtension: Bool = false
     @objc var strikethroughExtension: Bool = true
     @objc var strikethroughDoubleTildeOption: Bool = false
     
@@ -55,25 +55,25 @@ class Settings {
     @objc var syntaxTabsOption: Int = 4
     @objc var syntaxFontFamily: String = ""
     @objc var syntaxFontSize: CGFloat = 10
+    @objc var guessEngine: GuessEngine = .none
     
-    @objc var emojiExtension: Bool = true
-    @objc var emojiImageOption: Bool = false
-    @objc var inlineImageExtension: Bool = false
+    @objc var tableExtension: Bool = true
+    @objc var tagFilterExtension: Bool = true
+    @objc var taskListExtension: Bool = true
     
+    @objc var footnotesOption: Bool = true
     @objc var hardBreakOption: Bool = false
     @objc var noSoftBreakOption: Bool = false
     @objc var unsafeHTMLOption: Bool = false
+    @objc var smartQuotesOption: Bool = true
     @objc var validateUTFOption: Bool = false
-    @objc var smartQuotesOption: Bool = false
-    @objc var footnotesOption: Bool = false
     
     @objc var customCSS: URL?
     @objc var customCSSOverride: Bool = false
+    @objc var openInlineLink: Bool = false
     
     @objc var debug: Bool = false
     
-    @objc var guessEngine: GuessEngine = .none
-    @objc var openInlineLink: Bool = false
     
     class var applicationSupportUrl: URL? {
         let sharedContainerURL: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Domain)?.appendingPathComponent("Library/Application Support")
@@ -90,8 +90,10 @@ class Settings {
         return Settings.applicationSupportUrl?.appendingPathComponent("themes")
     }
     
-    private init() {
-        self.reset()
+    private init(noInitFromDefault: Bool = false) {
+        if !noInitFromDefault {
+            self.initFromDefaults()
+        }
     }
     deinit {
         stopMonitorChange()
@@ -107,10 +109,10 @@ class Settings {
     
     @objc func handleSettingsChanged(_ notification: NSNotification) {
         print("settings changed")
-        self.reset()
+        self.initFromDefaults()
     }
     
-    func reset() {
+    func initFromDefaults() {
         print("Shared preferences stored in \(Settings.applicationSupportUrl?.path ?? "??").")
         
         let defaults = UserDefaults.standard
@@ -233,6 +235,63 @@ class Settings {
         }
         
         sanitizeEmojiOption()
+    }
+    
+    @discardableResult
+    func resetToFactory() -> Bool {
+        let userDefaults = UserDefaults()
+        userDefaults.setPersistentDomain([:], forName: Settings.Domain)
+        let r = userDefaults.synchronize()
+        
+        if r {
+            let s = Settings()
+            
+            self.autoLinkExtension = s.autoLinkExtension
+            self.checkboxExtension = s.checkboxExtension
+            
+            self.emojiExtension = s.emojiExtension
+            self.emojiImageOption = s.emojiImageOption
+            
+            self.headsExtension = s.headsExtension
+            self.inlineImageExtension = s.inlineImageExtension
+            self.mentionExtension = s.mentionExtension
+            
+            self.strikethroughExtension = s.strikethroughExtension
+            self.strikethroughDoubleTildeOption = s.strikethroughDoubleTildeOption
+            
+            self.syntaxHighlightExtension = s.syntaxHighlightExtension
+            self.syntaxThemeLight = s.syntaxThemeLight
+            self.syntaxBackgroundColorLight = s.syntaxBackgroundColorLight
+            self.syntaxThemeDark = s.syntaxThemeDark
+            self.syntaxBackgroundColorDark = s.syntaxBackgroundColorDark
+            self.syntaxWordWrapOption = s.syntaxWordWrapOption
+            self.syntaxLineNumbersOption = s.syntaxLineNumbersOption
+            self.syntaxTabsOption = s.syntaxTabsOption
+            self.syntaxFontFamily = s.syntaxFontFamily
+            self.syntaxFontSize = s.syntaxFontSize
+            self.guessEngine = s.guessEngine
+            
+            self.tableExtension = s.tableExtension
+            self.tagFilterExtension = s.tagFilterExtension
+            self.taskListExtension = s.taskListExtension
+        
+            self.footnotesOption = s.footnotesOption
+            self.hardBreakOption = s.hardBreakOption
+            self.noSoftBreakOption = s.noSoftBreakOption
+            self.unsafeHTMLOption = s.unsafeHTMLOption
+            self.smartQuotesOption = s.smartQuotesOption
+            self.validateUTFOption = s.validateUTFOption
+            
+            self.customCSS = s.customCSS
+            self.customCSSOverride = s.customCSSOverride
+    
+            self.openInlineLink = s.openInlineLink
+    
+            self.debug = s.debug
+            
+            DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)
+        }
+        return r
     }
     
     private func sanitizeEmojiOption() {
@@ -732,8 +791,10 @@ table.debug td {
 \(style)
 \(header)
 </head>
-<body class="markdown-body">
+<body>
+<article class="markdown-body">
 \(body)
+</article>
 \(footer)
 </body>
 </html>

@@ -1,3 +1,11 @@
+1.0b10
+New features:
+- Implemented reset to factory settings.
+
+Bugfix:
+- Incomplete saving settings.
+- UI fix.
+
 1.0.b9
 New features:
 - Updated the default css style (thanks to [hazarek](https://github.com/hazarek)). 

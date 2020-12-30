@@ -9,44 +9,51 @@ import Cocoa
 import WebKit
 
 class ViewController: NSViewController {
-    @objc dynamic var headsExtension: Bool = true {
+    @objc dynamic var headsExtension: Bool = Settings.factorySettings.headsExtension {
         didSet {
             isDirty = true
         }
     }
-    @objc dynamic var tableExtension: Bool = true {
+    @objc dynamic var tableExtension: Bool = Settings.factorySettings.tableExtension {
         didSet {
             isDirty = true
         }
     }
-    @objc dynamic var autoLinkExtension: Bool = true {
+    @objc dynamic var autoLinkExtension: Bool = Settings.factorySettings.autoLinkExtension {
         didSet {
             isDirty = true
         }
     }
-    @objc dynamic var tagFilterExtension: Bool = true {
+    @objc dynamic var tagFilterExtension: Bool = Settings.factorySettings.tagFilterExtension {
         didSet {
             isDirty = true
         }
     }
-    @objc dynamic var taskListExtension: Bool = true {
+    @objc dynamic var taskListExtension: Bool = Settings.factorySettings.taskListExtension {
         didSet {
             isDirty = true
         }
     }
-    @objc dynamic var strikethroughExtension: Bool = true {
+    @objc dynamic var strikethroughExtension: Bool = Settings.factorySettings.strikethroughExtension {
         didSet {
             isDirty = true
-            strikethroughPopupButton.mode = strikethroughExtension ? .popup : .button
+            updateStrikethroughPopup()
         }
     }
-    @objc dynamic var mentionExtension: Bool = false {
+    dynamic var strikethroughDoubleTildeOption: Bool = Settings.factorySettings.strikethroughDoubleTildeOption {
+        didSet {
+            isDirty = true
+            updateStrikethroughPopup()
+        }
+    }
+    
+    @objc dynamic var mentionExtension: Bool = Settings.factorySettings.mentionExtension {
         didSet {
             isDirty = true
         }
     }
     
-    @objc dynamic var syntaxHighlightExtension: Bool = true {
+    @objc dynamic var syntaxHighlightExtension: Bool = Settings.factorySettings.syntaxHighlightExtension {
         didSet {
             isDirty = true
             self.sourceBackgroundLabel.textColor = syntaxHighlightExtension ? .labelColor : .disabledControlTextColor
@@ -56,14 +63,14 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var syntaxThemeLight: ThemePreview? {
+    @objc dynamic var syntaxThemeLight: ThemePreview? = nil {
         didSet {
             isDirty = true
             
             updateThemes()
         }
     }
-    @objc dynamic var syntaxThemeDark: ThemePreview? {
+    @objc dynamic var syntaxThemeDark: ThemePreview? = nil {
         didSet {
             isDirty = true
             
@@ -76,42 +83,48 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
-    @objc dynamic var backgroundColorLight: NSColor = NSColor.textBackgroundColor {
+    @objc dynamic var backgroundColorLight: NSColor = NSColor(css: Settings.factorySettings.syntaxBackgroundColorLight) ?? NSColor.textBackgroundColor {
         didSet {
             isDirty = true
         }
     }
     
-    @objc dynamic var backgroundColorDark: NSColor = NSColor.textBackgroundColor {
+    @objc dynamic var backgroundColorDark: NSColor = NSColor(css: Settings.factorySettings.syntaxBackgroundColorDark) ?? NSColor.textBackgroundColor {
         didSet {
             isDirty = true
         }
     }
     
-    @objc dynamic var syntaxWrapEnabled: Bool = false {
+    @objc dynamic var syntaxLineNumbers: Bool = Settings.factorySettings.syntaxLineNumbersOption {
         didSet {
             isDirty = true
         }
     }
     
-    @objc dynamic var syntaxWrapCharacters: Int = 80 {
+    @objc dynamic var syntaxWrapEnabled: Bool = Settings.factorySettings.syntaxWordWrapOption > 0 {
         didSet {
             isDirty = true
         }
     }
-    @objc dynamic fileprivate(set) var isFontCustomized: Bool = false {
+    
+    @objc dynamic var syntaxWrapCharacters: Int = Settings.factorySettings.syntaxWordWrapOption > 0 ? Settings.factorySettings.syntaxWordWrapOption : 80 {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic fileprivate(set) var isFontCustomized: Bool = !Settings.factorySettings.syntaxFontFamily.isEmpty {
         didSet {
             isDirty = true
             sourceFontLabel.textColor = syntaxHighlightExtension && isFontCustomized ? .labelColor : .disabledControlTextColor
         }
     }
-    @objc dynamic var syntaxFontSize: CGFloat = 12 {
+    @objc dynamic var syntaxFontSize: CGFloat = Settings.factorySettings.syntaxFontSize {
         didSet {
             isDirty = true
             refreshFontPreview()
         }
     }
-    @objc dynamic var syntaxFontFamily: String = "" {
+    @objc dynamic var syntaxFontFamily: String = Settings.factorySettings.syntaxFontFamily {
         /*willSet {
             self.willChangeValue(forKey: #keyPath(isFontCustomized))
         }*/
@@ -124,75 +137,82 @@ class ViewController: NSViewController {
     }
     
     
-    @objc dynamic var emojiExtension: Bool = true {
+    @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension {
         didSet {
             updateEmojiStatus()
-            emojiPopupButton.mode = emojiExtension ? .popup : .button
+            updateEmojiPopup()
+            isDirty = true
+        }
+    }
+    @objc dynamic var emojiImageOption: Bool = Settings.factorySettings.emojiImageOption {
+        didSet {
+            updateEmojiStatus()
+            updateEmojiPopup()
             isDirty = true
         }
     }
     
-    @objc dynamic var inlineImageExtension: Bool = true {
-        didSet {
-            isDirty = true
-        }
-    }
-    
-    @objc dynamic var hardBreakOption: Bool = false {
-        didSet {
-            isDirty = true
-        }
-    }
-    @objc dynamic var noSoftBreakOption: Bool = false {
-        didSet {
-            isDirty = true
-        }
-    }
-    @objc dynamic var unsafeHTMLOption: Bool = false {
-        didSet {
-            isDirty = true
-        }
-    }
-    @objc dynamic var validateUTFOption: Bool = false {
-        didSet {
-            isDirty = true
-        }
-    }
-    @objc dynamic var smartQuotesOption: Bool = false {
-        didSet {
-            isDirty = true
-        }
-    }
-    @objc dynamic var footnotesOption: Bool = false {
+    @objc dynamic var inlineImageExtension: Bool = Settings.factorySettings.inlineImageExtension {
         didSet {
             isDirty = true
         }
     }
     
-    @objc dynamic var guessEnabled: Bool = false {
+    @objc dynamic var hardBreakOption: Bool = Settings.factorySettings.hardBreakOption {
         didSet {
             isDirty = true
         }
     }
-    @objc dynamic var guessEngine: Int = 0 {
+    @objc dynamic var noSoftBreakOption: Bool = Settings.factorySettings.noSoftBreakOption {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic var unsafeHTMLOption: Bool = Settings.factorySettings.unsafeHTMLOption {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic var validateUTFOption: Bool = Settings.factorySettings.validateUTFOption {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic var smartQuotesOption: Bool = Settings.factorySettings.smartQuotesOption {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic var footnotesOption: Bool = Settings.factorySettings.footnotesOption {
         didSet {
             isDirty = true
         }
     }
     
-    @objc dynamic var debugMode: Bool = false {
+    @objc dynamic var guessEnabled: Bool = Settings.factorySettings.guessEngine != .none {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic var guessEngine: Int = Settings.factorySettings.guessEngine == .fast ? 0 : (Settings.factorySettings.guessEngine == .accurate ? 1 : 0) {
+        didSet {
+            isDirty = true
+        }
+    }
+    
+    @objc dynamic var debugMode: Bool = Settings.factorySettings.debug {
         didSet {
             isDirty = true
         }
     }
 
-    @objc dynamic var customizedCSSExtend: Bool = false {
+    @objc dynamic var customCSSOverride: Bool = Settings.factorySettings.customCSSOverride {
         didSet {
             isDirty = true
-            styleExtendPopup.selectItem(at: customizedCSSExtend ? 0 : 1)
+            styleExtendPopup.selectItem(at: customCSSOverride ? 1 : 0)
         }
     }
-    @objc dynamic var customizedCSSFile: URL? {
+    @objc dynamic var customCSSFile: URL? = Settings.factorySettings.customCSS {
         didSet {
             isDirty = true
             updateCustomCSSPopup()
@@ -241,7 +261,7 @@ class ViewController: NSViewController {
     }
     
     func updateCustomCSSPopup() {
-        if let style = customizedCSSFile {
+        if let style = customCSSFile {
             let base = Settings.stylesFolder
             if let index = stylesPopup.itemArray.firstIndex(where: {
                 let file: String
@@ -275,13 +295,20 @@ class ViewController: NSViewController {
         }
     }
     
+    internal var pauseAutoRefresh = 0 {
+        didSet {
+            if pauseAutoRefresh == 0 && isDirty && autoRefresh && isLoaded {
+                self.refresh(self)
+            }
+        }
+    }
     internal var isDirty = false {
         didSet {
             if oldValue != isDirty {
                 self.view.window?.isDocumentEdited = isDirty
                 saveButton?.isEnabled = isDirty
             }
-            if isDirty && autoRefresh && isLoaded {
+            if isDirty && autoRefresh && isLoaded && pauseAutoRefresh == 0 {
                 self.refresh(self)
             }
         }
@@ -321,7 +348,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var sourceWrapField: NSTextField!
     @IBOutlet weak var sourceWrapStepper: NSStepper!
     @IBOutlet weak var sourceCharactersLabel: NSTextField!
-    @IBOutlet weak var sourceLineNumbersButton: NSButton!
     @IBOutlet weak var sourceTabsPopup: NSPopUpButton!
     @IBOutlet weak var sourceTabsLabel: NSTextField!
     @IBOutlet weak var sourceFontLabel: NSTextField!
@@ -329,8 +355,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var guessButton: NSButton!
     @IBOutlet weak var guessEnginePopup: NSPopUpButton!
     
-    @IBOutlet weak var strikethroughPopupButton: CustomPopUpButton!
-    @IBOutlet weak var emojiPopupButton: CustomPopUpButton!
+    @IBOutlet weak var strikethroughPopupButton: NSPopUpButton!
+    @IBOutlet weak var emojiPopupButton: NSPopUpButton!
     @IBOutlet weak var unsafeButton: NSButton!
     @IBOutlet weak var versionLabel: NSTextField!
     @IBOutlet weak var advancedButton: NSButton!
@@ -353,19 +379,18 @@ class ViewController: NSViewController {
             } else {
                 self.textView.string = ""
             }
+            self.textView.setSelectedRange(NSRange(location: 0, length: 0))
             prev_scroll = -1
-            doRefresh(self)
+            
+            if isLoaded {
+                doRefresh(self)
+            }
         }
     }
     internal var prev_scroll: Int = -1
     
     @IBAction func doHighlightExtensionChanged(_ sender: NSButton) {
         self.highlightBackground.isEnabled = sender.state == .on
-    }
-    
-    @IBAction func doEmojiChanged(_ sender: NSPopUpButton) {
-        isDirty = true
-        updateEmojiStatus()
     }
     
     @IBAction func doDirty(_ sender: Any) {
@@ -382,7 +407,55 @@ class ViewController: NSViewController {
     }
     
     @IBAction func doStyleOverrideChange(_ sender: NSPopUpButton) {
-        self.customizedCSSExtend = sender.indexOfSelectedItem == 0
+        self.customCSSOverride = sender.indexOfSelectedItem == 1
+    }
+    
+    @IBAction func handleStrikethroughPopup(_ sender: NSPopUpButton) {
+        if sender.indexOfSelectedItem == 3 {
+            self.strikethroughExtension = false
+        } else {
+            self.strikethroughExtension = true
+            self.strikethroughDoubleTildeOption = sender.indexOfSelectedItem == 2
+        }
+    }
+    
+    func updateStrikethroughPopup() {
+        if !strikethroughExtension {
+            strikethroughPopupButton.title = "Strikethrough"
+        } else {
+            strikethroughPopupButton.title = "Strikethrough (\(self.strikethroughDoubleTildeOption ? "~~" : "~"))"
+        }
+    }
+    
+    internal func updateEmojiStatus() {
+        if emojiExtension && emojiImageOption {
+            pauseAutoRefresh += 1
+            unsafeHTMLOption = true
+            unsafeButton.state = .on
+            unsafeButton.isEnabled = false
+            pauseAutoRefresh -= 1
+        } else {
+            unsafeButton.isEnabled = true
+        }
+    }
+    
+    @IBAction func handleEmojiPopup(_ sender: NSPopUpButton) {
+        if sender.indexOfSelectedItem == 3 {
+            self.emojiExtension = false
+        } else {
+            pauseAutoRefresh += 1
+            self.emojiExtension = true
+            self.emojiImageOption = sender.indexOfSelectedItem == 2
+            pauseAutoRefresh -= 1
+        }
+    }
+    
+    func updateEmojiPopup() {
+        if !emojiExtension {
+            emojiPopupButton.title = "Emoji"
+        } else {
+            emojiPopupButton.title = "Emoji as \(self.emojiImageOption ? "images" : "font")"
+        }
     }
     
     @IBAction func openDocument(_ sender: Any) {
@@ -408,8 +481,21 @@ class ViewController: NSViewController {
     
     @IBAction func revertDocumentToSaved(_ sender: Any) {
         let settings = Settings.shared
-        settings.reset()
+        settings.initFromDefaults()
         self.initFromSettings(settings)
+    }
+    
+    @IBAction func resetToFactory(_ sender: Any) {
+        let alert = NSAlert()
+        alert.messageText = "Are you sure to reset all settings to factory default?"
+        alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
+        alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
+        let r = alert.runModal()
+        if r == .alertFirstButtonReturn {
+            let settings = Settings.shared
+            settings.resetToFactory()
+            self.initFromSettings(settings)
+        }
     }
     
     @IBAction func saveAction(_ sender: Any) {
@@ -535,7 +621,7 @@ document.addEventListener('scroll', function(e) {
     @IBAction func handleImportStyle(_ sender: NSPopUpButton) {
         if let url = importStyle(copyOnSharedFolder: true) {
             self.initStylesPopup(resetStyles: true)
-            customizedCSSFile = url
+            customCSSFile = url
         }
     }
     
@@ -544,7 +630,7 @@ document.addEventListener('scroll', function(e) {
         switch tag {
         case -1, /* Browse */ -2 /* Import */:
             if let url = importStyle(copyOnSharedFolder: tag == -2) {
-                customizedCSSFile = url
+                customCSSFile = url
             }
         case -3: // Download default style
             updateCustomCSSPopup()
@@ -577,10 +663,10 @@ document.addEventListener('scroll', function(e) {
             self.revealApplicationSupportInFinder(self)
         
         case -5: // Refresh list
-            let css = self.customizedCSSFile
-            self.customizedCSSFile = nil
+            let css = self.customCSSFile
+            self.customCSSFile = nil
             self.initStylesPopup(resetStyles: true)
-            self.customizedCSSFile = css
+            self.customCSSFile = css
             
         case -6: // Reveal
             updateCustomCSSPopup()
@@ -589,7 +675,7 @@ document.addEventListener('scroll', function(e) {
             
         default:
             if sender.indexOfSelectedItem == 0 {
-                customizedCSSFile = nil
+                customCSSFile = nil
             } else {
                 if let item = sender.selectedItem {
                     let url: URL
@@ -598,7 +684,7 @@ document.addEventListener('scroll', function(e) {
                     } else {
                         url = URL(fileURLWithPath: item.title)
                     }
-                    customizedCSSFile = url
+                    customCSSFile = url
                 }
             }
             updateCustomCSSPopup()
@@ -606,7 +692,7 @@ document.addEventListener('scroll', function(e) {
     }
     
     @IBAction func revealCSSInFinder(_ sender: Any) {
-        guard let url = self.customizedCSSFile else {
+        guard let url = self.customCSSFile else {
             return
         }
         NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
@@ -625,9 +711,7 @@ document.addEventListener('scroll', function(e) {
     
     internal func updateTabView() {
         tabView.tabViewType = isAdvancedSettingsHidden ? .noTabsNoBorder : .topTabsBezelBorder
-        if isAdvancedSettingsHidden {
-            tabView.selectTabViewItem(at: 0)
-        }
+        tabView.selectTabViewItem(at: isAdvancedSettingsHidden ? 0 : 1)
         tabViewLeftConstraint.constant = isAdvancedSettingsHidden ? 0 : 20
         tabViewBottomConstraint?.constant = isAdvancedSettingsHidden ? 0 : 20
         
@@ -666,6 +750,7 @@ document.addEventListener('scroll', function(e) {
         self.textView.isAutomaticQuoteSubstitutionEnabled = false // Settings this option on interfacebuilder is ignored.
         self.textView.isAutomaticTextReplacementEnabled = false
         self.textView.isAutomaticDashSubstitutionEnabled = false
+        textView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         
         let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
         
@@ -674,30 +759,27 @@ document.addEventListener('scroll', function(e) {
         let contentController = self.webView.configuration.userContentController
         contentController.add(self, name: "scrollHandler")
         
+        let settings = Settings.shared
+        
+        self.syntaxThemeLight = Self.searchTheme(Settings.factorySettings.syntaxThemeLight, in: Settings.shared.getAvailableThemes(), appearance: .light)
+        self.syntaxThemeDark = Self.searchTheme(Settings.factorySettings.syntaxThemeDark, in: Settings.shared.getAvailableThemes(), appearance: .dark)
+        
+        self.initFromSettings(settings)
+        
         markdown_file = Bundle.main.url(forResource: "test1", withExtension: "md")
         
         versionLabel?.stringValue = "lib cmark-gfm version \(String(cString: cmark_version_string())) (\(cmark_version()))"
         
-        let settings = Settings.shared
-        
-        self.initFromSettings(settings)
-        
-        self.strikethroughPopupButton.actionButton = { sender in
-            self.strikethroughExtension = true
-        }
-        self.strikethroughPopupButton.mode = self.strikethroughExtension ? .popup : .button
-        self.emojiPopupButton.actionButton = { sender in
-            self.emojiExtension = true
-        }
-        self.emojiPopupButton.mode = self.emojiExtension ? .popup : .button
-        
-        textView.font = NSFont.systemFont(ofSize: 14)
-        
+        updateTabView()
         tabView.selectTabViewItem(at: 0)
         
-        updateTabView()
+        DispatchQueue.main.async {
+            self.textView.setSelectedRange(NSRange(location: 0, length: 0))
+        }
         
         isLoaded = true
+        
+        doRefresh(self)
     }
     
     @IBAction func doAutoRefresh(_ sender: NSMenuItem) {
@@ -756,16 +838,6 @@ document.addEventListener('scroll', function(e) {
         }
     }
     
-    internal func updateEmojiStatus() {
-        if emojiExtension && emojiPopupButton.indexOfSelectedItem == 1 {
-            unsafeHTMLOption = true
-            unsafeButton.state = .on
-            unsafeButton.isEnabled = false
-        } else {
-            unsafeButton.isEnabled = true
-        }
-    }
-    
     @IBAction func doResetSourceThemes(_ sender: Any) {
         self.syntaxThemeLight = nil
         self.syntaxThemeDark = nil
@@ -781,7 +853,25 @@ document.addEventListener('scroll', function(e) {
         }
     }
     
+    class func searchTheme(_ name: String, in themes: [ThemePreview], appearance: Theme.ThemeAppearance) -> ThemePreview? {
+        let base16 = name.hasPrefix("base16/")
+        let t_name = base16 ? String(name.dropLast("base16/".count)) : name
+        let fullpath = t_name.contains("/")
+        if let t = themes.first(where: {
+                if fullpath {
+                    return $0.path == t_name
+                } else {
+                    return $0.name == t_name && $0.isBase16 == base16
+                }
+            }) {
+            return t;
+        } else {
+            return nil
+        }
+    }
+    
     internal func initFromSettings(_ settings: Settings) {
+        pauseAutoRefresh += 1
         initStylesPopup()
         
         self.debugMode = settings.debug
@@ -791,36 +881,20 @@ document.addEventListener('scroll', function(e) {
         self.tagFilterExtension = settings.tagFilterExtension
         self.taskListExtension = settings.taskListExtension
         self.strikethroughExtension = settings.strikethroughExtension
+        self.strikethroughDoubleTildeOption = settings.strikethroughDoubleTildeOption
         self.mentionExtension = settings.mentionExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         self.emojiExtension = settings.emojiExtension
+        self.emojiImageOption = settings.emojiImageOption
         self.inlineImageExtension = settings.inlineImageExtension
         self.headsExtension = settings.headsExtension
         
         let themes = Settings.shared.getAvailableThemes()
         
-        let searchTheme = { (name: String, appearance: Theme.ThemeAppearance) -> ThemePreview? in
-            let base16 = name.hasPrefix("base16/")
-            let t_name = base16 ? String(name.dropLast("base16/".count)) : name
-            let fullpath = t_name.contains("/")
-            if let t = themes.first(where: {
-                    if fullpath {
-                        return $0.path == t_name
-                    } else {
-                        return $0.name == t_name && $0.isBase16 == base16
-                    }
-                }) {
-                return t;
-            } else {
-                return nil
-            }
-        }
+        self.syntaxThemeLight = Self.searchTheme(settings.syntaxThemeLight, in: themes, appearance: .light)
+        self.syntaxThemeDark = Self.searchTheme(settings.syntaxThemeDark, in: themes, appearance: .dark)
         
-        self.syntaxThemeLight = searchTheme(settings.syntaxThemeLight, .light)
-        self.syntaxThemeDark = searchTheme(settings.syntaxThemeDark, .dark)
-        
-        
-        self.sourceLineNumbersButton.state = settings.syntaxLineNumbersOption ? .on : .off
+        self.syntaxLineNumbers = settings.syntaxLineNumbersOption
         self.syntaxWrapEnabled = settings.syntaxWordWrapOption > 0
         self.sourceWrapField.isEnabled = self.syntaxHighlightExtension
         self.sourceWrapField.isEnabled = syntaxWrapEnabled
@@ -844,7 +918,6 @@ document.addEventListener('scroll', function(e) {
         self.backgroundColorLight = NSColor(css: settings.syntaxBackgroundColorLight) ?? NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.9, alpha: 1)
         self.backgroundColorDark = NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.4, alpha: 1)
         
-        self.sourceLineNumbersButton.state = settings.syntaxLineNumbersOption ? .on : .off
         self.guessEnabled = settings.guessEngine != .none
         self.guessEngine = settings.guessEngine == .accurate ? 1 : 0
         
@@ -855,7 +928,8 @@ document.addEventListener('scroll', function(e) {
         self.smartQuotesOption = settings.smartQuotesOption
         self.footnotesOption = settings.footnotesOption
         
-        self.customizedCSSFile = settings.customCSS
+        self.customCSSFile = settings.customCSS
+        self.customCSSOverride = settings.customCSSOverride
         
         self.doRefresh(self)
         
@@ -863,6 +937,8 @@ document.addEventListener('scroll', function(e) {
         
         inlineLinkPopup.selectItem(at: settings.openInlineLink ? 0 : 1)
         isDirty = false
+        pauseAutoRefresh -= 1
+        doRefresh(self)
     }
     
     internal func updateSettings() -> Settings {
@@ -892,16 +968,16 @@ document.addEventListener('scroll', function(e) {
         settings.headsExtension = self.headsExtension
         
         settings.emojiExtension = self.emojiExtension
-        settings.emojiImageOption = self.emojiPopupButton.indexOfSelectedItem != 0
+        settings.emojiImageOption = self.emojiImageOption
         
         settings.strikethroughExtension = self.strikethroughExtension
-        settings.strikethroughDoubleTildeOption = self.strikethroughPopupButton.indexOfSelectedItem != 0
+        settings.strikethroughDoubleTildeOption = self.strikethroughDoubleTildeOption
         
         settings.syntaxHighlightExtension = self.syntaxHighlightExtension
         
         settings.syntaxThemeLight = self.syntaxThemeLight != nil ? themeName(self.syntaxThemeLight!) : ""
         settings.syntaxThemeDark = self.syntaxThemeDark != nil ? themeName(self.syntaxThemeDark!) : ""
-        settings.syntaxLineNumbersOption = self.sourceLineNumbersButton.state == .on
+        settings.syntaxLineNumbersOption = self.syntaxLineNumbers
         settings.syntaxWordWrapOption = syntaxWrapEnabled ? self.syntaxWrapCharacters : 0
         settings.syntaxTabsOption = self.sourceTabsPopup.selectedItem?.tag ?? 0
         settings.syntaxFontFamily = sourceFontButton.state == .on ?  self.syntaxFontFamily : ""
@@ -931,8 +1007,8 @@ document.addEventListener('scroll', function(e) {
         settings.smartQuotesOption = self.smartQuotesOption
         settings.footnotesOption = self.footnotesOption
         
-        settings.customCSSOverride = !customizedCSSExtend
-        settings.customCSS = self.customizedCSSFile
+        settings.customCSSOverride = self.customCSSOverride
+        settings.customCSS = self.customCSSFile
         
         settings.openInlineLink = inlineLinkPopup.indexOfSelectedItem == 0
         

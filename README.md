@@ -60,6 +60,7 @@ The rendering engine is based on the [Highlight](http://www.andre-simon.de/doku/
 
 In the advanced options panel you can customize the settings:
 
+- Theme (for light and dark appearance).
 - Line numbers visibility.
 - Word wrap options.
 - Use spaces instead of tabs for indentation.
@@ -75,6 +76,11 @@ When the code block does not specify the language it is possible to activate a g
 
 If no language is defined and the guessing fail (or is not enabled), the code is rendered as normal text.
 
+
+#### Source code highlight styles editor
+
+TODO
+
 # Style
 You can choose a css theme to render the markdown file. The app is provided with a predefined theme valid both for light and dark theme. 
 
@@ -88,11 +94,6 @@ User customized style sheet must have the settings for both light and dark appea
 ``` 
 
 The custom style is appended after the css used for the source code. In this way you can customize also the style of the language code. 
-
-
-# Source code highlight styles editor
-
-TODO
 
 # Build from source
 
@@ -113,6 +114,7 @@ The `highlight wrapper` is provided as precompiled (*TODO: insert the build proc
 The `go utils` library is build with the Xcode project. So you must have the `go` compiler installed (you can use `brew install go`). It has linked the [`Enry`](https://github.com/go-enry/go-enry) library used to guess the source code language when the guess mode is set to _accurate_.
 
 # Note about security
+
 To allow the quicklook view of local images the application and the extension has an entitlement exception to allow *only read access* to the entire system. 
 
 On Big Sur there is a bug in the quicklook engine and webkit that cause the immediate crash of any WebView inside a quicklook preview. To temporary fix this problem this quicklook extension uses a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement. 
