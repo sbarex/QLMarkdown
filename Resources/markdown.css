@@ -217,9 +217,15 @@ pre, code, kbd {
   display: none;
 }
 
+@media (prefers-color-scheme: dark) {
+  input[type="checkbox"] {
+    filter: invert(85%) brightness(1.5);
+  }
+}
 /* Fix checkboxes looking cut off when they render larger than the default size */
 input[type="checkbox"] {
   transform: translate(0px);
+  width: 14px; height: 14px;
 }
 
 
