@@ -11,7 +11,6 @@
 #include <html.h>
 #include "ext_scanners.h"
 #include "wrapper_highlight.h"
-#include "goutils.h"
 #include <houdini.h>
 
 // Local constants
@@ -341,13 +340,7 @@ static void html_render(cmark_syntax_extension *extension,
                 language = strdup("");
             }
         } else if (guess == accurate_guess) {
-            initEnryEngine();
-            
-            GoSlice content;
-            content.data = node->as.code.literal.data;
-            content.len = node->as.code.literal.len;
-            content.cap = node->as.code.literal.len;
-            language = guessWithEnry(content);
+            language = enry_guess_language((const char *)node->as.code.literal.data);
         } else {
             language = strdup((const char *)node->as.code.info.data);
         }

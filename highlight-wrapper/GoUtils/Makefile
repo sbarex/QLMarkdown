@@ -39,6 +39,9 @@ ifneq ($(CONFIGURATION),Debug)
 endif
 
 static: ${BUILD_DIR}/libgoutils.a
+static_intel: ${BUILD_DIR}/libgoutils-x86_64.a
+static_arm: ${BUILD_DIR}/libgoutils-arm64.a
+
 shared: ${BUILD_DIR}/libgoutils.dylib
 
 ${BUILD_DIR}/libgoutils.a: ${libraries}
@@ -52,12 +55,12 @@ endif
 
 ${BUILD_DIR}/libgoutils-x86_64.a: goutils.go
 	@echo "Compiling x86_64 static library…"
-	@CGO_CFLAGS="-mmacosx-version-min=10.15" go build --buildmode=c-archive -gcflags "${GCFLAGS}" -ldflags "${LDFLAGS}" -o ${BUILD_DIR}/libgoutils-x86_64.a
+	CGO_CFLAGS="-mmacosx-version-min=10.15" go build --buildmode=c-archive -gcflags "${GCFLAGS}" -ldflags "${LDFLAGS}" -o ${BUILD_DIR}/libgoutils-x86_64.a
 	@cp ${BUILD_DIR}/libgoutils-x86_64.h ${BUILD_DIR}/goutils.h
 
 ${BUILD_DIR}/libgoutils-arm64.a: goutils.go
 	@echo "Compiling arm64 static library…"
-	@GOOS=darwin GOARCH=arm64 CGO_ENABLED=1 CGO_CFLAGS="-target arm64-apple-macos11" CGO_LDFLAGS="-target arm64-apple-macos11" go build --buildmode=c-archive -ldflags "${LDFLAGS}" -o ${BUILD_DIR}/libgoutils-arm64.a
+	GOOS=darwin GOARCH=arm64 CGO_ENABLED=1 CGO_CFLAGS="-target arm64-apple-macos11" CGO_LDFLAGS="-target arm64-apple-macos11" go build --buildmode=c-archive -ldflags "${LDFLAGS}" -o ${BUILD_DIR}/libgoutils-arm64.a
 	@cp ${BUILD_DIR}/libgoutils-arm64.h ${BUILD_DIR}/goutils.h
 
 ${BUILD_DIR}/goutils.dylib: ${libraries_shared}

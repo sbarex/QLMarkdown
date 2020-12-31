@@ -8,7 +8,7 @@ HIGHLIGHT_DIR=highlight
 MAGIC_DIR=file-5.39
 
 ifeq ($(BUILT_PRODUCTS_DIR),)
-	BUILD_DIR=build
+	BUILD_DIR=${CURRENT_DIR}/build
 else
 	BUILD_DIR=${BUILT_PRODUCTS_DIR}
 endif
@@ -22,7 +22,8 @@ CFLAGS=-Wall -std=c++11 -D_FILE_OFFSET_BITS=64 \
        -I ${CURRENT_DIR}/${HIGHLIGHT_DIR}/src/include \
        -I ${CURRENT_DIR}/${LUA_DIR}/src \
        -I ${CURRENT_DIR}/${MAGIC_DIR}/src \
-       -I ${CURRENT_DIR}/
+       -I ${CURRENT_DIR} \
+       -I ${BUILD_DIR}
 LDFLAGS=-L${BUILD_DIR}
 
 CFLAGS_x86_64=-mmacosx-version-min=10.15
@@ -53,16 +54,19 @@ libraries_shared =
 libraries_static =
 lua_libraries =
 magic_libraries =
+goutils_libraries =
 
 ifeq ($(NATIVE_ARCH),x86_64)
 	lua_libraries    += ${BUILD_DIR}/liblua-x86_64.a
 	magic_libraries  += ${BUILD_DIR}/libmagic-x86_64.a
+	goutils_libraries  += ${BUILD_DIR}/libgoutils-x86_64.a
 	highlight_libraries = ${BUILD_DIR}/libhighlight-x86_64.a
 	libraries_shared += ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib
 	libraries_static += ${BUILD_DIR}/libwrapper_highlight-x86_64.a
 else
 	lua_libraries    += ${BUILD_DIR}/liblua-arm64.a
 	magic_libraries  += ${BUILD_DIR}/libmagic-arm64.a
+	goutils_libraries  += ${BUILD_DIR}/libgoutils-arm64.a
 	highlight_libraries = ${BUILD_DIR}/libhighlight_arm64.dylyb
 	libraries_shared += ${BUILD_DIR}/libwrapper_highlight-arm64.dylib
 	libraries_static += ${BUILD_DIR}/libwrapper_highlight-arm64.a
@@ -73,6 +77,7 @@ ifeq ($(NATIVE_ARCH),x86_64)
 		# build arm code
 		lua_libraries    += ${BUILD_DIR}/liblua-arm64.a
 		magic_libraries  += ${BUILD_DIR}/libmagic-arm64.a
+		goutils_libraries  += ${BUILD_DIR}/libgoutils-arm64.a
 		highlight_libraries += ${BUILD_DIR}/libhighlight-arm64.a
 		libraries_shared += ${BUILD_DIR}/libwrapper_highlight-arm64.dylib
 		libraries_static += ${BUILD_DIR}/libwrapper_highlight-arm64.a
@@ -80,6 +85,7 @@ else
 		# build intel code
 		lua_libraries    += ${BUILD_DIR}/liblua-x86_64.a
 		magic_libraries  += ${BUILD_DIR}/libmagic-x86_64.a
+		goutils_libraries  += ${BUILD_DIR}/libgoutils-x86_64.a
 		highlight_libraries += ${BUILD_DIR}/libhighlight-x86_64.a
 		libraries_shared += ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib
 		libraries_static += ${BUILD_DIR}/libwrapper_highlight-x86_64.a
@@ -241,6 +247,40 @@ ${BUILD_DIR}/magic.mgc:
 
 
 # ################################
+# GOUtils
+# ################################
+
+goutils_intel: ${BUILD_DIR}/libgoutils-x86_64.a
+goutils_arm: ${BUILD_DIR}/libgoutils-arm64.a
+goutils: ${BUILD_DIR}/libgoutils.a
+
+clean_goutils:
+	@echo "${bold}Cleaning goutils…${normal}"
+	@${MAKE} -C GoUtils clean
+	@echo ""
+
+${BUILD_DIR}/libgoutils-x86_64.a:
+	@echo "${bold}Building goutils for x86_64 platform...${normal}"
+	${MAKE} BUILT_PRODUCTS_DIR=${BUILD_DIR} -C GoUtils static_intel
+	@echo ""
+
+${BUILD_DIR}/libgoutils-arm64.a:
+	@echo "${bold}Building magic for arm64 platform...${normal}"
+	${MAKE} BUILT_PRODUCTS_DIR=${BUILD_DIR} -C GoUtils static_arm
+	@echo ""
+
+${BUILD_DIR}/libgoutils.a: ${goutils_libraries}
+ifeq ($(ONLY_ACTIVE_ARCH),NO)
+		@echo "${bold}Creating magic universal library...${normal}"
+		lipo -create -output ${BUILD_DIR}/libgoutils.a ${BUILD_DIR}/libgoutils-x86_64.a ${BUILD_DIR}/libgoutils-arm64.a
+else
+		@echo "${bold}Creating magic library for ${NATIVE_ARCH}...${normal}"
+		@rm -f ${BUILD_DIR}/libgoutils.a > /dev/null
+		ln ${BUILD_DIR}/libgoutils-${NATIVE_ARCH}.a ${BUILD_DIR}/libgoutils.a
+endif
+	@echo ""
+
+# ################################
 # Highlight wrapper
 # ################################
 
@@ -254,7 +294,7 @@ clean_highlight-wrapper:
 	@rm -f ${BUILD_DIR}/wrapper_highlight-arm64.o
 	@echo ""
 
-${BUILD_DIR}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a ${BUILD_DIR}/libmagic.a  wrapper_highlight.cpp
+${BUILD_DIR}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a ${BUILD_DIR}/libmagic.a ${BUILD_DIR}/libgoutils.a wrapper_highlight.cpp
 	@echo "${bold}Compiling highlight wrapper for x86_64 platform...${normal}"
 	@echo "current dir: ${CURRENT_DIR}"
 	${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
@@ -264,13 +304,13 @@ ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DI
 
 	@echo "${bold}Creating highlight wrapper shared library for x86_64 platform...${normal}"
 	${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
--ldl -lhighlight -lmagic -llua \
+-ldl -lhighlight -lmagic -llua -lgoutils \
 -dynamiclib \
 -install_name @rpath/libwrapper_highlight.dylib \
 -o ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib ${BUILD_DIR}/wrapper_highlight-x86_64.o
 	@echo ""
 
-${BUILD_DIR}/libwrapper_highlight-arm64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a ${BUILD_DIR}/libmagic.a  wrapper_highlight.cpp
+${BUILD_DIR}/libwrapper_highlight-arm64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a ${BUILD_DIR}/libmagic.a ${BUILD_DIR}/libgoutils.a wrapper_highlight.cpp
 	@echo "${bold}Compiling highlight wrapper for arm64 platform...${normal}"
 	${CXX} ${CFLAGS} ${CFLAGS_arm64} \
 -static \
@@ -278,7 +318,7 @@ ${BUILD_DIR}/libwrapper_highlight-arm64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR
 	@echo ""
 	@echo "${bold}Creating highlight wrapper shared library for arm64 platform...${normal}"
 	${CXX} ${CFLAGS} ${CFLAGS_arm64} ${LDFLAGS} ${LDFLAGS_arm64} \
--ldl -lhighlight -lmagic -llua \
+-ldl -lhighlight -lmagic -llua -lgoutils -framework CoreFoundation \
 -dynamiclib \
 -install_name @rpath/libwrapper_highlight.dylib \
 -o ${BUILD_DIR}/libwrapper_highlight-arm64.dylib ${BUILD_DIR}/wrapper_highlight-arm64.o
@@ -294,9 +334,9 @@ else
 		cp ${BUILD_DIR}/libwrapper_highlight-${NATIVE_ARCH}.dylib ${BUILD_DIR}/libwrapper_highlight.dylib
 endif
 
-all: check_arch build_dir lua highlight magic magic_db highlight-wrapper
+all: check_arch build_dir lua highlight magic magic_db goutils highlight-wrapper
 
-clean_intermediate: clean_lua clean_highlight clean_magic clean_highlight-wrapper
+clean_intermediate: clean_lua clean_highlight clean_magic clean_goutils clean_highlight-wrapper
 
 clean: clean_intermediate
 	@rm ${BUILD_DIR}/libwrapper_highlight.dylib 2> /dev/null
@@ -311,3 +351,6 @@ clean: clean_intermediate
 	@rm ${BUILD_DIR}/liblua.a 2> /dev/null
 	@rm ${BUILD_DIR}/liblua-x86_64.a 2> /dev/null
 	@rm ${BUILD_DIR}/liblua-arm64.a 2> /dev/null
+	@rm ${BUILD_DIR}/libgoutils.a 2> /dev/null
+	@rm ${BUILD_DIR}/libgoutils-x86_64.a 2> /dev/null
+	@rm ${BUILD_DIR}/libgoutils-arm64.a 2> /dev/null

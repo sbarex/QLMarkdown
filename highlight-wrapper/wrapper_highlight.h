@@ -255,12 +255,19 @@ EXPORT HTheme *highlight_get_theme2(const char *theme, int *exit_code, ReleaseTh
 EXPORT int highlight_save_theme( const char *filename, const HTheme *theme);
 
 /**
- * Try to guess the language
+ * Try to guess the language with magic library
  * @param buffer Source code to analyze.
  * @param magic_database Location of the magic mgc database definition. Pass NULL to use the system file.
  * @return The Language guessed or NULL. **The user must free the result.**
  */
 EXPORT char *magic_guess_language(const char *buffer, const char *magic_database);
+
+/**
+ * Try to guess the language with Enry engine
+ * @param buffer Source code to analyze.
+ * @return The Language guessed or NULL. **The user must free the result.**
+ */
+EXPORT char *enry_guess_language(const char *buffer);
 
 #ifdef __cplusplus
 }

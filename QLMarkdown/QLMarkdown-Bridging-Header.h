@@ -11,4 +11,3 @@
 #import "../cmark-gfm/extensions/inlineimage.h"
 
 #import "wrapper_highlight.h"
-#import "goutils.h"

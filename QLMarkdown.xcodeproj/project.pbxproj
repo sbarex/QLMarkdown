@@ -123,8 +123,6 @@
 		836B7476259E2B4100A6A5F7 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
 		836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
 		836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
-		836B7482259E4DA600A6A5F7 /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836B7481259E4DA600A6A5F7 /* libgoutils.a */; };
-		836B748A259E507400A6A5F7 /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836B7481259E4DA600A6A5F7 /* libgoutils.a */; };
 		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		83760302258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
@@ -182,20 +180,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 836B3007259E222600A6A5F7;
 			remoteInfo = "highlight-wrapper";
-		};
-		837F29192597A0B300A5F7DE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 837F28EF2597817300A5F7DE;
-			remoteInfo = GoLibraries;
-		};
-		837F291B2597A0B800A5F7DE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 837F28EF2597817300A5F7DE;
-			remoteInfo = GoLibraries;
 		};
 		83F1FE4A259CEE7400257DAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -402,12 +386,9 @@
 		836B720A259E226F00A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		836B7474259E2B4000A6A5F7 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = BUILT_PRODUCTS_DIR; };
 		836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		836B7481259E4DA600A6A5F7 /* libgoutils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgoutils.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		836B748C259E50A000A6A5F7 /* goutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goutils.h; sourceTree = BUILT_PRODUCTS_DIR; };
 		837602FF258C1813004799ED /* inlineimage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inlineimage.h; sourceTree = "<group>"; };
 		83760300258C1813004799ED /* inlineimage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inlineimage.c; sourceTree = "<group>"; };
 		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
-		837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = GoLibraries.xcodeproj; sourceTree = "<group>"; };
 		837F291E2597AAC000A5F7DE /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		838109C1258403CA000AFE3C /* mention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mention.h; sourceTree = "<group>"; };
 		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
@@ -454,7 +435,6 @@
 				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
 				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
 				836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
-				836B748A259E507400A6A5F7 /* libgoutils.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,7 +443,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
-				836B7482259E4DA600A6A5F7 /* libgoutils.a in Frameworks */,
 				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
 				836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
 			);
@@ -538,7 +517,6 @@
 				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
 				83870BC1259B95A90065543D /* main_interface.png */,
 				836B3019259E222700A6A5F7 /* highlight-wrapper */,
-				837F28FA2597817300A5F7DE /* GoLibraries */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMarkdown */,
 				831A8C42258ABADA00E36182 /* QLExtension */,
@@ -708,7 +686,6 @@
 				831A8C40258ABADA00E36182 /* Quartz.framework */,
 				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
 				836B7474259E2B4000A6A5F7 /* magic.mgc */,
-				836B7481259E4DA600A6A5F7 /* libgoutils.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -723,22 +700,6 @@
 			sourceTree = "<group>";
 		};
 		836B7195259E226E00A6A5F7 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		837F28FA2597817300A5F7DE /* GoLibraries */ = {
-			isa = PBXGroup;
-			children = (
-				836B748C259E50A000A6A5F7 /* goutils.h */,
-				837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */,
-			);
-			path = GoLibraries;
-			sourceTree = "<group>";
-		};
-		837F29002597817400A5F7DE /* Products */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -798,7 +759,6 @@
 			);
 			dependencies = (
 				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
-				837F291A2597A0B300A5F7DE /* PBXTargetDependency */,
 				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
 			);
 			name = "Markdown QL Extension";
@@ -821,7 +781,6 @@
 			);
 			dependencies = (
 				836B7472259E23DB00A6A5F7 /* PBXTargetDependency */,
-				837F291C2597A0B800A5F7DE /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
 				83F1FE4B259CEE7400257DAC /* PBXTargetDependency */,
 			);
@@ -881,10 +840,6 @@
 			productRefGroup = 83598E6225818808004664D3 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
-				{
-					ProductGroup = 837F29002597817400A5F7DE /* Products */;
-					ProjectRef = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
-				},
 				{
 					ProductGroup = 836B7195259E226E00A6A5F7 /* Products */;
 					ProjectRef = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
@@ -1098,16 +1053,6 @@
 			isa = PBXTargetDependency;
 			name = "highlight-wrapper";
 			targetProxy = 836B7478259E2BA400A6A5F7 /* PBXContainerItemProxy */;
-		};
-		837F291A2597A0B300A5F7DE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GoLibraries;
-			targetProxy = 837F29192597A0B300A5F7DE /* PBXContainerItemProxy */;
-		};
-		837F291C2597A0B800A5F7DE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GoLibraries;
-			targetProxy = 837F291B2597A0B800A5F7DE /* PBXContainerItemProxy */;
 		};
 		83F1FE4B259CEE7400257DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

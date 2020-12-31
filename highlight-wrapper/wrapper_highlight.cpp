@@ -2,6 +2,7 @@
 #include "highlight/src/include/codegenerator.h"
 #include "highlight/src/include/datadir.h"
 #include "highlight/src/include/version.h"
+#include "goutils.h"
 #include <os/log.h>
 #include <cstdio>
 #include <iostream>
@@ -1017,4 +1018,16 @@ char *magic_guess_language(const char *buffer, const char *magic_database) {
     magic_close(cookie);
 
     return lang != "-" ? strdup(lang.c_str()) : nullptr;
+}
+
+char *enry_guess_language(const char *buffer) {
+    initEnryEngine();
+
+    GoSlice content;
+    content.data = (void *)buffer;
+    content.len = strlen(buffer);
+    content.cap = content.len;
+    char *language = nullptr;
+    language = guessWithEnry(content);
+    return language;
 }
