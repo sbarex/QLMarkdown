@@ -103,7 +103,7 @@
 /*Syntax Highlight*/
 pre.hl	{ background-color: var(--hl_Background);
 }
-.hl.num { color: var(--hl_Number); }
+.hl.num { color: var(--hl_Number); font-weight: normal;}
 .hl.esc { color: var(--hl_Escape); font-weight: normal;}
 .hl.str { color: var(--hl_String); font-weight: normal;}
 .hl.pps { color: var(--hl_String_Pre_Processor); font-weight: normal;}
@@ -142,9 +142,28 @@ html {
 
 body {
   margin: 0;
-  padding: 1em;
+  /* padding: 1em; */
   color: var(--textPrimary);
   background-color: var(--background);
+}
+
+/* If the window is bigger than 902 pixels, the border will be visible. */
+@media (min-width: 902px) {
+  article {
+    border-radius: 8px;
+    border-width: 1px;  
+    border-style: solid;
+    border-color: var(--body-border-color);
+  }
+}
+
+article {
+  margin: auto;
+  max-width: 902px;
+  font-size: inherit;
+  line-height: 1.5;
+  word-wrap: break-word;
+  padding: 32px;
 }
 
 a {
@@ -203,16 +222,6 @@ input[type="checkbox"] {
   transform: translate(0px);
 }
 
-.markdown-body {
-  border: solid var(--body-border-color);
-  border-width: thin;
-  margin: auto;
-  max-width: 902px;
-  font-size: inherit;
-  line-height: 1.5;
-  word-wrap: break-word;
-  padding: 32px;
-}
 
 .markdown-body kbd {
   display: inline-block;
