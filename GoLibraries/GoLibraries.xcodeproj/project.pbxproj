@@ -11,8 +11,6 @@
 		837F28F12597817300A5F7DE /* goutils.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = goutils.go; sourceTree = "<group>"; };
 		837F28F22597817300A5F7DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		837F28F32597817300A5F7DE /* go.sum */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.sum; sourceTree = "<group>"; };
-		837F28F42597817300A5F7DE /* goutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goutils.h; sourceTree = "<group>"; };
-		837F28F52597817300A5F7DE /* goutils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = goutils.a; sourceTree = "<group>"; };
 		837F28F62597817300A5F7DE /* .idea */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .idea; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -24,8 +22,6 @@
 				837F28F12597817300A5F7DE /* goutils.go */,
 				837F28F22597817300A5F7DE /* Makefile */,
 				837F28F32597817300A5F7DE /* go.sum */,
-				837F28F42597817300A5F7DE /* goutils.h */,
-				837F28F52597817300A5F7DE /* goutils.a */,
 				837F28F62597817300A5F7DE /* .idea */,
 			);
 			sourceTree = "<group>";

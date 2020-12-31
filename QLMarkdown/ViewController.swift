@@ -768,8 +768,6 @@ document.addEventListener('scroll', function(e) {
         
         markdown_file = Bundle.main.url(forResource: "test1", withExtension: "md")
         
-        versionLabel?.stringValue = "lib cmark-gfm version \(String(cString: cmark_version_string())) (\(cmark_version()))"
-        
         updateTabView()
         tabView.selectTabViewItem(at: 0)
         

@@ -116,12 +116,18 @@
 		83598EFC25820A72004664D3 /* test2.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EFA258209C7004664D3 /* test2.md */; };
 		83598EFD25820A72004664D3 /* test1.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EF92582098A004664D3 /* test1.md */; };
 		83598F24258263C0004664D3 /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* markdown.css */; };
+		836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
+		836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
+		836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
+		836B7476259E2B4100A6A5F7 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
+		836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
+		836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
+		836B7482259E4DA600A6A5F7 /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836B7481259E4DA600A6A5F7 /* libgoutils.a */; };
+		836B748A259E507400A6A5F7 /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836B7481259E4DA600A6A5F7 /* libgoutils.a */; };
 		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		83760302258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
-		837F28E82597765900A5F7DE /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
-		837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837F290E2597950900A5F7DE /* libgoutils.a */; };
-		837F29122597975500A5F7DE /* libgoutils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 837F290E2597950900A5F7DE /* libgoutils.a */; };
 		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
 		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */; };
@@ -129,9 +135,6 @@
 		83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
 		83E7FEF2258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
-		83E7FEF8258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
-		83E7FEF9258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
-		83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
 		83F1FE4C259CEE7400257DAC /* external-launcher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -142,7 +145,6 @@
 		83F1FE6F259CF03B00257DAC /* external-launcher.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83F4B99225868A7400FC58A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		83F4B9962586AB9700FC58A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83D4B1C3258675D0000745DB /* README.md */; };
-		83F881612597E902008C5071 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 837F28E72597762C00A5F7DE /* magic.mgc */; };
 		83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
 		83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
 		83F882382598A8B3008C5071 /* org.sparkle-project.InstallerStatus.xpc in Resources */ = {isa = PBXBuildFile; fileRef = 83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */; };
@@ -166,6 +168,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 831A8C3E258ABADA00E36182;
 			remoteInfo = QLExtension;
+		};
+		836B7471259E23DB00A6A5F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 836B3007259E222600A6A5F7;
+			remoteInfo = "highlight-wrapper";
+		};
+		836B7478259E2BA400A6A5F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 836B3007259E222600A6A5F7;
+			remoteInfo = "highlight-wrapper";
 		};
 		837F29192597A0B300A5F7DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -209,14 +225,24 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		836B2FFF259DEEA800A6A5F7 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83E7FF07258FCCF9003ECF9B /* Embed Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				83E7FF08258FCD15003ECF9B /* libwrapper_highlight.dylib in Embed Libraries */,
 				83F882482598C5F3008C5071 /* Sparkle.framework in Embed Libraries */,
+				836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -372,17 +398,16 @@
 		83598EF92582098A004664D3 /* test1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test1.md; sourceTree = "<group>"; };
 		83598EFA258209C7004664D3 /* test2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test2.md; sourceTree = "<group>"; };
 		83598F22258263C0004664D3 /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
+		836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
+		836B720A259E226F00A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
+		836B7474259E2B4000A6A5F7 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = BUILT_PRODUCTS_DIR; };
+		836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		836B7481259E4DA600A6A5F7 /* libgoutils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgoutils.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		836B748C259E50A000A6A5F7 /* goutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goutils.h; sourceTree = BUILT_PRODUCTS_DIR; };
 		837602FF258C1813004799ED /* inlineimage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inlineimage.h; sourceTree = "<group>"; };
 		83760300258C1813004799ED /* inlineimage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inlineimage.c; sourceTree = "<group>"; };
 		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
-		837F28E72597762C00A5F7DE /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = "<group>"; };
-		837F28FB2597817400A5F7DE /* go.mod */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.mod; sourceTree = "<group>"; };
-		837F28FC2597817400A5F7DE /* goutils.go */ = {isa = PBXFileReference; lastKnownFileType = text; path = goutils.go; sourceTree = "<group>"; };
-		837F28FD2597817400A5F7DE /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
-		837F28FE2597817400A5F7DE /* go.sum */ = {isa = PBXFileReference; lastKnownFileType = text; path = go.sum; sourceTree = "<group>"; };
 		837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = GoLibraries.xcodeproj; sourceTree = "<group>"; };
-		837F290D259794FF00A5F7DE /* goutils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = goutils.h; sourceTree = "<group>"; };
-		837F290E2597950900A5F7DE /* libgoutils.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libgoutils.a; sourceTree = "<group>"; };
 		837F291E2597AAC000A5F7DE /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		838109C1258403CA000AFE3C /* mention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mention.h; sourceTree = "<group>"; };
 		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
@@ -395,8 +420,7 @@
 		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		83E7FEED258FBE54003ECF9B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		83E7FEF0258FBF37003ECF9B /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
-		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwrapper_highlight.dylib; path = "highlight wrapper/libwrapper_highlight.dylib"; sourceTree = "<group>"; };
-		83E7FF11258FE4DF003ECF9B /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
+		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		83EF951C2585367500B56FA3 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		83EF95212585476800B56FA3 /* emoji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = emoji.h; sourceTree = "<group>"; };
 		83EF95222585476800B56FA3 /* emoji.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emoji.c; sourceTree = "<group>"; };
@@ -428,9 +452,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
-				83E7FEF9258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
 				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
-				837F29122597975500A5F7DE /* libgoutils.a in Frameworks */,
+				836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
+				836B748A259E507400A6A5F7 /* libgoutils.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,10 +462,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83E7FEF8258FBF9F003ECF9B /* libwrapper_highlight.dylib in Frameworks */,
 				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
-				837F290F2597951D00A5F7DE /* libgoutils.a in Frameworks */,
+				836B7482259E4DA600A6A5F7 /* libgoutils.a in Frameworks */,
 				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
+				836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,8 +537,8 @@
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
 				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
 				83870BC1259B95A90065543D /* main_interface.png */,
+				836B3019259E222700A6A5F7 /* highlight-wrapper */,
 				837F28FA2597817300A5F7DE /* GoLibraries */,
-				83E7FEF5258FBF77003ECF9B /* highlight wrapper */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMarkdown */,
 				831A8C42258ABADA00E36182 /* QLExtension */,
@@ -546,6 +570,7 @@
 				83598E6425818808004664D3 /* AppDelegate.swift */,
 				83598E6625818808004664D3 /* ViewController.swift */,
 				83598E6A2581880A004664D3 /* Main.storyboard */,
+				836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */,
 				83598E682581880A004664D3 /* Assets.xcassets */,
 				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
 				8357EB7E2588262C002C2C45 /* String+ext.swift */,
@@ -680,21 +705,34 @@
 			isa = PBXGroup;
 			children = (
 				83F8822C2598A5C0008C5071 /* WebKit.framework */,
-				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
 				831A8C40258ABADA00E36182 /* Quartz.framework */,
+				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
+				836B7474259E2B4000A6A5F7 /* magic.mgc */,
+				836B7481259E4DA600A6A5F7 /* libgoutils.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		836B3019259E222700A6A5F7 /* highlight-wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */,
+				836B720A259E226F00A6A5F7 /* wrapper_highlight.h */,
+			);
+			path = "highlight-wrapper";
+			sourceTree = "<group>";
+		};
+		836B7195259E226E00A6A5F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		837F28FA2597817300A5F7DE /* GoLibraries */ = {
 			isa = PBXGroup;
 			children = (
-				837F290E2597950900A5F7DE /* libgoutils.a */,
-				837F290D259794FF00A5F7DE /* goutils.h */,
-				837F28FB2597817400A5F7DE /* go.mod */,
-				837F28FC2597817400A5F7DE /* goutils.go */,
-				837F28FD2597817400A5F7DE /* Makefile */,
-				837F28FE2597817400A5F7DE /* go.sum */,
+				836B748C259E50A000A6A5F7 /* goutils.h */,
 				837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */,
 			);
 			path = GoLibraries;
@@ -714,15 +752,6 @@
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		83E7FEF5258FBF77003ECF9B /* highlight wrapper */ = {
-			isa = PBXGroup;
-			children = (
-				837F28E72597762C00A5F7DE /* magic.mgc */,
-				83E7FF11258FE4DF003ECF9B /* wrapper_highlight.h */,
-			);
-			path = "highlight wrapper";
 			sourceTree = "<group>";
 		};
 		83F1FE42259CEE7400257DAC /* external-launcher */ = {
@@ -759,15 +788,16 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 831A8C50258ABADA00E36182 /* Build configuration list for PBXNativeTarget "Markdown QL Extension" */;
 			buildPhases = (
-				83E7FEFC258FCBE2003ECF9B /* ShellScript */,
 				831A8C3B258ABADA00E36182 /* Sources */,
 				831A8C3C258ABADA00E36182 /* Frameworks */,
 				831A8C3D258ABADA00E36182 /* Resources */,
 				83F1FE6E259CF03000257DAC /* CopyFiles */,
+				836B2FFF259DEEA800A6A5F7 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
 				837F291A2597A0B300A5F7DE /* PBXTargetDependency */,
 				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
 			);
@@ -780,7 +810,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83598E712581880A004664D3 /* Build configuration list for PBXNativeTarget "QLMarkdown" */;
 			buildPhases = (
-				83E7FEFD258FCBF9003ECF9B /* ShellScript */,
 				83598E5D25818808004664D3 /* Sources */,
 				83598E5E25818808004664D3 /* Frameworks */,
 				83598E5F25818808004664D3 /* Resources */,
@@ -791,6 +820,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				836B7472259E23DB00A6A5F7 /* PBXTargetDependency */,
 				837F291C2597A0B800A5F7DE /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
 				83F1FE4B259CEE7400257DAC /* PBXTargetDependency */,
@@ -855,6 +885,10 @@
 					ProductGroup = 837F29002597817400A5F7DE /* Products */;
 					ProjectRef = 837F28FF2597817400A5F7DE /* GoLibraries.xcodeproj */;
 				},
+				{
+					ProductGroup = 836B7195259E226E00A6A5F7 /* Products */;
+					ProjectRef = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -870,10 +904,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83F881612597E902008C5071 /* magic.mgc in Resources */,
 				831A8CC5258AC4A900E36182 /* markdown.css in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
 				83E7FEF2258FBF37003ECF9B /* highlight in Resources */,
+				836B7476259E2B4100A6A5F7 /* magic.mgc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -882,7 +916,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				83598EFC25820A72004664D3 /* test2.md in Resources */,
-				837F28E82597765900A5F7DE /* magic.mgc in Resources */,
 				83F4B9962586AB9700FC58A7 /* README.md in Resources */,
 				83598EFD25820A72004664D3 /* test1.md in Resources */,
 				83598E692581880A004664D3 /* Assets.xcassets in Resources */,
@@ -891,6 +924,7 @@
 				837D20D6258362A5008FC698 /* example.jpg in Resources */,
 				834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
+				836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */,
 				83F8823B2598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc in Resources */,
 				8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */,
 				83598F24258263C0004664D3 /* markdown.css in Resources */,
@@ -910,44 +944,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		83E7FEFC258FCBE2003ECF9B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"highlight wrapper\"\ninstall_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\n";
-		};
-		83E7FEFD258FCBF9003ECF9B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"highlight wrapper\"\nid=`/usr/bin/otool -D libwrapper_highlight.dylib`\nid=\"${id##*$'\\n'}\" # get the last output line\nif [ \"${id:0:7}\" = \"@rpath/\" ]\nthen\n    echo \"Install name valid for libwrapper_highlight.dylib\"\nelse\n    echo \"Changing the install name for libwrapper_highlight.dylib\"\n    echo ${id}\n    echo ${id:0:7}\n    install_name_tool -id '@rpath/libwrapper_highlight.dylib' libwrapper_highlight.dylib\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		831A8C3B258ABADA00E36182 /* Sources */ = {
@@ -984,6 +980,7 @@
 				831A8C95258ABDD400E36182 /* map.c in Sources */,
 				831A8C83258ABDB300E36182 /* cmark.c in Sources */,
 				831A8C9E258ABDD500E36182 /* registry.c in Sources */,
+				836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
 				834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */,
 				831A8C7A258ABDA100E36182 /* buffer.c in Sources */,
 				831A8C56258ABD6200E36182 /* autolink.c in Sources */,
@@ -1016,6 +1013,7 @@
 				83598EDF2581884D004664D3 /* blocks.c in Sources */,
 				83598EED2581884D004664D3 /* registry.c in Sources */,
 				834CAB8E2591DE0F00673002 /* SaveAsFormatView.swift in Sources */,
+				836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
 				83598ECD2581884D004664D3 /* xml.c in Sources */,
 				83598EE32581884D004664D3 /* plugin.c in Sources */,
 				83327D202593FCEB00E76CF6 /* url.cpp in Sources */,
@@ -1091,6 +1089,16 @@
 			target = 831A8C3E258ABADA00E36182 /* Markdown QL Extension */;
 			targetProxy = 831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */;
 		};
+		836B7472259E23DB00A6A5F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "highlight-wrapper";
+			targetProxy = 836B7471259E23DB00A6A5F7 /* PBXContainerItemProxy */;
+		};
+		836B7479259E2BA400A6A5F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "highlight-wrapper";
+			targetProxy = 836B7478259E2BA400A6A5F7 /* PBXContainerItemProxy */;
+		};
 		837F291A2597A0B300A5F7DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GoLibraries;
@@ -1139,7 +1147,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1154,8 +1162,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/GoLibraries",
+					"$(PROJECT_DIR)/highlight-wrapper",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
@@ -1174,7 +1183,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1189,8 +1198,9 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/GoLibraries",
+					"$(PROJECT_DIR)/highlight-wrapper",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
@@ -1329,7 +1339,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1339,6 +1349,8 @@
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
+					"\"$(SRCROOT)/highlight-wrapper\"",
+					"\"$(SRCROOT)/GoLibraries\"",
 				);
 				INFOPLIST_FILE = QLMarkdown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1348,9 +1360,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/GoLibraries",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/highlight-wrapper",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
@@ -1373,7 +1386,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1383,6 +1396,8 @@
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
+					"\"$(SRCROOT)/highlight-wrapper\"",
+					"\"$(SRCROOT)/GoLibraries\"",
 				);
 				INFOPLIST_FILE = QLMarkdown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1392,9 +1407,10 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight wrapper\"",
+					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/GoLibraries",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/highlight-wrapper",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;

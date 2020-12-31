@@ -66,7 +66,7 @@ image url: `https://octodex.github.com/images/minion.png`
 
 
 ## Strikethrough extension
-You can choose to recognize the single tile on ~test~ or only the double tile on ~~another test~~.
+You can choose to recognize the single tilde \~ on ~test~ or only the double tilde \~\~ on ~~another test~~.
 
 ## Source Syntax Highlight extension
 

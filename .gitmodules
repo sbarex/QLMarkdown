@@ -1,0 +1,3 @@
+[submodule "highlight-wrapper/highlight"]
+	path = highlight-wrapper/highlight
+	url = https://gitlab.com/saalen/highlight.git

@@ -1,3 +1,12 @@
+1.0b12
+New features:
+- Wrapper highlight library build inside the Xcode project.
+- Better about dialog.
+
+Bugfix:
+- css theme.
+- Shared library no more embedded twice.
+
 1.0b11
 Bugfix:
 - Fixed open external link to the default browser on Big Sur (via an external XPC service).
