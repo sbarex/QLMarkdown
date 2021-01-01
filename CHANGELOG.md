@@ -5,9 +5,9 @@ New features:
 - Better about dialog.
 
 Bugfix:
-- css theme.
-- Shared library no more embedded twice reducing the total file size.
+- Shared library and support files no more embedded twice reducing the total file size.
 - Fix on exporting default style.
+- Css theme fix.
 
 1.0b11
 Bugfix:

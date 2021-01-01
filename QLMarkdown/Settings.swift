@@ -315,6 +315,26 @@ class Settings {
         return try self.render(text: markdown_string, forAppearance: appearance, baseDir: baseDir ?? url.deletingLastPathComponent().path, log: log)
     }
     
+    /// Get the Bundle with the resources.
+    /// For the host app return the main Bundle. For the appex return the bundle of the hosting app.
+    func getResourceBundle() -> Bundle {
+        if Bundle.main.bundlePath.hasSuffix(".appex") {
+            // this is an app extension
+            let url = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
+
+            if let appBundle = Bundle(url: url) {
+                return appBundle
+            }
+        }
+        return Bundle.main
+    }
+    
+    /// Get the path of folder with `highlight` support files.
+    func getHighlightSupportPath() -> String? {
+        let path = getResourceBundle().url(forResource: "highlight", withExtension: "")?.path
+        return path
+    }
+    
     func render(text: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) throws -> String {
         cmark_gfm_core_extensions_ensure_registered()
         
@@ -472,8 +492,13 @@ class Settings {
         
         if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight") {
             // TODO: set a property
-            if let path = Bundle.main.resourceURL?.appendingPathComponent("highlight").path {
+            
+            if let path = getHighlightSupportPath() {
                 cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
+            } else {
+                if let l = log {
+                    os_log("Unable to found the `highlight` support dir!", log: l, type: .error)
+                }
             }
             
             let theme: String
@@ -502,7 +527,7 @@ class Settings {
             cmark_syntax_extension_highlight_set_tab_spaces(ext, Int32(self.syntaxTabsOption))
             cmark_syntax_extension_highlight_set_wrap_limit(ext, Int32(self.syntaxWordWrapOption))
             cmark_syntax_extension_highlight_set_guess_language(ext, guess_type(UInt32(self.guessEngine.rawValue)))
-            if self.guessEngine == .fast, let f = Bundle.main.path(forResource: "magic", ofType: "mgc") {
+            if self.guessEngine == .fast, let f = getResourceBundle().path(forResource: "magic", ofType: "mgc") {
                 cmark_syntax_extension_highlight_set_magic_file(ext, f)
             }
             
@@ -694,7 +719,7 @@ table.debug td {
             }
             
             html_debug += "<table>\n"
-            html_debug += "<tr><td>datadir</td><td>\(Bundle.main.resourceURL?.appendingPathComponent("highlight").path ?? "missing")</td></tr>\n"
+            html_debug += "<tr><td>datadir</td><td>\(getHighlightSupportPath() ?? "missing")</td></tr>\n"
             html_debug += "<tr><td>theme</td><td>\(theme)</td></tr>\n"
             html_debug += "<tr><td>background</td><td>\(background)</td></tr>\n"
             html_debug += "<tr><td>line numbers</td><td>\(self.syntaxLineNumbersOption ? "on" : "off")</td></tr>\n"
@@ -707,7 +732,7 @@ table.debug td {
                 html_debug += "off"
             case .fast:
                 html_debug += "fast<br />"
-                html_debug += "magic db: \(Bundle.main.path(forResource: "magic", ofType: "mgc") ?? "missing")"
+                html_debug += "magic db: \(getResourceBundle().path(forResource: "magic", ofType: "mgc") ?? "missing")"
             case .accurate:
                 html_debug += "accurate"
             }
@@ -729,7 +754,7 @@ table.debug td {
     
     internal func getBundleContents(forResource: String, ofType: String) -> String?
     {
-        if let p = Bundle.main.path(forResource: forResource, ofType: ofType), let data = FileManager.default.contents(atPath: p), let s = String(data: data, encoding: .utf8) {
+        if let p = getResourceBundle().path(forResource: forResource, ofType: ofType), let data = FileManager.default.contents(atPath: p), let s = String(data: data, encoding: .utf8) {
             return s
         } else {
             return nil

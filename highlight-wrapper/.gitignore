@@ -4,5 +4,7 @@
 *.la
 
 build/*
-.libs/*
-.deps/*
+**/.libs/*
+**/.deps/*
+
+lua-5.4.2/

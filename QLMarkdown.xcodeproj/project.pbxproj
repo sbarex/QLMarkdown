@@ -50,7 +50,6 @@
 		831A8CA6258ABDDB00E36182 /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB02581884B004664D3 /* utf8.c */; };
 		831A8CBE258AC0D200E36182 /* arena.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB82581884C004664D3 /* arena.c */; };
 		831A8CC1258AC18300E36182 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
-		831A8CC5258AC4A900E36182 /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* markdown.css */; };
 		831A8CD1258ACB3300E36182 /* ThemePropertyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */; };
 		83327D202593FCEB00E76CF6 /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
 		83327D222593FCEC00E76CF6 /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
@@ -121,7 +120,6 @@
 		836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
-		836B7476259E2B4100A6A5F7 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
 		836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
 		836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
 		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
@@ -133,7 +131,6 @@
 		83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
-		83E7FEF2258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
 		83F1FE4C259CEE7400257DAC /* external-launcher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -208,16 +205,6 @@
 				831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		836B2FFF259DEEA800A6A5F7 /* Embed Libraries */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		83E7FF07258FCCF9003ECF9B /* Embed Libraries */ = {
@@ -754,7 +741,6 @@
 				831A8C3C258ABADA00E36182 /* Frameworks */,
 				831A8C3D258ABADA00E36182 /* Resources */,
 				83F1FE6E259CF03000257DAC /* CopyFiles */,
-				836B2FFF259DEEA800A6A5F7 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -860,10 +846,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831A8CC5258AC4A900E36182 /* markdown.css in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
-				83E7FEF2258FBF37003ECF9B /* highlight in Resources */,
-				836B7476259E2B4100A6A5F7 /* magic.mgc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
