@@ -7,6 +7,7 @@ New features:
 Bugfix:
 - css theme.
 - Shared library no more embedded twice reducing the total file size.
+- Fix on exporting default style.
 
 1.0b11
 Bugfix:

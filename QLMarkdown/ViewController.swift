@@ -649,7 +649,8 @@ document.addEventListener('scroll', function(e) {
                 return
             }
             do {
-                try FileManager.default.copyItem(at: src, to: dst)
+                let css = try String(contentsOf: src, encoding: .utf8)
+                try css.write(to: dst, atomically: true, encoding: .utf8)
             } catch {
                 let alert = NSAlert()
                 alert.alertStyle = .critical
