@@ -1086,6 +1086,7 @@
 		831A8C4E258ABADA00E36182 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -1105,7 +1106,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
-					"$(PROJECT_DIR)/GoLibraries",
 					"$(PROJECT_DIR)/highlight-wrapper",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
@@ -1122,6 +1122,7 @@
 		831A8C4F258ABADA00E36182 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
@@ -1141,7 +1142,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
-					"$(PROJECT_DIR)/GoLibraries",
 					"$(PROJECT_DIR)/highlight-wrapper",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
@@ -1292,7 +1292,6 @@
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
 					"\"$(SRCROOT)/highlight-wrapper\"",
-					"\"$(SRCROOT)/GoLibraries\"",
 				);
 				INFOPLIST_FILE = QLMarkdown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1303,7 +1302,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
-					"$(PROJECT_DIR)/GoLibraries",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
 				);
@@ -1339,7 +1337,6 @@
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
 					"\"$(SRCROOT)/highlight-wrapper\"",
-					"\"$(SRCROOT)/GoLibraries\"",
 				);
 				INFOPLIST_FILE = QLMarkdown/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1350,7 +1347,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
-					"$(PROJECT_DIR)/GoLibraries",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
 				);
