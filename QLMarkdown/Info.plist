@@ -61,6 +61,27 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.package</string>
+				<string>public.directory</string>
+				<string>public.item</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>TextBundle</string>
+			<key>UTTypeIcons</key>
+			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>org.textbundle.package</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>textbundle</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 </dict>
 </plist>

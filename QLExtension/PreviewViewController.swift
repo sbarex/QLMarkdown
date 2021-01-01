@@ -108,8 +108,19 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         
         let settings = Settings.shared
         
+        let markdown_url: URL
+        if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {
+            if FileManager.default.fileExists(atPath: url.appendingPathComponent("text.md").path) {
+                markdown_url = url.appendingPathComponent("text.md")
+            } else {
+                markdown_url = url.appendingPathComponent("text.markdown")
+            }
+        } else {
+            markdown_url = url
+        }
+        
         do {
-            let text = try settings.render(file: url, forAppearance: type == "Light" ? .light : .dark, baseDir: url.deletingLastPathComponent().path, log: self.log)
+            let text = try settings.render(file: markdown_url, forAppearance: type == "Light" ? .light : .dark, baseDir: markdown_url.deletingLastPathComponent().path, log: self.log)
             
             let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
             
@@ -162,7 +173,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                 webView.navigationDelegate = self
                 // webView.uiDelegate = self
 
-                webView.loadHTMLString(html, baseURL: nil)
                 self.view.addSubview(webView)
                 
                 webView.loadHTMLString(html, baseURL: url.deletingLastPathComponent())

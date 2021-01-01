@@ -1,3 +1,7 @@
+1.0b13
+New features:
+- QL preview handle TextBundle container.
+
 1.0b12
 New features:
 - New icon (thanks to [hazarek](https://github.com/hazarek)). 
