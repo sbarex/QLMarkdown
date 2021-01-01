@@ -115,7 +115,7 @@ char *get_mime(const char *path, MIME_MAGICK_CHECK check_magic) {
                 if (ret && ret2 && memcmp(ret, ret2, 1) != 0) {
                     // different mayor type.
                     ret = NULL;
-                } else {
+                } else if (ret2) {
                     ret = ret2;
                 }
             } else {

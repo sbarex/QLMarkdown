@@ -2,6 +2,9 @@
 New features:
 - QL preview handle TextBundle container.
 
+Bugfix:
+- Fix error on image mime detection.
+
 1.0b12
 New features:
 - New icon (thanks to [hazarek](https://github.com/hazarek)). 
