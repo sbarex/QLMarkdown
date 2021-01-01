@@ -11,7 +11,7 @@ You can download the last compiled release (as universal binary) from [this link
 To use the quicklook preview you must launch the application at least once. In this way the quicklook extension will be discovered by the system. 
 After the first execution, the quicklook extension will be available (and enabled) among those present in the System preferences/Extensions.
 
-For maximum compatibility with the markdown format, the [`cmark-gfm`](https://github.com/github/cmark-gfm) library is used[^footnote]. 
+For maximum compatibility with the markdown format, the [`cmark-gfm`](https://github.com/github/cmark-gfm) library is used. The library is a GitHub fork of the standard cmark tool to process the markdown files. 
 
 Compared to the standard `cmark-gfm` equipment, these extensions have been added:
 - `Emoji`: translate the emoji placeholders like ```:smile:```.
@@ -35,7 +35,7 @@ The options follow those offered by the `cmark-gfm`:
 - `Emoji`: parse the emoji placeholder defined by GitHub. You can render the emoji with an emoticons glyph or using the image provided by GitHub. It is possible that some placeholders (especially if they require a sequence of several unicode codes) are not supported by the system font.
 - `GitHub mentions` _(available on advanced options panel)_: translate mentions to link to the GitHub account.
 - `Heads _(available on advanced options panel)_`: create anchors for the heads to use as cross internal reference. Each anchor is named with the title of the caption, lowercased, with spaces replaced with a dash char (`-`). UTF8 character encoding is supported.
-- `Inline local images` _(available on advanced options panel)_: inject in the html code the local images as base64 data[^footnote_inlineimages]. For security reasons are handled only urls without schema (e.g. `./image.jpg` or `image.jpg`), or with the `file` schema (e.g.  `file:///Users/username/Documents/image.jpg`)[^footnote_file_scheme] referring to existing files with an image mime type. This extension is required to render local images inside the quicklook preview.
+- `Inline local images` _(available on advanced options panel)_: inject in the html code the local images as base64 data. The quick look extension can not access to the local images defined inside the markdown code, so embedding the data it's a way around the limitation. For security reasons are handled only urls without schema (e.g. `./image.jpg` or `image.jpg`), or with the `file` schema (e.g.  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. This extension is required to render local images inside the quicklook preview. 
 - `Source code`: highlight the source code inside a fenced box. 
 - `Strikethrough`: strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.
 - `Table`: parse table as defined by the GitHub extension to the standard markdown language.
@@ -48,10 +48,13 @@ It is possible to translate with the system emoji font or using the image provid
 
 Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. Some multibyte sequence may not be supported by the system font, in this case it is recommended to set the substitution with GitHub images.
 
+A list of GitHub emoji placeholder is available [here](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#people--body)
+
 ### Inline local images extension
 This extension is required only to render local images on the quicklook preview. You can enable/disable from the advanced options panel.
 
-For security reason the quicklook preview (based on an html view) do not load local files. During the rendering process, the extension then embed the contents of the file on the html code as a base64 encoded data. This process operate only on local images (url without a scheme or with the `file://` scheme[^footnote_file_scheme] and with image mime type).
+For security reason the quicklook preview (based on an html view) do not load local files. During the rendering process, the extension then embed the contents of the file on the html code as a base64 encoded data. This process operate only on local images (url without a scheme or with the `file://` scheme and with image mime type).
+With the `file://` scheme you *always set the fullpath*. For images inside the same folder of the markdown file do not use the scheme  `file://` and also `./` is optional.
 
 ### Source code highlight extension
 This extension highlight the source code inside a fenced box.
@@ -64,10 +67,12 @@ In the advanced options panel you can customize the settings:
 - Line numbers visibility.
 - Word wrap options.
 - Use spaces instead of tabs for indentation.
-- Font[^footnote_font].
+- Font.
 - Guess undefined language.
 
 Some themes (especially those for light appearance) uses a white background that is the same of the markdown document, making the code block not immediately recognizable. For this reason it is possible to override the theme background color in order to use a personal one or the one defined by the markdown document. It is also possible to customize the theme used for language highlighting as desired. 
+
+Setting a custom font also change the font used in the code blocks enclosed by back-ticks (\`).
 
 When the code block does not specify the language it is possible to activate a guessing function. Two engines are available:
 
@@ -138,12 +143,3 @@ Also I am not a native English speaker :sweat_smile:.
 
 **This application was developed for pleasure.**
 
----
-
-[^footnote]: The library is a GitHub fork of the standard cmark tool to process the markdown files.
-
-[^footnote_inlineimages]: The quick look extension can not access to the local images defined inside the markdown code, so embedding the data it's a way around the limitation. 
-
-[^footnote_file_scheme]: With the `file://` scheme you *always set the fullpath*. For images inside the same folder of the markdown file do not use the scheme  `file://` and also `./` is optional.
-
-[^footnote_font]: Setting a custom font also change the font used in the code blocks enclosed by back-ticks (\`).
