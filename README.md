@@ -102,21 +102,19 @@ The custom style is appended after the css used for the source code. In this way
 
 # Build from source
 
+When you clone this repository, remember to fetch also the submodule with `git submodule update --init`.
+
 ## Dependency
 
-The app uses two extra libraries:
+The app uses an extra library `highlight wrapper`. This is a custom c++ shared library that expose the `highlight` functionality, emoji replacement and the guess detection engines. All the code required by this library is included in the Xcode project, and is compiled as a universal library. 
 
-- `highlight wrapper`: a custom c++ shared library that expose the `highlight` functionality and the emoji replacement
-- `go utils`: a custom static library developed in go for the accurate guess language type engine.
+The wrapper has statically linked the following libraries:
+- [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for source code highlight,
+- [`lua`](https://www.lua.org/) required by `highlight`
+- [`magic`](https://www.darwinsys.com/file/), used to guess the source code language when the guess mode is set to _fast_.
+- [`Enry`](https://github.com/go-enry/go-enry), used to guess the source code language when the guess mode is set to _accurate_.
 
-The two libraries are build as universal binary.
-
-The `highlight wrapper` is provided as precompiled (*TODO: insert the build process on the project*). It has statically linked these libraries:
-- [`highlight` v3.60](http://www.andre-simon.de/doku/highlight/en/highlight.php) (for source code highlight)
-- [`lua` v5.4.1](https://www.lua.org/) (required by `highlight`)
-- [`magic` v5.39](https://www.darwinsys.com/file/)  (used to guess the source code language when the guess mode is set to _fast_).
-
-The `go utils` library is build with the Xcode project. So you must have the `go` compiler installed (you can use `brew install go`). It has linked the [`Enry`](https://github.com/go-enry/go-enry) library used to guess the source code language when the guess mode is set to _accurate_.
+Because `Enry` is developed in `go`, to build the wrapper library you must have the `go` compiler installed (you can use `brew install go`). 
 
 # Note about security
 
@@ -131,6 +129,7 @@ The parsing process is based on the GitHub [`cmark-gfm`](https://github.com/gith
 
 The main difference is in the choice of style sheet and in the formatting of the source code.
 GitHub uses a number of libraries in Ruby for parsing and formatting source code that cannot easily be converted into a compiled library.
+
 The accurate engine for the language detection (used however only when the language is not specified) is a library derived from the `linguistic` framework used by GitHub.
 
 The source code highlight is based to a different library, so the formatting, style, and token recognition of the language is potentially different.
