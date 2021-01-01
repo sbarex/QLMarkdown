@@ -1,11 +1,12 @@
 1.0b12
 New features:
 - Wrapper highlight library build inside the Xcode project.
+- Wrapper highlight embed goutils with enry guess engine.
 - Better about dialog.
 
 Bugfix:
 - css theme.
-- Shared library no more embedded twice.
+- Shared library no more embedded twice reducing the total file size.
 
 1.0b11
 Bugfix:

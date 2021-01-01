@@ -157,7 +157,11 @@ highlight: ${BUILD_DIR}/libhighlight.a
 
 clean_highlight:
 	@echo "${bold}Cleaning highlight…${normal}"
+	@cp highlight_custom/makefile2.makefile highlight/makefile2.makefile
+	@cp highlight_custom/src/makefile2.makefile highlight/src/makefile2.makefile
 	@${MAKE} -C ${HIGHLIGHT_DIR} -f makefile2.makefile clean
+	@rm highlight/makefile2.makefile
+	@rm highlight/src/makefile2.makefile
 	@echo ""
 
 ${BUILD_DIR}/libhighlight-x86_64.a:

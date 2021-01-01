@@ -67,6 +67,7 @@
 		834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB9425923D3000673002 /* ThemeCollectionViewItem.xib */; };
 		834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
+		834D64A9259E9DC400DCA121 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		8357EB782587DBED002C2C45 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB772587DBED002C2C45 /* ThemesViewController.swift */; };
 		8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7B2587F8EB002C2C45 /* Theme.swift */; };
 		8357EB7F2588262C002C2C45 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7E2588262C002C2C45 /* String+ext.swift */; };
@@ -918,6 +919,7 @@
 				83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				83F8825A259906C7008C5071 /* heads.c in Sources */,
 				831A8C62258ABD7F00E36182 /* table.c in Sources */,
+				834D64A9259E9DC400DCA121 /* NSColor+ext.swift in Sources */,
 				831A8C97258ABDD400E36182 /* linked_list.c in Sources */,
 				831A8C77258ABD9D00E36182 /* blocks.c in Sources */,
 				831A8C5C258ABD6F00E36182 /* ext_scanners.c in Sources */,

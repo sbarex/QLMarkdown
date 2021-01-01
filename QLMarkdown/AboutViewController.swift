@@ -28,8 +28,9 @@ class AboutViewController: NSViewController {
             copyrightField.stringValue = ""
         }
         
-        
-        var s = "<div style='font-family: -apple-system; text-align: center'>"
+        let fg_color = NSColor.textColor.css() ?? "#000000"
+        let bg_color = NSColor.textBackgroundColor.css() ?? "#ffffff"
+        var s = "<div style='font-family: -apple-system; text-align: center; color: \(fg_color); background-color: \(bg_color)'>"
         
         s += "<b>Developer</b><br /><a href='https://github.com/sbarex/'>sbarex</a><br /><a href='https://github.com/sbarex/QLMarkdown'>https://github.com/sbarex/QLMarkdown</a><br /><br />"
         

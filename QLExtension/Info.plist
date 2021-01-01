@@ -39,6 +39,6 @@
 		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 SBAREX. All rights reserved.</string>
+	<string>Developed by SBAREX 2020 - 2021.</string>
 </dict>
 </plist>
