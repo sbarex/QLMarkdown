@@ -102,7 +102,7 @@
 <ul>
 <li>Implemented reset to factory settings.</li>
 </ul>
-<p>Bug fix:</p>
+<p>Bugfix:</p>
 <ul>
 <li>Incomplete saving settings.</li>
 <li>UI fix.</li>
@@ -116,9 +116,31 @@
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b11/QLMarkdown.zip" sparkle:version="11" sparkle:edSignature="/w1kJjt79fv+M1KZ7iQN1x7CYgsMQ2gTkPX8zCGgq4aO/NIj3sRA4GTUJ3EER1HXn/QqyJYeQWAR6ZBeG9ZdCQ==" length="17751190"/>
             <description><![CDATA[
-<p>Bug fix:</p>
+<p>Bugfix:</p>
 <ul>
 <li>Fixed open external link to the default browser on Big Sur (via an external XPC service).</li>
+</ul>
+            ]]>
+            </description>
+        </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mar, 30 dic 2020 17:52:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b12/QLMarkdown.zip" sparkle:version="12" sparkle:edSignature="6JYGcK1HFYRxDLlMTe+JqlDpNxZJBMI7eDHPehKnAVVJ/HuGs46E1cS005e0XE2pzvS5lAcrQPBHhuelOypUBA==" length="12470511"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>New icon (thanks to <a href="https://github.com/hazarek">hazarek</a>).</li>
+<li>Wrapper highlight library build inside the Xcode project.</li>
+<li>Wrapper highlight embed goutils with enry guess engine.</li>
+<li>Better about dialog.</li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>Shared library and support files no more embedded twice reducing the total file size.</li>
+<li>Fix on exporting default style.</li>
+<li>Css theme fix.</li>
 </ul>
             ]]>
             </description>
