@@ -5,7 +5,6 @@
 - [ ] application screenshot in the docs
 - [ ] check code signature and app group access
 - [ ] check inline images on network / mounted disk
-- [ ] @rpath libwrapper
 - [ ] investigate CMARK_OPT_UNSAFE form inline images
 - [ ] investigate font family override for fanced blocks
 - [ ] localization support
@@ -14,3 +13,4 @@
 - [x] extension to generate anchor link for heads
 - [x] sparkle update engine
 - [x] insert the `highlight` library on the build process
+- [x] @rpath libwrapper
