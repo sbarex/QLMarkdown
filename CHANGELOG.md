@@ -1,5 +1,6 @@
 1.0b12
 New features:
+- New icon (thanks to [hazarek](https://github.com/hazarek)). 
 - Wrapper highlight library build inside the Xcode project.
 - Wrapper highlight embed goutils with enry guess engine.
 - Better about dialog.

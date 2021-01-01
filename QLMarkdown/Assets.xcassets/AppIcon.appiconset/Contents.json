@@ -6,54 +6,55 @@
       "size" : "16x16"
     },
     {
+      "filename" : "appicon32-1.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "filename" : "MD32.png",
+      "filename" : "appicon32.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"
     },
     {
-      "filename" : "MD32@2x.png",
+      "filename" : "appicon64.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
-      "filename" : "MD128.png",
+      "filename" : "appicon128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
-      "filename" : "MD128@2x.png",
+      "filename" : "appicon256-1.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "MD128@2x-1.png",
+      "filename" : "appicon256.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "MD256@2x-1.png",
+      "filename" : "appicon256@2x.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "MD256@2x.png",
+      "filename" : "appicon256@2x-1.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "MD512@2x.png",
+      "filename" : "103432698-ca1e0300-4bf4-11eb-849f-b30e37b13cb8.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
