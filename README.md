@@ -204,4 +204,4 @@ Also I am not a native English speaker :sweat_smile:.
 
 **This application was developed for pleasure.**
 
-Thanks to thanks to [hazarek](https://github.com/hazarek) for the app icon and the CSS style.
+Thanks to thanks to [hazarek](https://github.com/hazarek) for the app icon and the css style.
