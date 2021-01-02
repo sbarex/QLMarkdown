@@ -87,10 +87,18 @@ static const char *mime_from_magic(FILE *fd) {
 	#define BUFLEN 256 //must be larger than max offset + max magic length
 	char buf[BUFLEN];
 	const char *ret;
-    return (fread(buf, sizeof(char), BUFLEN, fd) < BUFLEN)? NULL:
-		( ret = mime_search(mimes0,LEN(mimes0), buf) ) ? ret :
-		mime_search(mimes4, LEN(mimes4), buf+4);
-		//TODO mimes8 and mimesX + adjust BUFLEN to accomodate
+    size_t len;
+    len = fread(buf, sizeof(char), BUFLEN, fd);
+    if (len < 20) {
+        return NULL;
+    }
+    ret = mime_search(mimes0,LEN(mimes0), buf);
+    if (ret) {
+        return ret;
+    }
+    ret = mime_search(mimes4, LEN(mimes4), buf+4);
+    //TODO mimes8 and mimesX + adjust BUFLEN to accomodate
+    return ret;
 }
 
 char *get_mime(const char *path, MIME_MAGICK_CHECK check_magic) {
