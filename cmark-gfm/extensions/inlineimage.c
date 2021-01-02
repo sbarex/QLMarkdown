@@ -55,6 +55,7 @@ char *base64_encode(const char *data,
     for (int i = 0; i < mod_table[input_length % 3]; i++) {
         encoded_data[*output_length - 1 - i] = '=';
     }
+    encoded_data[*output_length-1] = '\0';
 
     return encoded_data;
 }
