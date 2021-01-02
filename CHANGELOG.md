@@ -24,7 +24,7 @@ Bugfix:
 
 1.0.b9
 New features:
-- Updated the default css style (thanks to [hazarek](https://github.com/hazarek)). 
+- Updated the default CSS style (thanks to [hazarek](https://github.com/hazarek)). 
 - For source highlight, option to choose the document style or a specific language style.
 
 1.0.b8
@@ -38,7 +38,7 @@ New features:
 - Auto refresh menu to automatically update the preview when an option is changed (the auto refresh do not apply when you change the example text). 
 - The quicklook extension detects the settings changed on the host application. Remember that macOS can store the quicklook preview in a cache, so to see the new settings applied try to open the preview of a different file.
 - On the host application you can open a .md file to view in the preview (you can also drag & drop the over the text editor).
-- Import css inside the support folder.
+- Import CSS inside the support folder.
 
 Bugfix:
 - Typo in application name.
