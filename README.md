@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="assets/img/icon.png" width="150"/>
+  <img src="assets/img/icon.png" width="150" alt="logo" />
 </p>
 
 # QLMarkdown
 
 QLMarkdown is a macOS Quick Look extension to preview Markdown files.
 
-> **WARNING!** The software is provided "as is", without any warranty of any kind.
+> **Please note that this software is provided "as is", without any warranty of any kind.**
 
 You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases). 
 
@@ -27,7 +27,7 @@ You can download the last compiled release (as universal binary) from [this link
     - [Table](#table)
     - [Tag filter](#tag-filter)
     - [Task list](#task-list)
-  - [Source code highlight styles editor](#source-code-highlight-styles-editor)
+  - [Styles](#styles)
   - [Build from source](#build-from-source)
     - [Dependency](#dependency)
   - [Note about security](#note-about-security)
@@ -43,6 +43,7 @@ You can download the last compiled release (as universal binary) from [this link
 ### QLMarkdown preferences window
 
 From the Preferences window you can configure the options, enable the desired extensions and set the style.
+Some lesser-used options are available in the advanced panel.
 
 ![main interface](./assets/img/main_interface.png)
 
@@ -66,9 +67,9 @@ Compared to the standard `cmark-gfm` equipment, these extensions have been added
 The options follow those offered by the `cmark-gfm`:
 - `hard break` _(available on advanced options panel)_: Render `softbreak` elements as hard line breaks.
 - `no soft break` _(available on advanced options panel)_: Render `softbreak` elements as spaces.
-- `unsafe raw HTML` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types).  By default, raw HTML is replaced by a placeholder HTML comment. Unsafe links are replaced by empty strings.
-- `validate UTF` _(available on advanced options panel)_: Validate UTF-8 in the input before parsing, replacing illegal sequences with the replacement character U+FFFD.
-- `smart quotes`: Convert straight quotes to curly, ```---``` to em dashes, ```--``` to en dashes.
+- `unsafe raw HTML` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types).  By default, HTML tags are stripped and unsafe links are replaced by empty strings.
+- `validate UTF` _(available on advanced options panel)_: Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD).
+- `smart quotes`: Convert straight quotes to curly, ```---``` to em dashes and ```--``` to en dashes.
 - `footnotes`: Parse the footnotes.
 
 ## Difference with the GitHub Markdown engine
@@ -86,20 +87,15 @@ The source code highlight is based to a different library, so the formatting, st
 
 ### Autolink
 
-`Autolink` _(available on advanced options panel)_: automatically translate url to link.
+Available on advanced options panel. Automatically translate url to link and parse email addresses.
 
 ### Emoji
 
-Parse the emoji placeholder defined by GitHub. You can render the emoji with an emoticons glyph or using the image provided by GitHub. It is possible that some placeholders (especially if they require a sequence of several unicode codes) are not supported by the system font.
- 
----
- 
-This extension translate the placeholders defined by [GitHub](https://api.github.com/emojis) into the corresponding emoji. 
-It is possible to translate with the system emoji font or using the image provided by GitHub (internet connection required). 
+Parse the emoji placeholder defined by [GitHub](https://api.github.com/emojis). You can render the emoji with an emoticons glyph or using the image provided by GitHub (internet connection required). 
 
 Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. Some multibyte sequence may not be supported by the system font, in this case it is recommended to set the substitution with GitHub images.
 
-A list of GitHub emoji placeholder is available [here](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#people--body)
+A list of GitHub emoji placeholder is available [here](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#people--body).
 
 ### GitHub mentions
 
@@ -111,12 +107,12 @@ Available on advanced options panel. Create anchors for the heads to use as cros
  
 ### Inline local images 
 
-Available on advanced options panel. Inject in the html code the local images as base64 data. The quick look extension can not access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. For security reasons are handled only urls without schema (e.g. `./image.jpg` or `image.jpg`), or with the `file` schema (e.g.  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. This extension is required to render local images inside the quicklook preview.
+Available on advanced options panel. Inject in the html code the local images as base64 data. The quick look extension, for security reason, can not access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. For security reasons are handled only urls without schema (e.g. `./image.jpg` or `image.jpg`), or with the `file` schema (e.g.  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. 
 
----
-
-For security reason the quicklook preview (based on an html view) do not load local files. During the rendering process, the extension then embed the contents of the file on the html code as a base64 encoded data. This process operate only on local images (url without a scheme or with the `file://` scheme and with image mime type).
+The extension then the contents of the image file on the html code as a base64 encoded data. This process operate only on local images (url without a scheme or with the `file://` scheme and with image mime type).
 With the `file://` scheme you *always set the fullpath*. For images inside the same folder of the Markdown file do not use the scheme  `file://` and also `./` is optional.
+
+The extension process both images defined in the Markdown styntax and also with html <image> tag.
 
 ### Source code highlight
 
@@ -160,7 +156,7 @@ Available on advanced options panel. Strip potentially dangerous html tags (`<ti
 
 Available on advanced options panel. Parse task list as defined by the GitHub extension to the standard Markdown language.
 
-## Source code highlight styles editor
+## Styles
 
 You can choose a CSS theme to render the Markdown file. The app is provided with a predefined theme ( Github theme ) valid both for light and dark theme. 
 
@@ -175,6 +171,8 @@ User customized style sheet must have the settings for both light and dark appea
 
 The custom style is appended after the CSS used for the source code. In this way you can customize also the style of the language code. 
 
+Source code highlight extension allow to customize the appearance of the code bloks.
+
 ## Build from source
 
 When you clone this repository, remember to fetch also the submodule with `git submodule update --init`.
@@ -184,8 +182,8 @@ When you clone this repository, remember to fetch also the submodule with `git s
 The app uses an extra library `highlight wrapper`. This is a custom c++ shared library that expose the `highlight` functionality, emoji replacement and the guess detection engines. All the code required by this library is included in the Xcode project, and is compiled as a universal library. 
 
 The wrapper has statically linked the following libraries:
-- [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for source code highlight,
-- [`lua`](https://www.lua.org/) required by `highlight`
+- [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for source code highlight.
+- [`lua`](https://www.lua.org/) required by `highlight`.
 - [`magic`](https://www.darwinsys.com/file/), used to guess the source code language when the guess mode is set to _fast_.
 - [`Enry`](https://github.com/go-enry/go-enry), used to guess the source code language when the guess mode is set to _accurate_.
 
@@ -202,6 +200,6 @@ On Big Sur there is a bug in the quicklook engine and webkit that cause the imme
 I am not primarily an application developer, and I have no particular experience in programming in swift and much less in c/c++. There may be possible bugs in the code, be patient.
 Also I am not a native English speaker :sweat_smile:. 
 
-**This application was developed for pleasure.**
+Thanks to [hazarek](https://github.com/hazarek) for the app icon and the css style.
 
-Thanks to thanks to [hazarek](https://github.com/hazarek) for the app icon and the css style.
+**This application was developed for pleasure :heart:.**
