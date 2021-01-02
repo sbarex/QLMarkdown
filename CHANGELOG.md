@@ -1,6 +1,15 @@
 # Changelog
+=======
+
+### 1.0b13
+New features:
+- QL preview handle TextBundle container.
+
+Bugfix:
+- Fix error on image mime detection.
 
 ### 1.0b12
+1.0b12
 New features:
 - New icon (thanks to [hazarek](https://github.com/hazarek)). 
 - Wrapper highlight library build inside the Xcode project.
@@ -68,8 +77,7 @@ New features:
 - Debug options.
 
 Bug fix:
-- fix missing WKWebView class on Catalina 
-
+- fix missing WKWebView class on Catalina
 
 ### 1.0.b3
 Bugfix:
