@@ -140,14 +140,12 @@ class ViewController: NSViewController {
     
     @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension {
         didSet {
-            updateEmojiStatus()
             updateEmojiPopup()
             isDirty = true
         }
     }
     @objc dynamic var emojiImageOption: Bool = Settings.factorySettings.emojiImageOption {
         didSet {
-            updateEmojiStatus()
             updateEmojiPopup()
             isDirty = true
         }
@@ -432,18 +430,6 @@ class ViewController: NSViewController {
         }
     }
     
-    internal func updateEmojiStatus() {
-        if emojiExtension && emojiImageOption {
-            pauseAutoRefresh += 1
-            unsafeHTMLOption = true
-            unsafeButton.state = .on
-            unsafeButton.isEnabled = false
-            pauseAutoRefresh -= 1
-        } else {
-            unsafeButton.isEnabled = true
-        }
-    }
-    
     @IBAction func handleEmojiPopup(_ sender: NSPopUpButton) {
         if sender.indexOfSelectedItem == 3 {
             self.emojiExtension = false
@@ -568,7 +554,14 @@ document.addEventListener('scroll', function(e) {
 });
 </script>
 """
-        let html = settings.getCompleteHTML(title: ".md", body: body, header: header)
+        let extrajs: String
+        if settings.unsafeHTMLOption && settings.inlineImageExtension {
+            extrajs = "<script type=\"text/javascript\">" + (settings.getBundleContents(forResource: "inlineimages", ofType: "js") ?? "") + "</script>\n";
+        } else {
+            extrajs = ""
+        }
+        
+        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: extrajs)
         webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
     }
     
@@ -764,6 +757,7 @@ document.addEventListener('scroll', function(e) {
         self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         let contentController = self.webView.configuration.userContentController
         contentController.add(self, name: "scrollHandler")
+        contentController.add(self, name: "imageExtensionHandler")
         
         let settings = Settings.shared
         
@@ -1079,15 +1073,39 @@ extension ViewController: WKNavigationDelegate {
 
 extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "scrollHandler" else {
-            return
-        }
-        guard let dict = message.body as? [String : AnyObject] else {
-            return
-        }
-
-        if let p = dict["scroll"] as? Int {
+        if message.name == "scrollHandler", let dict = message.body as? [String : AnyObject], let p = dict["scroll"] as? Int {
             self.prev_scroll = p
+        } else if message.name == "imageExtensionHandler", let dict = message.body as? [String : AnyObject], let src = dict["src"] as? String, let id = dict["id"] as? String, let data = get_base64_image(src.cString(using: .utf8)) {
+            
+            let response: [String: String] = [
+                "src": src,
+                "id": id,
+                "data": String(cString: data)
+            ]
+            data.deallocate()
+            let encoder = JSONEncoder()
+            guard let j = try? encoder.encode(response), let js = String(data: j, encoding: .utf8) else {
+                return
+            }
+
+            message.webView?.evaluateJavaScript("replaceImageSrc(\(js))") { (r, error) in
+                if let result = r as? Bool, !result {
+                    os_log(
+                        "Unable to replace <img> src %{public}s with the inline data.",
+                        log: self.log,
+                        type: .error,
+                        src
+                    )
+                }
+                if let error = error {
+                    os_log(
+                        "Unable to replace <img> src %{public}s with the inline data: %{public}s.",
+                        log: self.log,
+                        type: .error,
+                        src, error.localizedDescription
+                    )
+                }
+            }
         }
     }
 }

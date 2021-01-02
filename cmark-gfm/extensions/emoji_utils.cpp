@@ -8,6 +8,7 @@
 #include "emoji_utils.hpp"
 #include "string_utils.hpp"
 #include <string>
+#include <cstring>
 #include <map>
 #include <filesystem>
 #include <clocale>
@@ -1822,19 +1823,6 @@ std::map<std::string, std::string> emoji_list = {
 
 };
 
-int containsEmoji2(const char *txt) {
-    std::string text = txt;
-    
-    for ( auto it = emoji_list.begin(); it != emoji_list.end(); ++it ) {
-        std::string emoji;
-        emoji = it->first;
-        if (text.find(":" + emoji + ":") != std::string::npos) {
-            return 1;
-        }
-    }
-    return 0;
-}
-
 /**
  * Split a string.
  * @param source String to split
@@ -1852,86 +1840,79 @@ static std::vector<std::string> split(std::string source, char delimiter) {
     return seglist;
 }
 
-char *replaceEmoji2(const char *txt, int use_characters) {
-    std::string text = txt;
-    bool found = false;
-    if (use_characters) {
-        std::string current_locale = std::setlocale(LC_ALL, NULL);
-        if (std::setlocale(LC_ALL, "en_US.UTF-8") == NULL) {
-            std::cerr << "setlocale failed.\n";
-        }
-        std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-        std::wstring wParagraph = converter.from_bytes(text);
-        
-        for ( auto it = emoji_list.begin(); it != emoji_list.end(); ++it ) {
-            std::string emoji;
-            emoji = it->first;
-            if (text.find(":" + emoji + ":") != std::string::npos) {
-                found = true;
-                std::string image = it->second;
-                
-                std::string base_filename = image.substr(image.find_last_of("/") + 1);
-                std::string::size_type const p(base_filename.find_last_of('.'));
-                std::string sequence = base_filename.substr(0, p);
-                
-                // Split the sequence into single glyphs.
-                std::vector<std::string> seglist = split(sequence, '-');
-                
-                // Buffer for the parsed glyphs.
-                wchar_t rune[seglist.size()+1];
-                
-                int j = 0;
-                // std::cout << sizeof(wchar_t) << ' ' << sizeof(long) << "\n";
-                for (std::vector<std::string>::const_iterator i = seglist.begin(); i != seglist.end(); ++i) {
-                    std::string character = *i;
-                    wchar_t glyph = std::stoi(character, nullptr, 16);
-                    rune[j] = glyph;
-                    j++;
-                }
-                rune[j] = 0; // Null terminate.
-                
-                std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter1;
-                std::wstring wPlaceholder = converter1.from_bytes(":"+emoji+":");
-                
-                wReplaceAll(wParagraph, wPlaceholder, rune);
-            }
-        }
-        
-        if (found) {
-            const wchar_t *input = wParagraph.c_str();
-            // Count required buffer size (plus one for null-terminator).
-            size_t size = (std::wcslen(input) + 1) * sizeof(wchar_t);
-            char *buffer = (char *)calloc(1, size);
-
-            size_t convertedSize;
-            #ifdef __STDC_LIB_EXT1__
-                // wcstombs_s is only guaranteed to be available if __STDC_LIB_EXT1__ is defined
-
-                std::wcstombs_s(&convertedSize, buffer, size, input, size);
-            #else
-                convertedSize = std::wcstombs(buffer, input, size);
-            #endif
-            
-            // Restore previous locale.
-            std::setlocale(LC_ALL, current_locale.c_str());
-            
-            return buffer;
-        } else {
-            return NULL;
-        }
-    } else {
-        for ( auto it = emoji_list.begin(); it != emoji_list.end(); ++it ) {
-            std::string emoji = it->first;
-            if (text.find(":" + emoji + ":") != std::string::npos) {
-                found = true;
-                std::string image = it->second;
-                
-                std::string replace = "<img src='" + image + "' alt='" + emoji + "' width='16' height='16' />";
-                replaceAll(text, ":"+emoji+":", replace);
-            }
-        }
-        return found ? strdup(text.c_str()) : NULL;
+char *get_emoji_url(const char *placeholder) {
+    std::string s_placeholder = placeholder;
+    try {
+        auto u = emoji_list.at(s_placeholder);
+        return strdup(u.c_str());
+    }
+    catch(std::out_of_range& e) {
+        return NULL;
     }
 }
 
+wchar_t *get_w_emoji(const char *placeholder) {
+    std::string s_placeholder = placeholder;
+    std::string image;
+    try {
+        image = emoji_list[s_placeholder];
+    }
+    catch(std::out_of_range& e) {
+        return NULL;
+    }
+    
+    std::string base_filename = image.substr(image.find_last_of("/") + 1);
+    std::string::size_type const p(base_filename.find_last_of('.'));
+    std::string sequence = base_filename.substr(0, p);
+    
+    // Split the sequence into single glyphs.
+    std::vector<std::string> seglist = split(sequence, '-');
+    
+    // Buffer for the parsed glyphs.
+    auto *rune = (wchar_t *)calloc(seglist.size()+1, sizeof(wchar_t));
+    
+    int j = 0;
+    // std::cout << sizeof(wchar_t) << ' ' << sizeof(long) << "\n";
+    for (std::vector<std::string>::const_iterator i = seglist.begin(); i != seglist.end(); ++i) {
+        std::string character = *i;
+        wchar_t glyph = std::stoi(character, nullptr, 16);
+        rune[j] = glyph;
+        j++;
+    }
+    rune[j] = 0; // Null terminate.
+    
+    return rune;
+}
 
+
+char *get_emoji(const char *placeholder) {
+    wchar_t *rune = get_w_emoji(placeholder);
+    if (!rune) {
+        return NULL;
+    }
+    
+    std::string current_locale = std::setlocale(LC_ALL, NULL);
+    if (std::setlocale(LC_ALL, "en_US.UTF-8") == NULL) {
+        std::cerr << "setlocale failed.\n";
+    }
+    
+    // Count required buffer size (plus one for null-terminator).
+    size_t size = (std::wcslen(rune) + 1) * sizeof(wchar_t);
+    char *buffer = (char *)calloc(1, size);
+
+    size_t convertedSize;
+    #ifdef __STDC_LIB_EXT1__
+        // wcstombs_s is only guaranteed to be available if __STDC_LIB_EXT1__ is defined
+
+        std::wcstombs_s(&convertedSize, buffer, size, rune, size);
+    #else
+        convertedSize = std::wcstombs(buffer, rune, size);
+    #endif
+        
+    // Restore previous locale.
+    std::setlocale(LC_ALL, current_locale.c_str());
+    
+    free(rune);
+    
+    return buffer;
+}

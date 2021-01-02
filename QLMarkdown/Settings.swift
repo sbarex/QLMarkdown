@@ -339,7 +339,7 @@ class Settings {
         cmark_gfm_core_extensions_ensure_registered()
         
         var options = CMARK_OPT_DEFAULT
-        if self.unsafeHTMLOption || (self.emojiExtension && self.emojiImageOption) {
+        if self.unsafeHTMLOption {
             options |= CMARK_OPT_UNSAFE
         }
         
@@ -752,7 +752,7 @@ table.debug td {
         return html_debug
     }
     
-    internal func getBundleContents(forResource: String, ofType: String) -> String?
+    func getBundleContents(forResource: String, ofType: String) -> String?
     {
         if let p = getResourceBundle().path(forResource: forResource, ofType: ofType), let data = FileManager.default.contents(atPath: p), let s = String(data: data, encoding: .utf8) {
             return s

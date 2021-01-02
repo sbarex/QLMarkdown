@@ -78,11 +78,11 @@ typedef void (* ReleaseThemeInfoList)(HThemeInfo **themes, int count);
  */
 typedef void (*ResultThemeCallback)(void* context, const HTheme *theme, int exit_code);
 
-EXPORT char *get_highlight_version();
-EXPORT char *get_highlight_website();
-EXPORT char *get_highlight_email();
+EXPORT char *get_highlight_version(void);
+EXPORT char *get_highlight_website(void);
+EXPORT char *get_highlight_email(void);
 
-EXPORT const char *get_lua_info();
+EXPORT const char *get_lua_info(void);
 
 /*!
  * Initialize the highlight context with the provided path.
@@ -100,7 +100,7 @@ EXPORT void highlight_init(const char *search_dir);
  *
  * @see highlight_release_generator
  */
-int highlight_init_generator();
+int highlight_init_generator(void);
 
 /*!
  * Free the memory used by the generator if no more rendering is required.

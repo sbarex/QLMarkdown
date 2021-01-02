@@ -1035,9 +1035,9 @@
                                                                         </button>
                                                                     </gridCell>
                                                                     <gridCell row="P59-QT-GUd" column="gDs-o1-pxX" id="iGC-cr-36i">
-                                                                        <button key="contentView" toolTip="Allow HTML code inside the Markdown file." horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="Yvy-aE-Sho">
+                                                                        <button key="contentView" toolTip="Allow raw HTML code inside the Markdown file." horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="Yvy-aE-Sho">
                                                                             <rect key="frame" x="-2" y="27" width="275" height="18"/>
-                                                                            <buttonCell key="cell" type="check" title="Unsafe raw HTML" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yq1-8R-Fo4">
+                                                                            <buttonCell key="cell" type="check" title="Inline HTML (unsafe)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yq1-8R-Fo4">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
@@ -1048,7 +1048,7 @@
                                                                     </gridCell>
                                                                     <gridCell row="0Jj-Oa-MkY" column="gDs-o1-pxX" id="F7D-0Q-WPa">
                                                                         <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zVa-zC-rZ4">
-                                                                            <rect key="frame" x="-2" y="2" width="275" height="18"/>
+                                                                            <rect key="frame" x="-2" y="-1" width="275" height="18"/>
                                                                             <buttonCell key="cell" type="check" title="Debug info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Uj7-I5-hly">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -1227,7 +1227,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tg2-Ze-MWE">
-                                                                <rect key="frame" x="200" y="87" width="19" height="28"/>
+                                                                <rect key="frame" x="200" y="88" width="19" height="26"/>
                                                                 <stepperCell key="cell" continuous="YES" alignment="left" minValue="20" maxValue="100000" doubleValue="20" id="5ug-Af-KVm"/>
                                                                 <connections>
                                                                     <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="GkB-vQ-xcn"/>
@@ -1503,6 +1503,7 @@
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
                                                                             <connections>
+                                                                                <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.unsafeHTMLOption" id="Aik-lL-crJ"/>
                                                                                 <binding destination="XfG-lQ-9wD" name="value" keyPath="self.tagFilterExtension" id="IyO-Ut-9GX"/>
                                                                             </connections>
                                                                         </button>
@@ -1553,12 +1554,12 @@
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
                                 <rect key="frame" x="0.0" y="35" width="1011" height="558"/>
                                 <subviews>
-                                    <customView id="GDJ-WJ-HAB">
+                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
                                         <rect key="frame" x="0.0" y="0.0" width="504" height="558"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="0.0" width="504" height="558"/>
+                                                <rect key="frame" x="0.0" y="173" width="504" height="558"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
                                                     <rect key="frame" x="0.0" y="0.0" width="504" height="558"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1594,7 +1595,7 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView id="sp3-sm-w1y">
+                                    <customView misplaced="YES" id="sp3-sm-w1y">
                                         <rect key="frame" x="514" y="0.0" width="497" height="558"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
@@ -1610,7 +1611,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="241" y="271" width="16" height="16"/>
+                                                <rect key="frame" x="241" y="444" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
@@ -1721,16 +1722,6 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <userDefaultsController representsSharedInstance="YES" id="JgT-L6-uQU"/>
-                <menu id="wOR-Sc-2Bz">
-                    <items>
-                        <menuItem title="Choose a theme" id="hrR-W2-i1r">
-                            <modifierMask key="keyEquivalentModifierMask"/>
-                        </menuItem>
-                        <menuItem title="Open in the theme editor" id="gmU-pC-Y3W">
-                            <modifierMask key="keyEquivalentModifierMask"/>
-                        </menuItem>
-                    </items>
-                </menu>
             </objects>
             <point key="canvasLocation" x="0.5" y="937"/>
         </scene>
@@ -1779,7 +1770,6 @@
                                 <connections>
                                     <action selector="showThemeSelector:" target="crH-dK-4Jk" id="N9R-HO-Me0"/>
                                     <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="FgW-LS-dQt"/>
-                                    <outlet property="menu" destination="wOR-Sc-2Bz" id="ac1-0z-vbS"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DD0-TP-hnQ">
@@ -1802,7 +1792,6 @@
                                 <connections>
                                     <action selector="showThemeSelector:" target="crH-dK-4Jk" id="gxo-dI-pwk"/>
                                     <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.syntaxHighlightExtension" id="FIV-LT-Xns"/>
-                                    <outlet property="menu" destination="wOR-Sc-2Bz" id="ZVX-r6-pC3"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nAR-i0-Ub4">

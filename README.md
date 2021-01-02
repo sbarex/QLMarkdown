@@ -57,7 +57,7 @@ After the first execution, the quicklook extension will be available (and enable
 For maximum compatibility with the Markdown format, the [`cmark-gfm`](https://github.com/github/cmark-gfm) library is used. The library is a GitHub fork of the standard cmark tool to process the Markdown files. 
 
 Compared to the standard `cmark-gfm` equipment, these extensions have been added:
-- `Emoji`: translate the emoji placeholders like ```:smile:```.
+- `Emoji`: translate the emoji placeholders like `:smile:`.
 - `Heads anchors`: create anchors for the heads.
 - `Source code`: highlight the code inside fenced block.
 - `Inline local images`: embed the image files inside the formatted output (required for the quicklook preview).
@@ -67,7 +67,7 @@ Compared to the standard `cmark-gfm` equipment, these extensions have been added
 The options follow those offered by the `cmark-gfm`:
 - `Hard break` _(available on advanced options panel)_: Render `softbreak` elements as hard line breaks.
 - `No soft break` _(available on advanced options panel)_: Render `softbreak` elements as spaces.
-- `Unsafe raw HTML` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types).  By default, HTML tags are stripped and unsafe links are replaced by empty strings.
+- `Inline HTML (unsafe)` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file.  By default, HTML tags are stripped and unsafe links are replaced by empty strings.
 - `Validate UTF` _(available on advanced options panel)_: Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD).
 - `Smart quotes`: Convert straight quotes to curly, ```---``` to em dashes and ```--``` to en dashes.
 - `Footnotes`: Parse the footnotes.
@@ -112,7 +112,7 @@ Available on advanced options panel. Inject in the html code the local images as
 The extension then the contents of the image file on the html code as a base64 encoded data. This process operate only on local images (url without a scheme or with the `file://` scheme and with image mime type).
 With the `file://` scheme you *always set the fullpath*. For images inside the same folder of the Markdown file do not use the scheme  `file://` and also `./` is optional.
 
-The extension process both images defined in the Markdown styntax and also with html <image> tag.
+The extension process both images defined in the Markdown syntax and also with html <image> tag.
 
 ### Source code highlight
 
@@ -171,7 +171,7 @@ User customized style sheet must have the settings for both light and dark appea
 
 The custom style is appended after the CSS used for the source code. In this way you can customize also the style of the language code. 
 
-Source code highlight extension allow to customize the appearance of the code bloks.
+Source code highlight extension allow to customize the appearance of the code blocks.
 
 ## Build from source
 
@@ -179,7 +179,7 @@ When you clone this repository, remember to fetch also the submodule with `git s
 
 ### Dependency
 
-The app uses an extra library `highlight wrapper`. This is a custom c++ shared library that expose the `highlight` functionality, emoji replacement and the guess detection engines. All the code required by this library is included in the Xcode project, and is compiled as a universal library. 
+The app uses an extra library `highlight wrapper`. This is a custom c++ shared library that expose the `highlight` functionality and the guess detection engines. All the code required by this library is included in the Xcode project, and is compiled as a universal library. 
 
 The wrapper has statically linked the following libraries:
 - [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for source code highlight.

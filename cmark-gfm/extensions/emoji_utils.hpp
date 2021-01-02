@@ -13,18 +13,18 @@ extern "C" {
 #endif
 
 /**
- * Check if the text contains some emoji placeholders.
- * @param txt Source string.
- * @return 0 if no emoji whas found.
+  * Get the image url for a emoji placeholder.
+  * @param placeholder Placeholder to replace
+  * @return The image url or NULL if the placeholder is invalid. **User must release the memory.**
  */
-int containsEmoji2(const char *txt);
+char *get_emoji_url(const char *placeholder);
+
 /**
- * Replace all emoji placeholders.
- * @param txt Source string.
- * @param use_characters 1 for replacing the placeholders with emoticons, 0 to replace with an image tag.
- * @return Return the formatted text. **User must release the memory**. If no placeholder is replaced return NULL.
+  * Get the emoji for a placeholder.
+  * @param placeholder Placeholder to replace
+  * @return The emoji string or NULL if the placeholder is invalid. **User must release the memory.**
  */
-char *replaceEmoji2(const char *txt, int use_characters);
+char *get_emoji(const char *placeholder);
 
 #ifdef __cplusplus
 }

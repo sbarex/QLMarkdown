@@ -12,6 +12,9 @@
 #include "ext_scanners.h"
 #include "emoji_utils.hpp"
 #include <houdini.h>
+#include <scanners.h>
+
+const char *emoji_image_size = "16";
 
 typedef struct {
     bool use_images;
@@ -80,55 +83,75 @@ char *str_replace(char *orig, char *rep, char *with) {
     return result;
 }
 
-static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser, cmark_node *root) {
-    cmark_iter *iter;
-    cmark_event_type ev;
-    cmark_node *node;
+static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
+                         cmark_node *parent, unsigned char character,
+                         cmark_inline_parser *inline_parser) {
+    if (character != ':')
+        return NULL;
 
-    cmark_consolidate_text_nodes(root);
-    iter = cmark_iter_new(root);
+    cmark_chunk *chunk = cmark_inline_parser_get_chunk(inline_parser);
+    uint8_t *data = chunk->data;
+    size_t size = chunk->len;
+    int start = cmark_inline_parser_get_offset(inline_parser);
+    int at = start + 1;
+    int end = at;
 
-    bool use_characters = cmark_syntax_extension_emoji_get_use_characters(ext);
-    
-    while ((ev = cmark_iter_next(iter)) != CMARK_EVENT_DONE) {
-        node = cmark_iter_get_node(iter);
-        
-        // cmark_node_type type;
-        // type = node->type;
-        
-        if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_TEXT) {
-            const char *t = cmark_node_get_literal(node);
-            if (use_characters) {
-                if (t) {
-                    char *s = replaceEmoji2((char *)t, 1);
-                    if (s) {
-                        cmark_node_set_literal(node, s);
-                        free(s);
-                    }
-                }
-            } else if (containsEmoji2((char *)t) > 0) {
-                cmark_mem *mem = cmark_get_default_mem_allocator();
-                cmark_strbuf dest;
-                cmark_strbuf_init(mem, &dest, 0);
-                houdini_escape_html0(&dest, (const uint8_t *)t, (int)strlen(t), 0);
-                
-                char *s = replaceEmoji2((char *)dest.ptr, 0);
-                if (s) {
-                    cmark_node_set_type(node, CMARK_NODE_HTML_INLINE);
-                    cmark_node_set_literal(node, s);
-                
-                    free(s);
-                }
-                cmark_strbuf_free(&dest);
-                
-                // cmark_node_set_syntax_extension(node, ext);
-            }
-        }
+    if (start > 0 && !cmark_isspace(data[start-1])) {
+        return NULL;
     }
 
-    cmark_iter_free(iter);
+    while (end < size
+           && (!cmark_isspace(data[end]) && data[end] != ':')) {
+        end++;
+    }
+
+    if (end == at) {
+        return NULL;
+    }
     
-    return root;
+    if (data[end] != ':') {
+        return NULL;
+    }
+    
+    char *placeholder = parser->mem->calloc(end-start, sizeof(char));
+    memcpy(placeholder, &data[start+1], end-start-1);
+    
+    cmark_node *node = NULL;
+
+    char *url = get_emoji_url(placeholder);
+    if (url) {
+        bool use_characters = cmark_syntax_extension_emoji_get_use_characters(self);
+        if (use_characters) {
+            char *emoji = get_emoji(placeholder);
+            if (emoji) {
+                node = cmark_node_new_with_mem(CMARK_NODE_TEXT, parser->mem);
+                
+                cmark_node_set_literal(node, emoji);
+                
+                // cmark_strbuf_sets(&node->content, emoji);
+                free(emoji);
+            } else {
+                goto exit_func;
+            }
+        } else {
+            node = cmark_node_new_with_mem(CMARK_NODE_IMAGE, parser->mem);
+            
+            // cmark_strbuf_sets(&node->content, placeholder);
+            
+            cmark_node_set_url(node, url);
+            cmark_node_set_title(node, placeholder);
+            cmark_node_set_syntax_extension(node, self);
+        }
+        
+        cmark_inline_parser_set_offset(inline_parser, start + (end - start) + 1);
+    }
+    
+exit_func:
+    
+    free(url);
+    parser->mem->free(placeholder);
+    
+    return node;
 }
 
 bool cmark_syntax_extension_emoji_get_use_characters(cmark_syntax_extension *extension) {
@@ -145,6 +168,31 @@ void cmark_syntax_extension_emoji_set_use_characters(cmark_syntax_extension *ext
     settings->use_images = !use_characters;
 }
 
+void html_render(cmark_syntax_extension *extension,
+            struct cmark_html_renderer *renderer,
+            cmark_node *node,
+            cmark_event_type ev_type,
+            int options) {
+    cmark_strbuf *html = renderer->html;
+    if (ev_type == CMARK_EVENT_ENTER) {
+        cmark_strbuf_puts(html, "<img src=\"");
+        if ((options & CMARK_OPT_UNSAFE) || !(scan_dangerous_url(&node->as.link.url, 0))) {
+            houdini_escape_href(html, node->as.link.url.data, node->as.link.url.len);
+        }
+        cmark_strbuf_puts(html, "\" width=\"");
+        cmark_strbuf_puts(html, emoji_image_size);
+        cmark_strbuf_puts(html, "\" class=\"emoji\" alt=\"");
+        renderer->plain = node;
+    } else {
+        if (node->as.link.title.len) {
+            cmark_strbuf_puts(html, "\" title=\"");
+            houdini_escape_html0(html, node->as.link.title.data, node->as.link.title.len, 0);
+        }
+
+        cmark_strbuf_puts(html, "\" />");
+    }
+}
+
 cmark_syntax_extension *create_emoji_extension(void) {
     cmark_syntax_extension *ext = cmark_syntax_extension_new("emoji");
     
@@ -152,14 +200,11 @@ cmark_syntax_extension *create_emoji_extension(void) {
     cmark_syntax_extension_set_private(ext, settings, release_settings);
     
   // FIXME cmark_syntax_extension_set_match_block_func(ext, matches);
-  // cmark_syntax_extension_set_get_type_string_func(ext, get_type_string);
-  // FIXME cmark_syntax_extension_set_open_block_func(ext, open_tasklist_item);
-  // FIXME cmark_syntax_extension_set_can_contain_func(ext, can_contain);
-  // cmark_syntax_extension_set_commonmark_render_func(ext, commonmark_render);
-  // cmark_syntax_extension_set_plaintext_render_func(ext, commonmark_render);
-    // cmark_syntax_extension_set_html_render_func(ext, html_render);
-    cmark_syntax_extension_set_postprocess_func(ext, postprocess);
-  // cmark_syntax_extension_set_xml_attr_func(ext, xml_attr);
+    
+    cmark_syntax_extension_set_html_render_func(ext, html_render);
+
+    // cmark_syntax_extension_set_postprocess_func(ext, postprocess);
+    cmark_syntax_extension_set_match_inline_func(ext, match);
 
     return ext;
 }

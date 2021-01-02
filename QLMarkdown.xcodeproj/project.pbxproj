@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		831364F525A0EB34001A6C08 /* inlineimages.js in Resources */ = {isa = PBXBuildFile; fileRef = 831364F425A0EB34001A6C08 /* inlineimages.js */; };
 		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
 		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
@@ -246,6 +247,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		831364F425A0EB34001A6C08 /* inlineimages.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = inlineimages.js; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		831A8C43258ABADA00E36182 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 			isa = PBXGroup;
 			children = (
 				83598F22258263C0004664D3 /* markdown.css */,
+				831364F425A0EB34001A6C08 /* inlineimages.js */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 			);
 			path = Resources;
@@ -852,6 +855,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				831364F525A0EB34001A6C08 /* inlineimages.js in Resources */,
 				83598EFC25820A72004664D3 /* test2.md in Resources */,
 				83F4B9962586AB9700FC58A7 /* README.md in Resources */,
 				83598EFD25820A72004664D3 /* test1.md in Resources */,

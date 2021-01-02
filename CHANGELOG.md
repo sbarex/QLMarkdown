@@ -5,6 +5,7 @@
 New features:
 - QL preview handle TextBundle container.
 - Inline image extension handle also image inserted with <image> tag on the markdown file.
+- Better emoji handler.
 
 Bugfix:
 - Fix error on image mime detection.
