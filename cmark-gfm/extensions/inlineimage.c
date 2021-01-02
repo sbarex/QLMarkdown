@@ -95,6 +95,77 @@ static bool startsWith(const char *pre, const char *str)
     return lenstr < lenpre ? false : memcmp(pre, str, lenpre) == 0;
 }
 
+char *get_base64_image(const char *url) {
+    char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
+    const char *image_path;
+    char *mime = NULL;
+    char *encoded = NULL;
+    
+    parse_url(url, &protocol, &host, &path, &query);
+    
+    if (strcmp(protocol, "file") == 0) {
+        // The url path is the local file path.
+        image_path = path;
+    } else if (strlen(host) == 0) {
+        // No host, the url is a local file path.
+        image_path = (const char *)url;
+    } else {
+        // Not a local file.
+        goto continue_loop;
+    }
+    
+    if (access(image_path, F_OK) == 0) {
+        mime = get_mime(image_path, 2);
+        
+        if (!mime || !startsWith("image/", mime)) {
+            fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
+            goto continue_loop;
+        }
+        
+        char * buffer = 0;
+        long length = 0;
+        FILE * f = fopen((const char *)image_path, "rb");
+        if (f) {
+            fseek (f, 0, SEEK_END);
+            length = ftell(f);
+            fseek (f, 0, SEEK_SET);
+            buffer = malloc(length);
+            if (buffer) {
+                fread(buffer, 1, length, f);
+            }
+            fclose(f);
+            
+            size_t encoded_length = 0;
+            encoded = base64_encode(buffer, length, &encoded_length);
+            
+            char *prefix = (char *)calloc(strlen(mime)+strlen("data:;base64,"), sizeof(char));
+            sprintf(prefix, "data:%s;base64,", mime);
+            size_t prefix_length = sizeof(char)*strlen(prefix);
+            
+            encoded = realloc(encoded, encoded_length + prefix_length);
+            memmove(encoded + prefix_length, encoded, encoded_length);
+            memcpy(encoded, prefix, prefix_length);
+            
+            free(prefix);
+            free(buffer);
+        } else {
+            fprintf(stderr, "Error to get magic for file %s: #%d, %s\n", image_path, errno, strerror(errno));
+        }
+    } else {
+        fprintf(stderr, "Unable to open file %s: #%d, %s\n", image_path, errno, strerror(errno));
+    }
+    
+continue_loop:
+    free(mime);
+    
+    free(protocol);
+    free(path);
+    free(host);
+    free(query);
+    
+    return encoded;
+}
+
 static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser, cmark_node *root) {
     cmark_iter *iter;
     cmark_event_type ev;
@@ -120,73 +191,14 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_IMAGE) {
             const char *url = (const char *)node->as.link.url.data;
-            char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
-            const char *image_path;
-            char *mime = NULL;
-            parse_url(url, &protocol, &host, &path, &query);
-            if (strcmp(protocol, "file") == 0) {
-                // The url path is the local file path.
-                image_path = path;
-            } else if (strlen(host) == 0) {
-                // No host, the url is a local file path.
-                image_path = (const char *)url;
-            } else {
-                // Not a local file.
-                goto continue_loop;
+            char *encoded = NULL;
+            encoded = get_base64_image(url);
+            if (encoded != NULL) {
+                cmark_mem *mem = cmark_get_default_mem_allocator();
+                // Replace the original url with the encoded data.
+                cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
+                free(encoded);
             }
-            
-            if (access(image_path, F_OK) == 0) {
-                mime = get_mime(image_path, 2);
-                
-                if (!mime || !startsWith("image/", mime)) {
-                    fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
-                    goto continue_loop;
-                }
-                
-                char * buffer = 0;
-                long length = 0;
-                FILE * f = fopen((const char *)url, "rb");
-                if (f) {
-                    fseek (f, 0, SEEK_END);
-                    length = ftell(f);
-                    fseek (f, 0, SEEK_SET);
-                    buffer = malloc(length);
-                    if (buffer) {
-                        fread(buffer, 1, length, f);
-                    }
-                    fclose(f);
-                    
-                    char *encoded = 0;
-                    size_t encoded_length = 0;
-                    encoded = base64_encode(buffer, length, &encoded_length);
-                    
-                    
-                    char *prefix = (char *)calloc(strlen(mime)+strlen("data:;base64,"), sizeof(char));
-                    sprintf(prefix, "data:%s;base64,", mime);
-                    size_t prefix_length = sizeof(char)*strlen(prefix);
-                    encoded = realloc(encoded, encoded_length + prefix_length);
-                    memmove(encoded + prefix_length, encoded, encoded_length);
-                    memcpy(encoded, prefix, prefix_length);
-                    free(prefix);
-                    
-                    cmark_mem *mem = cmark_get_default_mem_allocator();
-                    // Replace the original url with the encoded data.
-                    cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
-                    
-                    free(buffer);
-                    free(encoded);
-                } else {
-                    fprintf(stderr, "Error to get magic for file %s: #%d, %s\n", path, errno, strerror(errno));
-                }
-            }
-            
-        continue_loop:
-            free(mime);
-            
-            free(protocol);
-            free(path);
-            free(host);
-            free(query);
         }
     }
     

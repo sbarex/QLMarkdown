@@ -122,7 +122,56 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         do {
             let text = try settings.render(file: markdown_url, forAppearance: type == "Light" ? .light : .dark, baseDir: markdown_url.deletingLastPathComponent().path, log: self.log)
             
-            let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
+            let extrajs: String
+            if settings.unsafeHTMLOption && settings.inlineImageExtension {
+                extrajs = """
+<script type="text/javascript">
+/**
+ * Generate an unique id.
+ * @returns {string}
+ */
+function uid() {
+    let a = new Uint32Array(3);
+    window.crypto.getRandomValues(a);
+    return (performance.now().toString(36)+Array.from(a).map(A => A.toString(36)).join("")).replace(/\\./g,"");
+}
+
+/**
+ * Callback event handler for error when loading an image.
+ */
+function handleImageError() {
+    if (this.src.indexOf("file://") === 0) {
+        // Process only local images.
+        if (!this.id) {
+            this.id = 'I' + uid(); // Assign a uid.
+        }
+        window.webkit.messageHandlers.imageExtensionHandler.postMessage({src: this.src, id: this.id});
+    }
+}
+
+/**
+ * Replace the src image with the embedded data.
+ */
+function replaceImageSrc(result) {
+    const img = document.getElementById(result.id);
+    if (img) {
+        img.src = result.data;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Register the onerror handler.
+for (let image of document.images) {
+    image.onerror = handleImageError
+}
+</script>
+"""
+            } else {
+                extrajs = ""
+            }
+            let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: extrajs)
             
             let previewRect: CGRect
             if #available(macOS 11, *) {
@@ -151,12 +200,17 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             } else {
             */
                 let preferences = WKPreferences()
-                preferences.javaScriptEnabled = false
+                preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
 
                 // Create a configuration for the preferences
                 let configuration = WKWebViewConfiguration()
                 //configuration.preferences = preferences
                 configuration.allowsAirPlayForMediaPlayback = false
+            
+                if settings.unsafeHTMLOption && settings.inlineImageExtension {
+                    // Handler to replace raw <image> src with the embedded data.
+                    configuration.userContentController.add(self, name: "imageExtensionHandler")
+                }
             
                 let webView = MyWKWebView(frame: previewRect, configuration: configuration)
                 webView.autoresizingMask = [.height, .width]
@@ -196,6 +250,52 @@ extension PreviewViewController: WebFrameLoadDelegate {
             handler(error)
         }
         self.handler = nil
+    }
+}
+
+extension PreviewViewController: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard message.name == "imageExtensionHandler" else {
+            return
+        }
+        guard let dict = message.body as? [String : AnyObject], let src = dict["src"] as? String, let id = dict["id"] as? String else {
+            return
+        }
+
+        guard let data = get_base64_image(src.cString(using: .utf8)) else {
+            return
+        }
+        defer {
+            data.deallocate()
+        }
+        let response: [String: String] = [
+            "src": src,
+            "id": id,
+            "data": String(cString: data)
+        ]
+        let encoder = JSONEncoder()
+        guard let j = try? encoder.encode(response), let js = String(data: j, encoding: .utf8) else {
+            return
+        }
+
+        message.webView?.evaluateJavaScript("replaceImageSrc(\(js))") { (r, error) in
+            if let result = r as? Bool, !result {
+                os_log(
+                    "Unable to replace <img> src %{public}s with the inline data.",
+                    log: self.log,
+                    type: .error,
+                    src
+                )
+            }
+            if let error = error {
+                os_log(
+                    "Unable to replace <img> src %{public}s with the inline data: %{public}s.",
+                    log: self.log,
+                    type: .error,
+                    src, error.localizedDescription
+                )
+            }
+        }
     }
 }
 

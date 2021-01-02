@@ -4,6 +4,7 @@
 ### 1.0b13
 New features:
 - QL preview handle TextBundle container.
+- Inline image extension handle also image inserted with <image> tag on the markdown file.
 
 Bugfix:
 - Fix error on image mime detection.
