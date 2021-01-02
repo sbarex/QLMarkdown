@@ -7,6 +7,7 @@
 
 import Cocoa
 import WebKit
+import OSLog
 
 class ViewController: NSViewController {
     @objc dynamic var headsExtension: Bool = Settings.factorySettings.headsExtension {
@@ -367,6 +368,10 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var styleSegementedControl: NSSegmentedControl!
     
+    private let log = {
+        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-host")
+    }()
+    
     var markdown_file: URL? {
         didSet {
             if let file = markdown_file {
@@ -525,7 +530,7 @@ class ViewController: NSViewController {
         let body: String
         let settings = self.updateSettings()
         do {
-            body = try settings.render(text: self.textView.string, forAppearance: self.styleSegementedControl.indexOfSelectedItem == 0 ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: nil)
+            body = try settings.render(text: self.textView.string, forAppearance: self.styleSegementedControl.indexOfSelectedItem == 0 ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
         } catch {
             body = "Error"
         }
@@ -564,7 +569,7 @@ document.addEventListener('scroll', function(e) {
 </script>
 """
         let html = settings.getCompleteHTML(title: ".md", body: body, header: header)
-        webView.loadHTMLString(html, baseURL: Bundle.main.resourceURL)
+        webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
     }
     
     func importStyle(copyOnSharedFolder: Bool) -> URL? {

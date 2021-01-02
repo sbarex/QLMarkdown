@@ -67,8 +67,6 @@
 		834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		834D64A9259E9DC400DCA121 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
-		834D64B5259F271C00DCA121 /* qlmarkdown-logotype.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D64B4259F271B00DCA121 /* qlmarkdown-logotype.png */; };
-		834D64B9259F27E700DCA121 /* logo32.png in Resources */ = {isa = PBXBuildFile; fileRef = 834D64B8259F27E700DCA121 /* logo32.png */; };
 		8357EB782587DBED002C2C45 /* ThemesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB772587DBED002C2C45 /* ThemesViewController.swift */; };
 		8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7B2587F8EB002C2C45 /* Theme.swift */; };
 		8357EB7F2588262C002C2C45 /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7E2588262C002C2C45 /* String+ext.swift */; };
@@ -279,10 +277,6 @@
 		834CAB9A2593650800673002 /* emoji_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = emoji_utils.cpp; sourceTree = "<group>"; };
 		834CAB9B2593650800673002 /* emoji_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = emoji_utils.hpp; sourceTree = "<group>"; };
 		834CABA02593C57B00673002 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
-		834D64B1259F261C00DCA121 /* qlmarkdown-logotype.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "qlmarkdown-logotype.svg"; sourceTree = "<group>"; };
-		834D64B2259F262C00DCA121 /* QLMarkdown.svg */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = QLMarkdown.svg; sourceTree = "<group>"; };
-		834D64B4259F271B00DCA121 /* qlmarkdown-logotype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qlmarkdown-logotype.png"; sourceTree = "<group>"; };
-		834D64B8259F27E700DCA121 /* logo32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo32.png; sourceTree = "<group>"; };
 		8357EB772587DBED002C2C45 /* ThemesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesViewController.swift; sourceTree = "<group>"; };
 		8357EB7B2587F8EB002C2C45 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8357EB7E2588262C002C2C45 /* String+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ext.swift"; sourceTree = "<group>"; };
@@ -388,7 +382,6 @@
 		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
 		838109C525840429000AFE3C /* checkbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checkbox.h; sourceTree = "<group>"; };
 		838109C625840429000AFE3C /* checkbox.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = checkbox.c; sourceTree = "<group>"; };
-		83870BC1259B95A90065543D /* main_interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_interface.png; sourceTree = "<group>"; };
 		83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesSelectorViewController.swift; sourceTree = "<group>"; };
 		83C44B3C259A70EE004C1367 /* string_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_utils.cpp; sourceTree = "<group>"; };
 		83C44B3D259A70EE004C1367 /* string_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string_utils.hpp; sourceTree = "<group>"; };
@@ -509,7 +502,6 @@
 				834CABA02593C57B00673002 /* CHANGELOG.md */,
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
 				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
-				83870BC1259B95A90065543D /* main_interface.png */,
 				836B3019259E222700A6A5F7 /* highlight-wrapper */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMarkdown */,
@@ -703,10 +695,6 @@
 		837F29172597A01F00A5F7DE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				834D64B8259F27E700DCA121 /* logo32.png */,
-				834D64B4259F271B00DCA121 /* qlmarkdown-logotype.png */,
-				834D64B2259F262C00DCA121 /* QLMarkdown.svg */,
-				834D64B1259F261C00DCA121 /* qlmarkdown-logotype.svg */,
 				83598F22258263C0004664D3 /* markdown.css */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 			);
@@ -871,14 +859,12 @@
 				83598E6C2581880A004664D3 /* Main.storyboard in Resources */,
 				8342418B25894328000093EC /* ThemesView.xib in Resources */,
 				837D20D6258362A5008FC698 /* example.jpg in Resources */,
-				834D64B9259F27E700DCA121 /* logo32.png in Resources */,
 				834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */,
 				83F8823B2598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc in Resources */,
 				8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */,
 				83598F24258263C0004664D3 /* markdown.css in Resources */,
-				834D64B5259F271C00DCA121 /* qlmarkdown-logotype.png in Resources */,
 				83F882382598A8B3008C5071 /* org.sparkle-project.InstallerStatus.xpc in Resources */,
 				83F882392598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Resources */,
 				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
