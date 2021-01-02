@@ -20,7 +20,7 @@ You can download the last compiled release (as universal binary) from [this link
     - [Autolink](#autolink)
     - [Emoji](#emoji)
     - [GitHub mentions](#github-mentions)
-    - [Heads](#heads)
+    - [Heads anchors](#heads-anchors)
     - [Inline local images](#inline-local-images)
     - [Source code highlight](#source-code-highlight)
     - [Strikethrough](#strikethrough)
@@ -58,19 +58,19 @@ For maximum compatibility with the Markdown format, the [`cmark-gfm`](https://gi
 
 Compared to the standard `cmark-gfm` equipment, these extensions have been added:
 - `Emoji`: translate the emoji placeholders like ```:smile:```.
-- `Heads`: create anchors for the heads.
+- `Heads anchors`: create anchors for the heads.
 - `Source code`: highlight the code inside fenced block.
 - `Inline local images`: embed the image files inside the formatted output (required for the quicklook preview).
 
 ---
 
 The options follow those offered by the `cmark-gfm`:
-- `hard break` _(available on advanced options panel)_: Render `softbreak` elements as hard line breaks.
-- `no soft break` _(available on advanced options panel)_: Render `softbreak` elements as spaces.
-- `unsafe raw HTML` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types).  By default, HTML tags are stripped and unsafe links are replaced by empty strings.
-- `validate UTF` _(available on advanced options panel)_: Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD).
-- `smart quotes`: Convert straight quotes to curly, ```---``` to em dashes and ```--``` to en dashes.
-- `footnotes`: Parse the footnotes.
+- `Hard break` _(available on advanced options panel)_: Render `softbreak` elements as hard line breaks.
+- `No soft break` _(available on advanced options panel)_: Render `softbreak` elements as spaces.
+- `Unsafe raw HTML` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types).  By default, HTML tags are stripped and unsafe links are replaced by empty strings.
+- `Validate UTF` _(available on advanced options panel)_: Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD).
+- `Smart quotes`: Convert straight quotes to curly, ```---``` to em dashes and ```--``` to en dashes.
+- `Footnotes`: Parse the footnotes.
 
 ## Difference with the GitHub Markdown engine
 
@@ -101,7 +101,7 @@ A list of GitHub emoji placeholder is available [here](https://github.com/ikatya
 
 Available on advanced options panel. Translate mentions to link to the GitHub account.
 
-### Heads
+### Heads anchors
 
 Available on advanced options panel. Create anchors for the heads to use as cross internal reference. Each anchor is named with the title of the caption, lowercased, with spaces replaced with a dash char (`-`). UTF8 character encoding is supported.
  
