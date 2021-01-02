@@ -14,6 +14,7 @@
 #include <houdini.h>
 #include <scanners.h>
 
+/// Size of the emoji image.
 const char *emoji_image_size = "16";
 
 typedef struct {
@@ -96,12 +97,7 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
     int at = start + 1;
     int end = at;
 
-    if (start > 0 && !cmark_isspace(data[start-1])) {
-        return NULL;
-    }
-
-    while (end < size
-           && (!cmark_isspace(data[end]) && data[end] != ':')) {
+    while (end < size && (!cmark_isspace(data[end]) && data[end] != ':')) {
         end++;
     }
 
