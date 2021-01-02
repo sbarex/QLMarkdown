@@ -145,5 +145,24 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>sab, 2 gen 2021 18:26:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b13/QLMarkdown.zip" sparkle:version="13" sparkle:edSignature="ROJzhUf0rCAXRXgCTEYU7hDY7l03Qv2PgNfCN+rT6LoyxbcG/ZvUrFJPoohiAxS0PrqemLcq0L7REA86w3hDDQ==" length="12482212"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>QL preview handle TextBundle container.</li>
+<li>Inline image extension handle also image inserted with <image> tag on the markdown file.</li>
+<li>Better emoji handler.</li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>Fix error on image mime detection.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
