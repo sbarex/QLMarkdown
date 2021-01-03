@@ -14,9 +14,6 @@
 #include <houdini.h>
 #include <scanners.h>
 
-/// Size of the emoji image.
-const char *emoji_image_size = "16";
-
 typedef struct {
     bool use_images;
 } emoji_settings;
@@ -123,16 +120,13 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
                 node = cmark_node_new_with_mem(CMARK_NODE_TEXT, parser->mem);
                 
                 cmark_node_set_literal(node, emoji);
-                
-                // cmark_strbuf_sets(&node->content, emoji);
+                // cmark_node_set_syntax_extension(node, self);
                 free(emoji);
             } else {
                 goto exit_func;
             }
         } else {
             node = cmark_node_new_with_mem(CMARK_NODE_IMAGE, parser->mem);
-            
-            // cmark_strbuf_sets(&node->content, placeholder);
             
             cmark_node_set_url(node, url);
             cmark_node_set_title(node, placeholder);
@@ -170,22 +164,33 @@ void html_render(cmark_syntax_extension *extension,
             cmark_event_type ev_type,
             int options) {
     cmark_strbuf *html = renderer->html;
-    if (ev_type == CMARK_EVENT_ENTER) {
-        cmark_strbuf_puts(html, "<img src=\"");
-        if ((options & CMARK_OPT_UNSAFE) || !(scan_dangerous_url(&node->as.link.url, 0))) {
-            houdini_escape_href(html, node->as.link.url.data, node->as.link.url.len);
+    
+    bool use_characters = cmark_syntax_extension_emoji_get_use_characters(extension);
+    
+    if (use_characters) {
+        if (ev_type == CMARK_EVENT_ENTER) {
+            cmark_strbuf_puts(html, "<span class=\"emoji\">");
+            cmark_strbuf_puts(html, (const char *)node->as.literal.data);
+            renderer->plain = node;
+        } else {
+            cmark_strbuf_puts(html, "</span>");
         }
-        cmark_strbuf_puts(html, "\" width=\"");
-        cmark_strbuf_puts(html, emoji_image_size);
-        cmark_strbuf_puts(html, "\" class=\"emoji\" alt=\"");
-        renderer->plain = node;
     } else {
-        if (node->as.link.title.len) {
-            cmark_strbuf_puts(html, "\" title=\"");
-            houdini_escape_html0(html, node->as.link.title.data, node->as.link.title.len, 0);
-        }
+        if (ev_type == CMARK_EVENT_ENTER) {
+            cmark_strbuf_puts(html, "<img src=\"");
+            if ((options & CMARK_OPT_UNSAFE) || !(scan_dangerous_url(&node->as.link.url, 0))) {
+                houdini_escape_href(html, node->as.link.url.data, node->as.link.url.len);
+            }
+            cmark_strbuf_puts(html, "\" class=\"emoji\" alt=\"");
+            renderer->plain = node;
+        } else {
+            if (node->as.link.title.len) {
+                cmark_strbuf_puts(html, "\" title=\"");
+                houdini_escape_html0(html, node->as.link.title.data, node->as.link.title.len, 0);
+            }
 
-        cmark_strbuf_puts(html, "\" />");
+            cmark_strbuf_puts(html, "\" />");
+        }
     }
 }
 

@@ -26,7 +26,7 @@ If the extension `autolink` is enabled the url https://www.github.com is rendere
 
 Using the emoji extension you can replace the `:smile:` to :smile:. 
 
-You can choose to use the standard emoji font or the Github images.
+You can choose to use the standard emoji font or the GitHub images.
 Multibyte emoji are also supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:.
 
 ## GitHub mentions extension

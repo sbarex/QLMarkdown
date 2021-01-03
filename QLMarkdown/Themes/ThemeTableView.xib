@@ -76,10 +76,10 @@
                     </customSpacing>
                 </stackView>
                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="13" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tPS-RX-tli">
-                    <rect key="frame" x="20" y="125" width="794" height="77"/>
+                    <rect key="frame" x="20" y="153" width="794" height="49"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="FB7-mZ-emk">
-                            <rect key="frame" x="-2" y="31" width="74" height="16"/>
+                            <rect key="frame" x="-2" y="17" width="74" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Description" id="4f0-qH-Fn5">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -87,7 +87,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Yjt-aa-AKJ">
-                            <rect key="frame" x="83" y="28" width="711" height="21"/>
+                            <rect key="frame" x="83" y="14" width="711" height="21"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="rYM-Rv-Vga">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -105,16 +105,16 @@
                     </customSpacing>
                 </stackView>
                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="z4p-sq-cAh">
-                    <rect key="frame" x="0.0" y="114" width="834" height="5"/>
+                    <rect key="frame" x="0.0" y="142" width="834" height="5"/>
                 </box>
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ENC-Dy-j05">
-                    <rect key="frame" x="0.0" y="31" width="834" height="85"/>
+                    <rect key="frame" x="0.0" y="31" width="834" height="113"/>
                     <clipView key="contentView" id="Qff-rN-ejQ">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="85"/>
+                        <rect key="frame" x="0.0" y="0.0" width="834" height="113"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="medium" headerView="SVs-zS-bwY" viewBased="YES" id="85v-Ra-SaE">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="57"/>
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="85"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="17" height="0.0"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -431,8 +431,8 @@
                                                 <action selector="duplicateTheme:" target="-2" id="KTJ-EB-kbA"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Duplicate the theme" keyEquivalent="d" id="sbx-dc-V8b"/>
-                                        <menuItem title="Delete the theme…" id="tuF-4i-azw">
+                                        <menuItem title="Duplicate the schema" keyEquivalent="d" id="sbx-dc-V8b"/>
+                                        <menuItem title="Delete the schema…" id="tuF-4i-azw">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="mBV-dn-eDU"/>
@@ -446,7 +446,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="bwp-hA-gSG"/>
-                                        <menuItem title="Open the Application Support themes folder" id="Gny-Cx-9jN">
+                                        <menuItem title="Open the Application Support colors schema folder" id="Gny-Cx-9jN">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="revealApplicationSupportInFinder:" target="-2" id="4ao-iy-3qf"/>

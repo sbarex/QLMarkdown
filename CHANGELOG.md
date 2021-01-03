@@ -6,9 +6,11 @@ New features:
 - QL preview handle TextBundle container.
 - Inline image extension handle also image inserted with <image> tag on the markdown file.
 - Better emoji handler.
+- Some less used commands on the theme dropdown popup are available pressing the alt key.
 
 Bugfix:
 - Fix error on image mime detection.
+- UI fix.
 
 ### 1.0b12
 1.0b12
@@ -38,7 +40,7 @@ Bugfix:
 ### 1.0.b9
 New features:
 - Updated the default CSS style (thanks to [hazarek](https://github.com/hazarek)). 
-- For source highlight, option to choose the document style or a specific language style.
+- For Syntax highlighting, option to choose the document style or a specific language style.
 
 ### 1.0.b8
 Bugfix:
@@ -62,9 +64,9 @@ Bugfix:
 New Features:
 - better ui.
 Bug fix:
-- Fix for bug on theme icon with underline style.
+- Fix for bug on colors scheme icon with underline style.
 - Fix missing close menu item.
-- Fix bug with "base16" source code themes.
+- Fix bug with "base16" syntax highlighting colors scheme.
 
 ### 1.0.b5
 New features:
@@ -89,7 +91,7 @@ Bugfix:
 ### 1.0.b2
 New features:
 - Reimplemented in c/c++ previous code developed on the external golang library (emoji, base64 encoding).
-- Source code highlight extension now use [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) linked as a library, and with more customizable options.
+- Syntax Highlighting extension now use [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) linked as a library, and with more customizable options.
 - GUI updated to use the changed extensions.
 - Many others changes.
 

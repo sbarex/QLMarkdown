@@ -138,7 +138,7 @@
                 <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ibW-Tp-4jG">
                     <rect key="frame" x="0.0" y="0.0" width="260" height="30"/>
                     <subviews>
-                        <button toolTip="Create a new empty theme." verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="8hv-eo-HQn">
+                        <button toolTip="Create a new empty color scheme." verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="8hv-eo-HQn">
                             <rect key="frame" x="8" y="9.5" width="14.5" height="13"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="XxS-cd-Glp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -148,7 +148,7 @@
                                 <action selector="handleAddTheme:" target="-2" id="kc1-5W-ef3"/>
                             </connections>
                         </button>
-                        <button toolTip="Delete current customized theme." verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="wK6-To-dUR">
+                        <button toolTip="Delete current customized color scheme." verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="wK6-To-dUR">
                             <rect key="frame" x="37" y="14" width="14.5" height="4"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="CLw-q3-ndO">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -177,8 +177,8 @@
                                 <menu key="menu" id="P3i-NB-6OX">
                                     <items>
                                         <menuItem state="on" image="style_mixed15" toolTip="All styles." id="PZx-s6-5td"/>
-                                        <menuItem image="style_light15" toolTip="Only light themes." id="hPA-ap-Hki"/>
-                                        <menuItem image="style_dark15" toolTip="Only dark themes." id="qOo-aU-tob">
+                                        <menuItem image="style_light15" toolTip="Only light color schemes." id="hPA-ap-Hki"/>
+                                        <menuItem image="style_dark15" toolTip="Only dark color schemes." id="qOo-aU-tob">
                                             <attributedString key="attributedTitle"/>
                                         </menuItem>
                                     </items>

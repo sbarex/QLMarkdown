@@ -60,7 +60,7 @@ class ThemePreviewView: NSView {
         // Populate the example files list.
         examples = self.getAvailableExamples()
         examplesPopup.removeAllItems()
-        examplesPopup.addItem(withTitle: "Theme colors")
+        examplesPopup.addItem(withTitle: "Colors scheme")
         examplesPopup.menu?.addItem(NSMenuItem.separator())
         for file in examples {
             let m = NSMenuItem(title: file.title, action: nil, keyEquivalent: "")
@@ -139,9 +139,9 @@ class ThemePreviewView: NSView {
                 self.webView.loadHTMLString("error", baseURL: nil)
             }
         } else {
-            // Show standard theme preview.
-            let schema = theme.getHtmlExample()
-            webView.loadHTMLString(schema, baseURL: nil)
+            // Show standard colors scheme preview.
+            let scheme = theme.getHtmlExample()
+            webView.loadHTMLString(scheme, baseURL: nil)
         }
     }
 }

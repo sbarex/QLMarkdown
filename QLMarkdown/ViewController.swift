@@ -220,30 +220,44 @@ class ViewController: NSViewController {
     
     func initStylesPopup(resetStyles: Bool = false) {
         stylesPopup.removeAllItems()
-        stylesPopup.addItem(withTitle: "Default style")
+        stylesPopup.addItem(withTitle: "GitHub ( Default )")
+        stylesPopup.lastItem?.tag = -100
         stylesPopup.menu?.addItem(NSMenuItem.separator())
-        stylesPopup.addItem(withTitle: "Reveal in Finder")
-        stylesPopup.lastItem?.tag = -6
-        stylesPopup.addItem(withTitle: "Refresh")
-        stylesPopup.lastItem?.tag = -5
-        stylesPopup.addItem(withTitle: "Open application support styles folder")
+        
+        stylesPopup.addItem(withTitle: "Open Application support themes folder")
         stylesPopup.lastItem?.tag = -4
-        stylesPopup.addItem(withTitle: "Download Default style")
-        stylesPopup.lastItem?.tag = -3
+        
+        stylesPopup.addItem(withTitle: "Reveal CSS in Finder")
+        stylesPopup.lastItem?.tag = -6
+        stylesPopup.lastItem?.isAlternate = true
+        stylesPopup.lastItem?.keyEquivalentModifierMask = [.option]
+        
+        stylesPopup.addItem(withTitle: "Refresh themes list")
+        stylesPopup.lastItem?.tag = -5
+        
         stylesPopup.menu?.addItem(NSMenuItem.separator())
+        
         stylesPopup.addItem(withTitle: "Import…")
         stylesPopup.lastItem?.tag = -2
+        stylesPopup.lastItem?.toolTip = "Import a CSS file in the standard themes folder."
+        
         stylesPopup.addItem(withTitle: "Browse…")
         stylesPopup.lastItem?.tag = -1
-        
+        stylesPopup.lastItem?.isAlternate = true
+        stylesPopup.lastItem?.keyEquivalentModifierMask = [.option]
+        stylesPopup.lastItem?.toolTip = "Use a custom CSS file without importing in the standard themes folder."
+
         let settings = Settings.shared
-        for url in settings.getAvailableStyles(resetCache: resetStyles) {
+        let custom_styles = settings.getAvailableStyles(resetCache: resetStyles)
+        for url in custom_styles {
             addStyleSheet(url)
         }
-        stylesPopup.menu?.insertItem(NSMenuItem.separator(), at: stylesPopup.numberOfItems-7)
+        
+        // stylesPopup.menu?.insertItem(NSMenuItem.separator(), at: stylesPopup.numberOfItems-6)
     }
     
-    internal func addStyleSheet(_ file: URL) {
+    @discardableResult
+    internal func addStyleSheet(_ file: URL) -> Int {
         let name: String
         let standalone: Bool
         if let folder = Settings.stylesFolder?.path, file.path.hasPrefix(folder) {
@@ -253,16 +267,34 @@ class ViewController: NSViewController {
             name = file.path
             standalone = false
         }
-        stylesPopup.insertItem(withTitle: name, at: stylesPopup.numberOfItems - 7)
-        if standalone {
-            stylesPopup.menu?.item(at: stylesPopup.numberOfItems - 8)?.tag = 1
+        
+        var index = 1
+        while stylesPopup.item(at: index)?.tag ?? -1 >= 0 {
+            index += 1
         }
+        index -= 1
+        stylesPopup.insertItem(withTitle: name, at: index)
+        if standalone {
+            stylesPopup.menu?.item(at: index)?.tag = 1
+        }
+        
+        if index > 0 && !(stylesPopup.item(at: 1)?.isSeparatorItem ?? true) {
+            stylesPopup.menu?.insertItem(NSMenuItem.separator(), at: 1)
+            index += 1
+        }
+        if !(stylesPopup.item(at: index+1)?.isSeparatorItem ?? true) {
+            stylesPopup.menu?.insertItem(NSMenuItem.separator(), at: index+1)
+        }
+        return index
     }
     
     func updateCustomCSSPopup() {
         if let style = customCSSFile {
             let base = Settings.stylesFolder
             if let index = stylesPopup.itemArray.firstIndex(where: {
+                guard !$0.isSeparatorItem && $0.tag >= 0 else {
+                    return false
+                }
                 let file: String
                 if $0.tag == 1, let base = base {
                     file = base.appendingPathComponent($0.title).path
@@ -272,8 +304,8 @@ class ViewController: NSViewController {
                 return file == style.path }) {
                 self.stylesPopup.selectItem(at: index)
             } else {
-                addStyleSheet(style)
-                self.stylesPopup.selectItem(at: self.stylesPopup.numberOfItems - 3)
+                let i = addStyleSheet(style)
+                self.stylesPopup.selectItem(at: i)
             }
         } else {
             self.stylesPopup.selectItem(at: 0)
@@ -364,7 +396,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var saveButton: NSButton!
     @IBOutlet weak var inlineLinkPopup: NSPopUpButton!
     
-    @IBOutlet weak var styleSegementedControl: NSSegmentedControl!
+    @IBOutlet weak var appearanceButton: NSButton!
     
     private let log = {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-host")
@@ -404,8 +436,10 @@ class ViewController: NSViewController {
         customBackgroundColor = highlightBackground.indexOfSelectedItem == 2
     }
     
-    @IBAction func doStyleChange(_ sender: NSSegmentedControl) {
-        self.view.window?.appearance = NSAppearance(named: sender.selectedSegment == 1 ? NSAppearance.Name.darkAqua : NSAppearance.Name.aqua)
+    @IBAction func handleAppearanceChange(_ sender: NSButton) {
+        let dark = sender.state == .on
+        self.view.window?.appearance = NSAppearance(named: dark ? NSAppearance.Name.darkAqua : NSAppearance.Name.aqua)
+        sender.toolTip = dark ? "Switch to light appearance." :  "Switch to dark appearance."
         self.doRefresh(sender)
     }
     
@@ -516,7 +550,7 @@ class ViewController: NSViewController {
         let body: String
         let settings = self.updateSettings()
         do {
-            body = try settings.render(text: self.textView.string, forAppearance: self.styleSegementedControl.indexOfSelectedItem == 0 ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+            body = try settings.render(text: self.textView.string, forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
         } catch {
             body = "Error"
         }
@@ -599,7 +633,6 @@ document.addEventListener('scroll', function(e) {
                     try FileManager.default.removeItem(at: dst)
                 }
                 try FileManager.default.copyItem(at: src, to: dst)
-                self.initStylesPopup(resetStyles: true)
                 return dst
             } catch {
                 let alert = NSAlert()
@@ -628,34 +661,12 @@ document.addEventListener('scroll', function(e) {
         switch tag {
         case -1, /* Browse */ -2 /* Import */:
             if let url = importStyle(copyOnSharedFolder: tag == -2) {
+                self.initStylesPopup(resetStyles: true)
                 customCSSFile = url
+            } else {
+                updateCustomCSSPopup()
             }
-        case -3: // Download default style
-            updateCustomCSSPopup()
             
-            let savePanel = NSSavePanel()
-            savePanel.canCreateDirectories = true
-            savePanel.showsTagField = false
-            savePanel.allowedFileTypes = ["css"]
-            savePanel.isExtensionHidden = false
-            savePanel.nameFieldStringValue = "markdown.css"
-            savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
-            
-            let result = savePanel.runModal()
-            
-            guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let dst = savePanel.url, let src = Bundle.main.url(forResource: "markdown", withExtension: "css") else {
-                return
-            }
-            do {
-                let css = try String(contentsOf: src, encoding: .utf8)
-                try css.write(to: dst, atomically: true, encoding: .utf8)
-            } catch {
-                let alert = NSAlert()
-                alert.alertStyle = .critical
-                alert.messageText = "Unable to export the css style!"
-                alert.addButton(withTitle: "Cancel")
-                alert.runModal()
-            }
         case -4: // Open application support folder
             updateCustomCSSPopup()
             
@@ -663,28 +674,57 @@ document.addEventListener('scroll', function(e) {
         
         case -5: // Refresh list
             let css = self.customCSSFile
+            self.pauseAutoRefresh += 1
             self.customCSSFile = nil
             self.initStylesPopup(resetStyles: true)
             self.customCSSFile = css
+            self.pauseAutoRefresh -= 1
             
         case -6: // Reveal
             updateCustomCSSPopup()
             
-            self.revealCSSInFinder(self)
+            if customCSSFile == nil {
+                // Download default theme.
+                let savePanel = NSSavePanel()
+                savePanel.canCreateDirectories = true
+                savePanel.showsTagField = false
+                savePanel.allowedFileTypes = ["css"]
+                savePanel.isExtensionHidden = false
+                savePanel.nameFieldStringValue = "markdown.css"
+                savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
+                
+                let result = savePanel.runModal()
+                
+                guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let dst = savePanel.url, let src = Bundle.main.url(forResource: "markdown", withExtension: "css") else {
+                    return
+                }
+                do {
+                    let css = try String(contentsOf: src, encoding: .utf8)
+                    try css.write(to: dst, atomically: true, encoding: .utf8)
+                } catch {
+                    let alert = NSAlert()
+                    alert.alertStyle = .critical
+                    alert.messageText = "Unable to export the css style!"
+                    alert.addButton(withTitle: "Cancel")
+                    alert.runModal()
+                }
+            } else {
+                // Reveal current theme.
+                self.revealCSSInFinder(self)
+            }
+        case -100:
+            // Default theme.
+            customCSSFile = nil
             
         default:
-            if sender.indexOfSelectedItem == 0 {
-                customCSSFile = nil
-            } else {
-                if let item = sender.selectedItem {
-                    let url: URL
-                    if item.tag == 1, let base = Settings.stylesFolder {
-                        url = base.appendingPathComponent(item.title)
-                    } else {
-                        url = URL(fileURLWithPath: item.title)
-                    }
-                    customCSSFile = url
+            if let item = sender.selectedItem, item.tag >= 0 {
+                let url: URL
+                if item.tag == 1, let base = Settings.stylesFolder {
+                    url = base.appendingPathComponent(item.title)
+                } else {
+                    url = URL(fileURLWithPath: item.title)
                 }
+                customCSSFile = url
             }
             updateCustomCSSPopup()
         }
@@ -753,7 +793,8 @@ document.addEventListener('scroll', function(e) {
         
         let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
         
-        self.styleSegementedControl.setSelected(true, forSegment: type != "Light" ? 1 : 0)
+        self.appearanceButton.state = type != "Light" ? .on : .off
+        self.appearanceButton.toolTip = self.appearanceButton.state == .on ? "Switch to light appearance." : "Switch to dark appearance."
         self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         let contentController = self.webView.configuration.userContentController
         contentController.add(self, name: "scrollHandler")
@@ -844,7 +885,7 @@ document.addEventListener('scroll', function(e) {
     internal func updateThemes() {
         if syntaxThemeLight == nil && syntaxThemeDark == nil {
             sourceThemesPopup.itemArray.first?.image = nil
-            sourceThemesPopup.itemArray.first?.title = "Inherit from document style"
+            sourceThemesPopup.itemArray.first?.title = "Inherit from theme"
         } else {
             sourceThemesPopup.itemArray.first?.image = Theme.getCombinedImage2(light: syntaxThemeLight, dark: syntaxThemeDark, size: 100, space: 10)
             sourceThemesPopup.itemArray.first?.title = (syntaxThemeLight?.name ?? "") + " / " + (syntaxThemeDark?.name ?? "")
@@ -1069,6 +1110,18 @@ extension ViewController: WKNavigationDelegate {
         // self.webView.isHidden = false
         progressIndicator.stopAnimation(self)
     }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if !Settings.shared.openInlineLink, navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
+            let r = NSWorkspace.shared.open(url)
+            // print(r, url.absoluteString)
+            if r {
+                decisionHandler(.cancel)
+                return
+            }
+        }
+        decisionHandler(.allow)
+    }
 }
 
 extension ViewController: WKScriptMessageHandler {
@@ -1143,31 +1196,14 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 }
 
 
-enum CustomPopUpButtonMode {
-    case popup
-    case button
-}
-
-class CustomPopUpButton: NSPopUpButton {
-    var mode: CustomPopUpButtonMode = .popup {
-        didSet {
-            guard let c = self.cell as? NSPopUpButtonCell else {
-                return
-            }
-            c.arrowPosition = mode == .popup ? .arrowAtCenter : .noArrow
+extension ViewController: NSMenuDelegate {
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        
+        if let item = menu.item(withTag: -6) {
+            item.title = self.customCSSFile == nil ? "Download default CSS theme" : "Reveal CSS in Finder"
         }
-    }
-    
-    var actionButton: ((CustomPopUpButton) -> Void)?
-    
-    override func willOpenMenu(_ menu: NSMenu, with event: NSEvent) {
-        if mode == .popup {
-            super.willOpenMenu(menu, with: event)
-        } else {
-            // this grant the popup menu to not showup (or disappear so quickly)
-            menu.cancelTrackingWithoutAnimation()
-            actionButton?(self)
-        }
+        
+        print("menuNeedsUpdate")
     }
 }
 

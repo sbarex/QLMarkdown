@@ -24,6 +24,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         return .terminateNow
     }
     
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        if let folder = Settings.applicationSupportUrl {
+            if FileManager.default.fileExists(atPath: folder.appendingPathComponent("styles").path) {
+                // Migrate previous custom themes and color schemes.
+                if FileManager.default.fileExists(atPath: folder.appendingPathComponent("themes").path), let color_schemes_folder = Settings.themesFolder {
+                    try? FileManager.default.createDirectory(at: color_schemes_folder, withIntermediateDirectories: true, attributes: nil)
+                    
+                    let enumerator = FileManager.default.enumerator(atPath: folder.appendingPathComponent("themes").path)!
+                    while let file = enumerator.nextObject() as? String {
+                        let fullname = folder.appendingPathComponent("themes").appendingPathComponent(file)
+                        if fullname.pathExtension == "theme" {
+                            try? FileManager.default.moveItem(at: fullname, to: color_schemes_folder.appendingPathComponent(file))
+                        }
+                    }
+                }
+                
+                if let themes_folder = Settings.stylesFolder {
+                    try? FileManager.default.createDirectory(at: themes_folder, withIntermediateDirectories: true, attributes: nil)
+                    
+                    let enumerator = FileManager.default.enumerator(atPath: folder.appendingPathComponent("styles").path)!
+                    
+                    while let file = enumerator.nextObject() as? String {
+                        let fullname = folder.appendingPathComponent("styles").appendingPathComponent(file)
+                        if fullname.pathExtension == "css" {
+                            try? FileManager.default.moveItem(at: fullname, to: themes_folder.appendingPathComponent(file))
+                        }
+                    }
+                }
+                
+                try? FileManager.default.removeItem(at: folder.appendingPathComponent("styles"))
+            }
+        }
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         let hostBundle = Bundle.main

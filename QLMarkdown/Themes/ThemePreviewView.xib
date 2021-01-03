@@ -48,12 +48,12 @@
                     <subviews>
                         <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="7JE-Hc-tGd">
                             <rect key="frame" x="3" y="8" width="449" height="15"/>
-                            <popUpButtonCell key="cell" type="roundRect" title="Theme colors" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="xFj-XR-Ahh" id="uWd-QF-WL1">
+                            <popUpButtonCell key="cell" type="roundRect" title="Colors scheme" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="xFj-XR-Ahh" id="uWd-QF-WL1">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="cellTitle"/>
                                 <menu key="menu" id="za4-wm-0Fj">
                                     <items>
-                                        <menuItem title="Theme colors" state="on" id="xFj-XR-Ahh"/>
+                                        <menuItem title="Colors scheme" state="on" id="xFj-XR-Ahh"/>
                                     </items>
                                 </menu>
                             </popUpButtonCell>

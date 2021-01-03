@@ -1,7 +1,7 @@
 #  TODO
 
-- [ ] Investigate if export source code style as css var overriding the default style
-- [ ] Source highlight theme editor (custom themes)
+- [ ] Investigate if export syntax highlighting colors scheme style as CSS var overriding the default style
+- [ ] Syntax highlighting color scheme editor
 - [ ] Check code signature and app group access
 - [ ] Check inline images on network / mounted disk
 - [ ] Investigate font family override for fanced blocks

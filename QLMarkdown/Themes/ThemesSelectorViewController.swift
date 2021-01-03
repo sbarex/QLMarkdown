@@ -15,7 +15,7 @@ class ThemesSelectorViewController: NSViewController {
                 lighThemeLabel?.attributedStringValue = theme.getAttributedTitle()
             } else {
                 lighThemeButton?.image = nil
-                lighThemeLabel?.stringValue = "inherit from document style"
+                lighThemeLabel?.stringValue = "Inherit from theme"
             }
         }
     }
@@ -26,7 +26,7 @@ class ThemesSelectorViewController: NSViewController {
                 darkThemeLabel?.attributedStringValue = theme.getAttributedTitle()
             } else {
                 darkThemeButton?.image = nil
-                darkThemeLabel?.stringValue = "inherit from document style"
+                darkThemeLabel?.stringValue = "Inherit from theme"
             }
         }
     }

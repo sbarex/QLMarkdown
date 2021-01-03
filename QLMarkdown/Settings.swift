@@ -83,11 +83,11 @@ class Settings {
     }
     
     class var stylesFolder: URL? {
-        return Settings.applicationSupportUrl?.appendingPathComponent("styles")
+        return Settings.applicationSupportUrl?.appendingPathComponent("themes")
     }
     
     class var themesFolder: URL? {
-        return Settings.applicationSupportUrl?.appendingPathComponent("themes")
+        return Settings.applicationSupportUrl?.appendingPathComponent("syntax-highlight-color-schemes")
     }
     
     private init(noInitFromDefault: Bool = false) {
@@ -682,7 +682,7 @@ table.debug td {
         }
         html_debug += "</td></tr>\n"
         
-        html_debug += "<tr><td>source code highlight</td><td>"
+        html_debug += "<tr><td>syntax highlighting</td><td>"
         if self.syntaxHighlightExtension {
             html_debug += "on " + (cmark_find_syntax_extension("syntaxhighlight") == nil ? " (NOT AVAILABLE" : "")
             

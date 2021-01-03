@@ -272,7 +272,7 @@ class ThemesView: NSView {
  */
     }
     
-    /// Duplicate the current theme.
+    /// Duplicate the current color scheme.
     @IBAction func handleDuplicate(_ sender: Any) {
         guard let theme = self.theme else {
             return
