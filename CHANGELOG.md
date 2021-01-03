@@ -3,18 +3,17 @@
 
 ### 1.0b14
 New features:
-- QL preview handle TextBundle container.
-- Inline image extension handle also image inserted with <image> tag on the markdown file.
 - Better emoji handler.
-- Some less used commands on the theme dropdown popup are available pressing the alt key.
-
-Bugfix:
-- Fix error on image mime detection.
-- UI fix.
+- UI improvement. Some less used commands on the theme dropdown popup are available pressing the alt key.
 
 ### 1.0b13
 New features:
+- QL preview handle TextBundle container.
+- Inline image extension handle also image inserted with <image> tag on the markdown file.
 - Better emoji handler.
+
+Bugfix:
+- Fix error on image mime detection.
 
 ### 1.0b12
 1.0b12
