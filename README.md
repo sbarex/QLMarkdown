@@ -61,7 +61,7 @@ Compared to the `cmark-gfm`, these extensions have been added:
 Although GitHub has customized the [`cmark-gfm`](https://github.com/github/cmark-gfm) library, it does not use it directly in the rendering process of Markdown files (see [this repository](https://github.com/github/markup)).
 GitHub uses a number of libraries in Ruby for parsing and formatting source code that cannot easily be converted into a compiled library.
 
-The accurate engine for the language detection (used however only when the language is not specified) is a library derived from the [`linguistic`](https://github.com/github/linguist#syntax-highlighting) framework used by GitHub.
+The accurate engine for the language detection (used however only when the language is not specified) is a library derived from the [`Linguistic`](https://github.com/github/linguist#syntax-highlighting) framework used by GitHub.
 
 So, the main difference between this application and GitHub is in the choice of the theme and in the formatting of the source code.
 
@@ -115,12 +115,12 @@ _Available on advanced options panel._ Create anchors for the heads to use as cr
  
 #### Inline local images 
 
-_Available on advanced options panel._ Inject in the html code the local images as base64 data. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. 
+_Available on advanced options panel._ Inject in the HTML code the local images as base64 data. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. 
 
 For security reasons are handled only URLs without schema (e.g., `./image.jpg`, `image.jpg` or `assets/image.jpg`), or with the `file` schema (e.g.,  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. 
 With the `file://` schema you *always set the full path*. For images inside the same folder of the Markdown file do not use the  `file://` schema and also `./` is optional.
 
-The extension process both images defined in the Markdown syntax and also with html `<image>` tag if the raw html code options is enabled.
+The extension process both images defined in the Markdown syntax and also with HTML `<image>` tag if the raw HTML code options is enabled.
 
 #### Syntax Highlighting
 
@@ -144,7 +144,7 @@ Setting a custom font also change the font used in the code blocks enclosed by b
 When the code block does not specify the language, it is possible to activate a guessing function. Two engines are available:
 
 - Fast guess: it is based on the `magic` library;
-- Accurate guess: it is based on the [`Enry`](https://github.com/go-enry/go-enry) library, that is a golang porting of the ruby [`linguist`](https://github.com/github/linguist/) library used by GitHub.
+- Accurate guess: it is based on the [`Enry`](https://github.com/go-enry/go-enry) library, that is a Golang porting of the Ruby [`linguist`](https://github.com/github/linguist/) library used by GitHub.
 
 If no language is defined and the guessing fail (or is not enabled), the code is rendered as normal text.
 
@@ -158,7 +158,7 @@ Parse table as defined by the GitHub extension to the standard Markdown language
 
 #### Tag filter
 
-_Available on advanced options panel._ Strip potentially dangerous html tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include html code is enabled.
+_Available on advanced options panel._ Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.
 
 #### Task list
 
@@ -187,7 +187,7 @@ When you clone this repository, remember to fetch also the submodule with `git s
 
 ### Dependency
 
-The app uses an extra library `highlight wrapper`. This is a custom c++ shared library that expose the `highlight` functionality and the guess detection engines. All the code required by this library is included in the Xcode project, and is compiled as a universal library. 
+The app uses an extra library `highlight wrapper`. This is a custom C++ shared library that expose the `highlight` functionality and the guess detection engines. All the code required by this library is included in the Xcode project, and is compiled as a universal library. 
 
 The wrapper has statically linked the following libraries:
 - [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for syntax highlighting.
@@ -205,7 +205,7 @@ On Big Sur there is a bug in the Quick Look engine and WebKit that cause the imm
 
 ## Note about the developer
 
-I am not primarily an application developer, and I have no particular experience in programming in swift and much less in c/c++. There may be possible bugs in the code, be patient.
+I am not primarily an application developer, and I have no particular experience in programming in swift and much less in C/C++. There may be possible bugs in the code, be patient.
 Also, I am not a native English speaker :sweat_smile:. 
 
 Thanks to [hazarek](https://github.com/hazarek) for the app icon and the CSS style.
