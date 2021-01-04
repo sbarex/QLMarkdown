@@ -73,6 +73,11 @@
                                                 <action selector="openDocument:" target="Ady-hI-5gd" id="bsq-g5-4nm"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Export preview as HTML…" keyEquivalent="e" id="ZqH-Pa-y1s">
+                                            <connections>
+                                                <action selector="exportPreview:" target="Ady-hI-5gd" id="ThC-Ot-hlN"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="U4l-0Q-Iha"/>
                                         <menuItem title="Save settings" keyEquivalent="s" id="pxx-59-PXV">
                                             <connections>
@@ -1570,7 +1575,7 @@
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="504" height="386"/>
+                                                            <size key="minSize" width="484" height="386"/>
                                                             <size key="maxSize" width="679" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>

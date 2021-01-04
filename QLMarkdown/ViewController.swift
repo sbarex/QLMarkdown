@@ -500,6 +500,43 @@ class ViewController: NSViewController {
         self.markdown_file = src
     }
     
+    @IBAction func exportPreview(_ sender: Any) {
+        let savePanel = NSSavePanel()
+        savePanel.canCreateDirectories = true
+        savePanel.showsTagField = false
+        savePanel.allowedFileTypes = ["html"]
+        savePanel.isExtensionHidden = false
+        savePanel.nameFieldStringValue = "markdown.html"
+        savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
+        
+        let result = savePanel.runModal()
+        
+        guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let dst = savePanel.url else {
+            return
+        }
+        
+        let body: String
+        let settings = self.updateSettings()
+        do {
+            body = try settings.render(text: self.textView.string, forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+        } catch {
+            body = "Error"
+        }
+        
+        
+        let html = settings.getCompleteHTML(title: ".md", body: body)
+        do {
+            
+            try html.write(to: dst, atomically: true, encoding: .utf8)
+        } catch {
+            let alert = NSAlert()
+            alert.alertStyle = .critical
+            alert.messageText = "Unable to export the html preview!"
+            alert.addButton(withTitle: "Cancel")
+            alert.runModal()
+        }
+    }
+    
     @IBAction func saveDocument(_ sender: Any) {
         saveAction(sender)
     }
