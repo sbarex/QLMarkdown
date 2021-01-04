@@ -1875,9 +1875,21 @@ wchar_t *get_w_emoji(const char *placeholder) {
     // std::cout << sizeof(wchar_t) << ' ' << sizeof(long) << "\n";
     for (std::vector<std::string>::const_iterator i = seglist.begin(); i != seglist.end(); ++i) {
         std::string character = *i;
-        wchar_t glyph = std::stoi(character, nullptr, 16);
-        rune[j] = glyph;
-        j++;
+        try {
+            std::size_t pos = 0;
+            wchar_t glyph = std::stoi(character, &pos, 16);
+            if (pos < character.length()) {
+                std::cerr << character << " is not an hex number!\n";
+                free(rune);
+                return nullptr;
+            }
+            rune[j] = glyph;
+            j++;
+        } catch (std::invalid_argument) {
+            std::cerr << "Unable to parse stoi for character \"" << character << "\".\n";
+            free(rune);
+            return nullptr;
+        }
     }
     rune[j] = 0; // Null terminate.
     
@@ -1888,7 +1900,7 @@ wchar_t *get_w_emoji(const char *placeholder) {
 char *get_emoji(const char *placeholder) {
     wchar_t *rune = get_w_emoji(placeholder);
     if (!rune) {
-        return NULL;
+        return nullptr;
     }
     
     std::string current_locale = std::setlocale(LC_ALL, NULL);

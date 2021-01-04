@@ -101,7 +101,9 @@ _Available on advanced options panel._ Automatically translate URL to link and p
 
 Parse the emoji placeholder defined by [GitHub](https://api.github.com/emojis). You can render the emoji with an emoticons glyph or using the image provided by GitHub (internet connection required). 
 
-Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. Some multibyte sequence may not be supported by the system font, in this case it is recommended to set the substitution with GitHub images.
+Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. Some multibyte sequence may not be supported by the system font, in this case it is recommended to set the substitution with GitHub images. 
+
+Some emoji do not have an equivalent glyph on the standard font and will be replaced always with the relative image.
 
 A list of GitHub emoji placeholder is available [here](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#people--body).
 

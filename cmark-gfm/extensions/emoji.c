@@ -123,9 +123,11 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
                 // cmark_node_set_syntax_extension(node, self);
                 free(emoji);
             } else {
-                goto exit_func;
+                // Use image as fallback.
+                goto image_mode;
             }
         } else {
+        image_mode:
             node = cmark_node_new_with_mem(CMARK_NODE_IMAGE, parser->mem);
             
             cmark_node_set_url(node, url);
@@ -135,8 +137,6 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
         
         cmark_inline_parser_set_offset(inline_parser, start + (end - start) + 1);
     }
-    
-exit_func:
     
     free(url);
     parser->mem->free(placeholder);
@@ -165,9 +165,7 @@ void html_render(cmark_syntax_extension *extension,
             int options) {
     cmark_strbuf *html = renderer->html;
     
-    bool use_characters = cmark_syntax_extension_emoji_get_use_characters(extension);
-    
-    if (use_characters) {
+    if (node->type != CMARK_NODE_IMAGE) {
         if (ev_type == CMARK_EVENT_ENTER) {
             cmark_strbuf_puts(html, "<span class=\"emoji\">");
             cmark_strbuf_puts(html, (const char *)node->as.literal.data);
