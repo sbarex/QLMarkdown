@@ -122,7 +122,7 @@ pre.hl	{ background-color: var(--hl_Background);
 
 
 pre {
-  max-width: 902px;;
+  max-width: 902px;
 }
 * {
   box-sizing: border-box;
@@ -454,7 +454,7 @@ input[type="checkbox"] {
 }
 
 .markdown-body img.emoji {
-    max-width: 20px;
+    max-width: 18px;
 }
 
 .markdown-body span.frame {

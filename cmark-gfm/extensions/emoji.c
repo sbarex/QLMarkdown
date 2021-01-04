@@ -94,7 +94,7 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
     int at = start + 1;
     int end = at;
 
-    while (end < size && (!cmark_isspace(data[end]) && data[end] != ':')) {
+    while (end < size && data[end] != ':' && !cmark_isspace(data[end])) {
         end++;
     }
 
@@ -111,34 +111,35 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
     
     cmark_node *node = NULL;
 
-    char *url = get_emoji_url(placeholder);
-    if (url) {
-        bool use_characters = cmark_syntax_extension_emoji_get_use_characters(self);
-        if (use_characters) {
-            char *emoji = get_emoji(placeholder);
-            if (emoji) {
-                node = cmark_node_new_with_mem(CMARK_NODE_TEXT, parser->mem);
-                
-                cmark_node_set_literal(node, emoji);
-                // cmark_node_set_syntax_extension(node, self);
-                free(emoji);
-            } else {
-                // Use image as fallback.
-                goto image_mode;
-            }
+    const char *url;
+    bool use_characters = cmark_syntax_extension_emoji_get_use_characters(self);
+    
+    if (use_characters) {
+        const char *emoji = get_emoji_glyphs(placeholder);
+        if (emoji) {
+            node = cmark_node_new_with_mem(CMARK_NODE_TEXT, parser->mem);
+            
+            cmark_node_set_literal(node, emoji);
         } else {
-        image_mode:
+            // Use image as fallback.
+            goto process_as_image;
+        }
+    } else {
+    process_as_image:
+        url = get_emoji_url(placeholder);
+        if (url) {
             node = cmark_node_new_with_mem(CMARK_NODE_IMAGE, parser->mem);
             
             cmark_node_set_url(node, url);
             cmark_node_set_title(node, placeholder);
             cmark_node_set_syntax_extension(node, self);
         }
-        
+    }
+    
+    if (node != NULL) {
         cmark_inline_parser_set_offset(inline_parser, start + (end - start) + 1);
     }
     
-    free(url);
     parser->mem->free(placeholder);
     
     return node;
@@ -205,5 +206,10 @@ cmark_syntax_extension *create_emoji_extension(void) {
     // cmark_syntax_extension_set_postprocess_func(ext, postprocess);
     cmark_syntax_extension_set_match_inline_func(ext, match);
 
+    cmark_mem *mem = cmark_get_default_mem_allocator();
+    cmark_llist *special_chars = NULL;
+    special_chars = cmark_llist_append(mem, special_chars, (void *)':');
+        cmark_syntax_extension_set_special_inline_chars(ext, special_chars);
+    
     return ext;
 }
