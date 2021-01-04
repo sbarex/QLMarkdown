@@ -1073,7 +1073,7 @@
                                                                     <font key="font" metaFont="menu"/>
                                                                     <menu key="menu" id="0DD-rT-3vk">
                                                                         <items>
-                                                                            <menuItem title="View in quicklook window" id="yzH-Mt-sgy">
+                                                                            <menuItem title="View in Quick Look window" id="yzH-Mt-sgy">
                                                                                 <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
                                                                             </menuItem>
                                                                             <menuItem title="Open on default browser" state="on" id="rt9-6q-gO1"/>
@@ -1454,7 +1454,7 @@
                                                                 </columns>
                                                                 <gridCells>
                                                                     <gridCell row="aVe-9R-eKB" column="jYm-ty-U7O" id="YMx-Sz-JJQ">
-                                                                        <button key="contentView" toolTip="Handle url and email addresses as link." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MIB-mW-C6G">
+                                                                        <button key="contentView" toolTip="Handle URL and email addresses as link." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MIB-mW-C6G">
                                                                             <rect key="frame" x="-2" y="119" width="137" height="18"/>
                                                                             <buttonCell key="cell" type="check" title="Autolink" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ugc-L6-bGe">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1490,7 +1490,7 @@
                                                                         </button>
                                                                     </gridCell>
                                                                     <gridCell row="Xbk-bN-l6d" column="jYm-ty-U7O" id="Hzj-YF-YtA">
-                                                                        <button key="contentView" toolTip="Embed local images as base64 data for the Quicklook preview." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w9X-nc-ti0">
+                                                                        <button key="contentView" toolTip="Embed local images as base64 data for the Quick Look preview." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w9X-nc-ti0">
                                                                             <rect key="frame" x="-2" y="47" width="137" height="18"/>
                                                                             <buttonCell key="cell" type="check" title="Inline local images" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VSj-gs-vQa">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>

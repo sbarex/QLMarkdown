@@ -1,15 +1,15 @@
 # TOC
 
 - [Extensions](#extensions)
-    - [Autolink](#autolink-extension)
-    - [Emoji](#emoji-extension)
-    - [GitHub mentions](#github-mentions-extension)
-    - [Heads](#heads-extension)
-    - [Inline images](#inline-images-extension)
-    - [Table](#table-extension)
-    - [Strikethrough](#strikethrough-extension)
-    - [Source Syntax Highlight](#source-syntax-highlight-extension)
-    - [Task list](#task-list-extension)
+  - [Autolink extension](#autolink-extension)
+  - [Emoji extension](#emoji-extension)
+  - [GitHub mentions extension](#github-mentions-extension)
+  - [Heads extension](#heads-extension)
+  - [Inline images extension](#inline-images-extension)
+  - [Table extension](#table-extension)
+  - [Strikethrough extension](#strikethrough-extension)
+  - [Source Syntax Highlight extension](#source-syntax-highlight-extension)
+  - [Task list extension](#task-list-extension)
 - [Options](#options)
 
 (The links on the TOC works only if the `heads` extension enabled).
@@ -42,7 +42,7 @@ If enabled the links inside the [TOC](#toc) section works.
 
 ## Inline images extension
 
-The extension embed the local image inside the html output. Is required for the quicklook preview.
+The extension embed the local image inside the HTML output. Is required for the Quick Look preview.
 
 
 image url: `example.jpg`
