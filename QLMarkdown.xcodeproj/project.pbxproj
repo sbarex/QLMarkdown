@@ -116,7 +116,7 @@
 		83598EF625818BCB004664D3 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
 		83598EFC25820A72004664D3 /* test2.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EFA258209C7004664D3 /* test2.md */; };
 		83598EFD25820A72004664D3 /* test1.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EF92582098A004664D3 /* test1.md */; };
-		83598F24258263C0004664D3 /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* markdown.css */; };
+		83598F24258263C0004664D3 /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
 		836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
@@ -368,7 +368,7 @@
 		83598EF525818BCB004664D3 /* syntaxhighlight.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = syntaxhighlight.c; sourceTree = "<group>"; };
 		83598EF92582098A004664D3 /* test1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test1.md; sourceTree = "<group>"; };
 		83598EFA258209C7004664D3 /* test2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test2.md; sourceTree = "<group>"; };
-		83598F22258263C0004664D3 /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
+		83598F22258263C0004664D3 /* default.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = default.css; sourceTree = "<group>"; };
 		836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
 		836B720A259E226F00A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		836B7474259E2B4000A6A5F7 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -694,7 +694,7 @@
 		837F29172597A01F00A5F7DE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				83598F22258263C0004664D3 /* markdown.css */,
+				83598F22258263C0004664D3 /* default.css */,
 				831364F425A0EB34001A6C08 /* inlineimages.js */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 			);
@@ -864,7 +864,7 @@
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */,
 				8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */,
-				83598F24258263C0004664D3 /* markdown.css in Resources */,
+				83598F24258263C0004664D3 /* default.css in Resources */,
 				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
 				834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */,
 				834CAB8A259167D100673002 /* examples in Resources */,

@@ -489,7 +489,7 @@ class ViewController: NSViewController {
         panel.canCreateDirectories = false
         panel.allowsMultipleSelection = false
         panel.allowedFileTypes = ["md"]
-        panel.message = "Select a markdown file to preview"
+        panel.message = "Select a Markdown file to preview"
         
         let result = panel.runModal()
         
@@ -531,7 +531,7 @@ class ViewController: NSViewController {
         } catch {
             let alert = NSAlert()
             alert.alertStyle = .critical
-            alert.messageText = "Unable to export the html preview!"
+            alert.messageText = "Unable to export the HTML preview!"
             alert.addButton(withTitle: "Cancel")
             alert.runModal()
         }
@@ -727,12 +727,12 @@ document.addEventListener('scroll', function(e) {
                 savePanel.showsTagField = false
                 savePanel.allowedFileTypes = ["css"]
                 savePanel.isExtensionHidden = false
-                savePanel.nameFieldStringValue = "markdown.css"
+                savePanel.nameFieldStringValue = "default.css"
                 savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
                 
                 let result = savePanel.runModal()
                 
-                guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let dst = savePanel.url, let src = Bundle.main.url(forResource: "markdown", withExtension: "css") else {
+                guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let dst = savePanel.url, let src = Bundle.main.url(forResource: "default", withExtension: "css") else {
                     return
                 }
                 do {

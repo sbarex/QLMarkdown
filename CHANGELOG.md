@@ -3,10 +3,10 @@
 
 ### 1.0b15
 New features:
-- Option to export the generated preview to an html file in the main application.
+- Option to export the generated preview to an HTML file in the main application.
 
 Bugfix:
-- fix emoji parser.
+- Fix emoji parser.
 
 ### 1.0b14
 New features:

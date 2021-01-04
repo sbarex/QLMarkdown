@@ -775,13 +775,13 @@ table.debug td {
         if let css = self.getCustomCSSCode() {
             css_doc_extended = formatCSS(css)
             if !self.customCSSOverride {
-                css_doc = formatCSS(getBundleContents(forResource: "markdown", ofType: "css"))
+                css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
             } else {
                 css_doc = ""
             }
         } else {
             css_doc_extended = ""
-            css_doc = formatCSS(getBundleContents(forResource: "markdown", ofType: "css"))
+            css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
         }
         // css_doc = "<style type=\"text/css\">\n\(css_doc)\n</style>\n"
             
