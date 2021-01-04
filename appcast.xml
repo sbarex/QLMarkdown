@@ -178,5 +178,22 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>dom, 3 gen 2021 17:08:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b15/QLMarkdown.zip" sparkle:version="15" sparkle:edSignature="bfu8114v/kZ7cF7siPDZpuEQrVMMNq+dcs40ZLzlhfL63DWOV4zUy1aN+gH3+jd2VL6Hv9BbA24CkIc0qAVFBA==" length="12106518"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Option to export the generated preview to an HTML file in the main application.</li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>Fix emoji parser.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
