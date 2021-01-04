@@ -47,14 +47,14 @@ New features:
 
 ### 1.0.b8
 Bugfix:
-- Fixed standard cmark tasklist extension not inserting class style in html output.
+- Fixed standard cmark tasklist extension not inserting class style in HTML output.
 
 ### 1.0.b7
 New features:
 - `Heads extension` to auto create anchor for the heads.
 - Redesigned UI. 
 - Auto refresh menu to automatically update the preview when an option is changed (the auto refresh do not apply when you change the example text). 
-- The quicklook extension detects the settings changed on the host application. Remember that macOS can store the quicklook preview in a cache, so to see the new settings applied try to open the preview of a different file.
+- The Quick Look extension detects the settings changed on the host application. Remember that macOS can store the Quick Look preview in a cache, so to see the new settings applied try to open the preview of a different file.
 - On the host application you can open a .md file to view in the preview (you can also drag & drop the over the text editor).
 - Import CSS inside the support folder.
 
@@ -73,13 +73,13 @@ Bug fix:
 
 ### 1.0.b5
 New features:
-- Experimental option to choose to open links inside the quicklook preview window or in the default browser (but on Big Sur do not works).
+- Experimental option to choose to open links inside the Quick Look preview window or in the default browser (but on Big Sur do not works).
 Bugfix:
 - Fix missing sparkle framework.
 
 ### 1.0.b4
 New features:
-- Auto update with Sparkle framework. Auto updated works only when run the main application and not from the quicklook extension. You must have launched the application at least twice for the update checks to begin, or you can use the appropriate item in the application menu.
+- Auto update with Sparkle framework. Auto updated works only when run the main application and not from the Quick Look extension. You must have launched the application at least twice for the update checks to begin, or you can use the appropriate item in the application menu.
 - Save button enabled only when there are some changed settings. in case of error a warning panel will be shown.
 - Debug options.
 
@@ -93,7 +93,7 @@ Bugfix:
 
 ### 1.0.b2
 New features:
-- Reimplemented in c/c++ previous code developed on the external golang library (emoji, base64 encoding).
+- Reimplemented in C/C++ previous code developed on the external Go library (emoji, base64 encoding).
 - Syntax Highlighting extension now use [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) linked as a library, and with more customizable options.
 - GUI updated to use the changed extensions.
 - Many others changes.

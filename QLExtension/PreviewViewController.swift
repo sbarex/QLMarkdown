@@ -17,7 +17,7 @@ class MyWKWebView: WKWebView {
     }
     
     override func becomeFirstResponder() -> Bool {
-        // Quicklook window do not allow first responder child.
+        // Quick Look window do not allow first responder child.
         return false
     }
 }
@@ -29,7 +29,7 @@ class MyWebView: WebView {
     }
     
     override func becomeFirstResponder() -> Bool {
-        // Quicklook window do not allow first responder child.
+        // Quick Look window do not allow first responder child.
         return false
     }
 }
@@ -259,7 +259,7 @@ extension PreviewViewController: WKScriptMessageHandler {
 extension PreviewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let handler = self.handler {
-            // Show the quicklook preview only after the complete rendering (preventing a flickering glitch).
+            // Show the Quick Look preview only after the complete rendering (preventing a flickering glitch).
             
             handler(nil)
             self.handler = nil
