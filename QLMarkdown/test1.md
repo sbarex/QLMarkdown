@@ -42,7 +42,7 @@ If enabled the links inside the [TOC](#toc) section works.
 
 ## Inline images extension
 
-The extension embed the local image inside the html output. Is required for the quicklook preview.
+The extension embed the local image inside the html output. Is required for the Quick Look preview.
 
 
 image url: `example.jpg`
