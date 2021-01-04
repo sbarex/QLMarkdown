@@ -205,7 +205,7 @@ On Big Sur there is a bug in the Quick Look engine and WebKit that cause the imm
 
 ## Note about the developer
 
-I am not primarily an application developer, and I have no particular experience in programming in swift and much less in C/C++. There may be possible bugs in the code, be patient.
+I am not primarily an application developer, and I have no particular experience in programming in Swift and much less in C/C++. There may be possible bugs in the code, be patient.
 Also, I am not a native English speaker :sweat_smile:. 
 
 Thanks to [hazarek](https://github.com/hazarek) for the app icon and the CSS style.
