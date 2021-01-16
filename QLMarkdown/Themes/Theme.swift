@@ -87,7 +87,7 @@ import Cocoa
     }
     
     class PropertyStyle {
-        enum Name: String {
+        enum Attribute: String {
             case italic = "italic"
             case bold = "bold"
             case underline = "underline"
@@ -117,7 +117,7 @@ import Cocoa
             self.init(color: color, italic: italic, bold: bold, underline: underline)
         }
         
-        func getCSSStyle(withColor: Bool = true) -> String {
+        func getCSSStyle() -> String {
             var style = ""
             if let italic = self.italic {
                 style += "font-style: \(italic ? "italic" : "normal"); "
@@ -128,14 +128,14 @@ import Cocoa
             if let underline = self.underline {
                 style += "text-decoration: \(underline ? "underline" : "none"); "
             }
-            if withColor, let color = self.color {
+            if let color = self.color {
                 style += "color: \(color); "
             }
             
             return style
         }
         
-        subscript(name: Name)->AnyHashable? {
+        subscript(name: Attribute)->AnyHashable? {
             get {
                 switch name {
                 case .bold:
@@ -323,19 +323,17 @@ import Cocoa
         self.keywords = []
     }
     
-    func getHtmlExample() -> String {
+    
+    func getCSSStyle() -> String {
         let formatPropertyCss = { (name: PropertyName, property: PropertyStyle) -> String in
-            var css = "." + name.cssClass.joined(separator: ".") + " {"
+            var css = "." + name.cssClass.joined(separator: ".") + " {\n"
             if name == .canvas {
-                css += "background-color: \(property.color ?? "#ffffff");"
+                css += "    background-color: \(property.color ?? "#ffffff");\n"
             } else {
                 css += property.getCSSStyle()
             }
             css += "}\n"
             return css
-        }
-        let formatProperty = { (name: PropertyName, property: PropertyStyle) -> String in
-            return "<div class='\(name.cssClass.joined(separator: " "))'>\(name.name)</div>\n"
         }
         
         var css = ""
@@ -362,6 +360,16 @@ import Cocoa
         for (i, keyword) in self.keywords.enumerated() {
             css += formatPropertyCss(.keyword(index: i), keyword)
         }
+        
+        return css
+    }
+    
+    func getHtmlExample() -> String {
+        let formatProperty = { (name: PropertyName, property: PropertyStyle) -> String in
+            return "<div class='\(name.cssClass.joined(separator: " "))'>\(name.name)</div>\n"
+        }
+        
+        let css = self.getCSSStyle()
         
         var s = """
 <html>

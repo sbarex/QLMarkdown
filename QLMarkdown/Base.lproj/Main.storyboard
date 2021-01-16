@@ -2069,7 +2069,7 @@ Gw
         <scene sceneID="WNd-O7-Vdp">
             <objects>
                 <windowController showSeguePresentationStyle="single" id="VZF-nt-1dI" customClass="AboutWindowController" customModule="QLMarkdown" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="07D-zf-Sfn">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="07D-zf-Sfn">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <rect key="contentRect" x="196" y="239" width="291" height="176"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
@@ -2087,7 +2087,7 @@ Gw
                 </windowController>
                 <customObject id="kjp-9V-P2O" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="618.5" y="705"/>
+            <point key="canvasLocation" x="730" y="704"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="VRI-xW-cZ4">
@@ -2184,7 +2184,7 @@ Gw
                 </viewController>
                 <customObject id="bdx-fe-T4t" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1150.5" y="726.5"/>
+            <point key="canvasLocation" x="1150" y="698"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="DFL-JM-PTQ">

@@ -176,7 +176,12 @@ class ThemeTableView: NSView {
             return
         }
         do {
-            try theme.write(toFile: url.path)
+            if url.pathExtension == "css" {
+                let css = theme.getCSSStyle()
+                try css.write(toFile: url.path, atomically: true, encoding: .utf8)
+            } else {
+                try theme.write(toFile: url.path)
+            }
         } catch {
             let alert = NSAlert()
             alert.alertStyle = .critical

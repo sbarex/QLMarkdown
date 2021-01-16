@@ -134,7 +134,6 @@
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
-		83F1FE4C259CEE7400257DAC /* external-launcher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83F1FE53259CEEC900257DAC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE52259CEEC900257DAC /* main.swift */; };
 		83F1FE57259CEF0100257DAC /* external_launcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE56259CEF0100257DAC /* external_launcherProtocol.swift */; };
 		83F1FE5B259CEF4300257DAC /* external_launcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE5A259CEF4300257DAC /* external_launcher.swift */; };
@@ -176,13 +175,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 836B3007259E222600A6A5F7;
 			remoteInfo = "highlight-wrapper";
-		};
-		83F1FE4A259CEE7400257DAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83598E5925818808004664D3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 83F1FE40259CEE7400257DAC;
-			remoteInfo = "external-launcher";
 		};
 		83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -233,7 +225,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				83F1FE4C259CEE7400257DAC /* external-launcher.xpc in Embed XPC Services */,
 				83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
 				83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
 				83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
@@ -529,19 +520,19 @@
 				83598E6D2581880A004664D3 /* Info.plist */,
 				83598E6E2581880A004664D3 /* QLMarkdown.entitlements */,
 				83598E7925818839004664D3 /* QLMarkdown-Bridging-Header.h */,
-				8357EB762587DBDE002C2C45 /* Themes */,
 				83598E6425818808004664D3 /* AppDelegate.swift */,
 				83598E6625818808004664D3 /* ViewController.swift */,
 				83598E6A2581880A004664D3 /* Main.storyboard */,
-				836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */,
 				83598E682581880A004664D3 /* Assets.xcassets */,
-				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
-				8357EB7E2588262C002C2C45 /* String+ext.swift */,
+				8357EB762587DBDE002C2C45 /* Themes */,
+				836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */,
 				83598EF92582098A004664D3 /* test1.md */,
 				83598EFA258209C7004664D3 /* test2.md */,
 				837D20D5258362A5008FC698 /* example.jpg */,
 				83F4B99125868A7400FC58A7 /* Settings.swift */,
 				83327D452595E15700E76CF6 /* Settings+ext.swift */,
+				8357EB7E2588262C002C2C45 /* String+ext.swift */,
+				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
 				834CAB89259167B800673002 /* examples */,
 			);
 			path = QLMarkdown;
@@ -767,7 +758,6 @@
 			dependencies = (
 				836B7472259E23DB00A6A5F7 /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
-				83F1FE4B259CEE7400257DAC /* PBXTargetDependency */,
 			);
 			name = QLMarkdown;
 			productName = QLMarkdown;
@@ -1035,11 +1025,6 @@
 			name = "highlight-wrapper";
 			targetProxy = 836B7478259E2BA400A6A5F7 /* PBXContainerItemProxy */;
 		};
-		83F1FE4B259CEE7400257DAC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 83F1FE40259CEE7400257DAC /* external-launcher */;
-			targetProxy = 83F1FE4A259CEE7400257DAC /* PBXContainerItemProxy */;
-		};
 		83F1FE6D259CF02900257DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 83F1FE40259CEE7400257DAC /* external-launcher */;
@@ -1074,7 +1059,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1110,7 +1095,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1265,7 +1250,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1310,7 +1295,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (

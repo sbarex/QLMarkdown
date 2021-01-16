@@ -337,7 +337,6 @@ class ViewController: NSViewController {
         didSet {
             if oldValue != isDirty {
                 self.view.window?.isDocumentEdited = isDirty
-                saveButton?.isEnabled = isDirty
             }
             if isDirty && autoRefresh && isLoaded && pauseAutoRefresh == 0 {
                 self.refresh(self)
@@ -360,14 +359,12 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var tabView: NSTabView!
     @IBOutlet weak var tabViewLeftConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tabViewBottomConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var stylesPopup: NSPopUpButton!
     
     @IBOutlet weak var styleExtendPopup: NSPopUpButton!
-    @IBOutlet weak var styleRevealMenu: NSMenuItem!
     
     @IBOutlet weak var highlightBackground: NSPopUpButton!
     @IBOutlet weak var sourceBackgroundLabel: NSTextField!
@@ -389,11 +386,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var strikethroughPopupButton: NSPopUpButton!
     @IBOutlet weak var emojiPopupButton: NSPopUpButton!
     @IBOutlet weak var unsafeButton: NSButton!
-    @IBOutlet weak var versionLabel: NSTextField!
     @IBOutlet weak var advancedButton: NSButton!
     
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
-    @IBOutlet weak var saveButton: NSButton!
     @IBOutlet weak var inlineLinkPopup: NSPopUpButton!
     
     @IBOutlet weak var appearanceButton: NSButton!
@@ -789,7 +784,6 @@ document.addEventListener('scroll', function(e) {
         tabView.tabViewType = isAdvancedSettingsHidden ? .noTabsNoBorder : .topTabsBezelBorder
         tabView.selectTabViewItem(at: isAdvancedSettingsHidden ? 0 : 1)
         tabViewLeftConstraint.constant = isAdvancedSettingsHidden ? 0 : 20
-        tabViewBottomConstraint?.constant = isAdvancedSettingsHidden ? 0 : 20
         
         advancedButton.title = isAdvancedSettingsHidden ? "Show advanced options" : "Show only basic options"
     }

@@ -34,7 +34,7 @@
                         <menu key="menu" id="5D6-pF-Hwe">
                             <items>
                                 <menuItem title="Highlight theme" state="on" id="yPr-jP-u5s"/>
-                                <menuItem title="CSS" id="Lmi-6w-SwN"/>
+                                <menuItem title="CSS Style" id="Lmi-6w-SwN"/>
                             </items>
                         </menu>
                     </popUpButtonCell>

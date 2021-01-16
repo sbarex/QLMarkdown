@@ -1,6 +1,12 @@
 # Changelog
 =======
 
+### 1.0b16
+Bugfix:
+- Fix on heads extension.
+- Fix on emoji extension.
+- Fix for exporting a source color scheme as a CSS style.
+
 ### 1.0b15
 New features:
 - Option to export the generated preview to an HTML file in the main application.
