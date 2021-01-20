@@ -1031,3 +1031,32 @@ char *enry_guess_language(const char *buffer) {
     language = guessWithEnry(content);
     return language;
 }
+
+char *magic_get_mime_by_file(const char *filename, const char *magic_database) {
+    magic_t cookie = magic_open(MAGIC_MIME_TYPE);
+    if (cookie == nullptr) {
+        os_log_error(sLog, "libmagic: %{public}s", magic_error(cookie));
+        return nullptr;
+    }
+
+    const char *magic = nullptr;
+    string mime = "";
+
+    if (magic_load(cookie, magic_database) != 0) {
+        os_log_error(sLog, "libmagic: %{public}s", magic_error(cookie));
+        goto exit_func;
+    }
+
+    magic = magic_file(cookie, filename);
+    if (magic == nullptr) {
+        os_log_error(sLog, "libmagic: %{public}s", magic_error(cookie));
+        goto exit_func;
+    } else {
+        mime = magic;
+    }
+
+    exit_func:
+    magic_close(cookie);
+
+    return mime != "" ? strdup(mime.c_str()) : nullptr;
+}

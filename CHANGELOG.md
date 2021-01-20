@@ -1,6 +1,10 @@
 # Changelog
 =======
 
+### 1.0b17
+Bugfix:
+- Better mime recognition for inline images.
+
 ### 1.0b16
 Bugfix:
 - Fix on heads extension.

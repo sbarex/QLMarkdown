@@ -219,7 +219,16 @@ extension PreviewViewController: WKScriptMessageHandler {
             return
         }
 
-        guard let data = get_base64_image(src.cString(using: .utf8)) else {
+        guard let data = get_base64_image(
+            src.cString(using: .utf8),
+            { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
+                let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
+                
+                let r = magic_get_mime_by_file(path, magic_file)
+                return r
+            },
+            nil
+        ) else {
             return
         }
         defer {

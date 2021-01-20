@@ -93,7 +93,7 @@ static const char *mime_from_magic(FILE *fd) {
         return NULL;
     }
     ret = mime_search(mimes0,LEN(mimes0), buf);
-    if (ret) {
+    if (ret && strlen(ret) > 0) {
         return ret;
     }
     ret = mime_search(mimes4, LEN(mimes4), buf+4);

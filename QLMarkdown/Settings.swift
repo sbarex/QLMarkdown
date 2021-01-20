@@ -467,6 +467,12 @@ class Settings {
         if self.inlineImageExtension, let ext = cmark_find_syntax_extension("inlineimage") {
             cmark_parser_attach_syntax_extension(parser, ext)
             cmark_syntax_extension_inlineimage_set_wd(ext, baseDir.cString(using: .utf8))
+            cmark_syntax_extension_inlineimage_set_mime_callback(ext, { (path, context) in
+                let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
+                let r = magic_get_mime_by_file(path, magic_file)
+                return r
+            }, nil)
+            
             if let l = log {
                 os_log(
                     "Enabled markdown `local inline image` extension with working path set to `%{public}s.",

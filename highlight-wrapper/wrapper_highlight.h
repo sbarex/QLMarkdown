@@ -269,6 +269,14 @@ EXPORT char *magic_guess_language(const char *buffer, const char *magic_database
  */
 EXPORT char *enry_guess_language(const char *buffer);
 
+/**
+ * Get a mime type of a file.
+ * @param filename Path of the file to get the mime.
+ * @param magic_database Location of the magic mgc database definition. Pass NULL to use the system file.
+ * @return The detected mime or NULL. **The user must free the result.**
+ */
+EXPORT char *magic_get_mime_by_file(const char *filename, const char *magic_database);
+
 #ifdef __cplusplus
 }
 #endif

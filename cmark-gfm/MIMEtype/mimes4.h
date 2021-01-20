@@ -6,10 +6,10 @@
 
 static const char *mimes4[] = {
 	"\x0D" "\x0AVersion:Vivo",             VIDEO "vivo",
-	"\x07" "#VRML V",                      MODEL "vrml",
-	"\x1C" "-BEGIN PGP PUBLIC KEY BLOCK-", APPLICATION "pgp-keys",
-	"\x04" "XPR3",                         APPLICATION "x-quark-xpress-3",
-	"\x04" "XPRa",                         APPLICATION "x-quark-xpress-3",
+	// "\x07" "#VRML V",                      MODEL "vrml",
+	// "\x1C" "-BEGIN PGP PUBLIC KEY BLOCK-", APPLICATION "pgp-keys",
+	// "\x04" "XPR3",                         APPLICATION "x-quark-xpress-3",
+	// "\x04" "XPRa",                         APPLICATION "x-quark-xpress-3",
 	"\x04" "free",                         VIDEO "quicktime",
 	"\x07" "ftyp3g2",                      VIDEO "3gpp2",
 	"\x07" "ftyp3ge",                      VIDEO "3gpp",
@@ -34,7 +34,7 @@ static const char *mimes4[] = {
 	"\x04" "idsc",                         VIDEO "quicktime",
 	"\x02" "jP",                           IMAGE "jp2",
 	"\x04" "mdat",                         VIDEO "quicktime",
-	"\x04" "pckg",                         APPLICATION "x-quicktime-player",
+	// "\x04" "pckg",                         APPLICATION "x-quicktime-player",
 	"\x04" "skip",                         VIDEO "quicktime",
 	"\x04" "wide",                         VIDEO "quicktime",
 };

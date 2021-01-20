@@ -733,7 +733,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1011" height="700"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <tabView translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
+                            <tabView initialItem="XgS-T3-Gpv" translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
                                 <rect key="frame" x="13" y="592" width="985" height="114"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>

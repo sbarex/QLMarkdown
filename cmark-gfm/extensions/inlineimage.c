@@ -32,8 +32,8 @@ static int mod_table[] = {0, 2, 1};
 
 char *base64_encode(const char *data,
                     size_t input_length,
-                    size_t *output_length) {
-
+                    size_t *output_length)
+{
     *output_length = 4 * ((input_length + 2) / 3);
 
     char *encoded_data = calloc(1, *output_length);
@@ -63,12 +63,16 @@ char *base64_encode(const char *data,
 
 typedef struct {
     char *path;
+    MimeCheck *magic_callback;
+    void *magic_context;
 } inlineimage_settings;
 
 static inlineimage_settings *init_settings() {
     cmark_mem *mem = cmark_get_default_mem_allocator();
     inlineimage_settings *settings = mem->calloc(1, sizeof(inlineimage_settings));
     settings->path = NULL;
+    settings->magic_callback = NULL;
+    settings->magic_context = NULL;
     return settings;
 }
 
@@ -81,6 +85,8 @@ static void release_settings(cmark_mem *mem, void *user_data)
             mem->free(settings->path);
             settings->path = NULL;
         }
+        settings->magic_callback = NULL;
+        settings->magic_context = NULL;
         mem->free(user_data);
     }
 }
@@ -96,7 +102,7 @@ static bool startsWith(const char *pre, const char *str)
     return lenstr < lenpre ? false : memcmp(pre, str, lenpre) == 0;
 }
 
-char *get_base64_image(const char *url) {
+char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_context) {
     char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
     const char *image_path;
     char *mime = NULL;
@@ -116,8 +122,11 @@ char *get_base64_image(const char *url) {
     }
     
     if (access(image_path, F_OK) == 0) {
-        mime = get_mime(image_path, 2);
-        
+        if (mime_callback != NULL) {
+            mime = mime_callback(image_path, mime_context);
+        } else {
+            mime = get_mime(image_path, 2);
+        }
         if (!mime || !startsWith("image/", mime)) {
             fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
             goto continue_loop;
@@ -193,7 +202,9 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_IMAGE) {
             const char *url = (const char *)node->as.link.url.data;
             char *encoded = NULL;
-            encoded = get_base64_image(url);
+            MimeCheck *mime_callback = cmark_syntax_extension_inlineimage_get_mime_callback(ext);
+            void *mime_context = cmark_syntax_extension_inlineimage_get_mime_context(ext);
+            encoded = get_base64_image(url, mime_callback, mime_context);
             if (encoded != NULL) {
                 cmark_mem *mem = cmark_get_default_mem_allocator();
                 // Replace the original url with the encoded data.
@@ -228,6 +239,36 @@ void cmark_syntax_extension_inlineimage_set_wd(cmark_syntax_extension *ext, cons
 char *cmark_syntax_extension_inlineimage_get_wd(cmark_syntax_extension *extension) {
     inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
     return settings ? settings->path : NULL;
+}
+
+MimeCheck *cmark_syntax_extension_inlineimage_get_mime_callback(cmark_syntax_extension *extension)
+{
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (settings) {
+        return settings->magic_callback;
+    } else {
+        return NULL;
+    }
+}
+void *cmark_syntax_extension_inlineimage_get_mime_context(cmark_syntax_extension *extension)
+{
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (settings) {
+        return settings->magic_context;
+    } else {
+        return NULL;
+    }
+}
+
+void cmark_syntax_extension_inlineimage_set_mime_callback(cmark_syntax_extension *extension, MimeCheck *callback, void *context)
+{
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (!settings) {
+        settings = init_settings();
+        cmark_syntax_extension_set_private(extension, settings, release_settings);
+    }
+    settings->magic_callback = callback;
+    settings->magic_context = context;
 }
 
 cmark_syntax_extension *create_inlineimage_extension(void) {
