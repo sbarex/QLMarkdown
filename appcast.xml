@@ -214,5 +214,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mer, 20 gen 2021 19:15:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b17/QLMarkdown.zip" sparkle:version="17" sparkle:edSignature="LXxjhpf4/yr+jOvZIxpA2+6W3f3zeXgqftLylt5buT8Ysy8Y08mqZkWyX7dUzLsfYLQGkm3CkNkmbrXxx7LYAw==" length="12274642"/>
+            <description><![CDATA[
+<p>Bugfix:</p>
+<ul>
+<li>Better mime recognition for inline images.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
