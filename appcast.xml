@@ -227,5 +227,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mer, 20 gen 2021 19:15:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b18/QLMarkdown.zip" sparkle:version="18" sparkle:edSignature="VMrIKkkvV+OpthEWDSjn6O5YTeAb52pQIr+xc27hiCR55s6vbAxwJjk5asYklimUYfASIMZ2ep34mfh/s81eAw==" length="12277698"/>
+            <description><![CDATA[
+<p>Bugfix:</p>
+<ul>
+<li>Fixed base64 image encoding.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
