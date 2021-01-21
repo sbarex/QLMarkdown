@@ -20,46 +20,7 @@
 
 #include <errno.h>
 
-static char encoding_table[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
-                                'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
-                                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-                                'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
-                                'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
-                                'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-                                'w', 'x', 'y', 'z', '0', '1', '2', '3',
-                                '4', '5', '6', '7', '8', '9', '+', '/'};
-static int mod_table[] = {0, 2, 1};
-
-char *base64_encode(const char *data,
-                    size_t input_length,
-                    size_t *output_length)
-{
-    *output_length = 4 * ((input_length + 2) / 3);
-
-    char *encoded_data = calloc(1, *output_length);
-    if (encoded_data == NULL) return NULL;
-
-    for (int i = 0, j = 0; i < input_length;) {
-        uint32_t octet_a = i < input_length ? (unsigned char)data[i++] : 0;
-        uint32_t octet_b = i < input_length ? (unsigned char)data[i++] : 0;
-        uint32_t octet_c = i < input_length ? (unsigned char)data[i++] : 0;
-
-        uint32_t triple = (octet_a << 0x10) + (octet_b << 0x08) + octet_c;
-
-        encoded_data[j++] = encoding_table[(triple >> 3 * 6) & 0x3F];
-        encoded_data[j++] = encoding_table[(triple >> 2 * 6) & 0x3F];
-        encoded_data[j++] = encoding_table[(triple >> 1 * 6) & 0x3F];
-        encoded_data[j++] = encoding_table[(triple >> 0 * 6) & 0x3F];
-    }
-
-    for (int i = 0; i < mod_table[input_length % 3]; i++) {
-        encoded_data[*output_length - 1 - i] = '=';
-    }
-    encoded_data[*output_length-1] = '\0';
-
-    return encoded_data;
-}
-
+#include "b64.h"
 
 typedef struct {
     char *path;
@@ -145,18 +106,13 @@ char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_con
             }
             fclose(f);
             
-            size_t encoded_length = 0;
-            encoded = base64_encode(buffer, length, &encoded_length);
+            char *data = b64_encode((const unsigned char *)buffer, length);
+            size_t encoded_length = strlen(data);
             
-            char *prefix = (char *)calloc(strlen(mime)+strlen("data:;base64,"), sizeof(char));
-            sprintf(prefix, "data:%s;base64,", mime);
-            size_t prefix_length = sizeof(char)*strlen(prefix);
+            encoded = (char *)calloc(strlen(mime) + strlen("data:;base64,") + encoded_length + 1, sizeof(char));
+            sprintf(encoded, "data:%s;base64,%s", mime, data);
             
-            encoded = realloc(encoded, encoded_length + prefix_length);
-            memmove(encoded + prefix_length, encoded, encoded_length);
-            memcpy(encoded, prefix, prefix_length);
-            
-            free(prefix);
+            free(data);
             free(buffer);
         } else {
             fprintf(stderr, "Error to get magic for file %s: #%d, %s\n", image_path, errno, strerror(errno));

@@ -123,6 +123,12 @@
 		836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
 		836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
 		836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
+		83720A2825B8E93D00B49FEC /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2025B8E93D00B49FEC /* decode.c */; };
+		83720A2925B8E93D00B49FEC /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2125B8E93D00B49FEC /* encode.c */; };
+		83720A3625B8EA6000B49FEC /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2125B8E93D00B49FEC /* encode.c */; };
+		83720A3925B8EA6600B49FEC /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2025B8E93D00B49FEC /* decode.c */; };
+		83720A4725B8EA9700B49FEC /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A1D25B8E93D00B49FEC /* buffer.c */; };
+		83720A4A25B8EA9700B49FEC /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A1D25B8E93D00B49FEC /* buffer.c */; };
 		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		83760302258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
@@ -364,6 +370,12 @@
 		836B720A259E226F00A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		836B7474259E2B4000A6A5F7 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = BUILT_PRODUCTS_DIR; };
 		836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		83720A1D25B8E93D00B49FEC /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
+		83720A1E25B8E93D00B49FEC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		83720A1F25B8E93D00B49FEC /* b64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b64.h; sourceTree = "<group>"; };
+		83720A2025B8E93D00B49FEC /* decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = decode.c; sourceTree = "<group>"; };
+		83720A2125B8E93D00B49FEC /* encode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = encode.c; sourceTree = "<group>"; };
+		83720A2225B8E93D00B49FEC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		837602FF258C1813004799ED /* inlineimage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inlineimage.h; sourceTree = "<group>"; };
 		83760300258C1813004799ED /* inlineimage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inlineimage.c; sourceTree = "<group>"; };
 		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
@@ -545,6 +557,7 @@
 				83327D1D2593FB0700E76CF6 /* url.hpp */,
 				83C44B3C259A70EE004C1367 /* string_utils.cpp */,
 				83C44B3D259A70EE004C1367 /* string_utils.hpp */,
+				83720A1C25B8E93D00B49FEC /* b64.c */,
 				83327D252594066300E76CF6 /* MIMEtype */,
 				83598E7825818828004664D3 /* extensions */,
 				83598E762581881B004664D3 /* src */,
@@ -680,6 +693,19 @@
 			children = (
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		83720A1C25B8E93D00B49FEC /* b64.c */ = {
+			isa = PBXGroup;
+			children = (
+				83720A1D25B8E93D00B49FEC /* buffer.c */,
+				83720A1E25B8E93D00B49FEC /* LICENSE */,
+				83720A1F25B8E93D00B49FEC /* b64.h */,
+				83720A2025B8E93D00B49FEC /* decode.c */,
+				83720A2125B8E93D00B49FEC /* encode.c */,
+				83720A2225B8E93D00B49FEC /* README.md */,
+			);
+			path = b64.c;
 			sourceTree = "<group>";
 		};
 		837F29172597A01F00A5F7DE /* Resources */ = {
@@ -878,6 +904,7 @@
 				83327D222593FCEC00E76CF6 /* url.cpp in Sources */,
 				831A8CA5258ABDDB00E36182 /* xml.c in Sources */,
 				831A8C9F258ABDD500E36182 /* html.c in Sources */,
+				83720A3625B8EA6000B49FEC /* encode.c in Sources */,
 				831A8C80258ABDAC00E36182 /* cmark_ctype.c in Sources */,
 				831A8C86258ABDB600E36182 /* commonmark.c in Sources */,
 				831A8C99258ABDD400E36182 /* plaintext.c in Sources */,
@@ -887,11 +914,13 @@
 				83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */,
 				83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				83F8825A259906C7008C5071 /* heads.c in Sources */,
+				83720A3925B8EA6600B49FEC /* decode.c in Sources */,
 				831A8C62258ABD7F00E36182 /* table.c in Sources */,
 				834D64A9259E9DC400DCA121 /* NSColor+ext.swift in Sources */,
 				831A8C97258ABDD400E36182 /* linked_list.c in Sources */,
 				831A8C77258ABD9D00E36182 /* blocks.c in Sources */,
 				831A8C5C258ABD6F00E36182 /* ext_scanners.c in Sources */,
+				83720A4725B8EA9700B49FEC /* buffer.c in Sources */,
 				831A8C8C258ABDBE00E36182 /* footnotes.c in Sources */,
 				831A8C9C258ABDD500E36182 /* plugin.c in Sources */,
 				831A8CBE258AC0D200E36182 /* arena.c in Sources */,
@@ -954,6 +983,7 @@
 				8357EB782587DBED002C2C45 /* ThemesViewController.swift in Sources */,
 				83598E902581883B004664D3 /* tasklist.c in Sources */,
 				83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */,
+				83720A2925B8E93D00B49FEC /* encode.c in Sources */,
 				83598EEB2581884D004664D3 /* buffer.c in Sources */,
 				83598E8F2581883B004664D3 /* table.c in Sources */,
 				83598E8C2581883B004664D3 /* autolink.c in Sources */,
@@ -988,9 +1018,11 @@
 				83598EE62581884D004664D3 /* node.c in Sources */,
 				838109C725840429000AFE3C /* checkbox.c in Sources */,
 				83598E912581883B004664D3 /* core-extensions.c in Sources */,
+				83720A4A25B8EA9700B49FEC /* buffer.c in Sources */,
 				8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */,
 				83598EE22581884D004664D3 /* arena.c in Sources */,
 				83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */,
+				83720A2825B8E93D00B49FEC /* decode.c in Sources */,
 				8357EB7F2588262C002C2C45 /* String+ext.swift in Sources */,
 				838109C3258403CA000AFE3C /* mention.c in Sources */,
 			);
@@ -1059,7 +1091,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1095,7 +1127,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1250,7 +1282,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1295,7 +1327,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (

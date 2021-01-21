@@ -1,5 +1,8 @@
 # Changelog
 =======
+### 1.0b18
+Bugfix:
+- Fixed base64 image encoding. 
 
 ### 1.0b17
 Bugfix:
