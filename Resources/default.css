@@ -435,6 +435,7 @@ input[type="checkbox"] {
 
 .markdown-body img {
   max-width: 100%;
+  height: auto;
   box-sizing: initial;
   background-color: var(--background);
 }
