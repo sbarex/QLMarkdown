@@ -240,5 +240,19 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>lun, 1 feb 2021 22:41:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b19/QLMarkdown.zip" sparkle:version="19" sparkle:edSignature="9g8fZuLOtQosHCAj4IlQGHNGhdjMW+adCQ8MZjvO+5sspGWL0WwWGrRdBmYCFTVRLo40vH505TWuiEWixxfBAQ==" length="12277846"/>
+            <description><![CDATA[
+<p>Bugfix:</p>
+<ul>
+<li>Responsive image height fix.</li>
+<li>Correct parsing of image filename with spaces inside a <code>&lt;img></code> tag. Please note that spaces are not supported within the filenames of images defined with markdown syntax. Spaces are unsafe to use inside an URL, must be replaced with <code>%20</code>.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
