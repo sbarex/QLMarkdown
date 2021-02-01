@@ -1,5 +1,11 @@
 # Changelog
 =======
+
+### 1.0b19
+Bugfix:
+- Responsive image height fix.
+- Correct parsing of image filename with spaces inside a `<img>` tag. Please note that spaces are not supported within the filenames of images defined with markdown syntax. Spaces are unsafe to use inside an URL, must be replaced with `%20`.
+
 ### 1.0b18
 Bugfix:
 - Fixed base64 image encoding. 

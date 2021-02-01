@@ -86,6 +86,12 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     }
      */
     
+    /*
+    @IBAction func copy(_ sender: Any) {
+        NSPasteboard.general.setString("Ciao2", forType: .string)
+    }
+    */
+    
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
         
         // Add the supported content types to the QLSupportedContentTypes array in the Info.plist of the extension.

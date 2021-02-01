@@ -1159,7 +1159,7 @@ extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "scrollHandler", let dict = message.body as? [String : AnyObject], let p = dict["scroll"] as? Int {
             self.prev_scroll = p
-        } else if message.name == "imageExtensionHandler", let dict = message.body as? [String : AnyObject], let src = dict["src"] as? String, let id = dict["id"] as? String, let data = get_base64_image(src.cString(using: .utf8), { (path, context) in
+        } else if message.name == "imageExtensionHandler", let dict = message.body as? [String : AnyObject], let src = (dict["src"] as? String)?.removingPercentEncoding, let id = dict["id"] as? String, let data = get_base64_image(src.cString(using: .utf8), { (path, context) in
                 let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
                 let r = magic_get_mime_by_file(path, magic_file)
                 return r
