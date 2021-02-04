@@ -34,7 +34,12 @@ char *process_title(const char *title) {
     // string text = title;
     
     wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    wstring wParagraph = converter.from_bytes(text);
+    wstring wParagraph;
+    try {
+        wParagraph = converter.from_bytes(text);
+    } catch (const std::range_error& e) {
+        return nullptr;
+    }
     
     transform(
               wParagraph.begin(), wParagraph.end(),
