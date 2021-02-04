@@ -1,6 +1,10 @@
 # Changelog
 =======
 
+### 1.0b21
+New features:
+- Settings to handle autoupdate.
+
 ### 1.0b20
 Bugfix:
 - fix for anchors of head with emoji characters.

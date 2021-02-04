@@ -39,7 +39,7 @@
 	<key>SUPublicEDKey</key>
 	<string>J+ikFQXeR6eaUV0jvyfZAJKeYh+9UKGJuD/kJSIXnZk=</string>
 	<key>SUScheduledCheckInterval</key>
-	<integer>86400</integer>
+	<real>86400</real>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>

@@ -555,6 +555,10 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func checkForUpdates(_ sender: Any) {
+        (NSApplication.shared.delegate as? AppDelegate)?.checkForUpdates(sender)
+    }
+    
     @IBAction func saveAction(_ sender: Any) {
         let settings = self.updateSettings()
         
