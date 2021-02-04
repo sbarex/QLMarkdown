@@ -254,5 +254,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>gio, 4 feb 2021 20:13:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b20/QLMarkdown.zip" sparkle:version="20" sparkle:edSignature="8DK0kFN4n7Wm8JZYyYbTaCWM/Ofy3kHoQWDF8TSZeEbLIQhJYvzp/6lGRt+sRyXwVj4b/Mx5H919X4KbDXB3AQ==" length="12484347"/>
+            <description><![CDATA[
+<p>Bugfix:</p>
+<ul>
+<li> fix for anchors of head with emoji characters.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
