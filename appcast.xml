@@ -262,7 +262,20 @@
             <description><![CDATA[
 <p>Bugfix:</p>
 <ul>
-<li> fix for anchors of head with emoji characters.</li>
+<li>Fix for anchors of head with emoji characters.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>gio, 4 feb 2021 23:04:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b21/QLMarkdown.zip" sparkle:version="21" sparkle:edSignature="KMY/WoqWP1LNrJYguM1H29JQ35PV7Pw6bREmAgdWSUdtuehgvxc6v5ZfrkxG0saDoWEEGXrfjTRzqf3kDnWzBw==" length="12487417"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Settings to handle autoupdate.</li>
 </ul>
             ]]>
             </description>
