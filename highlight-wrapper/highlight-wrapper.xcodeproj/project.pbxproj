@@ -18,7 +18,6 @@
 		836B3012259E222600A6A5F7 /* build */ = {isa = PBXFileReference; lastKnownFileType = folder; path = build; sourceTree = "<group>"; };
 		836B3013259E222600A6A5F7 /* wrapper_highlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wrapper_highlight.cpp; sourceTree = "<group>"; };
 		836B3014259E222600A6A5F7 /* file-5.39 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "file-5.39"; sourceTree = "<group>"; };
-		836B3015259E222600A6A5F7 /* .idea */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .idea; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -36,7 +35,6 @@
 				836B3012259E222600A6A5F7 /* build */,
 				836B3013259E222600A6A5F7 /* wrapper_highlight.cpp */,
 				836B3014259E222600A6A5F7 /* file-5.39 */,
-				836B3015259E222600A6A5F7 /* .idea */,
 			);
 			sourceTree = "<group>";
 		};

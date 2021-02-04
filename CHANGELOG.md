@@ -1,6 +1,10 @@
 # Changelog
 =======
 
+### 1.0b20
+Bugfix:
+- fix for anchors of head with emoji characters.
+
 ### 1.0b19
 Bugfix:
 - Responsive image height fix.

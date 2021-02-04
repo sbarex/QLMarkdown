@@ -1,0 +1,231 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXFileReference section */
+		83DB29A125CC78950013D6F7 /* libre2.symbols.darwin */ = {isa = PBXFileReference; lastKnownFileType = text; name = libre2.symbols.darwin; path = re2/libre2.symbols.darwin; sourceTree = "<group>"; };
+		83DB29A225CC78950013D6F7 /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CMakeLists.txt; path = re2/CMakeLists.txt; sourceTree = "<group>"; };
+		83DB29A425CC78950013D6F7 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = re2/LICENSE; sourceTree = "<group>"; };
+		83DB29A525CC78950013D6F7 /* util */ = {isa = PBXFileReference; lastKnownFileType = folder; name = util; path = re2/util; sourceTree = "<group>"; };
+		83DB29A625CC78950013D6F7 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = re2/AUTHORS; sourceTree = "<group>"; };
+		83DB29A825CC78950013D6F7 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; name = Makefile; path = re2/Makefile; sourceTree = "<group>"; };
+		83DB29A925CC78950013D6F7 /* libre2.symbols */ = {isa = PBXFileReference; lastKnownFileType = text; name = libre2.symbols; path = re2/libre2.symbols; sourceTree = "<group>"; };
+		83DB29AA25CC78950013D6F7 /* runtests */ = {isa = PBXFileReference; lastKnownFileType = text; name = runtests; path = re2/runtests; sourceTree = "<group>"; };
+		83DB29AC25CC78950013D6F7 /* WORKSPACE */ = {isa = PBXFileReference; lastKnownFileType = text; name = WORKSPACE; path = re2/WORKSPACE; sourceTree = "<group>"; };
+		83DB29AD25CC78950013D6F7 /* re2.pc */ = {isa = PBXFileReference; lastKnownFileType = text; name = re2.pc; path = re2/re2.pc; sourceTree = "<group>"; };
+		83DB29AE25CC78950013D6F7 /* cmake_install.cmake */ = {isa = PBXFileReference; lastKnownFileType = text; name = cmake_install.cmake; path = re2/cmake_install.cmake; sourceTree = "<group>"; };
+		83DB29AF25CC78950013D6F7 /* testinstall.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = testinstall.cc; path = re2/testinstall.cc; sourceTree = "<group>"; };
+		83DB29B025CC78950013D6F7 /* ucs2.diff */ = {isa = PBXFileReference; lastKnownFileType = text; name = ucs2.diff; path = re2/ucs2.diff; sourceTree = "<group>"; };
+		83DB29B125CC78960013D6F7 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = re2/README; sourceTree = "<group>"; };
+		83DB29B225CC78960013D6F7 /* CONTRIBUTORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = CONTRIBUTORS; path = re2/CONTRIBUTORS; sourceTree = "<group>"; };
+		83DB29B325CC78960013D6F7 /* re2 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = re2; path = re2/re2; sourceTree = "<group>"; };
+		83DB29B425CC78960013D6F7 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = re2/.gitignore; sourceTree = "<group>"; };
+		83DB29B525CC78960013D6F7 /* CONTRIBUTING.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CONTRIBUTING.md; path = re2/CONTRIBUTING.md; sourceTree = "<group>"; };
+		83DB29B625CC78960013D6F7 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; name = .github; path = re2/.github; sourceTree = "<group>"; };
+		83DB29B725CC78960013D6F7 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = re2/lib; sourceTree = "<group>"; };
+		83DB29B825CC78960013D6F7 /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = re2/doc; sourceTree = "<group>"; };
+		83DB29B925CC78960013D6F7 /* CMakeCache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CMakeCache.txt; path = re2/CMakeCache.txt; sourceTree = "<group>"; };
+		83DB29BA25CC78960013D6F7 /* BUILD */ = {isa = PBXFileReference; lastKnownFileType = text; name = BUILD; path = re2/BUILD; sourceTree = "<group>"; };
+		83DB29BC25CC78960013D6F7 /* install_manifest.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = install_manifest.txt; path = re2/install_manifest.txt; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		83DB299A25CC78950013D6F7 = {
+			isa = PBXGroup;
+			children = (
+				83DB29A125CC78950013D6F7 /* libre2.symbols.darwin */,
+				83DB29A225CC78950013D6F7 /* CMakeLists.txt */,
+				83DB29A425CC78950013D6F7 /* LICENSE */,
+				83DB29A525CC78950013D6F7 /* util */,
+				83DB29A625CC78950013D6F7 /* AUTHORS */,
+				83DB29A825CC78950013D6F7 /* Makefile */,
+				83DB29A925CC78950013D6F7 /* libre2.symbols */,
+				83DB29AA25CC78950013D6F7 /* runtests */,
+				83DB29AC25CC78950013D6F7 /* WORKSPACE */,
+				83DB29AD25CC78950013D6F7 /* re2.pc */,
+				83DB29AE25CC78950013D6F7 /* cmake_install.cmake */,
+				83DB29AF25CC78950013D6F7 /* testinstall.cc */,
+				83DB29B025CC78950013D6F7 /* ucs2.diff */,
+				83DB29B125CC78960013D6F7 /* README */,
+				83DB29B225CC78960013D6F7 /* CONTRIBUTORS */,
+				83DB29B325CC78960013D6F7 /* re2 */,
+				83DB29B425CC78960013D6F7 /* .gitignore */,
+				83DB29B525CC78960013D6F7 /* CONTRIBUTING.md */,
+				83DB29B625CC78960013D6F7 /* .github */,
+				83DB29B725CC78960013D6F7 /* lib */,
+				83DB29B825CC78960013D6F7 /* doc */,
+				83DB29B925CC78960013D6F7 /* CMakeCache.txt */,
+				83DB29BA25CC78960013D6F7 /* BUILD */,
+				83DB29BC25CC78960013D6F7 /* install_manifest.txt */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		83DB299F25CC78950013D6F7 /* re2 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "-f ../MakefileRe2 $(ACTION)";
+			buildConfigurationList = 83DB29BD25CC78960013D6F7 /* Build configuration list for PBXLegacyTarget "re2" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = re2;
+			dependencies = (
+			);
+			name = re2;
+			passBuildSettingsInEnvironment = 1;
+			productName = re2;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		83DB299B25CC78950013D6F7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1240;
+			};
+			buildConfigurationList = 83DB299E25CC78950013D6F7 /* Build configuration list for PBXProject "re2" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83DB299A25CC78950013D6F7;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				83DB299F25CC78950013D6F7 /* re2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		83DB299C25CC78950013D6F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		83DB299D25CC78950013D6F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		83DB29BE25CC78960013D6F7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = re2;
+			};
+			name = Debug;
+		};
+		83DB29BF25CC78960013D6F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = re2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		83DB299E25CC78950013D6F7 /* Build configuration list for PBXProject "re2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83DB299C25CC78950013D6F7 /* Debug */,
+				83DB299D25CC78950013D6F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83DB29BD25CC78960013D6F7 /* Build configuration list for PBXLegacyTarget "re2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83DB29BE25CC78960013D6F7 /* Debug */,
+				83DB29BF25CC78960013D6F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83DB299B25CC78950013D6F7 /* Project object */;
+}

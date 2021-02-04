@@ -1,0 +1,95 @@
+.DEFAULT_GOAL := all
+
+SPACE     := $(null) $(null)
+CURRENT_DIR := $(subst $(SPACE),"\\ ",$(CURDIR))
+
+ifeq ($(BUILT_PRODUCTS_DIR),)
+	BUILD_DIR=${CURRENT_DIR}/build
+else
+	BUILD_DIR=${BUILT_PRODUCTS_DIR}
+endif
+
+ifeq ($(ONLY_ACTIVE_ARCH),)
+	ONLY_ACTIVE_ARCH=NO
+endif
+
+ifndef NATIVE_ARCH
+	NATIVE_ARCH := $(shell uname -m)
+	# $(error NATIVE_ARCH is not set)
+endif
+
+ifeq ($(CONFIGURATION),Debug)
+	CMAKE_BUILD_TYPE=Debug
+else
+	CMAKE_BUILD_TYPE=Release
+endif
+
+VALID_ARCHS = x86_64 arm64
+
+libraries_shared =
+ifeq ($(NATIVE_ARCH),x86_64)
+	libraries_shared = ${BUILD_DIR}/x86_64/lib/libre2.dylib
+else
+	libraries_shared = ${BUILD_DIR}/arm64/lib/libre2.dylib
+endif
+
+ifeq ($(ONLY_ACTIVE_ARCH),NO)
+ifeq ($(NATIVE_ARCH),x86_64)
+		# build arm code
+		libraries_shared += ${BUILD_DIR}/arm64/lib/libre2.dylib
+else
+		# build intel code
+		libraries_shared += ${BUILD_DIR}/x86_64/lib/libre2.dylib
+endif
+endif
+
+check_arch:
+#     @echo NATIVE_ARCH IS $(NATIVE_ARCH)
+ifeq ($(filter $(NATIVE_ARCH),$(VALID_ARCHS)),)
+		$(error "Current arch ${NATIVE_ARCH} is not supported! Valid archs are: ${VALID_ARCHS}.")
+endif
+ifeq ($(ONLY_ACTIVE_ARCH),NO)
+		@echo "Building universal binary"
+else
+		@echo "Building $(NATIVE_ARCH) architecture"
+endif
+	@echo ""
+
+
+clean:
+	@echo "${bold}Cleaning…${normal}"
+	${MAKE} clean
+	@echo ""
+
+${BUILD_DIR}/arm64/lib/libre2.dylib:
+	@echo "${bold}Building re2 for arm64 platform…${normal}"
+	rm -R CMakeFiles
+	#$(shell mkdir ${BUILD_DIR}/arm64 2> /dev/null)
+	#cd ${BUILD_DIR}/arm64
+	cmake . -DBUILD_SHARED_LIBS=YES -DBUILD_TESTING=OFF -DRE2_BUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=${BUILD_DIR}/arm64 -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+	${MAKE}
+	${MAKE} install
+	@echo ""
+
+${BUILD_DIR}/x86_64/lib/libre2.dylib:
+	@echo "${bold}Building re2 for x86_64 platform…${normal}"
+	rm -R CMakeFiles
+	cmake . -DBUILD_SHARED_LIBS=YES -DBUILD_TESTING=OFF -DRE2_BUILD_TESTING=OFF -DCMAKE_INSTALL_PREFIX=${BUILD_DIR}/x86_64 -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15
+	${MAKE}
+	${MAKE} install
+	@echo ""
+
+${BUILD_DIR}/libre2.dylib: ${libraries_shared}
+ifeq ($(ONLY_ACTIVE_ARCH),NO)
+		@echo "${bold}Creating re2 universal library...${normal}"
+		lipo -create -output ${BUILD_DIR}/libre2.dylib ${BUILD_DIR}/x86_64/lib/libre2.dylib ${BUILD_DIR}/arm64/lib/libre2.dylib
+		cp -R ${BUILD_DIR}/x86_64/include/ ${BUILD_DIR}/include/
+else
+		@echo "${bold}Creating re2 library for ${NATIVE_ARCH}...${normal}"
+		@rm -f ${BUILD_DIR}/libre2.dylib > /dev/null
+		ln ${BUILD_DIR}/${NATIVE_ARCH}/lib/libre2.dylib ${BUILD_DIR}/libre2.dylib
+		cp -R ${BUILD_DIR}/${NATIVE_ARCH}/include/ ${BUILD_DIR}/include/
+endif
+	@echo ""
+
+all: check_arch ${BUILD_DIR}/libre2.dylib

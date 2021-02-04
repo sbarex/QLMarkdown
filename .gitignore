@@ -1,6 +1,11 @@
 .DS_Store
 
-HTMLConverter/htmlconverter.a
-HTMLConverter/htmlconverter_arm64.a
-HTMLConverter/htmlconverter_x86_64.a
+re2/CMakeFiles/
+re2/Makefile
+re2/install_manifest.txt
+re2/cmake_install.cmake
+re2/CMakeCache.txt
 
+/*/.idea/
+
+*.dSYM

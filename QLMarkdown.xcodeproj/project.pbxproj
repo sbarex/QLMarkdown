@@ -137,6 +137,9 @@
 		83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */; };
 		83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
+		83DB296A25CC6BB70013D6F7 /* libre2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; };
+		83DB296B25CC6BCD0013D6F7 /* libre2.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		83DB298225CC6CD10013D6F7 /* libre2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; };
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
@@ -167,6 +170,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 831A8C3E258ABADA00E36182;
 			remoteInfo = QLExtension;
+		};
+		832D256525CC8B28005F41AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83DB299F25CC78950013D6F7;
+			remoteInfo = re2;
+		};
+		832D256725CC8B2D005F41AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83DB299F25CC78950013D6F7;
+			remoteInfo = re2;
 		};
 		836B7471259E23DB00A6A5F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -210,6 +227,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				83F882482598C5F3008C5071 /* Sparkle.framework in Embed Libraries */,
+				83DB296B25CC6BCD0013D6F7 /* libre2.dylib in Embed Libraries */,
 				836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
@@ -249,6 +267,7 @@
 		831A8C48258ABADA00E36182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831A8C49258ABADA00E36182 /* QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QLExtension.entitlements; sourceTree = "<group>"; };
 		831A8CD0258ACB3300E36182 /* ThemePropertyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePropertyViewController.swift; sourceTree = "<group>"; };
+		832D256125CC8894005F41AC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		83327D1D2593FB0700E76CF6 /* url.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = url.hpp; sourceTree = "<group>"; };
 		83327D1E2593FB0700E76CF6 /* url.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = url.cpp; sourceTree = "<group>"; };
 		83327D262594066300E76CF6 /* MIME-sources.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MIME-sources.md"; sourceTree = "<group>"; };
@@ -388,6 +407,13 @@
 		83C44B3C259A70EE004C1367 /* string_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_utils.cpp; sourceTree = "<group>"; };
 		83C44B3D259A70EE004C1367 /* string_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string_utils.hpp; sourceTree = "<group>"; };
 		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		83DB296925CC6BB70013D6F7 /* libre2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libre2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		83DB297C25CC6C8B0013D6F7 /* stringpiece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringpiece.h; sourceTree = "<group>"; };
+		83DB297D25CC6C8B0013D6F7 /* filtered_re2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filtered_re2.h; sourceTree = "<group>"; };
+		83DB297E25CC6C8B0013D6F7 /* re2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = re2.h; sourceTree = "<group>"; };
+		83DB297F25CC6C8B0013D6F7 /* set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = set.h; sourceTree = "<group>"; };
+		83DB298F25CC77CC0013D6F7 /* MakefileRe2 */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefileRe2; sourceTree = "<group>"; };
+		83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = re2.xcodeproj; sourceTree = "<group>"; };
 		83E7FEED258FBE54003ECF9B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		83E7FEF0258FBF37003ECF9B /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
 		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -423,6 +449,7 @@
 			files = (
 				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
 				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
+				83DB298225CC6CD10013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +460,7 @@
 			files = (
 				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
 				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
+				83DB296A25CC6BB70013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,10 +532,13 @@
 				834CABA02593C57B00673002 /* CHANGELOG.md */,
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
 				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
+				83DB298F25CC77CC0013D6F7 /* MakefileRe2 */,
+				83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */,
 				836B3019259E222700A6A5F7 /* highlight-wrapper */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMarkdown */,
 				831A8C42258ABADA00E36182 /* QLExtension */,
+				832D256125CC8894005F41AC /* .gitignore */,
 				837F29172597A01F00A5F7DE /* Resources */,
 				83F881632597EE2B008C5071 /* Sparkle */,
 				83F1FE42259CEE7400257DAC /* external-launcher */,
@@ -671,6 +702,8 @@
 		83598F0525825B8D004664D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				83DB296925CC6BB70013D6F7 /* libre2.dylib */,
+				83DB297A25CC6C8B0013D6F7 /* include */,
 				83F8822C2598A5C0008C5071 /* WebKit.framework */,
 				831A8C40258ABADA00E36182 /* Quartz.framework */,
 				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
@@ -718,6 +751,32 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		83DB297A25CC6C8B0013D6F7 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				83DB297B25CC6C8B0013D6F7 /* re2 */,
+			);
+			path = include;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		83DB297B25CC6C8B0013D6F7 /* re2 */ = {
+			isa = PBXGroup;
+			children = (
+				83DB297C25CC6C8B0013D6F7 /* stringpiece.h */,
+				83DB297D25CC6C8B0013D6F7 /* filtered_re2.h */,
+				83DB297E25CC6C8B0013D6F7 /* re2.h */,
+				83DB297F25CC6C8B0013D6F7 /* set.h */,
+			);
+			path = re2;
+			sourceTree = "<group>";
+		};
+		83DB2AA325CC852C0013D6F7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		83F1FE42259CEE7400257DAC /* external-launcher */ = {
 			isa = PBXGroup;
 			children = (
@@ -760,6 +819,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				832D256825CC8B2D005F41AC /* PBXTargetDependency */,
 				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
 				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
 			);
@@ -782,6 +842,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				832D256625CC8B28005F41AC /* PBXTargetDependency */,
 				836B7472259E23DB00A6A5F7 /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
 			);
@@ -844,6 +905,10 @@
 				{
 					ProductGroup = 836B7195259E226E00A6A5F7 /* Products */;
 					ProjectRef = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
+				},
+				{
+					ProductGroup = 83DB2AA325CC852C0013D6F7 /* Products */;
+					ProjectRef = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1047,6 +1112,16 @@
 			target = 831A8C3E258ABADA00E36182 /* Markdown QL Extension */;
 			targetProxy = 831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */;
 		};
+		832D256625CC8B28005F41AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = re2;
+			targetProxy = 832D256525CC8B28005F41AC /* PBXContainerItemProxy */;
+		};
+		832D256825CC8B2D005F41AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = re2;
+			targetProxy = 832D256725CC8B2D005F41AC /* PBXContainerItemProxy */;
+		};
 		836B7472259E23DB00A6A5F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "highlight-wrapper";
@@ -1091,12 +1166,13 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
+					"\"$(SRCROOT)/re2/include\"",
 				);
 				INFOPLIST_FILE = QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1108,6 +1184,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/highlight-wrapper",
+					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
@@ -1127,12 +1204,13 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
+					"\"$(SRCROOT)/re2/include\"",
 				);
 				INFOPLIST_FILE = QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1144,6 +1222,7 @@
 					"$(inherited)",
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/highlight-wrapper",
+					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 1.0;
@@ -1282,7 +1361,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1305,6 +1384,7 @@
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
+					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
@@ -1327,7 +1407,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1350,6 +1430,7 @@
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
+					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
