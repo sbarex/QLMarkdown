@@ -54,7 +54,8 @@ class AboutViewController: NSViewController {
         }
         
         s += "\(String(cString: get_lua_info()))<br />\n"
-        s += "Enry (<a href=\"https://www.github.com/go-enry/go-enry/\">https://www.github.com/go-enry/go-enry/</a>)<br />\n"
+        s += "Enry (<a href=\"https://www.github.com/go-enry/go-enry/\">https://www.github.com/go-enry/go-enry</a>)<br />\n"
+        s += "Google re2 (<a href=\"https://github.com/google/re2\">https://github.com/google/re2</a>)<br />\n"
         s += "<br />\n———<br />\n<br />\n"
         s += "Thanks to hazarek (<a href=\"https://github.com/hazarek\">https://github.com/hazarek</a>) for the app icon and CSS style.<br />\n"
         
