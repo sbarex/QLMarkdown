@@ -8,11 +8,11 @@
   - [Inline images extension](#inline-images-extension)
   - [Table extension](#table-extension)
   - [Strikethrough extension](#strikethrough-extension)
-  - [Source Syntax Highlight extension](#source-syntax-highlight-extension)
+  - [Syntax Highlight extension](#syntax-highlight-extension)
   - [Task list extension](#task-list-extension)
 - [Options](#options)
 
-(The links on the TOC works only if the `heads` extension enabled).
+(The links on the TOC works only if the `heads` extension is enabled).
 
 ---
 
@@ -68,7 +68,7 @@ image url: `https://octodex.github.com/images/minion.png`
 ## Strikethrough extension
 You can choose to recognize the single tilde \~ on ~test~ or only the double tilde \~\~ on ~~another test~~.
 
-## Source Syntax Highlight extension
+## Syntax Highlight extension
 
 This fenced block uses the php syntax highlight:
 
@@ -81,7 +81,7 @@ function test(array $a, string $b, $c = null): boolean {
 }
 ```
 
-You can choose the theme and override the background.
+You can choose the theme.
 
 ## Task list extension
 * [x] step 1
@@ -94,5 +94,5 @@ You can choose the theme and override the background.
 The `smart quote` option format the quote as "curly" [^footnote1].
 
 ---
-[^footnote1]: If the option `footnotes` is enabled this text is rendered as a foot note. 
+[^footnote1]: If the option `footnotes` is enabled this text is rendered as a foot note. Footnotes is not recognized in the github pages.
 
