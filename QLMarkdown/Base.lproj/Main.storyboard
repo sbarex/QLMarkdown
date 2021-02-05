@@ -723,7 +723,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="0.0" y="305"/>
         </scene>
         <!--Preferences-->
         <scene sceneID="hIz-AP-VOD">
@@ -734,16 +734,16 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView initialItem="XgS-T3-Gpv" translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="13" y="419" width="990" height="287"/>
+                                <rect key="frame" x="13" y="549" width="990" height="157"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Basic options" identifier="" id="XgS-T3-Gpv">
                                         <view key="view" id="z2a-cF-5GG">
-                                            <rect key="frame" x="10" y="33" width="970" height="109"/>
+                                            <rect key="frame" x="10" y="33" width="970" height="111"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <gridView verticalHuggingPriority="248" verticalCompressionResistancePriority="749" xPlacement="leading" yPlacement="top" rowAlignment="firstBaseline" rowSpacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dOo-mR-WPE">
-                                                    <rect key="frame" x="20" y="61" width="678" height="40"/>
+                                                    <rect key="frame" x="20" y="63" width="678" height="40"/>
                                                     <constraints>
                                                         <constraint firstItem="LYg-yO-59i" firstAttribute="width" secondItem="QND-4B-AbJ" secondAttribute="width" id="1Fp-Vx-MmW"/>
                                                         <constraint firstItem="V1O-A3-p8C" firstAttribute="width" secondItem="CPv-Ar-3VO" secondAttribute="width" id="f4p-Xn-qAJ"/>
@@ -971,57 +971,85 @@
                                                         <gridCell row="b1T-4W-Sf6" column="KrJ-af-HRv" id="1hc-mg-8KF"/>
                                                     </gridCells>
                                                 </gridView>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imd-ri-rfh">
-                                                    <rect key="frame" x="19" y="19" width="190" height="16"/>
-                                                    <buttonCell key="cell" type="check" title="Automatically check for updates" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="TdA-92-3eK">
-                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <binding destination="uEM-91-19k" name="value" keyPath="updater.automaticallyChecksForUpdates" id="VJE-gK-QPz"/>
-                                                    </connections>
-                                                </button>
-                                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SzN-nZ-Agz">
-                                                    <rect key="frame" x="213" y="15" width="70" height="22"/>
-                                                    <popUpButtonCell key="cell" type="push" title="Hourly" bezelStyle="rounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3600" imageScaling="proportionallyDown" inset="2" selectedItem="Utw-rv-74R" id="fQJ-NV-Rof">
-                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                        <menu key="menu" id="PU5-Z7-dbb">
-                                                            <items>
-                                                                <menuItem title="Hourly" state="on" tag="3600" id="Utw-rv-74R"/>
-                                                                <menuItem title="Daily" tag="86400" id="QZd-3C-PtD"/>
-                                                                <menuItem title="Weekly" tag="604800" id="cjJ-Fu-tvR"/>
-                                                            </items>
-                                                        </menu>
-                                                    </popUpButtonCell>
-                                                    <connections>
-                                                        <binding destination="uEM-91-19k" name="enabled" keyPath="updater.automaticallyChecksForUpdates" id="vD0-mE-b6c"/>
-                                                        <binding destination="uEM-91-19k" name="selectedTag" keyPath="updater.updateCheckInterval" id="7aV-kB-0ca"/>
-                                                    </connections>
-                                                </popUpButton>
-                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dY0-RO-Aco">
-                                                    <rect key="frame" x="281" y="12" width="94" height="27"/>
-                                                    <buttonCell key="cell" type="push" title="Check now…" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6zW-hM-0I1">
-                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="smallSystem"/>
-                                                    </buttonCell>
-                                                    <connections>
-                                                        <action selector="checkForUpdates:" target="XfG-lQ-9wD" id="kPJ-m8-Nuj"/>
-                                                    </connections>
-                                                </button>
+                                                <stackView distribution="fill" orientation="horizontal" alignment="firstBaseline" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gEP-pe-cKT">
+                                                    <rect key="frame" x="20" y="20" width="663" height="16"/>
+                                                    <subviews>
+                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="imd-ri-rfh">
+                                                            <rect key="frame" x="-1" y="0.0" width="190" height="16"/>
+                                                            <buttonCell key="cell" type="check" title="Automatically check for updates" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="TdA-92-3eK">
+                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="smallSystem"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <binding destination="uEM-91-19k" name="value" keyPath="updater.automaticallyChecksForUpdates" id="VJE-gK-QPz"/>
+                                                            </connections>
+                                                        </button>
+                                                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SzN-nZ-Agz">
+                                                            <rect key="frame" x="193" y="-4" width="70" height="22"/>
+                                                            <popUpButtonCell key="cell" type="push" title="Hourly" bezelStyle="rounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="border" tag="3600" imageScaling="proportionallyDown" inset="2" selectedItem="Utw-rv-74R" id="fQJ-NV-Rof">
+                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                <font key="font" metaFont="smallSystem"/>
+                                                                <menu key="menu" id="PU5-Z7-dbb">
+                                                                    <items>
+                                                                        <menuItem title="Hourly" state="on" tag="3600" id="Utw-rv-74R"/>
+                                                                        <menuItem title="Daily" tag="86400" id="QZd-3C-PtD"/>
+                                                                        <menuItem title="Weekly" tag="604800" id="cjJ-Fu-tvR"/>
+                                                                    </items>
+                                                                </menu>
+                                                            </popUpButtonCell>
+                                                            <connections>
+                                                                <binding destination="uEM-91-19k" name="enabled" keyPath="updater.automaticallyChecksForUpdates" id="vD0-mE-b6c"/>
+                                                                <binding destination="uEM-91-19k" name="selectedTag" keyPath="updater.updateCheckInterval" id="7aV-kB-0ca"/>
+                                                            </connections>
+                                                        </popUpButton>
+                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dY0-RO-Aco">
+                                                            <rect key="frame" x="261" y="-7" width="94" height="27"/>
+                                                            <buttonCell key="cell" type="push" title="Check now…" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6zW-hM-0I1">
+                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                <font key="font" metaFont="smallSystem"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="checkForUpdates:" target="XfG-lQ-9wD" id="kPJ-m8-Nuj"/>
+                                                            </connections>
+                                                        </button>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="For-LC-KlP">
+                                                            <rect key="frame" x="355" y="3" width="310" height="11"/>
+                                                            <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="Auto updates are searched only when the main application is opened." id="bSg-na-cd0">
+                                                                <font key="font" metaFont="miniSystem"/>
+                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <connections>
+                                                                <binding destination="uEM-91-19k" name="hidden" keyPath="updater.automaticallyChecksForUpdates" id="Vmh-10-Vj7">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
+                                                            </connections>
+                                                        </textField>
+                                                    </subviews>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dY0-RO-Aco" secondAttribute="trailing" constant="20" symbolic="YES" id="43U-r1-Jaf"/>
-                                                <constraint firstItem="dY0-RO-Aco" firstAttribute="leading" secondItem="SzN-nZ-Agz" secondAttribute="trailing" constant="8" symbolic="YES" id="Cf9-iZ-F35"/>
-                                                <constraint firstItem="imd-ri-rfh" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="Eh2-M3-yat"/>
-                                                <constraint firstItem="SzN-nZ-Agz" firstAttribute="firstBaseline" secondItem="imd-ri-rfh" secondAttribute="firstBaseline" id="NpR-tV-cja"/>
+                                                <constraint firstItem="gEP-pe-cKT" firstAttribute="top" secondItem="dOo-mR-WPE" secondAttribute="bottom" multiplier="1.4" constant="8" symbolic="YES" id="3L0-bx-4bv"/>
+                                                <constraint firstItem="gEP-pe-cKT" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="Ny2-nu-tx2"/>
                                                 <constraint firstItem="dOo-mR-WPE" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="Ote-2y-D7a"/>
-                                                <constraint firstItem="imd-ri-rfh" firstAttribute="top" secondItem="dOo-mR-WPE" secondAttribute="bottom" multiplier="1.4" constant="8" symbolic="YES" id="TTf-wq-AP4"/>
-                                                <constraint firstItem="SzN-nZ-Agz" firstAttribute="leading" secondItem="imd-ri-rfh" secondAttribute="trailing" constant="8" symbolic="YES" id="UfH-aQ-Asl"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dOo-mR-WPE" secondAttribute="trailing" constant="20" symbolic="YES" id="g2W-1o-URO"/>
+                                                <constraint firstAttribute="bottom" secondItem="gEP-pe-cKT" secondAttribute="bottom" constant="20" symbolic="YES" id="i3F-qw-igV"/>
                                                 <constraint firstItem="dOo-mR-WPE" firstAttribute="top" secondItem="z2a-cF-5GG" secondAttribute="top" constant="8" id="pYf-2D-kgL"/>
-                                                <constraint firstItem="dY0-RO-Aco" firstAttribute="firstBaseline" secondItem="imd-ri-rfh" secondAttribute="firstBaseline" id="qKU-sO-D06"/>
-                                                <constraint firstAttribute="bottom" secondItem="imd-ri-rfh" secondAttribute="bottom" constant="20" symbolic="YES" id="qcM-kN-8cg"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gEP-pe-cKT" secondAttribute="trailing" constant="20" symbolic="YES" id="xe9-E5-euq"/>
                                             </constraints>
                                         </view>
                                     </tabViewItem>
@@ -1600,27 +1628,27 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="418" width="1016" height="5"/>
+                                <rect key="frame" x="0.0" y="548" width="1016" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="34" width="1016" height="386"/>
+                                <rect key="frame" x="0.0" y="34" width="1016" height="516"/>
                                 <subviews>
-                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="507" height="386"/>
+                                    <customView id="GDJ-WJ-HAB">
+                                        <rect key="frame" x="0.0" y="0.0" width="507" height="516"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="-132" width="507" height="386"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="507" height="516"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="507" height="386"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="507" height="516"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH" customClass="DropableTextView" customModule="QLMarkdown" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="487" height="386"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="487" height="516"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="507" height="386"/>
+                                                            <size key="minSize" width="487" height="516"/>
                                                             <size key="maxSize" width="679" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>
@@ -1634,7 +1662,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="491" y="0.0" width="16" height="386"/>
+                                                    <rect key="frame" x="491" y="0.0" width="16" height="516"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -1646,12 +1674,12 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView misplaced="YES" id="sp3-sm-w1y">
-                                        <rect key="frame" x="517" y="0.0" width="499" height="386"/>
+                                    <customView id="sp3-sm-w1y">
+                                        <rect key="frame" x="517" y="0.0" width="499" height="516"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="0.0" width="499" height="386"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="499" height="516"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -1662,7 +1690,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="242" y="53" width="16" height="16"/>
+                                                <rect key="frame" x="242" y="250" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
