@@ -280,5 +280,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mar, 9 feb 2021 15:36:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b22/QLMarkdown.zip" sparkle:version="22" sparkle:edSignature="Khe5GOg8GWcR/gBsRuZ4lbPd1yc6yC8asvmTBY5YUBFRjhyqMA6V2/VXnYS9XMFXoGltVqeSMPRbyogLumfhCw==" length="12487323"/>
+            <description><![CDATA[
+<p>Bugfix:</p>
+<ul>
+<li>Fixed a glitch when showing the preview (the webview is initially shown smaller than the QL window).</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
