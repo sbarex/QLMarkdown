@@ -1,6 +1,10 @@
 # Changelog
 =======
 
+### 1.0b22
+Bugfix:
+- Fixed a glitch when showing the preview (the webview is initially shown smaller than the QL window).
+
 ### 1.0b21
 New features:
 - Settings to handle autoupdate.

@@ -35,6 +35,8 @@ class MyWebView: WebView {
 }
 
 class PreviewViewController: NSViewController, QLPreviewingController {
+    var webView: MyWKWebView!
+    
     private let log = {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-extension")
     }()
@@ -63,6 +65,77 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                 print("Received error:", error)
             } as? ExternalLauncherProtocol
         }
+        
+        let settings = Settings.shared
+        
+        let previewRect: CGRect
+        if #available(macOS 11, *) {
+            previewRect = self.view.bounds
+        } else {
+            previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
+        }
+        
+        /*
+        if #available(macOS 11, *) {
+            // On Big Sur there are some bugs with the current WKWebView:
+            // - WKWebView crash on launch because ignore the com.apple.security.network.client entitlement (workaround setting the com.apple.security.temporary-exception.mach-lookup.global-name exception for com.apple.nsurlsessiond
+            // - WKWebView cannot scroll when QL preview window is in fullscreen.
+            // Old WebView API works.
+            let webView = MyWebView(frame: previewRect)
+            webView.autoresizingMask = [.height, .width]
+            webView.preferences.isJavaScriptEnabled = false
+            webView.preferences.allowsAirPlayForMediaPlayback = false
+            webView.preferences.arePlugInsEnabled = false
+            
+            self.view.addSubview(webView)
+            
+            webView.mainFrame.loadHTMLString(html, baseURL: nil)
+            webView.frameLoadDelegate = self
+            webView.drawsBackground = false // Best solution is use the same color of the body
+        } else {
+        */
+            let preferences = WKPreferences()
+            preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
+
+            // Create a configuration for the preferences
+            let configuration = WKWebViewConfiguration()
+            //configuration.preferences = preferences
+            configuration.allowsAirPlayForMediaPlayback = false
+        
+            // Handler to replace raw <image> src with the embedded data.
+            configuration.userContentController.add(self, name: "imageExtensionHandler")
+        
+            self.webView = MyWKWebView(frame: previewRect, configuration: configuration)
+            self.webView.autoresizingMask = [.height, .width]
+            
+            self.webView.wantsLayer = true
+            if #available(macOS 11, *) {
+                self.webView.layer?.borderWidth = 0
+            } else {
+                // Draw a border around the web view
+                self.webView.layer?.borderColor = NSColor.gridColor.cgColor
+                self.webView.layer?.borderWidth = 1
+            }
+        
+            self.webView.navigationDelegate = self
+            // webView.uiDelegate = self
+
+            self.view.addSubview(self.webView)
+        
+            /*
+            self.webView.translatesAutoresizingMaskIntoConstraints = false
+            var padding: CGFloat = 2
+            if #available(macOS 11, *) {
+                padding = 0
+            }
+        
+            NSLayoutConstraint(item: self.webView!, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: padding).isActive = true
+            NSLayoutConstraint(item: self.webView!, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: padding).isActive = true
+            NSLayoutConstraint(item: self.webView!, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: padding).isActive = true
+            NSLayoutConstraint(item: self.webView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: padding).isActive = true
+            */
+            
+       /* } */
     }
     
     internal func getBundleContents(forResource: String, ofType: String) -> String?
@@ -85,12 +158,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         handler(nil)
     }
      */
-    
-    /*
-    @IBAction func copy(_ sender: Any) {
-        NSPasteboard.general.setString("Ciao2", forType: .string)
-    }
-    */
     
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
         
@@ -135,65 +202,14 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                 extrajs = ""
             }
             let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: extrajs)
-            
-            let previewRect: CGRect
-            if #available(macOS 11, *) {
-                previewRect = self.view.bounds
-            } else {
-                previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
-            }
-            
             /*
             if #available(macOS 11, *) {
-                // On Big Sur there are some bugs with the current WKWebView:
-                // - WKWebView crash on launch because ignore the com.apple.security.network.client entitlement (workaround setting the com.apple.security.temporary-exception.mach-lookup.global-name exception for com.apple.nsurlsessiond
-                // - WKWebView cannot scroll when QL preview window is in fullscreen.
-                // Old WebView API works.
-                let webView = MyWebView(frame: previewRect)
-                webView.autoresizingMask = [.height, .width]
-                webView.preferences.isJavaScriptEnabled = false
-                webView.preferences.allowsAirPlayForMediaPlayback = false
-                webView.preferences.arePlugInsEnabled = false
-                
-                self.view.addSubview(webView)
-                
-                webView.mainFrame.loadHTMLString(html, baseURL: nil)
-                webView.frameLoadDelegate = self
-                webView.drawsBackground = false // Best solution is use the same color of the body
+                self.webView.mainFrame.loadHTMLString(html, baseURL: nil)
             } else {
             */
-                let preferences = WKPreferences()
-                preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
-
-                // Create a configuration for the preferences
-                let configuration = WKWebViewConfiguration()
-                //configuration.preferences = preferences
-                configuration.allowsAirPlayForMediaPlayback = false
-            
-                if settings.unsafeHTMLOption && settings.inlineImageExtension {
-                    // Handler to replace raw <image> src with the embedded data.
-                    configuration.userContentController.add(self, name: "imageExtensionHandler")
-                }
-            
-                let webView = MyWKWebView(frame: previewRect, configuration: configuration)
-                webView.autoresizingMask = [.height, .width]
-                
-                webView.wantsLayer = true
-                if #available(macOS 11, *) {
-                    webView.layer?.borderWidth = 0
-                } else {
-                    // Draw a border around the web view
-                    webView.layer?.borderColor = NSColor.gridColor.cgColor
-                    webView.layer?.borderWidth = 1
-                }
-            
-                webView.navigationDelegate = self
-                // webView.uiDelegate = self
-
-                self.view.addSubview(webView)
-                
-                webView.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
-           /* } */
+            self.webView.isHidden = true // hide the webview until complete rendering
+            self.webView.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
+            /* } */
         } catch {
             handler(error)
         }
@@ -218,7 +234,7 @@ extension PreviewViewController: WebFrameLoadDelegate {
 
 extension PreviewViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "imageExtensionHandler" else {
+        guard message.name == "imageExtensionHandler", Settings.shared.unsafeHTMLOption && Settings.shared.inlineImageExtension else {
             return
         }
         guard let dict = message.body as? [String : AnyObject], let src = dict["src"] as? String, let id = dict["id"] as? String else {
@@ -278,6 +294,10 @@ extension PreviewViewController: WKNavigationDelegate {
             
             handler(nil)
             self.handler = nil
+            // Wait to show the webview to prevent a resize glitch.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                self.webView.isHidden = false
+            }
         }
     }
     
@@ -285,6 +305,7 @@ extension PreviewViewController: WKNavigationDelegate {
         if let handler = self.handler {
             handler(error)
             self.handler = nil
+            self.webView.isHidden = false
         }
     }
     
@@ -301,7 +322,6 @@ extension PreviewViewController: WKNavigationDelegate {
                 return
             } else {
                 let r = NSWorkspace.shared.open(url)
-                // print(r, url.absoluteString)
                 if r {
                     decisionHandler(.cancel)
                     return
