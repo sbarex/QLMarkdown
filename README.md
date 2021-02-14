@@ -84,7 +84,7 @@ Also, the theme popup menu has some extra commands available pressing the `alt` 
 The options follow those offered by the `cmark-gfm`:
 - `Hard break` _(available on advanced options panel)_: Render `softbreak` elements as hard line breaks.
 - `No soft break` _(available on advanced options panel)_: Render `softbreak` elements as spaces.
-- `Inline HTML (unsafe)` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file.  By default, HTML tags are stripped and unsafe links are replaced by empty strings.
+- `Inline HTML (unsafe)` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file.  By default, HTML tags are stripped and unsafe links are replaced by empty strings. _So this option is required for preview SVG images_.
 - `Validate UTF` _(available on advanced options panel)_: Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).
 - `Smart quotes`: Convert straight quotes to curly, ```---``` to em dashes and ```--``` to en dashes.
 - `Footnotes`: Parse the footnotes.
