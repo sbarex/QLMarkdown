@@ -293,5 +293,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>dom, 21 feb 2021 17:10:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b23/QLMarkdown.zip" sparkle:version="23" sparkle:edSignature="FEhbby1FdHqf/D4n8F5TUsXbL7BkmDF0ehA/imLOP8XwXiov/UIuV6+5LqhhL3GsObpuxhlN7w/bSjLJK/MbAg==" length="12487519"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Support for UTI <code>com.unknown.md</code>.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
