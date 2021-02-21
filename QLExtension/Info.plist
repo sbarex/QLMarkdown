@@ -28,6 +28,7 @@
 		<dict>
 			<key>QLSupportedContentTypes</key>
 			<array>
+				<string>com.unknown.md</string>
 				<string>net.daringfireball.markdown</string>
 				<string>org.textbundle.package</string>
 			</array>

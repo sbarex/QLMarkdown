@@ -49,8 +49,24 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>Markdown Document</string>
-			<key>UTTypeIcons</key>
-			<dict/>
+			<key>UTTypeIdentifier</key>
+			<string>com.unknown.md</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>md</string>
+					<string>markdown</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.plain-text</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Markdown Document</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.daringfireball.markdown</string>
 			<key>UTTypeTagSpecification</key>
@@ -58,6 +74,7 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>md</string>
+					<string>markdown</string>
 				</array>
 			</dict>
 		</dict>
