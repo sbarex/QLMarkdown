@@ -306,5 +306,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>mer, 3 mar 2021 07:49:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b24/QLMarkdown.zip" sparkle:version="24" sparkle:edSignature="IuN1CpJrpya63FPYOq6l4jpIDLeyJV2pSBEg7lhecjBCYcXPy/97WgH/TjcjOJ+BZBq7FqC67XKRuPCNt96DBQ==" length="12494169"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Basic support for <code>rmarkdown</code> files.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
