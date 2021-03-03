@@ -60,6 +60,7 @@ class Settings {
     @objc var tableExtension: Bool = true
     @objc var tagFilterExtension: Bool = true
     @objc var taskListExtension: Bool = true
+    @objc var rmdExtension: Bool = true
     
     @objc var footnotesOption: Bool = true
     @objc var hardBreakOption: Bool = false
@@ -132,6 +133,10 @@ class Settings {
         if let ext = defaultsDomain["tasklist"] as? Bool {
             taskListExtension = ext
         }
+        if let ext = defaultsDomain["rmd"] as? Bool {
+            rmdExtension = ext
+        }
+        
         if let ext = defaultsDomain["strikethrough"] as? Bool {
             strikethroughExtension = ext
         }
@@ -274,6 +279,7 @@ class Settings {
             self.tableExtension = s.tableExtension
             self.tagFilterExtension = s.tagFilterExtension
             self.taskListExtension = s.taskListExtension
+            self.rmdExtension = s.rmdExtension
         
             self.footnotesOption = s.footnotesOption
             self.hardBreakOption = s.hardBreakOption
@@ -312,7 +318,7 @@ class Settings {
             return ""
         }
         
-        return try self.render(text: markdown_string, forAppearance: appearance, baseDir: baseDir ?? url.deletingLastPathComponent().path, log: log)
+        return try self.render(text: markdown_string, filename: url.lastPathComponent, forAppearance: appearance, baseDir: baseDir ?? url.deletingLastPathComponent().path, log: log)
     }
     
     /// Get the Bundle with the resources.
@@ -335,7 +341,7 @@ class Settings {
         return path
     }
     
-    func render(text: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) throws -> String {
+    func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) throws -> String {
         cmark_gfm_core_extensions_ensure_registered()
         
         var options = CMARK_OPT_DEFAULT
@@ -428,6 +434,17 @@ class Settings {
                     log: l,
                     type: .debug
                 )
+            }
+        }
+        
+        var md_text = text
+        
+        if self.rmdExtension && filename.lowercased().hasSuffix("rmd") && md_text.hasPrefix("---") {
+            let pattern = "(?s)((?<=---\n).*?(?>\n---\n))"
+            if let range = md_text.range(of: pattern, options: .regularExpression) {
+                let yaml = String(md_text[range.lowerBound ..< md_text.index(range.upperBound, offsetBy: -4)])
+                // Embed the header inside a yaml block.
+                md_text = "```yaml\n"+yaml+"```\n" + md_text[range.upperBound ..< md_text.endIndex]
             }
         }
         
@@ -557,7 +574,7 @@ class Settings {
             }
         }
         
-        cmark_parser_feed(parser, text, strlen(text))
+        cmark_parser_feed(parser, md_text, strlen(md_text))
         guard let doc = cmark_parser_finish(parser) else {
             throw CMARK_Error.parser_parse
         }
@@ -647,6 +664,14 @@ table.debug td {
         html_debug += "<tr><td>tasklist extension</td><td>"
         if self.taskListExtension {
             html_debug += "on " + (cmark_find_syntax_extension("tasklist") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>rmd extension</td><td>"
+        if self.rmdExtension {
+            html_debug += "on"
         } else {
             html_debug += "off"
         }

@@ -21,6 +21,7 @@ extension Settings {
         defaultsDomain["autolink"] = autoLinkExtension
         defaultsDomain["tagfilter"] = tagFilterExtension
         defaultsDomain["tasklist"] = taskListExtension
+        defaultsDomain["rmd"] = rmdExtension
         defaultsDomain["mention"] = mentionExtension
         defaultsDomain["checkbox"] = checkboxExtension
         defaultsDomain["inlineimage"] = inlineImageExtension

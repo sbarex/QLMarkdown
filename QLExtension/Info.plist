@@ -28,9 +28,12 @@
 		<dict>
 			<key>QLSupportedContentTypes</key>
 			<array>
+				<string>net.ia.markdown</string>
 				<string>com.unknown.md</string>
 				<string>net.daringfireball.markdown</string>
 				<string>org.textbundle.package</string>
+				<string>com.rstudio.rmarkdown</string>
+				<string>dyn.ah62d4rv4ge81e5pe</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

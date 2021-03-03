@@ -35,6 +35,12 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
+    @objc dynamic var rmdExtension: Bool = Settings.factorySettings.rmdExtension {
+        didSet {
+            isDirty = true
+        }
+    }
+    
     @objc dynamic var strikethroughExtension: Bool = Settings.factorySettings.strikethroughExtension {
         didSet {
             isDirty = true
@@ -513,7 +519,7 @@ class ViewController: NSViewController {
         let body: String
         let settings = self.updateSettings()
         do {
-            body = try settings.render(text: self.textView.string, forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
         } catch {
             body = "Error"
         }
@@ -586,7 +592,7 @@ class ViewController: NSViewController {
         let body: String
         let settings = self.updateSettings()
         do {
-            body = try settings.render(text: self.textView.string, forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
         } catch {
             body = "Error"
         }
@@ -954,6 +960,7 @@ document.addEventListener('scroll', function(e) {
         self.autoLinkExtension = settings.autoLinkExtension
         self.tagFilterExtension = settings.tagFilterExtension
         self.taskListExtension = settings.taskListExtension
+        self.rmdExtension = settings.rmdExtension
         self.strikethroughExtension = settings.strikethroughExtension
         self.strikethroughDoubleTildeOption = settings.strikethroughDoubleTildeOption
         self.mentionExtension = settings.mentionExtension
@@ -1037,6 +1044,7 @@ document.addEventListener('scroll', function(e) {
         settings.autoLinkExtension = self.autoLinkExtension
         settings.tagFilterExtension = self.tagFilterExtension
         settings.taskListExtension = self.taskListExtension
+        settings.rmdExtension = self.rmdExtension
         settings.mentionExtension = self.mentionExtension
         settings.inlineImageExtension = self.inlineImageExtension
         settings.headsExtension = self.headsExtension
@@ -1254,7 +1262,7 @@ class DropableTextView: NSTextView {
             
             print(url.path)
         } else {
-            print("fial")
+            print("fail")
         }
     }
     
@@ -1274,7 +1282,7 @@ class DropableTextView: NSTextView {
             return false
         }
         let suffix = URL(fileURLWithPath: path).pathExtension.lowercased()
-        if suffix == "md" {
+        if suffix == "md" || suffix == "markdown" || suffix == "rmd" {
             return true
         } else {
             return false

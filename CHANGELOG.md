@@ -1,9 +1,12 @@
 # Changelog
 =======
+### 1.0b24
+New features:
+- Support for `.rmd` file. The `.rmd` files are handled like normal `.md` files _without parsing the `r` code_. With the `rmd extension` enabled (default enabled, on advanced settings) the file header is rendered as a `yaml` block. 
 
 ### 1.0b23
 New features:
-- support for UTI `com.unknown.md`.
+- Support for UTI `com.unknown.md`.
 
 ### 1.0b22
 Bugfix:
