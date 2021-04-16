@@ -319,5 +319,18 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0</title>
+            <pubDate>ven, 16 apr 2021 09:40:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0b25/QLMarkdown.zip" sparkle:version="25" sparkle:edSignature="BUOO2Z55JEYmyySaUwYPUef7X4sndXqk4hxDLpQqRPOdJv+dy6nkjWf63jkq34KgI4oqPcNOXp7wBXIY8YHbCw==" length="12499143"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Extended the support for the <code>yaml</code> header of <code>.rmd</code> to all <code>.md</code> files. The <code>rmd extension</code> was renamed to <code>YAML header</code>.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
