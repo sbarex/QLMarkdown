@@ -1,5 +1,9 @@
 # Changelog
 =======
+### 1.0b25
+New features:
+- Extended the support for the `yaml` header of  `.rmd` to all `.md` files. The `rmd extension` was renamed to `YAML header`. 
+
 ### 1.0b24
 New features:
 - Support for `.rmd` file. The `.rmd` files are handled like normal `.md` files _without parsing the `r` code_. With the `rmd extension` enabled (default enabled, on advanced settings) the file header is rendered as a `yaml` block. 

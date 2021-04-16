@@ -191,8 +191,10 @@ _Available on advanced options panel._ Strip potentially dangerous HTML tags (`<
 
 _Available on advanced options panel._ Parse task list as defined by the GitHub extension to the standard Markdown language.
 
-#### Rmd header
-_Available on advanced options panel._ Allow to handle the header of `.rmd` files.
+#### YAML header
+_Available on advanced options panel._ Allow to handle a `yaml` header at the beginning of a file. You can choose to enable the extensions to all `.md` files or only for `.rmd` files.
+
+The header is recognized only if thge file start with `---`.
 
 ### Themes
 

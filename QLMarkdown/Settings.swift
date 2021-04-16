@@ -60,7 +60,8 @@ class Settings {
     @objc var tableExtension: Bool = true
     @objc var tagFilterExtension: Bool = true
     @objc var taskListExtension: Bool = true
-    @objc var rmdExtension: Bool = true
+    @objc var yamlExtension: Bool = true
+    @objc var yamlExtensionAll: Bool = false
     
     @objc var footnotesOption: Bool = true
     @objc var hardBreakOption: Bool = false
@@ -134,7 +135,10 @@ class Settings {
             taskListExtension = ext
         }
         if let ext = defaultsDomain["rmd"] as? Bool {
-            rmdExtension = ext
+            yamlExtension = ext
+        }
+        if let v = defaultsDomain["rmd_all"] as? Bool {
+            yamlExtensionAll = v
         }
         
         if let ext = defaultsDomain["strikethrough"] as? Bool {
@@ -279,7 +283,8 @@ class Settings {
             self.tableExtension = s.tableExtension
             self.tagFilterExtension = s.tagFilterExtension
             self.taskListExtension = s.taskListExtension
-            self.rmdExtension = s.rmdExtension
+            self.yamlExtension = s.yamlExtension
+            self.yamlExtensionAll = s.yamlExtensionAll
         
             self.footnotesOption = s.footnotesOption
             self.hardBreakOption = s.hardBreakOption
@@ -439,7 +444,7 @@ class Settings {
         
         var md_text = text
         
-        if self.rmdExtension && filename.lowercased().hasSuffix("rmd") && md_text.hasPrefix("---") {
+        if self.yamlExtension && (self.yamlExtensionAll || filename.lowercased().hasSuffix("rmd")) && md_text.hasPrefix("---") {
             let pattern = "(?s)((?<=---\n).*?(?>\n---\n))"
             if let range = md_text.range(of: pattern, options: .regularExpression) {
                 let yaml = String(md_text[range.lowerBound ..< md_text.index(range.upperBound, offsetBy: -4)])
@@ -669,9 +674,9 @@ table.debug td {
         }
         html_debug += "</td></tr>\n"
         
-        html_debug += "<tr><td>rmd extension</td><td>"
-        if self.rmdExtension {
-            html_debug += "on"
+        html_debug += "<tr><td>YAML extension</td><td>"
+        if self.yamlExtension {
+            html_debug += "on "+(self.yamlExtensionAll ? "for all files" : "for .rmd files")
         } else {
             html_debug += "off"
         }

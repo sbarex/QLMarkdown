@@ -1127,7 +1127,7 @@
                                                                     </gridCell>
                                                                     <gridCell row="0Jj-Oa-MkY" column="gDs-o1-pxX" id="F7D-0Q-WPa">
                                                                         <button key="contentView" horizontalHuggingPriority="247" verticalHuggingPriority="749" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zVa-zC-rZ4">
-                                                                            <rect key="frame" x="-2" y="3" width="284" height="18"/>
+                                                                            <rect key="frame" x="-2" y="-1" width="284" height="18"/>
                                                                             <buttonCell key="cell" type="check" title="Debug info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Uj7-I5-hly">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -1601,16 +1601,49 @@
                                                                         </button>
                                                                     </gridCell>
                                                                     <gridCell row="U3p-nG-osr" column="jYm-ty-U7O" id="jaW-YD-xIt">
-                                                                        <button key="contentView" toolTip="Handle header of .rmd files." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-OK-azv">
-                                                                            <rect key="frame" x="-2" y="-1" width="137" height="18"/>
-                                                                            <buttonCell key="cell" type="check" title="Rmd header" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6MU-jQ-KNG">
-                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                                <font key="font" metaFont="system"/>
-                                                                            </buttonCell>
-                                                                            <connections>
-                                                                                <binding destination="XfG-lQ-9wD" name="value" keyPath="self.rmdExtension" id="9G4-tM-SIs"/>
-                                                                            </connections>
-                                                                        </button>
+                                                                        <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZV-G2-qY1">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="135" height="16"/>
+                                                                            <subviews>
+                                                                                <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-OK-azv">
+                                                                                    <rect key="frame" x="-2" y="-1" width="18" height="18"/>
+                                                                                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="6MU-jQ-KNG">
+                                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.yamlExtension" id="bWC-ya-90g"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                                <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IeG-vS-v6c">
+                                                                                    <rect key="frame" x="13" y="0.0" width="122" height="16"/>
+                                                                                    <popUpButtonCell key="cell" type="roundTextured" title="YAML header" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="vHd-22-hfh">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="menu"/>
+                                                                                        <menu key="menu" id="ZCo-te-Lyb">
+                                                                                            <items>
+                                                                                                <menuItem title="YAML header" state="on" hidden="YES" id="JQj-Yd-BmL"/>
+                                                                                                <menuItem title="Only for Rmd files" id="RCL-f2-K7U"/>
+                                                                                                <menuItem title="For all md files" id="6lL-8G-ydW"/>
+                                                                                                <menuItem title="Disabled" id="1JJ-R9-DkW">
+                                                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                                </menuItem>
+                                                                                            </items>
+                                                                                        </menu>
+                                                                                    </popUpButtonCell>
+                                                                                    <connections>
+                                                                                        <action selector="handleYamlPopup:" target="XfG-lQ-9wD" id="Azo-8t-Hif"/>
+                                                                                    </connections>
+                                                                                </popUpButton>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
                                                                     </gridCell>
                                                                 </gridCells>
                                                             </gridView>
@@ -1807,6 +1840,7 @@
                         <outlet property="textView" destination="Q3Q-a2-tMH" id="Glk-S5-qdQ"/>
                         <outlet property="unsafeButton" destination="Yvy-aE-Sho" id="UmS-Os-ggW"/>
                         <outlet property="webView" destination="bs7-Op-UnU" id="zXJ-Jb-TMr"/>
+                        <outlet property="yamlPopupButton" destination="IeG-vS-v6c" id="PgQ-PL-hNI"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

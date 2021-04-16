@@ -35,8 +35,15 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
-    @objc dynamic var rmdExtension: Bool = Settings.factorySettings.rmdExtension {
+    @objc dynamic var yamlExtension: Bool = Settings.factorySettings.yamlExtension {
         didSet {
+            updateYamlPopup()
+            isDirty = true
+        }
+    }
+    @objc dynamic var yamlExtensionAll: Bool = Settings.factorySettings.yamlExtensionAll {
+        didSet {
+            updateYamlPopup()
             isDirty = true
         }
     }
@@ -391,6 +398,7 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var strikethroughPopupButton: NSPopUpButton!
     @IBOutlet weak var emojiPopupButton: NSPopUpButton!
+    @IBOutlet weak var yamlPopupButton: NSPopUpButton!
     @IBOutlet weak var unsafeButton: NSButton!
     @IBOutlet weak var advancedButton: NSButton!
     
@@ -481,6 +489,23 @@ class ViewController: NSViewController {
             emojiPopupButton.title = "Emoji"
         } else {
             emojiPopupButton.title = "Emoji as \(self.emojiImageOption ? "images" : "font")"
+        }
+    }
+    
+    @IBAction func handleYamlPopup(_ sender: NSPopUpButton) {
+        if sender.indexOfSelectedItem == 3 {
+            self.yamlExtension = false
+        } else {
+            self.yamlExtension = true
+            self.yamlExtensionAll = sender.indexOfSelectedItem == 2
+        }
+    }
+    
+    func updateYamlPopup() {
+        if !yamlExtension {
+            yamlPopupButton.title = "YAML header"
+        } else {
+            yamlPopupButton.title = "YAML header (\(self.yamlExtensionAll ? "all files" : ".rmd files"))"
         }
     }
     
@@ -960,7 +985,8 @@ document.addEventListener('scroll', function(e) {
         self.autoLinkExtension = settings.autoLinkExtension
         self.tagFilterExtension = settings.tagFilterExtension
         self.taskListExtension = settings.taskListExtension
-        self.rmdExtension = settings.rmdExtension
+        self.yamlExtension = settings.yamlExtension
+        self.yamlExtensionAll = settings.yamlExtensionAll
         self.strikethroughExtension = settings.strikethroughExtension
         self.strikethroughDoubleTildeOption = settings.strikethroughDoubleTildeOption
         self.mentionExtension = settings.mentionExtension
@@ -1044,7 +1070,8 @@ document.addEventListener('scroll', function(e) {
         settings.autoLinkExtension = self.autoLinkExtension
         settings.tagFilterExtension = self.tagFilterExtension
         settings.taskListExtension = self.taskListExtension
-        settings.rmdExtension = self.rmdExtension
+        settings.yamlExtension = self.yamlExtension
+        settings.yamlExtensionAll = self.yamlExtensionAll
         settings.mentionExtension = self.mentionExtension
         settings.inlineImageExtension = self.inlineImageExtension
         settings.headsExtension = self.headsExtension
@@ -1223,7 +1250,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             alert.messageText = "There are some modified settings"
             alert.informativeText = "Do you want to save them before closing?"
             alert.addButton(withTitle: "Save").keyEquivalent = "\r"
-            alert.addButton(withTitle: "No")
+            alert.addButton(withTitle: "Don't Save").keyEquivalent = "d"
             alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
             
             let r = alert.runModal()
