@@ -69,7 +69,13 @@ This application handle these UTIs:
 - dyn.ah62d4rv4ge81e5pe (dynamic UTI for unassociated .rmd files)
 - com.rstudio.rmarkdown
 
-Please inform me of any other UTI associated to `.md` files. 
+Please inform me of any other UTI associated to `.md` files.
+
+Install with [Homebrew](https://brew.sh/):
+
+```shell
+brew install --cask sbarex-qlmarkdown
+```
 
 ## Markdown processing
 
