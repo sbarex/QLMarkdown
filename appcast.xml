@@ -337,7 +337,7 @@
             <title>1.0.1</title>
             <pubDate>mer, 2 giu 2021 16:32:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.1/QLMarkdown.zip" sparkle:version="26" sparkle:edSignature="eIc+J7w4VbZhoSNNHJBT0Z4PF/94wd4694f2pFbc212BJx4j/+EHI5H8S4UPxZSXflGXstKnwipnrbyKBMDHCw==" length="13932892"/>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.1/QLMarkdown.zip" sparkle:shortVersionString="1.0.1" sparkle:version="26" sparkle:edSignature="eIc+J7w4VbZhoSNNHJBT0Z4PF/94wd4694f2pFbc212BJx4j/+EHI5H8S4UPxZSXflGXstKnwipnrbyKBMDHCw==" length="13932892"/>
             <description><![CDATA[
 <p>New features:</p>
 <ul>
