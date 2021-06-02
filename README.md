@@ -45,6 +45,14 @@ You can download the last compiled release (as universal binary) from [this link
 
 ## Installation
 
+You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases) or you can install the Application with [Homebrew](https://brew.sh/):   
+
+```shell
+brew install --cask sbarex-qlmarkdown
+```
+
+The application has the automatic update function.
+
 To use the Quick Look preview you must launch the application at least once. In this way the Quick Look extension will be discovered by the system. 
 After the first execution, the Quick Look extension will be available (and enabled) among those present in the System preferences/Extensions.
 
@@ -69,7 +77,8 @@ This application handle these UTIs:
 - dyn.ah62d4rv4ge81e5pe (dynamic UTI for unassociated .rmd files)
 - com.rstudio.rmarkdown
 
-Please inform me of any other UTI associated to `.md` files. 
+Please inform me of any other UTI associated to `.md` files.
+
 
 ## Markdown processing
 
