@@ -1,3 +1,16 @@
+---
+Title: My Title
+Author: Sbarex
+Date: Sunday, May 30, 2021
+Abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+The previous block placed at the top of the document and contained between the markers `---` is displayed as the file header when the `YAML` extension is enabled. With the `table` extension on, it is displayed as a table otherwise as a block of code.
+
+
 # TOC
 
 - [Extensions](#extensions)
@@ -20,29 +33,29 @@
 
 ## Autolink extension
 
-If the extension `autolink` is enabled the url https://www.github.com is rendered as a link.
+If the `autolink` extension is enabled the URL https://www.github.com is displayed as a link.
 
 ## Emoji extension
 
-Using the emoji extension you can replace the `:smile:` to :smile:. 
+Using the `emoji` extension you can replace the `:smile:` with :smile:. 
 
 You can choose to use the standard emoji font or the GitHub images.
 Multibyte emoji are also supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:.
 
 ## GitHub mentions extension
 
-With the mentions extension @sbarex is rendered as a link to the GitHub account.
+With the `mentions` extension @sbarex is rendered as a link to the GitHub account.
 
 ## Heads extension
 
-With the heads extension for each heads is created an anchor named with the title, lowercased, and space replaced with a hypen sign.
+With the `heads` extension for each heads is created an anchor named with the title, lowercased, and space replaced with a hypen sign.
 The anchors can be used for cross links. 
 
 If enabled the links inside the [TOC](#toc) section works. 
 
 ## Inline images extension
 
-The extension embed the local image inside the HTML output. Is required for the Quick Look preview.
+The `inline image` extension embed the local image inside the HTML output. **Is required for view local images in the Quick Look preview.**
 
 
 image url: `example.jpg`

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -134,6 +134,8 @@
 		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
 		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
 		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
+		8382D05C2664051400210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05B2664051400210A0A /* Yams */; };
+		8382D05E2664052E00210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05D2664052E00210A0A /* Yams */; };
 		83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */; };
 		83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
@@ -448,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
+				8382D05E2664052E00210A0A /* Yams in Frameworks */,
 				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
 				83DB298225CC6CD10013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
@@ -459,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
+				8382D05C2664051400210A0A /* Yams in Frameworks */,
 				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
 				83DB296A25CC6BB70013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
@@ -819,11 +823,15 @@
 			buildRules = (
 			);
 			dependencies = (
+				8382D05A266403D200210A0A /* PBXTargetDependency */,
 				832D256825CC8B2D005F41AC /* PBXTargetDependency */,
 				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
 				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
 			);
 			name = "Markdown QL Extension";
+			packageProductDependencies = (
+				8382D05D2664052E00210A0A /* Yams */,
+			);
 			productName = QLExtension;
 			productReference = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -847,6 +855,9 @@
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
 			);
 			name = QLMarkdown;
+			packageProductDependencies = (
+				8382D05B2664051400210A0A /* Yams */,
+			);
 			productName = QLMarkdown;
 			productReference = 83598E6125818808004664D3 /* QLMarkdown.app */;
 			productType = "com.apple.product-type.application";
@@ -899,6 +910,9 @@
 				Base,
 			);
 			mainGroup = 83598E5825818808004664D3;
+			packageReferences = (
+				8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */,
+			);
 			productRefGroup = 83598E6225818808004664D3 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1132,6 +1146,10 @@
 			name = "highlight-wrapper";
 			targetProxy = 836B7478259E2BA400A6A5F7 /* PBXContainerItemProxy */;
 		};
+		8382D05A266403D200210A0A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 8382D059266403D200210A0A /* Yams */;
+		};
 		83F1FE6D259CF02900257DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 83F1FE40259CEE7400257DAC /* external-launcher */;
@@ -1162,11 +1180,11 @@
 		831A8C4E258ABADA00E36182 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1187,7 +1205,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1200,11 +1218,11 @@
 		831A8C4F258ABADA00E36182 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1225,7 +1243,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1361,7 +1379,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1387,7 +1405,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1408,7 +1426,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1434,7 +1452,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1534,6 +1552,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jpsim/Yams.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8382D059266403D200210A0A /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		8382D05B2664051400210A0A /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		8382D05D2664052E00210A0A /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83598E5925818808004664D3 /* Project object */;
 }

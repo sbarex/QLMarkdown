@@ -285,6 +285,10 @@ input[type="checkbox"] {
   margin-bottom: 16px;
 }
 
+.markdown-body table table {
+    margin-bottom: 0;
+}
+
 .markdown-body hr {
   height: .25em;
   padding: 0;

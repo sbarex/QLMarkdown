@@ -145,7 +145,7 @@ _Available on advanced options panel._ Create anchors for the heads to use as cr
 _Available on advanced options panel._ Inject in the HTML code the local images as base64 data. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. 
 
 For security reasons are handled only URLs without schema (e.g., `./image.jpg`, `image.jpg` or `assets/image.jpg`), or with the `file` schema (e.g.,  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. 
-With the `file://` schema you *always set the full path*. For images inside the same folder of the Markdown file do not use the  `file://` schema and also `./` is optional.
+With the `file://` schema you *must always set the full path*. For images inside the same folder of the Markdown file do not use the  `file://` schema and also `./` is optional.
 
 The extension process both images defined in the Markdown syntax and also with HTML `<image>` tag if the raw HTML code options is enabled.
 
@@ -194,7 +194,9 @@ _Available on advanced options panel._ Parse task list as defined by the GitHub 
 #### YAML header
 _Available on advanced options panel._ Allow to handle a `yaml` header at the beginning of a file. You can choose to enable the extensions to all `.md` files or only for `.rmd` files.
 
-The header is recognized only if thge file start with `---`.
+The header is recognized only if the file start with `---`.
+
+When the `table` extension is enabled, the header is rendered as a table, otherwise as a block of code. Nested tables are supported.
 
 ### Themes
 

@@ -1,5 +1,11 @@
 # Changelog
 =======
+
+
+### 1.0.1
+New features:
+- With `YAML` and `table` extensions enabled, the `yaml` file header is displayed as a table.  
+
 ### 1.0b25
 New features:
 - Extended the support for the `yaml` header of  `.rmd` to all `.md` files. The `rmd extension` was renamed to `YAML header`. 

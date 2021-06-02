@@ -8,6 +8,8 @@
 import Foundation
 import OSLog
 
+import Yams
+
 enum CMARK_Error: Error {
     case parser_create
     case parser_parse
@@ -346,6 +348,95 @@ class Settings {
         return path
     }
     
+    internal func parseYaml(node: Yams.Node) throws -> Any {
+        switch node {
+        case .scalar(let scalar):
+            return scalar.string
+        case .mapping(let mapping):
+            var r: [(key: AnyHashable, value: Any)] = []
+            for n in mapping {
+                guard let k = try parseYaml(node: n.key) as? AnyHashable else {
+                    continue
+                }
+                let v = try parseYaml(node: n.value)
+                r.append((key: k, value: v))
+            }
+            return r
+        case .sequence(let sequence):
+            var r: [Any] = []
+            for n in sequence {
+                r.append(try parseYaml(node: n))
+            }
+            return r
+        }
+    }
+    
+    internal func renderYaml(_ yaml: [(key: AnyHashable, value: Any)]) -> String {
+        guard yaml.count > 0 else {
+            return ""
+        }
+        
+        var s = "<table>"
+        for element in yaml {
+            let key: String = "<strong>\(element.key)</strong>"
+            /*
+            do {
+                key = try self.render(text: "**\(element.key)**", filename: "", forAppearance: .light, baseDir: "")
+            } catch {
+                key = "<strong>\(element.key)</strong>"
+            }*/
+            s += "<tr><td align='right'>\(key)</td><td>"
+            if let t = element.value as? [(key: AnyHashable, value: Any)] {
+                s += renderYaml(t)
+            } else if let t = element.value as? [Any] {
+                s += "<ul>\n" + t.map({ v in
+                    let s: String = "\(v)"
+                    /*
+                    if let t = v as? String {
+                        do {
+                            s = try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
+                        } catch {
+                            s = t
+                        }
+                    } else {
+                        s = "\(v)"
+                    }*/
+                    return "<li>\(s)</li>"
+                }).joined(separator: "\n")
+            } else if let t = element.value as? String {
+                s += t
+                /*
+                do {
+                    s += try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
+                } catch {
+                    s += t.replacingOccurrences(of: "|", with: #"\|"#)
+                }
+                */
+            } else {
+                s += "\(element.value)"
+            }
+            s += "</td></tr>\n"
+        }
+        s += "</table>"
+        return s
+    }
+    
+    internal func renderYamlHeader(_ text: String, isHTML: inout Bool) -> String {
+        if self.tableExtension {
+            do {
+                if let node = try Yams.compose(yaml: text), let yaml = try self.parseYaml(node: node) as? [(key: AnyHashable, value: Any)] {
+                    isHTML = true
+                    return renderYaml(yaml)
+                }
+            } catch {
+                print(error)
+            }
+        }
+        // Embed the header inside a yaml block.
+        isHTML = false
+        return "```yaml\n"+text+"```\n"
+    }
+    
     func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) throws -> String {
         cmark_gfm_core_extensions_ensure_registered()
         
@@ -444,12 +535,20 @@ class Settings {
         
         var md_text = text
         
+        var header = ""
+        
         if self.yamlExtension && (self.yamlExtensionAll || filename.lowercased().hasSuffix("rmd")) && md_text.hasPrefix("---") {
             let pattern = "(?s)((?<=---\n).*?(?>\n---\n))"
             if let range = md_text.range(of: pattern, options: .regularExpression) {
                 let yaml = String(md_text[range.lowerBound ..< md_text.index(range.upperBound, offsetBy: -4)])
-                // Embed the header inside a yaml block.
-                md_text = "```yaml\n"+yaml+"```\n" + md_text[range.upperBound ..< md_text.endIndex]
+                var isHTML = false
+                header = self.renderYamlHeader(yaml, isHTML: &isHTML)
+                if isHTML {
+                    md_text = String(md_text[range.upperBound ..< md_text.endIndex])
+                } else {
+                    md_text = header + md_text[range.upperBound ..< md_text.endIndex]
+                    header = ""
+                }
             }
         }
         
@@ -594,7 +693,7 @@ class Settings {
                 free(html2)
             }
             
-            return html_debug + String(cString: html2)
+            return html_debug + header + String(cString: html2)
         } else {
             return html_debug + "<p>RENDER FAILED!</p>"
         }

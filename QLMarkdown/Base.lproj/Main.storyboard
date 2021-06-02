@@ -734,7 +734,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView initialItem="XgS-T3-Gpv" translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="13" y="418" width="990" height="288"/>
+                                <rect key="frame" x="13" y="549" width="990" height="157"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Basic options" identifier="" id="XgS-T3-Gpv">
@@ -1674,27 +1674,27 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="417" width="1016" height="5"/>
+                                <rect key="frame" x="0.0" y="548" width="1016" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="34" width="1016" height="385"/>
+                                <rect key="frame" x="0.0" y="34" width="1016" height="516"/>
                                 <subviews>
                                     <customView id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="507" height="385"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="507" height="516"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="0.0" width="507" height="385"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="507" height="516"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="507" height="385"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="507" height="516"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH" customClass="DropableTextView" customModule="QLMarkdown" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="487" height="385"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="487" height="516"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="507" height="385"/>
+                                                            <size key="minSize" width="487" height="516"/>
                                                             <size key="maxSize" width="679" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>
@@ -1708,7 +1708,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="491" y="0.0" width="16" height="385"/>
+                                                    <rect key="frame" x="491" y="0.0" width="16" height="516"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -1721,11 +1721,11 @@
                                         </constraints>
                                     </customView>
                                     <customView id="sp3-sm-w1y">
-                                        <rect key="frame" x="517" y="0.0" width="499" height="385"/>
+                                        <rect key="frame" x="517" y="0.0" width="499" height="516"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="0.0" width="499" height="385"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="499" height="516"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -1736,7 +1736,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="242" y="185" width="16" height="16"/>
+                                                <rect key="frame" x="242" y="250" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
