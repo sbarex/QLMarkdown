@@ -346,5 +346,19 @@
             ]]>
             </description>
         </item>
+        
+        <item>
+            <title>1.0.2</title>
+            <pubDate>mer, 22 set 2021 14:40:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.2/QLMarkdown.zip" sparkle:shortVersionString="1.0.2" sparkle:version="27" sparkle:edSignature="qTBzG14CGCbALsR/ToPhHzSLvIUgCZyQ81q8SNHL8Ld+0UQeRLBMUeAQGzU+Z/mDwPb2GnhiHORyx8LjHJnjBA==" length="13807716"/>
+            <description><![CDATA[
+<p>Bugfix:</p>
+<ul>
+<li>Fenced code block highlighted even when <code>.rmd</code> syntax is used (language name inside a curly brace).</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
