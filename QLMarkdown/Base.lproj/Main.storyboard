@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="19162"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1777,8 +1777,8 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1nt-58-sRk">
-                                <rect key="frame" x="968" y="10" width="15" height="15"/>
-                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="style_dark15" imagePosition="only" alignment="center" alternateImage="style_light15" state="on" inset="2" id="mrl-iS-3hF">
+                                <rect key="frame" x="967" y="9" width="16" height="16"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="appearance" imagePosition="only" alignment="center" state="on" inset="2" id="mrl-iS-3hF">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -2545,6 +2545,7 @@ Gw
         <image name="ThemeOrigin_All_Normal" width="15" height="15"/>
         <image name="ThemeOrigin_Custom_Normal" width="15" height="15"/>
         <image name="ThemeOrigin_Standalone_Normal" width="15" height="15"/>
+        <image name="appearance" width="16" height="16"/>
         <image name="style_dark15" width="15" height="15"/>
         <image name="style_light15" width="15" height="15"/>
         <image name="style_mixed15" width="15" height="15"/>

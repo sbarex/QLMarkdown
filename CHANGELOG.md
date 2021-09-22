@@ -1,8 +1,11 @@
 # Changelog
 =======
 
-
-### 1.0.1
+### 1.0.2 (27)
+Bugfix:
+- Fenced code block highlighted even when rmd syntax is used (language name inside a curly brace).
+  
+### 1.0.1 (26)
 New features:
 - With `YAML` and `table` extensions enabled, the `yaml` file header is displayed as a table.  
 

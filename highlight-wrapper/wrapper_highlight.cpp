@@ -309,6 +309,17 @@ char *highlight_format_string2(const char *code, const char *language, int *exit
         suffix = "xml";
     } else if (suffix == "m" ) {
         suffix = "objc";
+    } else if (suffix.front() == '{' && suffix.back() == '}') {
+        // remove r-markdown curly braces
+        std::size_t found1 = suffix.find_first_of(','); // arguments separator
+        std::size_t found2 = suffix.find_first_of(' ');
+        std::size_t found = min(found1, found2);
+        if (found != std::string::npos) {
+            suffix = suffix.substr(1, found - 1);
+        } else {
+            suffix.pop_back();
+            suffix.erase(0, 1);
+        }
     }
     generator->setFilesCnt(1);
 
