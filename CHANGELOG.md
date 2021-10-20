@@ -1,6 +1,10 @@
 # Changelog
 =======
 
+### 1.0.3 (28)
+New features:
+- Command line interface (CLI) tool.
+
 ### 1.0.2 (27)
 Bugfix:
 - Fenced code block highlighted even when rmd syntax is used (language name inside a curly brace).

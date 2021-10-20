@@ -164,6 +164,9 @@ const char *highlight_get_current_theme(void) {
 
 int highlight_set_current_theme(const char *theme) {
     string themePath;
+    if (strlen(theme) == 0) {
+        return EXIT_FAILURE;
+    }
     if (Platform::fileExists(theme)) {
         themePath = theme;
     } else {
@@ -186,7 +189,7 @@ int highlight_set_current_theme(const char *theme) {
         return EXIT_FAILURE;
     } else {
         os_log_debug(sLog, "Using theme `%{public}s`.", themePath.c_str());
-        printf("using theme %s\n", themePath.c_str());
+        // printf("using theme %s\n", themePath.c_str());
     }
     return EXIT_SUCCESS;
 }

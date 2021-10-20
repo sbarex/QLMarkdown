@@ -4,9 +4,7 @@
 
 # QLMarkdown
 
-QLMarkdown is a macOS Quick Look extension to preview Markdown files. It can also preview textbundle packages and rmarkdown (`.rmd`) files.
-
-RMarkdown files are rendered as normal markdown _without_ evaluating `r` code. The header is rendered as a `yaml` code block.  
+QLMarkdown is a macOS Quick Look extension to preview Markdown files. It can also preview textbundle packages and rmarkdown (`.rmd`) files (_without_ evaluating `r` code).  
 
 > **Please note that this software is provided "as is", without any warranty of any kind.**
 
@@ -30,7 +28,9 @@ You can download the last compiled release (as universal binary) from [this link
       - [Table](#table)
       - [Tag filter](#tag-filter)
       - [Task list](#task-list)
+      - [YAML header](#yaml-header)
     - [Themes](#themes)
+  - [Command line interface](#command-line-interface)
   - [Build from source](#build-from-source)
     - [Dependency](#dependency)
   - [Note about security](#note-about-security)
@@ -224,6 +224,35 @@ The custom style is appended after the CSS used for the source code. In this way
 
 Syntax highlighting extension allow to customize the appearance of the code blocks.
 
+
+## Command line interface
+
+A `qlmarkdown_cli` command line interface (CLI) is available to perform batch conversion of markdown files.
+
+The tool is located inside the `QLMarkdown.app/Contents/Resources` folder (and should not be moved outside). 
+
+```
+Usage: qlmarkdown_cli [--app <path>] [-o <file|dir>] <file> [..]
+
+Arguments:
+ -h    Show this help and exit.
+ -o    <file|dir> Destination output. If you pass a directory, a new file is 
+       created with the name of the processed source with html extension. 
+       The destination file is always overwritten. 
+       If this argument is not provided, the output will be printed to the 
+       stdout.
+ -v    Verbose mode. Valid only with the -o option.
+
+To handle multiple files at time you need to pass the -o arguments with a destination folder.
+```
+
+The CLI interface uses the same settings as the Quick Look extension.
+
+The CLI honors the inline image option _only_ for image defined with the markdown syntax. 
+
+Any relative paths (for example in the `src` attribute of an `<img>` tag) inside raw HTML fragments are not updated according to the destination folder. 
+
+
 ## Build from source
 
 When you clone this repository, remember to fetch also the submodule with `git submodule update --init`.
@@ -248,7 +277,7 @@ On Big Sur there is a bug in the Quick Look engine and WebKit that cause the imm
 
 ## Note about the developer
 
-I am not primarily an application developer, and I have no particular experience in programming in Swift and much less in C/C++. There may be possible bugs in the code, be patient.
+I am not primarily an application developer. There may be possible bugs in the code, be patient.
 Also, I am not a native English speaker :sweat_smile:. 
 
 Thanks to [hazarek](https://github.com/hazarek) for the app icon and the CSS style.

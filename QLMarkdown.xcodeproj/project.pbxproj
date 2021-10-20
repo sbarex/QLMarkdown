@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -59,6 +59,59 @@
 		83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83327D452595E15700E76CF6 /* Settings+ext.swift */; };
 		8342418B25894328000093EC /* ThemesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8342418A25894328000093EC /* ThemesView.xib */; };
 		8342418E2589432E000093EC /* ThemesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342418D2589432E000093EC /* ThemesView.swift */; };
+		83437974271D47DF00A5D6EA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83437973271D47DF00A5D6EA /* main.swift */; };
+		83437978271D47E700A5D6EA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
+		8343797A271D498800A5D6EA /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 83437979271D498800A5D6EA /* Yams */; };
+		8343797B271D499A00A5D6EA /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
+		8343797E271D499D00A5D6EA /* libre2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; };
+		83437980271D49EA00A5D6EA /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
+		83437981271D49EE00A5D6EA /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
+		83437982271D49F500A5D6EA /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A1D25B8E93D00B49FEC /* buffer.c */; };
+		83437983271D49F700A5D6EA /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2025B8E93D00B49FEC /* decode.c */; };
+		83437984271D49FA00A5D6EA /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2125B8E93D00B49FEC /* encode.c */; };
+		83437985271D49FF00A5D6EA /* MIMEtype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83327D2E2594066300E76CF6 /* MIMEtype.c */; };
+		83437986271D4A1900A5D6EA /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
+		83437987271D4A1900A5D6EA /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
+		83437988271D4A1900A5D6EA /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
+		83437989271D4A1900A5D6EA /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
+		8343798A271D4A1900A5D6EA /* table.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E862581883B004664D3 /* table.c */; };
+		8343798B271D4A1900A5D6EA /* core-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E892581883B004664D3 /* core-extensions.c */; };
+		8343798C271D4A1900A5D6EA /* strikethrough.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E7E2581883A004664D3 /* strikethrough.c */; };
+		8343798D271D4A1900A5D6EA /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
+		8343798E271D4A1900A5D6EA /* tasklist.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E882581883B004664D3 /* tasklist.c */; };
+		8343798F271D4A1900A5D6EA /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
+		83437990271D4A1900A5D6EA /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
+		83437991271D4A1900A5D6EA /* tagfilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E7F2581883A004664D3 /* tagfilter.c */; };
+		83437992271D4A1900A5D6EA /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
+		83437993271D4A1900A5D6EA /* ext_scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E852581883B004664D3 /* ext_scanners.c */; };
+		83437994271D4A1900A5D6EA /* autolink.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E802581883A004664D3 /* autolink.c */; };
+		83437995271D4A3D00A5D6EA /* syntax_extension.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB22581884C004664D3 /* syntax_extension.c */; };
+		83437996271D4A3D00A5D6EA /* latex.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC72581884D004664D3 /* latex.c */; };
+		83437997271D4A3D00A5D6EA /* houdini_html_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAD2581884B004664D3 /* houdini_html_e.c */; };
+		83437998271D4A3D00A5D6EA /* iterator.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB12581884C004664D3 /* iterator.c */; };
+		83437999271D4A3D00A5D6EA /* utf8.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB02581884B004664D3 /* utf8.c */; };
+		8343799A271D4A3D00A5D6EA /* plugin.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB92581884C004664D3 /* plugin.c */; };
+		8343799B271D4A3D00A5D6EA /* blocks.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB42581884C004664D3 /* blocks.c */; };
+		8343799C271D4A3D00A5D6EA /* map.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA52581884B004664D3 /* map.c */; };
+		8343799D271D4A3D00A5D6EA /* houdini_href_e.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA72581884B004664D3 /* houdini_href_e.c */; };
+		8343799E271D4A3D00A5D6EA /* footnotes.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9A2581884A004664D3 /* footnotes.c */; };
+		8343799F271D4A3D00A5D6EA /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9D2581884A004664D3 /* xml.c */; };
+		834379A0271D4A3D00A5D6EA /* plaintext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC32581884C004664D3 /* plaintext.c */; };
+		834379A1271D4A3D00A5D6EA /* linked_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB72581884C004664D3 /* linked_list.c */; };
+		834379A2271D4A3D00A5D6EA /* cmark_ctype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAA2581884B004664D3 /* cmark_ctype.c */; };
+		834379A3271D4A3D00A5D6EA /* render.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBB2581884C004664D3 /* render.c */; };
+		834379A4271D4A3D00A5D6EA /* references.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC12581884C004664D3 /* references.c */; };
+		834379A5271D4A3D00A5D6EA /* html.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E9F2581884B004664D3 /* html.c */; };
+		834379A6271D4A3D00A5D6EA /* inlines.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA32581884B004664D3 /* inlines.c */; };
+		834379A7271D4A3D00A5D6EA /* arena.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB82581884C004664D3 /* arena.c */; };
+		834379A8271D4A3D00A5D6EA /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC82581884D004664D3 /* buffer.c */; };
+		834379A9271D4A3D00A5D6EA /* registry.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598ECA2581884D004664D3 /* registry.c */; };
+		834379AA271D4A3D00A5D6EA /* node.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EBE2581884C004664D3 /* node.c */; };
+		834379AB271D4A3D00A5D6EA /* houdini_html_u.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA12581884B004664D3 /* houdini_html_u.c */; };
+		834379AC271D4A3D00A5D6EA /* scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EAF2581884B004664D3 /* scanners.c */; };
+		834379AD271D4A3D00A5D6EA /* cmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EA22581884B004664D3 /* cmark.c */; };
+		834379AE271D4A3D00A5D6EA /* commonmark.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EC02581884C004664D3 /* commonmark.c */; };
+		834379AF271D4A3D00A5D6EA /* man.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EB32581884C004664D3 /* man.c */; };
 		834CAB8A259167D100673002 /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB89259167B800673002 /* examples */; };
 		834CAB8E2591DE0F00673002 /* SaveAsFormatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */; };
 		834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */; };
@@ -132,6 +185,7 @@
 		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		83760302258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
+		837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */ = {isa = PBXBuildFile; fileRef = 837F97CE271EA098009F4605 /* qlmarkdown_cli */; };
 		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
 		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		8382D05C2664051400210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05B2664051400210A0A /* Yams */; };
@@ -166,6 +220,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		830DF9EB27202265004429F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83DB299F25CC78950013D6F7;
+			remoteInfo = re2;
+		};
+		830DF9ED27202265004429F8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 836B3007259E222600A6A5F7;
+			remoteInfo = "highlight-wrapper";
+		};
 		831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83598E5925818808004664D3 /* Project object */;
@@ -201,6 +269,13 @@
 			remoteGlobalIDString = 836B3007259E222600A6A5F7;
 			remoteInfo = "highlight-wrapper";
 		};
+		837F97CF271EA0C8009F4605 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 83437970271D47DF00A5D6EA;
+			remoteInfo = qlmarkdown_cli;
+		};
 		83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83598E5925818808004664D3 /* Project object */;
@@ -221,6 +296,15 @@
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8343796F271D47DF00A5D6EA /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		83E7FF07258FCCF9003ECF9B /* Embed Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -285,6 +369,9 @@
 		83327D452595E15700E76CF6 /* Settings+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ext.swift"; sourceTree = "<group>"; };
 		8342418A25894328000093EC /* ThemesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemesView.xib; sourceTree = "<group>"; };
 		8342418D2589432E000093EC /* ThemesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesView.swift; sourceTree = "<group>"; };
+		83437971271D47DF00A5D6EA /* qlmarkdown_cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = qlmarkdown_cli; sourceTree = BUILT_PRODUCTS_DIR; };
+		83437973271D47DF00A5D6EA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		834379B2271D4FB800A5D6EA /* qlmarkdown_cli.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = qlmarkdown_cli.entitlements; sourceTree = "<group>"; };
 		834CAB89259167B800673002 /* examples */ = {isa = PBXFileReference; lastKnownFileType = text; path = examples; sourceTree = SOURCE_ROOT; };
 		834CAB8C2591DE0F00673002 /* SaveAsFormatView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveAsFormatView.swift; sourceTree = "<group>"; };
 		834CAB8D2591DE0F00673002 /* SaveAsFormatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveAsFormatView.xib; sourceTree = "<group>"; };
@@ -401,6 +488,7 @@
 		83760300258C1813004799ED /* inlineimage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inlineimage.c; sourceTree = "<group>"; };
 		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
 		837F291E2597AAC000A5F7DE /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		837F97CE271EA098009F4605 /* qlmarkdown_cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = qlmarkdown_cli; sourceTree = BUILT_PRODUCTS_DIR; };
 		838109C1258403CA000AFE3C /* mention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mention.h; sourceTree = "<group>"; };
 		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
 		838109C525840429000AFE3C /* checkbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checkbox.h; sourceTree = "<group>"; };
@@ -457,6 +545,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8343796E271D47DF00A5D6EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8343797A271D498800A5D6EA /* Yams in Frameworks */,
+				8343797E271D499D00A5D6EA /* libre2.dylib in Frameworks */,
+				8343797B271D499A00A5D6EA /* libwrapper_highlight.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		83598E5E25818808004664D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -507,6 +605,16 @@
 			path = MIMEtype;
 			sourceTree = "<group>";
 		};
+		83437972271D47DF00A5D6EA /* qlmarkdown_cli */ = {
+			isa = PBXGroup;
+			children = (
+				837F97CE271EA098009F4605 /* qlmarkdown_cli */,
+				834379B2271D4FB800A5D6EA /* qlmarkdown_cli.entitlements */,
+				83437973271D47DF00A5D6EA /* main.swift */,
+			);
+			path = qlmarkdown_cli;
+			sourceTree = "<group>";
+		};
 		8357EB762587DBDE002C2C45 /* Themes */ = {
 			isa = PBXGroup;
 			children = (
@@ -546,6 +654,7 @@
 				837F29172597A01F00A5F7DE /* Resources */,
 				83F881632597EE2B008C5071 /* Sparkle */,
 				83F1FE42259CEE7400257DAC /* external-launcher */,
+				83437972271D47DF00A5D6EA /* qlmarkdown_cli */,
 				83598F0525825B8D004664D3 /* Frameworks */,
 				83598E6225818808004664D3 /* Products */,
 			);
@@ -557,6 +666,7 @@
 				83598E6125818808004664D3 /* QLMarkdown.app */,
 				831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */,
 				83F1FE41259CEE7400257DAC /* external-launcher.xpc */,
+				83437971271D47DF00A5D6EA /* qlmarkdown_cli */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -836,6 +946,29 @@
 			productReference = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		83437970271D47DF00A5D6EA /* qlmarkdown_cli */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83437977271D47DF00A5D6EA /* Build configuration list for PBXNativeTarget "qlmarkdown_cli" */;
+			buildPhases = (
+				8343796D271D47DF00A5D6EA /* Sources */,
+				8343796E271D47DF00A5D6EA /* Frameworks */,
+				8343796F271D47DF00A5D6EA /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				830DF9EC27202265004429F8 /* PBXTargetDependency */,
+				830DF9EE27202265004429F8 /* PBXTargetDependency */,
+				830DF9F027202265004429F8 /* PBXTargetDependency */,
+			);
+			name = qlmarkdown_cli;
+			packageProductDependencies = (
+				83437979271D498800A5D6EA /* Yams */,
+			);
+			productName = qlmarkdown_cli;
+			productReference = 83437971271D47DF00A5D6EA /* qlmarkdown_cli */;
+			productType = "com.apple.product-type.tool";
+		};
 		83598E6025818808004664D3 /* QLMarkdown */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 83598E712581880A004664D3 /* Build configuration list for PBXNativeTarget "QLMarkdown" */;
@@ -850,6 +983,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				837F97D0271EA0C8009F4605 /* PBXTargetDependency */,
 				832D256625CC8B28005F41AC /* PBXTargetDependency */,
 				836B7472259E23DB00A6A5F7 /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
@@ -885,11 +1019,15 @@
 		83598E5925818808004664D3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1230;
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1230;
 				TargetAttributes = {
 					831A8C3E258ABADA00E36182 = {
 						CreatedOnToolsVersion = 12.3;
+					};
+					83437970271D47DF00A5D6EA = {
+						CreatedOnToolsVersion = 13.0;
 					};
 					83598E6025818808004664D3 = {
 						CreatedOnToolsVersion = 12.2;
@@ -902,7 +1040,7 @@
 				};
 			};
 			buildConfigurationList = 83598E5C25818808004664D3 /* Build configuration list for PBXProject "QLMarkdown" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -930,6 +1068,7 @@
 				83598E6025818808004664D3 /* QLMarkdown */,
 				831A8C3E258ABADA00E36182 /* Markdown QL Extension */,
 				83F1FE40259CEE7400257DAC /* external-launcher */,
+				83437970271D47DF00A5D6EA /* qlmarkdown_cli */,
 			);
 		};
 /* End PBXProject section */
@@ -963,6 +1102,7 @@
 				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
 				834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */,
 				834CAB8A259167D100673002 /* examples in Resources */,
+				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1032,6 +1172,63 @@
 				831A8C59258ABD6800E36182 /* core-extensions.c in Sources */,
 				831A8C90258ABDC300E36182 /* houdini_html_u.c in Sources */,
 				831A8C96258ABDD400E36182 /* render.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8343796D271D47DF00A5D6EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83437981271D49EE00A5D6EA /* string_utils.cpp in Sources */,
+				83437989271D4A1900A5D6EA /* heads_utils.cpp in Sources */,
+				8343799E271D4A3D00A5D6EA /* footnotes.c in Sources */,
+				83437983271D49F700A5D6EA /* decode.c in Sources */,
+				8343799A271D4A3D00A5D6EA /* plugin.c in Sources */,
+				834379AA271D4A3D00A5D6EA /* node.c in Sources */,
+				834379AD271D4A3D00A5D6EA /* cmark.c in Sources */,
+				8343799F271D4A3D00A5D6EA /* xml.c in Sources */,
+				834379AE271D4A3D00A5D6EA /* commonmark.c in Sources */,
+				83437986271D4A1900A5D6EA /* inlineimage.c in Sources */,
+				834379A2271D4A3D00A5D6EA /* cmark_ctype.c in Sources */,
+				834379A9271D4A3D00A5D6EA /* registry.c in Sources */,
+				83437998271D4A3D00A5D6EA /* iterator.c in Sources */,
+				83437993271D4A1900A5D6EA /* ext_scanners.c in Sources */,
+				83437980271D49EA00A5D6EA /* url.cpp in Sources */,
+				83437992271D4A1900A5D6EA /* emoji_utils.cpp in Sources */,
+				83437987271D4A1900A5D6EA /* mention.c in Sources */,
+				834379A1271D4A3D00A5D6EA /* linked_list.c in Sources */,
+				834379A8271D4A3D00A5D6EA /* buffer.c in Sources */,
+				83437994271D4A1900A5D6EA /* autolink.c in Sources */,
+				834379A4271D4A3D00A5D6EA /* references.c in Sources */,
+				8343798F271D4A1900A5D6EA /* emoji.c in Sources */,
+				83437984271D49FA00A5D6EA /* encode.c in Sources */,
+				83437990271D4A1900A5D6EA /* syntaxhighlight.c in Sources */,
+				83437978271D47E700A5D6EA /* Settings.swift in Sources */,
+				834379A5271D4A3D00A5D6EA /* html.c in Sources */,
+				834379A0271D4A3D00A5D6EA /* plaintext.c in Sources */,
+				83437985271D49FF00A5D6EA /* MIMEtype.c in Sources */,
+				834379AF271D4A3D00A5D6EA /* man.c in Sources */,
+				83437982271D49F500A5D6EA /* buffer.c in Sources */,
+				8343798A271D4A1900A5D6EA /* table.c in Sources */,
+				83437974271D47DF00A5D6EA /* main.swift in Sources */,
+				8343799C271D4A3D00A5D6EA /* map.c in Sources */,
+				834379A7271D4A3D00A5D6EA /* arena.c in Sources */,
+				834379A3271D4A3D00A5D6EA /* render.c in Sources */,
+				8343798B271D4A1900A5D6EA /* core-extensions.c in Sources */,
+				8343798D271D4A1900A5D6EA /* heads.c in Sources */,
+				83437997271D4A3D00A5D6EA /* houdini_html_e.c in Sources */,
+				83437996271D4A3D00A5D6EA /* latex.c in Sources */,
+				8343798E271D4A1900A5D6EA /* tasklist.c in Sources */,
+				834379AB271D4A3D00A5D6EA /* houdini_html_u.c in Sources */,
+				8343799D271D4A3D00A5D6EA /* houdini_href_e.c in Sources */,
+				8343798C271D4A1900A5D6EA /* strikethrough.c in Sources */,
+				83437991271D4A1900A5D6EA /* tagfilter.c in Sources */,
+				83437995271D4A3D00A5D6EA /* syntax_extension.c in Sources */,
+				8343799B271D4A3D00A5D6EA /* blocks.c in Sources */,
+				83437999271D4A3D00A5D6EA /* utf8.c in Sources */,
+				83437988271D4A1900A5D6EA /* checkbox.c in Sources */,
+				834379AC271D4A3D00A5D6EA /* scanners.c in Sources */,
+				834379A6271D4A3D00A5D6EA /* inlines.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1318,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		830DF9EC27202265004429F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = re2;
+			targetProxy = 830DF9EB27202265004429F8 /* PBXContainerItemProxy */;
+		};
+		830DF9EE27202265004429F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "highlight-wrapper";
+			targetProxy = 830DF9ED27202265004429F8 /* PBXContainerItemProxy */;
+		};
+		830DF9F027202265004429F8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 830DF9EF27202265004429F8 /* Yams */;
+		};
 		831A8C4B258ABADA00E36182 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 831A8C3E258ABADA00E36182 /* Markdown QL Extension */;
@@ -1145,6 +1356,11 @@
 			isa = PBXTargetDependency;
 			name = "highlight-wrapper";
 			targetProxy = 836B7478259E2BA400A6A5F7 /* PBXContainerItemProxy */;
+		};
+		837F97D0271EA0C8009F4605 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 83437970271D47DF00A5D6EA /* qlmarkdown_cli */;
+			targetProxy = 837F97CF271EA0C8009F4605 /* PBXContainerItemProxy */;
 		};
 		8382D05A266403D200210A0A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1184,7 +1400,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1205,7 +1421,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1222,7 +1438,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1243,11 +1459,61 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		83437975271D47DF00A5D6EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = qlmarkdown_cli/qlmarkdown_cli.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"cmark-gfm/src",
+					"cmark-gfm/extensions",
+					"\"$(SRCROOT)/re2/include\"",
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		83437976271D47DF00A5D6EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = qlmarkdown_cli/qlmarkdown_cli.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				HEADER_SEARCH_PATHS = (
+					"cmark-gfm/src",
+					"cmark-gfm/extensions",
+					"\"$(SRCROOT)/re2/include\"",
+				);
+				LD_RUNPATH_SEARCH_PATHS = (
+					"@loader_path/../Frameworks",
+					"@executable_path/../Frameworks",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
@@ -1379,7 +1645,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1405,7 +1671,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1426,7 +1692,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 28;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1452,7 +1718,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1524,6 +1790,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		83437977271D47DF00A5D6EA /* Build configuration list for PBXNativeTarget "qlmarkdown_cli" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83437975271D47DF00A5D6EA /* Debug */,
+				83437976271D47DF00A5D6EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		83598E5C25818808004664D3 /* Build configuration list for PBXProject "QLMarkdown" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1565,6 +1840,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		830DF9EF27202265004429F8 /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		83437979271D498800A5D6EA /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
 		8382D059266403D200210A0A /* Yams */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;

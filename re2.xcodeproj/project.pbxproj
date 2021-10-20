@@ -28,9 +28,7 @@
 		83DB29B625CC78960013D6F7 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; name = .github; path = re2/.github; sourceTree = "<group>"; };
 		83DB29B725CC78960013D6F7 /* lib */ = {isa = PBXFileReference; lastKnownFileType = folder; name = lib; path = re2/lib; sourceTree = "<group>"; };
 		83DB29B825CC78960013D6F7 /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = re2/doc; sourceTree = "<group>"; };
-		83DB29B925CC78960013D6F7 /* CMakeCache.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CMakeCache.txt; path = re2/CMakeCache.txt; sourceTree = "<group>"; };
 		83DB29BA25CC78960013D6F7 /* BUILD */ = {isa = PBXFileReference; lastKnownFileType = text; name = BUILD; path = re2/BUILD; sourceTree = "<group>"; };
-		83DB29BC25CC78960013D6F7 /* install_manifest.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = install_manifest.txt; path = re2/install_manifest.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -58,9 +56,7 @@
 				83DB29B625CC78960013D6F7 /* .github */,
 				83DB29B725CC78960013D6F7 /* lib */,
 				83DB29B825CC78960013D6F7 /* doc */,
-				83DB29B925CC78960013D6F7 /* CMakeCache.txt */,
 				83DB29BA25CC78960013D6F7 /* BUILD */,
-				83DB29BC25CC78960013D6F7 /* install_manifest.txt */,
 			);
 			sourceTree = "<group>";
 		};

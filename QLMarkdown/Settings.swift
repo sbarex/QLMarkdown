@@ -36,6 +36,7 @@ class Settings {
     
     static let shared = Settings()
     static let factorySettings = Settings(noInitFromDefault: true)
+    static var appBundleUrl: URL?
     
     @objc var autoLinkExtension: Bool = true
     @objc var checkboxExtension: Bool = false
@@ -112,12 +113,12 @@ class Settings {
     }
     
     @objc func handleSettingsChanged(_ notification: NSNotification) {
-        print("settings changed")
+        // print("settings changed")
         self.initFromDefaults()
     }
     
     func initFromDefaults() {
-        print("Shared preferences stored in \(Settings.applicationSupportUrl?.path ?? "??").")
+        // print("Shared preferences stored in \(Settings.applicationSupportUrl?.path ?? "??").")
         
         let defaults = UserDefaults.standard
         // let d = UserDefaults(suiteName: Settings.Domain)
@@ -331,7 +332,9 @@ class Settings {
     /// Get the Bundle with the resources.
     /// For the host app return the main Bundle. For the appex return the bundle of the hosting app.
     func getResourceBundle() -> Bundle {
-        if Bundle.main.bundlePath.hasSuffix(".appex") {
+        if let url = Settings.appBundleUrl, let appBundle = Bundle(url: url) {
+            return appBundle
+        } else if Bundle.main.bundlePath.hasSuffix(".appex") {
             // this is an app extension
             let url = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
 
@@ -429,7 +432,7 @@ class Settings {
                     return renderYaml(yaml)
                 }
             } catch {
-                print(error)
+                // print(error)
             }
         }
         // Embed the header inside a yaml block.
@@ -924,6 +927,7 @@ table.debug td {
         if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight"), cmark_syntax_extension_highlight_get_rendered_count(ext) > 0 {
             let theme = String(cString: cmark_syntax_extension_highlight_get_theme_name(ext))
             if !theme.isEmpty, let p = cmark_syntax_extension_get_style(ext) {
+                // Embed the theme style.
                 let font = self.syntaxFontFamily
                 css_highlight = String(cString: p)
                 if font != "" {

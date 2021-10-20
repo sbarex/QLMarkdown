@@ -6,7 +6,8 @@
 - [ ] Check inline images on network / mounted disk
 - [ ] Investigate font family override for fanced blocks
 - [ ] Localization support
-- [X] Emoji extension: better code that parse the single placeholder and generate nodes inside the AST (this would avoid the CMARK_OPT_UNSAFE option for emojis as images)
+- [ ] embed inline image for `<img>` raw tag without using javascript/callbacks.
+- [x] Emoji extension: better code that parse the single placeholder and generate nodes inside the AST (this would avoid the CMARK_OPT_UNSAFE option for emojis as images)
 - [x] Investigate CMARK_OPT_UNSAFE for inline images
 - [x] Application screenshot in the docs
 - [x] Extension to generate anchor link for heads
