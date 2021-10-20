@@ -360,5 +360,19 @@
             ]]>
             </description>
         </item>
+        
+        <item>
+            <title>1.0.3</title>
+            <pubDate>mer, 20 ott 2021 13:27:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.3/QLMarkdown.zip" sparkle:shortVersionString="1.0.3" sparkle:version="28" sparkle:edSignature="w5XS2SuB5wfQTUa3QwceVDTJ4LaDqkyAHEjh3aoUSExAcB2eqyf6dq0ZO0oN33jNsDhJE18mSoXNfJzzYWgEBA==" length="15205707"/>
+            <description><![CDATA[
+<p>New features:</p>
+<ul>
+<li>Command line interface (CLI) tool.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
