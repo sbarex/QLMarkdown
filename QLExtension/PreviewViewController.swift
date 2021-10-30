@@ -49,6 +49,16 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     
     var launcherService: ExternalLauncherProtocol?
 
+    deinit {
+        Settings.shared.stopMonitorChange()
+    }
+    
+    override func viewDidDisappear() {
+        self.launcherService = nil
+        // Releases the script handler which retain a strong reference to self which prevents the WebKit process from being released.
+        self.webView.configuration.userContentController.removeScriptMessageHandler(forName: "imageExtensionHandler")
+    }
+    
     override func loadView() {
         super.loadView()
         // Do any additional setup after loading the view.
@@ -94,12 +104,9 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             webView.drawsBackground = false // Best solution is use the same color of the body
         } else {
         */
-            let preferences = WKPreferences()
-            preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
-
             // Create a configuration for the preferences
             let configuration = WKWebViewConfiguration()
-            //configuration.preferences = preferences
+            configuration.preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
             configuration.allowsAirPlayForMediaPlayback = false
         
             // Handler to replace raw <image> src with the embedded data.
@@ -294,10 +301,10 @@ extension PreviewViewController: WKNavigationDelegate {
             
             handler(nil)
             self.handler = nil
-            // Wait to show the webview to prevent a resize glitch.
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                self.webView.isHidden = false
-            }
+        }
+        // Wait to show the webview to prevent a resize glitch.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.webView.isHidden = false
         }
     }
     
