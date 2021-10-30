@@ -397,5 +397,39 @@
             ]]>
             </description>
         </item>
+        
+        
+        <item>
+            <title>1.0.5</title>
+            <pubDate>sab, 30 ott 2021 21:10:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.5/QLMarkdown.zip" sparkle:shortVersionString="1.0.5" sparkle:version="30" sparkle:edSignature="c8az/NQX7m5yy8I0fyXc4lnu1lwNx/ZkHpLoviL0xJEcPPkq94YanQ1YvTxEP/w4zUesYogo+O/WTrU1BFepBg==" length="17813220"/>
+            <description><![CDATA[
+<h2>1.0.5</h2>
+<p>Bugfix:</p>
+<ul>
+<li>Tag Filter extension fixed.</li>
+<li>Improved performance for inline image handling in raw HTML fragment.</li>
+<li>Better recognition of javascript fenced block.</li>
+<li>Missing library credits on about dialog.</li>
+</ul>
+
+<h2>1.0.4</h2>
+<p>New features:</p>
+<ul>
+<li>On macOS 12 Monterey, the new lightweight data based preview will be used.</li>
+<li>Addeded more arguments to the CLI tool.</li>
+<li>CLI tool embed inline images handle also raw HTML fragments.</li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>Handle markdown associated only to a dynamic UTI.</li>
+<li>Fixed issue with instantiated and never released <code>Markdown QL Extension Web Content</code> process for each file previewed.</li>
+<li>On macOS 12 Monterey now you can scroll the preview with the scrollbars.</li>
+<li>On macOS 12 Monterey the bug of trackpad scrolling in fullscreen preview has been fixed.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
