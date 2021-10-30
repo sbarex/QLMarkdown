@@ -384,7 +384,7 @@
 <p>New features:</p>
 <ul>
 <li>On macOS 12 Monterey, the new lightweight data based preview will be used.</li>
-<li><Addeded more arguments to the CLI tool./li>
+<li>Addeded more arguments to the CLI tool.</li>
 <li>CLI tool embed inline images handle also raw HTML fragments.</li>
 </ul>
 <p>Bugfix:</p>
