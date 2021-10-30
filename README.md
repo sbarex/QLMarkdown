@@ -74,6 +74,7 @@ This application handle these UTIs:
 - com.unknown.md
 - net.ia.markdown
 - org.textbundle.package
+- dyn.ah62d4rv4ge8043a (dynamic UTI for unassociated .md files)
 - dyn.ah62d4rv4ge81e5pe (dynamic UTI for unassociated .rmd files)
 - com.rstudio.rmarkdown
 
@@ -232,7 +233,7 @@ A `qlmarkdown_cli` command line interface (CLI) is available to perform batch co
 The tool is located inside the `QLMarkdown.app/Contents/Resources` folder (and should not be moved outside). 
 
 ```
-Usage: qlmarkdown_cli [--app <path>] [-o <file|dir>] <file> [..]
+Usage: qlmarkdown_cli [-o <file|dir>] <file> [..]
 
 Arguments:
  -h    Show this help and exit.
@@ -243,14 +244,36 @@ Arguments:
        stdout.
  -v    Verbose mode. Valid only with the -o option.
 
+Options:
+ --debug [on|off]
+ --footnotes [on|off]
+ --hard-break [on|off]
+ --no-soft-break [on|off]
+ --raw-html [on|off]
+ --smart-quotes [on|off]
+ --validate-utf8 [on|off]
+
+Extensions:
+ --autolink [on|off]
+ --emoji [no|image|font]
+ --github-mentions [on|off]
+ --heads-anchor [on|off]
+ --inline-images [on|off]
+ --table [on|off]
+ --tag-filter [on|off]
+ --tasklist [on|off]
+ --strikethrough [no|single|double]
+ --syntax-highlight [on|off]
+ --yaml [no|rmd|all]
+
+Unspecified rendering options will use the settings defined in the main application.
+
 To handle multiple files at time you need to pass the -o arguments with a destination folder.
 ```
 
-The CLI interface uses the same settings as the Quick Look extension.
+The CLI interface uses the same settings as the Quick Look extension, but you can override it if you wish. 
 
-The CLI honors the inline image option _only_ for image defined with the markdown syntax. 
-
-Any relative paths (for example in the `src` attribute of an `<img>` tag) inside raw HTML fragments are not updated according to the destination folder. 
+Any relative paths inside raw HTML fragments are not updated according to the destination folder. 
 
 
 ## Build from source

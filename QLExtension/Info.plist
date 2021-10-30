@@ -26,6 +26,8 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
+			<key>QLIsDataBasedPreview</key>
+			<true/>
 			<key>QLSupportedContentTypes</key>
 			<array>
 				<string>net.ia.markdown</string>
@@ -34,6 +36,7 @@
 				<string>org.textbundle.package</string>
 				<string>com.rstudio.rmarkdown</string>
 				<string>dyn.ah62d4rv4ge81e5pe</string>
+				<string>dyn.ah62d4rv4ge8043a</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

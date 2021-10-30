@@ -1,6 +1,17 @@
 # Changelog
 =======
 
+### 1.0.4 (29)
+New features:
+- On macOS 12 Monterey, the new lightweight data based preview will be used.
+- Addeded more arguments to the CLI tool.
+- CLI tool embed inline images handle also raw HTML fragments.
+Bugfix:
+- Handle markdown associated only to a dynamic UTI.
+- Fixed issue with instantiated and never released `Markdown QL Extension Web Content` process for each file previewed.
+- On macOS 12 Monterey now you can scroll the preview with the scrollbars.
+- On macOS 12 Monterey the bug of trackpad scrolling in fullscreen preview has been fixed.
+
 ### 1.0.3 (28)
 New features:
 - Command line interface (CLI) tool.

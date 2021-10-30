@@ -549,8 +549,7 @@ class ViewController: NSViewController {
             body = "Error"
         }
         
-        
-        let html = settings.getCompleteHTML(title: ".md", body: body)
+        let html = settings.getCompleteHTML(title: ".md", body: body, basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent())
         do {
             
             try html.write(to: dst, atomically: true, encoding: .utf8)
@@ -655,14 +654,8 @@ document.addEventListener('scroll', function(e) {
 });
 </script>
 """
-        let extrajs: String
-        if settings.unsafeHTMLOption && settings.inlineImageExtension {
-            extrajs = "<script type=\"text/javascript\">" + (settings.getBundleContents(forResource: "inlineimages", ofType: "js") ?? "") + "</script>\n";
-        } else {
-            extrajs = ""
-        }
         
-        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: extrajs)
+        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: "", basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent())
         webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
     }
     

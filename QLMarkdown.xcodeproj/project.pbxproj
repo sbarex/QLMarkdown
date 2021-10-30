@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		831364F525A0EB34001A6C08 /* inlineimages.js in Resources */ = {isa = PBXBuildFile; fileRef = 831364F425A0EB34001A6C08 /* inlineimages.js */; };
+		830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3B272D68E500378FFE /* SwiftSoup */; };
+		830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3D272D68F700378FFE /* SwiftSoup */; };
+		830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3F272D68FB00378FFE /* SwiftSoup */; };
 		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
 		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
@@ -345,7 +347,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		831364F425A0EB34001A6C08 /* inlineimages.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = inlineimages.js; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		831A8C43258ABADA00E36182 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -542,6 +543,7 @@
 				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
 				83DB298225CC6CD10013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
+				830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -552,6 +554,7 @@
 				8343797A271D498800A5D6EA /* Yams in Frameworks */,
 				8343797E271D499D00A5D6EA /* libre2.dylib in Frameworks */,
 				8343797B271D499A00A5D6EA /* libwrapper_highlight.dylib in Frameworks */,
+				830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,6 +567,7 @@
 				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
 				83DB296A25CC6BB70013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
+				830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,7 +863,6 @@
 			isa = PBXGroup;
 			children = (
 				83598F22258263C0004664D3 /* default.css */,
-				831364F425A0EB34001A6C08 /* inlineimages.js */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 			);
 			path = Resources;
@@ -933,7 +936,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				8382D05A266403D200210A0A /* PBXTargetDependency */,
+				830B5B44272D6D9200378FFE /* PBXTargetDependency */,
+				830B5B2F272D5B8C00378FFE /* PBXTargetDependency */,
 				832D256825CC8B2D005F41AC /* PBXTargetDependency */,
 				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
 				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
@@ -941,6 +945,7 @@
 			name = "Markdown QL Extension";
 			packageProductDependencies = (
 				8382D05D2664052E00210A0A /* Yams */,
+				830B5B3D272D68F700378FFE /* SwiftSoup */,
 			);
 			productName = QLExtension;
 			productReference = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */;
@@ -957,6 +962,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				830B5B46272D6D9900378FFE /* PBXTargetDependency */,
 				830DF9EC27202265004429F8 /* PBXTargetDependency */,
 				830DF9EE27202265004429F8 /* PBXTargetDependency */,
 				830DF9F027202265004429F8 /* PBXTargetDependency */,
@@ -964,6 +970,7 @@
 			name = qlmarkdown_cli;
 			packageProductDependencies = (
 				83437979271D498800A5D6EA /* Yams */,
+				830B5B3F272D68FB00378FFE /* SwiftSoup */,
 			);
 			productName = qlmarkdown_cli;
 			productReference = 83437971271D47DF00A5D6EA /* qlmarkdown_cli */;
@@ -983,6 +990,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				830B5B42272D6D8A00378FFE /* PBXTargetDependency */,
+				830B5B37272D613A00378FFE /* PBXTargetDependency */,
 				837F97D0271EA0C8009F4605 /* PBXTargetDependency */,
 				832D256625CC8B28005F41AC /* PBXTargetDependency */,
 				836B7472259E23DB00A6A5F7 /* PBXTargetDependency */,
@@ -991,6 +1000,7 @@
 			name = QLMarkdown;
 			packageProductDependencies = (
 				8382D05B2664051400210A0A /* Yams */,
+				830B5B3B272D68E500378FFE /* SwiftSoup */,
 			);
 			productName = QLMarkdown;
 			productReference = 83598E6125818808004664D3 /* QLMarkdown.app */;
@@ -1050,6 +1060,7 @@
 			mainGroup = 83598E5825818808004664D3;
 			packageReferences = (
 				8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */,
+				830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 			);
 			productRefGroup = 83598E6225818808004664D3 /* Products */;
 			projectDirPath = "";
@@ -1086,7 +1097,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831364F525A0EB34001A6C08 /* inlineimages.js in Resources */,
 				83598EFC25820A72004664D3 /* test2.md in Resources */,
 				83F4B9962586AB9700FC58A7 /* README.md in Resources */,
 				83598EFD25820A72004664D3 /* test1.md in Resources */,
@@ -1318,6 +1328,26 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		830B5B2F272D5B8C00378FFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 830B5B2E272D5B8C00378FFE /* Yams */;
+		};
+		830B5B37272D613A00378FFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 830B5B36272D613A00378FFE /* Yams */;
+		};
+		830B5B42272D6D8A00378FFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 830B5B41272D6D8A00378FFE /* SwiftSoup */;
+		};
+		830B5B44272D6D9200378FFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 830B5B43272D6D9200378FFE /* SwiftSoup */;
+		};
+		830B5B46272D6D9900378FFE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 830B5B45272D6D9900378FFE /* SwiftSoup */;
+		};
 		830DF9EC27202265004429F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = re2;
@@ -1362,10 +1392,6 @@
 			target = 83437970271D47DF00A5D6EA /* qlmarkdown_cli */;
 			targetProxy = 837F97CF271EA0C8009F4605 /* PBXContainerItemProxy */;
 		};
-		8382D05A266403D200210A0A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 8382D059266403D200210A0A /* Yams */;
-		};
 		83F1FE6D259CF02900257DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 83F1FE40259CEE7400257DAC /* external-launcher */;
@@ -1400,7 +1426,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1421,7 +1447,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1438,7 +1464,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1459,7 +1485,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1645,7 +1671,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1671,7 +1697,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1692,7 +1718,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 28;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1718,7 +1744,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1829,6 +1855,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jpsim/Yams.git";
@@ -1840,17 +1874,52 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		830B5B2E272D5B8C00378FFE /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		830B5B36272D613A00378FFE /* Yams */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
+			productName = Yams;
+		};
+		830B5B3B272D68E500378FFE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		830B5B3D272D68F700378FFE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		830B5B3F272D68FB00378FFE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		830B5B41272D6D8A00378FFE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		830B5B43272D6D9200378FFE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		830B5B45272D6D9900378FFE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
 		830DF9EF27202265004429F8 /* Yams */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
 			productName = Yams;
 		};
 		83437979271D498800A5D6EA /* Yams */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
-			productName = Yams;
-		};
-		8382D059266403D200210A0A /* Yams */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
 			productName = Yams;

@@ -9,6 +9,7 @@ import Foundation
 import OSLog
 
 import Yams
+import SwiftSoup
 
 enum CMARK_Error: Error {
     case parser_create
@@ -104,12 +105,16 @@ class Settings {
         stopMonitorChange()
     }
     
+    fileprivate var isMonitoring = false
     func startMonitorChange() {
+        isMonitoring = true
         DistributedNotificationCenter.default().addObserver(self, selector: #selector(self.handleSettingsChanged(_:)), name: .QLMarkdownSettingsUpdated, object: nil)
     }
     
     func stopMonitorChange() {
-        DistributedNotificationCenter.default().removeObserver(self)
+        if isMonitoring {
+            DistributedNotificationCenter.default().removeObserver(self)
+        }
     }
     
     @objc func handleSettingsChanged(_ notification: NSNotification) {
@@ -899,7 +904,7 @@ table.debug td {
         }
     }
     
-    func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "") -> String {
+    func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "", basedir: URL) -> String {
         let css_doc: String
         let css_doc_extended: String
         
@@ -944,7 +949,7 @@ table.debug td {
         
         let style = css_doc + css_highlight + css_doc_extended
         
-        let html =
+        var html =
 """
 <!doctype html>
 <html>
@@ -963,6 +968,54 @@ table.debug td {
 </body>
 </html>
 """
+        if self.unsafeHTMLOption && self.inlineImageExtension {
+            var changed = false
+            do {
+                let doc = try SwiftSoup.parse(html, basedir.path)
+                for img in try doc.select("img") {
+                    let src = try img.attr("src")
+                    
+                    guard !src.isEmpty, !src.hasPrefix("http"), !src.hasPrefix("HTTP") else {
+                        // Do not handle external image.
+                        continue
+                    }
+                    guard !src.hasPrefix("data:") else {
+                        // Do not reprocess data: image.
+                        continue
+                    }
+                    
+                    let file = basedir.appendingPathComponent(src).path
+                    guard FileManager.default.fileExists(atPath: file) else {
+                        continue // File not found.
+                    }
+                    guard let data = get_base64_image(
+                        file.cString(using: .utf8),
+                        { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
+                            let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
+                            
+                            let r = magic_get_mime_by_file(path, magic_file)
+                            return r
+                        },
+                        nil
+                    ) else {
+                        continue
+                    }
+                    defer {
+                        data.deallocate()
+                    }
+                    let img_data = String(cString: data)
+                    try img.attr("src", img_data)
+                    changed = true
+                }
+                if changed {
+                    html = try doc.outerHtml()
+                }
+            } catch Exception.Error(_, let message) {
+                print("Error processing html: \(message)")
+            } catch {
+                print("Error parsing html: \(error.localizedDescription)")
+            }
+        }
         return html
     }
 }

@@ -54,12 +54,14 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     }
     
     override func viewDidDisappear() {
+        // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
+        
         self.launcherService = nil
-        // Releases the script handler which retain a strong reference to self which prevents the WebKit process from being released.
-        self.webView.configuration.userContentController.removeScriptMessageHandler(forName: "imageExtensionHandler")
     }
     
     override func loadView() {
+        // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
+        
         super.loadView()
         // Do any additional setup after loading the view.
         
@@ -108,9 +110,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             let configuration = WKWebViewConfiguration()
             configuration.preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
             configuration.allowsAirPlayForMediaPlayback = false
-        
-            // Handler to replace raw <image> src with the embedded data.
-            configuration.userContentController.add(self, name: "imageExtensionHandler")
         
             self.webView = MyWKWebView(frame: previewRect, configuration: configuration)
             self.webView.autoresizingMask = [.height, .width]
@@ -167,6 +166,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
      */
     
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
+        // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
         
         // Add the supported content types to the QLSupportedContentTypes array in the Info.plist of the extension.
         
@@ -175,6 +175,44 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         // Call the completion handler so Quick Look knows that the preview is fully loaded.
         // Quick Look will display a loading spinner while the completion handler is not called.
         
+        do {
+            self.handler = handler
+            
+            let html = try renderMD(url: url)
+            /*
+            if #available(macOS 11, *) {
+                self.webView.mainFrame.loadHTMLString(html, baseURL: nil)
+            } else {
+            */
+            self.webView.isHidden = true // hide the webview until complete rendering
+            self.webView.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
+            /* } */
+        } catch {
+            handler(error)
+        }
+    }
+    
+    @available(macOSApplicationExtension 12.0, *)
+    func providePreview(for request: QLFilePreviewRequest, completionHandler handler: @escaping (QLPreviewReply?, Error?) -> Void) {
+        // This code will be called on macOS 12 Monterey with QLIsDataBasedPreview set.
+        
+        // print("providePreview for \(request.fileURL)")
+        
+        do {
+            let html = try renderMD(url: request.fileURL)
+            let replay = QLPreviewReply(dataOfContentType: .html, contentSize: .zero) { _ in
+                return html.data(using: .utf8)!
+            }
+            
+            // replay.title = request.fileURL.lastPathComponent
+            replay.stringEncoding = .utf8
+            handler(replay, nil)
+        } catch {
+            handler(nil, error)
+        }
+    }
+    
+    func renderMD(url: URL) throws -> String {
         os_log(
             "Generating preview for file %{public}s",
             log: self.log,
@@ -183,8 +221,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         )
         
         let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
-        
-        self.handler = handler
         
         let settings = Settings.shared
         
@@ -199,27 +235,11 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             markdown_url = url
         }
         
-        do {
-            let text = try settings.render(file: markdown_url, forAppearance: type == "Light" ? .light : .dark, baseDir: markdown_url.deletingLastPathComponent().path, log: self.log)
+        let text = try settings.render(file: markdown_url, forAppearance: type == "Light" ? .light : .dark, baseDir: markdown_url.deletingLastPathComponent().path, log: self.log)
+        
+        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent())
             
-            let extrajs: String
-            if settings.unsafeHTMLOption && settings.inlineImageExtension {
-                extrajs = "<script type=\"text/javascript\">" + (settings.getBundleContents(forResource: "inlineimages", ofType: "js") ?? "") + "</script>\n";
-            } else {
-                extrajs = ""
-            }
-            let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: extrajs)
-            /*
-            if #available(macOS 11, *) {
-                self.webView.mainFrame.loadHTMLString(html, baseURL: nil)
-            } else {
-            */
-            self.webView.isHidden = true // hide the webview until complete rendering
-            self.webView.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
-            /* } */
-        } catch {
-            handler(error)
-        }
+        return html
     }
 }
 
@@ -239,69 +259,13 @@ extension PreviewViewController: WebFrameLoadDelegate {
     }
 }
 
-extension PreviewViewController: WKScriptMessageHandler {
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "imageExtensionHandler", Settings.shared.unsafeHTMLOption && Settings.shared.inlineImageExtension else {
-            return
-        }
-        guard let dict = message.body as? [String : AnyObject], let src = dict["src"] as? String, let id = dict["id"] as? String else {
-            return
-        }
-
-        guard let data = get_base64_image(
-            src.cString(using: .utf8),
-            { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
-                let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
-                
-                let r = magic_get_mime_by_file(path, magic_file)
-                return r
-            },
-            nil
-        ) else {
-            return
-        }
-        defer {
-            data.deallocate()
-        }
-        let response: [String: String] = [
-            "src": src,
-            "id": id,
-            "data": String(cString: data)
-        ]
-        let encoder = JSONEncoder()
-        guard let j = try? encoder.encode(response), let js = String(data: j, encoding: .utf8) else {
-            return
-        }
-
-        message.webView?.evaluateJavaScript("replaceImageSrc(\(js))") { (r, error) in
-            if let result = r as? Bool, !result {
-                os_log(
-                    "Unable to replace <img> src %{public}s with the inline data.",
-                    log: self.log,
-                    type: .error,
-                    src
-                )
-            }
-            if let error = error {
-                os_log(
-                    "Unable to replace <img> src %{public}s with the inline data: %{public}s.",
-                    log: self.log,
-                    type: .error,
-                    src, error.localizedDescription
-                )
-            }
-        }
-    }
-}
-
 extension PreviewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if let handler = self.handler {
-            // Show the Quick Look preview only after the complete rendering (preventing a flickering glitch).
-            
             handler(nil)
             self.handler = nil
         }
+        // Show the Quick Look preview only after the complete rendering (preventing a flickering glitch).
         // Wait to show the webview to prevent a resize glitch.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.webView.isHidden = false

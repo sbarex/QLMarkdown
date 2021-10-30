@@ -22,14 +22,38 @@ extension FileHandle : TextOutputStream {
 func usage(exitCode: Int = -1) {
     let name = cliUrl.lastPathComponent
     print("\(name)")
-    print("Usage: \(name) [--app <path>] [-o <file|dir>] [-v] <file> [..]")
+    print("Usage: \(name) [-o <file|dir>] [-v] <file> [..]")
     print("\nArguments:")
     print(" -h\tShow this help and exit.")
     print(" -o\t<file|dir> Destination output. If you pass a directory, a new file is created with the name of the processed source with html extension. \n   \tThe destination file is always overwritten. If this argument is not provided, the output will be printed to the stdout.")
     print(" -v\tVerbose mode. Valid only with the -o option.")
     // print(" --app\t<path> Set the path of \"QLMarkdown.app\" otherwise assume that \(name) is called from the Contents/Resources of the app bundle.")
+    
+    print("\nOptions:")
+    print(" --debug [on|off]")
+    print(" --footnotes [on|off]")
+    print(" --hard-break [on|off]")
+    print(" --no-soft-break [on|off]")
+    print(" --raw-html [on|off]")
+    print(" --smart-quotes [on|off]")
+    print(" --validate-utf8 [on|off]")
+    
+    print("\nExtensions:")
+    print(" --autolink [on|off]")
+    print(" --emoji [no|image|font]")
+    print(" --github-mentions [on|off]")
+    print(" --heads-anchor [on|off]")
+    print(" --inline-images [on|off]")
+    print(" --table [on|off]")
+    print(" --tag-filter [on|off]")
+    print(" --tasklist [on|off]")
+    print(" --strikethrough [no|single|double]")
+    print(" --syntax-highlight [on|off]")
+    print(" --yaml [no|rmd|all]")
+    
+    print("\nUnspecified rendering options will use the settings defined in the main application.")
+
     print("\nTo handle multiple files at time you need to pass the -o arguments with a destination folder.")
-    print("\nPlease use the main app to customize the rendering settings.")
     
     if exitCode >= 0 {
         exit(Int32(exitCode))
@@ -40,6 +64,26 @@ var appUrl: URL!
 var files: [URL] = []
 var dest: URL?
 var verbose = false
+
+let settings = Settings.shared
+
+func parseArgOnOff(index i: Int) -> Bool {
+    guard i+1 < CommandLine.arguments.count else {
+        print("\(cliUrl.lastPathComponent): \(CommandLine.arguments[i]) require on|off extra arguments.\n", to: &standardError)
+        usage(exitCode: 1)
+        return false
+    }
+    
+    let u = CommandLine.arguments[i+1]
+    switch u {
+    case "on", "1": return true
+    case "off", "0": return false
+    default:
+        print("\(cliUrl.lastPathComponent): illegal argument '\(u)' for \(CommandLine.arguments[i]) option.\n", to: &standardError)
+        usage(exitCode: 1)
+        return false
+    }
+}
 
 var i = 1
 while i < Int(CommandLine.argc) {
@@ -52,8 +96,68 @@ while i < Int(CommandLine.argc) {
                 usage(exitCode: 0)
             case "--app":
                 let u = CommandLine.arguments[i+1]
-                i += 1
                 appUrl = URL(fileURLWithPath: u)
+                i += 1
+            case "--smart-quotes":
+                settings.smartQuotesOption = parseArgOnOff(index: i)
+                i += 1
+            case "--footnotes":
+                settings.footnotesOption = parseArgOnOff(index: i)
+                i += 1
+            case "--emoji":
+                let opt = CommandLine.arguments[i+1]
+                settings.emojiExtension = opt != "no"
+                settings.emojiImageOption = opt == "image"
+                i += 1
+            case "--table":
+                settings.tableExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--strikethrough":
+                let opt = CommandLine.arguments[i+1]
+                settings.strikethroughExtension = opt != "no"
+                settings.strikethroughDoubleTildeOption = opt == "double"
+                i += 1
+            case "--syntax-highlight":
+                settings.syntaxHighlightExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--hard-break":
+                settings.hardBreakOption = parseArgOnOff(index: i)
+                i += 1
+            case "--no-soft-break":
+                settings.noSoftBreakOption = parseArgOnOff(index: i)
+                i += 1
+            case "--validate-utf8":
+                settings.validateUTFOption = parseArgOnOff(index: i)
+                i += 1
+            case "--raw-html":
+                settings.unsafeHTMLOption = parseArgOnOff(index: i)
+                i += 1
+            case "--autolink":
+                settings.autoLinkExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--github-mentions":
+                settings.mentionExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--heads-anchor":
+                settings.headsExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--inline-images":
+                settings.inlineImageExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--tag-filter":
+                settings.tagFilterExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--tasklist":
+                settings.taskListExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--yaml":
+                let opt = CommandLine.arguments[i+1]
+                settings.yamlExtension = opt != "no"
+                settings.yamlExtensionAll = opt == "all"
+                i += 1
+            case "--debug":
+                settings.debug = parseArgOnOff(index: i)
+                i += 1
             default:
                 print("\(cliUrl.lastPathComponent): illegal option -\(arg)\n", to: &standardError)
                 usage(exitCode: 1)
@@ -67,6 +171,10 @@ while i < Int(CommandLine.argc) {
                     usage(exitCode: 0)
                 case "o":
                     if j + 1 == arg.count {
+                        if CommandLine.arguments[i+1].description.hasPrefix("-") {
+                            print("\(cliUrl.lastPathComponent): option -\(arg1) require a destination path\n", to: &standardError)
+                            usage(exitCode: 1)
+                        }
                         dest = URL(fileURLWithPath: CommandLine.arguments[i+1])
                         i += 1
                     } else {
@@ -111,6 +219,31 @@ while i < Int(CommandLine.argc) {
 }
 
 verbose = verbose && dest != nil
+if verbose {
+    print("\n\(cliUrl.lastPathComponent)")
+    print("\n- options:")
+    print("    footnotes: \(settings.footnotesOption ? "on" : "off")")
+    print("    hard-break: \(settings.hardBreakOption ? "on" : "off")")
+    print("    no-soft-break: \(settings.noSoftBreakOption ? "on" : "off")")
+    print("    raw-html: \(settings.unsafeHTMLOption ? "on" : "off")")
+    print("    smart-quotes: \(settings.smartQuotesOption ? "on" : "off")")
+    print("    validate-utf8: \(settings.validateUTFOption ? "on" : "off")")
+    print("    debug: \(settings.debug ? "on" : "off")")
+    
+    print("\n- extensions:")
+    print("    autolink: \(settings.autoLinkExtension ? "on" : "off")")
+    print("    emoji: \(settings.emojiExtension ? (settings.emojiImageOption ? "as image" : "as font") : "off")")
+    print("    github-mentions: \(settings.mentionExtension ? "on" : "off")")
+    print("    heads-anchor: \(settings.headsExtension ? "on" : "off")")
+    print("    inline-images: \(settings.inlineImageExtension ? "on" : "off")")
+    print("    table: \(settings.tableExtension ? "on" : "off")")
+    print("    tag-filter: \(settings.tagFilterExtension ? "on" : "off")")
+    print("    tasklist: \(settings.taskListExtension ? "on" : "off")")
+    print("    strikethrough: \(settings.strikethroughExtension ? (settings.strikethroughDoubleTildeOption ? "double tilde" : "single tilde") : "off")")
+    print("    syntax-highlight: \(settings.syntaxHighlightExtension ? "on" : "off")")
+    print("    yaml: \(settings.yamlExtension ? (settings.yamlExtensionAll ? "all" : "only for .rmd") : "off")")
+    print("")
+}
 
 if appUrl == nil {
     appUrl = cliUrl.deletingLastPathComponent().deletingLastPathComponent()
@@ -138,13 +271,8 @@ defer {
 }
 
 Settings.appBundleUrl = appBundleUrl
-let settings = Settings.shared
 
 let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
-
-if verbose {
-    print("\(cliUrl.lastPathComponent):")
-}
 
 for url in files {
     let markdown_url: URL
@@ -169,7 +297,7 @@ for url in files {
         }
         let text = try settings.render(file: markdown_url, forAppearance: type == "Light" ? .light : .dark, baseDir: markdown_url.deletingLastPathComponent().path, log: nil)
         
-        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
+        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, basedir: markdown_url.deletingLastPathComponent())
         
         var output: URL?
         if let dest = dest {
