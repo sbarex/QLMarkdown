@@ -304,15 +304,12 @@ char *highlight_format_string2(const char *code, const char *language, int *exit
     outFilePath = "";
 
     string suffix = language;
-    if (suffix == "c++") {
-        suffix = "cpp";
-    } else if (suffix == "ascr" || suffix == "scpt") {
-        suffix = "applescript";
-    } else if (suffix == "plist" ) {
-        suffix = "xml";
-    } else if (suffix == "m" ) {
-        suffix = "objc";
-    } else if (suffix.front() == '{' && suffix.back() == '}') {
+    // convert string to lower case
+    std::for_each(suffix.begin(), suffix.end(), [](char & c){
+        c = ::tolower(c);
+    });
+    
+    if (suffix.front() == '{' && suffix.back() == '}') {
         // remove r-markdown curly braces
         std::size_t found1 = suffix.find_first_of(','); // arguments separator
         std::size_t found2 = suffix.find_first_of(' ');
@@ -323,6 +320,18 @@ char *highlight_format_string2(const char *code, const char *language, int *exit
             suffix.pop_back();
             suffix.erase(0, 1);
         }
+    }
+    
+    if (suffix == "c++") {
+        suffix = "cpp";
+    } else if (suffix == "ascr" || suffix == "scpt") {
+        suffix = "applescript";
+    } else if (suffix == "plist" ) {
+        suffix = "xml";
+    } else if (suffix == "m" ) {
+        suffix = "objc";
+    } else if (suffix == "javascript" ) {
+        suffix = "js";
     }
     generator->setFilesCnt(1);
 

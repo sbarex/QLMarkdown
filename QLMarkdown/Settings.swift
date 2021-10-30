@@ -497,6 +497,13 @@ class Settings {
             cmark_parser_free(parser)
         }
         
+        /*
+        var extensions: UnsafeMutablePointer<cmark_llist>? = nil
+        defer {
+            cmark_llist_free(cmark_get_default_mem_allocator(), extensions)
+        }
+        */
+        
         if self.tableExtension, let ext = cmark_find_syntax_extension("table") {
             cmark_parser_attach_syntax_extension(parser, ext)
             if let l = log {
@@ -506,6 +513,7 @@ class Settings {
                     type: .debug
                 )
             }
+            // extensions = cmark_llist_append(cmark_get_default_mem_allocator(), nil, &ext)
         }
         
         if self.autoLinkExtension, let ext = cmark_find_syntax_extension("autolink") {
@@ -696,7 +704,7 @@ class Settings {
         
         let html_debug = self.renderDebugInfo(forAppearance: appearance, baseDir: baseDir)
         // Render
-        if let html2 = cmark_render_html(doc, options, nil) {
+        if let html2 = cmark_render_html(doc, options, cmark_parser_get_syntax_extensions(parser)) {
             defer {
                 free(html2)
             }
@@ -968,7 +976,7 @@ table.debug td {
 </body>
 </html>
 """
-        if self.unsafeHTMLOption && self.inlineImageExtension {
+        if self.unsafeHTMLOption && self.inlineImageExtension, let ext = cmark_find_syntax_extension("inlineimage"), cmark_syntax_extension_inlineimage_get_raw_images_count(ext) > 0 {
             var changed = false
             do {
                 let doc = try SwiftSoup.parse(html, basedir.path)

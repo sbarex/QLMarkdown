@@ -1,6 +1,13 @@
 # Changelog
 =======
 
+### 1.0.5 (30)
+Bugfix:
+- Tag Filter extension fixed.
+- Improved performance for inline image handling in raw HTML fragment.
+- Better recognition of javascript fenced block.
+- Missing library credits on about dialog.
+
 ### 1.0.4 (29)
 New features:
 - On macOS 12 Monterey, the new lightweight data based preview will be used.
