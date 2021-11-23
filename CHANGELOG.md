@@ -1,6 +1,13 @@
 # Changelog
 =======
 
+### 1.0.6 (31)
+New features:
+- Application menu item to install/reveal the CLI tool on `/usr/local/bin` folder.
+- Support for UTI `public.markdown` defined by `Nova.app`.
+Bugfix:
+- Fixed possibile deallocation error with invalid highlight theme.
+
 ### 1.0.5 (30)
 Bugfix:
 - Tag Filter extension fixed.

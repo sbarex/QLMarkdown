@@ -494,7 +494,6 @@ int highlight_list_themes2(HThemeInfo ***theme_list, int *count, ReleaseThemeInf
     string suffix, desc;
     Diluculum::LuaValueMap categoryMap;
 
-    int matchedFileCnt=0;
     std::set<string> categoryNames;
 
     istringstream valueStream;
@@ -504,9 +503,10 @@ int highlight_list_themes2(HThemeInfo ***theme_list, int *count, ReleaseThemeInf
     int j = 0;
 
     for (const auto& filePath : filePaths) {
+        HThemeInfo *theme;
         try {
-            HThemeInfo *theme = allocate_theme_info();
-
+            theme = allocate_theme_info();
+            
             Diluculum::LuaState ls;
             highlight::SyntaxReader::initLuaState(ls, filePath, "");
             ls.doFile(filePath);
@@ -529,21 +529,20 @@ int highlight_list_themes2(HThemeInfo ***theme_list, int *count, ReleaseThemeInf
             suffix = suffix.substr ( 1, suffix.length()- wildcard.length() );
 
             theme->name = strdup(suffix.c_str());
-            theme->desc = strdup(ls["Description"].value().asString().c_str());
+            theme->desc = strdup(desc.c_str());
             theme->path = strdup(filePath.c_str());
             theme->base16 = filePath.rfind(base_path16, 0) == 0 ? 1 : 0;
 
-
             themes[j] = theme;
             j++;
-
-            matchedFileCnt++;
         } catch (std::runtime_error &error) {
             os_log_error(sLog, "Failed to read '%{public}s': %{public}s", filePath.c_str(), error.what());
+            release_theme_info(theme);
         }
     }
 
     *theme_list = themes;
+    *count = j;
 
     return EXIT_SUCCESS;
 }
