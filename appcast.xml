@@ -431,5 +431,49 @@
             ]]>
             </description>
         </item>
+        <item>
+            <title>1.0.6</title>
+            <pubDate>mar, 23 nov 2021 16:53:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.6/QLMarkdown.zip" sparkle:shortVersionString="1.0.6" sparkle:version="31" sparkle:edSignature="vf9laXH/ulR9n+kVkF7UbK7Pk8ZtymLXOlXR+0a39lOCiLFyyMfVGKLfkCQNsTfF1yX2PvBmzoQN/ZqCy9EkDQ==" length="17815158"/>
+            <description><![CDATA[
+<h2>1.0.6</h2>
+<p>New features:</p>
+<ul>
+<li>Application menu item to install/reveal the CLI tool on <code>/usr/local/bin</code> folder.</li>
+<li>Support for UTI <code>public.markdown</code> defined by <code>Nova.app</code>.</li>
+</ul>
+
+<p>Bugfix:</p>
+<ul>
+<li>Fixed possibile deallocation error with invalid highlight theme.</li>
+</ul>
+
+<h2>1.0.5</h2>
+<p>Bugfix:</p>
+<ul>
+<li>Tag Filter extension fixed.</li>
+<li>Improved performance for inline image handling in raw HTML fragment.</li>
+<li>Better recognition of javascript fenced block.</li>
+<li>Missing library credits on about dialog.</li>
+</ul>
+
+<h2>1.0.4</h2>
+<p>New features:</p>
+<ul>
+<li>On macOS 12 Monterey, the new lightweight data based preview will be used.</li>
+<li>Addeded more arguments to the CLI tool.</li>
+<li>CLI tool embed inline images handle also raw HTML fragments.</li>
+</ul>
+<p>Bugfix:</p>
+<ul>
+<li>Handle markdown associated only to a dynamic UTI.</li>
+<li>Fixed issue with instantiated and never released <code>Markdown QL Extension Web Content</code> process for each file previewed.</li>
+<li>On macOS 12 Monterey now you can scroll the preview with the scrollbars.</li>
+<li>On macOS 12 Monterey the bug of trackpad scrolling in fullscreen preview has been fixed.</li>
+</ul>
+            ]]>
+            </description>
+        </item>
     </channel>
 </rss>
