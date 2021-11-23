@@ -30,30 +30,30 @@ func usage(exitCode: Int = -1) {
     // print(" --app\t<path> Set the path of \"QLMarkdown.app\" otherwise assume that \(name) is called from the Contents/Resources of the app bundle.")
     
     print("\nOptions:")
-    print(" --debug [on|off]")
-    print(" --footnotes [on|off]")
-    print(" --hard-break [on|off]")
-    print(" --no-soft-break [on|off]")
-    print(" --raw-html [on|off]")
-    print(" --smart-quotes [on|off]")
-    print(" --validate-utf8 [on|off]")
+    print(" --debug on|off")
+    print(" --footnotes on|off")
+    print(" --hard-break on|off")
+    print(" --no-soft-break on|off")
+    print(" --raw-html on|off")
+    print(" --smart-quotes on|off")
+    print(" --validate-utf8 on|off")
     
     print("\nExtensions:")
-    print(" --autolink [on|off]")
-    print(" --emoji [no|image|font]")
-    print(" --github-mentions [on|off]")
-    print(" --heads-anchor [on|off]")
-    print(" --inline-images [on|off]")
-    print(" --table [on|off]")
-    print(" --tag-filter [on|off]")
-    print(" --tasklist [on|off]")
-    print(" --strikethrough [no|single|double]")
-    print(" --syntax-highlight [on|off]")
-    print(" --yaml [no|rmd|all]")
+    print(" --autolink on|off")
+    print(" --emoji image|font|off")
+    print(" --github-mentions on|off")
+    print(" --heads-anchor on|off")
+    print(" --inline-images on|off")
+    print(" --table on|off")
+    print(" --tag-filter on|off")
+    print(" --tasklist on|off")
+    print(" --strikethrough single|double|off")
+    print(" --syntax-highlight on|off")
+    print(" --yaml rmd|all|off")
     
     print("\nUnspecified rendering options will use the settings defined in the main application.")
 
-    print("\nTo handle multiple files at time you need to pass the -o arguments with a destination folder.")
+    print("\nTo handle multiple files at time you need to pass the -o argument with a destination folder.")
     
     if exitCode >= 0 {
         exit(Int32(exitCode))
@@ -69,7 +69,7 @@ let settings = Settings.shared
 
 func parseArgOnOff(index i: Int) -> Bool {
     guard i+1 < CommandLine.arguments.count else {
-        print("\(cliUrl.lastPathComponent): \(CommandLine.arguments[i]) require on|off extra arguments.\n", to: &standardError)
+        print("\(cliUrl.lastPathComponent): \(CommandLine.arguments[i]) require an on|off argument.\n", to: &standardError)
         usage(exitCode: 1)
         return false
     }
@@ -106,7 +106,7 @@ while i < Int(CommandLine.argc) {
                 i += 1
             case "--emoji":
                 let opt = CommandLine.arguments[i+1]
-                settings.emojiExtension = opt != "no"
+                settings.emojiExtension = opt != "off"
                 settings.emojiImageOption = opt == "image"
                 i += 1
             case "--table":
@@ -114,7 +114,7 @@ while i < Int(CommandLine.argc) {
                 i += 1
             case "--strikethrough":
                 let opt = CommandLine.arguments[i+1]
-                settings.strikethroughExtension = opt != "no"
+                settings.strikethroughExtension = opt != "off"
                 settings.strikethroughDoubleTildeOption = opt == "double"
                 i += 1
             case "--syntax-highlight":
@@ -152,7 +152,7 @@ while i < Int(CommandLine.argc) {
                 i += 1
             case "--yaml":
                 let opt = CommandLine.arguments[i+1]
-                settings.yamlExtension = opt != "no"
+                settings.yamlExtension = opt != "off"
                 settings.yamlExtensionAll = opt == "all"
                 i += 1
             case "--debug":
@@ -258,7 +258,7 @@ if files.count > 1 {
         FileManager.default.fileExists(atPath: dest.path, isDirectory: &isDir)
     }
     if !isDir.boolValue {
-        print("Error: to process multiple files you must use the -o arguments with a folder path!", to: &standardError)
+        print("Error: to process multiple files you must use the -o argument with a folder path!", to: &standardError)
         exit(1)
     }
 }
@@ -274,6 +274,10 @@ Settings.appBundleUrl = appBundleUrl
 
 let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
 
+if files.isEmpty {
+    usage(exitCode: 1)
+}
+
 for url in files {
     let markdown_url: URL
     if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {
@@ -285,10 +289,9 @@ for url in files {
     } else {
         markdown_url = url
     }
-
     
     do {
-        if !FileManager.default.isReadableFile(atPath: markdown_url.path) {
+        guard FileManager.default.isReadableFile(atPath: markdown_url.path) else {
             print("Unable to read the file \(markdown_url.path)", to: &standardError)
             exit(127)
         }

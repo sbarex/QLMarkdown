@@ -232,6 +232,8 @@ A `qlmarkdown_cli` command line interface (CLI) is available to perform batch co
 
 The tool is located inside the `QLMarkdown.app/Contents/Resources` folder (and should not be moved outside). 
 
+From the Application menu you can create a symbolic link into `/usr/local/bin` folder.
+
 ```
 Usage: qlmarkdown_cli [-o <file|dir>] <file> [..]
 
@@ -245,26 +247,26 @@ Arguments:
  -v    Verbose mode. Valid only with the -o option.
 
 Options:
- --debug [on|off]
- --footnotes [on|off]
- --hard-break [on|off]
- --no-soft-break [on|off]
- --raw-html [on|off]
- --smart-quotes [on|off]
- --validate-utf8 [on|off]
+ --debug on|off
+ --footnotes on|off
+ --hard-break on|off
+ --no-soft-break on|off
+ --raw-html on|off
+ --smart-quotes on|off
+ --validate-utf8 on|off
 
 Extensions:
- --autolink [on|off]
- --emoji [no|image|font]
- --github-mentions [on|off]
- --heads-anchor [on|off]
- --inline-images [on|off]
- --table [on|off]
- --tag-filter [on|off]
- --tasklist [on|off]
- --strikethrough [no|single|double]
- --syntax-highlight [on|off]
- --yaml [no|rmd|all]
+ --autolink on|off
+ --emoji image|font|off
+ --github-mentions on|off
+ --heads-anchor on|off
+ --inline-images on|off
+ --table on|off
+ --tag-filter on|off
+ --tasklist on|off
+ --strikethrough single|double|off
+ --syntax-highlight on|off
+ --yaml rmd|all|off
 
 Unspecified rendering options will use the settings defined in the main application.
 

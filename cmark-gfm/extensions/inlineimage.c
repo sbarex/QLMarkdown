@@ -203,8 +203,7 @@ char *cmark_syntax_extension_inlineimage_get_wd(cmark_syntax_extension *extensio
 int cmark_syntax_extension_inlineimage_get_raw_images_count(cmark_syntax_extension *ext) {
     inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(ext);
     if (!settings) {
-        settings = init_settings();
-        cmark_syntax_extension_set_private(ext, settings, release_settings);
+        return 0;
     }
     return settings->raw_images;
 }
