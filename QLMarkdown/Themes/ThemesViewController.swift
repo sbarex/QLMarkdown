@@ -10,7 +10,7 @@ import Foundation
 import Cocoa
 import WebKit
 
-protocol ThemesViewDelegate: class {
+protocol ThemesViewDelegate: AnyObject {
     var theme: ThemePreview? { get set }
 }
 

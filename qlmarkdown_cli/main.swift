@@ -30,13 +30,14 @@ func usage(exitCode: Int = -1) {
     // print(" --app\t<path> Set the path of \"QLMarkdown.app\" otherwise assume that \(name) is called from the Contents/Resources of the app bundle.")
     
     print("\nOptions:")
-    print(" --debug on|off")
     print(" --footnotes on|off")
     print(" --hard-break on|off")
     print(" --no-soft-break on|off")
     print(" --raw-html on|off")
     print(" --smart-quotes on|off")
     print(" --validate-utf8 on|off")
+    print(" --code on|off")
+    print(" --debug on|off")
     
     print("\nExtensions:")
     print(" --autolink on|off")
@@ -158,6 +159,9 @@ while i < Int(CommandLine.argc) {
             case "--debug":
                 settings.debug = parseArgOnOff(index: i)
                 i += 1
+            case "--code":
+                settings.renderAsCode = parseArgOnOff(index: i)
+                i += 1
             default:
                 print("\(cliUrl.lastPathComponent): illegal option -\(arg)\n", to: &standardError)
                 usage(exitCode: 1)
@@ -228,6 +232,7 @@ if verbose {
     print("    raw-html: \(settings.unsafeHTMLOption ? "on" : "off")")
     print("    smart-quotes: \(settings.smartQuotesOption ? "on" : "off")")
     print("    validate-utf8: \(settings.validateUTFOption ? "on" : "off")")
+    print("    render source code: \(settings.renderAsCode ? "on" : "off")")
     print("    debug: \(settings.debug ? "on" : "off")")
     
     print("\n- extensions:")
@@ -298,9 +303,10 @@ for url in files {
         if verbose {
             print("- processing \(markdown_url.path) ...")
         }
-        let text = try settings.render(file: markdown_url, forAppearance: type == "Light" ? .light : .dark, baseDir: markdown_url.deletingLastPathComponent().path, log: nil)
+        let appearance: Appearance = type == "Light" ? .light : .dark
+        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path, log: nil)
         
-        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, basedir: markdown_url.deletingLastPathComponent())
+        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, basedir: markdown_url.deletingLastPathComponent(), forAppearance: appearance)
         
         var output: URL?
         if let dest = dest {

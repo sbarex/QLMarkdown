@@ -78,6 +78,7 @@ class Settings {
     @objc var customCSSOverride: Bool = false
     @objc var openInlineLink: Bool = false
     
+    @objc var renderAsCode: Bool = false
     @objc var debug: Bool = false
     
     
@@ -250,6 +251,9 @@ class Settings {
         if let opt = defaultsDomain["inline-link"] as? Bool {
             openInlineLink = opt
         }
+        if let opt = defaultsDomain["render-as-code"] as? Bool {
+            renderAsCode = opt
+        }
         
         sanitizeEmojiOption()
     }
@@ -307,6 +311,7 @@ class Settings {
             self.openInlineLink = s.openInlineLink
     
             self.debug = s.debug
+            self.renderAsCode = s.renderAsCode
             
             DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)
         }
@@ -445,7 +450,60 @@ class Settings {
         return "```yaml\n"+text+"```\n"
     }
     
+    func renderCode(text: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) -> String? {
+        
+        if let path = getHighlightSupportPath() {
+            cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
+        } else {
+            if let l = log {
+                os_log("Unable to found the `highlight` support dir!", log: l, type: .error)
+            }
+        }
+        
+        let theme: String
+        switch appearance {
+        case .light:
+            theme = self.syntaxThemeLight
+        case .dark:
+            theme = self.syntaxThemeDark
+        case .undefined:
+            let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+            if mode == "Light" {
+                theme = self.syntaxThemeLight
+            } else {
+                theme = self.syntaxThemeDark
+            }
+        }
+        
+        // Initialize a new generator and clear previous settings.
+        highlight_init_generator()
+        
+        highlight_set_print_line_numbers(self.syntaxLineNumbersOption ? 1 : 0)
+        highlight_set_formatting_mode(Int32(self.syntaxWordWrapOption), Int32(self.syntaxTabsOption))
+        
+        if !self.syntaxFontFamily.isEmpty {
+            highlight_set_current_font(self.syntaxFontFamily, self.syntaxFontSize > 0 ? String(format: "%.02f", self.syntaxFontSize) : "1rem") // 1rem is rendered as 1rempt, so it is ignored.
+        } else {
+            highlight_set_current_font("ui-monospace, -apple-system, BlinkMacSystemFont, sans-serif", "10");
+        }
+        
+        if let s = colorizeCode(text, "md", theme, true, self.syntaxLineNumbersOption) {
+            defer {
+                s.deallocate()
+            }
+            let code = String(cString: s)
+            return code
+        } else {
+            return nil
+        }
+    }
+    
     func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) throws -> String {
+        
+        if self.renderAsCode, let code = self.renderCode(text: text, forAppearance: appearance, baseDir: baseDir, log: log) {
+            return code
+        }
+        
         cmark_gfm_core_extensions_ensure_registered()
         
         var options = CMARK_OPT_DEFAULT
@@ -912,7 +970,8 @@ table.debug td {
         }
     }
     
-    func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "", basedir: URL) -> String {
+    func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "", basedir: URL, forAppearance appearance: Appearance) -> String {
+        
         let css_doc: String
         let css_doc_extended: String
         
@@ -923,40 +982,81 @@ table.debug td {
             return "<style type='text/css'>\(css)\n</style>\n"
         }
         
-        if let css = self.getCustomCSSCode() {
-            css_doc_extended = formatCSS(css)
-            if !self.customCSSOverride {
-                css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
+        if !self.renderAsCode {
+            if let css = self.getCustomCSSCode() {
+                css_doc_extended = formatCSS(css)
+                if !self.customCSSOverride {
+                    css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
+                } else {
+                    css_doc = ""
+                }
             } else {
-                css_doc = ""
+                css_doc_extended = ""
+                css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
             }
+            // css_doc = "<style type=\"text/css\">\n\(css_doc)\n</style>\n"
         } else {
             css_doc_extended = ""
-            css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
+            css_doc = ""
         }
-        // css_doc = "<style type=\"text/css\">\n\(css_doc)\n</style>\n"
             
         var css_highlight: String = ""
-        if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight"), cmark_syntax_extension_highlight_get_rendered_count(ext) > 0 {
+        if self.renderAsCode {
+            let theme: String
+            var background: String = ""
+            switch appearance {
+            case .light:
+                theme = self.syntaxThemeLight
+            case .dark:
+                theme = self.syntaxThemeDark
+            case .undefined:
+                let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                if mode == "Light" {
+                    theme = self.syntaxThemeLight
+                } else {
+                    theme = self.syntaxThemeDark
+                }
+            }
+            var release: ReleaseTheme?
+            var exit_code: Int32 = 0
+            if let theme = highlight_get_theme2(theme, &exit_code, &release) {
+                defer {
+                    release?(theme)
+                }
+                if let s = theme.pointee.canvas?.pointee.color {
+                    background = String(cString: s)
+                }
+            }
+            exit_code = 0
+            if let p = highlight_format_style2(&exit_code, background) {
+                css_highlight = String(cString: p) + "\npre.hl { white-space: pre; }\n"
+                p.deallocate()
+            }
+        } else if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight"), cmark_syntax_extension_highlight_get_rendered_count(ext) > 0 {
             let theme = String(cString: cmark_syntax_extension_highlight_get_theme_name(ext))
             if !theme.isEmpty, let p = cmark_syntax_extension_get_style(ext) {
                 // Embed the theme style.
-                let font = self.syntaxFontFamily
                 css_highlight = String(cString: p)
-                if font != "" {
-                    css_highlight += """
-    :root {
-    --code-font: "\(font)", -apple-system, Menlo, monospace;
-    }
-    """;
-                }
-                css_highlight = formatCSS(css_highlight);
-                p.deallocate();
+                p.deallocate()
             }
+        }
+        if !css_highlight.isEmpty {
+            let font = self.syntaxFontFamily
+            if font != "" {
+                let code = """
+:root {
+--code-font: "\(font)", ui-monospace, -apple-system, Menlo, monospace;
+}
+"""
+                css_highlight += code
+            }
+            css_highlight = formatCSS(css_highlight)
         }
         
         let style = css_doc + css_highlight + css_doc_extended
-        
+        let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
+        let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"
+        let body_style = self.renderAsCode ? " class='hl'" : ""
         var html =
 """
 <!doctype html>
@@ -968,15 +1068,15 @@ table.debug td {
 \(style)
 \(header)
 </head>
-<body>
-<article class="markdown-body">
+<body\(body_style)>
+\(wrapper_open)
 \(body)
-</article>
+\(wrapper_close)
 \(footer)
 </body>
 </html>
 """
-        if self.unsafeHTMLOption && self.inlineImageExtension, let ext = cmark_find_syntax_extension("inlineimage"), cmark_syntax_extension_inlineimage_get_raw_images_count(ext) > 0 {
+        if !self.renderAsCode && self.unsafeHTMLOption && self.inlineImageExtension, let ext = cmark_find_syntax_extension("inlineimage"), cmark_syntax_extension_inlineimage_get_raw_images_count(ext) > 0 {
             var changed = false
             do {
                 let doc = try SwiftSoup.parse(html, basedir.path)

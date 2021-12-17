@@ -56,6 +56,7 @@ extension Settings {
         
         defaultsDomain["debug"] = self.debug
         defaultsDomain["inline-link"] = openInlineLink
+        defaultsDomain["render-as-code"] = self.renderAsCode
         
         let file: String
         if let url = customCSS {

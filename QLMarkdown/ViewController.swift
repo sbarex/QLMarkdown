@@ -217,6 +217,12 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
+    
+    @objc dynamic var renderAsCode: Bool = Settings.factorySettings.renderAsCode {
+        didSet {
+            isDirty = true
+        }
+    }
 
     @objc dynamic var customCSSOverride: Bool = Settings.factorySettings.customCSSOverride {
         didSet {
@@ -543,13 +549,14 @@ class ViewController: NSViewController {
         
         let body: String
         let settings = self.updateSettings()
+        let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
         do {
-            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
         } catch {
             body = "Error"
         }
         
-        let html = settings.getCompleteHTML(title: ".md", body: body, basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent())
+        let html = settings.getCompleteHTML(title: ".md", body: body, basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
         do {
             
             try html.write(to: dst, atomically: true, encoding: .utf8)
@@ -615,8 +622,9 @@ class ViewController: NSViewController {
         
         let body: String
         let settings = self.updateSettings()
+        let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
         do {
-            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: self.appearanceButton.state == .off ? .light : .dark, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
         } catch {
             body = "Error"
         }
@@ -655,7 +663,7 @@ document.addEventListener('scroll', function(e) {
 </script>
 """
         
-        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: "", basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent())
+        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: "", basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
         webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
     }
     
@@ -973,6 +981,7 @@ document.addEventListener('scroll', function(e) {
         initStylesPopup()
         
         self.debugMode = settings.debug
+        self.renderAsCode = settings.renderAsCode
         
         self.tableExtension = settings.tableExtension
         self.autoLinkExtension = settings.autoLinkExtension
@@ -1058,6 +1067,7 @@ document.addEventListener('scroll', function(e) {
         let settings = Settings.shared
         
         settings.debug = self.debugMode
+        settings.renderAsCode = self.renderAsCode
         
         settings.tableExtension = self.tableExtension
         settings.autoLinkExtension = self.autoLinkExtension

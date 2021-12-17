@@ -235,9 +235,10 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             markdown_url = url
         }
         
-        let text = try settings.render(file: markdown_url, forAppearance: type == "Light" ? .light : .dark, baseDir: markdown_url.deletingLastPathComponent().path, log: self.log)
+        let appearance: Appearance = type == "Light" ? .light : .dark
+        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path, log: self.log)
         
-        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent())
+        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent(), forAppearance: appearance)
             
         return html
     }

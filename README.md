@@ -126,6 +126,8 @@ The options follow those offered by the `cmark-gfm`:
 
 In the advanced options, you can also choose if open external link inside the Quick Look preview window or in the default browser.
 
+With the `Render source code` enabled, the preview shows the highlighted source code instead of the formatted output. 
+
 ### Extensions
 
 #### Autolink
@@ -247,13 +249,14 @@ Arguments:
  -v    Verbose mode. Valid only with the -o option.
 
 Options:
- --debug on|off
  --footnotes on|off
  --hard-break on|off
  --no-soft-break on|off
  --raw-html on|off
  --smart-quotes on|off
  --validate-utf8 on|off
+ --code on|off
+ --debug on|off
 
 Extensions:
  --autolink on|off

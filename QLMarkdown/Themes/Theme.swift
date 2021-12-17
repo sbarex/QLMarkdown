@@ -377,7 +377,7 @@ import Cocoa
         <title>\(self.name)</title>
 <style type="text/css">
 body {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: ui-monospace, -apple-system, BlinkMacSystemFont, sans-serif;
     user-select: none;
 }
 \(css)

@@ -1,6 +1,12 @@
 # Changelog
 =======
 
+
+### 1.0.7 (32)
+New features:
+- Support for render the markdown source code instead of the formatted output.
+
+
 ### 1.0.6 (31)
 New features:
 - Application menu item to install/reveal the CLI tool on `/usr/local/bin` folder.
