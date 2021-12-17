@@ -463,15 +463,15 @@ class Settings {
         let theme: String
         switch appearance {
         case .light:
-            theme = self.syntaxThemeLight
+            theme = self.syntaxThemeLight.isEmpty ? "acid" : self.syntaxThemeLight
         case .dark:
-            theme = self.syntaxThemeDark
+            theme = self.syntaxThemeDark.isEmpty ? "zenburn" : self.syntaxThemeDark
         case .undefined:
             let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
             if mode == "Light" {
-                theme = self.syntaxThemeLight
+                theme = self.syntaxThemeLight.isEmpty ? "acid" : self.syntaxThemeLight
             } else {
-                theme = self.syntaxThemeDark
+                theme = self.syntaxThemeDark.isEmpty ? "zenburn" : self.syntaxThemeDark
             }
         }
         
@@ -1006,15 +1006,15 @@ table.debug td {
             var background: String = ""
             switch appearance {
             case .light:
-                theme = self.syntaxThemeLight
+                theme = self.syntaxThemeLight.isEmpty ? "acid" : self.syntaxThemeLight
             case .dark:
-                theme = self.syntaxThemeDark
+                theme = self.syntaxThemeDark.isEmpty ? "zenburn" : self.syntaxThemeDark
             case .undefined:
                 let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
                 if mode == "Light" {
-                    theme = self.syntaxThemeLight
+                    theme = self.syntaxThemeLight.isEmpty ? "acid" : self.syntaxThemeLight
                 } else {
-                    theme = self.syntaxThemeDark
+                    theme = self.syntaxThemeDark.isEmpty ? "zenburn" : self.syntaxThemeDark
                 }
             }
             var release: ReleaseTheme?
