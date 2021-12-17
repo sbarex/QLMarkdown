@@ -480,7 +480,7 @@
             <title>1.0.7</title>
             <pubDate>ven, 17 dic 2021 18:18:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.7/QLMarkdown.zip" sparkle:shortVersionString="1.0.7" sparkle:version="32" sparkle:edSignature="xes4xz6zS/sKItkD4SlMHYXy90DJhIjJG8qPH8qopJLKm0A+KaJaukQ3x89aNga8OttXKwMFy9cnPpUMlYwJDA==" length="17837425">
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.7/QLMarkdown.zip" sparkle:shortVersionString="1.0.7" sparkle:version="32" sparkle:edSignature="xes4xz6zS/sKItkD4SlMHYXy90DJhIjJG8qPH8qopJLKm0A+KaJaukQ3x89aNga8OttXKwMFy9cnPpUMlYwJDA==" length="17837425" />
             <description><![CDATA[
 <h2>1.0.7 (32)</h2>
 <p>New features:</p>
@@ -488,7 +488,7 @@
 <li>Support for render the markdown source code instead of the formatted output.</li>
 </ul>
 
- <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+<p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
             ]]>
             </description>
         </item>
