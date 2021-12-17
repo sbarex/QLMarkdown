@@ -1,6 +1,10 @@
 # Changelog
-=======
 
+
+### 1.0.8 (33)
+Bugfix:
+- Fixed bug for undefined source code theme.
+- Fixed bug on settings sync delay in the Quick Look preview on macOS Monterey.
 
 ### 1.0.7 (32)
 New features:

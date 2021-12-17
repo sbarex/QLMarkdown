@@ -199,6 +199,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         // print("providePreview for \(request.fileURL)")
         
         do {
+            Settings.shared.initFromDefaults()
             let html = try renderMD(url: request.fileURL)
             let replay = QLPreviewReply(dataOfContentType: .html, contentSize: .zero) { _ in
                 return html.data(using: .utf8)!

@@ -1019,18 +1019,20 @@ table.debug td {
             }
             var release: ReleaseTheme?
             var exit_code: Int32 = 0
-            if let theme = highlight_get_theme2(theme, &exit_code, &release) {
-                defer {
-                    release?(theme)
-                }
-                if let s = theme.pointee.canvas?.pointee.color {
-                    background = String(cString: s)
-                }
+            let t = highlight_get_theme2(theme, &exit_code, &release)
+            defer {
+                release?(t)
+            }
+            if exit_code == EXIT_SUCCESS, let s = t?.pointee.canvas.pointee.color {
+                background = String(cString: s)
             }
             exit_code = 0
-            if let p = highlight_format_style2(&exit_code, background) {
+            let p = highlight_format_style2(&exit_code, background)
+            defer {
+                p?.deallocate()
+            }
+            if exit_code == EXIT_SUCCESS, let p = p {
                 css_highlight = String(cString: p) + "\npre.hl { white-space: pre; }\n"
-                p.deallocate()
             }
         } else if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight"), cmark_syntax_extension_highlight_get_rendered_count(ext) > 0 {
             let theme = String(cString: cmark_syntax_extension_highlight_get_theme_name(ext))
