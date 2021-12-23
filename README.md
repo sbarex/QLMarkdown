@@ -57,7 +57,7 @@ To use the Quick Look preview you must launch the application at least once. In 
 After the first execution, the Quick Look extension will be available (and enabled) among those present in the System preferences/Extensions.
 
 If you have problems, try moving the application to the trash and then back in the Applications folder. 
-If the `QLMarkdown Preview Extension` is present (and checked) in the list of Quick Look Extensions in the System preferences but the `.md` files are not displayed it is probably due to other applications that have registered support for that type of file. You can change the order of priority of the Quick Look Extensions indide the System preferences.
+If the `QLMarkdown Preview Extension` is present (and checked) in the list of Quick Look Extensions in the System preferences but the `.md` files are not displayed it is probably due to other applications that have registered support for that type of file. You can change the order of priority of the Quick Look Extensions inside the System preferences.
 
 Finally, the problems may depend on how the `.md` files were registered on the system by other applications.
 
