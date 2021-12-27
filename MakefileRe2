@@ -93,3 +93,4 @@ endif
 	@echo ""
 
 all: check_arch ${BUILD_DIR}/libre2.dylib
+install: check_arch ${BUILD_DIR}/libre2.dylib

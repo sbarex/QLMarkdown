@@ -79,6 +79,15 @@ class Settings {
     @objc var openInlineLink: Bool = false
     
     @objc var renderAsCode: Bool = false
+    var qlWindowWidth: Int? = nil
+    var qlWindowHeight: Int? = nil
+    var qlWindowSize: CGSize {
+        if let w = qlWindowWidth, w > 0, let h = qlWindowHeight, h > 0 {
+            return CGSize(width: w, height: h)
+        } else {
+            return .zero
+        }
+    }
     @objc var debug: Bool = false
     
     
@@ -254,6 +263,12 @@ class Settings {
         if let opt = defaultsDomain["render-as-code"] as? Bool {
             renderAsCode = opt
         }
+        if let opt = defaultsDomain["ql-window-width"] as? Int, opt > 0 {
+            qlWindowWidth = opt
+        }
+        if let opt = defaultsDomain["ql-window-height"] as? Int, opt > 0 {
+            qlWindowHeight = opt
+        }
         
         sanitizeEmojiOption()
     }
@@ -312,6 +327,8 @@ class Settings {
     
             self.debug = s.debug
             self.renderAsCode = s.renderAsCode
+            self.qlWindowWidth = s.qlWindowWidth
+            self.qlWindowHeight = s.qlWindowHeight
             
             DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)
         }

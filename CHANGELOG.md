@@ -1,6 +1,13 @@
 # Changelog
 
 
+### 1.0.9 (34)
+New features:
+- Experimental support for defining the size of the Quick Look window.
+- Magic `file` updated to release 5.41.
+Bugfix:
+- Fixed cross compile compilation of `file` library.
+
 ### 1.0.8 (33)
 Bugfix:
 - Fixed bug for undefined source code theme.
@@ -9,7 +16,6 @@ Bugfix:
 ### 1.0.7 (32)
 New features:
 - Support for render the markdown source code instead of the formatted output.
-
 
 ### 1.0.6 (31)
 New features:

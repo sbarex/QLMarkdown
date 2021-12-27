@@ -58,6 +58,9 @@ extension Settings {
         defaultsDomain["inline-link"] = openInlineLink
         defaultsDomain["render-as-code"] = self.renderAsCode
         
+        defaultsDomain["ql-window-width"] = self.qlWindowWidth
+        defaultsDomain["ql-window-height"] = self.qlWindowHeight
+        
         let file: String
         if let url = customCSS {
             if let folder = Settings.stylesFolder?.path, url.path.hasPrefix(folder) {

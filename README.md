@@ -4,9 +4,11 @@
 
 # QLMarkdown
 
-QLMarkdown is a macOS Quick Look extension to preview Markdown files. It can also preview textbundle packages and rmarkdown (`.rmd`) files (_without_ evaluating `r` code).  
+QLMarkdown is a macOS Quick Look extension to preview Markdown files.   
 
 > **Please note that this software is provided "as is", without any warranty of any kind.**
+
+The Quick Look extension can also preview textbundle packages and rmarkdown (`.rmd`) files (_without_ evaluating `r` code).
 
 You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases). The application also has the automatic update function.
 
@@ -126,7 +128,9 @@ The options follow those offered by the `cmark-gfm`:
 
 In the advanced options, you can also choose if open external link inside the Quick Look preview window or in the default browser.
 
-With the `Render source code` enabled, the preview shows the highlighted source code instead of the formatted output. 
+With the `Render source code` enabled _(available on advanced options panel)_, the preview shows the highlighted source code instead of the formatted output. 
+
+The `Quick Look size` field _(available on advanced options panel)_ allow you to force a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.
 
 ### Extensions
 

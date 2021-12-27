@@ -80,6 +80,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         
         let settings = Settings.shared
         
+        self.preferredContentSize = settings.qlWindowSize
+        
         let previewRect: CGRect
         if #available(macOS 11, *) {
             previewRect = self.view.bounds
@@ -201,7 +203,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         do {
             Settings.shared.initFromDefaults()
             let html = try renderMD(url: request.fileURL)
-            let replay = QLPreviewReply(dataOfContentType: .html, contentSize: .zero) { _ in
+            let replay = QLPreviewReply(dataOfContentType: .html, contentSize: Settings.shared.qlWindowSize) { _ in
                 return html.data(using: .utf8)!
             }
             

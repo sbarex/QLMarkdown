@@ -223,6 +223,22 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
+    
+    @objc dynamic var qlWindowSizeCustomized: Bool = false {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic var qlWindowWidth: Int = Settings.factorySettings.qlWindowWidth ?? 1000 {
+        didSet {
+            isDirty = true
+        }
+    }
+    @objc dynamic var qlWindowHeight: Int = Settings.factorySettings.qlWindowHeight ?? 800 {
+        didSet {
+            isDirty = true
+        }
+    }
 
     @objc dynamic var customCSSOverride: Bool = Settings.factorySettings.customCSSOverride {
         didSet {
@@ -412,6 +428,9 @@ class ViewController: NSViewController {
     @IBOutlet weak var inlineLinkPopup: NSPopUpButton!
     
     @IBOutlet weak var appearanceButton: NSButton!
+    
+    @IBOutlet weak var gridView: NSGridView!
+    @IBOutlet weak var qlWindowSizeButton: NSButton!
     
     private let log = {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-host")
@@ -663,7 +682,7 @@ document.addEventListener('scroll', function(e) {
 </script>
 """
         
-        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: "", basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
+        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: "", basedir: self.markdown_file?.deletingLastPathComponent() ?? Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
         webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
     }
     
@@ -983,6 +1002,10 @@ document.addEventListener('scroll', function(e) {
         self.debugMode = settings.debug
         self.renderAsCode = settings.renderAsCode
         
+        self.qlWindowSizeCustomized = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0
+        self.qlWindowWidth = settings.qlWindowWidth ?? 1000
+        self.qlWindowHeight = settings.qlWindowHeight ?? 800
+        
         self.tableExtension = settings.tableExtension
         self.autoLinkExtension = settings.autoLinkExtension
         self.tagFilterExtension = settings.tagFilterExtension
@@ -1068,6 +1091,8 @@ document.addEventListener('scroll', function(e) {
         
         settings.debug = self.debugMode
         settings.renderAsCode = self.renderAsCode
+        settings.qlWindowWidth = self.qlWindowSizeCustomized ? self.qlWindowWidth : nil
+        settings.qlWindowHeight = self.qlWindowSizeCustomized ? self.qlWindowHeight : nil
         
         settings.tableExtension = self.tableExtension
         settings.autoLinkExtension = self.autoLinkExtension
@@ -1290,7 +1315,7 @@ class DropableTextView: NSTextView {
     func endDrag(_ sender: NSDraggingInfo) {
         if let fileUrl = sender.draggingPasteboard.pasteboardItems?.first?.propertyList(forType: .fileURL) as? String, let url = URL(string: fileUrl) {
             
-            print(url.path)
+            // print(url.path)
         } else {
             print("fail")
         }

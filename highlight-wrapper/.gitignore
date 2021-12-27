@@ -8,3 +8,23 @@ build/*
 **/.deps/*
 
 lua-5.4.2/
+
+file-5.41/config.h
+file-5.41/config.log
+file-5.41/config.status
+file-5.41/libmagic.pc
+file-5.41/libmagic.pc.in
+file-5.41/libtool
+file-5.41/Makefile
+file-5.41/stamp-h1
+file-5.41/doc/Makefile
+file-5.41/doc/file.1
+file-5.41/doc/libmagic.3
+file-5.41/doc/magic.4
+file-5.41/tests/Makefile
+file-5.41/magic/magic.mgc
+file-5.41/magic/Makefile
+file-5.41/python/Makefile
+file-5.41/src/file
+file-5.41/src/magic.h
+file-5.41/src/Makefile
