@@ -5,7 +5,7 @@ CURRENT_DIR := $(subst $(SPACE),"\\ ",$(CURDIR))
 
 LUA_DIR=lua-5.4.2
 HIGHLIGHT_DIR=highlight
-MAGIC_DIR=file-5.39
+MAGIC_DIR=file-5.41
 
 ifeq ($(BUILT_PRODUCTS_DIR),)
 	BUILD_DIR=${CURRENT_DIR}/build
@@ -219,9 +219,14 @@ ${BUILD_DIR}/libmagic-x86_64.a:
 ifneq ("$(wildcard $(MAGIC_DIR)/Makefile)","")
 	@${MAKE} -C ${MAGIC_DIR} clean
 endif
-	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_x86_64}" ./configure --enable-static --disable-zlib --disable-bzlib --disable-xzlib
-	${MAKE} -C ${MAGIC_DIR}
+	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_x86_64}" ./configure --host=x86_64-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
+# Change the PATH to use the native `file`.
+	PATH="${BUILD_DIR}:${PATH}" ${MAKE} -C ${MAGIC_DIR}
 	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-x86_64.a
+ifeq ($(NATIVE_ARCH),x86_64)
+# Copy the file executable for the current cpu to be used to compile the magic.mgc file for a different cpu target.
+	cp ${MAGIC_DIR}/src/file ${BUILD_DIR}/file
+endif
 	@echo ""
 
 ${BUILD_DIR}/libmagic-arm64.a:
@@ -229,9 +234,14 @@ ${BUILD_DIR}/libmagic-arm64.a:
 ifneq ("$(wildcard $(MAGIC_DIR)/Makefile)","")
 	@${MAKE} -C ${MAGIC_DIR} clean
 endif
-	cd $(MAGIC_DIR) && CFLAGS="-target arm64-apple-macos11.0" ./configure --host=arm-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
-	${MAKE} -C ${MAGIC_DIR}
+	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_arm64}" ./configure --host=arm-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
+# Change the PATH to use the native `file`.
+	PATH="${BUILD_DIR}:${PATH}" ${MAKE} -C ${MAGIC_DIR}
 	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-arm64.a
+ifeq ($(NATIVE_ARCH),arm64)
+# Copy the file executable for the current cpu to be used to compile the magic.mgc file for a different cpu target.
+	cp ${MAGIC_DIR}/src/file ${BUILD_DIR}/file
+endif
 	@echo ""
 
 ${BUILD_DIR}/libmagic.a: ${magic_libraries}
@@ -246,6 +256,7 @@ endif
 	@echo ""
 
 ${BUILD_DIR}/magic.mgc:
+	@echo "${bold}Creating magic.mgc...${normal}"
 	file -C -m magic
 	mv magic.mgc ${BUILD_DIR}/
 
@@ -338,7 +349,8 @@ else
 		cp ${BUILD_DIR}/libwrapper_highlight-${NATIVE_ARCH}.dylib ${BUILD_DIR}/libwrapper_highlight.dylib
 endif
 
-all: check_arch build_dir lua highlight magic magic_db goutils highlight-wrapper
+all: check_arch build_dir magic magic_db lua highlight goutils highlight-wrapper
+install: check_arch build_dir magic magic_db lua highlight goutils highlight-wrapper
 
 clean_intermediate: clean_lua clean_highlight clean_magic clean_goutils clean_highlight-wrapper
 

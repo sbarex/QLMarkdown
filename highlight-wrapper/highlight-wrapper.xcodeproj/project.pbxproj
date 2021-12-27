@@ -7,34 +7,32 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		836B3008259E222600A6A5F7 /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
 		836B3009259E222600A6A5F7 /* magic */ = {isa = PBXFileReference; lastKnownFileType = folder; path = magic; sourceTree = "<group>"; };
 		836B300A259E222600A6A5F7 /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
 		836B300B259E222600A6A5F7 /* boost */ = {isa = PBXFileReference; lastKnownFileType = folder; path = boost; sourceTree = "<group>"; };
-		836B300C259E222600A6A5F7 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		836B300C259E222600A6A5F7 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; usesTabs = 1; };
 		836B300E259E222600A6A5F7 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		836B300F259E222600A6A5F7 /* lua-5.4.2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "lua-5.4.2"; sourceTree = "<group>"; };
 		836B3010259E222600A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		836B3012259E222600A6A5F7 /* build */ = {isa = PBXFileReference; lastKnownFileType = folder; path = build; sourceTree = "<group>"; };
 		836B3013259E222600A6A5F7 /* wrapper_highlight.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = wrapper_highlight.cpp; sourceTree = "<group>"; };
-		836B3014259E222600A6A5F7 /* file-5.39 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "file-5.39"; sourceTree = "<group>"; };
+		83703D8A2779D3D800B9AF87 /* file-5.41 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "file-5.41"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
 		836B3002259E222600A6A5F7 = {
 			isa = PBXGroup;
 			children = (
-				836B3008259E222600A6A5F7 /* .DS_Store */,
 				836B3009259E222600A6A5F7 /* magic */,
 				836B300A259E222600A6A5F7 /* highlight */,
 				836B300B259E222600A6A5F7 /* boost */,
 				836B300C259E222600A6A5F7 /* Makefile */,
 				836B300E259E222600A6A5F7 /* .gitignore */,
+				83703D8A2779D3D800B9AF87 /* file-5.41 */,
 				836B300F259E222600A6A5F7 /* lua-5.4.2 */,
 				836B3010259E222600A6A5F7 /* wrapper_highlight.h */,
 				836B3012259E222600A6A5F7 /* build */,
 				836B3013259E222600A6A5F7 /* wrapper_highlight.cpp */,
-				836B3014259E222600A6A5F7 /* file-5.39 */,
 			);
 			sourceTree = "<group>";
 		};
