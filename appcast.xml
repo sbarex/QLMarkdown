@@ -523,7 +523,7 @@
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.9/QLMarkdown.zip" sparkle:shortVersionString="1.0.9" sparkle:version="34" sparkle:edSignature="8bVTM3b0aAvFneQHMNo/4U0LIuZUDWKQkxcWdky3wddCNCy5W+ewQT28w+I5XEqUN2TaaV7F1uFloLbMKaqRCw==" length="15833143"/>
             <description><![CDATA[
-<h2>1.0.8 (33)</h2>
+<h2>1.0.9 (34)</h2>
 <p>New features:</p>
 <ul>
 <li>Experimental support for defining the size of the Quick Look window.</li>
@@ -538,5 +538,6 @@
             ]]>
             </description>
         </item>
+        
     </channel>
 </rss>
