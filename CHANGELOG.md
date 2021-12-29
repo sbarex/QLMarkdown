@@ -7,6 +7,7 @@ New features:
 - Better performance for inline images on raw html fragments.
 - Option for automatic saving of settings changes.
 - GUI optimization.
+
 Bugfix:
 - Fixed settings save.
 
@@ -14,6 +15,7 @@ Bugfix:
 New features:
 - Experimental support for defining the size of the Quick Look window.
 - Magic `file` updated to release 5.41.
+
 Bugfix:
 - Fixed cross compile compilation of `file` library.
 
@@ -30,6 +32,7 @@ New features:
 New features:
 - Application menu item to install/reveal the CLI tool on `/usr/local/bin` folder.
 - Support for UTI `public.markdown` defined by `Nova.app`.
+
 Bugfix:
 - Fixed possibile deallocation error with invalid highlight theme.
 
@@ -45,6 +48,7 @@ New features:
 - On macOS 12 Monterey, the new lightweight data based preview will be used.
 - Addeded more arguments to the CLI tool.
 - CLI tool embed inline images handle also raw HTML fragments.
+
 Bugfix:
 - Handle markdown associated only to a dynamic UTI.
 - Fixed issue with instantiated and never released `Markdown QL Extension Web Content` process for each file previewed.
@@ -186,6 +190,7 @@ Bug fix:
 ### 1.0.b5
 New features:
 - Experimental option to choose to open links inside the Quick Look preview window or in the default browser (but on Big Sur do not works).
+
 Bugfix:
 - Fix missing sparkle framework.
 
