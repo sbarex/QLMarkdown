@@ -98,15 +98,16 @@ Compared to the `cmark-gfm`, these extensions have been added:
 Although GitHub has customized the [`cmark-gfm`](https://github.com/github/cmark-gfm) library, it does not use it directly in the rendering process of Markdown files (see [this repository](https://github.com/github/markup)).
 GitHub uses a number of libraries in Ruby for parsing and formatting source code that cannot easily be converted into a compiled library.
 
-The accurate engine for the language detection (used however only when the language is not specified) is a library derived from the [`Linguistic`](https://github.com/github/linguist#syntax-highlighting) framework used by GitHub.
+This application, when set to use the accurate engine for the language detection (used only when the language is not specified) uses a library derived from the [`Linguistic`](https://github.com/github/linguist#syntax-highlighting) framework adopted by GitHub.
 
-So, the main difference between this application and GitHub is in the choice of the theme and in the formatting of the source code.
-
-The syntax highlighting is based to a different library, so the formatting, colors scheme, and token recognition of the language is potentially different.
+The main difference between this application and GitHub is the formatting of the source code.
+Syntax highlighting uses a different library, so the formatting, colors scheme, and language token recognition are potentially different.
 
 ## Settings
 
 Launching the application, you can configure the options, enable the desired extensions and set the theme for formatting the Quick Look preview of Markdown files.
+
+__To make the settings effective you need to save them (cmd-s or menu `File` > `Save settings`) or enable the autosave option.__
 
 ![main interface](./assets/img/main_interface.png)
 
@@ -116,11 +117,9 @@ Some lesser-used options are available in the advanced panel.
 
 Also, the theme popup menu has some extra commands available pressing the `alt` key.
 
-__To make the settings effective you need to save them (cmd-s or menu `File` > `Save settings`) or enable the autosave option.__
-
 ### Options
 
-The options follow those offered by the `cmark-gfm`:
+The options follow those offered by the `cmark-gfm` engine:
 - `Hard break` _(available on advanced options panel)_: Render `softbreak` elements as hard line breaks.
 - `No soft break` _(available on advanced options panel)_: Render `softbreak` elements as spaces.
 - `Inline HTML (unsafe)` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.
@@ -163,9 +162,9 @@ _Available on advanced options panel._ Create anchors for the heads to use as cr
 _Available on advanced options panel._ Inject in the HTML code the local images as base64 data. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. 
 
 For security reasons are handled only URLs without schema (e.g., `./image.jpg`, `image.jpg` or `assets/image.jpg`), or with the `file` schema (e.g.,  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. 
-With the `file://` schema you *must always set the full path*. For images inside the same folder of the Markdown file do not use the  `file://` schema and also `./` is optional.
+With the `file://` schema you *must always set the full path*. For images inside the same folder of the Markdown file do not use the  `file://` schema and also the path `./` is optional.
 
-The extension process both images defined in the Markdown syntax and also with HTML `<image>` tag if the raw HTML code options is enabled.
+The extension process both images defined in the Markdown syntax and also with HTML `<img>` tag if the raw HTML code option is enabled.
 
 #### Syntax Highlighting
 
@@ -218,7 +217,7 @@ When the `table` extension is enabled, the header is rendered as a table, otherw
 
 ### Themes
 
-You can choose a CSS theme to render the Markdown file. The application is provided with a predefined theme ( GitHub theme ) valid both for light and dark appearance. 
+You can choose a CSS theme to render the Markdown file. The application is provided with a predefined theme derived from the GitHub style valid both for light and dark appearance. 
 
 Also, it is possible to use a style to extend the standard theme or to complete override. 
 User customized style sheet must have the settings for both light and dark appearance using the CSS media query:
@@ -297,9 +296,9 @@ The app uses an extra library `highlight wrapper`. This is a custom C++ shared l
 
 The wrapper has statically linked the following libraries:
 - [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for syntax highlighting.
-- [`lua`](https://www.lua.org/) required by `highlight`.
 - [`magic`](https://www.darwinsys.com/file/), used to guess the source code language when the guess mode is set to _fast_.
 - [`Enry`](https://github.com/go-enry/go-enry), used to guess the source code language when the guess mode is set to _accurate_.
+- [`PCRE2`](https://github.com/PhilipHazel/pcre2) and  [`JPCRE2`](https://github.com/jpcre2/jpcre2) used by the heads extension.
 
 Because `Enry` is developed in `go`, to build the wrapper library you must have the `go` compiler installed (you can use `brew install go`). 
 
