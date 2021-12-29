@@ -78,8 +78,8 @@ static char *process_title_std_regex(const char *title) {
     std::locale::global(std::locale("en_US.UTF-8"));
     // Lowercase
     transform(text3.begin(), text3.end(), text3.begin(), towlower);
-    // Removes characters that are not alphanumeric or spaces.
-    std::wregex pattern(L"[^_[:alnum:] ]+", std::regex_constants::extended);
+    // Removes characters that are not alphanumeric or spaces or dashes.
+    std::wregex pattern(L"[^_[:alnum:] -]+", std::regex_constants::extended);
     text3 = std::regex_replace(text3, pattern, L"");
     // Replace spaces with dashes.
     text3 = std::regex_replace(text3, std::wregex(L" "), L"-");
@@ -104,8 +104,8 @@ static char *process_title_re2(const char *title) {
     
     string text = title;
     
-    // Removes characters that are not alphanumeric or spaces.
-    RE2 re("[^\\p{L}\\p{N} ]+");
+    // Removes characters that are not alphanumeric or spaces or dashes.
+    RE2 re("[^\\p{L}\\p{N} -]+");
     if (!re.ok()) {
         return nullptr;
     }
@@ -150,7 +150,7 @@ class PCRE2_re
     private:
         PCRE2_re() {
             invalidChars_re
-                .setPattern(L"[^\\p{L}\\p{N} ]+")
+                .setPattern(L"[^\\p{L}\\p{N} -]+") // Not letters, not numbers, not spaces, not dash.
                 .addModifier("inuS") // i: case insensitive, n: unicode support, u: utf support, S: jit compiler
                 .compile();
             
@@ -184,7 +184,7 @@ static char *process_title_pcre2(const char *title) {
     
     wstring text = stringToWstring(title);
     
-    // Removes characters that are not alphanumeric or spaces.
+    // Removes characters that are not alphanumeric or spaces or dashes.
     jpw::RegexReplace rr;
     wstring s = rr
         .setRegexObject(&PCRE2_re::getInstance().invalidChars_re)
