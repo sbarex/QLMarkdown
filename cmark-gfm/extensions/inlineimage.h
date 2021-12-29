@@ -14,11 +14,10 @@
 
 cmark_syntax_extension *create_inlineimage_extension(void);
 
+//! Get the current working directory.
 char *cmark_syntax_extension_inlineimage_get_wd(cmark_syntax_extension *extension);
+//! Set the current working directory.
 void cmark_syntax_extension_inlineimage_set_wd(cmark_syntax_extension *ext, const char *path);
-int cmark_syntax_extension_inlineimage_get_raw_images_count(cmark_syntax_extension *ext);
-void cmark_syntax_extension_inlineimage_set_raw_images_count(cmark_syntax_extension *ext, int value);
-void cmark_syntax_extension_inlineimage_increment_raw_images_count(cmark_syntax_extension *ext, int delta);
 
 typedef char *(MimeCheck)( const char *filename, void *context );
 
@@ -29,6 +28,13 @@ void *cmark_syntax_extension_inlineimage_get_mime_context(cmark_syntax_extension
 //! Set the mime chceck callback
 void cmark_syntax_extension_inlineimage_set_mime_callback(cmark_syntax_extension *extension, MimeCheck *callback, void *context);
 
+typedef void (ProcessFragment)(cmark_syntax_extension *extension, unsigned char *fragment, char *baseDir, void *context, const char **code);
+
+ProcessFragment *cmark_syntax_extension_inlineimage_get_unsafe_html_processor_callback(cmark_syntax_extension *extension);
+//! Get the context for processing the raw html fragment.
+void *cmark_syntax_extension_inlineimage_get_unsafe_html_context(cmark_syntax_extension *extension);
+//! Get the callback for processing the raw html fragment.
+void cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(cmark_syntax_extension *extension, ProcessFragment *callback, void *context);
 
 /**
  * Get the base64 encoded data for a local image.

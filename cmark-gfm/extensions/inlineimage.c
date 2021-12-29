@@ -27,6 +27,8 @@ typedef struct {
     MimeCheck *magic_callback;
     void *magic_context;
     int raw_images;
+    ProcessFragment *html_callback;
+    void *html_context;
 } inlineimage_settings;
 
 static inlineimage_settings *init_settings() {
@@ -35,7 +37,10 @@ static inlineimage_settings *init_settings() {
     settings->path = NULL;
     settings->magic_callback = NULL;
     settings->magic_context = NULL;
-    settings->raw_images = 0;
+    
+    settings->html_callback = NULL;
+    settings->html_context = NULL;
+    
     return settings;
 }
 
@@ -50,7 +55,10 @@ static void release_settings(cmark_mem *mem, void *user_data)
         }
         settings->magic_callback = NULL;
         settings->magic_context = NULL;
-        settings->raw_images = 0;
+        
+        settings->html_callback = NULL;
+        settings->html_context = NULL;
+        
         mem->free(user_data);
     }
 }
@@ -152,13 +160,20 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         chdir(basedir);
     }
     
+    ProcessFragment *html_callback = cmark_syntax_extension_inlineimage_get_unsafe_html_processor_callback(ext);
+    void *html_context = html_callback != NULL ? cmark_syntax_extension_inlineimage_get_unsafe_html_context(ext) : NULL;
+    
     while ((ev = cmark_iter_next(iter)) != CMARK_EVENT_DONE) {
         node = cmark_iter_get_node(iter);
         
         // cmark_node_type type;
         // type = node->type;
         
-        if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_IMAGE) {
+        if (ev != CMARK_EVENT_ENTER) {
+            continue;
+        }
+        
+        if (node->type == CMARK_NODE_IMAGE) {
             const char *url = (const char *)node->as.link.url.data;
             char *encoded = NULL;
             MimeCheck *mime_callback = cmark_syntax_extension_inlineimage_get_mime_callback(ext);
@@ -169,6 +184,16 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
                 // Replace the original url with the encoded data.
                 cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
                 free(encoded);
+            }
+        } else if (node->type == CMARK_NODE_HTML_BLOCK && html_callback != NULL) {
+            // Search inside the raw html fragment and process the images.
+            cmark_chunk_to_cstr(parser->mem, &node->as.literal);
+            unsigned char *s = NULL;
+            html_callback(ext, node->as.literal.data, (char *)basedir, html_context, (const char **)&s);
+            if (s != NULL) {
+                // printf("%s", s);
+                cmark_chunk_set_cstr(parser->mem, &node->as.literal, (const char *)s);
+                free(s);
             }
         }
     }
@@ -198,32 +223,6 @@ void cmark_syntax_extension_inlineimage_set_wd(cmark_syntax_extension *ext, cons
 char *cmark_syntax_extension_inlineimage_get_wd(cmark_syntax_extension *extension) {
     inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
     return settings ? settings->path : NULL;
-}
-
-int cmark_syntax_extension_inlineimage_get_raw_images_count(cmark_syntax_extension *ext) {
-    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(ext);
-    if (!settings) {
-        return 0;
-    }
-    return settings->raw_images;
-}
-
-void cmark_syntax_extension_inlineimage_set_raw_images_count(cmark_syntax_extension *ext, int value) {
-    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(ext);
-    if (!settings) {
-        settings = init_settings();
-        cmark_syntax_extension_set_private(ext, settings, release_settings);
-    }
-    settings->raw_images = value;
-}
-
-void cmark_syntax_extension_inlineimage_increment_raw_images_count(cmark_syntax_extension *ext, int delta) {
-    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(ext);
-    if (!settings) {
-        settings = init_settings();
-        cmark_syntax_extension_set_private(ext, settings, release_settings);
-    }
-    settings->raw_images += delta;
 }
 
 MimeCheck *cmark_syntax_extension_inlineimage_get_mime_callback(cmark_syntax_extension *extension)
@@ -256,28 +255,43 @@ void cmark_syntax_extension_inlineimage_set_mime_callback(cmark_syntax_extension
     settings->magic_context = context;
 }
 
-static bool prefix(const char *pre, const char *str)
+
+ProcessFragment *cmark_syntax_extension_inlineimage_get_unsafe_html_processor_callback(cmark_syntax_extension *extension)
 {
-    return strncmp(pre, str, strlen(pre)) == 0;
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (settings) {
+        return settings->html_callback;
+    } else {
+        return NULL;
+    }
 }
-
-static int filter(cmark_syntax_extension *ext, const unsigned char *tag,
-                  size_t tag_len) {
-  if (prefix("<img ", (const char *)tag)) {
-    cmark_syntax_extension_inlineimage_increment_raw_images_count(ext, 1);
-  }
-
-  return 1;
+void *cmark_syntax_extension_inlineimage_get_unsafe_html_context(cmark_syntax_extension *extension)
+{
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (settings) {
+        return settings->html_context;
+    } else {
+        return NULL;
+    }
 }
-
-cmark_syntax_extension *create_inlineimage_extension(void) {
+void cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(cmark_syntax_extension *extension, ProcessFragment *callback, void *context)
+{
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (!settings) {
+        settings = init_settings();
+        cmark_syntax_extension_set_private(extension, settings, release_settings);
+    }
+    settings->html_callback = callback;
+    settings->html_context = context;
+}
+cmark_syntax_extension *create_inlineimage_extension(void)
+{
     cmark_syntax_extension *ext = cmark_syntax_extension_new("inlineimage");
     
     inlineimage_settings *settings = init_settings();
     cmark_syntax_extension_set_private(ext, settings, release_settings);
     
     cmark_syntax_extension_set_postprocess_func(ext, postprocess);
-    cmark_syntax_extension_set_html_filter_func(ext, filter);
     
     return ext;
 }

@@ -10,39 +10,48 @@ import WebKit
 import OSLog
 
 class ViewController: NSViewController {
+    @objc dynamic var elapsedTimeLabel: String = ""
+    
     @objc dynamic var headsExtension: Bool = Settings.factorySettings.headsExtension {
         didSet {
+            guard oldValue != headsExtension else { return }
             isDirty = true
         }
     }
     @objc dynamic var tableExtension: Bool = Settings.factorySettings.tableExtension {
         didSet {
+            guard oldValue != tableExtension else { return }
             isDirty = true
         }
     }
     @objc dynamic var autoLinkExtension: Bool = Settings.factorySettings.autoLinkExtension {
         didSet {
+            guard oldValue != autoLinkExtension else { return }
             isDirty = true
         }
     }
     @objc dynamic var tagFilterExtension: Bool = Settings.factorySettings.tagFilterExtension {
         didSet {
+            guard oldValue != tagFilterExtension else { return }
             isDirty = true
         }
     }
     @objc dynamic var taskListExtension: Bool = Settings.factorySettings.taskListExtension {
         didSet {
+            guard oldValue != taskListExtension else { return }
             isDirty = true
         }
     }
     @objc dynamic var yamlExtension: Bool = Settings.factorySettings.yamlExtension {
         didSet {
+            guard oldValue != yamlExtension else { return }
             updateYamlPopup()
             isDirty = true
         }
     }
     @objc dynamic var yamlExtensionAll: Bool = Settings.factorySettings.yamlExtensionAll {
         didSet {
+            guard oldValue != yamlExtensionAll else { return }
             updateYamlPopup()
             isDirty = true
         }
@@ -50,12 +59,14 @@ class ViewController: NSViewController {
     
     @objc dynamic var strikethroughExtension: Bool = Settings.factorySettings.strikethroughExtension {
         didSet {
+            guard oldValue != strikethroughExtension else { return }
             isDirty = true
             updateStrikethroughPopup()
         }
     }
     dynamic var strikethroughDoubleTildeOption: Bool = Settings.factorySettings.strikethroughDoubleTildeOption {
         didSet {
+            guard oldValue != strikethroughDoubleTildeOption else { return }
             isDirty = true
             updateStrikethroughPopup()
         }
@@ -63,12 +74,14 @@ class ViewController: NSViewController {
     
     @objc dynamic var mentionExtension: Bool = Settings.factorySettings.mentionExtension {
         didSet {
+            guard oldValue != mentionExtension else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var syntaxHighlightExtension: Bool = Settings.factorySettings.syntaxHighlightExtension {
         didSet {
+            guard oldValue != syntaxHighlightExtension else { return }
             isDirty = true
             self.sourceBackgroundLabel.textColor = syntaxHighlightExtension ? .labelColor : .disabledControlTextColor
             self.sourceCharactersLabel.textColor = syntaxHighlightExtension ? .labelColor : .disabledControlTextColor
@@ -79,6 +92,7 @@ class ViewController: NSViewController {
     
     @objc dynamic var syntaxThemeLight: ThemePreview? = nil {
         didSet {
+            guard oldValue != syntaxThemeLight else { return }
             isDirty = true
             
             updateThemes()
@@ -86,6 +100,7 @@ class ViewController: NSViewController {
     }
     @objc dynamic var syntaxThemeDark: ThemePreview? = nil {
         didSet {
+            guard oldValue != syntaxThemeDark else { return }
             isDirty = true
             
             updateThemes()
@@ -94,46 +109,54 @@ class ViewController: NSViewController {
     
     @objc dynamic var customBackgroundColor: Bool = false {
         didSet {
+            guard oldValue != customBackgroundColor else { return }
             isDirty = true
         }
     }
     @objc dynamic var backgroundColorLight: NSColor = NSColor(css: Settings.factorySettings.syntaxBackgroundColorLight) ?? NSColor.textBackgroundColor {
         didSet {
+            guard oldValue != backgroundColorLight else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var backgroundColorDark: NSColor = NSColor(css: Settings.factorySettings.syntaxBackgroundColorDark) ?? NSColor.textBackgroundColor {
         didSet {
+            guard oldValue != backgroundColorDark else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var syntaxLineNumbers: Bool = Settings.factorySettings.syntaxLineNumbersOption {
         didSet {
+            guard oldValue != syntaxLineNumbers else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var syntaxWrapEnabled: Bool = Settings.factorySettings.syntaxWordWrapOption > 0 {
         didSet {
+            guard oldValue != syntaxWrapEnabled else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var syntaxWrapCharacters: Int = Settings.factorySettings.syntaxWordWrapOption > 0 ? Settings.factorySettings.syntaxWordWrapOption : 80 {
         didSet {
+            guard oldValue != syntaxWrapCharacters else { return }
             isDirty = true
         }
     }
     @objc dynamic fileprivate(set) var isFontCustomized: Bool = !Settings.factorySettings.syntaxFontFamily.isEmpty {
         didSet {
+            guard oldValue != isFontCustomized else { return }
             isDirty = true
             sourceFontLabel.textColor = syntaxHighlightExtension && isFontCustomized ? .labelColor : .disabledControlTextColor
         }
     }
     @objc dynamic var syntaxFontSize: CGFloat = Settings.factorySettings.syntaxFontSize {
         didSet {
+            guard oldValue != syntaxFontSize else { return }
             isDirty = true
             refreshFontPreview()
         }
@@ -143,6 +166,7 @@ class ViewController: NSViewController {
             self.willChangeValue(forKey: #keyPath(isFontCustomized))
         }*/
         didSet {
+            guard oldValue != syntaxFontFamily else { return }
             isDirty = true
             isFontCustomized = !syntaxFontFamily.isEmpty
             //self.didChangeValue(forKey: #keyPath(isFontCustomized))
@@ -153,12 +177,14 @@ class ViewController: NSViewController {
     
     @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension {
         didSet {
+            guard oldValue != emojiExtension else { return }
             updateEmojiPopup()
             isDirty = true
         }
     }
     @objc dynamic var emojiImageOption: Bool = Settings.factorySettings.emojiImageOption {
         didSet {
+            guard oldValue != emojiImageOption else { return }
             updateEmojiPopup()
             isDirty = true
         }
@@ -166,90 +192,131 @@ class ViewController: NSViewController {
     
     @objc dynamic var inlineImageExtension: Bool = Settings.factorySettings.inlineImageExtension {
         didSet {
+            guard oldValue != inlineImageExtension else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var hardBreakOption: Bool = Settings.factorySettings.hardBreakOption {
         didSet {
+            guard oldValue != hardBreakOption else { return }
             isDirty = true
         }
     }
     @objc dynamic var noSoftBreakOption: Bool = Settings.factorySettings.noSoftBreakOption {
         didSet {
+            guard oldValue != noSoftBreakOption else { return }
             isDirty = true
         }
     }
     @objc dynamic var unsafeHTMLOption: Bool = Settings.factorySettings.unsafeHTMLOption {
         didSet {
+            guard oldValue != unsafeHTMLOption else { return }
             isDirty = true
         }
     }
     @objc dynamic var validateUTFOption: Bool = Settings.factorySettings.validateUTFOption {
         didSet {
+            guard oldValue != validateUTFOption else { return }
             isDirty = true
         }
     }
     @objc dynamic var smartQuotesOption: Bool = Settings.factorySettings.smartQuotesOption {
         didSet {
+            guard oldValue != smartQuotesOption else { return }
             isDirty = true
         }
     }
     @objc dynamic var footnotesOption: Bool = Settings.factorySettings.footnotesOption {
         didSet {
+            guard oldValue != footnotesOption else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var guessEnabled: Bool = Settings.factorySettings.guessEngine != .none {
         didSet {
+            guard oldValue != guessEnabled else { return }
             isDirty = true
         }
     }
     @objc dynamic var guessEngine: Int = Settings.factorySettings.guessEngine == .fast ? 0 : (Settings.factorySettings.guessEngine == .accurate ? 1 : 0) {
         didSet {
+            guard oldValue != guessEngine else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var debugMode: Bool = Settings.factorySettings.debug {
         didSet {
+            guard oldValue != debugMode else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var renderAsCode: Bool = Settings.factorySettings.renderAsCode {
         didSet {
+            guard oldValue != renderAsCode else { return }
             isDirty = true
         }
     }
     
     @objc dynamic var qlWindowSizeCustomized: Bool = false {
         didSet {
+            guard oldValue != qlWindowSizeCustomized else { return }
             isDirty = true
+            qlWindowSizePopupButton.selectItem(at: qlWindowSizeCustomized ? 1 : 0)
         }
     }
     @objc dynamic var qlWindowWidth: Int = Settings.factorySettings.qlWindowWidth ?? 1000 {
         didSet {
+            guard oldValue != qlWindowWidth else { return }
             isDirty = true
         }
     }
     @objc dynamic var qlWindowHeight: Int = Settings.factorySettings.qlWindowHeight ?? 800 {
         didSet {
+            guard oldValue != qlWindowHeight else { return }
             isDirty = true
         }
     }
 
     @objc dynamic var customCSSOverride: Bool = Settings.factorySettings.customCSSOverride {
         didSet {
+            guard oldValue != customCSSOverride else { return }
             isDirty = true
             styleExtendPopup.selectItem(at: customCSSOverride ? 1 : 0)
         }
     }
     @objc dynamic var customCSSFile: URL? = Settings.factorySettings.customCSS {
         didSet {
+            guard oldValue != customCSSFile else { return }
             isDirty = true
             updateCustomCSSPopup()
+        }
+    }
+    
+    internal var pauseAutoSave = 0 {
+        didSet {
+            if pauseAutoSave == 0 && isDirty && isLoaded && isAutoSaving {
+                saveAction(self)
+            }
+        }
+    }
+    @objc dynamic var isAutoSaving: Bool {
+        get {
+            return UserDefaults.standard.value(forKey: "auto-save") as? Bool ?? true
+        }
+        set {
+            guard newValue != isAutoSaving else { return }
+            
+            self.willChangeValue(forKey: "isAutoSaving")
+            UserDefaults.standard.setValue(newValue, forKey: "auto-save")
+            self.didChangeValue(forKey: "isAutoSaving")
+            
+            if newValue && isDirty && pauseAutoSave == 0 {
+                saveAction(self)
+            }
         }
     }
     
@@ -370,24 +437,32 @@ class ViewController: NSViewController {
     }
     internal var isDirty = false {
         didSet {
-            if oldValue != isDirty {
-                self.view.window?.isDocumentEdited = isDirty
-            }
+            guard oldValue != isDirty else { return }
+            
+            self.view.window?.isDocumentEdited = isDirty
             if isDirty && autoRefresh && isLoaded && pauseAutoRefresh == 0 {
                 self.refresh(self)
+            }
+            if isDirty && isAutoSaving && isLoaded {
+                self.saveAction(self)
             }
         }
     }
     internal var isLoaded = false
     
-    var isAdvancedSettingsHidden: Bool {
+    @objc dynamic var isAdvancedSettingsHidden: Bool {
         get {
-            let defaults = UserDefaults.standard
-            return defaults.value(forKey: "advanced-settings") as? Bool ?? true
+            return UserDefaults.standard.value(forKey: "advanced-settings") as? Bool ?? true
         }
         set {
-            let defaults = UserDefaults.standard
-            defaults.setValue(newValue, forKey: "advanced-settings")
+            guard newValue != isAdvancedSettingsHidden else { return }
+            
+            self.willChangeValue(forKey: "isAdvancedSettingsHidden")
+            
+            UserDefaults.standard.setValue(newValue, forKey: "advanced-settings")
+            
+            self.didChangeValue(forKey: "isAdvancedSettingsHidden")
+            
             updateTabView()
         }
     }
@@ -422,15 +497,13 @@ class ViewController: NSViewController {
     @IBOutlet weak var emojiPopupButton: NSPopUpButton!
     @IBOutlet weak var yamlPopupButton: NSPopUpButton!
     @IBOutlet weak var unsafeButton: NSButton!
-    @IBOutlet weak var advancedButton: NSButton!
     
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
     @IBOutlet weak var inlineLinkPopup: NSPopUpButton!
     
     @IBOutlet weak var appearanceButton: NSButton!
     
-    @IBOutlet weak var gridView: NSGridView!
-    @IBOutlet weak var qlWindowSizeButton: NSButton!
+    @IBOutlet weak var qlWindowSizePopupButton: NSPopUpButton!
     
     private let log = {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-host")
@@ -615,6 +688,10 @@ class ViewController: NSViewController {
         (NSApplication.shared.delegate as? AppDelegate)?.checkForUpdates(sender)
     }
     
+    @IBAction func handleQLSizeChanged(_ sender: NSPopUpButton) {
+        self.qlWindowSizeCustomized = sender.indexOfSelectedItem == 1
+    }
+    
     @IBAction func saveAction(_ sender: Any) {
         let settings = self.updateSettings()
         
@@ -642,6 +719,9 @@ class ViewController: NSViewController {
         let body: String
         let settings = self.updateSettings()
         let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
+        
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
         do {
             body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
         } catch {
@@ -683,7 +763,10 @@ document.addEventListener('scroll', function(e) {
 """
         
         let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: "", basedir: self.markdown_file?.deletingLastPathComponent() ?? Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
+        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
+        
+        elapsedTimeLabel = String(format: "Rendered in %.3f seconds", timeElapsed)
     }
     
     func importStyle(copyOnSharedFolder: Bool) -> URL? {
@@ -831,16 +914,10 @@ document.addEventListener('scroll', function(e) {
         NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
     }
     
-    @IBAction func doAdvancedSettings(_ sender: Any) {
-        self.isAdvancedSettingsHidden = !self.isAdvancedSettingsHidden
-    }
-    
     internal func updateTabView() {
         tabView.tabViewType = isAdvancedSettingsHidden ? .noTabsNoBorder : .topTabsBezelBorder
-        tabView.selectTabViewItem(at: isAdvancedSettingsHidden ? 0 : 1)
-        tabViewLeftConstraint.constant = isAdvancedSettingsHidden ? 0 : 20
-        
-        advancedButton.title = isAdvancedSettingsHidden ? "Show advanced options" : "Show only basic options"
+        // tabView.selectTabViewItem(at: isAdvancedSettingsHidden ? 0 : 1)
+        tabViewLeftConstraint.constant = isAdvancedSettingsHidden ? 0 : 12
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -892,6 +969,11 @@ document.addEventListener('scroll', function(e) {
         self.syntaxThemeDark = Self.searchTheme(Settings.factorySettings.syntaxThemeDark, in: Settings.shared.getAvailableThemes(), appearance: .dark)
         
         self.initFromSettings(settings)
+        
+        self.updateCustomCSSPopup()
+        self.updateEmojiPopup()
+        self.updateStrikethroughPopup()
+        self.updateYamlPopup()
         
         markdown_file = Bundle.main.url(forResource: "test1", withExtension: "md")
         
@@ -997,6 +1079,8 @@ document.addEventListener('scroll', function(e) {
     
     internal func initFromSettings(_ settings: Settings) {
         pauseAutoRefresh += 1
+        pauseAutoSave += 1
+        
         initStylesPopup()
         
         self.debugMode = settings.debug
@@ -1010,14 +1094,19 @@ document.addEventListener('scroll', function(e) {
         self.autoLinkExtension = settings.autoLinkExtension
         self.tagFilterExtension = settings.tagFilterExtension
         self.taskListExtension = settings.taskListExtension
+        
         self.yamlExtension = settings.yamlExtension
         self.yamlExtensionAll = settings.yamlExtensionAll
+        
         self.strikethroughExtension = settings.strikethroughExtension
         self.strikethroughDoubleTildeOption = settings.strikethroughDoubleTildeOption
+        
         self.mentionExtension = settings.mentionExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
+        
         self.emojiExtension = settings.emojiExtension
         self.emojiImageOption = settings.emojiImageOption
+        
         self.inlineImageExtension = settings.inlineImageExtension
         self.headsExtension = settings.headsExtension
         
@@ -1063,13 +1152,14 @@ document.addEventListener('scroll', function(e) {
         self.customCSSFile = settings.customCSS
         self.customCSSOverride = settings.customCSSOverride
         
-        self.doRefresh(self)
-        
         self.guessEnginePopup.isEnabled = self.guessEnabled && self.syntaxHighlightExtension
         
         inlineLinkPopup.selectItem(at: settings.openInlineLink ? 0 : 1)
+        
         isDirty = false
         pauseAutoRefresh -= 1
+        pauseAutoSave -= 1
+        
         doRefresh(self)
     }
     

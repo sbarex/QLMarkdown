@@ -18,6 +18,8 @@
 #include <render.h>
 #include <html.h>
 
+#include <locale.h>
+
 static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser, cmark_node *root) {
     cmark_iter *iter;
     cmark_event_type ev;
@@ -25,6 +27,11 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
 
     cmark_consolidate_text_nodes(root);
     iter = cmark_iter_new(root);
+        
+    char *current_locale = setlocale(LC_ALL, NULL);
+    if (setlocale(LC_ALL, "en_US.UTF-8") == NULL) {
+        // cerr << "setlocale failed.\n";
+    }
     
     while ((ev = cmark_iter_next(iter)) != CMARK_EVENT_DONE) {
         node = cmark_iter_get_node(iter);
@@ -40,6 +47,10 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
     }
     
     cmark_iter_free(iter);
+    
+    // Restore previous locale.
+    setlocale(LC_ALL, current_locale);
+    
     
     return root;
 }

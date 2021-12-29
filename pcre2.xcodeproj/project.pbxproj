@@ -1,0 +1,262 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXFileReference section */
+		83D82A2C277BC53A00C9B99F /* testdata */ = {isa = PBXFileReference; lastKnownFileType = folder; name = testdata; path = pcre2/testdata; sourceTree = "<group>"; };
+		83D82A2D277BC53A00C9B99F /* RunTest.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = RunTest.bat; path = pcre2/RunTest.bat; sourceTree = "<group>"; };
+		83D82A2E277BC53A00C9B99F /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; name = configure.ac; path = pcre2/configure.ac; sourceTree = "<group>"; };
+		83D82A2F277BC53A00C9B99F /* pcre2_fuzzer.dict */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = pcre2_fuzzer.dict; path = pcre2/pcre2_fuzzer.dict; sourceTree = "<group>"; };
+		83D82A30277BC53A00C9B99F /* CMakeLists.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = CMakeLists.txt; path = pcre2/CMakeLists.txt; sourceTree = "<group>"; };
+		83D82A31277BC53A00C9B99F /* RunGrepTest.bat */ = {isa = PBXFileReference; lastKnownFileType = text; name = RunGrepTest.bat; path = pcre2/RunGrepTest.bat; sourceTree = "<group>"; };
+		83D82A32277BC53A00C9B99F /* libpcre2-16.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libpcre2-16.pc.in"; path = "pcre2/libpcre2-16.pc.in"; sourceTree = "<group>"; };
+		83D82A33277BC53A00C9B99F /* cmake */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cmake; path = pcre2/cmake; sourceTree = "<group>"; };
+		83D82A34277BC53A00C9B99F /* RunGrepTest */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = RunGrepTest; path = pcre2/RunGrepTest; sourceTree = "<group>"; };
+		83D82A35277BC53A00C9B99F /* pcre2-config.in */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "pcre2-config.in"; path = "pcre2/pcre2-config.in"; sourceTree = "<group>"; };
+		83D82A36277BC53A00C9B99F /* ChangeLog */ = {isa = PBXFileReference; lastKnownFileType = text; name = ChangeLog; path = pcre2/ChangeLog; sourceTree = "<group>"; };
+		83D82A37277BC53A00C9B99F /* libpcre2-32.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libpcre2-32.pc.in"; path = "pcre2/libpcre2-32.pc.in"; sourceTree = "<group>"; };
+		83D82A38277BC53A00C9B99F /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = pcre2/AUTHORS; sourceTree = "<group>"; };
+		83D82A39277BC53A00C9B99F /* CheckMan */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; name = CheckMan; path = pcre2/CheckMan; sourceTree = "<group>"; };
+		83D82A3A277BC53A00C9B99F /* CleanTxt */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; name = CleanTxt; path = pcre2/CleanTxt; sourceTree = "<group>"; };
+		83D82A3B277BC53A00C9B99F /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = pcre2/README; sourceTree = "<group>"; };
+		83D82A3C277BC53A00C9B99F /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; name = Makefile.am; path = pcre2/Makefile.am; sourceTree = "<group>"; };
+		83D82A3D277BC53A00C9B99F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = pcre2/README.md; sourceTree = "<group>"; };
+		83D82A3E277BC53A00C9B99F /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; name = COPYING; path = pcre2/COPYING; sourceTree = "<group>"; };
+		83D82A3F277BC53A00C9B99F /* PrepareRelease */ = {isa = PBXFileReference; lastKnownFileType = text; name = PrepareRelease; path = pcre2/PrepareRelease; sourceTree = "<group>"; };
+		83D82A40277BC53A00C9B99F /* 132html */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; name = 132html; path = pcre2/132html; sourceTree = "<group>"; };
+		83D82A41277BC53A00C9B99F /* NEWS */ = {isa = PBXFileReference; lastKnownFileType = text; name = NEWS; path = pcre2/NEWS; sourceTree = "<group>"; };
+		83D82A43277BC53A00C9B99F /* Detrail */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; name = Detrail; path = pcre2/Detrail; sourceTree = "<group>"; };
+		83D82A44277BC53A00C9B99F /* index.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = index.md; path = pcre2/index.md; sourceTree = "<group>"; };
+		83D82A45277BC53A00C9B99F /* libpcre2-posix.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libpcre2-posix.pc.in"; path = "pcre2/libpcre2-posix.pc.in"; sourceTree = "<group>"; };
+		83D82A46277BC53A00C9B99F /* HACKING */ = {isa = PBXFileReference; lastKnownFileType = text; name = HACKING; path = pcre2/HACKING; sourceTree = "<group>"; };
+		83D82A47277BC53A00C9B99F /* NON-AUTOTOOLS-BUILD */ = {isa = PBXFileReference; lastKnownFileType = text; name = "NON-AUTOTOOLS-BUILD"; path = "pcre2/NON-AUTOTOOLS-BUILD"; sourceTree = "<group>"; };
+		83D82A48277BC53A00C9B99F /* m4 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = m4; path = pcre2/m4; sourceTree = "<group>"; };
+		83D82A49277BC53A00C9B99F /* doc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doc; path = pcre2/doc; sourceTree = "<group>"; };
+		83D82A4B277BC53A00C9B99F /* maint */ = {isa = PBXFileReference; lastKnownFileType = folder; name = maint; path = pcre2/maint; sourceTree = "<group>"; };
+		83D82A4C277BC53A00C9B99F /* pcre2_fuzzer.options */ = {isa = PBXFileReference; lastKnownFileType = text; name = pcre2_fuzzer.options; path = pcre2/pcre2_fuzzer.options; sourceTree = "<group>"; };
+		83D82A4D277BC53A00C9B99F /* config-cmake.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = "config-cmake.h.in"; path = "pcre2/config-cmake.h.in"; sourceTree = "<group>"; };
+		83D82A4E277BC53A00C9B99F /* RunTest */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = RunTest; path = pcre2/RunTest; sourceTree = "<group>"; };
+		83D82A4F277BC53A00C9B99F /* perltest.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = perltest.sh; path = pcre2/perltest.sh; sourceTree = "<group>"; };
+		83D82A50277BC53A00C9B99F /* LICENCE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENCE; path = pcre2/LICENCE; sourceTree = "<group>"; };
+		83D82A51277BC53A00C9B99F /* autogen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = autogen.sh; path = pcre2/autogen.sh; sourceTree = "<group>"; };
+		83D82A52277BC53A00C9B99F /* libpcre2-8.pc.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = "libpcre2-8.pc.in"; path = "pcre2/libpcre2-8.pc.in"; sourceTree = "<group>"; };
+		83D82A53277BC53A00C9B99F /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = pcre2/src; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		83D82A26277BC53A00C9B99F = {
+			isa = PBXGroup;
+			children = (
+				83D82A40277BC53A00C9B99F /* 132html */,
+				83D82A38277BC53A00C9B99F /* AUTHORS */,
+				83D82A51277BC53A00C9B99F /* autogen.sh */,
+				83D82A36277BC53A00C9B99F /* ChangeLog */,
+				83D82A39277BC53A00C9B99F /* CheckMan */,
+				83D82A3A277BC53A00C9B99F /* CleanTxt */,
+				83D82A33277BC53A00C9B99F /* cmake */,
+				83D82A30277BC53A00C9B99F /* CMakeLists.txt */,
+				83D82A4D277BC53A00C9B99F /* config-cmake.h.in */,
+				83D82A2E277BC53A00C9B99F /* configure.ac */,
+				83D82A3E277BC53A00C9B99F /* COPYING */,
+				83D82A43277BC53A00C9B99F /* Detrail */,
+				83D82A49277BC53A00C9B99F /* doc */,
+				83D82A46277BC53A00C9B99F /* HACKING */,
+				83D82A44277BC53A00C9B99F /* index.md */,
+				83D82A52277BC53A00C9B99F /* libpcre2-8.pc.in */,
+				83D82A32277BC53A00C9B99F /* libpcre2-16.pc.in */,
+				83D82A37277BC53A00C9B99F /* libpcre2-32.pc.in */,
+				83D82A45277BC53A00C9B99F /* libpcre2-posix.pc.in */,
+				83D82A50277BC53A00C9B99F /* LICENCE */,
+				83D82A48277BC53A00C9B99F /* m4 */,
+				83D82A4B277BC53A00C9B99F /* maint */,
+				83D82A3C277BC53A00C9B99F /* Makefile.am */,
+				83D82A41277BC53A00C9B99F /* NEWS */,
+				83D82A47277BC53A00C9B99F /* NON-AUTOTOOLS-BUILD */,
+				83D82A2F277BC53A00C9B99F /* pcre2_fuzzer.dict */,
+				83D82A4C277BC53A00C9B99F /* pcre2_fuzzer.options */,
+				83D82A35277BC53A00C9B99F /* pcre2-config.in */,
+				83D82A4F277BC53A00C9B99F /* perltest.sh */,
+				83D82A3F277BC53A00C9B99F /* PrepareRelease */,
+				83D82A3B277BC53A00C9B99F /* README */,
+				83D82A3D277BC53A00C9B99F /* README.md */,
+				83D82A34277BC53A00C9B99F /* RunGrepTest */,
+				83D82A31277BC53A00C9B99F /* RunGrepTest.bat */,
+				83D82A4E277BC53A00C9B99F /* RunTest */,
+				83D82A2D277BC53A00C9B99F /* RunTest.bat */,
+				83D82A53277BC53A00C9B99F /* src */,
+				83D82A2C277BC53A00C9B99F /* testdata */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		83D82A2B277BC53A00C9B99F /* pcre2 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = " -C pcre2 -f ../MakefilePCRE $(ACTION)";
+			buildConfigurationList = 83D82A54277BC53A00C9B99F /* Build configuration list for PBXLegacyTarget "pcre2" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = pcre2;
+			passBuildSettingsInEnvironment = 1;
+			productName = pcre2;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		83D82A27277BC53A00C9B99F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1320;
+			};
+			buildConfigurationList = 83D82A2A277BC53A00C9B99F /* Build configuration list for PBXProject "pcre2" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83D82A26277BC53A00C9B99F;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				83D82A2B277BC53A00C9B99F /* pcre2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		83D82A28277BC53A00C9B99F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		83D82A29277BC53A00C9B99F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		83D82A55277BC53A00C9B99F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = pcre2;
+			};
+			name = Debug;
+		};
+		83D82A56277BC53A00C9B99F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = pcre2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		83D82A2A277BC53A00C9B99F /* Build configuration list for PBXProject "pcre2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83D82A28277BC53A00C9B99F /* Debug */,
+				83D82A29277BC53A00C9B99F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83D82A54277BC53A00C9B99F /* Build configuration list for PBXLegacyTarget "pcre2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83D82A55277BC53A00C9B99F /* Debug */,
+				83D82A56277BC53A00C9B99F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83D82A27277BC53A00C9B99F /* Project object */;
+}

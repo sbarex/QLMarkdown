@@ -65,7 +65,6 @@
 		83437978271D47E700A5D6EA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		8343797A271D498800A5D6EA /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 83437979271D498800A5D6EA /* Yams */; };
 		8343797B271D499A00A5D6EA /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
-		8343797E271D499D00A5D6EA /* libre2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; };
 		83437980271D49EA00A5D6EA /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
 		83437981271D49EE00A5D6EA /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83437982271D49F500A5D6EA /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A1D25B8E93D00B49FEC /* buffer.c */; };
@@ -195,9 +194,9 @@
 		83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */; };
 		83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
-		83DB296A25CC6BB70013D6F7 /* libre2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; };
-		83DB296B25CC6BCD0013D6F7 /* libre2.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		83DB298225CC6CD10013D6F7 /* libre2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83DB296925CC6BB70013D6F7 /* libre2.dylib */; };
+		83D82A89277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
+		83D82A8A277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
+		83D82A8B277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
@@ -222,13 +221,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		830DF9EB27202265004429F8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 83DB299F25CC78950013D6F7;
-			remoteInfo = re2;
-		};
 		830DF9ED27202265004429F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
@@ -242,20 +234,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 831A8C3E258ABADA00E36182;
 			remoteInfo = QLExtension;
-		};
-		832D256525CC8B28005F41AC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 83DB299F25CC78950013D6F7;
-			remoteInfo = re2;
-		};
-		832D256725CC8B2D005F41AC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 83DB299F25CC78950013D6F7;
-			remoteInfo = re2;
 		};
 		836B7471259E23DB00A6A5F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -277,6 +255,48 @@
 			proxyType = 1;
 			remoteGlobalIDString = 83437970271D47DF00A5D6EA;
 			remoteInfo = qlmarkdown_cli;
+		};
+		83D82AA1277C8E6B00C9B99F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83D82A2B277BC53A00C9B99F;
+			remoteInfo = pcre2;
+		};
+		83D82AA3277C8E6F00C9B99F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83D82A63277BD1E800C9B99F;
+			remoteInfo = jpcre2;
+		};
+		83D82AA5277C8E7E00C9B99F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83D82A63277BD1E800C9B99F;
+			remoteInfo = jpcre2;
+		};
+		83D82AA7277C8E8200C9B99F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83D82A2B277BC53A00C9B99F;
+			remoteInfo = pcre2;
+		};
+		83D82AA9277C8E8B00C9B99F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83D82A63277BD1E800C9B99F;
+			remoteInfo = jpcre2;
+		};
+		83D82AAB277C8E8F00C9B99F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83D82A2B277BC53A00C9B99F;
+			remoteInfo = pcre2;
 		};
 		83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -315,7 +335,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				83F882482598C5F3008C5071 /* Sparkle.framework in Embed Libraries */,
-				83DB296B25CC6BCD0013D6F7 /* libre2.dylib in Embed Libraries */,
 				836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
@@ -498,13 +517,13 @@
 		83C44B3C259A70EE004C1367 /* string_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_utils.cpp; sourceTree = "<group>"; };
 		83C44B3D259A70EE004C1367 /* string_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string_utils.hpp; sourceTree = "<group>"; };
 		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		83DB296925CC6BB70013D6F7 /* libre2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libre2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		83DB297C25CC6C8B0013D6F7 /* stringpiece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringpiece.h; sourceTree = "<group>"; };
-		83DB297D25CC6C8B0013D6F7 /* filtered_re2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filtered_re2.h; sourceTree = "<group>"; };
-		83DB297E25CC6C8B0013D6F7 /* re2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = re2.h; sourceTree = "<group>"; };
-		83DB297F25CC6C8B0013D6F7 /* set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = set.h; sourceTree = "<group>"; };
-		83DB298F25CC77CC0013D6F7 /* MakefileRe2 */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefileRe2; sourceTree = "<group>"; };
-		83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = re2.xcodeproj; sourceTree = "<group>"; };
+		83D82A58277BC56300C9B99F /* pcre2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = pcre2.xcodeproj; sourceTree = "<group>"; };
+		83D82A5D277BCAED00C9B99F /* MakefilePCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefilePCRE; sourceTree = "<group>"; usesTabs = 1; };
+		83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = jpcre2.xcodeproj; sourceTree = "<group>"; };
+		83D82A87277BD21A00C9B99F /* MakefileJPCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefileJPCRE; sourceTree = "<group>"; usesTabs = 1; };
+		83D82A88277C45B500C9B99F /* libpcre2-32.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpcre2-32.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83D82A90277C466500C9B99F /* jpcre2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = jpcre2.hpp; sourceTree = BUILT_PRODUCTS_DIR; };
+		83D82A91277C467A00C9B99F /* pcre2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pcre2.h; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E7FEED258FBE54003ECF9B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		83E7FEF0258FBF37003ECF9B /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
 		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -539,9 +558,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */,
+				83D82A8A277C45B500C9B99F /* libpcre2-32.a in Frameworks */,
 				8382D05E2664052E00210A0A /* Yams in Frameworks */,
 				83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */,
-				83DB298225CC6CD10013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
 				830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */,
 			);
@@ -552,9 +571,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8343797A271D498800A5D6EA /* Yams in Frameworks */,
-				8343797E271D499D00A5D6EA /* libre2.dylib in Frameworks */,
 				8343797B271D499A00A5D6EA /* libwrapper_highlight.dylib in Frameworks */,
 				830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */,
+				83D82A8B277C45B500C9B99F /* libpcre2-32.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,9 +582,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
+				83D82A89277C45B500C9B99F /* libpcre2-32.a in Frameworks */,
 				8382D05C2664051400210A0A /* Yams in Frameworks */,
 				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
-				83DB296A25CC6BB70013D6F7 /* libre2.dylib in Frameworks */,
 				836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
 				830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */,
 			);
@@ -584,9 +603,9 @@
 		831A8C42258ABADA00E36182 /* QLExtension */ = {
 			isa = PBXGroup;
 			children = (
+				831A8C48258ABADA00E36182 /* Info.plist */,
 				831A8C43258ABADA00E36182 /* PreviewViewController.swift */,
 				831A8C45258ABADA00E36182 /* PreviewViewController.xib */,
-				831A8C48258ABADA00E36182 /* Info.plist */,
 				831A8C49258ABADA00E36182 /* QLExtension.entitlements */,
 			);
 			path = QLExtension;
@@ -648,17 +667,19 @@
 				834CABA02593C57B00673002 /* CHANGELOG.md */,
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
 				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
-				83DB298F25CC77CC0013D6F7 /* MakefileRe2 */,
-				83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */,
+				832D256125CC8894005F41AC /* .gitignore */,
+				83D82A87277BD21A00C9B99F /* MakefileJPCRE */,
+				83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */,
+				83D82A5D277BCAED00C9B99F /* MakefilePCRE */,
+				83D82A58277BC56300C9B99F /* pcre2.xcodeproj */,
 				836B3019259E222700A6A5F7 /* highlight-wrapper */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMarkdown */,
 				831A8C42258ABADA00E36182 /* QLExtension */,
-				832D256125CC8894005F41AC /* .gitignore */,
 				837F29172597A01F00A5F7DE /* Resources */,
-				83F881632597EE2B008C5071 /* Sparkle */,
-				83F1FE42259CEE7400257DAC /* external-launcher */,
 				83437972271D47DF00A5D6EA /* qlmarkdown_cli */,
+				83F1FE42259CEE7400257DAC /* external-launcher */,
+				83F881632597EE2B008C5071 /* Sparkle */,
 				83598F0525825B8D004664D3 /* Frameworks */,
 				83598E6225818808004664D3 /* Products */,
 			);
@@ -694,6 +715,8 @@
 				83327D452595E15700E76CF6 /* Settings+ext.swift */,
 				8357EB7E2588262C002C2C45 /* String+ext.swift */,
 				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
+				83D82A90277C466500C9B99F /* jpcre2.hpp */,
+				83D82A91277C467A00C9B99F /* pcre2.h */,
 				834CAB89259167B800673002 /* examples */,
 			);
 			path = QLMarkdown;
@@ -820,8 +843,7 @@
 		83598F0525825B8D004664D3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				83DB296925CC6BB70013D6F7 /* libre2.dylib */,
-				83DB297A25CC6C8B0013D6F7 /* include */,
+				83D82A88277C45B500C9B99F /* libpcre2-32.a */,
 				83F8822C2598A5C0008C5071 /* WebKit.framework */,
 				831A8C40258ABADA00E36182 /* Quartz.framework */,
 				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
@@ -868,26 +890,14 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		83DB297A25CC6C8B0013D6F7 /* include */ = {
+		83D82A92277C4ABE00C9B99F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				83DB297B25CC6C8B0013D6F7 /* re2 */,
 			);
-			path = include;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		83DB297B25CC6C8B0013D6F7 /* re2 */ = {
-			isa = PBXGroup;
-			children = (
-				83DB297C25CC6C8B0013D6F7 /* stringpiece.h */,
-				83DB297D25CC6C8B0013D6F7 /* filtered_re2.h */,
-				83DB297E25CC6C8B0013D6F7 /* re2.h */,
-				83DB297F25CC6C8B0013D6F7 /* set.h */,
-			);
-			path = re2;
+			name = Products;
 			sourceTree = "<group>";
 		};
-		83DB2AA325CC852C0013D6F7 /* Products */ = {
+		83D82A99277C80C900C9B99F /* Products */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -936,9 +946,10 @@
 			buildRules = (
 			);
 			dependencies = (
+				83D82AA8277C8E8200C9B99F /* PBXTargetDependency */,
+				83D82AA6277C8E7E00C9B99F /* PBXTargetDependency */,
 				830B5B44272D6D9200378FFE /* PBXTargetDependency */,
 				830B5B2F272D5B8C00378FFE /* PBXTargetDependency */,
-				832D256825CC8B2D005F41AC /* PBXTargetDependency */,
 				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
 				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
 			);
@@ -962,8 +973,9 @@
 			buildRules = (
 			);
 			dependencies = (
+				83D82AAC277C8E8F00C9B99F /* PBXTargetDependency */,
+				83D82AAA277C8E8B00C9B99F /* PBXTargetDependency */,
 				830B5B46272D6D9900378FFE /* PBXTargetDependency */,
-				830DF9EC27202265004429F8 /* PBXTargetDependency */,
 				830DF9EE27202265004429F8 /* PBXTargetDependency */,
 				830DF9F027202265004429F8 /* PBXTargetDependency */,
 			);
@@ -990,10 +1002,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				83D82AA2277C8E6B00C9B99F /* PBXTargetDependency */,
+				83D82AA4277C8E6F00C9B99F /* PBXTargetDependency */,
 				830B5B42272D6D8A00378FFE /* PBXTargetDependency */,
 				830B5B37272D613A00378FFE /* PBXTargetDependency */,
 				837F97D0271EA0C8009F4605 /* PBXTargetDependency */,
-				832D256625CC8B28005F41AC /* PBXTargetDependency */,
 				836B7472259E23DB00A6A5F7 /* PBXTargetDependency */,
 				831A8C4B258ABADA00E36182 /* PBXTargetDependency */,
 			);
@@ -1070,8 +1083,12 @@
 					ProjectRef = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
 				},
 				{
-					ProductGroup = 83DB2AA325CC852C0013D6F7 /* Products */;
-					ProjectRef = 83DB2A9525CC78F60013D6F7 /* re2.xcodeproj */;
+					ProductGroup = 83D82A99277C80C900C9B99F /* Products */;
+					ProjectRef = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
+				},
+				{
+					ProductGroup = 83D82A92277C4ABE00C9B99F /* Products */;
+					ProjectRef = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1348,11 +1365,6 @@
 			isa = PBXTargetDependency;
 			productRef = 830B5B45272D6D9900378FFE /* SwiftSoup */;
 		};
-		830DF9EC27202265004429F8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = re2;
-			targetProxy = 830DF9EB27202265004429F8 /* PBXContainerItemProxy */;
-		};
 		830DF9EE27202265004429F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "highlight-wrapper";
@@ -1366,16 +1378,6 @@
 			isa = PBXTargetDependency;
 			target = 831A8C3E258ABADA00E36182 /* Markdown QL Extension */;
 			targetProxy = 831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */;
-		};
-		832D256625CC8B28005F41AC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = re2;
-			targetProxy = 832D256525CC8B28005F41AC /* PBXContainerItemProxy */;
-		};
-		832D256825CC8B2D005F41AC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = re2;
-			targetProxy = 832D256725CC8B2D005F41AC /* PBXContainerItemProxy */;
 		};
 		836B7472259E23DB00A6A5F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1391,6 +1393,36 @@
 			isa = PBXTargetDependency;
 			target = 83437970271D47DF00A5D6EA /* qlmarkdown_cli */;
 			targetProxy = 837F97CF271EA0C8009F4605 /* PBXContainerItemProxy */;
+		};
+		83D82AA2277C8E6B00C9B99F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = pcre2;
+			targetProxy = 83D82AA1277C8E6B00C9B99F /* PBXContainerItemProxy */;
+		};
+		83D82AA4277C8E6F00C9B99F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = jpcre2;
+			targetProxy = 83D82AA3277C8E6F00C9B99F /* PBXContainerItemProxy */;
+		};
+		83D82AA6277C8E7E00C9B99F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = jpcre2;
+			targetProxy = 83D82AA5277C8E7E00C9B99F /* PBXContainerItemProxy */;
+		};
+		83D82AA8277C8E8200C9B99F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = pcre2;
+			targetProxy = 83D82AA7277C8E8200C9B99F /* PBXContainerItemProxy */;
+		};
+		83D82AAA277C8E8B00C9B99F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = jpcre2;
+			targetProxy = 83D82AA9277C8E8B00C9B99F /* PBXContainerItemProxy */;
+		};
+		83D82AAC277C8E8F00C9B99F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = pcre2;
+			targetProxy = 83D82AAB277C8E8F00C9B99F /* PBXContainerItemProxy */;
 		};
 		83F1FE6D259CF02900257DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1426,7 +1458,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1445,9 +1477,10 @@
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(PROJECT_DIR)/re2",
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1464,7 +1497,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1483,9 +1516,10 @@
 					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(PROJECT_DIR)/re2",
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1513,6 +1547,10 @@
 					"@executable_path/../Frameworks",
 					"$(inherited)",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
@@ -1537,6 +1575,10 @@
 					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
 					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1596,7 +1638,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1651,7 +1693,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -1671,7 +1713,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1697,7 +1739,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1718,7 +1760,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1744,7 +1786,7 @@
 					"$(PROJECT_DIR)/re2",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.9;
+				MARKETING_VERSION = 1.0.10;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

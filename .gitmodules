@@ -1,6 +1,9 @@
 [submodule "highlight-wrapper/highlight"]
 	path = highlight-wrapper/highlight
 	url = https://gitlab.com/saalen/highlight.git
-[submodule "re2"]
-	path = re2
-	url = https://github.com/google/re2.git
+[submodule "jpcre2"]
+	path = jpcre2
+	url = https://github.com/jpcre2/jpcre2
+[submodule "pcre2"]
+	path = pcre2
+	url = https://github.com/PhilipHazel/pcre2

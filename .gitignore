@@ -1,10 +1,11 @@
 .DS_Store
 
-re2/CMakeFiles/
-re2/Makefile
-re2/install_manifest.txt
-re2/cmake_install.cmake
-re2/CMakeCache.txt
+## User settings
+xcuserdata/
+jpcre2.xcodeproj/xcuserdata/
+pcre2.xcodeproj/xcuserdata/*
+
+highlight-wrapper/GoUtils/.idea/
 
 /*/.idea/
 

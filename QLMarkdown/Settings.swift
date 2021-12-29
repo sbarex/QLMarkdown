@@ -79,8 +79,12 @@ class Settings {
     @objc var openInlineLink: Bool = false
     
     @objc var renderAsCode: Bool = false
+    
+    /// Quick Look window width.
     var qlWindowWidth: Int? = nil
+    /// Quick Look window height.
     var qlWindowHeight: Int? = nil
+    /// Quick Look window size.
     var qlWindowSize: CGSize {
         if let w = qlWindowWidth, w > 0, let h = qlWindowHeight, h > 0 {
             return CGSize(width: w, height: h)
@@ -88,6 +92,7 @@ class Settings {
             return .zero
         }
     }
+    
     @objc var debug: Bool = false
     
     
@@ -265,9 +270,13 @@ class Settings {
         }
         if let opt = defaultsDomain["ql-window-width"] as? Int, opt > 0 {
             qlWindowWidth = opt
+        } else {
+            qlWindowWidth = nil
         }
         if let opt = defaultsDomain["ql-window-height"] as? Int, opt > 0 {
             qlWindowHeight = opt
+        } else {
+            qlWindowHeight = nil
         }
         
         sanitizeEmojiOption()
@@ -326,7 +335,9 @@ class Settings {
             self.openInlineLink = s.openInlineLink
     
             self.debug = s.debug
+            
             self.renderAsCode = s.renderAsCode
+            
             self.qlWindowWidth = s.qlWindowWidth
             self.qlWindowHeight = s.qlWindowHeight
             
@@ -692,6 +703,69 @@ class Settings {
                     type: .debug,
                     baseDir
                 )
+            }
+            
+            if self.unsafeHTMLOption {
+                cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(ext, { (ext, fragment, workingDir, context, code) in
+                    guard let fragment = fragment else {
+                        return
+                    }
+                    
+                    let baseDir: URL
+                    if let s = workingDir {
+                        let b = String(cString: s)
+                        baseDir = URL(fileURLWithPath: b)
+                    } else {
+                        baseDir = URL(fileURLWithPath: "")
+                    }
+                    let html = String(cString: fragment)
+                    var changed = false
+                    do {
+                        let doc = try SwiftSoup.parseBodyFragment(html, baseDir.path)
+                        for img in try doc.select("img") {
+                            let src = try img.attr("src")
+                            
+                            guard !src.isEmpty, !src.hasPrefix("http"), !src.hasPrefix("HTTP") else {
+                                // Do not handle external image.
+                                continue
+                            }
+                            guard !src.hasPrefix("data:") else {
+                                // Do not reprocess data: image.
+                                continue
+                            }
+                            
+                            let file = baseDir.appendingPathComponent(src).path
+                            guard FileManager.default.fileExists(atPath: file) else {
+                                continue // File not found.
+                            }
+                            guard let data = get_base64_image(
+                                file.cString(using: .utf8),
+                                { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
+                                    let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
+                                    
+                                    let r = magic_get_mime_by_file(path, magic_file)
+                                    return r
+                                },
+                                nil
+                            ) else {
+                                continue
+                            }
+                            defer {
+                                data.deallocate()
+                            }
+                            let img_data = String(cString: data)
+                            try img.attr("src", img_data)
+                            changed = true
+                        }
+                        if changed, let html = try doc.body()?.html(), let s = strdup(html) {
+                            code?.pointee = UnsafePointer(s)
+                        }
+                    } catch Exception.Error(_, let message) {
+                        print("Error processing html: \(message)")
+                    } catch {
+                        print("Error parsing html: \(error.localizedDescription)")
+                    }
+                }, nil)
             }
         }
         
@@ -1076,7 +1150,7 @@ table.debug td {
         let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
         let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"
         let body_style = self.renderAsCode ? " class='hl'" : ""
-        var html =
+        let html =
 """
 <!doctype html>
 <html>
@@ -1095,54 +1169,6 @@ table.debug td {
 </body>
 </html>
 """
-        if !self.renderAsCode && self.unsafeHTMLOption && self.inlineImageExtension, let ext = cmark_find_syntax_extension("inlineimage"), cmark_syntax_extension_inlineimage_get_raw_images_count(ext) > 0 {
-            var changed = false
-            do {
-                let doc = try SwiftSoup.parse(html, basedir.path)
-                for img in try doc.select("img") {
-                    let src = try img.attr("src")
-                    
-                    guard !src.isEmpty, !src.hasPrefix("http"), !src.hasPrefix("HTTP") else {
-                        // Do not handle external image.
-                        continue
-                    }
-                    guard !src.hasPrefix("data:") else {
-                        // Do not reprocess data: image.
-                        continue
-                    }
-                    
-                    let file = basedir.appendingPathComponent(src).path
-                    guard FileManager.default.fileExists(atPath: file) else {
-                        continue // File not found.
-                    }
-                    guard let data = get_base64_image(
-                        file.cString(using: .utf8),
-                        { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
-                            let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
-                            
-                            let r = magic_get_mime_by_file(path, magic_file)
-                            return r
-                        },
-                        nil
-                    ) else {
-                        continue
-                    }
-                    defer {
-                        data.deallocate()
-                    }
-                    let img_data = String(cString: data)
-                    try img.attr("src", img_data)
-                    changed = true
-                }
-                if changed {
-                    html = try doc.outerHtml()
-                }
-            } catch Exception.Error(_, let message) {
-                print("Error processing html: \(message)")
-            } catch {
-                print("Error parsing html: \(error.localizedDescription)")
-            }
-        }
         return html
     }
 }

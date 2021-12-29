@@ -107,5 +107,5 @@ You can choose the theme.
 The `smart quote` option format the quote as "curly" [^footnote1].
 
 ---
-[^footnote1]: If the option `footnotes` is enabled this text is rendered as a foot note. Footnotes is not recognized in the github pages.
+[^footnote1]: If the option `footnotes` is enabled this text is rendered as a foot note. _Footnotes is not recognized in the GitHub pages._
 

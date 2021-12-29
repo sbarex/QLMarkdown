@@ -116,21 +116,23 @@ Some lesser-used options are available in the advanced panel.
 
 Also, the theme popup menu has some extra commands available pressing the `alt` key.
 
+__To make the settings effective you need to save them (cmd-s or menu `File` > `Save settings`) or enable the autosave option.__
+
 ### Options
 
 The options follow those offered by the `cmark-gfm`:
 - `Hard break` _(available on advanced options panel)_: Render `softbreak` elements as hard line breaks.
 - `No soft break` _(available on advanced options panel)_: Render `softbreak` elements as spaces.
-- `Inline HTML (unsafe)` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:`, and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file.  By default, HTML tags are stripped and unsafe links are replaced by empty strings. _So this option is required for preview SVG images_.
+- `Inline HTML (unsafe)` _(available on advanced options panel)_: Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.
 - `Validate UTF` _(available on advanced options panel)_: Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).
-- `Smart quotes`: Convert straight quotes to curly, ```---``` to em dashes and ```--``` to en dashes.
-- `Footnotes`: Parse the footnotes.
+- `Smart quotes`: Convert straight quotes to curly, ```---``` to _em dashes_ and ```--``` to _en dashes_.
+- `Footnotes`: Parse the footnotes. Footnotes are not supported by GitHub.
 
 In the advanced options, you can also choose if open external link inside the Quick Look preview window or in the default browser.
 
 With the `Render source code` enabled _(available on advanced options panel)_, the preview shows the highlighted source code instead of the formatted output. 
 
-The `Quick Look size` field _(available on advanced options panel)_ allow you to force a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.
+The `Quick Look window` option _(available on advanced options panel)_ allow you to force a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.
 
 ### Extensions
 

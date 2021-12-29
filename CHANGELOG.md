@@ -1,6 +1,15 @@
 # Changelog
 
 
+### 1.0.10 (35)
+New features:
+- Better performance for heads extension.
+- Better performance for inline images on raw html fragments.
+- Option for automatic saving of settings changes.
+- GUI optimization.
+Bugfix:
+- Fixed settings save.
+
 ### 1.0.9 (34)
 New features:
 - Experimental support for defining the size of the Quick Look window.

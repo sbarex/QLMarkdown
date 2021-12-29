@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83598E6025818808004664D3"
-               BuildableName = "QLMarkdown.app"
-               BlueprintName = "QLMarkdown"
-               ReferencedContainer = "container:QLMarkdown.xcodeproj">
+               BlueprintIdentifier = "83D82A2B277BC53A00C9B99F"
+               BuildableName = "pcre2"
+               BlueprintName = "pcre2"
+               ReferencedContainer = "container:pcre2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -40,16 +40,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83598E6025818808004664D3"
-            BuildableName = "QLMarkdown.app"
-            BlueprintName = "QLMarkdown"
-            ReferencedContainer = "container:QLMarkdown.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -57,16 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "83598E6025818808004664D3"
-            BuildableName = "QLMarkdown.app"
-            BlueprintName = "QLMarkdown"
-            ReferencedContainer = "container:QLMarkdown.xcodeproj">
+            BlueprintIdentifier = "83D82A2B277BC53A00C9B99F"
+            BuildableName = "pcre2"
+            BlueprintName = "pcre2"
+            ReferencedContainer = "container:pcre2.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

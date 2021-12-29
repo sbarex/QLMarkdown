@@ -58,8 +58,8 @@ extension Settings {
         defaultsDomain["inline-link"] = openInlineLink
         defaultsDomain["render-as-code"] = self.renderAsCode
         
-        defaultsDomain["ql-window-width"] = self.qlWindowWidth
-        defaultsDomain["ql-window-height"] = self.qlWindowHeight
+        defaultsDomain["ql-window-width"] = self.qlWindowWidth ?? 0
+        defaultsDomain["ql-window-height"] = self.qlWindowHeight ?? 0
         
         let file: String
         if let url = customCSS {

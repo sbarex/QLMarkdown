@@ -1,0 +1,264 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		83D82AB4277C901D00C9B99F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83D82AB0277C901000C9B99F /* pcre2.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83D82A2B277BC53A00C9B99F;
+			remoteInfo = pcre2;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		83D82A64277BD1E800C9B99F /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; name = configure.ac; path = jpcre2/configure.ac; sourceTree = "<group>"; };
+		83D82A65277BD1E800C9B99F /* INSTALL */ = {isa = PBXFileReference; lastKnownFileType = text; name = INSTALL; path = jpcre2/INSTALL; sourceTree = "<group>"; };
+		83D82A66277BD1E800C9B99F /* configure */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = configure; path = jpcre2/configure; sourceTree = "<group>"; };
+		83D82A67277BD1E800C9B99F /* prepare */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = prepare; path = jpcre2/prepare; sourceTree = "<group>"; };
+		83D82A68277BD1E800C9B99F /* ChangeLog */ = {isa = PBXFileReference; lastKnownFileType = text; name = ChangeLog; path = jpcre2/ChangeLog; sourceTree = "<group>"; };
+		83D82A69277BD1E800C9B99F /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; name = config; path = jpcre2/config; sourceTree = "<group>"; };
+		83D82A6A277BD1E800C9B99F /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; name = AUTHORS; path = jpcre2/AUTHORS; sourceTree = "<group>"; };
+		83D82A6B277BD1E800C9B99F /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = jpcre2/README; sourceTree = "<group>"; };
+		83D82A6C277BD1E800C9B99F /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; name = Makefile.am; path = jpcre2/Makefile.am; sourceTree = "<group>"; };
+		83D82A6D277BD1E800C9B99F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = jpcre2/README.md; sourceTree = "<group>"; };
+		83D82A6E277BD1E800C9B99F /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; name = COPYING; path = jpcre2/COPYING; sourceTree = "<group>"; };
+		83D82A6F277BD1E800C9B99F /* crmd */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = crmd; path = jpcre2/crmd; sourceTree = "<group>"; };
+		83D82A70277BD1E800C9B99F /* Additional-Info.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = "Additional-Info.txt"; path = "jpcre2/Additional-Info.txt"; sourceTree = "<group>"; };
+		83D82A71277BD1E800C9B99F /* NEWS */ = {isa = PBXFileReference; lastKnownFileType = text; name = NEWS; path = jpcre2/NEWS; sourceTree = "<group>"; };
+		83D82A75277BD1E800C9B99F /* m4 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = m4; path = jpcre2/m4; sourceTree = "<group>"; };
+		83D82A77277BD1E800C9B99F /* Doxyfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Doxyfile; path = jpcre2/Doxyfile; sourceTree = "<group>"; };
+		83D82A78277BD1E800C9B99F /* doxy */ = {isa = PBXFileReference; lastKnownFileType = folder; name = doxy; path = jpcre2/doxy; sourceTree = "<group>"; };
+		83D82A79277BD1E800C9B99F /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; name = Makefile.in; path = jpcre2/Makefile.in; sourceTree = "<group>"; };
+		83D82A7B277BD1E800C9B99F /* aclocal.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; name = aclocal.m4; path = jpcre2/aclocal.m4; sourceTree = "<group>"; };
+		83D82A7C277BD1E800C9B99F /* LICENCE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENCE; path = jpcre2/LICENCE; sourceTree = "<group>"; };
+		83D82A7D277BD1E800C9B99F /* autogen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = autogen.sh; path = jpcre2/autogen.sh; sourceTree = "<group>"; };
+		83D82A7E277BD1E800C9B99F /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; name = src; path = jpcre2/src; sourceTree = "<group>"; };
+		83D82AB0277C901000C9B99F /* pcre2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = pcre2.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		83D82A5E277BD1E800C9B99F = {
+			isa = PBXGroup;
+			children = (
+				83D82AB0277C901000C9B99F /* pcre2.xcodeproj */,
+				83D82A7B277BD1E800C9B99F /* aclocal.m4 */,
+				83D82A70277BD1E800C9B99F /* Additional-Info.txt */,
+				83D82A6A277BD1E800C9B99F /* AUTHORS */,
+				83D82A7D277BD1E800C9B99F /* autogen.sh */,
+				83D82A68277BD1E800C9B99F /* ChangeLog */,
+				83D82A69277BD1E800C9B99F /* config */,
+				83D82A66277BD1E800C9B99F /* configure */,
+				83D82A64277BD1E800C9B99F /* configure.ac */,
+				83D82A6E277BD1E800C9B99F /* COPYING */,
+				83D82A6F277BD1E800C9B99F /* crmd */,
+				83D82A78277BD1E800C9B99F /* doxy */,
+				83D82A77277BD1E800C9B99F /* Doxyfile */,
+				83D82A65277BD1E800C9B99F /* INSTALL */,
+				83D82A7C277BD1E800C9B99F /* LICENCE */,
+				83D82A75277BD1E800C9B99F /* m4 */,
+				83D82A6C277BD1E800C9B99F /* Makefile.am */,
+				83D82A79277BD1E800C9B99F /* Makefile.in */,
+				83D82A71277BD1E800C9B99F /* NEWS */,
+				83D82A67277BD1E800C9B99F /* prepare */,
+				83D82A6B277BD1E800C9B99F /* README */,
+				83D82A6D277BD1E800C9B99F /* README.md */,
+				83D82A7E277BD1E800C9B99F /* src */,
+			);
+			sourceTree = "<group>";
+		};
+		83D82AB1277C901000C9B99F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		83D82A63277BD1E800C9B99F /* jpcre2 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "-C jpcre2 -f ../MakefileJPCRE $(ACTION)";
+			buildConfigurationList = 83D82A7F277BD1E800C9B99F /* Build configuration list for PBXLegacyTarget "jpcre2" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+				83D82AB5277C901D00C9B99F /* PBXTargetDependency */,
+			);
+			name = jpcre2;
+			passBuildSettingsInEnvironment = 1;
+			productName = jpcre2;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		83D82A5F277BD1E800C9B99F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1320;
+			};
+			buildConfigurationList = 83D82A62277BD1E800C9B99F /* Build configuration list for PBXProject "jpcre2" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83D82A5E277BD1E800C9B99F;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 83D82AB1277C901000C9B99F /* Products */;
+					ProjectRef = 83D82AB0277C901000C9B99F /* pcre2.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				83D82A63277BD1E800C9B99F /* jpcre2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXTargetDependency section */
+		83D82AB5277C901D00C9B99F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = pcre2;
+			targetProxy = 83D82AB4277C901D00C9B99F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		83D82A60277BD1E800C9B99F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		83D82A61277BD1E800C9B99F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		83D82A80277BD1E800C9B99F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = jpcre2;
+			};
+			name = Debug;
+		};
+		83D82A81277BD1E800C9B99F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = jpcre2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		83D82A62277BD1E800C9B99F /* Build configuration list for PBXProject "jpcre2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83D82A60277BD1E800C9B99F /* Debug */,
+				83D82A61277BD1E800C9B99F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83D82A7F277BD1E800C9B99F /* Build configuration list for PBXLegacyTarget "jpcre2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83D82A80277BD1E800C9B99F /* Debug */,
+				83D82A81277BD1E800C9B99F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83D82A5F277BD1E800C9B99F /* Project object */;
+}
