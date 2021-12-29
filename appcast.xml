@@ -2,6 +2,31 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title> 
+        
+        <item>
+            <title>1.0.10</title>
+            <pubDate>lun, 29 dic 2021 16:37:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.10/QLMarkdown.zip" sparkle:shortVersionString="1.0.10" sparkle:version="35" sparkle:edSignature="Iv1RDXqyC0oSBcD6G8YrSrseiN4VlhX2wl2F56XN/ianDiJ9vD4GfwV/0g/1VSuVqn0mz/zLTJe+gh+j6MUdAw==" length="16424857" />
+            <description><![CDATA[
+<h2>1.0.10 (35)</h2>
+<p>New features:</p>
+<ul>
+<li>Better performance for heads extension.</li>
+<li>Better performance for inline images on raw html fragments.</li>
+<li>Option for automatic saving of settings changes.</li>
+<li>GUI optimization.</li>
+</ul>
+
+<p>Bugfix:</p>
+<ul>
+<li>Fixed settings save.</li>
+</ul>
+<p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
         <item>
             <title>1.0</title>
             <pubDate>sab, 26 dic 2020 11:12:25 +0100</pubDate>
