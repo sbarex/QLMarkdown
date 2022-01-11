@@ -1,3 +1,5 @@
+[![counter](https://img.shields.io/github/downloads/sbarex/qlmarkdown/latest/total)](https://github.com/sbarex/QLMarkdown/releases) [![counter](https://img.shields.io/github/downloads/sbarex/qlmarkdown/total)](https://github.com/sbarex/QLMarkdown/releases)
+
 <p align="center">
   <img src="assets/img/icon.png" width="150" alt="logo" />
 </p>
