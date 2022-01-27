@@ -2,6 +2,30 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title> 
+        <item>
+            <title>1.0.11</title>
+            <pubDate>gio, 27 geb 2022 23:54:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.11/QLMarkdown.zip" sparkle:shortVersionString="1.0.11" sparkle:version="36" sparkle:edSignature="kjzyCI87lb11UsqKnmoOTBomXdFcqBZR3G5g+OFK4op6faJGymN9LZNsAeCgS+OD3DqyAxSXhAtg9ZYCvCDODQ==" length="15206113" />
+            <description><![CDATA[
+<h2>1.0.11 (36)</h2>
+<p>New features:</p>
+<ul>
+<li>Support for opening markdown files (by dragging the file onto the app icon).</li>
+<li>Support for exporting the markdown code.</li>
+<li>Sparkle updated to release 2.0.0. </li>
+</ul>
+
+<p>Bugfix:</p>
+<ul>
+<li>Fix for heads with dash.</li>
+<li>Implemented missing behavior for the color scheme editor.</li>
+<li>Fix for installation of the command line tool.</li>
+</ul>
+<p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
         
         <item>
             <title>1.0.10</title>
