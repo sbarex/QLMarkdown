@@ -154,6 +154,14 @@ extension Settings {
     }
     
     @discardableResult
+    func removeTheme(path: String) throws -> Bool {
+        guard let theme = self.getAvailableThemes().first(where: { $0.path == path }) else {
+            return false
+        }
+        return try self.removeTheme(theme)
+    }
+    
+    @discardableResult
     func removeTheme(_ theme: ThemePreview) throws -> Bool {
         guard !theme.isStandalone else { return false }
         

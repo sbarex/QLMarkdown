@@ -380,7 +380,7 @@ class ThemesView: NSView {
         }
         
         let dst = themesFolder.appendingPathComponent(src.lastPathComponent)
-            
+        
         if FileManager.default.fileExists(atPath: dst.path) {
             let alert = NSAlert()
             alert.messageText = "A theme already exists with the same name. \nDo you want to overwrite?"
@@ -389,9 +389,14 @@ class ThemesView: NSView {
             alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
             if alert.runModal() == .alertSecondButtonReturn {
                 do {
-                    try FileManager.default.removeItem(at: dst)
+                    try Settings.shared.removeTheme(path: dst.path)
                 } catch {
-                    
+                    let alert = NSAlert()
+                    alert.messageText = "Unable to remove previous theme!"
+                    alert.alertStyle = .warning
+                    alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+                    alert.runModal()
+                    return
                 }
             } else {
                 return
@@ -399,6 +404,10 @@ class ThemesView: NSView {
         }
         do {
             try FileManager.default.copyItem(at: src, to: dst)
+            let theme = ThemePreview(theme: t!.pointee)
+            theme.path = dst.path
+            Settings.shared.appendTheme(theme)
+            self.theme = theme
         } catch {
             let alert = NSAlert()
             alert.messageText = "Unable to import the theme!"
