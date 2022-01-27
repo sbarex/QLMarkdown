@@ -42,10 +42,8 @@ class ThemeSelectorViewController: NSViewController {
     
     var handler: ((ThemePreview)->Void)?
     
-    var allThemes: [ThemePreview] = [] {
-        didSet {
-            refreshThemes()
-        }
+    var allThemes: [ThemePreview] {
+        return Settings.shared.getAvailableThemes()
     }
     
     internal var themes: [ThemePreview] = [] {
@@ -178,8 +176,6 @@ extension ThemeSelectorViewController: NSCollectionViewDataSource {
         return a
         // return themes[indexPath.item]
     }
-    
-    
 }
 
 

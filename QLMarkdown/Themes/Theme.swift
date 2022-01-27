@@ -34,6 +34,24 @@ import Cocoa
             hasher.combine(self.name)
         }
         
+        var index: Int {
+            switch self {
+            case .plain: return 0
+            case .canvas: return 1
+            case .number: return 2
+            case .string: return 3
+            case .escape: return 4
+            case .preProcessor: return 5
+            case .stringPreProc: return 6
+            case .blockComment: return 7
+            case .lineComment: return 8
+            case .lineNum: return 9
+            case .operator: return 10
+            case .interpolation: return 11
+            case .keyword(let index): return 12 + index
+            }
+        }
+        
         var name: String {
             switch self {
             case .plain: return "Default"
@@ -84,6 +102,14 @@ import Cocoa
                 return false
             }
         }
+        var keywordIndex: Int {
+            switch self {
+            case .keyword(let i):
+                return i
+            default:
+                return -1
+            }
+        }
     }
     
     class PropertyStyle {
@@ -95,7 +121,12 @@ import Cocoa
             case color = "color"
         }
         
-        var italic: Bool?
+        var italic: Bool? {
+            didSet {
+                guard oldValue != italic else { return }
+                
+            }
+        }
         var bold: Bool?
         var underline: Bool?
         var color: String?
@@ -198,9 +229,9 @@ import Cocoa
             return export
         }
         
-        func getFormattedString(_ text: String, font: NSFont, forIcon: Bool = false) -> NSAttributedString {
+        func getFormattedString(_ text: String, font: NSFont, forIcon: Bool = false, plainColor: String?) -> NSAttributedString {
             var attributes: [NSAttributedString.Key: Any] = [:]
-            if let cc = NSColor(css: self.color) {
+            if let cc = NSColor(css: self.color ?? plainColor) {
                 attributes[.foregroundColor] = cc
             }
             if !forIcon, let underline = self.underline {
@@ -224,13 +255,29 @@ import Cocoa
     }
     
     public static func == (lhs: Theme, rhs: Theme) -> Bool {
-        return lhs.name == rhs.name
+        return lhs.name == rhs.name && lhs.isStandalone == rhs.isStandalone
     }
     
-    var name: String
-    var desc: String
+    @objc dynamic var name: String {
+        didSet {
+            guard oldValue != name else { return }
+            self.isDirty = true
+        }
+    }
+    
+    dynamic var desc: String {
+        didSet {
+            guard oldValue != desc else { return }
+            self.isDirty = true
+        }
+    }
     var path: String
-    var appearance: ThemeAppearance = .undefined
+    dynamic var appearance: ThemeAppearance = .undefined {
+        didSet {
+            guard oldValue != appearance else { return }
+            self.isDirty = true
+        }
+    }
     
     var plain: PropertyStyle
     var canvas: PropertyStyle
@@ -248,7 +295,7 @@ import Cocoa
     
     var isBase16: Bool = false
     var isStandalone: Bool = false
-    var isDirty: Bool = false
+    @objc dynamic var isDirty: Bool = false
     
     convenience init (theme: HTheme) {
         let import_prop = { ( p: inout PropertyStyle, property: HThemeProperty) in
@@ -296,7 +343,7 @@ import Cocoa
                 self.keywords.append(PropertyStyle(property: k))
             }
         }
-        
+        self.isDirty = false
     }
     
     init(name: String) {
@@ -321,6 +368,8 @@ import Cocoa
         self.`operator` = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
         self.interpolation = PropertyStyle(color: nil, italic: nil, bold: nil, underline: nil)
         self.keywords = []
+        
+        self.isDirty = false
     }
     
     
@@ -416,19 +465,19 @@ body {
     /// This code don't call internally the getHtmlExample and is more (about 6x)  fast!
     internal func getAttributedExampleForIcon(font: NSFont) -> NSAttributedString {
         let s = NSMutableAttributedString()
-        s.append(self.plain.getFormattedString(PropertyName.plain.name, font: font, forIcon: true))
-        s.append(self.number.getFormattedString(PropertyName.number.name, font: font, forIcon: true))
-        s.append(self.string.getFormattedString(PropertyName.string.name, font: font, forIcon: true))
-        s.append(self.escape.getFormattedString(PropertyName.escape.name, font: font, forIcon: true))
-        s.append(self.preProcessor.getFormattedString(PropertyName.preProcessor.name, font: font, forIcon: true))
-        s.append(self.stringPreProc.getFormattedString(PropertyName.stringPreProc.name, font: font, forIcon: true))
-        s.append(self.blockComment.getFormattedString(PropertyName.blockComment.name, font: font, forIcon: true))
-        s.append(self.lineComment.getFormattedString(PropertyName.lineComment.name, font: font, forIcon: true))
-        s.append(self.lineNum.getFormattedString(PropertyName.lineNum.name, font: font, forIcon: true))
-        s.append(self.operator.getFormattedString(PropertyName.operator.name, font: font, forIcon: true))
-        s.append(self.interpolation.getFormattedString(PropertyName.interpolation.name, font: font, forIcon: true))
+        s.append(self.plain.getFormattedString(PropertyName.plain.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.number.getFormattedString(PropertyName.number.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.string.getFormattedString(PropertyName.string.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.escape.getFormattedString(PropertyName.escape.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.preProcessor.getFormattedString(PropertyName.preProcessor.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.stringPreProc.getFormattedString(PropertyName.stringPreProc.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.blockComment.getFormattedString(PropertyName.blockComment.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.lineComment.getFormattedString(PropertyName.lineComment.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.lineNum.getFormattedString(PropertyName.lineNum.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.operator.getFormattedString(PropertyName.operator.name, font: font, forIcon: true, plainColor: self.plain.color))
+        s.append(self.interpolation.getFormattedString(PropertyName.interpolation.name, font: font, forIcon: true, plainColor: self.plain.color))
         for (i, keyword) in self.keywords.enumerated() {
-            s.append(keyword.getFormattedString(PropertyName.keyword(index: i).name, font: font, forIcon: true))
+            s.append(keyword.getFormattedString(PropertyName.keyword(index: i).name, font: font, forIcon: true, plainColor: self.plain.color))
         }
         
         return s
@@ -605,8 +654,25 @@ body {
         }
     }
     
+    enum ErrorSave: Error {
+        case missingThemeFolder
+    }
+    
+    func save() throws {
+        if self.path.isEmpty {
+            guard let dest = Settings.themesFolder?.appendingPathComponent(UUID().uuidString + ".theme") else {
+                throw ErrorSave.missingThemeFolder
+            }
+            self.path = dest.path
+        }
+        try self.write(toFile: self.path)
+        self.isDirty = false
+        NotificationCenter.default.post(name: .themeDidSaved, object: self)
+    }
+    
     func write(toFile file: String) throws {
         var s = ""
+        s += "Name = \"\(self.name.escapingForLua())\"\n\n"
         s += "Description = \"\(self.desc.escapingForLua())\"\n\n"
 
         if self.appearance != .undefined {
@@ -630,21 +696,21 @@ body {
                 if n > 0 {
                     s += ", "
                 }
-                s += "Bold=\"\(v ? "true" : "false")\""
+                s += "Bold=\(v ? "True" : "False")"
                 n += 1
             }
             if let v = property.italic {
                 if n > 0 {
                     s += ", "
                 }
-                s += "Italic=\"\(v ? "true" : "false")\""
+                s += "Italic=\(v ? "True" : "False")"
                 n += 1
             }
             if let v = property.underline {
                 if n > 0 {
                     s += ", "
                 }
-                s += "Underline=\"\(v ? "true" : "false")\""
+                s += "Underline=\(v ? "True" : "False")"
                 n += 1
             }
             s += " }"
@@ -667,13 +733,13 @@ body {
         s += exportProperty(self.lineNum, "LineNum")
         s += exportProperty(self.operator, "Operator")
         s += exportProperty(self.interpolation, "Interpolation")
+        s += "\nKeywords = {\n"
         if self.keywords.count > 0 {
-            s += "\nKeywords = {\n"
             for keyword in self.keywords {
                 s += exportProperty(keyword, "")
             }
-            s += "}\n"
         }
+        s += "}\n"
         s += "\n"
         
         try s.write(toFile: file, atomically: true, encoding: .utf8)
@@ -737,5 +803,42 @@ class ThemePreview: Theme {
         }
         return s
     }
+    
+    override func duplicate() -> ThemePreview {
+        let t = ThemePreview(name: self.name)
+        t.desc = self.desc
+        
+        let exportProperty = { (dstTheme: Theme, name: PropertyName) in
+            let src = self[name]!
+            let dst = dstTheme[name]!
+            dst.color = src.color
+            dst.bold = src.bold
+            dst.italic = src.italic
+            dst.underline = src.underline
+        }
+        exportProperty(t, .plain)
+        exportProperty(t, .canvas)
+        exportProperty(t, .number)
+        exportProperty(t, .string)
+        exportProperty(t, .escape)
+        exportProperty(t, .preProcessor)
+        exportProperty(t, .stringPreProc)
+        exportProperty(t, .blockComment)
+        exportProperty(t, .lineComment)
+        exportProperty(t, .lineNum)
+        exportProperty(t, .operator)
+        exportProperty(t, .interpolation)
+        for keyword in self.keywords {
+            let k = PropertyStyle(color: keyword.color, italic: keyword.italic, bold: keyword.bold, underline: keyword.underline)
+            t.keywords.append(k)
+        }
+        return t
+    }
 }
 
+extension NSNotification.Name {
+    static let currentThemeDidChange = NSNotification.Name("currentThemeDidChange")
+    static let themeDidSaved = NSNotification.Name("themeDidSaved")
+    static let themeDidAdded = NSNotification.Name("themeDidAdded")
+    static let themeDidDeleted = NSNotification.Name("themeDidDeleted")
+}

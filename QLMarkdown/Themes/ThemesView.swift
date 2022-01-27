@@ -12,27 +12,37 @@ class ThemesView: NSView {
     @IBOutlet weak var outlineView: NSOutlineView!
     @IBOutlet weak var filterThemePopup: NSPopUpButton!
     @IBOutlet weak var searchField: NSSearchField!
-    
-    @IBOutlet weak var addThemeButton: NSButton!
-    @IBOutlet weak var delThemeButton: NSButton!
-    
+        
     weak var delegate: ThemesViewDelegate?
     
     var theme: ThemePreview? {
         didSet {
-            if oldValue != theme {
-                delThemeButton.isEnabled = !(theme?.isStandalone ?? true)
-                if let _ = theme, var index = themes.firstIndex(of: theme!) {
-                    index += !theme!.isStandalone ? 2 : 1
-                    outlineView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
-                } else {
-                    outlineView.selectRowIndexes(IndexSet(integer: -1), byExtendingSelection: false)
+            delegate?.theme = theme
+            guard oldValue != theme else { return }
+            
+            oldValue?.removeObserver(self, forKeyPath: #keyPath(ThemePreview.name))
+            
+            var index = -1
+            if let theme = self.theme {
+                theme.addObserver(self, forKeyPath: #keyPath(ThemePreview.name), options: [], context: nil)
+                
+                if theme.isStandalone, let i = standardThemes.firstIndex(of: theme) {
+                    index = i + 1
+                } else if !theme.isStandalone, let i = customThemes.firstIndex(of: theme) {
+                    index = i + 2 + standardThemes.count
                 }
             }
-            delegate?.theme = theme
+            if index > 0 {
+                outlineView.expandItem(theme!.isStandalone ? "Standard" : "Custom")
+                outlineView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
+                outlineView.scrollRowToVisible(index)
+            } else {
+                outlineView.selectRowIndexes(IndexSet(integer: -1), byExtendingSelection: false)
+            }
         }
     }
     
+    /*
     func setTheme(name: String?, scroll: Bool) {
         if let name = name, var index = themes.firstIndex(where: {$0.name == name}) {
             let theme = themes[index]
@@ -45,55 +55,55 @@ class ThemesView: NSView {
             outlineView.selectRowIndexes(IndexSet(integer: -1), byExtendingSelection: false)
         }
     }
+    */
     
-    /// All (unfiltered) standard themes.
+    /// All (unfiltered) standard and custom themes.
     var allThemes: [ThemePreview] = [] {
         didSet {
-            refreshThemes(custom: false)
-        }
-    }
-    /// All (unfiltered) custom themes.
-    var allCustomThemes: [ThemePreview] = [] {
-        didSet {
-            refreshThemes(custom: true)
+            self.outlineView?.beginUpdates()
+            refreshThemes(custom: nil)
+            self.outlineView?.endUpdates()
         }
     }
     
     /// Filtered standard themes.
-    var themes: [ThemePreview] = [] {
+    var standardThemes: [ThemePreview] = [] {
         didSet {
-            if oldValue != themes {
-                self.outlineView?.reloadItem("Standard", reloadChildren: true)
-                if let t = themes.first(where: { $0 == self.theme }) {
-                    let i = outlineView.row(forItem: t)
-                    if i >= 0 {
-                        // Reselect current theme.
-                        self.outlineView?.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: false)
-                    }
+            guard oldValue != standardThemes else { return }
+            self.outlineView?.beginUpdates()
+            self.outlineView?.reloadItem("Standard", reloadChildren: true)
+            if let theme = self.theme {
+                let i = outlineView.row(forItem: theme)
+                if i >= 0 {
+                    // Reselect current theme.
+                    self.outlineView?.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: false)
                 }
             }
+            self.outlineView?.endUpdates()
         }
     }
     
     /// Filtered custom themes.
     var customThemes: [ThemePreview] = [] {
         didSet {
-            if oldValue != customThemes {
-                self.outlineView?.reloadItem("Custom", reloadChildren: true)
-                if let t = customThemes.first(where: { $0 == self.theme }) {
-                    let i = self.outlineView.row(forItem: t)
-                    if i >= 0 {
-                        // Reselect current theme.
-                        self.outlineView?.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: false)
-                    }
+            guard oldValue != customThemes else { return }
+            self.outlineView?.beginUpdates()
+            self.outlineView?.reloadItem("Custom", reloadChildren: true)
+            if let theme = self.theme {
+                let i = outlineView.row(forItem: theme)
+                if i >= 0 {
+                    // Reselect current theme.
+                    self.outlineView?.selectRowIndexes(IndexSet(integer: i), byExtendingSelection: false)
                 }
             }
+            self.outlineView?.endUpdates()
         }
     }
     
     /// Filter for theme name.
     var filter: String = "" {
         didSet {
+            guard oldValue != filter else { return }
             refreshThemes()
         }
     }
@@ -101,6 +111,7 @@ class ThemesView: NSView {
     /// Filter for theme style (light/dark).
     var style: Theme.ThemeAppearance = .undefined {
         didSet {
+            guard oldValue != style else { return }
             refreshThemes()
         }
     }
@@ -127,22 +138,63 @@ class ThemesView: NSView {
         self.outlineView.beginUpdates()
         
         // Fetch the themes.
-        self.themes = Settings.shared.getAvailableThemes() 
+        self.allThemes = Settings.shared.getAvailableThemes()
         
-        self.allThemes = self.themes.filter({ $0.isStandalone })
-        self.allCustomThemes = self.themes.filter({ !$0.isStandalone })
-        
-        if self.allThemes.count > 0 {
+        if self.standardThemes.count > 0 {
             self.outlineView.expandItem("Standard")
         }
-        if self.allCustomThemes.count > 0 {
+        if self.customThemes.count > 0 {
             self.outlineView.expandItem("Custom")
         }
         self.outlineView.endUpdates()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeDidAdd(_:)), name: .themeDidAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeDidDelete(_:)), name: .themeDidDeleted, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeDidChange(_:)), name: .currentThemeDidChange, object: nil)
+        
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .themeDidAdded, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .themeDidDeleted, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .currentThemeDidChange, object: nil)
+        theme?.removeObserver(self, forKeyPath: #keyPath(ThemePreview.name))
+    }
+    
+    @objc func handleThemeDidAdd(_ notification: Notification) {
+        self.allThemes = Settings.shared.getAvailableThemes()
+    }
+    
+    @objc func handleThemeDidDelete(_ notification: Notification) {
+        if let theme = notification.object as? ThemePreview, self.theme == theme {
+            self.theme = nil
+        }
+        self.allThemes = Settings.shared.getAvailableThemes()
+    }
+    
+    @objc func handleThemeDidChange(_ notification: Notification) {
+        guard let theme = notification.object as? ThemePreview else {
+            return
+        }
+        let index = self.outlineView.row(forItem: theme)
+        if index >= 0 {
+            self.outlineView.reloadData(forRowIndexes: IndexSet(integer: index), columnIndexes: IndexSet(integersIn: 0..<self.outlineView.numberOfColumns))
+        }
+    }
+    
+    @objc override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if let theme = object as? ThemePreview, theme == self.theme {
+            if keyPath == #keyPath(ThemePreview.name) || keyPath == #keyPath(ThemePreview.image) {
+                self.outlineView.reloadItem(theme)
+                return
+            }
+        }
+        super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
     
     /// Update the list of theme visible in the outline view.
     func refreshThemes(custom: Bool? = nil) {
+        var standalone = true
         let filter_func = { (theme: Theme) -> Bool in
             if self.filter != "" {
                 guard let _ = theme.name.range(of: self.filter, options: String.CompareOptions.caseInsensitive) else {
@@ -151,10 +203,10 @@ class ThemesView: NSView {
                 }
             }
             
-            if !theme.isStandalone && !theme.isDirty {
-                // Theme is not changed or is not standalone.
+            if theme.isStandalone != standalone {
                 return false
             }
+            
             switch self.style {
             case .light:
                 if theme.appearance != .light {
@@ -173,114 +225,56 @@ class ThemesView: NSView {
         }
         
         if custom == nil || custom == false {
-            themes = allThemes.filter(filter_func)
+            standalone = true
+            standardThemes = allThemes.filter(filter_func)
         }
         if custom == nil || custom == true {
-            customThemes = allCustomThemes.filter(filter_func).sorted(by: { $0.name < $1.name })
+            standalone = false
+            customThemes = allThemes.filter(filter_func).sorted(by: { $0.name < $1.name })
         }
     }
     
     /// Append a custom theme to the list.
     func appendCustomTheme(_ newTheme: ThemePreview) {
-        // newTheme.isStandalone = false
-        // newTheme.addObserver(self, forKeyPath: "isDirty", options: [], context: nil)
-        
-        var themes = allCustomThemes
-        themes.append(newTheme)
-        themes.sort { (t1, t2) -> Bool in
-            return t1.name < t2.name
-        }
-        
-        contentView.window?.isDocumentEdited = true
-        
         outlineView.beginUpdates()
-        allCustomThemes = themes
-            
-        /// Index of inserted theme
-        if let i = customThemes.firstIndex(where: { $0 == newTheme }) {
-            // Expand the list of custom themes.
-            outlineView.expandItem("Custom")
-            let item = customThemes[i]
-            let row = outlineView.row(forItem: item)
-            if row >= 0 {
-                // Select the new theme.
-                outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-                // Scroll to the theme row.
-                outlineView.scrollRowToVisible(row)
-            }
-        }
+        Settings.shared.appendTheme(newTheme)
+        self.theme = newTheme
         outlineView.endUpdates()
     }
     
-    func removeTheme() {
-        /*
-        guard let theme = self.theme, !theme.isStandalone else {
+    func removeTheme(_ theme: ThemePreview?) {
+        guard let theme = theme else {
             return
         }
-        
-        let update = { () in
-            /// Index of the theme in the list
-            guard let index = self.allCustomThemes.firstIndex(where: { $0 == theme }) else {
-                return
-            }
+        do {
+            try Settings.shared.removeTheme(theme)
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "Unable to delete the theme \(theme.name)!"
+            alert.informativeText = error.localizedDescription
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             
-            self.outlineView.beginUpdates()
-            if let i = self.customThemes.firstIndex(where: { $0 == theme }) {
-                // Remove the row of deleted theme.
-                self.outlineView.removeItems(at: IndexSet(integer: i), inParent: "Custom", withAnimation: NSTableView.AnimationOptions.slideLeft)
-            }
-            
-            // Remove the theme from the list
-            let t = self.allCustomThemes.remove(at: index)
-            t.theme.delegate = nil
-            
-            self.outlineView.endUpdates()
-            
-            // Update the dirty status of the windows.
-            self.view.window?.isDocumentEdited = self.customThemes.first(where: { $0.isDirty }) != nil
-                
-            if self.theme == theme {
-                self.theme = nil
-            }
-            
-            NotificationCenter.default.post(name: .themeDidDeleted, object: NotificationThemeDeletedData(theme.name))
+            alert.alertStyle = .critical
+            alert.runModal()
         }
-        
-        if theme.originalName.isEmpty {
-            // Theme never saved.
-            update()
+    }
+    
+    private func getThemeForMenu(_ menuItem: NSMenuItem?) -> ThemePreview? {
+        let theme: ThemePreview?
+        if let identifier = menuItem?.menu?.identifier?.rawValue, identifier == "contextual" {
+            theme = outlineView.item(atRow: outlineView.clickedRow) as? ThemePreview
         } else {
-            service?.deleteTheme(name: theme.originalName) { (success, error) in
-                if success {
-                    DispatchQueue.main.async {
-                        update()
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        let alert = NSAlert()
-                        alert.window.title = "Error"
-                        alert.messageText = "Unable to delete the theme \(theme.name)!"
-                        alert.informativeText = error?.localizedDescription ?? ""
-                        alert.addButton(withTitle: "Close")
-                        
-                        alert.alertStyle = .critical
-                        alert.runModal()
-                    }
-                }
-            }
+            theme = self.theme
         }
- */
+        return theme
     }
     
     /// Duplicate the current color scheme.
     @IBAction func handleDuplicate(_ sender: Any) {
-        guard let theme = self.theme else {
+        guard let theme = self.getThemeForMenu(sender as? NSMenuItem) else {
             return
         }
-        /*
-        guard let newTheme = Theme(dict: theme.toDictionary()) else {
-            return
-        }
+        let newTheme = theme.duplicate()
         
         // List of current customized theme names.
         var names = customThemes.map({ $0.name })
@@ -292,41 +286,39 @@ class ThemesView: NSView {
         
         newTheme.name = themeName
         
-        appendCustomTheme(newTheme)
-        
+        Settings.shared.appendTheme(newTheme)
         self.theme = newTheme
-         */
+        newTheme.isDirty = true
     }
     
     /// Add a new empty theme.
     @IBAction func handleAddTheme(_ sender: Any) {
         let themeName = "new_theme".duplicate(format: "%@_%d", suffixPattern: #"_(?<n>\d+)"#, list: customThemes.map({ $0.name }))
         let newTheme = ThemePreview(name: themeName)
-        newTheme.isDirty = true
         
         appendCustomTheme(newTheme)
         
         self.theme = newTheme
+        newTheme.isDirty = true
     }
     
     /// Delete the current theme.
     @IBAction func handleDelTheme(_ sender: Any) {
-        guard let theme = self.theme, !theme.isStandalone else {
+        guard let theme = self.getThemeForMenu(sender as? NSMenuItem), !theme.isStandalone else {
             return
         }
         
         let alert = NSAlert()
-        alert.messageText = "Warning"
-        alert.informativeText = "Are you sure to delete this custom theme?"
-        alert.addButton(withTitle: "Yes")
-        alert.addButton(withTitle: "No")
+        alert.messageText = "Are you sure to delete the \(theme.name) custom theme?"
+        alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
+        alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
         alert.alertStyle = .warning
         
         alert.beginSheetModal(for: self.contentView.window!) { (response) in
             guard response == .alertFirstButtonReturn else {
                 return
             }
-            self.removeTheme()
+            self.removeTheme(theme)
         }
     }
     
@@ -341,6 +333,150 @@ class ThemesView: NSView {
         }
     }
     
+    @IBAction func importTheme(_ sender: Any) {
+        guard let themesFolder = Settings.themesFolder else {
+            let alert = NSAlert()
+            alert.messageText = "Missing themes folder!"
+            alert.alertStyle = .critical
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+            return
+        }
+        
+        let openPanel = NSOpenPanel()
+        openPanel.canCreateDirectories = false
+        openPanel.showsTagField = false
+        openPanel.allowedFileTypes = ["theme"]
+        openPanel.isExtensionHidden = false
+        openPanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
+        
+        let result = openPanel.runModal()
+        
+        guard result == .OK, let src = openPanel.url else {
+            return
+        }
+        guard src.pathExtension == "theme" else {
+            let alert = NSAlert()
+            alert.messageText = "Theme file must have the `.theme` extension!"
+            alert.alertStyle = .critical
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+            return
+        }
+        
+        var exit_code: Int32 = 0
+        var release: ReleaseTheme?
+        let t = highlight_get_theme2(src.path.cString(using: .utf8), &exit_code, &release)
+        defer {
+            release?(t)
+        }
+        guard t != nil, exit_code == EXIT_SUCCESS else {
+            let alert = NSAlert()
+            alert.messageText = "Invalid file"
+            alert.alertStyle = .critical
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+            return
+        }
+        
+        let dst = themesFolder.appendingPathComponent(src.lastPathComponent)
+            
+        if FileManager.default.fileExists(atPath: dst.path) {
+            let alert = NSAlert()
+            alert.messageText = "A theme already exists with the same name. \nDo you want to overwrite?"
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
+            alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
+            if alert.runModal() == .alertSecondButtonReturn {
+                do {
+                    try FileManager.default.removeItem(at: dst)
+                } catch {
+                    
+                }
+            } else {
+                return
+            }
+        }
+        do {
+            try FileManager.default.copyItem(at: src, to: dst)
+        } catch {
+            let alert = NSAlert()
+            alert.messageText = "Unable to import the theme!"
+            alert.informativeText = error.localizedDescription
+            alert.alertStyle = .critical
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+            return
+        }
+    }
+    
+    @IBAction func exportTheme(_ sender: Any) {
+        let theme: ThemePreview?
+        if let identifier = (sender as? NSMenuItem)?.menu?.identifier?.rawValue, identifier == "contextual" {
+            theme = outlineView.item(atRow: outlineView.clickedRow) as? ThemePreview
+        } else {
+            theme = self.theme
+        }
+        guard let theme = theme else {
+            return
+        }
+
+        let savePanel = NSSavePanel()
+        savePanel.canCreateDirectories = true
+        savePanel.showsTagField = false
+        savePanel.allowedFileTypes = ["theme"]
+        savePanel.isExtensionHidden = false
+        savePanel.nameFieldStringValue = "\(theme.name).theme"
+        savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
+        
+        let view = SaveAsFormatView(frame: NSRect(x: 0, y: 0, width: 200, height: 50))
+        savePanel.accessoryView = view
+        view.savePanel = savePanel
+        
+        let result = savePanel.runModal()
+        // savePanel.begin { (result) in
+        guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let url = savePanel.url else {
+            return
+        }
+        do {
+            if url.pathExtension == "css" {
+                let css = theme.getCSSStyle()
+                try css.write(toFile: url.path, atomically: true, encoding: .utf8)
+            } else {
+                try theme.write(toFile: url.path)
+            }
+        } catch {
+            let alert = NSAlert()
+            alert.alertStyle = .critical
+            alert.messageText = "Unable to export the theme!"
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+        }
+        // }
+    }
+
+    @IBAction func revealTheme(_ sender: Any) {
+        guard let theme = self.getThemeForMenu(sender as? NSMenuItem) else {
+            return
+        }
+        if !theme.path.isEmpty && FileManager.default.fileExists(atPath: theme.path) {
+            NSWorkspace.shared.activateFileViewerSelecting([URL(fileURLWithPath: theme.path)])
+        } else {
+            let alert = NSAlert()
+            alert.messageText = "Unable to find the theme file."
+            alert.informativeText = theme.path.isEmpty ? "Perhaps the theme has not yet been saved?" : ""
+            alert.alertStyle = .informational
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+        }
+    }
+    
+    @IBAction func revealApplicationSupportInFinder(_ sender: Any) {
+        guard let url = Settings.themesFolder else {
+            return
+        }
+        NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
+    }
 }
 
 // MARK: - NSControlTextEditingDelegate
@@ -363,7 +499,7 @@ extension ThemesView: NSOutlineViewDataSource {
             return 2 // Standard and Custom item.
         } else if item as? String == "Standard" {
             // Standalone filtered themes.
-            return themes.count
+            return standardThemes.count
         } else if item as? String == "Custom" {
             // Customized filtered themes.
             return customThemes.count
@@ -389,7 +525,7 @@ extension ThemesView: NSOutlineViewDataSource {
                 return "Custom"
             }
         } else if item as? String == "Standard" {
-            return themes[index]
+            return standardThemes[index]
         } else if item as? String == "Custom" {
             return customThemes[index]
         } else {
@@ -442,6 +578,20 @@ extension ThemesView: NSOutlineViewDelegate {
     func outlineViewSelectionDidChange(_ notification: Notification) {
         if outlineView.selectedRow >= 0, let item = outlineView.item(atRow: outlineView.selectedRow) as? ThemePreview {
             self.theme = item
+        }
+    }
+}
+
+// MARK: - NSMenuDelegate
+extension ThemesView: NSMenuDelegate {
+    func menuWillOpen(_ menu: NSMenu) {
+        let theme = menu.identifier?.rawValue == "contextual" ? outlineView.item(atRow: outlineView.clickedRow) as? ThemePreview : self.theme
+        for item in menu.items {
+            if item.tag == 2 {
+                item.isEnabled = !(theme?.isStandalone ?? true)
+            } else if item.tag > 0 {
+                item.isEnabled = theme != nil
+            }
         }
     }
 }

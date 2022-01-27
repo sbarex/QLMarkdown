@@ -51,7 +51,6 @@ class ThemesSelectorViewController: NSViewController {
                 self.darkTheme = theme
             }
         }
-        vc.allThemes = Settings.shared.getAvailableThemes()
         
         self.present(vc, asPopoverRelativeTo: sender.frame, of: sender.superview!, preferredEdge: NSRectEdge.maxY, behavior: NSPopover.Behavior.semitransient)
     }

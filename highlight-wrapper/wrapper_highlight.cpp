@@ -731,16 +731,24 @@ HTheme *highlight_get_theme2( const char *theme_name, int *exit_code, ReleaseThe
     }
     HTheme *theme = allocate_theme();
 
-    theme->name = strdup(name.c_str());
-    theme->desc = strdup(ls["Description"].value().asString().c_str());
+    Diluculum::LuaValue prop;
+
+    prop = ls["Name"].value();
+    if (prop != Diluculum::Nil) {
+        theme->name = strdup(prop.asString().c_str());
+    } else {
+        theme->name = strdup(name.c_str());
+    }
+    prop = ls["Description"].value();
+    if (prop != Diluculum::Nil) {
+        theme->desc = strdup(prop.asString().c_str());
+    }
     theme->path = strdup(themeFile.c_str());
 
     string base_path = dataDir.getThemePath("", false);
     theme->standalone = themeFile.rfind(base_path, 0) == 0 ? 1 : 0;
     string base_path16 = dataDir.getThemePath("", true);
     theme->base16 = themeFile.rfind(base_path16, 0) == 0 ? 1 : 0;
-
-    Diluculum::LuaValue prop;
 
     prop = ls["Categories"].value();
     if (prop != Diluculum::Nil) {

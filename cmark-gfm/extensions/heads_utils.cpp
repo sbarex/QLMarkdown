@@ -28,7 +28,10 @@
 #ifdef PCRE2_LIBRARY
 #define PCRE2_CODE_UNIT_WIDTH 32
 #include "pcre2.h"
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Weverything"
 #include "jpcre2.hpp"
+#pragma clang diagnostic pop
 
 typedef jpcre2::select<wchar_t> jpw;
 #endif

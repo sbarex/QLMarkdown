@@ -72,6 +72,22 @@ class ThemePreviewView: NSView {
         // Register a custom js handler.
         webView.configuration.userContentController.add(self, name: "jsHandler")
         self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeDidChange(_:)), name: .currentThemeDidChange, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .currentThemeDidChange, object: nil)
+    }
+    
+    @objc func handleThemeDidChange(_ notification: Notification) {
+        guard let theme = notification.object as? ThemePreview else {
+            return
+        }
+        guard theme == self.theme else {
+            return
+        }
+        self.theme = theme
     }
     
     /// Get the list of available source file example.
@@ -115,20 +131,27 @@ class ThemePreviewView: NSView {
         }
             
         if let url = example, let data = FileManager.default.contents(atPath: url.path), let code = String(data: data, encoding: .utf8) {
-            /*
-            /// Show a file.
-            var settings: [String: Any] = [
-                SCSHSettings.Key.theme: theme.name,
-                SCSHSettings.Key.inlineTheme: theme.toDictionary(),
-                SCSHSettings.Key.renderForExtension: false,
-                SCSHSettings.Key.lineNumbers: true,
-                SCSHSettings.Key.customCSS: "* { box-sizing: border-box; } html, body { height: 100%; margin: 0; } body { padding: 0; }"
-            ]
-            */
-            
-            if let s = colorizeCode(code.cString(using: .utf8)!, url.pathExtension, theme.name, false, true) {
+            let path: String
+            if !theme.isStandalone {
+                path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("theme.theme").path
+                do {
+                    try theme.write(toFile: path)
+                } catch {
+                    self.webView.loadHTMLString("Error: unable to save the theme to a temporary file.", baseURL: nil)
+                    return
+                }
+            } else {
+                path = theme.path
+            }
+            highlight_init_generator()
+            highlight_set_print_line_numbers(Settings.shared.syntaxLineNumbersOption ? 1 : 0)
+            highlight_set_formatting_mode(Int32(Settings.shared.syntaxWordWrapOption), Int32(Settings.shared.syntaxTabsOption))
+            let fontName = Settings.shared.syntaxFontFamily.isEmpty ? NSFont.monospacedSystemFont(ofSize: 9, weight: .regular).fontName : Settings.shared.syntaxFontFamily
+            let fontSize = String(format: "%.1f", Settings.shared.syntaxFontSize > 0 ? Settings.shared.syntaxFontSize : 9.0)
+            highlight_set_current_font(fontName.cString(using: .utf8), fontSize.cString(using: .utf8))
+            if let s = colorizeCode(code.cString(using: .utf8)!, url.pathExtension, path, false, Settings.shared.syntaxLineNumbersOption) {
                 defer {
-                    free(s);
+                    free(s)
                 }
                 if let html = String(cString: s, encoding: .utf8) {
                     self.webView.loadHTMLString(html, baseURL: nil)
@@ -137,6 +160,9 @@ class ThemePreviewView: NSView {
                 }
             } else {
                 self.webView.loadHTMLString("error", baseURL: nil)
+            }
+            if !theme.isStandalone {
+                try? FileManager.default.removeItem(atPath: path)
             }
         } else {
             // Show standard colors scheme preview.

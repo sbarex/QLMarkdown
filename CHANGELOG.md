@@ -1,6 +1,17 @@
 # Changelog
 
 
+### 1.0.11 (36)
+New features:
+- Support for opening markdown files (by dragging the file onto the app icon)
+- Support for exporting the markdown code.
+- Sparkle updated to release 2.0.0. 
+
+Bugfix:
+- Fix for heads with dash.
+- Implemented missing behavior for the color scheme editor.
+- Fix for installation of the command line tool.
+
 ### 1.0.10 (35)
 New features:
 - Better performance for heads extension.

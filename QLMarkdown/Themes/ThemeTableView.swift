@@ -13,12 +13,21 @@ class ThemeTableView: NSView {
     @IBOutlet weak var nameField: NSTextField!
     @IBOutlet weak var descriptionField: NSTextField!
     @IBOutlet weak var styleControl: NSSegmentedControl!
-    @IBOutlet weak var newKeywordMenu: NSMenuItem!
-    @IBOutlet weak var deleteThemeMenu: NSMenuItem!
+    @IBOutlet weak var newKeywordButton: NSButton!
+    @IBOutlet weak var saveButton: NSButton!
     
     var order: [Theme.PropertyName] = []
+    
+    var isDirty: Bool = false {
+        didSet {
+            guard oldValue != isDirty else { return }
+        }
+    }
+    
     var theme: ThemePreview? {
         didSet {
+            oldValue?.removeObserver(self, forKeyPath: #keyPath(ThemePreview.isDirty))
+            
             contentView.isHidden = theme == nil
             
             nameField.isEditable = !(theme?.isStandalone ?? true)
@@ -33,9 +42,7 @@ class ThemeTableView: NSView {
             } else {
                 styleControl.setSelected(true, forSegment: 0)
             }
-            newKeywordMenu.isEnabled = theme != nil && !theme!.isStandalone
-            deleteThemeMenu.isEnabled = theme != nil && !theme!.isStandalone
-            
+             
             order = [
                 .canvas,
                 .plain,
@@ -55,7 +62,10 @@ class ThemeTableView: NSView {
             }
             
             tableView.reloadData()
-            
+            self.isDirty = theme?.isDirty ?? false
+            self.newKeywordButton.isHidden = theme?.isStandalone ?? true
+            self.saveButton.isHidden = self.theme?.isStandalone ?? true
+            theme?.addObserver(self, forKeyPath: #keyPath(ThemePreview.isDirty), options: [], context: nil)
         }
     }
     
@@ -67,6 +77,10 @@ class ThemeTableView: NSView {
     required init?(coder decoder: NSCoder) {
         super.init(coder: decoder)
         setup()
+    }
+    
+    deinit {
+        theme?.removeObserver(self, forKeyPath: #keyPath(ThemePreview.isDirty))
     }
     
     private func setup() {
@@ -82,16 +96,49 @@ class ThemeTableView: NSView {
         tableView.doubleAction = #selector(self.handleDoubleClick(_:))
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        
+        if let theme = object as? ThemePreview, theme == self.theme {
+            if keyPath == #keyPath(ThemePreview.isDirty) {
+                if theme.isDirty {
+                    self.window?.isDocumentEdited = true
+                }
+                NotificationCenter.default.post(name: .currentThemeDidChange, object: theme)
+            }
+        }
+    }
+    
     func showPropertyEditor(name: Theme.PropertyName) {
         if let theme = self.theme, let vc = NSStoryboard.main?.instantiateController(withIdentifier: "ThemePropertyViewController") as? ThemePropertyViewController {
             vc.setTheme(theme, property: name)
+            vc.action = { vc in
+                guard let prop = theme[name] else {
+                    return
+                }
+
+                prop.color = vc.color
+                prop.bold = vc.bold <= 0 ? nil : vc.bold == 1
+                prop.italic = vc.italic <= 0 ? nil : vc.italic == 1
+                prop.underline = vc.underline <= 0 ? nil : vc.underline == 1
+                
+                theme.invalidateImage()
+                
+                if name == .canvas || name == .plain {
+                    self.tableView.reloadData()
+                } else {
+                    self.tableView.reloadData(forRowIndexes: IndexSet(integer: name.index), columnIndexes: IndexSet(integersIn: 0..<self.tableView.numberOfColumns))
+                }
+                
+                theme.isDirty = true
+                self.isDirty = true
+            }
             
             self.window?.contentViewController?.presentAsSheet(vc)
         }
     }
     
     @IBAction func handleDoubleClick(_ sender: Any) {
-        guard tableView.clickedRow >= 0 else {
+        guard let theme = self.theme, !theme.isStandalone, tableView.clickedRow >= 0 else {
             return
         }
         
@@ -99,36 +146,66 @@ class ThemeTableView: NSView {
         self.showPropertyEditor(name: name)
     }
     
-    @IBAction func handleEditProperty(_ sender: NSMenuItem) {
-        let row = sender.tag
+    @IBAction func handleEditProperty(_ sender: Any) {
+        let row: Int
+        if sender is NSMenuItem {
+            row = self.tableView.clickedRow
+        } else if let sender = sender as? NSButton {
+            row = sender.tag
+        } else {
+            return
+        }
         let name = order[row]
         self.showPropertyEditor(name: name)
     }
     
-    
-    @IBAction func revealApplicationSupportInFinder(_ sender: Any) {
-        guard let url = Settings.themesFolder else {
+    @IBAction func handleStyleChanged(_ sender: NSSegmentedControl) {
+        guard let theme = self.theme, !theme.isStandalone else {
             return
         }
-        NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
+        switch sender.indexOfSelectedItem {
+        case 0: theme.appearance = .undefined
+        case 1: theme.appearance = .light
+        case 2: theme.appearance = .dark
+        default: break
+        }
+    }
+    
+    @objc func controlTextDidChange(_ obj: Notification) {
+        guard let textField = obj.object as? NSTextField, let theme = self.theme, !theme.isStandalone else {
+            return
+        }
+        if textField == self.nameField {
+            theme.name = textField.stringValue
+        } else if textField == self.descriptionField {
+            theme.desc = textField.stringValue
+        }
     }
     
     @IBAction func handleAddKeyword(_ sender: Any) {
-        guard let theme = self.theme else {
+        guard let theme = self.theme, !theme.isStandalone else {
             return
         }
-        let k = Theme.PropertyStyle(color: "#ffffff", italic: false, bold: false, underline: false)
+        let k = Theme.PropertyStyle(color: "#999999", italic: false, bold: false, underline: false)
         theme.keywords.append(k)
         theme.isDirty = true
+        self.isDirty = true
         
         tableView.insertRows(at: IndexSet(integer: 12 + theme.keywords.count), withAnimation: .slideDown)
     }
     
-    @IBAction func handleRemoveProperty(_ sender: NSMenuItem) {
-        guard let theme = self.theme else {
+    @IBAction func handleRemoveProperty(_ sender: Any) {
+        guard let theme = self.theme, !theme.isStandalone else {
             return
         }
-        let row = sender.tag
+        let row: Int
+        if sender is NSMenuItem {
+            row = self.tableView.clickedRow
+        } else if let sender = sender as? NSButton {
+            row = sender.tag
+        } else {
+            return
+        }
         let name = order[row]
         guard name.isKeyword else {
             return
@@ -136,7 +213,7 @@ class ThemeTableView: NSView {
         
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.messageText = "Are you sure to remove this keyword?"
+        alert.messageText = "Are you sure to remove the keyword \(name.keywordIndex+1)?"
         alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
         alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
         let r = alert.runModal()
@@ -145,6 +222,7 @@ class ThemeTableView: NSView {
             
             theme.keywords.remove(at: index)
             theme.isDirty = true
+            self.isDirty = true
             
             tableView.beginUpdates()
             tableView.removeRows(at: IndexSet(integer: row), withAnimation: .slideUp)
@@ -153,47 +231,42 @@ class ThemeTableView: NSView {
         }
     }
     
-    @IBAction func exportTheme(_ sender: Any) {
-        guard let theme = self.theme else {
-            return
-        }
-
-        let savePanel = NSSavePanel()
-        savePanel.canCreateDirectories = true
-        savePanel.showsTagField = false
-        savePanel.allowedFileTypes = ["theme"]
-        savePanel.isExtensionHidden = false
-        savePanel.nameFieldStringValue = "\(theme.name).theme"
-        savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
+    @IBAction func saveTheme(_ sender: Any) {
+        guard let theme = self.theme, !theme.isStandalone else { return }
         
-        let view = SaveAsFormatView(frame: NSRect(x: 0, y: 0, width: 200, height: 50))
-        savePanel.accessoryView = view
-        view.savePanel = savePanel
-        
-        let result = savePanel.runModal()
-        // savePanel.begin { (result) in
-        guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let url = savePanel.url else {
-            return
-        }
         do {
-            if url.pathExtension == "css" {
-                let css = theme.getCSSStyle()
-                try css.write(toFile: url.path, atomically: true, encoding: .utf8)
-            } else {
-                try theme.write(toFile: url.path)
-            }
+            try theme.save()
+            self.isDirty = false
         } catch {
             let alert = NSAlert()
+            alert.messageText = "Unable to save the theme in \(theme.path)"
+            alert.informativeText = error.localizedDescription
             alert.alertStyle = .critical
-            alert.messageText = "Unable to export the theme!"
-            alert.addButton(withTitle: "Cancel")
             alert.runModal()
         }
-        // }
     }
-    
-    @IBAction func duplicateTheme(_ sender: Any) {
-        
+}
+
+// MARK: - NSMenuDelegate
+
+extension ThemeTableView: NSMenuDelegate {
+    func menuWillOpen(_ menu: NSMenu) {
+        menu.items.forEach({
+            if $0.tag == 1 {
+                $0.isEnabled = !(theme?.isStandalone ?? true) && self.tableView.clickedRow >= 0 && self.order[self.tableView.clickedRow].isKeyword
+                $0.isHidden = !(theme?.isStandalone ?? true) && self.tableView.clickedRow >= 0 && self.order[self.tableView.clickedRow].isKeyword
+            } else {
+                $0.isEnabled = !(theme?.isStandalone ?? true)
+                if $0.tag == 2 {
+                    if self.tableView.clickedRow >= 0 {
+                        let prop = self.order[self.tableView.clickedRow]
+                        $0.title = "Edit the \(prop.name) style"
+                    } else {
+                        $0.title = "Edit"
+                    }
+                }
+            }
+        })
     }
 }
 
@@ -224,7 +297,7 @@ extension ThemeTableView: NSTableViewDelegate {
                 cell.textField?.stringValue = name.name
                 cell.textField?.textColor = NSColor(css: theme.plain.color) ?? .textColor
             } else {
-                cell.textField?.attributedStringValue = property?.getFormattedString(name.name, font: NSFont.systemFont(ofSize: NSFont.systemFontSize)) ?? NSAttributedString()
+                cell.textField?.attributedStringValue = property?.getFormattedString(name.name, font: NSFont.systemFont(ofSize: NSFont.systemFontSize), plainColor: theme.plain.color) ?? NSAttributedString()
             }
             
             cell.textField?.backgroundColor = background
@@ -281,9 +354,12 @@ extension ThemeTableView: NSTableViewDelegate {
             guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "DetailCell"), owner: self) as? DetailPropertyCellView else {
                 return nil
             }
-            cell.popupButton.menu?.item(at: 2)?.isHidden = !name.isKeyword
-            cell.popupButton.menu?.items.forEach({ $0.tag = row })
-            cell.popupButton.isEnabled = !theme.isStandalone
+            cell.deleteButton.isEnabled = !theme.isStandalone
+            cell.deleteButton.isHidden = theme.isStandalone || !name.isKeyword
+            cell.deleteButton.tag = row
+            cell.editButton.isEnabled = !theme.isStandalone
+            cell.editButton.isHidden = theme.isStandalone
+            cell.editButton.tag = row
             return cell
         } else if tableColumn?.identifier.rawValue == "CSS" {
             guard let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "TextCell"), owner: self) as? NSTableCellView else {
@@ -328,5 +404,6 @@ extension ThemeTableView: NSTableViewDelegate {
 }
 
 class DetailPropertyCellView: NSTableCellView {
-    @IBOutlet weak var popupButton: NSPopUpButton!
+    @IBOutlet weak var editButton: NSButton!
+    @IBOutlet weak var deleteButton: NSButton!
 }

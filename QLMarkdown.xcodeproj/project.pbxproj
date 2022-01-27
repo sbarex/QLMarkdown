@@ -10,6 +10,7 @@
 		830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3B272D68E500378FFE /* SwiftSoup */; };
 		830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3D272D68F700378FFE /* SwiftSoup */; };
 		830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3F272D68FB00378FFE /* SwiftSoup */; };
+		831834E6277E10150044ECDA /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 831834E5277E10150044ECDA /* Sparkle */; };
 		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
 		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
@@ -209,11 +210,6 @@
 		83F4B9962586AB9700FC58A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83D4B1C3258675D0000745DB /* README.md */; };
 		83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
 		83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
-		83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F882362598A8B3008C5071 /* Sparkle.framework */; };
-		83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		83F882482598C5F3008C5071 /* Sparkle.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83F882362598A8B3008C5071 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83F88259259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
 		83F8825A259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
 		83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
@@ -256,47 +252,40 @@
 			remoteGlobalIDString = 83437970271D47DF00A5D6EA;
 			remoteInfo = qlmarkdown_cli;
 		};
-		83D82AA1277C8E6B00C9B99F /* PBXContainerItemProxy */ = {
+		83D9CF0B27A12FB000E86BC9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 83D82A2B277BC53A00C9B99F;
-			remoteInfo = pcre2;
+			remoteGlobalIDString = 83D9CCA027A12F3100E86BC9;
+			remoteInfo = libpcre2;
 		};
-		83D82AA3277C8E6F00C9B99F /* PBXContainerItemProxy */ = {
+		83D9CF0D27A1331400E86BC9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 83D82A63277BD1E800C9B99F;
-			remoteInfo = jpcre2;
+			remoteGlobalIDString = 83D9CCA027A12F3100E86BC9;
+			remoteInfo = libpcre2;
 		};
-		83D82AA5277C8E7E00C9B99F /* PBXContainerItemProxy */ = {
+		83D9CF1327A1336400E86BC9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 83D82A63277BD1E800C9B99F;
-			remoteInfo = jpcre2;
+			remoteGlobalIDString = 83D9CF0F27A1334800E86BC9;
+			remoteInfo = libjpcre2;
 		};
-		83D82AA7277C8E8200C9B99F /* PBXContainerItemProxy */ = {
+		83D9CF1527A1336A00E86BC9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 83D82A2B277BC53A00C9B99F;
-			remoteInfo = pcre2;
+			remoteGlobalIDString = 83D9CF0F27A1334800E86BC9;
+			remoteInfo = libjpcre2;
 		};
-		83D82AA9277C8E8B00C9B99F /* PBXContainerItemProxy */ = {
+		83D9CF1727A1336E00E86BC9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
+			containerPortal = 83598E5925818808004664D3 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 83D82A63277BD1E800C9B99F;
-			remoteInfo = jpcre2;
-		};
-		83D82AAB277C8E8F00C9B99F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 83D82A2B277BC53A00C9B99F;
-			remoteInfo = pcre2;
+			remoteGlobalIDString = 83D9CCA027A12F3100E86BC9;
+			remoteInfo = libpcre2;
 		};
 		83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -334,7 +323,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				83F882482598C5F3008C5071 /* Sparkle.framework in Embed Libraries */,
 				836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
@@ -356,9 +344,6 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				83F882412598A8C4008C5071 /* org.sparkle-project.InstallerStatus.xpc in Embed XPC Services */,
-				83F8823F2598A8C2008C5071 /* org.sparkle-project.InstallerLauncher.xpc in Embed XPC Services */,
-				83F8823D2598A8C0008C5071 /* org.sparkle-project.InstallerConnection.xpc in Embed XPC Services */,
 			);
 			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,13 +502,11 @@
 		83C44B3C259A70EE004C1367 /* string_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_utils.cpp; sourceTree = "<group>"; };
 		83C44B3D259A70EE004C1367 /* string_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string_utils.hpp; sourceTree = "<group>"; };
 		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		83D82A58277BC56300C9B99F /* pcre2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = pcre2.xcodeproj; sourceTree = "<group>"; };
 		83D82A5D277BCAED00C9B99F /* MakefilePCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefilePCRE; sourceTree = "<group>"; usesTabs = 1; };
-		83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = jpcre2.xcodeproj; sourceTree = "<group>"; };
 		83D82A87277BD21A00C9B99F /* MakefileJPCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefileJPCRE; sourceTree = "<group>"; usesTabs = 1; };
-		83D82A88277C45B500C9B99F /* libpcre2-32.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libpcre2-32.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		83D82A90277C466500C9B99F /* jpcre2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = jpcre2.hpp; sourceTree = BUILT_PRODUCTS_DIR; };
-		83D82A91277C467A00C9B99F /* pcre2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pcre2.h; sourceTree = BUILT_PRODUCTS_DIR; };
+		83D82A88277C45B500C9B99F /* libpcre2-32.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libpcre2-32.a"; path = "libpcre2/lib/libpcre2-32.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		83D82A90277C466500C9B99F /* jpcre2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = jpcre2.hpp; path = libjpcre2/include/jpcre2.hpp; sourceTree = BUILT_PRODUCTS_DIR; };
+		83D82A91277C467A00C9B99F /* pcre2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pcre2.h; path = libpcre2/include/pcre2.h; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E7FEED258FBE54003ECF9B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		83E7FEF0258FBF37003ECF9B /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
 		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -537,15 +520,7 @@
 		83F1FE5A259CEF4300257DAC /* external_launcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcher.swift; sourceTree = "<group>"; };
 		83F1FE5E259CEF6C00257DAC /* external_launcher_delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcher_delegate.swift; sourceTree = "<group>"; };
 		83F4B99125868A7400FC58A7 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		83F881642597EE2B008C5071 /* BinaryDelta */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = BinaryDelta; sourceTree = "<group>"; };
-		83F881672597EE2C008C5071 /* generate_appcast */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_appcast; sourceTree = "<group>"; };
-		83F881682597EE2C008C5071 /* sign_update */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = sign_update; sourceTree = "<group>"; };
-		83F881692597EE2C008C5071 /* generate_keys */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = generate_keys; sourceTree = "<group>"; };
 		83F8822C2598A5C0008C5071 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerStatus.xpc"; sourceTree = "<group>"; };
-		83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
-		83F882362598A8B3008C5071 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; path = "org.sparkle-project.InstallerConnection.xpc"; sourceTree = "<group>"; };
 		83F88257259906C7008C5071 /* heads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = heads.h; sourceTree = "<group>"; };
 		83F88258259906C7008C5071 /* heads.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = heads.c; sourceTree = "<group>"; };
 		83F8825C25991BFC008C5071 /* heads_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = heads_utils.cpp; sourceTree = "<group>"; };
@@ -581,10 +556,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				831834E6277E10150044ECDA /* Sparkle in Frameworks */,
 				83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */,
 				83D82A89277C45B500C9B99F /* libpcre2-32.a in Frameworks */,
 				8382D05C2664051400210A0A /* Yams in Frameworks */,
-				83F8823A2598A8B3008C5071 /* Sparkle.framework in Frameworks */,
 				836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */,
 				830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */,
 			);
@@ -668,10 +643,7 @@
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
 				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
 				832D256125CC8894005F41AC /* .gitignore */,
-				83D82A87277BD21A00C9B99F /* MakefileJPCRE */,
-				83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */,
-				83D82A5D277BCAED00C9B99F /* MakefilePCRE */,
-				83D82A58277BC56300C9B99F /* pcre2.xcodeproj */,
+				83D9CCA427A12F8F00E86BC9 /* dependencies */,
 				836B3019259E222700A6A5F7 /* highlight-wrapper */,
 				83598E7525818812004664D3 /* cmark-gfm */,
 				83598E6325818808004664D3 /* QLMarkdown */,
@@ -679,7 +651,6 @@
 				837F29172597A01F00A5F7DE /* Resources */,
 				83437972271D47DF00A5D6EA /* qlmarkdown_cli */,
 				83F1FE42259CEE7400257DAC /* external-launcher */,
-				83F881632597EE2B008C5071 /* Sparkle */,
 				83598F0525825B8D004664D3 /* Frameworks */,
 				83598E6225818808004664D3 /* Products */,
 			);
@@ -890,18 +861,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		83D82A92277C4ABE00C9B99F /* Products */ = {
+		83D9CCA427A12F8F00E86BC9 /* dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				83D82A87277BD21A00C9B99F /* MakefileJPCRE */,
+				83D82A5D277BCAED00C9B99F /* MakefilePCRE */,
 			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		83D82A99277C80C900C9B99F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
+			path = dependencies;
 			sourceTree = "<group>";
 		};
 		83F1FE42259CEE7400257DAC /* external-launcher */ = {
@@ -916,22 +882,39 @@
 			path = "external-launcher";
 			sourceTree = "<group>";
 		};
-		83F881632597EE2B008C5071 /* Sparkle */ = {
-			isa = PBXGroup;
-			children = (
-				83F882372598A8B3008C5071 /* org.sparkle-project.InstallerConnection.xpc */,
-				83F882352598A8B3008C5071 /* org.sparkle-project.InstallerLauncher.xpc */,
-				83F882342598A8B2008C5071 /* org.sparkle-project.InstallerStatus.xpc */,
-				83F882362598A8B3008C5071 /* Sparkle.framework */,
-				83F881642597EE2B008C5071 /* BinaryDelta */,
-				83F881672597EE2C008C5071 /* generate_appcast */,
-				83F881682597EE2C008C5071 /* sign_update */,
-				83F881692597EE2C008C5071 /* generate_keys */,
-			);
-			path = Sparkle;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		83D9CCA027A12F3100E86BC9 /* libpcre2 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "-f ./dependencies/MakefilePCRE $(ACTION) VERBOSE=0";
+			buildConfigurationList = 83D9CCA127A12F3100E86BC9 /* Build configuration list for PBXLegacyTarget "libpcre2" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+			);
+			name = libpcre2;
+			passBuildSettingsInEnvironment = 1;
+			productName = libpcre2;
+		};
+		83D9CF0F27A1334800E86BC9 /* libjpcre2 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "-f ./dependencies/MakefileJPCRE $(ACTION) VERBOSE=0";
+			buildConfigurationList = 83D9CF1027A1334800E86BC9 /* Build configuration list for PBXLegacyTarget "libjpcre2" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "";
+			dependencies = (
+				83D9CF1827A1336E00E86BC9 /* PBXTargetDependency */,
+			);
+			name = libjpcre2;
+			passBuildSettingsInEnvironment = 1;
+			productName = libpcre2;
+		};
+/* End PBXLegacyTarget section */
 
 /* Begin PBXNativeTarget section */
 		831A8C3E258ABADA00E36182 /* Markdown QL Extension */ = {
@@ -946,8 +929,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				83D82AA8277C8E8200C9B99F /* PBXTargetDependency */,
-				83D82AA6277C8E7E00C9B99F /* PBXTargetDependency */,
+				83D9CF0E27A1331400E86BC9 /* PBXTargetDependency */,
+				83D9CF1627A1336A00E86BC9 /* PBXTargetDependency */,
 				830B5B44272D6D9200378FFE /* PBXTargetDependency */,
 				830B5B2F272D5B8C00378FFE /* PBXTargetDependency */,
 				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
@@ -973,8 +956,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				83D82AAC277C8E8F00C9B99F /* PBXTargetDependency */,
-				83D82AAA277C8E8B00C9B99F /* PBXTargetDependency */,
 				830B5B46272D6D9900378FFE /* PBXTargetDependency */,
 				830DF9EE27202265004429F8 /* PBXTargetDependency */,
 				830DF9F027202265004429F8 /* PBXTargetDependency */,
@@ -1002,8 +983,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				83D82AA2277C8E6B00C9B99F /* PBXTargetDependency */,
-				83D82AA4277C8E6F00C9B99F /* PBXTargetDependency */,
+				83D9CF0C27A12FB000E86BC9 /* PBXTargetDependency */,
+				83D9CF1427A1336400E86BC9 /* PBXTargetDependency */,
 				830B5B42272D6D8A00378FFE /* PBXTargetDependency */,
 				830B5B37272D613A00378FFE /* PBXTargetDependency */,
 				837F97D0271EA0C8009F4605 /* PBXTargetDependency */,
@@ -1014,6 +995,7 @@
 			packageProductDependencies = (
 				8382D05B2664051400210A0A /* Yams */,
 				830B5B3B272D68E500378FFE /* SwiftSoup */,
+				831834E5277E10150044ECDA /* Sparkle */,
 			);
 			productName = QLMarkdown;
 			productReference = 83598E6125818808004664D3 /* QLMarkdown.app */;
@@ -1056,6 +1038,9 @@
 						CreatedOnToolsVersion = 12.2;
 						LastSwiftMigration = 1220;
 					};
+					83D9CCA027A12F3100E86BC9 = {
+						CreatedOnToolsVersion = 13.2;
+					};
 					83F1FE40259CEE7400257DAC = {
 						CreatedOnToolsVersion = 12.3;
 						LastSwiftMigration = 1230;
@@ -1074,6 +1059,7 @@
 			packageReferences = (
 				8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */,
 				830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				831834E4277E10150044ECDA /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 83598E6225818808004664D3 /* Products */;
 			projectDirPath = "";
@@ -1082,14 +1068,6 @@
 					ProductGroup = 836B7195259E226E00A6A5F7 /* Products */;
 					ProjectRef = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
 				},
-				{
-					ProductGroup = 83D82A99277C80C900C9B99F /* Products */;
-					ProjectRef = 83D82A83277BD1F400C9B99F /* jpcre2.xcodeproj */;
-				},
-				{
-					ProductGroup = 83D82A92277C4ABE00C9B99F /* Products */;
-					ProjectRef = 83D82A58277BC56300C9B99F /* pcre2.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -1097,6 +1075,8 @@
 				831A8C3E258ABADA00E36182 /* Markdown QL Extension */,
 				83F1FE40259CEE7400257DAC /* external-launcher */,
 				83437970271D47DF00A5D6EA /* qlmarkdown_cli */,
+				83D9CCA027A12F3100E86BC9 /* libpcre2 */,
+				83D9CF0F27A1334800E86BC9 /* libjpcre2 */,
 			);
 		};
 /* End PBXProject section */
@@ -1394,35 +1374,30 @@
 			target = 83437970271D47DF00A5D6EA /* qlmarkdown_cli */;
 			targetProxy = 837F97CF271EA0C8009F4605 /* PBXContainerItemProxy */;
 		};
-		83D82AA2277C8E6B00C9B99F /* PBXTargetDependency */ = {
+		83D9CF0C27A12FB000E86BC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = pcre2;
-			targetProxy = 83D82AA1277C8E6B00C9B99F /* PBXContainerItemProxy */;
+			target = 83D9CCA027A12F3100E86BC9 /* libpcre2 */;
+			targetProxy = 83D9CF0B27A12FB000E86BC9 /* PBXContainerItemProxy */;
 		};
-		83D82AA4277C8E6F00C9B99F /* PBXTargetDependency */ = {
+		83D9CF0E27A1331400E86BC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = jpcre2;
-			targetProxy = 83D82AA3277C8E6F00C9B99F /* PBXContainerItemProxy */;
+			target = 83D9CCA027A12F3100E86BC9 /* libpcre2 */;
+			targetProxy = 83D9CF0D27A1331400E86BC9 /* PBXContainerItemProxy */;
 		};
-		83D82AA6277C8E7E00C9B99F /* PBXTargetDependency */ = {
+		83D9CF1427A1336400E86BC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = jpcre2;
-			targetProxy = 83D82AA5277C8E7E00C9B99F /* PBXContainerItemProxy */;
+			target = 83D9CF0F27A1334800E86BC9 /* libjpcre2 */;
+			targetProxy = 83D9CF1327A1336400E86BC9 /* PBXContainerItemProxy */;
 		};
-		83D82AA8277C8E8200C9B99F /* PBXTargetDependency */ = {
+		83D9CF1627A1336A00E86BC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = pcre2;
-			targetProxy = 83D82AA7277C8E8200C9B99F /* PBXContainerItemProxy */;
+			target = 83D9CF0F27A1334800E86BC9 /* libjpcre2 */;
+			targetProxy = 83D9CF1527A1336A00E86BC9 /* PBXContainerItemProxy */;
 		};
-		83D82AAA277C8E8B00C9B99F /* PBXTargetDependency */ = {
+		83D9CF1827A1336E00E86BC9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = jpcre2;
-			targetProxy = 83D82AA9277C8E8B00C9B99F /* PBXContainerItemProxy */;
-		};
-		83D82AAC277C8E8F00C9B99F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = pcre2;
-			targetProxy = 83D82AAB277C8E8F00C9B99F /* PBXContainerItemProxy */;
+			target = 83D9CCA027A12F3100E86BC9 /* libpcre2 */;
+			targetProxy = 83D9CF1727A1336E00E86BC9 /* PBXContainerItemProxy */;
 		};
 		83F1FE6D259CF02900257DAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1458,13 +1433,12 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
-					"\"$(SRCROOT)/re2/include\"",
 				);
 				INFOPLIST_FILE = QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1474,13 +1448,12 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/highlight-wrapper",
-					"$(PROJECT_DIR)/re2",
 					"$(PROJECT_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1497,13 +1470,12 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
-					"\"$(SRCROOT)/re2/include\"",
 				);
 				INFOPLIST_FILE = QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1513,13 +1485,12 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)/highlight-wrapper",
-					"$(PROJECT_DIR)/re2",
 					"$(PROJECT_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1540,7 +1511,6 @@
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
-					"\"$(SRCROOT)/re2/include\"",
 				);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/../Frameworks",
@@ -1550,6 +1520,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1569,7 +1540,6 @@
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
-					"\"$(SRCROOT)/re2/include\"",
 				);
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/../Frameworks",
@@ -1579,6 +1549,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1713,13 +1684,10 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Sparkle",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
@@ -1733,13 +1701,12 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
-					"$(PROJECT_DIR)/re2",
+					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1760,13 +1727,10 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Sparkle",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"cmark-gfm/src",
 					"cmark-gfm/extensions",
@@ -1780,18 +1744,71 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(PROJECT_DIR)/highlight-wrapper\"",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
-					"$(PROJECT_DIR)/re2",
+					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.10;
+				MARKETING_VERSION = 1.0.11;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		83D9CCA227A12F3100E86BC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		83D9CCA327A12F3100E86BC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		83D9CF1127A1334800E86BC9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUGGING_SYMBOLS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		83D9CF1227A1334800E86BC9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -1885,6 +1902,24 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		83D9CCA127A12F3100E86BC9 /* Build configuration list for PBXLegacyTarget "libpcre2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83D9CCA227A12F3100E86BC9 /* Debug */,
+				83D9CCA327A12F3100E86BC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83D9CF1027A1334800E86BC9 /* Build configuration list for PBXLegacyTarget "libjpcre2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83D9CF1127A1334800E86BC9 /* Debug */,
+				83D9CF1227A1334800E86BC9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		83F1FE4F259CEE7400257DAC /* Build configuration list for PBXNativeTarget "external-launcher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1900,6 +1935,14 @@
 		830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		831834E4277E10150044ECDA /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.0;
@@ -1960,6 +2003,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
 			productName = Yams;
+		};
+		831834E5277E10150044ECDA /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 831834E4277E10150044ECDA /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		83437979271D498800A5D6EA /* Yams */ = {
 			isa = XCSwiftPackageProductDependency;

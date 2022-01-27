@@ -1,0 +1,163 @@
+.DEFAULT_GOAL := all
+
+# Output all commands.
+ifeq ($(VERBOSE),1)
+	SHELL=sh -xv
+endif
+
+bold := $(shell tput bold 2> /dev/null)
+normal := $(shell tput sgr0 2> /dev/null)
+
+ifeq ($(CURDIR),)
+	CURDIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
+endif
+SOURCE_ROOT ?= ${CURDIR}
+SOURCE_ROOT := $(SOURCE_ROOT)/dependencies
+
+SPACE     := $(null) $(null)
+CURRENT_DIR := $(subst $(SPACE),"\\ ",$(CURDIR))
+
+ifeq ($(BUILT_PRODUCTS_DIR),)
+	BUILD_DIR=${CURRENT_DIR}/build
+else
+	BUILD_DIR=${BUILT_PRODUCTS_DIR}
+endif
+
+ONLY_ACTIVE_ARCH?=NO
+NATIVE_ARCH ?= $(shell uname -m)
+VALID_ARCHS = x86_64 arm64
+N_CPU = $(shell sysctl -n hw.physicalcpu)
+
+SDK_PATH = $(shell /usr/bin/xcrun --show-sdk-path)
+
+CXX = clang++
+CFLAGS =
+LDFLAGS = -L${SDK_PATH}/usr/lib
+
+CFLAGS_x86_64 = -target x86_64-apple-macos10.15
+LDFLAGS_x86_64 = -target x86_64-apple-macos10.15
+
+CFLAGS_arm64 = -target arm64-apple-macos11
+LDFLAGS_arm64 = -target arm64-apple-macos11
+
+ifeq ($(CONFIGURATION),Debug)
+	CFLAGS_x86_64 += -g
+	CFLAGS_arm64 += -g
+else
+	CFLAGS_x86_64 += -DNDEBUG
+	CFLAGS_arm64 += -DNDEBUG
+endif
+
+libpcre2_files = ${BUILD_DIR}/libpcre2/$(NATIVE_ARCH)/lib/libpcre2-32.a
+makefiles = ${BUILD_DIR}/libpcre2/$(NATIVE_ARCH)/Makefile
+
+ifeq ($(ONLY_ACTIVE_ARCH),NO)
+ifeq ($(NATIVE_ARCH),x86_64)
+		# build arm code
+		libpcre2_files += ${BUILD_DIR}/libpcre2/arm64/lib/libpcre2-32.a
+		makefiles += ${BUILD_DIR}/libpcre2/arm64/Makefile
+else
+		# build intel code
+		libpcre2_files += ${BUILD_DIR}/libpcre2/x86_64/lib/libpcre2-32.a
+		makefiles += ${BUILD_DIR}/libpcre2/x86_64/Makefile
+endif
+endif
+
+check_arch:
+# 	@echo NATIVE_ARCH IS $(NATIVE_ARCH)
+ifeq ($(filter $(NATIVE_ARCH),$(VALID_ARCHS)),)
+		$(error "Current arch ${NATIVE_ARCH} is not supported! Valid archs are: ${VALID_ARCHS}.")
+endif
+ifeq ($(ONLY_ACTIVE_ARCH),NO)
+		@echo "${bold}Building libpcre2 universal binary${normal}"
+else
+		@echo "${bold}Building libpcre2 for $(NATIVE_ARCH) architecture${normal}"
+endif
+	@echo "CURRENT_DIR: ${CURRENT_DIR}"
+	@echo "SOURCE_ROOT: ${SOURCE_ROOT}"
+	@echo "BUILD_DIR: ${BUILD_DIR}"
+
+clean:
+	@echo "${bold}Cleaning libpcre2…${normal}"
+	${MAKE} clean
+		
+	@rm -r "${BUILD_DIR}/libpcre2" 2> /dev/null
+	@echo ""
+
+libpcre2: $(makefiles) ${BUILD_DIR}/libpcre2/lib/libpcre2-32.a
+
+# Check if the source files are presents.
+source-libpcre2 : autogen ${SOURCE_ROOT}/pcre2/configure.ac ${SOURCE_ROOT}/pcre2/configure
+${SOURCE_ROOT}/pcre2/configure.ac :
+	@echo ""
+	@echo "${bold}Submodule update…${normal}"
+	cd "${SOURCE_ROOT}/.." && git submodule update --init
+	
+# Autogen
+${SOURCE_ROOT}/pcre2/configure :
+	@echo ""
+	@echo "${bold}Autogen configuration files…${normal}"
+	cd "${SOURCE_ROOT}/pcre2" && PATH="/usr/local/bin:${PATH}" sh ./autogen.sh
+
+autogen:
+ifeq (, $(shell PATH="/usr/local/bin:${PATH}" which autoreconf))
+		$(error ${bold}No autoreconf in PATH${normal} ($(PATH)), ${bold}try install autogen tools with homebrew${normal})
+endif
+
+# Set Target-specific variables for arm64
+${BUILD_DIR}/libpcre2/arm64/lib/libpcre2-32.a : ARCH := arm64
+
+${BUILD_DIR}/libpcre2/arm64/Makefile : CFLAGS := ${CFLAGS} ${CFLAGS_arm64} -mmacosx-version-min=11
+${BUILD_DIR}/libpcre2/arm64/Makefile : LDFLAGS := ${LDFLAGS} ${LDFLAGS_arm64}
+${BUILD_DIR}/libpcre2/arm64/Makefile : HOST := aarch64-apple-darwin
+${BUILD_DIR}/libpcre2/arm64/Makefile : MIN_OS := 11
+${BUILD_DIR}/libpcre2/arm64/Makefile : ARCH := arm64
+
+# Set Target-specific variables for x86_64
+${BUILD_DIR}/libpcre2/x86_64/lib/libpcre2-32.a : ARCH := x86_64
+
+${BUILD_DIR}/libpcre2/x86_64/Makefile : CFLAGS := ${CFLAGS} ${CFLAGS_x86_64} -mmacosx-version-min=10.15
+${BUILD_DIR}/libpcre2/x86_64/Makefile : LDFLAGS := ${LDFLAGS} ${LDFLAGS_x86_64}
+${BUILD_DIR}/libpcre2/x86_64/Makefile : HOST := x86_64-apple-darwin
+${BUILD_DIR}/libpcre2/x86_64/Makefile : MIN_OS := 10.15
+${BUILD_DIR}/libpcre2/x86_64/Makefile : ARCH := x86_64
+
+# Library configuration for a CPU architecture.
+$(makefiles) &:
+	@echo ""
+	@echo "${bold}libpcre2 configuration for ${ARCH} platform…${normal}"
+	@mkdir -p "${BUILD_DIR}/libpcre2/${ARCH}"
+	@cd "${BUILD_DIR}/libpcre2/${ARCH}" && CFLAGS="${CFLAGS}" LDFLAGS="${LDFLAGS}" CC="/usr/bin/cc -target ${ARCH}-apple-macos" ${SOURCE_ROOT}/pcre2/configure --host=${HOST} --prefix="${BUILD_DIR}/libpcre2/${ARCH}" --disable-shared --enable-static --enable-jit --enable-pcre2-32 --disable-pcre2-8
+	${MAKE} -C "${BUILD_DIR}/libpcre2/${ARCH}" -j${N_CPU} clean
+	
+# Build the library for a CPU architecture.
+$(libpcre2_files) :
+	@echo ""
+	@echo "${bold}Compiling libpcre2 for ${ARCH} platform…${normal}"
+	PATH="/usr/local/bin:${PATH}" ${MAKE} -C "${BUILD_DIR}/libpcre2/${ARCH}" -j${N_CPU}
+
+	@echo ""
+	@echo "${bold}Installing libpcre2 for ${ARCH} platform on ${BUILD_DIR}/libpcre2/${ARCH} …${normal}"
+	PATH="/usr/local/bin:${PATH}" ${MAKE} -C "${BUILD_DIR}/libpcre2/${ARCH}" -j${N_CPU} install
+	
+	
+# Build the library.
+${BUILD_DIR}/libpcre2/lib/libpcre2-32.a : source-libpcre2 ${libpcre2_files}
+	@mkdir -p "${BUILD_DIR}/libpcre2/lib/"
+	@echo ""
+ifeq ($(ONLY_ACTIVE_ARCH),NO)
+		@echo "${bold}Creating libpcre2 universal library…${normal}"
+		lipo -create -output "${BUILD_DIR}/libpcre2/lib/libpcre2-32.a" "${BUILD_DIR}/libpcre2/x86_64/lib/libpcre2-32.a" "${BUILD_DIR}/libpcre2/arm64/lib/libpcre2-32.a"
+else
+		@echo "${bold}Creating libpcre2 library for ${NATIVE_ARCH} platform…${normal}"
+		@rm -f "${BUILD_DIR}/libpcre2/lib/libpcre2-32.a" > /dev/null
+		ln "${BUILD_DIR}/libpcre2/${NATIVE_ARCH}/lib/libpcre2-32.a" "${BUILD_DIR}/libpcre2/lib/libpcre2-32.a"
+endif
+	@rm -rf "${BUILD_DIR}/libpcre2/include" > /dev/null
+	ln -s "${BUILD_DIR}/libpcre2/${NATIVE_ARCH}/include" "${BUILD_DIR}/libpcre2/include"
+	@echo ""
+	
+
+all: check_arch source-libpcre2 libpcre2
+install: check_arch source-libpcre2 libpcre2
+

@@ -17,7 +17,9 @@ class ThemePropertyViewController: NSViewController {
     
     @objc dynamic var isEditable: Bool = false
     
-    var color = "#ffffff" {
+    var action: ((_ vc: ThemePropertyViewController)->Void)?
+    
+    var color = "#999999" {
         willSet {
             self.willChangeValue(forKey: #keyPath(color_color))
         }
@@ -59,7 +61,7 @@ class ThemePropertyViewController: NSViewController {
             underline = 0
         }
         
-        color = property?.color ?? "#ffffff"
+        color = property?.color ?? "#999999"
         
         self.boxView?.title = "\(name.name) property"
         
@@ -76,7 +78,12 @@ class ThemePropertyViewController: NSViewController {
     }
     
     @IBAction func doSave(_ sender: Any) {
-        
+        action?(self)
+        if let popover = self.popover {
+            popover.performClose(sender)
+        } else {
+            self.dismiss(self)
+        }
     }
     
     @IBAction func doCancel(_ sender: Any) {

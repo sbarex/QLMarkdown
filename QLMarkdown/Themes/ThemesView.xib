@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ThemesView" customModule="QLMarkdown" customModuleProvider="target">
             <connections>
-                <outlet property="addThemeButton" destination="8hv-eo-HQn" id="vn4-w6-1XK"/>
                 <outlet property="contentView" destination="c22-O7-iKe" id="qxg-eL-OFQ"/>
-                <outlet property="delThemeButton" destination="wK6-To-dUR" id="wgJ-UB-SXT"/>
                 <outlet property="filterThemePopup" destination="kZp-oX-aid" id="dQQ-H6-6xR"/>
                 <outlet property="outlineView" destination="SC8-7R-nO8" id="sev-hM-9gK"/>
                 <outlet property="searchField" destination="TpP-Gd-jiA" id="T6i-MK-8Hp"/>
@@ -115,6 +113,7 @@
                                 <connections>
                                     <outlet property="dataSource" destination="-2" id="Jz1-zY-W2z"/>
                                     <outlet property="delegate" destination="-2" id="qWn-df-h2W"/>
+                                    <outlet property="menu" destination="zRt-qY-M6D" id="TDB-Cj-kuB"/>
                                 </connections>
                             </outlineView>
                         </subviews>
@@ -138,28 +137,68 @@
                 <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ibW-Tp-4jG">
                     <rect key="frame" x="0.0" y="0.0" width="260" height="30"/>
                     <subviews>
-                        <button toolTip="Create a new empty color scheme." verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="8hv-eo-HQn">
-                            <rect key="frame" x="8" y="9.5" width="14.5" height="13"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="XxS-cd-Glp">
+                        <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="F8z-LQ-Cun">
+                            <rect key="frame" x="3" y="8" width="34" height="14"/>
+                            <popUpButtonCell key="cell" type="roundRect" bezelStyle="roundedRect" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" id="wHS-no-P9Q">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="handleAddTheme:" target="-2" id="kc1-5W-ef3"/>
-                            </connections>
-                        </button>
-                        <button toolTip="Delete current customized color scheme." verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="wK6-To-dUR">
-                            <rect key="frame" x="37" y="14" width="14.5" height="4"/>
-                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="CLw-q3-ndO">
-                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <action selector="handleDelTheme:" target="-2" id="lgH-nr-NZd"/>
-                            </connections>
-                        </button>
+                                <font key="font" metaFont="cellTitle"/>
+                                <menu key="menu" autoenablesItems="NO" id="9bz-lB-Shr">
+                                    <items>
+                                        <menuItem state="on" image="NSActionTemplate" hidden="YES" id="rPr-Q5-rsv">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="New scheme" id="g7e-BI-B0C">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="handleAddTheme:" target="-2" id="TWB-g1-N9O"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Duplicate" tag="1" enabled="NO" keyEquivalent="d" id="AZA-Sg-kcf">
+                                            <connections>
+                                                <action selector="handleDuplicate:" target="-2" id="ITk-zA-pC7"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Remove…" tag="2" enabled="NO" id="7la-EM-wMg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="handleDelTheme:" target="-2" id="PsH-pJ-YNu"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Dsq-bU-3O7"/>
+                                        <menuItem title="Import…" id="9O0-YX-Zrg">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="importTheme:" target="-2" id="6Qb-9J-2YB"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Export…" tag="1" enabled="NO" id="Iuv-nQ-CHJ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="exportTheme:" target="-2" id="bgq-WJ-cwa"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reveal on Finder…" tag="1" alternate="YES" id="lw3-Vl-BPI">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="revealTheme:" target="-2" id="Ggh-Rv-O70"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="F5T-WA-5tV"/>
+                                        <menuItem title="Open the Application Support folder" id="RsS-Ou-bUk">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="revealApplicationSupportInFinder:" target="-2" id="KmR-A8-meo"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                    <connections>
+                                        <outlet property="delegate" destination="-2" id="tZ3-dR-Bas"/>
+                                    </connections>
+                                </menu>
+                            </popUpButtonCell>
+                        </popUpButton>
                         <searchField wantsLayer="YES" focusRingType="none" horizontalHuggingPriority="248" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TpP-Gd-jiA">
-                            <rect key="frame" x="66" y="4" width="143" height="22"/>
+                            <rect key="frame" x="52" y="4" width="157" height="22"/>
                             <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" focusRingType="none" usesSingleLineMode="YES" bezelStyle="round" id="Xh6-78-aBg">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -197,10 +236,8 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
-                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
@@ -221,10 +258,40 @@
             </constraints>
             <point key="canvasLocation" x="22" y="106"/>
         </customView>
+        <menu autoenablesItems="NO" identifier="contextual" id="zRt-qY-M6D">
+            <items>
+                <menuItem title="Duplicate" tag="1" keyEquivalent="d" id="Tlw-AP-CMw">
+                    <connections>
+                        <action selector="handleDuplicate:" target="-2" id="Gqb-6N-Lpm"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Remove…" tag="2" id="YOu-XP-niL">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="handleDelTheme:" target="-2" id="BpN-PN-yUq"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Export…" tag="1" id="oII-Bt-wtg">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="exportTheme:" target="-2" id="w4c-XY-qH4"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Reveal on Finder…" tag="1" alternate="YES" id="gdr-Vk-F5d">
+                    <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                    <connections>
+                        <action selector="revealTheme:" target="-2" id="aMV-v0-0qf"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <connections>
+                <outlet property="delegate" destination="-2" id="1NZ-4m-Pqe"/>
+            </connections>
+            <point key="canvasLocation" x="254" y="21.5"/>
+        </menu>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="14" height="13"/>
-        <image name="NSRemoveTemplate" width="14" height="4"/>
+        <image name="NSActionTemplate" width="15" height="15"/>
         <image name="NSStatusAvailable" width="16" height="16"/>
         <image name="style_dark15" width="15" height="15"/>
         <image name="style_light15" width="15" height="15"/>

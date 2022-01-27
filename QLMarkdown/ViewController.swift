@@ -95,7 +95,7 @@ class ViewController: NSViewController {
             guard oldValue != syntaxThemeLight else { return }
             isDirty = true
             
-            updateThemes()
+            updateThemesPopup()
         }
     }
     @objc dynamic var syntaxThemeDark: ThemePreview? = nil {
@@ -103,7 +103,7 @@ class ViewController: NSViewController {
             guard oldValue != syntaxThemeDark else { return }
             isDirty = true
             
-            updateThemes()
+            updateThemesPopup()
         }
     }
     
@@ -167,10 +167,10 @@ class ViewController: NSViewController {
         }*/
         didSet {
             guard oldValue != syntaxFontFamily else { return }
-            isDirty = true
             isFontCustomized = !syntaxFontFamily.isEmpty
             //self.didChangeValue(forKey: #keyPath(isFontCustomized))
             refreshFontPreview()
+            isDirty = true
         }
     }
     
@@ -437,8 +437,6 @@ class ViewController: NSViewController {
     }
     internal var isDirty = false {
         didSet {
-            guard oldValue != isDirty else { return }
-            
             self.view.window?.isDocumentEdited = isDirty
             if isDirty && autoRefresh && isLoaded && pauseAutoRefresh == 0 {
                 self.refresh(self)
@@ -509,6 +507,7 @@ class ViewController: NSViewController {
         return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-host")
     }()
     
+    var edited: Bool = false
     var markdown_file: URL? {
         didSet {
             if let file = markdown_file {
@@ -527,6 +526,7 @@ class ViewController: NSViewController {
             if isLoaded {
                 doRefresh(self)
             }
+            edited = false
         }
     }
     internal var prev_scroll: Int = -1
@@ -607,6 +607,23 @@ class ViewController: NSViewController {
         }
     }
     
+    @discardableResult
+    func openMarkdown(file: URL) -> Bool {
+        if edited {
+            let alert = NSAlert()
+            alert.messageText = "The current markdown file has been modified.\nAre you sure to replace it?"
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            let r = alert.runModal()
+            guard r == .alertFirstButtonReturn else {
+                return false
+            }
+        }
+        self.markdown_file = file
+        return true
+    }
+    
     @IBAction func openDocument(_ sender: Any) {
         let panel = NSOpenPanel()
         panel.canChooseDirectories = false
@@ -621,7 +638,33 @@ class ViewController: NSViewController {
             return
         }
         
-        self.markdown_file = src
+        self.openMarkdown(file: src)
+    }
+    
+    @IBAction func exportMarkdown(_ sender: Any) {
+        let savePanel = NSSavePanel()
+        savePanel.canCreateDirectories = true
+        savePanel.showsTagField = false
+        savePanel.allowedFileTypes = ["md", "rmd"]
+        savePanel.isExtensionHidden = false
+        savePanel.nameFieldStringValue = self.markdown_file?.lastPathComponent ?? "markdown.md"
+        savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
+        
+        let result = savePanel.runModal()
+        
+        guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let dst = savePanel.url else {
+            return
+        }
+        
+        do {
+            try self.textView.string.write(to: dst, atomically: true, encoding: .utf8)
+        } catch {
+            let alert = NSAlert()
+            alert.alertStyle = .critical
+            alert.messageText = "Unable to export the Markdown source!"
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+        }
     }
     
     @IBAction func exportPreview(_ sender: Any) {
@@ -656,7 +699,7 @@ class ViewController: NSViewController {
             let alert = NSAlert()
             alert.alertStyle = .critical
             alert.messageText = "Unable to export the HTML preview!"
-            alert.addButton(withTitle: "Cancel")
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             alert.runModal()
         }
     }
@@ -701,7 +744,7 @@ class ViewController: NSViewController {
             let panel = NSAlert()
             panel.messageText = "Error saving the settings!"
             panel.alertStyle = .warning
-            panel.addButton(withTitle: "OK")
+            panel.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             panel.runModal()
         }
     }
@@ -794,7 +837,7 @@ document.addEventListener('scroll', function(e) {
                     alert.messageText = "A file with the same name already exists. \nDo you want to overwrite?"
                     alert.alertStyle = .warning
                     alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
-                    alert.addButton(withTitle: "Yes")
+                    alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
                     
                     let r = alert.runModal()
                     guard r == .alertSecondButtonReturn else {
@@ -875,7 +918,7 @@ document.addEventListener('scroll', function(e) {
                     let alert = NSAlert()
                     alert.alertStyle = .critical
                     alert.messageText = "Unable to export the css style!"
-                    alert.addButton(withTitle: "Cancel")
+                    alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
                     alert.runModal()
                 }
             } else {
@@ -984,9 +1027,18 @@ document.addEventListener('scroll', function(e) {
             self.textView.setSelectedRange(NSRange(location: 0, length: 0))
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.handleThemeChanged(_:)), name: .currentThemeDidChange, object: nil)
+        
         isLoaded = true
         
         doRefresh(self)
+    }
+    
+    @objc func handleThemeChanged(_ notification: Notification) {
+        guard let theme = notification.object as? ThemePreview else { return }
+        if theme.path == self.syntaxThemeLight?.path || theme.path == self.syntaxThemeDark?.path {
+            self.updateThemesPopup()
+        }
     }
     
     @IBAction func doAutoRefresh(_ sender: NSMenuItem) {
@@ -1050,10 +1102,10 @@ document.addEventListener('scroll', function(e) {
         self.syntaxThemeDark = nil
     }
     
-    internal func updateThemes() {
+    internal func updateThemesPopup() {
         if syntaxThemeLight == nil && syntaxThemeDark == nil {
             sourceThemesPopup.itemArray.first?.image = nil
-            sourceThemesPopup.itemArray.first?.title = "Inherit from theme"
+            sourceThemesPopup.itemArray.first?.title = "Source style"
         } else {
             sourceThemesPopup.itemArray.first?.image = Theme.getCombinedImage2(light: syntaxThemeLight, dark: syntaxThemeDark, size: 100, space: 10)
             sourceThemesPopup.itemArray.first?.title = (syntaxThemeLight?.name ?? "") + " / " + (syntaxThemeDark?.name ?? "")
@@ -1403,12 +1455,13 @@ class DropableTextView: NSTextView {
     @IBOutlet weak var container: ViewController?
     
     func endDrag(_ sender: NSDraggingInfo) {
+        /*
         if let fileUrl = sender.draggingPasteboard.pasteboardItems?.first?.propertyList(forType: .fileURL) as? String, let url = URL(string: fileUrl) {
             
             // print(url.path)
         } else {
             print("fail")
-        }
+        }*/
     }
     
     override init(frame frameRect: NSRect) {
@@ -1449,7 +1502,7 @@ class DropableTextView: NSTextView {
         }
         
         let url = URL(fileURLWithPath: path)
-        container?.markdown_file = url
+        container?.openMarkdown(file: url)
         return true
         /*
         do {
@@ -1460,5 +1513,14 @@ class DropableTextView: NSTextView {
             return false
         }
          */
+    }
+}
+
+extension ViewController: NSTextDelegate {
+    func textDidChange(_ notification: Notification) {
+        guard let sender = notification.object as? NSTextView, sender == textView else {
+            return
+        }
+        edited = true
     }
 }

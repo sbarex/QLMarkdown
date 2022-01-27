@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AppKit
 
 extension Settings {
     private static var themes: [ThemePreview]?
@@ -142,6 +143,49 @@ extension Settings {
             }
         }
         return Settings.themes!
+    }
+    
+    func appendTheme(_ theme: ThemePreview) {
+        if Settings.themes == nil {
+            let _ = getAvailableThemes(resetCache: true)
+        }
+        Settings.themes?.append(theme)
+        NotificationCenter.default.post(name: .themeDidAdded, object: theme)
+    }
+    
+    @discardableResult
+    func removeTheme(_ theme: ThemePreview) throws -> Bool {
+        guard !theme.isStandalone else { return false }
+        
+        if !theme.path.isEmpty {
+            let url = URL(fileURLWithPath: theme.path)
+            if FileManager.default.fileExists(atPath: url.path) {
+                try FileManager.default.removeItem(at: url)
+            }
+            if self.syntaxThemeLight == theme.path {
+                self.syntaxThemeLight = ""
+            }
+            if self.syntaxThemeDark == theme.path {
+                self.syntaxThemeDark = ""
+            }
+            if let vc = NSApplication.shared.windows.first(where: {$0.windowController?.contentViewController is ViewController})?.windowController?.contentViewController as? ViewController {
+                if vc.syntaxThemeLight?.path == theme.path {
+                    vc.syntaxThemeLight = nil
+                }
+                if vc.syntaxThemeDark?.path == theme.path {
+                    vc.syntaxThemeDark = nil
+                }
+            }
+        }
+        
+        if let index = Settings.themes?.firstIndex(of: theme) {
+            Settings.themes!.remove(at: index)
+            NotificationCenter.default.post(name: .themeDidDeleted, object: theme)
+            return true
+        } else {
+            return false
+        }
+        
     }
     
     func getAvailableStyles(resetCache reset: Bool = false) -> [URL] {

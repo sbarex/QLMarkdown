@@ -2,11 +2,11 @@
 
 - [ ] Bugfix: on dark style, there is a flashing white rectangle before show the preview on Monterey.
 - [ ] Investigate if export syntax highlighting colors scheme style as CSS var overriding the default style
-- [ ] Syntax highlighting color scheme editor
 - [ ] Check code signature and app group access
 - [ ] Check inline images on network / mounted disk
 - [ ] Investigate font family override for fanced blocks
 - [ ] Localization support
+- [x] Syntax highlighting color scheme editor
 - [x] Optimize the inline image extension for raw html code: process and embed the data only for fragments and not processing all the formatted html code.
 - [x] Embed inline image for `<img>` raw tag without using javascript/callbacks.
 - [x] Emoji extension: better code that parse the single placeholder and generate nodes inside the AST (this would avoid the CMARK_OPT_UNSAFE option for emojis as images)

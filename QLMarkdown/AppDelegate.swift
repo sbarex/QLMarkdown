@@ -13,14 +13,26 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     var userDriver: SPUStandardUserDriver?
     var updater: SPUUpdater?
     
+    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+        guard let controller = sender.windows.first(where: {$0.windowController?.contentViewController is ViewController })?.windowController?.contentViewController as? ViewController else {
+            return false
+        }
+        let file = URL(fileURLWithPath: filename)
+        guard file.pathExtension.lowercased() == "md" else {
+            return false
+        }
+        return controller.openMarkdown(file: file)
+    }
+    
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
-        if let wc = NSApplication.shared.mainWindow?.windowController as? PreferencesWindowController {
-            if wc.windowShouldClose(wc.window!) {
-                return .terminateNow
-            } else {
+        for window in sender.windows {
+            if let wc = window.windowController as? PreferencesWindowController, !wc.windowShouldClose(window) {
+                return .terminateCancel
+            } else if let wc = window.windowController as? ThemesWindowController, !wc.windowShouldClose(window) {
                 return .terminateCancel
             }
         }
+        
         return .terminateNow
     }
     
@@ -74,7 +86,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             let alert = NSAlert()
             alert.messageText = "Updater Error"
             alert.informativeText = "The Updater failed to start. For detailed error information, check the Console.app log."
-            alert.addButton(withTitle: "OK")
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             alert.runModal()
         }
     }
@@ -95,7 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         if menuItem.action == #selector(self.checkForUpdates(_:)) {
-            return self.userDriver?.canCheckForUpdates ?? false
+            return self.updater?.canCheckForUpdates ?? false
         }
         if menuItem.identifier?.rawValue == "advanced settings" {
             let defaults = UserDefaults.standard
@@ -120,7 +132,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         let path = "/usr/local/bin/qlmarkdown_cli"
         do {
             try FileManager.default.createSymbolicLink(at: URL(fileURLWithPath: path), withDestinationURL: app)
-            alert.messageText = "Command line tool installed on `\(path)`"
+            alert.messageText = "Command line tool installed"
+            alert.informativeText = "Path: \(path)"
             alert.alertStyle = .informational
         } catch {
             alert.messageText = "Unable to link the command line tool link into `\(path)`!"
