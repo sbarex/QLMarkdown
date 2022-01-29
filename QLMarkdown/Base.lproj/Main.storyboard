@@ -30,13 +30,13 @@
                                                 <action selector="checkForUpdates:" target="Voe-Tx-rLC" id="JWB-gK-Wfw"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Install the command line tool" id="eLR-wj-sll">
+                                        <menuItem title="Install the command line tool…" id="eLR-wj-sll">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="installCLITool:" target="Voe-Tx-rLC" id="BHr-CG-89n"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Reveal the command line tool" alternate="YES" id="R79-ew-3D9">
+                                        <menuItem title="Reveal the command line tool…" alternate="YES" id="R79-ew-3D9">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                             <connections>
                                                 <action selector="revealCLITool:" target="Voe-Tx-rLC" id="a9e-gM-h4J"/>
