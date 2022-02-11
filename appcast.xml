@@ -12,7 +12,7 @@
 <p>Bugfix:</p>
 <ul>
 <li>Better procedure for install the command line tool.</li>
-<li>IFixed the bug that prevented the processing of html raw images when they are not inserted in a html block element. </li>
+<li>Fixed the bug that prevented the processing of html raw images when they are not inserted in a html block element. </li>
 </ul>
 <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
             ]]>
