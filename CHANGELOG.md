@@ -2,11 +2,11 @@
 
 ### 1.0.13 (38)
 Bugfix:
-- Fixed the sparkle integration bug. **If you have installed version 1.0.11 or 1.0.12 you may need to [re-download the updated app from the web](https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip).** 
+- Fixed the Sparkle integration bug. **If you have installed version 1.0.11 or 1.0.12 you may need to [re-download the updated app from the web](https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip).** 
 
 ### 1.0.12 (37)
 Bugfix:
-- Better procedure for install the command line tool.
+- Better procedure to install the command line tool.
 - Fixed the bug that prevented the processing of html raw images when they are not inserted in a html block element. 
 
 ### 1.0.11 (36)
