@@ -2,6 +2,30 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title> 
+        
+        <item>
+            <title>1.0.13</title>
+            <pubDate>ven, 11 feb 2022 17:46:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip" sparkle:shortVersionString="1.0.13" sparkle:version="38" sparkle:edSignature="Ab4qa3kjg0/fxHVVKhQf6fKGmaijy6mAW5a3lf1BQlaKGx4ZpNZsWLLxkkxAW3g9V+/LDaG5VNgFK8hrrsb1BQ==" length="15208656" />
+            <description><![CDATA[
+<h2>1.0.13 (38)</h2>
+<p>Bugfix:</p>
+<ul>
+<li>Fixed the sparkle integration bug. <b>If you have installed version 1.0.11 or 1.0.12 you may need to <a href="https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip">re-download the updated app from the web</a>.</li>
+</ul>
+
+<h2>1.0.12 (37)</h2>
+<p>Bugfix:</p>
+<ul>
+<li>Better procedure for install the command line tool.</li>
+<li>Fixed the bug that prevented the processing of html raw images when they are not inserted in a html block element. </li>
+</ul>
+<p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
         <item>
             <title>1.0.12</title>
             <pubDate>ven, 11 feb 2022 15:27:00 +0100</pubDate>
