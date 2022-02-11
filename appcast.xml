@@ -12,8 +12,15 @@
 <h2>1.0.13 (38)</h2>
 <p>Bugfix:</p>
 <ul>
-<li>Fixed the sparkle integration bug. <b>If you have installed version 1.0.11 or 1.0.12 you may need to <a href="https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip">re-download the updated app from the web</a>.</b></li>
+<li>Fixed the Sparkle integration bug. </li>
 </ul>
+
+<p><b>If you have installed version 1.0.11 or 1.0.12 you may need to <a href="https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip">re-download the updated app from the web</a>.</b></p>
+<ol>
+    <li>Unzip the archive</li>
+    <li>Replace the app inside the Applications folder</li>
+    <li>Start QLMarkdown with right click (or cmd-click) and choose open from the context menu.</li>
+</ol>
 
 <h2>1.0.12 (37)</h2>
 <p>Bugfix:</p>
