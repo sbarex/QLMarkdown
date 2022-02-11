@@ -1,6 +1,11 @@
 # Changelog
 
 
+### 1.0.12 (37)
+Bugfix:
+- Better procedure for install the command line tool.
+- Fixed the bug that prevented the processing of html raw images when they are not inserted in a html block element. 
+
 ### 1.0.11 (36)
 New features:
 - Support for opening markdown files (by dragging the file onto the app icon)

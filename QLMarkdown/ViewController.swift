@@ -667,6 +667,18 @@ class ViewController: NSViewController {
         }
     }
     
+    @IBAction func reloadMarkdown(_ sender: Any) {
+        guard let file = self.markdown_file else {
+            return
+        }
+        let prev_scroll = self.prev_scroll
+        self.openMarkdown(file: file)
+        self.prev_scroll = prev_scroll
+        if prev_scroll > 0 {
+            webView.evaluateJavaScript("document.documentElement.scrollTop = \(prev_scroll);")
+        }
+    }
+    
     @IBAction func exportPreview(_ sender: Any) {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true

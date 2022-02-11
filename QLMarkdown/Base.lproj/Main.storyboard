@@ -95,6 +95,11 @@
                                                 <action selector="exportPreview:" target="Ady-hI-5gd" id="ThC-Ot-hlN"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Reload Markdown source" keyEquivalent="R" id="oCc-uW-APD">
+                                            <connections>
+                                                <action selector="reloadMarkdown:" target="Ady-hI-5gd" id="iOr-Z4-dVU"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="U4l-0Q-Iha"/>
                                         <menuItem title="Save settings" keyEquivalent="s" id="pxx-59-PXV">
                                             <connections>

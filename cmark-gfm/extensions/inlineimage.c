@@ -185,7 +185,7 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
                 cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
                 free(encoded);
             }
-        } else if (node->type == CMARK_NODE_HTML_BLOCK && html_callback != NULL) {
+        } else if ((node->type == CMARK_NODE_HTML_BLOCK || node->type == CMARK_NODE_HTML_INLINE) && html_callback != NULL) {
             // Search inside the raw html fragment and process the images.
             cmark_chunk_to_cstr(parser->mem, &node->as.literal);
             unsigned char *s = NULL;
