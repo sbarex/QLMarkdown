@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.0.13 (38)
+Bugfix:
+- Fixed the sparkle integration bug. **If you have installed version 1.0.11 or 1.0.12 you may need to [re-download the updated app from the web](https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip).** 
 
 ### 1.0.12 (37)
 Bugfix:

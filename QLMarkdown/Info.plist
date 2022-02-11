@@ -71,7 +71,7 @@
 		<true/>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Developed by SBAREX 2020 - 2021.</string>
+	<string>Developed by SBAREX 2020 - 2022.</string>
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
@@ -80,6 +80,8 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<false/>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
 	<key>SUFeedURL</key>
 	<string>https://sbarex.github.io/QLMarkdown/appcast.xml</string>
 	<key>SUPublicEDKey</key>
