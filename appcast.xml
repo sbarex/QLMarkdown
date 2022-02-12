@@ -19,7 +19,7 @@
 <ol>
     <li>Unzip the archive</li>
     <li>Replace the app inside the Applications folder</li>
-    <li>Start QLMarkdown with right click (or cmd-click) and choose open from the context menu.</li>
+    <li>Start QLMarkdown with right click (or ctrl-click) and choose open from the context menu.</li>
 </ol>
 
 <h2>1.0.12 (37)</h2>
