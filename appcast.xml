@@ -4,6 +4,30 @@
         <title>QLMarkdown</title> 
         
         <item>
+            <title>1.0.14</title>
+            <pubDate>mer, 23 feb 2022 8:50:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.14/QLMarkdown.zip" sparkle:shortVersionString="1.0.14" sparkle:version="39" sparkle:edSignature="QHWP+IKBRUSqeN4SsKZGWnXiT6o61JxANYenacDK+mv4+i/dBNMKSGBOgsMpiA3i40MYgqtMRi6PKnsoTs8TBQ==" length="15209073" />
+            <description><![CDATA[
+<h2>1.0.14 (39)</h2>
+<p>Bugfix:</p>
+<ul>
+<li>Allows you to use <code>...</code> to end the <code>yaml</code> header block.</li>
+</ul>
+
+<p><b>If you have installed version 1.0.11 or 1.0.12 you may need to <a href="https://github.com/sbarex/QLMarkdown/releases/download/1.0.14/QLMarkdown.zip">re-download the updated app from the web</a>.</b></p>
+<ol>
+    <li>Unzip the archive</li>
+    <li>Replace the app inside the Applications folder</li>
+    <li>Start QLMarkdown with right click (or ctrl-click) and choose open from the context menu.</li>
+</ol>
+
+<p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
+        <item>
             <title>1.0.13</title>
             <pubDate>ven, 11 feb 2022 17:46:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
