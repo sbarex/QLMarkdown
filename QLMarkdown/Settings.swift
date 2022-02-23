@@ -640,7 +640,13 @@ class Settings {
         var header = ""
         
         if self.yamlExtension && (self.yamlExtensionAll || filename.lowercased().hasSuffix("rmd")) && md_text.hasPrefix("---") {
-            let pattern = "(?s)((?<=---\n).*?(?>\n---\n))"
+            /*
+             (?s): Turn on "dot matches newline" for the remainder of the regular expression. For “single line mode” makes the dot match all characters, including line breaks.
+             (?<=---\n): Positive lookbehind. Matches at a position if the pattern inside the lookbehind can be matched ending at that position. Find expression .* where expression `---\n` precedes.
+             (?>\n(?:---|\.\.\.):
+             (?:---|\.\.\.): not capturing group
+             */
+            let pattern = "(?s)((?<=---\n).*?(?>\n(?:---|\\.\\.\\.)\n))"
             if let range = md_text.range(of: pattern, options: .regularExpression) {
                 let yaml = String(md_text[range.lowerBound ..< md_text.index(range.upperBound, offsetBy: -4)])
                 var isHTML = false

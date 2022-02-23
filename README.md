@@ -237,7 +237,7 @@ If no language is defined and the guessing fail (or is not enabled), the code is
 
 In the [Advanced options panel](#advanced-options), you can enable the extension to handle a `yaml` header at the beginning of a file. You can choose to enable the extensions to all `.md` files or only for `.rmd` files.
 
-The header is recognized only if the file start with `---`.
+The header is recognized only if the file start with `---`. The yaml block must be closed with `---` or with `...`.
 
 When the `table` extension is enabled, the header is rendered as a table, otherwise as a block of code. Nested tables are supported.
 

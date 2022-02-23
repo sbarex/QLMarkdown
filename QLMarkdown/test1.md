@@ -6,9 +6,9 @@ Abstract: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
 output:
   pdf_document: default
   html_notebook: default
----
+...
 
-The previous block placed at the top of the document and contained between the markers `---` is displayed as the file header when the `YAML` extension is enabled. With the `table` extension on, it is displayed as a table otherwise as a block of code.
+The previous block placed at the top of the document, starting with `---` and ending with `---` or `...` is displayed as the file header when the `YAML` extension is enabled. With the `table` extension on, it is displayed as a table otherwise as a block of code.
 
 
 # TOC
