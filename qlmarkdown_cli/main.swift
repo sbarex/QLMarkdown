@@ -298,13 +298,14 @@ for url in files {
     do {
         guard FileManager.default.isReadableFile(atPath: markdown_url.path) else {
             print("Unable to read the file \(markdown_url.path)", to: &standardError)
+            os_log("Unable to read the file %{private}@", log: OSLog.cli, type: .error, markdown_url.path)
             exit(127)
         }
         if verbose {
             print("- processing \(markdown_url.path) ...")
         }
         let appearance: Appearance = type == "Light" ? .light : .dark
-        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path, log: nil)
+        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
         
         let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, basedir: markdown_url.deletingLastPathComponent(), forAppearance: appearance)
         
@@ -336,6 +337,7 @@ for url in files {
         }
     } catch {
         print("Error processing \(url.path): \(error.localizedDescription)", to: &standardError)
+        os_log("Error processing the file %{private}@: %{public}@", log: OSLog.cli, type: .error, url.path, error.localizedDescription)
         exit(1)
     }
 }

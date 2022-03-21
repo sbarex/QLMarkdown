@@ -186,6 +186,12 @@
 		83720A4A25B8EA9700B49FEC /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A1D25B8E93D00B49FEC /* buffer.c */; };
 		83760301258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		83760302258C1813004799ED /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
+		8376EADD27E8BD3D00AB44B8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376EADC27E8BD3D00AB44B8 /* Log.swift */; };
+		8376EADE27E8BD3D00AB44B8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376EADC27E8BD3D00AB44B8 /* Log.swift */; };
+		8376EADF27E8BD3D00AB44B8 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376EADC27E8BD3D00AB44B8 /* Log.swift */; };
+		8376EAE227E8C67F00AB44B8 /* c_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 8376EAE127E8C67F00AB44B8 /* c_log.c */; };
+		8376EAE327E8C67F00AB44B8 /* c_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 8376EAE127E8C67F00AB44B8 /* c_log.c */; };
+		8376EAE427E8C67F00AB44B8 /* c_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 8376EAE127E8C67F00AB44B8 /* c_log.c */; };
 		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
 		837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */ = {isa = PBXBuildFile; fileRef = 837F97CE271EA098009F4605 /* qlmarkdown_cli */; };
 		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
@@ -491,6 +497,9 @@
 		83720A2225B8E93D00B49FEC /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		837602FF258C1813004799ED /* inlineimage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inlineimage.h; sourceTree = "<group>"; };
 		83760300258C1813004799ED /* inlineimage.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = inlineimage.c; sourceTree = "<group>"; };
+		8376EADC27E8BD3D00AB44B8 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		8376EAE027E8C67F00AB44B8 /* c_log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = c_log.h; sourceTree = "<group>"; };
+		8376EAE127E8C67F00AB44B8 /* c_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = c_log.c; sourceTree = "<group>"; };
 		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
 		837F291E2597AAC000A5F7DE /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		837F97CE271EA098009F4605 /* qlmarkdown_cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = qlmarkdown_cli; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -686,6 +695,7 @@
 				83327D452595E15700E76CF6 /* Settings+ext.swift */,
 				8357EB7E2588262C002C2C45 /* String+ext.swift */,
 				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
+				8376EADC27E8BD3D00AB44B8 /* Log.swift */,
 				83D82A90277C466500C9B99F /* jpcre2.hpp */,
 				83D82A91277C467A00C9B99F /* pcre2.h */,
 				834CAB89259167B800673002 /* examples */,
@@ -700,6 +710,8 @@
 				83327D1D2593FB0700E76CF6 /* url.hpp */,
 				83C44B3C259A70EE004C1367 /* string_utils.cpp */,
 				83C44B3D259A70EE004C1367 /* string_utils.hpp */,
+				8376EAE027E8C67F00AB44B8 /* c_log.h */,
+				8376EAE127E8C67F00AB44B8 /* c_log.c */,
 				83720A1C25B8E93D00B49FEC /* b64.c */,
 				83327D252594066300E76CF6 /* MIMEtype */,
 				83598E7825818828004664D3 /* extensions */,
@@ -1145,6 +1157,7 @@
 				834D64A9259E9DC400DCA121 /* NSColor+ext.swift in Sources */,
 				831A8C97258ABDD400E36182 /* linked_list.c in Sources */,
 				831A8C77258ABD9D00E36182 /* blocks.c in Sources */,
+				8376EAE327E8C67F00AB44B8 /* c_log.c in Sources */,
 				831A8C5C258ABD6F00E36182 /* ext_scanners.c in Sources */,
 				83720A4725B8EA9700B49FEC /* buffer.c in Sources */,
 				831A8C8C258ABDBE00E36182 /* footnotes.c in Sources */,
@@ -1171,6 +1184,7 @@
 				831A8CA6258ABDDB00E36182 /* utf8.c in Sources */,
 				831A8C94258ABDD400E36182 /* man.c in Sources */,
 				831A8C8F258ABDC300E36182 /* houdini_href_e.c in Sources */,
+				8376EADE27E8BD3D00AB44B8 /* Log.swift in Sources */,
 				831A8C65258ABD8200E36182 /* tagfilter.c in Sources */,
 				83327D332594087100E76CF6 /* MIMEtype.c in Sources */,
 				831A8C6E258ABD8D00E36182 /* emoji.c in Sources */,
@@ -1190,10 +1204,12 @@
 				83437989271D4A1900A5D6EA /* heads_utils.cpp in Sources */,
 				8343799E271D4A3D00A5D6EA /* footnotes.c in Sources */,
 				83437983271D49F700A5D6EA /* decode.c in Sources */,
+				8376EAE427E8C67F00AB44B8 /* c_log.c in Sources */,
 				8343799A271D4A3D00A5D6EA /* plugin.c in Sources */,
 				834379AA271D4A3D00A5D6EA /* node.c in Sources */,
 				834379AD271D4A3D00A5D6EA /* cmark.c in Sources */,
 				8343799F271D4A3D00A5D6EA /* xml.c in Sources */,
+				8376EADF27E8BD3D00AB44B8 /* Log.swift in Sources */,
 				834379AE271D4A3D00A5D6EA /* commonmark.c in Sources */,
 				83437986271D4A1900A5D6EA /* inlineimage.c in Sources */,
 				834379A2271D4A3D00A5D6EA /* cmark_ctype.c in Sources */,
@@ -1245,6 +1261,7 @@
 			files = (
 				83598ED62581884D004664D3 /* cmark_ctype.c in Sources */,
 				831A8CD1258ACB3300E36182 /* ThemePropertyViewController.swift in Sources */,
+				8376EADD27E8BD3D00AB44B8 /* Log.swift in Sources */,
 				83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */,
 				83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				83F88259259906C7008C5071 /* heads.c in Sources */,
@@ -1288,6 +1305,7 @@
 				83598ED12581884D004664D3 /* houdini_html_u.c in Sources */,
 				834CAB9225923D2200673002 /* ThemeSelectorViewController.swift in Sources */,
 				83598E6525818808004664D3 /* AppDelegate.swift in Sources */,
+				8376EAE227E8C67F00AB44B8 /* c_log.c in Sources */,
 				83598EE82581884D004664D3 /* references.c in Sources */,
 				83EF95232585476800B56FA3 /* emoji.c in Sources */,
 				834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */,

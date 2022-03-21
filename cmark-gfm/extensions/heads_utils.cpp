@@ -36,6 +36,8 @@
 typedef jpcre2::select<wchar_t> jpw;
 #endif
 
+#include "c_log.h"
+
 using namespace std;
 
 //! Convert a string to a wide string.
@@ -103,6 +105,7 @@ static char *process_title_re2(const char *title) {
     std::string current_locale = setlocale(LC_ALL, NULL);
     if (setlocale(LC_ALL, "en_US.UTF-8") == NULL) {
         cerr << "setlocale failed.\n";
+        os_log_error(getLogForHeadsExt(), "`setlocale` failed!");
     }
     
     string text = title;

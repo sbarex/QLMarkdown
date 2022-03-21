@@ -18,6 +18,10 @@
 #include <sstream>
 #include <vector>
 
+#include <os/log.h>
+
+extern "C" os_log_t getLogForEmojiExt(void);
+
 // https://api.github.com/emojis
 
 typedef struct {
@@ -1901,6 +1905,7 @@ static wchar_t *get_w_emoji(const char *placeholder) {
             wchar_t glyph = std::stoi(character, &pos, 16);
             if (pos < character.length()) {
                 std::cerr << character << " is not an hex number!\n";
+                os_log_error(getLogForEmojiExt(), "%{public}s is not an hex number!", character.c_str());
                 free(rune);
                 return nullptr;
             }
@@ -1909,6 +1914,7 @@ static wchar_t *get_w_emoji(const char *placeholder) {
             j++;
         } catch (std::invalid_argument) {
             std::cerr << "Unable to parse stoi for character \"" << character << "\".\n";
+            os_log_error(getLogForEmojiExt(), "Unable to parse stoi for character \"%{public}s\"!", character.c_str());
             free(rune);
             return nullptr;
         }
@@ -1928,6 +1934,7 @@ char *get_emoji(const char *placeholder) {
     std::string current_locale = std::setlocale(LC_ALL, nullptr);
     if (std::setlocale(LC_ALL, "en_US.UTF-8") == nullptr) {
         std::cerr << "setlocale failed.\n";
+        os_log_error(getLogForEmojiExt(), "`setlocale` failed!");
     }
     
     // Count required buffer size (plus one for null-terminator).

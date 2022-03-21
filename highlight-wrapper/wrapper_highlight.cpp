@@ -14,7 +14,7 @@
 
 #define IO_ERROR_REPORT_LENGTH 5
 
-static os_log_t sLog = os_log_create("org.sbarex.highlight-wrapper", "rendering");
+static os_log_t sLog = os_log_create("org.sbarex.QLMarkdown", "C Wrapper");
 
 static DataDir dataDir;
 static highlight::CodeGenerator *generator = nullptr;
@@ -61,7 +61,7 @@ void highlight_init(const char *search_dir) {
     if (!endsWith(pp, "/")) {
         pp += Platform::pathSeparator;
     }
-    os_log_debug(sLog, "Initializing search dirs with `%s`.", pp.c_str());
+    os_log_debug(sLog, "Initializing search dirs with `%{public}s`.", pp.c_str());
     dataDir.initSearchDirectories(pp);
 
     // call before printInstalledLanguages!

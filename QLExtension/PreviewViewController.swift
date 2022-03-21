@@ -37,10 +37,6 @@ class MyWebView: WebView {
 class PreviewViewController: NSViewController, QLPreviewingController {
     var webView: MyWKWebView!
     
-    private let log = {
-        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-extension")
-    }()
-    
     var handler: ((Error?) -> Void)? = nil
     
     override var nibName: NSNib.Name? {
@@ -218,7 +214,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     func renderMD(url: URL) throws -> String {
         os_log(
             "Generating preview for file %{public}s",
-            log: self.log,
+            log: OSLog.quickLookExtension,
             type: .info,
             url.path
         )
@@ -239,7 +235,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         }
         
         let appearance: Appearance = type == "Light" ? .light : .dark
-        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path, log: self.log)
+        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
         
         let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent(), forAppearance: appearance)
             

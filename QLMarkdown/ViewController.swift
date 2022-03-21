@@ -503,10 +503,6 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var qlWindowSizePopupButton: NSPopUpButton!
     
-    private let log = {
-        return OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "quicklook.qlmarkdown-host")
-    }()
-    
     var edited: Bool = false
     var markdown_file: URL? {
         didSet {
@@ -698,14 +694,13 @@ class ViewController: NSViewController {
         let settings = self.updateSettings()
         let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
         do {
-            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
         } catch {
             body = "Error"
         }
         
         let html = settings.getCompleteHTML(title: ".md", body: body, basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
         do {
-            
             try html.write(to: dst, atomically: true, encoding: .utf8)
         } catch {
             let alert = NSAlert()
@@ -778,7 +773,7 @@ class ViewController: NSViewController {
         let startTime = CFAbsoluteTimeGetCurrent()
         
         do {
-            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "", log: log)
+            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
         } catch {
             body = "Error"
         }
@@ -1016,7 +1011,6 @@ document.addEventListener('scroll', function(e) {
         self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         let contentController = self.webView.configuration.userContentController
         contentController.add(self, name: "scrollHandler")
-        contentController.add(self, name: "imageExtensionHandler")
         
         let settings = Settings.shared
         
@@ -1380,41 +1374,6 @@ extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "scrollHandler", let dict = message.body as? [String : AnyObject], let p = dict["scroll"] as? Int {
             self.prev_scroll = p
-        } else if message.name == "imageExtensionHandler", let dict = message.body as? [String : AnyObject], let src = (dict["src"] as? String)?.removingPercentEncoding, let id = dict["id"] as? String, let data = get_base64_image(src.cString(using: .utf8), { (path, context) in
-                let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
-                let r = magic_get_mime_by_file(path, magic_file)
-                return r
-            }, nil) {
-            
-            let response: [String: String] = [
-                "src": src,
-                "id": id,
-                "data": String(cString: data)
-            ]
-            data.deallocate()
-            let encoder = JSONEncoder()
-            guard let j = try? encoder.encode(response), let js = String(data: j, encoding: .utf8) else {
-                return
-            }
-
-            message.webView?.evaluateJavaScript("replaceImageSrc(\(js))") { (r, error) in
-                if let result = r as? Bool, !result {
-                    os_log(
-                        "Unable to replace <img> src %{public}s with the inline data.",
-                        log: self.log,
-                        type: .error,
-                        src
-                    )
-                }
-                if let error = error {
-                    os_log(
-                        "Unable to replace <img> src %{public}s with the inline data: %{public}s.",
-                        log: self.log,
-                        type: .error,
-                        src, error.localizedDescription
-                    )
-                }
-            }
         }
     }
 }

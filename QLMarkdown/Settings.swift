@@ -95,6 +95,9 @@ class Settings {
     
     @objc var debug: Bool = false
     
+    lazy fileprivate (set) var resourceBundle: Bundle = {
+        return getResourceBundle()
+    }()
     
     class var applicationSupportUrl: URL? {
         let sharedContainerURL: URL? = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: Domain)?.appendingPathComponent("Library/Application Support")
@@ -359,12 +362,13 @@ class Settings {
         return try? String(contentsOf: url)
     }
     
-    func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?, log: OSLog? = nil) throws -> String {
+    func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?) throws -> String {
         guard let data = FileManager.default.contents(atPath: url.path), let markdown_string = String(data: data, encoding: .utf8) else {
+            os_log("Unable to read the file %{private}@", log: OSLog.rendering, type: .error, url.path)
             return ""
         }
         
-        return try self.render(text: markdown_string, filename: url.lastPathComponent, forAppearance: appearance, baseDir: baseDir ?? url.deletingLastPathComponent().path, log: log)
+        return try self.render(text: markdown_string, filename: url.lastPathComponent, forAppearance: appearance, baseDir: baseDir ?? url.deletingLastPathComponent().path)
     }
     
     /// Get the Bundle with the resources.
@@ -378,14 +382,23 @@ class Settings {
 
             if let appBundle = Bundle(url: url) {
                 return appBundle
+            } else if let appBundle = Bundle(identifier: "org.sbarex.QLMarkdown") {
+                return appBundle
             }
+            // To access the main bundle, the extension must not be sandboxed (or must have a security exception entitlement to access the entire disk).
+            os_log(
+                "Unable to open the main application bundle from %{public}@",
+                log: OSLog.quickLookExtension,
+                type: .error,
+                url.path
+            )
         }
         return Bundle.main
     }
     
     /// Get the path of folder with `highlight` support files.
     func getHighlightSupportPath() -> String? {
-        let path = getResourceBundle().url(forResource: "highlight", withExtension: "")?.path
+        let path = self.resourceBundle.url(forResource: "highlight", withExtension: "")?.path
         return path
     }
     
@@ -478,14 +491,11 @@ class Settings {
         return "```yaml\n"+text+"```\n"
     }
     
-    func renderCode(text: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) -> String? {
-        
+    func renderCode(text: String, forAppearance appearance: Appearance, baseDir: String) -> String? {
         if let path = getHighlightSupportPath() {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
         } else {
-            if let l = log {
-                os_log("Unable to found the `highlight` support dir!", log: l, type: .error)
-            }
+            os_log("Unable to found the `highlight` support dir!", log: OSLog.rendering, type: .error)
         }
         
         let theme: String
@@ -526,9 +536,8 @@ class Settings {
         }
     }
     
-    func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String, log: OSLog? = nil) throws -> String {
-        
-        if self.renderAsCode, let code = self.renderCode(text: text, forAppearance: appearance, baseDir: baseDir, log: log) {
+    func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String) throws -> String {
+        if self.renderAsCode, let code = self.renderCode(text: text, forAppearance: appearance, baseDir: baseDir) {
             return code
         }
         
@@ -559,24 +568,10 @@ class Settings {
             options |= CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE
         }
         
-        if let l = log {
-            os_log(
-                "cmark_gfm options: %{public}d.",
-                log: l,
-                type: .debug,
-                options
-            )
-        }
+        os_log("cmark_gfm options: %{public}d.", log: OSLog.rendering, type: .debug, options)
         
         guard let parser = cmark_parser_new(options) else {
-            if let l = log {
-                os_log(
-                    "Unable to create new cmark_parser!",
-                    log: l,
-                    type: .error,
-                    options
-                )
-            }
+            os_log("Unable to create new cmark_parser!", log: OSLog.rendering, type: .error, options)
             throw CMARK_Error.parser_create
         }
         defer {
@@ -590,48 +585,40 @@ class Settings {
         }
         */
         
-        if self.tableExtension, let ext = cmark_find_syntax_extension("table") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `table` extension.",
-                    log: l,
-                    type: .debug
-                )
-            }
-            // extensions = cmark_llist_append(cmark_get_default_mem_allocator(), nil, &ext)
-        }
-        
-        if self.autoLinkExtension, let ext = cmark_find_syntax_extension("autolink") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `autolink` extension.",
-                    log: l,
-                    type: .debug
-                )
+        if self.tableExtension {
+            if let ext = cmark_find_syntax_extension("table") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown markdown `table` extension.", log: OSLog.rendering, type: .debug)
+                // extensions = cmark_llist_append(cmark_get_default_mem_allocator(), nil, &ext)
+            } else {
+                os_log("Could not enable markdown `table` extension!", log: OSLog.rendering, type: .error)
             }
         }
         
-        if self.tagFilterExtension, let ext = cmark_find_syntax_extension("tagfilter") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `tagfilter` extension.",
-                    log: l,
-                    type: .debug
-                )
+        if self.autoLinkExtension {
+            if let ext = cmark_find_syntax_extension("autolink") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `autolink` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `autolink` extension!", log: OSLog.rendering, type: .error)
             }
         }
         
-        if self.taskListExtension, let ext = cmark_find_syntax_extension("tasklist") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `tasklist` extension.",
-                    log: l,
-                    type: .debug
-                )
+        if self.tagFilterExtension {
+            if let ext = cmark_find_syntax_extension("tagfilter") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `tagfilter` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `tagfilter` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
+        if self.taskListExtension {
+            if let ext = cmark_find_syntax_extension("tasklist") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `tasklist` extension.",  log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `tasklist` extension!", log: OSLog.rendering, type: .error)
             }
         }
         
@@ -660,192 +647,180 @@ class Settings {
             }
         }
         
-        if self.strikethroughExtension, let ext = cmark_find_syntax_extension("strikethrough") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `strikethrough` extension.",
-                    log: l,
-                    type: .debug
-                )
-            }
-        }
-        
-        if self.mentionExtension, let ext = cmark_find_syntax_extension("mention") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `mention` extension.",
-                    log: l,
-                    type: .debug
-                )
-            }
-        }
-        
-        if self.headsExtension, let ext = cmark_find_syntax_extension("heads") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `heads` extension.",
-                    log: l,
-                    type: .debug
-                )
-            }
-        }
-        
-        if self.inlineImageExtension, let ext = cmark_find_syntax_extension("inlineimage") {
-            cmark_parser_attach_syntax_extension(parser, ext)
-            cmark_syntax_extension_inlineimage_set_wd(ext, baseDir.cString(using: .utf8))
-            cmark_syntax_extension_inlineimage_set_mime_callback(ext, { (path, context) in
-                let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
-                let r = magic_get_mime_by_file(path, magic_file)
-                return r
-            }, nil)
-            
-            if let l = log {
-                os_log(
-                    "Enabled markdown `local inline image` extension with working path set to `%{public}s.",
-                    log: l,
-                    type: .debug,
-                    baseDir
-                )
-            }
-            
-            if self.unsafeHTMLOption {
-                cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(ext, { (ext, fragment, workingDir, context, code) in
-                    guard let fragment = fragment else {
-                        return
-                    }
-                    
-                    let baseDir: URL
-                    if let s = workingDir {
-                        let b = String(cString: s)
-                        baseDir = URL(fileURLWithPath: b)
-                    } else {
-                        baseDir = URL(fileURLWithPath: "")
-                    }
-                    let html = String(cString: fragment)
-                    var changed = false
-                    do {
-                        let doc = try SwiftSoup.parseBodyFragment(html, baseDir.path)
-                        for img in try doc.select("img") {
-                            let src = try img.attr("src")
-                            
-                            guard !src.isEmpty, !src.hasPrefix("http"), !src.hasPrefix("HTTP") else {
-                                // Do not handle external image.
-                                continue
-                            }
-                            guard !src.hasPrefix("data:") else {
-                                // Do not reprocess data: image.
-                                continue
-                            }
-                            
-                            let file = baseDir.appendingPathComponent(src).path
-                            guard FileManager.default.fileExists(atPath: file) else {
-                                continue // File not found.
-                            }
-                            guard let data = get_base64_image(
-                                file.cString(using: .utf8),
-                                { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
-                                    let magic_file = Settings.shared.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
-                                    
-                                    let r = magic_get_mime_by_file(path, magic_file)
-                                    return r
-                                },
-                                nil
-                            ) else {
-                                continue
-                            }
-                            defer {
-                                data.deallocate()
-                            }
-                            let img_data = String(cString: data)
-                            try img.attr("src", img_data)
-                            changed = true
-                        }
-                        if changed, let html = try doc.body()?.html(), let s = strdup(html) {
-                            code?.pointee = UnsafePointer(s)
-                        }
-                    } catch Exception.Error(_, let message) {
-                        print("Error processing html: \(message)")
-                    } catch {
-                        print("Error parsing html: \(error.localizedDescription)")
-                    }
-                }, nil)
-            }
-        }
-        
-        if self.emojiExtension, let ext = cmark_find_syntax_extension("emoji") {
-            cmark_syntax_extension_emoji_set_use_characters(ext, !self.emojiImageOption)
-            cmark_parser_attach_syntax_extension(parser, ext)
-            if let l = log {
-                os_log(
-                    "Enabled markdown `emoji` extension using %{public}%s.",
-                    log: l,
-                    type: .debug,
-                    self.emojiImageOption ? "images" : "glyphs"
-                )
-            }
-        }
-        
-        if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight") {
-            // TODO: set a property
-            
-            if let path = getHighlightSupportPath() {
-                cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
+        if self.strikethroughExtension {
+            if let ext = cmark_find_syntax_extension("strikethrough") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `strikethrough` extension.", log: OSLog.rendering, type: .debug)
             } else {
-                if let l = log {
-                    os_log("Unable to found the `highlight` support dir!", log: l, type: .error)
-                }
+                os_log("Could not enable markdown `strikethrough` extension!", log: OSLog.rendering, type: .error)
             }
-            
-            let theme: String
-            let background: String
-            switch appearance {
-            case .light:
-                theme = self.syntaxThemeLight
-                background = self.syntaxBackgroundColorLight
-            case .dark:
-                theme = self.syntaxThemeDark
-                background = self.syntaxBackgroundColorDark
-            case .undefined:
-                let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
-                if mode == "Light" {
+        }
+        
+        if self.mentionExtension {
+            if let ext = cmark_find_syntax_extension("mention") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `mention` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `mention` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
+        if self.headsExtension {
+            if let ext = cmark_find_syntax_extension("heads") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `heads` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `heads` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
+        if self.inlineImageExtension {
+            if let ext = cmark_find_syntax_extension("inlineimage") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                cmark_syntax_extension_inlineimage_set_wd(ext, baseDir.cString(using: .utf8))
+                cmark_syntax_extension_inlineimage_set_mime_callback(ext, { (path, context) in
+                    let magic_file = Settings.shared.resourceBundle.path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
+                    let r = magic_get_mime_by_file(path, magic_file)
+                    return r
+                }, nil)
+                
+                os_log("Enabled markdown `local inline image` extension with working path set to `%{public}s.", log: OSLog.rendering, type: .debug, baseDir)
+                
+                if self.unsafeHTMLOption {
+                    cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(ext, { (ext, fragment, workingDir, context, code) in
+                        guard let fragment = fragment else {
+                            return
+                        }
+                        
+                        let baseDir: URL
+                        if let s = workingDir {
+                            let b = String(cString: s)
+                            baseDir = URL(fileURLWithPath: b)
+                        } else {
+                            baseDir = URL(fileURLWithPath: "")
+                        }
+                        let html = String(cString: fragment)
+                        var changed = false
+                        do {
+                            let doc = try SwiftSoup.parseBodyFragment(html, baseDir.path)
+                            for img in try doc.select("img") {
+                                let src = try img.attr("src")
+                                
+                                guard !src.isEmpty, !src.hasPrefix("http"), !src.hasPrefix("HTTP") else {
+                                    // Do not handle external image.
+                                    continue
+                                }
+                                guard !src.hasPrefix("data:") else {
+                                    // Do not reprocess data: image.
+                                    continue
+                                }
+                                
+                                let file = baseDir.appendingPathComponent(src).path
+                                guard FileManager.default.fileExists(atPath: file) else {
+                                    os_log("Image %{private}@ not found!", log: OSLog.rendering, type: .error)
+                                    continue // File not found.
+                                }
+                                guard let data = get_base64_image(
+                                    file.cString(using: .utf8),
+                                    { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
+                                        let magic_file = Settings.shared.resourceBundle.path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
+                                        
+                                        let r = magic_get_mime_by_file(path, magic_file)
+                                        return r
+                                    },
+                                    nil
+                                ) else {
+                                    continue
+                                }
+                                defer {
+                                    data.deallocate()
+                                }
+                                let img_data = String(cString: data)
+                                try img.attr("src", img_data)
+                                changed = true
+                            }
+                            if changed, let html = try doc.body()?.html(), let s = strdup(html) {
+                                code?.pointee = UnsafePointer(s)
+                            }
+                        } catch Exception.Error(_, let message) {
+                            os_log("Error processing html: %{public}@!", log: OSLog.rendering, type: .error, message)
+                        } catch {
+                            os_log("Error parsing html: %{public}@!", log: OSLog.rendering, type: .error, error.localizedDescription)
+                        }
+                    }, nil)
+                }
+            } else {
+                os_log("Could not enable markdown `local inline image` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
+        if self.emojiExtension {
+            if let ext = cmark_find_syntax_extension("emoji") {
+                cmark_syntax_extension_emoji_set_use_characters(ext, !self.emojiImageOption)
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `emoji` extension using %{public}s.", log: OSLog.rendering, type: .debug, self.emojiImageOption ? "images" : "glyphs")
+            } else {
+                os_log("Could not enable markdown `emoji` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
+        if self.syntaxHighlightExtension {
+            if let ext = cmark_find_syntax_extension("syntaxhighlight") {
+                // TODO: set a property
+                
+                if let path = getHighlightSupportPath() {
+                    cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
+                } else {
+                    os_log("Unable to found the `highlight` support dir!", log: OSLog.rendering, type: .error)
+                }
+                
+                let theme: String
+                let background: String
+                switch appearance {
+                case .light:
                     theme = self.syntaxThemeLight
                     background = self.syntaxBackgroundColorLight
-                } else {
+                case .dark:
                     theme = self.syntaxThemeDark
                     background = self.syntaxBackgroundColorDark
+                case .undefined:
+                    let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                    if mode == "Light" {
+                        theme = self.syntaxThemeLight
+                        background = self.syntaxBackgroundColorLight
+                    } else {
+                        theme = self.syntaxThemeDark
+                        background = self.syntaxBackgroundColorDark
+                    }
                 }
-            }
-            
-            cmark_syntax_extension_highlight_set_theme_name(ext, theme)
-            cmark_syntax_extension_highlight_set_background_color(ext, background.isEmpty ? nil : background)
-            cmark_syntax_extension_highlight_set_line_number(ext, self.syntaxLineNumbersOption ? 1 : 0)
-            cmark_syntax_extension_highlight_set_tab_spaces(ext, Int32(self.syntaxTabsOption))
-            cmark_syntax_extension_highlight_set_wrap_limit(ext, Int32(self.syntaxWordWrapOption))
-            cmark_syntax_extension_highlight_set_guess_language(ext, guess_type(UInt32(self.guessEngine.rawValue)))
-            if self.guessEngine == .fast, let f = getResourceBundle().path(forResource: "magic", ofType: "mgc") {
-                cmark_syntax_extension_highlight_set_magic_file(ext, f)
-            }
-            
-            if !self.syntaxFontFamily.isEmpty {
-                cmark_syntax_extension_highlight_set_font_family(ext, self.syntaxFontFamily, Float(self.syntaxFontSize))
-            } else {
-                // cmark_syntax_extension_highlight_set_font_family(ext, "-apple-system, BlinkMacSystemFont, sans-serif", 0.0)
-                // Pass a fake value, so will be used the font defined inside the main css file.
-                cmark_syntax_extension_highlight_set_font_family(ext, "-", 0.0)
-            }
-            
-            cmark_parser_attach_syntax_extension(parser, ext)
-            
-            if let l = log {
+                
+                cmark_syntax_extension_highlight_set_theme_name(ext, theme)
+                cmark_syntax_extension_highlight_set_background_color(ext, background.isEmpty ? nil : background)
+                cmark_syntax_extension_highlight_set_line_number(ext, self.syntaxLineNumbersOption ? 1 : 0)
+                cmark_syntax_extension_highlight_set_tab_spaces(ext, Int32(self.syntaxTabsOption))
+                cmark_syntax_extension_highlight_set_wrap_limit(ext, Int32(self.syntaxWordWrapOption))
+                cmark_syntax_extension_highlight_set_guess_language(ext, guess_type(UInt32(self.guessEngine.rawValue)))
+                if self.guessEngine == .fast, let f = self.resourceBundle.path(forResource: "magic", ofType: "mgc") {
+                    cmark_syntax_extension_highlight_set_magic_file(ext, f)
+                }
+                
+                if !self.syntaxFontFamily.isEmpty {
+                    cmark_syntax_extension_highlight_set_font_family(ext, self.syntaxFontFamily, Float(self.syntaxFontSize))
+                } else {
+                    // cmark_syntax_extension_highlight_set_font_family(ext, "-apple-system, BlinkMacSystemFont, sans-serif", 0.0)
+                    // Pass a fake value, so will be used the font defined inside the main css file.
+                    cmark_syntax_extension_highlight_set_font_family(ext, "-", 0.0)
+                }
+                
+                cmark_parser_attach_syntax_extension(parser, ext)
+                
                 os_log(
                     "Enabled markdown `syntax highlight` extension.\n Theme: %{public}s, background color: %{public}s",
-                    log: l,
+                    log: OSLog.rendering,
                     type: .debug,
-                    theme, background
-                )
+                    theme, background)
+            } else {
+                os_log("Could not enable markdown `syntax highlight` extension!", log: OSLog.rendering, type: .error)
             }
         }
         
@@ -1038,7 +1013,7 @@ table.debug td {
                 html_debug += "off"
             case .fast:
                 html_debug += "fast<br />"
-                html_debug += "magic db: \(getResourceBundle().path(forResource: "magic", ofType: "mgc") ?? "missing")"
+                html_debug += "magic db: \(self.resourceBundle.path(forResource: "magic", ofType: "mgc") ?? "missing")"
             case .accurate:
                 html_debug += "accurate"
             }
@@ -1060,7 +1035,7 @@ table.debug td {
     
     func getBundleContents(forResource: String, ofType: String) -> String?
     {
-        if let p = getResourceBundle().path(forResource: forResource, ofType: ofType), let data = FileManager.default.contents(atPath: p), let s = String(data: data, encoding: .utf8) {
+        if let p = self.resourceBundle.path(forResource: forResource, ofType: ofType), let data = FileManager.default.contents(atPath: p), let s = String(data: data, encoding: .utf8) {
             return s
         } else {
             return nil

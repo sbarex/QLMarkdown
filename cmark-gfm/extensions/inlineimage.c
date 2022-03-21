@@ -21,6 +21,9 @@
 #include <errno.h>
 
 #include "b64.h"
+#include <os/log.h>
+
+#include "c_log.h"
 
 typedef struct {
     char *path;
@@ -93,13 +96,14 @@ char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_con
         goto continue_loop;
     }
     
-    if (access(image_path, F_OK) == 0) {
+    if (access(image_path, F_OK | R_OK) == 0) {
         if (mime_callback != NULL) {
             mime = mime_callback(image_path, mime_context);
         } else {
             mime = get_mime(image_path, 2);
         }
         if (!mime || !startsWith("image/", mime)) {
+            os_log_error(getLogForImageExt(), "%{private}s (%{public}s) is not an image!", image_path, mime);
             fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
             goto continue_loop;
         }
@@ -126,10 +130,12 @@ char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_con
             free(data);
             free(buffer);
         } else {
-            fprintf(stderr, "Error to get magic for file %s: #%d, %s\n", image_path, errno, strerror(errno));
+            os_log_error(getLogForImageExt(), "Error to get magic for file %{private}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+            fprintf(stderr, "Error to get magic for file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
         }
     } else {
-        fprintf(stderr, "Unable to open file %s: #%d, %s\n", image_path, errno, strerror(errno));
+        os_log_error(getLogForImageExt(), "Unable to open file %{private}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+        fprintf(stderr, "Unable to open file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
     }
     
 continue_loop:
