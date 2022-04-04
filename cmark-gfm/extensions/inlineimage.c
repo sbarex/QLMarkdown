@@ -25,10 +25,24 @@
 
 #include "c_log.h"
 
+// #include <curl/curl.h>
+#include <libgen.h>
+#include <ctype.h>
+
+static inline void lowercase(char *s){
+    while (*s) {
+        *s = tolower(*s);
+        ++s;
+    }
+}
+
 typedef struct {
     char *path;
     MimeCheck *magic_callback;
     void *magic_context;
+    DataCallback *data_callback;
+    void *data_context;
+    
     int raw_images;
     ProcessFragment *html_callback;
     void *html_context;
@@ -40,6 +54,9 @@ static inlineimage_settings *init_settings() {
     settings->path = NULL;
     settings->magic_callback = NULL;
     settings->magic_context = NULL;
+    
+    settings->data_callback = NULL;
+    settings->data_context = NULL;
     
     settings->html_callback = NULL;
     settings->html_context = NULL;
@@ -59,6 +76,9 @@ static void release_settings(cmark_mem *mem, void *user_data)
         settings->magic_callback = NULL;
         settings->magic_context = NULL;
         
+        settings->data_callback = NULL;
+        settings->data_context = NULL;
+        
         settings->html_callback = NULL;
         settings->html_context = NULL;
         
@@ -77,7 +97,85 @@ static bool startsWith(const char *pre, const char *str)
     return lenstr < lenpre ? false : memcmp(pre, str, lenpre) == 0;
 }
 
-char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_context) {
+/*
+struct MemoryStruct {
+  char *memory;
+  size_t size;
+};
+ 
+static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
+    size_t realsize = size * nmemb;
+    struct MemoryStruct *mem = (struct MemoryStruct *)userp;
+ 
+    char *ptr = mem->memory != NULL ? realloc(mem->memory, mem->size + realsize + 1) : malloc(mem->size + realsize + 1);
+    if(!ptr) {
+        // out of memory!
+        printf("not enough memory (realloc returned NULL)\n");
+        return 0;
+    }
+ 
+    mem->memory = ptr;
+    memcpy(&(mem->memory[mem->size]), contents, realsize);
+    mem->size += realsize;
+    mem->memory[mem->size] = 0;
+ 
+    return realsize;
+}
+
+char *fetch_remote(const char *url, int *status, size_t *size) {
+    CURL *curl_handle;
+    CURLcode res;
+    
+    struct MemoryStruct chunk;
+     
+    chunk.memory = NULL;  // will be grown as needed by the realloc above
+    chunk.size = 0;    // no data at this point
+     
+    curl_global_init(CURL_GLOBAL_ALL);
+     
+    // init the curl session
+    curl_handle = curl_easy_init();
+     
+    // specify URL to get
+    curl_easy_setopt(curl_handle, CURLOPT_URL, url);
+     
+    // send all data to this function
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
+     
+    // we pass our 'chunk' struct to the callback function
+    curl_easy_setopt(curl_handle, CURLOPT_WRITEDATA, (void *)&chunk);
+     
+    // some servers do not like requests that are made without a user-agent
+         field, so we provide one
+    curl_easy_setopt(curl_handle, CURLOPT_USERAGENT, "libcurl-agent/1.0");
+     
+    // get it!
+    res = curl_easy_perform(curl_handle);
+     
+    // check for errors
+    if (res != CURLE_OK) {
+         fprintf(stderr, "curl_easy_perform() failed: %s\n",
+                curl_easy_strerror(res));
+    } else {
+        // Now, our chunk.memory points to a memory block that is chunk.size
+        // bytes big and contains the remote file.
+        //
+        // Do something nice with it!
+        printf("%lu bytes retrieved\n", (unsigned long)chunk.size);
+    }
+     
+    // cleanup curl stuff
+    curl_easy_cleanup(curl_handle);
+     
+    // we are done with libcurl, so clean it up
+    curl_global_cleanup();
+    *status = res;
+    *size = chunk.size;
+    return chunk.memory;
+}
+*/
+
+char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_context, DataCallback *remote_callback, void *remote_context) {
     char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
     const char *image_path;
     char *mime = NULL;
@@ -92,8 +190,38 @@ char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_con
         // No host, the url is a local file path.
         image_path = (const char *)url;
     } else {
-        // Not a local file.
-        goto continue_loop;
+        if (remote_callback != NULL) {
+            char *buffer = remote_callback(url, remote_context);
+            if (buffer == NULL) {
+                goto continue_loop;
+            }
+            char temp[strlen(path)+1], *fname, *ext;
+            strcpy(temp, path); //todo rewrite own basename to take const char*
+            fname = basename(temp);
+            ext = strchr(fname, '.');
+            if (ext == NULL) {
+                ext = fname;
+            } else {
+                ext++; // skip the dot
+            }
+            lowercase(ext);
+            
+            mime  = get_mime_from_buffer(ext, buffer, 2);
+            
+            char *data = b64_encode((const unsigned char *)buffer, strlen(buffer));
+            size_t encoded_length = strlen(data);
+            
+            encoded = (char *)calloc(strlen(mime) + strlen("data:;base64,") + encoded_length + 1, sizeof(char));
+            sprintf(encoded, "data:%s;base64,%s", mime, data);
+            
+            free(data);
+            free(buffer);
+            
+            goto continue_loop;
+        } else {
+            // Not a local file.
+            goto continue_loop;
+        }
     }
     
     if (access(image_path, F_OK | R_OK) == 0) {
@@ -182,9 +310,15 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         if (node->type == CMARK_NODE_IMAGE) {
             const char *url = (const char *)node->as.link.url.data;
             char *encoded = NULL;
+            
             MimeCheck *mime_callback = cmark_syntax_extension_inlineimage_get_mime_callback(ext);
             void *mime_context = cmark_syntax_extension_inlineimage_get_mime_context(ext);
-            encoded = get_base64_image(url, mime_callback, mime_context);
+            
+            DataCallback *data_callback = cmark_syntax_extension_inlineimage_get_remote_data_callback(ext);
+            void *data_context = cmark_syntax_extension_inlineimage_get_remote_data_context(ext);
+            
+            encoded = get_base64_image(url, mime_callback, mime_context, data_callback, data_context);
+            
             if (encoded != NULL) {
                 cmark_mem *mem = cmark_get_default_mem_allocator();
                 // Replace the original url with the encoded data.
@@ -261,6 +395,35 @@ void cmark_syntax_extension_inlineimage_set_mime_callback(cmark_syntax_extension
     settings->magic_context = context;
 }
 
+
+DataCallback *cmark_syntax_extension_inlineimage_get_remote_data_callback(cmark_syntax_extension *extension)
+{
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (settings) {
+        return settings->data_callback;
+    } else {
+        return NULL;
+    }
+}
+
+void *cmark_syntax_extension_inlineimage_get_remote_data_context(cmark_syntax_extension *extension) {
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (settings) {
+        return settings->data_context;
+    } else {
+        return NULL;
+    }
+}
+
+void cmark_syntax_extension_inlineimage_set_remote_data_callback(cmark_syntax_extension *extension, DataCallback *callback, void *context) {
+    inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
+    if (!settings) {
+        settings = init_settings();
+        cmark_syntax_extension_set_private(extension, settings, release_settings);
+    }
+    settings->data_callback = callback;
+    settings->data_context = context;
+}
 
 ProcessFragment *cmark_syntax_extension_inlineimage_get_unsafe_html_processor_callback(cmark_syntax_extension *extension)
 {

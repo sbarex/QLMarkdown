@@ -30,6 +30,8 @@ typedef enum MIME_MAGICK_CHECK {
  */
 char *get_mime(const char *path, MIME_MAGICK_CHECK check_magic);
 
+char *get_mime_from_buffer(const char *ext, const char *buffer, MIME_MAGICK_CHECK check_magic);
+    
 #ifdef __cplusplus
 }
 #endif

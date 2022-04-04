@@ -83,6 +83,17 @@ static const char *mime_search(const char **mimes,size_t len,const char *buf){
 	return NULL;
 }
 
+static const char *mime_from_magic_buffer(const char *buf) {
+    const char *ret;
+    ret = mime_search(mimes0,LEN(mimes0), buf);
+    if (ret && strlen(ret) > 0) {
+        return ret;
+    }
+    ret = mime_search(mimes4, LEN(mimes4), buf+4);
+    //TODO mimes8 and mimesX + adjust BUFLEN to accomodate
+    return ret;
+}
+
 static const char *mime_from_magic(FILE *fd) {
 	#define BUFLEN 256 //must be larger than max offset + max magic length
 	char buf[BUFLEN];
@@ -147,4 +158,35 @@ char *get_mime(const char *path, MIME_MAGICK_CHECK check_magic) {
     strcat(mime, &ret[1]);
     
 	return mime;
+}
+
+char *get_mime_from_buffer(const char *ext, const char *buffer, MIME_MAGICK_CHECK check_magic) {
+    const char *ret = mime_from_ext(ext);
+    
+    if (check_magic != MAGIC_NOT_CHECKED) {
+        if (ret == NULL || check_magic == MAGIC_CONFRONT) {
+            const char *ret2 = mime_from_magic_buffer(buffer);
+            if (ret && ret2 && memcmp(ret, ret2, 1) != 0) {
+                // different mayor type.
+                ret = NULL;
+            } else if (ret2) {
+                ret = ret2;
+            }
+        }
+    }
+    if (!ret) {
+        return NULL;
+    }
+    
+    const char *major_type = major_types[*ret];
+    int size1 = (int)strlen(major_type);
+    int size2 = (int)strlen(ret);
+    
+    char *mime = calloc(size1 + size2 + 1, sizeof(char));
+    
+    strcpy(mime, major_type);
+    strcat(mime, "/");
+    strcat(mime, &ret[1]);
+    
+    return mime;
 }

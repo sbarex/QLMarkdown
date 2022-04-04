@@ -35,7 +35,8 @@ class MyWebView: WebView {
 }
 
 class PreviewViewController: NSViewController, QLPreviewingController {
-    var webView: MyWKWebView!
+    var webView: MyWKWebView?
+    var legacyWebView: MyWebView?
     
     var handler: ((Error?) -> Void)? = nil
     
@@ -85,8 +86,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
         }
         
-        /*
-        if #available(macOS 11, *) {
+        if settings.useLegacyPreview {
             // On Big Sur there are some bugs with the current WKWebView:
             // - WKWebView crash on launch because ignore the com.apple.security.network.client entitlement (workaround setting the com.apple.security.temporary-exception.mach-lookup.global-name exception for com.apple.nsurlsessiond
             // - WKWebView cannot scroll when QL preview window is in fullscreen.
@@ -96,38 +96,38 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             webView.preferences.isJavaScriptEnabled = false
             webView.preferences.allowsAirPlayForMediaPlayback = false
             webView.preferences.arePlugInsEnabled = false
+            webView.preferences.loadsImagesAutomatically = true
             
             self.view.addSubview(webView)
             
-            webView.mainFrame.loadHTMLString(html, baseURL: nil)
+            self.legacyWebView = webView
             webView.frameLoadDelegate = self
             webView.drawsBackground = false // Best solution is use the same color of the body
         } else {
-        */
             // Create a configuration for the preferences
             let configuration = WKWebViewConfiguration()
             configuration.preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
             configuration.allowsAirPlayForMediaPlayback = false
         
             self.webView = MyWKWebView(frame: previewRect, configuration: configuration)
-            self.webView.autoresizingMask = [.height, .width]
+            self.webView!.autoresizingMask = [.height, .width]
             
-            self.webView.wantsLayer = true
+            self.webView!.wantsLayer = true
             if #available(macOS 11, *) {
-                self.webView.layer?.borderWidth = 0
+                self.webView!.layer?.borderWidth = 0
             } else {
                 // Draw a border around the web view
-                self.webView.layer?.borderColor = NSColor.gridColor.cgColor
-                self.webView.layer?.borderWidth = 1
+                self.webView!.layer?.borderColor = NSColor.gridColor.cgColor
+                self.webView!.layer?.borderWidth = 1
             }
         
-            self.webView.navigationDelegate = self
-            // webView.uiDelegate = self
+            self.webView!.navigationDelegate = self
+            // webView!.uiDelegate = self
 
-            self.view.addSubview(self.webView)
+            self.view.addSubview(self.webView!)
         
             /*
-            self.webView.translatesAutoresizingMaskIntoConstraints = false
+            self.webView!.translatesAutoresizingMaskIntoConstraints = false
             var padding: CGFloat = 2
             if #available(macOS 11, *) {
                 padding = 0
@@ -139,7 +139,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             NSLayoutConstraint(item: self.webView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: padding).isActive = true
             */
             
-       /* } */
+        }
     }
     
     internal func getBundleContents(forResource: String, ofType: String) -> String?
@@ -177,14 +177,12 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             self.handler = handler
             
             let html = try renderMD(url: url)
-            /*
-            if #available(macOS 11, *) {
-                self.webView.mainFrame.loadHTMLString(html, baseURL: nil)
+            if Settings.shared.useLegacyPreview, let webView = self.legacyWebView {
+                webView.mainFrame.loadHTMLString("LEGACY VIEW " + html, baseURL: nil)
             } else {
-            */
-            self.webView.isHidden = true // hide the webview until complete rendering
-            self.webView.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
-            /* } */
+                self.webView?.isHidden = true // hide the webview until complete rendering
+                self.webView?.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
+            }
         } catch {
             handler(error)
         }
@@ -268,7 +266,7 @@ extension PreviewViewController: WKNavigationDelegate {
         // Show the Quick Look preview only after the complete rendering (preventing a flickering glitch).
         // Wait to show the webview to prevent a resize glitch.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.webView.isHidden = false
+            self.webView?.isHidden = false
         }
     }
     
@@ -276,7 +274,7 @@ extension PreviewViewController: WKNavigationDelegate {
         if let handler = self.handler {
             handler(error)
             self.handler = nil
-            self.webView.isHidden = false
+            self.webView?.isHidden = false
         }
     }
     
