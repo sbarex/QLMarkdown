@@ -504,6 +504,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var qlWindowSizePopupButton: NSPopUpButton!
     
     var edited: Bool = false
+    var allow_reload: Bool = true
+    fileprivate var markdown_source: DispatchSourceFileSystemObject?
     var markdown_file: URL? {
         didSet {
             if let file = markdown_file {
@@ -513,6 +515,8 @@ class ViewController: NSViewController {
                 } catch {
                     self.textView.string = "** Error loading file *\(file.path)*! **"
                 }
+                
+                self.startMonitorFile()
             } else {
                 self.textView.string = ""
             }
@@ -526,6 +530,10 @@ class ViewController: NSViewController {
         }
     }
     internal var prev_scroll: Int = -1
+    
+    deinit {
+        self.markdown_source?.cancel()
+    }
     
     @IBAction func doHighlightExtensionChanged(_ sender: NSButton) {
         self.highlightBackground.isEnabled = sender.state == .on
@@ -599,7 +607,7 @@ class ViewController: NSViewController {
         if !yamlExtension {
             yamlPopupButton.title = "YAML header"
         } else {
-            yamlPopupButton.title = "YAML header (\(self.yamlExtensionAll ? "all files" : ".rmd files"))"
+            yamlPopupButton.title = "YAML header (\(self.yamlExtensionAll ? "all files" : ".rmd, .qmd files"))"
         }
     }
     
@@ -641,7 +649,7 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        savePanel.allowedFileTypes = ["md", "rmd"]
+        savePanel.allowedFileTypes = ["md", "rmd", "qmd"]
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = self.markdown_file?.lastPathComponent ?? "markdown.md"
         savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
@@ -673,6 +681,48 @@ class ViewController: NSViewController {
         if prev_scroll > 0 {
             webView.evaluateJavaScript("document.documentElement.scrollTop = \(prev_scroll);")
         }
+    }
+    
+    func startMonitorFile() {
+        self.markdown_source?.cancel()
+        self.markdown_source = nil
+        self.allow_reload = true
+        
+        guard let file = markdown_file else {
+            return
+        }
+        
+        let fileDescriptor = open(FileManager.default.fileSystemRepresentation(withPath: file.path), O_EVTONLY)
+        guard fileDescriptor >= 0 else {
+            return
+        }
+        
+        self.markdown_source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescriptor, eventMask: .all, queue: DispatchQueue.main)
+        self.markdown_source!.setEventHandler { [weak self] in
+            guard let me = self else {
+                return
+            }
+            if me.edited {
+                let alert = NSAlert()
+                alert.alertStyle = .warning
+                alert.messageText = "The source markdown has been changed outside the app, do you want to reload it?"
+                alert.informativeText = "Changes made to the file will be lost. "
+                alert.addButton(withTitle: "Reload")
+                alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+                if alert.runModal() == .alertFirstButtonReturn {
+                    me.reloadMarkdown(me)
+                } else {
+                    me.allow_reload = false
+                    me.markdown_source?.cancel()
+                }
+            } else {
+                self?.reloadMarkdown(me)
+            }
+        }
+        self.markdown_source!.setCancelHandler {
+            close(fileDescriptor)
+        }
+        self.markdown_source!.resume()
     }
     
     @IBAction func exportPreview(_ sender: Any) {
@@ -1301,6 +1351,7 @@ document.addEventListener('scroll', function(e) {
     }
 }
 
+// MARK: - NSMenuItemValidation
 extension ViewController: NSMenuItemValidation {
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
@@ -1316,6 +1367,7 @@ extension ViewController: NSMenuItemValidation {
         return true
     }
 }
+// MARK: - NSFontChanging
 extension ViewController: NSFontChanging {
     /// Handle the selection of a font.
     func changeFont(_ sender: NSFontManager?) {
@@ -1337,7 +1389,7 @@ extension ViewController: NSFontChanging {
     }
 }
 
-
+// MARK: - WKNavigationDelegate
 extension ViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         if prev_scroll > 0 {
@@ -1370,6 +1422,7 @@ extension ViewController: WKNavigationDelegate {
     }
 }
 
+// MARK: - WKScriptMessageHandler
 extension ViewController: WKScriptMessageHandler {
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "scrollHandler", let dict = message.body as? [String : AnyObject], let p = dict["scroll"] as? Int {
@@ -1422,6 +1475,7 @@ extension ViewController: NSMenuDelegate {
     }
 }
 
+// MARK: - DropableTextView
 class DropableTextView: NSTextView {
     @IBOutlet weak var container: ViewController?
     
@@ -1451,7 +1505,7 @@ class DropableTextView: NSTextView {
             return false
         }
         let suffix = URL(fileURLWithPath: path).pathExtension.lowercased()
-        if suffix == "md" || suffix == "markdown" || suffix == "rmd" {
+        if suffix == "md" || suffix == "markdown" || suffix == "rmd" || suffix == "qmd" {
             return true
         } else {
             return false
@@ -1487,6 +1541,7 @@ class DropableTextView: NSTextView {
     }
 }
 
+// MARK: - NSTextDelegate
 extension ViewController: NSTextDelegate {
     func textDidChange(_ notification: Notification) {
         guard let sender = notification.object as? NSTextView, sender == textView else {
