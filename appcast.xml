@@ -2,6 +2,23 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title> 
+        <item>
+            <title>1.0.15</title>
+            <pubDate>lun, 4 apr 2022 23:37:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.15/QLMarkdown.zip" sparkle:shortVersionString="1.0.15" sparkle:version="40" sparkle:edSignature="1SRvlwl3js7vNPgoiJSn5d+Qt476n1uARCq2o65P9z+cz7UpO4f6MsjOGyiPVAhY+R0xSwKiYNFy2fPNLxeFAA==" length="17267050" />
+            <description><![CDATA[
+<h2>1.0.15 (40)</h2>
+<p>New features:</p>
+<ul>
+<li>The markdown file is automatically reloaded when it is edited outside of the app.</li>
+<li>Preliminary support for Quarto files (<code>.qmd</code>).</li>
+</ul>
+
+<p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
         
         <item>
             <title>1.0.14</title>
