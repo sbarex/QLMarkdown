@@ -12,7 +12,7 @@ _This application is not intended to be used as a standalone markdown file edito
 
 > **Please note that this software is provided "as is", without any warranty of any kind.**
 
-The Quick Look extension can also preview rmarkdown (`.rmd`) files (_without_ evaluating `r` code) and  textbundle packages.
+The Quick Look extension can also preview rmarkdown (`.rmd`) files (_without_ evaluating `r` code), Quarto files (`.qmd`) and textbundle packages.
 
 You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases). 
 
@@ -76,10 +76,12 @@ This application handle these UTIs:
 - `com.unknown.md`
 - `net.daringfireball.markdown`
 - `net.ia.markdown`
+- `org.quarto.qmarkdown`
 - `public.markdown`
 - `org.textbundle.package`
 - `dyn.ah62d4rv4ge8043a` (dynamic UTI for unassociated .md files)
 - `dyn.ah62d4rv4ge81e5pe` (dynamic UTI for unassociated .rmd files)
+- `dyn.ah62d4rv4ge81c5pe` (dynamic UTI for unassociated .qmd files)
 
 Please inform me of any other UTI associated to `.md` files.
 
@@ -93,7 +95,7 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - [`Heads anchors`](#heads-anchors): create anchors for the heads.
 - [`Inline local images`](#inline-local-images): embed the image files inside the formatted output (required for the Quick Look preview).
 - [`Syntax highlighting`](#syntax-highlighting): highlight the code inside fenced block.
-- [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` files.
+- [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` or `qmd` files.
 
 
 ## Difference with the GitHub Markdown engine
@@ -235,7 +237,7 @@ If no language is defined and the guessing fail (or is not enabled), the code is
 
 ### YAML header
 
-In the [Advanced options panel](#advanced-options), you can enable the extension to handle a `yaml` header at the beginning of a file. You can choose to enable the extensions to all `.md` files or only for `.rmd` files.
+In the [Advanced options panel](#advanced-options), you can enable the extension to handle a `yaml` header at the beginning of a file. You can choose to enable the extensions to all `.md` files or only for `.rmd` and `.qmd` files.
 
 The header is recognized only if the file start with `---`. The yaml block must be closed with `---` or with `...`.
 
@@ -283,7 +285,7 @@ Extensions:
  --tasklist on|off
  --strikethrough single|double|off
  --syntax-highlight on|off
- --yaml rmd|all|off
+ --yaml rmd|qmd|all|off
 
 Unspecified rendering options will use the settings defined in the main application.
 

@@ -50,7 +50,7 @@ func usage(exitCode: Int = -1) {
     print(" --tasklist on|off")
     print(" --strikethrough single|double|off")
     print(" --syntax-highlight on|off")
-    print(" --yaml rmd|all|off")
+    print(" --yaml rmd|qmd|all|off")
     
     print("\nUnspecified rendering options will use the settings defined in the main application.")
 
@@ -246,7 +246,7 @@ if verbose {
     print("    tasklist: \(settings.taskListExtension ? "on" : "off")")
     print("    strikethrough: \(settings.strikethroughExtension ? (settings.strikethroughDoubleTildeOption ? "double tilde" : "single tilde") : "off")")
     print("    syntax-highlight: \(settings.syntaxHighlightExtension ? "on" : "off")")
-    print("    yaml: \(settings.yamlExtension ? (settings.yamlExtensionAll ? "all" : "only for .rmd") : "off")")
+    print("    yaml: \(settings.yamlExtension ? (settings.yamlExtensionAll ? "for all files" : "only for .rmd and .qmd files") : "off")")
     print("")
 }
 

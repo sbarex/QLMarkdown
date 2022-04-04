@@ -35,9 +35,11 @@
 				<string>net.daringfireball.markdown</string>
 				<string>net.ia.markdown</string>
 				<string>org.textbundle.package</string>
+				<string>org.quarto.qmarkdown</string>
 				<string>public.markdown</string>
 				<string>dyn.ah62d4rv4ge81e5pe</string>
 				<string>dyn.ah62d4rv4ge8043a</string>
+				<string>dyn.ah62d4rv4ge81c5pe</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>

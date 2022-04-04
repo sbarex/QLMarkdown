@@ -80,6 +80,8 @@ class Settings {
     
     @objc var renderAsCode: Bool = false
     
+    var useLegacyPreview: Bool = false
+    
     /// Quick Look window width.
     var qlWindowWidth: Int? = nil
     /// Quick Look window height.
@@ -160,11 +162,15 @@ class Settings {
         if let ext = defaultsDomain["tasklist"] as? Bool {
             taskListExtension = ext
         }
-        if let ext = defaultsDomain["rmd"] as? Bool {
+        if let ext = defaultsDomain["yaml"] as? Bool {
+            yamlExtension = ext
+        } else if let ext = defaultsDomain["rmd"] as? Bool {
             yamlExtension = ext
         }
-        if let v = defaultsDomain["rmd_all"] as? Bool {
-            yamlExtensionAll = v
+        if let ext = defaultsDomain["yaml_all"] as? Bool {
+            yamlExtensionAll = ext
+        } else if let ext = defaultsDomain["rmd_all"] as? Bool {
+            yamlExtensionAll = ext
         }
         
         if let ext = defaultsDomain["strikethrough"] as? Bool {
@@ -282,6 +288,10 @@ class Settings {
             qlWindowHeight = nil
         }
         
+        if let opt = defaultsDomain["legacy-preview"] as? Bool {
+            useLegacyPreview = opt
+        }
+        
         sanitizeEmojiOption()
     }
     
@@ -343,6 +353,8 @@ class Settings {
             
             self.qlWindowWidth = s.qlWindowWidth
             self.qlWindowHeight = s.qlWindowHeight
+            
+            self.useLegacyPreview = false
             
             DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)
         }
@@ -626,7 +638,7 @@ class Settings {
         
         var header = ""
         
-        if self.yamlExtension && (self.yamlExtensionAll || filename.lowercased().hasSuffix("rmd")) && md_text.hasPrefix("---") {
+        if self.yamlExtension && (self.yamlExtensionAll || filename.lowercased().hasSuffix("rmd") || filename.lowercased().hasSuffix("qmd")) && md_text.hasPrefix("---") {
             /*
              (?s): Turn on "dot matches newline" for the remainder of the regular expression. For “single line mode” makes the dot match all characters, including line breaks.
              (?<=---\n): Positive lookbehind. Matches at a position if the pattern inside the lookbehind can be matched ending at that position. Find expression .* where expression `---\n` precedes.
@@ -683,6 +695,20 @@ class Settings {
                     let r = magic_get_mime_by_file(path, magic_file)
                     return r
                 }, nil)
+                /*
+                cmark_syntax_extension_inlineimage_set_remote_data_callback(ext, { (url, context) -> UnsafeMutablePointer<Int8>? in
+                    guard let uu = url, let u = URL(string: String(cString: uu)) else {
+                        return nil
+                    }
+                    do {
+                        let data = try Data(contentsOf: u)
+                    } catch {
+                        os_log("Error fetch data from %{public}@: %{public}@", log: OSLog.rendering, type: .error, String(cString: uu), error.localizedDescription)
+                        return nil
+                    }
+                    return nil
+                }, nil)
+                */
                 
                 os_log("Enabled markdown `local inline image` extension with working path set to `%{public}s.", log: OSLog.rendering, type: .debug, baseDir)
                 
@@ -728,6 +754,17 @@ class Settings {
                                         let r = magic_get_mime_by_file(path, magic_file)
                                         return r
                                     },
+                                    nil,
+                                    /*{ (url, _ )->UnsafeMutablePointer<Int8>? in
+                                        guard let s = url else {
+                                            return nil
+                                        }
+                                        let u = URL(fileURLWithPath: String(cString: s))
+                                        guard let data = try? Data(contentsOf: u) else {
+                                            return nil
+                                        }
+                                        return nil
+                                    }*/ nil,
                                     nil
                                 ) else {
                                     continue
@@ -921,7 +958,7 @@ table.debug td {
         
         html_debug += "<tr><td>YAML extension</td><td>"
         if self.yamlExtension {
-            html_debug += "on "+(self.yamlExtensionAll ? "for all files" : "for .rmd files")
+            html_debug += "on "+(self.yamlExtensionAll ? "for all files" : "only for .rmd and .qmd files")
         } else {
             html_debug += "off"
         }

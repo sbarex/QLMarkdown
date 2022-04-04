@@ -22,8 +22,10 @@ extension Settings {
         defaultsDomain["autolink"] = autoLinkExtension
         defaultsDomain["tagfilter"] = tagFilterExtension
         defaultsDomain["tasklist"] = taskListExtension
-        defaultsDomain["rmd"] = yamlExtension
-        defaultsDomain["rmd_all"] = yamlExtensionAll
+        defaultsDomain.removeValue(forKey: "rmd")
+        defaultsDomain.removeValue(forKey: "rmd_all")
+        defaultsDomain["yaml"] = yamlExtension
+        defaultsDomain["yaml_all"] = yamlExtensionAll
         defaultsDomain["mention"] = mentionExtension
         defaultsDomain["checkbox"] = checkboxExtension
         defaultsDomain["inlineimage"] = inlineImageExtension
@@ -61,6 +63,12 @@ extension Settings {
         
         defaultsDomain["ql-window-width"] = self.qlWindowWidth ?? 0
         defaultsDomain["ql-window-height"] = self.qlWindowHeight ?? 0
+        
+        if self.useLegacyPreview {
+            defaultsDomain["legacy-preview"] = self.useLegacyPreview
+        } else {
+            defaultsDomain.removeValue(forKey: "legacy-preview")
+        }
         
         let file: String
         if let url = customCSS {
