@@ -11,7 +11,7 @@
 <h2>1.0.15 (40)</h2>
 <p>New features:</p>
 <ul>
-<li>The markdown file is automatically reloaded when it is edited outside of the app.</li>
+<li>On the main app, the markdown file is automatically reloaded when it is edited outside.</li>
 <li>Preliminary support for Quarto files (<code>.qmd</code>).</li>
 </ul>
 
