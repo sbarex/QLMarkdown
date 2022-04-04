@@ -1,6 +1,11 @@
 # Changelog
 
 
+### 1.0.15 (40)
+New features:
+- The markdown file is automatically reloaded when it is edited outside of the app.  
+- Preliminary support for Quarto files (`.qmd`).
+
 ### 1.0.14 (39)
 Bugfix:
 - Allows you to use `...` to end the `yaml` header block. 
