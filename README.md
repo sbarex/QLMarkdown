@@ -166,7 +166,7 @@ Some lesser-used options are available in the advanced panel.
 |No soft break|Render `softbreak` elements as spaces.|
 |Validate UTF|Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).|
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|
-|Render source code|Show the plain text file (raw version) instead of the formatted output.|
+|Render source code|Show the plain text file (raw version) instead of the formatted output. Syntax highlighting remains.|
 |Debug info|Insert in the output some debug information.|
 
 |Extension|Description|
