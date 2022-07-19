@@ -53,7 +53,19 @@ You can download the last compiled release (as universal binary) from [this link
 brew install --cask qlmarkdown
 ```
 
-The application has the automatic update function.
+The precompiled app is not notarized or signed, so the first time you run the app the system may show a warning about the impossibility to check for malicious software.
+
+To fix, you can launch the app with right click (or ctrl click) on the app icon and choose the open action.
+
+You can also execute this command from the terminal:
+
+```sh
+$ xattr -r -d com.apple.quarantine "FULL PATH OF THE QLMarkdown.app (you can drag the file to get the pull path)"
+```
+
+Alternatively, after trying to launch the app for the first time, you can open the System Preferences > Security & Privacy > General (tab) and click the Open Anyway button.
+
+This will resolve the error of an unsigned application when launching the app.
 
 To use the Quick Look preview you must launch the application at least once. In this way the Quick Look extension will be discovered by the system. 
 After the first execution, the Quick Look extension will be available (and enabled) among those present in the System preferences/Extensions.
