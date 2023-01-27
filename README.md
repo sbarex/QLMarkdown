@@ -262,7 +262,11 @@ A `qlmarkdown_cli` command line interface (CLI) is available to perform batch co
 
 The tool is located inside the `QLMarkdown.app/Contents/Resources` folder (and should not be moved outside). 
 
-From the Application menu you can create a symbolic link into `/usr/local/bin` folder.
+You can create a symbolic link into your `$PATH` to use the tool from any folder. Open Terminal.app and type:
+
+```sh
+ln -s /Applications/QLMarkdown.app/Contents/Resources/qlmarkdown_cli /usr/local/bin/qlmarkdown_cli
+```
 
 ```
 Usage: qlmarkdown_cli [-o <file|dir>] <file> [..]
