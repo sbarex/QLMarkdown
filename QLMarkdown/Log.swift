@@ -2,7 +2,7 @@
 //  Log.swift
 //  QLMarkdown
 //
-//  Created by Simone Baldissini on 21/03/22.
+//  Created by Sbarex on 21/03/22.
 //
 
 import Foundation

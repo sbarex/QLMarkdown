@@ -14,7 +14,7 @@
 		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
 		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
-		831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		831A8C56258ABD6200E36182 /* autolink.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E802581883A004664D3 /* autolink.c */; };
 		831A8C59258ABD6800E36182 /* core-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E892581883B004664D3 /* core-extensions.c */; };
 		831A8C5C258ABD6F00E36182 /* ext_scanners.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598E852581883B004664D3 /* ext_scanners.c */; };
@@ -303,15 +303,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		831A8C4C258ABADA00E36182 /* Embed App Extensions */ = {
+		831A8C4C258ABADA00E36182 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed App Extensions */,
+				831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8343796F271D47DF00A5D6EA /* CopyFiles */ = {
@@ -990,7 +990,7 @@
 				83598E5D25818808004664D3 /* Sources */,
 				83598E5E25818808004664D3 /* Frameworks */,
 				83598E5F25818808004664D3 /* Resources */,
-				831A8C4C258ABADA00E36182 /* Embed App Extensions */,
+				831A8C4C258ABADA00E36182 /* Embed Foundation Extensions */,
 				83E7FF07258FCCF9003ECF9B /* Embed Libraries */,
 				83F8816F2597EE45008C5071 /* Embed XPC Services */,
 			);
@@ -1040,7 +1040,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1300;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					831A8C3E258ABADA00E36182 = {
 						CreatedOnToolsVersion = 12.3;
@@ -1454,6 +1454,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 40;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1491,6 +1492,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 40;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				HEADER_SEARCH_PATHS = (
@@ -1526,6 +1528,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = qlmarkdown_cli/qlmarkdown_cli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1555,6 +1558,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = qlmarkdown_cli/qlmarkdown_cli.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1612,6 +1616,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1673,6 +1678,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1705,6 +1711,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 40;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1748,6 +1755,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 40;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1783,6 +1791,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUGGING_SYMBOLS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -1798,6 +1807,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -1810,6 +1820,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUGGING_SYMBOLS = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -1825,6 +1836,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
@@ -1839,6 +1851,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "external-launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1865,6 +1878,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "external-launcher/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

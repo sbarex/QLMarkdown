@@ -37,6 +37,7 @@ func usage(exitCode: Int = -1) {
     print(" --smart-quotes on|off")
     print(" --validate-utf8 on|off")
     print(" --code on|off")
+    print(" --appearance light|dark.")
     print(" --debug on|off")
     
     print("\nExtensions:")
@@ -67,6 +68,7 @@ var dest: URL?
 var verbose = false
 
 let settings = Settings.shared
+var type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
 
 func parseArgOnOff(index i: Int) -> Bool {
     guard i+1 < CommandLine.arguments.count else {
@@ -162,6 +164,9 @@ while i < Int(CommandLine.argc) {
             case "--code":
                 settings.renderAsCode = parseArgOnOff(index: i)
                 i += 1
+            case "--appearance":
+                let opt = CommandLine.arguments[i+1]
+                type = opt.lowercased() == "light" ? "Lifht" : "Dark"
             default:
                 print("\(cliUrl.lastPathComponent): illegal option -\(arg)\n", to: &standardError)
                 usage(exitCode: 1)
@@ -225,6 +230,8 @@ while i < Int(CommandLine.argc) {
 verbose = verbose && dest != nil
 if verbose {
     print("\n\(cliUrl.lastPathComponent)")
+    print("    appearance: \(type)")
+    
     print("\n- options:")
     print("    footnotes: \(settings.footnotesOption ? "on" : "off")")
     print("    hard-break: \(settings.hardBreakOption ? "on" : "off")")
@@ -276,8 +283,6 @@ defer {
 }
 
 Settings.appBundleUrl = appBundleUrl
-
-let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
 
 if files.isEmpty {
     usage(exitCode: 1)

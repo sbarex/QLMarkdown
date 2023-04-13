@@ -6,18 +6,22 @@ New features:
 - The markdown file is automatically reloaded when it is edited outside of the app.  
 - Preliminary support for Quarto files (`.qmd`).
 
+
 ### 1.0.14 (39)
 Bugfix:
 - Allows you to use `...` to end the `yaml` header block. 
+
 
 ### 1.0.13 (38)
 Bugfix:
 - Fixed the Sparkle integration bug. **If you have installed version 1.0.11 or 1.0.12 you may need to [re-download the updated app from the web](https://github.com/sbarex/QLMarkdown/releases/download/1.0.13/QLMarkdown.zip).** 
 
+
 ### 1.0.12 (37)
 Bugfix:
 - Better procedure to install the command line tool.
 - Fixed the bug that prevented the processing of html raw images when they are not inserted in a html block element. 
+
 
 ### 1.0.11 (36)
 New features:
@@ -30,6 +34,7 @@ Bugfix:
 - Implemented missing behavior for the color scheme editor.
 - Fix for installation of the command line tool.
 
+
 ### 1.0.10 (35)
 New features:
 - Better performance for heads extension.
@@ -40,6 +45,7 @@ New features:
 Bugfix:
 - Fixed settings save.
 
+
 ### 1.0.9 (34)
 New features:
 - Experimental support for defining the size of the Quick Look window.
@@ -48,14 +54,17 @@ New features:
 Bugfix:
 - Fixed cross compile compilation of `file` library.
 
+
 ### 1.0.8 (33)
 Bugfix:
 - Fixed bug for undefined source code theme.
 - Fixed bug on settings sync delay in the Quick Look preview on macOS Monterey.
 
+
 ### 1.0.7 (32)
 New features:
 - Support for render the markdown source code instead of the formatted output.
+
 
 ### 1.0.6 (31)
 New features:
@@ -65,12 +74,14 @@ New features:
 Bugfix:
 - Fixed possibile deallocation error with invalid highlight theme.
 
+
 ### 1.0.5 (30)
 Bugfix:
 - Tag Filter extension fixed.
 - Improved performance for inline image handling in raw HTML fragment.
 - Better recognition of javascript fenced block.
 - Missing library credits on about dialog.
+
 
 ### 1.0.4 (29)
 New features:
@@ -84,60 +95,74 @@ Bugfix:
 - On macOS 12 Monterey now you can scroll the preview with the scrollbars.
 - On macOS 12 Monterey the bug of trackpad scrolling in fullscreen preview has been fixed.
 
+
 ### 1.0.3 (28)
 New features:
 - Command line interface (CLI) tool.
+
 
 ### 1.0.2 (27)
 Bugfix:
 - Fenced code block highlighted even when rmd syntax is used (language name inside a curly brace).
   
+
 ### 1.0.1 (26)
 New features:
 - With `YAML` and `table` extensions enabled, the `yaml` file header is displayed as a table.  
+
 
 ### 1.0b25
 New features:
 - Extended the support for the `yaml` header of  `.rmd` to all `.md` files. The `rmd extension` was renamed to `YAML header`. 
 
+
 ### 1.0b24
 New features:
 - Support for `.rmd` file. The `.rmd` files are handled like normal `.md` files _without parsing the `r` code_. With the `rmd extension` enabled (default enabled, on advanced settings) the file header is rendered as a `yaml` block. 
+
 
 ### 1.0b23
 New features:
 - Support for UTI `com.unknown.md`.
 
+
 ### 1.0b22
 Bugfix:
 - Fixed a glitch when showing the preview (the webview is initially shown smaller than the QL window).
+
 
 ### 1.0b21
 New features:
 - Settings to handle autoupdate.
 
+
 ### 1.0b20
 Bugfix:
 - fix for anchors of head with emoji characters.
+
 
 ### 1.0b19
 Bugfix:
 - Responsive image height fix.
 - Correct parsing of image filename with spaces inside a `<img>` tag. Please note that spaces are not supported within the filenames of images defined with markdown syntax. Spaces are unsafe to use inside an URL, must be replaced with `%20`.
 
+
 ### 1.0b18
 Bugfix:
 - Fixed base64 image encoding. 
 
+
 ### 1.0b17
 Bugfix:
 - Better mime recognition for inline images.
+
 
 ### 1.0b16
 Bugfix:
 - Fix on heads extension.
 - Fix on emoji extension.
 - Fix for exporting a source color scheme as a CSS style.
+
 
 ### 1.0b15
 New features:
@@ -146,10 +171,12 @@ New features:
 Bugfix:
 - Fix emoji parser.
 
+
 ### 1.0b14
 New features:
 - Better emoji handler.
 - UI improvement. Some less used commands on the theme dropdown popup are available pressing the alt key.
+
 
 ### 1.0b13
 New features:
@@ -159,6 +186,7 @@ New features:
 
 Bugfix:
 - Fix error on image mime detection.
+
 
 ### 1.0b12
 1.0b12
@@ -173,9 +201,11 @@ Bugfix:
 - Fix on exporting default style.
 - Css theme fix.
 
+
 ### 1.0b11
 Bugfix:
 - Fixed open external link to the default browser on Big Sur (via an external XPC service).
+
 
 ### 1.0b10
 New features:
@@ -185,14 +215,17 @@ Bugfix:
 - Incomplete saving settings.
 - UI fix.
 
+
 ### 1.0.b9
 New features:
 - Updated the default CSS style (thanks to [hazarek](https://github.com/hazarek)). 
 - For Syntax highlighting, option to choose the document style or a specific language style.
 
+
 ### 1.0.b8
 Bugfix:
 - Fixed standard cmark tasklist extension not inserting class style in HTML output.
+
 
 ### 1.0.b7
 New features:
@@ -208,6 +241,7 @@ Bugfix:
 - Null pointer bug on inlineimage extension.
 - Fix on the image mime detection.
 
+
 ### 1.0.b6
 New Features:
 - better ui.
@@ -216,12 +250,14 @@ Bug fix:
 - Fix missing close menu item.
 - Fix bug with "base16" syntax highlighting colors scheme.
 
+
 ### 1.0.b5
 New features:
 - Experimental option to choose to open links inside the Quick Look preview window or in the default browser (but on Big Sur do not works).
 
 Bugfix:
 - Fix missing sparkle framework.
+
 
 ### 1.0.b4
 New features:
@@ -232,10 +268,12 @@ New features:
 Bug fix:
 - fix missing WKWebView class on Catalina
 
+
 ### 1.0.b3
 Bugfix:
 - Save menu item fixed.
 - libmagic linked statically.
+
 
 ### 1.0.b2
 New features:
@@ -243,6 +281,7 @@ New features:
 - Syntax Highlighting extension now use [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) linked as a library, and with more customizable options.
 - GUI updated to use the changed extensions.
 - Many others changes.
+
 
 ### 1.0.b1
 First release.

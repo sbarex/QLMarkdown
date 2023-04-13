@@ -1,34 +1,32 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Sparkle",
-        "repositoryURL": "https://github.com/sparkle-project/Sparkle",
-        "state": {
-          "branch": null,
-          "revision": "85d3fa2e0e2b7871866eb1a92231847cff4162fd",
-          "version": "2.0.0"
-        }
-      },
-      {
-        "package": "SwiftSoup",
-        "repositoryURL": "https://github.com/scinfu/SwiftSoup",
-        "state": {
-          "branch": null,
-          "revision": "3fa09f4d79e5172b14cb50e02f1d5f115a2bbaef",
-          "version": "2.3.4"
-        }
-      },
-      {
-        "package": "Yams",
-        "repositoryURL": "https://github.com/jpsim/Yams.git",
-        "state": {
-          "branch": null,
-          "revision": "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
-          "version": "4.0.6"
-        }
+  "pins" : [
+    {
+      "identity" : "sparkle",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sparkle-project/Sparkle",
+      "state" : {
+        "revision" : "85d3fa2e0e2b7871866eb1a92231847cff4162fd",
+        "version" : "2.0.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup",
+      "state" : {
+        "revision" : "f707b8680cddb96dc1855632340a572ef37bbb98",
+        "version" : "2.5.3"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams.git",
+      "state" : {
+        "revision" : "9ff1cc9327586db4e0c8f46f064b6a82ec1566fa",
+        "version" : "4.0.6"
+      }
+    }
+  ],
+  "version" : 2
 }

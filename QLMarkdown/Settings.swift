@@ -23,7 +23,7 @@ enum Appearance: Int {
 }
 
 @objc enum GuessEngine: Int {
-    case none
+    case none = 0
     case fast
     case accurate
 }
@@ -32,7 +32,57 @@ extension NSNotification.Name {
     public static let QLMarkdownSettingsUpdated: NSNotification.Name = NSNotification.Name("org.sbarex.qlmarkdown-settings-changed")
 }
 
-class Settings {
+class Settings: Codable {
+    enum CodingKeys: String, CodingKey {
+        case autoLinkExtension
+        case checkboxExtension
+        case emojiExtension
+        case emojiImageOption
+        case headsExtension
+        case inlineImageExtension
+        case mentionExtension
+        case strikethroughExtension
+        case strikethroughDoubleTildeOption
+        
+        case syntaxHighlightExtension
+        case syntaxThemeLight
+        case syntaxBackgroundColorLight
+        case syntaxThemeDark
+        case syntaxBackgroundColorDark
+        case syntaxWordWrapOption
+        case syntaxLineNumbersOption
+        case syntaxTabsOption
+        case syntaxFontFamily
+        case syntaxFontSize
+        case guessEngine
+        
+        case tableExtension
+        case tagFilterExtension
+        case taskListExtension
+        case yamlExtension
+        case yamlExtensionAll
+        
+        case footnotesOption
+        case hardBreakOption
+        case noSoftBreakOption
+        case unsafeHTMLOption
+        case smartQuotesOption
+        case validateUTFOption
+        
+        case customCSS
+        case customCSSOverride
+        case openInlineLink
+        
+        case renderAsCode
+        
+        case useLegacyPreview
+        
+        case qlWindowWidth
+        case qlWindowHeight
+        
+        case debug
+    }
+
     static let Domain: String = "org.sbarex.qlmarkdown"
     
     static let shared = Settings()
@@ -76,6 +126,7 @@ class Settings {
     
     @objc var customCSS: URL?
     @objc var customCSSOverride: Bool = false
+    
     @objc var openInlineLink: Bool = false
     
     @objc var renderAsCode: Bool = false
@@ -121,8 +172,112 @@ class Settings {
             self.initFromDefaults()
         }
     }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.autoLinkExtension = try container.decode(Bool.self, forKey:.autoLinkExtension)
+        self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
+        self.emojiExtension = try container.decode(Bool.self, forKey:.emojiExtension)
+        self.emojiImageOption = try container.decode(Bool.self, forKey:.emojiImageOption)
+        self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
+        self.inlineImageExtension = try container.decode(Bool.self, forKey:.inlineImageExtension)
+        self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
+        self.strikethroughExtension = try container.decode(Bool.self, forKey:.strikethroughExtension)
+        self.strikethroughDoubleTildeOption = try container.decode(Bool.self, forKey:.strikethroughDoubleTildeOption)
+    
+        self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
+        self.syntaxThemeLight = try container.decode(String.self, forKey: .syntaxThemeLight)
+        self.syntaxBackgroundColorLight = try container.decode(String.self, forKey: .syntaxBackgroundColorLight)
+        self.syntaxThemeDark = try container.decode(String.self, forKey: .syntaxThemeDark)
+        self.syntaxBackgroundColorDark = try container.decode(String.self, forKey: .syntaxBackgroundColorDark)
+        self.syntaxWordWrapOption = try container.decode(Int.self, forKey: .syntaxWordWrapOption)
+        self.syntaxLineNumbersOption = try container.decode(Bool.self, forKey: .syntaxLineNumbersOption)
+        self.syntaxTabsOption = try container.decode(Int.self, forKey: .syntaxTabsOption)
+        self.syntaxFontFamily = try container.decode(String.self, forKey: .syntaxFontFamily)
+        self.syntaxFontSize = try container.decode(CGFloat.self, forKey: .syntaxFontSize)
+        self.guessEngine = GuessEngine(rawValue: try container.decode(Int.self, forKey: .guessEngine)) ?? .none
+    
+        self.tableExtension = try container.decode(Bool.self, forKey: .tableExtension)
+        self.tagFilterExtension = try container.decode(Bool.self, forKey: .tagFilterExtension)
+        self.taskListExtension = try container.decode(Bool.self, forKey: .taskListExtension)
+        self.yamlExtension = try container.decode(Bool.self, forKey: .yamlExtension)
+        self.yamlExtensionAll = try container.decode(Bool.self, forKey: .yamlExtensionAll)
+    
+        self.footnotesOption = try container.decode(Bool.self, forKey: .footnotesOption)
+        self.hardBreakOption = try container.decode(Bool.self, forKey: .hardBreakOption)
+        self.noSoftBreakOption = try container.decode(Bool.self, forKey: .noSoftBreakOption)
+        self.unsafeHTMLOption = try container.decode(Bool.self, forKey: .unsafeHTMLOption)
+        self.smartQuotesOption = try container.decode(Bool.self, forKey: .smartQuotesOption)
+        self.validateUTFOption = try container.decode(Bool.self, forKey: .validateUTFOption)
+    
+        self.customCSS = try container.decode(URL?.self, forKey: .customCSS)
+        self.customCSSOverride = try container.decode(Bool.self, forKey: .customCSSOverride)
+        self.openInlineLink = try container.decode(Bool.self, forKey: .openInlineLink)
+    
+        self.renderAsCode = try container.decode(Bool.self, forKey: .renderAsCode)
+    
+        self.useLegacyPreview = try container.decode(Bool.self, forKey: .useLegacyPreview)
+    
+        self.qlWindowWidth = try container.decode(Int?.self, forKey: .qlWindowWidth)
+        self.qlWindowHeight = try container.decode(Int?.self, forKey: .qlWindowHeight)
+    
+        self.debug = try container.decode(Bool.self, forKey: .debug)
+    }
+    
+    init(defaults defaultsDomain: [String: Any]) {
+        self.update(from: defaultsDomain)
+    }
+
     deinit {
         stopMonitorChange()
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.autoLinkExtension, forKey: .autoLinkExtension)
+        try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
+        try container.encode(self.emojiExtension, forKey: .emojiExtension)
+        try container.encode(self.emojiImageOption, forKey: .emojiImageOption)
+        try container.encode(self.headsExtension, forKey: .headsExtension)
+        try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
+        try container.encode(self.mentionExtension, forKey: .mentionExtension)
+        try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
+        try container.encode(self.strikethroughDoubleTildeOption, forKey: .strikethroughDoubleTildeOption)
+    
+        try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
+        try container.encode(self.syntaxThemeLight, forKey: .syntaxThemeLight)
+        try container.encode(self.syntaxBackgroundColorLight, forKey: .syntaxBackgroundColorLight)
+        try container.encode(self.syntaxThemeDark, forKey: .syntaxThemeDark)
+        try container.encode(self.syntaxBackgroundColorDark, forKey: .syntaxBackgroundColorDark)
+        try container.encode(self.syntaxWordWrapOption, forKey: .syntaxWordWrapOption)
+        try container.encode(self.syntaxLineNumbersOption, forKey: .syntaxLineNumbersOption)
+        try container.encode(self.syntaxTabsOption, forKey: .syntaxTabsOption)
+        try container.encode(self.syntaxFontFamily, forKey: .syntaxFontFamily)
+        try container.encode(self.syntaxFontSize, forKey: .syntaxFontSize)
+        try container.encode(self.guessEngine.rawValue, forKey: .guessEngine)
+    
+        try container.encode(self.tableExtension, forKey: .tableExtension)
+        try container.encode(self.tagFilterExtension, forKey: .tagFilterExtension)
+        try container.encode(self.taskListExtension, forKey: .taskListExtension)
+        try container.encode(self.yamlExtension, forKey: .yamlExtension)
+        try container.encode(self.yamlExtensionAll, forKey: .yamlExtensionAll)
+    
+        try container.encode(self.footnotesOption, forKey: .footnotesOption)
+        try container.encode(self.hardBreakOption, forKey: .hardBreakOption)
+        try container.encode(self.noSoftBreakOption, forKey: .noSoftBreakOption)
+        try container.encode(self.unsafeHTMLOption, forKey: .unsafeHTMLOption)
+        try container.encode(self.smartQuotesOption, forKey: .smartQuotesOption)
+        try container.encode(self.validateUTFOption, forKey: .validateUTFOption)
+    
+        try container.encode(self.customCSS, forKey: .customCSS)
+        try container.encode(self.customCSSOverride, forKey: .customCSSOverride)
+        try container.encode(self.openInlineLink, forKey: .openInlineLink)
+        try container.encode(self.renderAsCode, forKey: .renderAsCode)
+        
+        try container.encode(self.useLegacyPreview, forKey: .useLegacyPreview)
+        try container.encode(self.qlWindowWidth, forKey: .qlWindowWidth)
+        try container.encode(self.qlWindowHeight, forKey: .qlWindowHeight)
+        try container.encode(self.debug, forKey: .debug)
     }
     
     fileprivate var isMonitoring = false
@@ -150,6 +305,11 @@ class Settings {
         // Remember that macOS store the precerences inside a cache. If you manual edit the preferences file you need to reset this cache:
         // $ killall -u $USER cfprefsd
         let defaultsDomain = defaults.persistentDomain(forName: Settings.Domain) ?? [:]
+        
+        self.update(from: defaultsDomain)
+    }
+    
+    func update(from defaultsDomain: [String: Any]) {
         if let ext = defaultsDomain["table"] as? Bool {
             tableExtension = ext
         }
@@ -291,7 +451,7 @@ class Settings {
         if let opt = defaultsDomain["legacy-preview"] as? Bool {
             useLegacyPreview = opt
         }
-        
+
         sanitizeEmojiOption()
     }
     
@@ -368,7 +528,7 @@ class Settings {
     }
     
     func getCustomCSSCode() -> String? {
-        guard let url = self.customCSS else {
+        guard let url = self.customCSS, url.lastPathComponent != "-" else {
             return nil
         }
         return try? String(contentsOf: url)

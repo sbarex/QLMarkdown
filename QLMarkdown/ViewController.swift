@@ -322,10 +322,16 @@ class ViewController: NSViewController {
     
     func initStylesPopup(resetStyles: Bool = false) {
         stylesPopup.removeAllItems()
+        // Standard CSS
         stylesPopup.addItem(withTitle: "GitHub ( Default )")
         stylesPopup.lastItem?.tag = -100
+        
+        // stylesPopup.addItem(withTitle: "None")
+        // stylesPopup.lastItem?.tag = -101
+        
         stylesPopup.menu?.addItem(NSMenuItem.separator())
         
+        // Actions
         stylesPopup.addItem(withTitle: "Open Application support themes folder")
         stylesPopup.lastItem?.tag = -4
         
@@ -334,20 +340,20 @@ class ViewController: NSViewController {
         stylesPopup.lastItem?.isAlternate = true
         stylesPopup.lastItem?.keyEquivalentModifierMask = [.option]
         
-        stylesPopup.addItem(withTitle: "Refresh themes list")
+        stylesPopup.addItem(withTitle: "Refresh")
         stylesPopup.lastItem?.tag = -5
         
         stylesPopup.menu?.addItem(NSMenuItem.separator())
         
         stylesPopup.addItem(withTitle: "Import…")
         stylesPopup.lastItem?.tag = -2
-        stylesPopup.lastItem?.toolTip = "Import a CSS file in the standard themes folder."
+        stylesPopup.lastItem?.toolTip = "Import a CSS file into the standard themes folder."
         
         stylesPopup.addItem(withTitle: "Browse…")
         stylesPopup.lastItem?.tag = -1
         stylesPopup.lastItem?.isAlternate = true
         stylesPopup.lastItem?.keyEquivalentModifierMask = [.option]
-        stylesPopup.lastItem?.toolTip = "Use a custom CSS file without importing in the standard themes folder."
+        stylesPopup.lastItem?.toolTip = "Use a custom CSS file without importing into the standard themes folder."
 
         let settings = Settings.shared
         let custom_styles = settings.getAvailableStyles(resetCache: resetStyles)
@@ -392,6 +398,10 @@ class ViewController: NSViewController {
     
     func updateCustomCSSPopup() {
         if let style = customCSSFile {
+            guard style.lastPathComponent != "-" else {
+                self.stylesPopup.selectItem(withTag: -101)
+                return
+            }
             let base = Settings.stylesFolder
             if let index = stylesPopup.itemArray.firstIndex(where: {
                 guard !$0.isSeparatorItem && $0.tag >= 0 else {
@@ -953,6 +963,10 @@ document.addEventListener('scroll', function(e) {
         case -6: // Reveal
             updateCustomCSSPopup()
             
+            guard customCSSFile == nil || customCSSFile!.lastPathComponent != "-" else {
+                return
+            }
+            
             if customCSSFile == nil {
                 // Download default theme.
                 let savePanel = NSSavePanel()
@@ -985,6 +999,9 @@ document.addEventListener('scroll', function(e) {
         case -100:
             // Default theme.
             customCSSFile = nil
+        case -101:
+            // None
+            customCSSFile = URL(fileURLWithPath: "-")
             
         default:
             if let item = sender.selectedItem, item.tag >= 0 {

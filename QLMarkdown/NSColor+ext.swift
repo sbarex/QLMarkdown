@@ -9,7 +9,7 @@ import Cocoa
 
 extension NSColor {
     convenience init?(css: String?) {
-        guard let css = css else {
+        guard let css = css, !css.isEmpty else {
             return nil
         }
         var color = css.hasPrefix("#") ? String(css.dropFirst()) : css

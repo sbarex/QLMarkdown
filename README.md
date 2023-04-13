@@ -65,7 +65,7 @@ Finally, the problems may depend on how the `.md` files were registered on the s
 
 In the terminal try the following command:
 
-```
+```shell
 mdls -name kMDItemContentType PATH_OF_AN_EXISTS_MD_FILE
 ```
 
@@ -301,6 +301,8 @@ Any relative paths inside raw HTML fragments are not updated according to the de
 
 When you clone this repository, remember to fetch also the submodule with `git submodule update --init`.
 
+Some libraries (`Sparkle`, `Yams` and `SwiftSoup`) are handled by the Swift Package Manager. In case of problems it might be useful to reset the cache with the command from the menu `File/Packages/Reset Package Caches`.
+
 
 ### Dependency
 
@@ -313,6 +315,12 @@ The wrapper has statically linked the following libraries:
 - [`PCRE2`](https://github.com/PhilipHazel/pcre2) and [`JPCRE2`](https://github.com/jpcre2/jpcre2) used by the heads extension.
 
 These libraries are automatically compiled by Xcode.
+
+`libpcre` require the `autoconf` utility to be build. You can install it with [`homebrew`](https://brew.sh/):
+
+```sh
+brew install autoconf
+``` 
 
 Because `Enry` is developed in `go`, to build the wrapper library you must have the `go` compiler installed (you can use `brew install go`). 
 
