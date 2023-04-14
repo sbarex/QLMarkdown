@@ -7,6 +7,3 @@
 [submodule "pcre2"]
 	path = dependencies/pcre2
 	url = https://github.com/PhilipHazel/pcre2
-[submodule "cmark-gfm"]
-	path = cmark-gfm
-	url = https://github.com/github/cmark-gfm
