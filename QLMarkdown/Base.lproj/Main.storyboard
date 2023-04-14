@@ -1873,12 +1873,12 @@
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
                                 <rect key="frame" x="0.0" y="34" width="1065" height="545"/>
                                 <subviews>
-                                    <customView misplaced="YES" id="GDJ-WJ-HAB">
+                                    <customView id="GDJ-WJ-HAB">
                                         <rect key="frame" x="0.0" y="0.0" width="532" height="545"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="189" width="532" height="545"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="532" height="545"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
                                                     <rect key="frame" x="0.0" y="0.0" width="532" height="545"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1915,12 +1915,13 @@
                                             <constraint firstItem="n1h-Pp-I4v" firstAttribute="top" secondItem="GDJ-WJ-HAB" secondAttribute="top" id="g9B-14-enk"/>
                                         </constraints>
                                     </customView>
-                                    <customView misplaced="YES" id="sp3-sm-w1y">
+                                    <customView id="sp3-sm-w1y">
                                         <rect key="frame" x="542" y="0.0" width="523" height="545"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="189" width="523" height="545"/>
+                                            <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
+                                                <rect key="frame" x="0.0" y="0.0" width="523" height="545"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                                     <wkPreferences key="preferences"/>
@@ -1930,18 +1931,12 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="254" y="454" width="16" height="16"/>
+                                                <rect key="frame" x="254" y="265" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="bs7-Op-UnU" firstAttribute="leading" secondItem="sp3-sm-w1y" secondAttribute="leading" id="00w-Af-l9l"/>
-                                            <constraint firstAttribute="bottom" secondItem="bs7-Op-UnU" secondAttribute="bottom" id="7VR-lL-D6n"/>
                                             <constraint firstItem="uLU-em-oOP" firstAttribute="centerX" secondItem="sp3-sm-w1y" secondAttribute="centerX" id="D88-Oj-fMn"/>
-                                            <constraint firstItem="bs7-Op-UnU" firstAttribute="top" secondItem="sp3-sm-w1y" secondAttribute="top" id="K2p-sG-8oq"/>
-                                            <constraint firstAttribute="trailing" secondItem="bs7-Op-UnU" secondAttribute="trailing" id="Upr-no-oMe"/>
                                             <constraint firstItem="uLU-em-oOP" firstAttribute="centerY" secondItem="sp3-sm-w1y" secondAttribute="centerY" id="ZUf-qH-WiJ"/>
-                                            <constraint firstItem="uLU-em-oOP" firstAttribute="centerX" secondItem="bs7-Op-UnU" secondAttribute="centerX" id="hF1-ub-uCn"/>
-                                            <constraint firstItem="uLU-em-oOP" firstAttribute="centerY" secondItem="bs7-Op-UnU" secondAttribute="centerY" id="myr-SK-ZyY"/>
                                         </constraints>
                                     </customView>
                                 </subviews>

@@ -1,6 +1,6 @@
 #include "mention.h"
-#include <parser.h>
-#include <render.h>
+#include "../../cmark-gfm/src/parser.h"
+#include "../../cmark-gfm/src/render.h"
 
 cmark_node_type CMARK_NODE_MENTION;
 

@@ -1,6 +1,14 @@
 # Changelog
 
 
+### 1.0.16 (41)
+New features:
+- cmark-gfm updated to version 0.29.0.gfm.11.
+  
+Bugfix:
+- Alt attribute for emoji rendered as image.
+ 
+
 ### 1.0.15 (40)
 New features:
 - The markdown file is automatically reloaded when it is edited outside of the app.  

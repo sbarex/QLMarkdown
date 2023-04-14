@@ -5,6 +5,9 @@ xcuserdata/
 jpcre2.xcodeproj/xcuserdata/
 pcre2.xcodeproj/xcuserdata/*
 
+cmark-gfm/cmark-arm64/
+cmark-gfm/cmark-x86_64/
+
 highlight-wrapper/GoUtils/.idea/
 
 /*/.idea/

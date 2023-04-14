@@ -26,11 +26,11 @@ CFLAGS=-Wall -std=c++11 -D_FILE_OFFSET_BITS=64 \
        -I ${BUILD_DIR}
 LDFLAGS=-L${BUILD_DIR}
 
-CFLAGS_x86_64=-target x86_64-apple-macos10.15
-CFLAGS_arm64=-target arm64-apple-macos11
+CFLAGS_x86_64=-target x86_64-apple-macos10.15 -mmacosx-version-min=10.15
+CFLAGS_arm64=-target arm64-apple-macos11 -mmacosx-version-min=11
 
-LDFLAGS_x86_64=-target x86_64-apple-macos10.15
-LDFLAGS_arm64=-target arm64-apple-macos11
+LDFLAGS_x86_64=-target x86_64-apple-macos10.15 -mmacosx-version-min=10.15
+LDFLAGS_arm64=-target arm64-apple-macos11 -mmacosx-version-min=11
 
 ifeq ($(CONFIGURATION),Debug)
 	CFLAGS_x86_64+= -g
@@ -312,7 +312,7 @@ clean_highlight-wrapper:
 ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a ${BUILD_DIR}/libmagic.a ${BUILD_DIR}/libgoutils.a wrapper_highlight.cpp
 	@echo "${bold}Compiling highlight wrapper for x86_64 platform...${normal}"
 	@echo "current dir: ${CURRENT_DIR}"
-	${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
+	MACOSX_DEPLOYMENT_TARGET=10.15 ${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
 -static \
 -c wrapper_highlight.cpp -o ${BUILD_DIR}/wrapper_highlight-x86_64.o
 	@echo ""
@@ -327,7 +327,7 @@ ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DI
 
 ${BUILD_DIR}/libwrapper_highlight-arm64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a ${BUILD_DIR}/libmagic.a ${BUILD_DIR}/libgoutils.a wrapper_highlight.cpp
 	@echo "${bold}Compiling highlight wrapper for arm64 platform...${normal}"
-	${CXX} ${CFLAGS} ${CFLAGS_arm64} \
+	MACOSX_DEPLOYMENT_TARGET=11 ${CXX} ${CFLAGS} ${CFLAGS_arm64} \
 -static \
 -c wrapper_highlight.cpp -o ${BUILD_DIR}/wrapper_highlight-arm64.o
 	@echo ""

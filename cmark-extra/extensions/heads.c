@@ -14,9 +14,9 @@
 #include <unistd.h>
 #include <string.h>
 
-#include <parser.h>
-#include <render.h>
-#include <html.h>
+#include "../../cmark-gfm/src/parser.h"
+#include "../../cmark-gfm/src/render.h"
+#include "../../cmark-gfm/src/html.h"
 
 #include <locale.h>
 

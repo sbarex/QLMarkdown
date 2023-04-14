@@ -714,6 +714,7 @@ class Settings: Codable {
         }
         
         cmark_gfm_core_extensions_ensure_registered()
+        cmark_gfm_extra_extensions_ensure_registered()
         
         var options = CMARK_OPT_DEFAULT
         if self.unsafeHTMLOption {
@@ -870,7 +871,7 @@ class Settings: Codable {
                 }, nil)
                 */
                 
-                os_log("Enabled markdown `local inline image` extension with working path set to `%{public}s.", log: OSLog.rendering, type: .debug, baseDir)
+                os_log("Enabled markdown `local inline image` extension with working path set to `%{public}s`.", log: OSLog.rendering, type: .debug, baseDir)
                 
                 if self.unsafeHTMLOption {
                     cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(ext, { (ext, fragment, workingDir, context, code) in

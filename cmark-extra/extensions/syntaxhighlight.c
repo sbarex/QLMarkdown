@@ -6,10 +6,10 @@
 //
 
 #include "syntaxhighlight.h"
-#include <parser.h>
-#include <render.h>
-#include <html.h>
-#include "ext_scanners.h"
+#include "../../cmark-gfm/src/parser.h"
+#include "../../cmark-gfm/src/render.h"
+#include "../../cmark-gfm/src/html.h"
+#include "../../cmark-gfm/extensions/ext_scanners.h"
 #include "wrapper_highlight.h"
 #include <houdini.h>
 

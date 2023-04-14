@@ -324,6 +324,8 @@ brew install autoconf
 
 Because `Enry` is developed in `go`, to build the wrapper library you must have the `go` compiler installed (you can use `brew install go`). 
 
+The compilation of `cmark-gfm` require `cmake` (`brew install cmake`). 
+
 
 ## Note about security
 

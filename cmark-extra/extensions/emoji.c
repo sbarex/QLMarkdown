@@ -81,6 +81,10 @@ char *str_replace(char *orig, char *rep, char *with) {
     return result;
 }
 
+static void free_user_data(cmark_mem *mem, void *user_data) {
+    mem->free(user_data);
+}
+
 static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
                          cmark_node *parent, unsigned char character,
                          cmark_inline_parser *inline_parser) {
@@ -138,9 +142,11 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
     
     if (node != NULL) {
         cmark_inline_parser_set_offset(inline_parser, start + (end - start) + 1);
+        cmark_node_set_user_data(node, placeholder);
+        cmark_node_set_user_data_free_func(node, free_user_data);
     }
     
-    parser->mem->free(placeholder);
+    // parser->mem->free(placeholder); // Don't free the placeholder stored inside the node user_data.
     
     return node;
 }
@@ -181,6 +187,10 @@ void html_render(cmark_syntax_extension *extension,
                 houdini_escape_href(html, node->as.link.url.data, node->as.link.url.len);
             }
             cmark_strbuf_puts(html, "\" class=\"emoji\" alt=\"");
+            void *placeholder = cmark_node_get_user_data(node);
+            if (placeholder) {
+                cmark_strbuf_puts(html, placeholder);
+            }
             renderer->plain = node;
         } else {
             if (node->as.link.title.len) {
