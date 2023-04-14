@@ -429,7 +429,11 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         // type = node->type;
         
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_CODE_BLOCK) {
-            cmark_node_set_syntax_extension(node, ext);
+            if (strcmp((const char *)node->as.code.info.data, "math") == 0) {
+                // Do not process, require the Math extension.
+            } else {
+                cmark_node_set_syntax_extension(node, ext);
+            }
         }
         
         if (in_code) {
