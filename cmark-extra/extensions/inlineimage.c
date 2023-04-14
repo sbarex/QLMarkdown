@@ -48,7 +48,7 @@ typedef struct {
     void *html_context;
 } inlineimage_settings;
 
-static inlineimage_settings *init_settings() {
+static inlineimage_settings *init_settings(void) {
     cmark_mem *mem = cmark_get_default_mem_allocator();
     inlineimage_settings *settings = mem->calloc(1, sizeof(inlineimage_settings));
     settings->path = NULL;

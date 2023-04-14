@@ -36,7 +36,7 @@ static const char *get_type_string(cmark_syntax_extension *extension, cmark_node
 }
 */
 
-static syntax_highlight_settings *init_settings() {
+static syntax_highlight_settings *init_settings(void ) {
     cmark_mem *mem = cmark_get_default_mem_allocator();
     syntax_highlight_settings *settings = mem->calloc(1, sizeof(syntax_highlight_settings));
     settings->background_color = NULL;
