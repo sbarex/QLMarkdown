@@ -265,6 +265,21 @@ import Cocoa
         }
     }
     
+    var fullName: String {
+        get {
+            var name: String
+            if self.isStandalone {
+                name = self.name
+                if self.isBase16 {
+                    name = "base16/\(name)"
+                }
+            } else {
+                name = self.path
+            }
+            return name
+        }
+    }
+    
     dynamic var desc: String {
         didSet {
             guard oldValue != desc else { return }

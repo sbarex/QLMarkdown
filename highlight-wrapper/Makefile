@@ -3,9 +3,9 @@
 SPACE     := $(null) $(null)
 CURRENT_DIR := $(subst $(SPACE),"\\ ",$(CURDIR))
 
-LUA_DIR=lua-5.4.2
+LUA_DIR=lua-5.4.4
 HIGHLIGHT_DIR=highlight
-MAGIC_DIR=file-5.41
+MAGIC_DIR=file-5.44
 
 ifeq ($(BUILT_PRODUCTS_DIR),)
 	BUILD_DIR=${CURRENT_DIR}/build
@@ -220,13 +220,13 @@ ifneq ("$(wildcard $(MAGIC_DIR)/Makefile)","")
 	@${MAKE} -C ${MAGIC_DIR} clean
 endif
 	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_x86_64}" ./configure --host=x86_64-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
-# Change the PATH to use the native `file`.
-	PATH="${BUILD_DIR}:${PATH}" ${MAKE} -C ${MAGIC_DIR}
-	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-x86_64.a
-ifeq ($(NATIVE_ARCH),x86_64)
-# Copy the file executable for the current cpu to be used to compile the magic.mgc file for a different cpu target.
-	cp ${MAGIC_DIR}/src/file ${BUILD_DIR}/file
+ifneq ($(NATIVE_ARCH),x86_64)
+# Change the path of the native `file`.
+	/usr/bin/sed -i.bak -E 's/^FILE_COMPILE.*$$/FILE_COMPILE = $$\{BUILD_DIR\}\/file-$$\{NATIVE_ARCH\}/g' $(MAGIC_DIR)/magic/Makefile
 endif
+	${MAKE} -C ${MAGIC_DIR}
+	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-x86_64.a
+	mv ${MAGIC_DIR}/src/file ${BUILD_DIR}/file-x86_64
 	@echo ""
 
 ${BUILD_DIR}/libmagic-arm64.a:
@@ -235,30 +235,34 @@ ifneq ("$(wildcard $(MAGIC_DIR)/Makefile)","")
 	@${MAKE} -C ${MAGIC_DIR} clean
 endif
 	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_arm64}" ./configure --host=arm-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
-# Change the PATH to use the native `file`.
-	PATH="${BUILD_DIR}:${PATH}" ${MAKE} -C ${MAGIC_DIR}
-	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-arm64.a
-ifeq ($(NATIVE_ARCH),arm64)
-# Copy the file executable for the current cpu to be used to compile the magic.mgc file for a different cpu target.
-	cp ${MAGIC_DIR}/src/file ${BUILD_DIR}/file
+ifneq ($(NATIVE_ARCH),arm64)
+# Change the path of the native `file`.
+	/usr/bin/sed -i.bak -E 's/^FILE_COMPILE.*$$/FILE_COMPILE = $$\{BUILD_DIR\}\/file-$$\{NATIVE_ARCH\}/g' $(MAGIC_DIR)/magic/Makefile
 endif
+	${MAKE} -C ${MAGIC_DIR}
+	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-arm64.a
+	mv ${MAGIC_DIR}/src/file ${BUILD_DIR}/file-arm64
 	@echo ""
 
 ${BUILD_DIR}/libmagic.a: ${magic_libraries}
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 		@echo "${bold}Creating magic universal library...${normal}"
 		lipo -create -output ${BUILD_DIR}/libmagic.a ${BUILD_DIR}/libmagic-x86_64.a ${BUILD_DIR}/libmagic-arm64.a
+		lipo -create -output ${BUILD_DIR}/file ${BUILD_DIR}/file-x86_64 ${BUILD_DIR}/file-arm64
 else
 		@echo "${bold}Creating magic library for ${NATIVE_ARCH}...${normal}"
 		@rm -f ${BUILD_DIR}/libmagic.a > /dev/null
 		ln ${BUILD_DIR}/libmagic-${NATIVE_ARCH}.a ${BUILD_DIR}/libmagic.a
+		@rm -f ${BUILD_DIR}/file > /dev/null
+		ln ${BUILD_DIR}/file-${NATIVE_ARCH} ${BUILD_DIR}/file
 endif
 	@echo ""
 
 ${BUILD_DIR}/magic.mgc:
-	@echo "${bold}Creating magic.mgc...${normal}"
-	file -C -m magic
-	mv magic.mgc ${BUILD_DIR}/
+	@echo "${bold}Coping magic.mgc...${normal}"
+	#${BUILD_DIR}/file -C -m ${CURRENT_DIR}/${MAGIC_DIR}/magic
+	#mv ${CURRENT_DIR}/${MAGIC_DIR}/magic.mgc ${BUILD_DIR}/
+	cp ${CURRENT_DIR}/${MAGIC_DIR}/magic/magic.mgc ${BUILD_DIR}/magic.mgc
 
 
 # ################################

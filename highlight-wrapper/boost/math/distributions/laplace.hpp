@@ -24,7 +24,7 @@
 
 namespace boost{ namespace math{
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #  pragma warning(push)
 #  pragma warning(disable:4127) // conditional expression is constant
 #endif
@@ -36,13 +36,13 @@ public:
    // ----------------------------------
    // public Types
    // ----------------------------------
-   typedef RealType value_type;
-   typedef Policy policy_type;
+   using value_type = RealType;
+   using policy_type = Policy;
 
    // ----------------------------------
    // Constructor(s)
    // ----------------------------------
-   laplace_distribution(RealType l_location = 0, RealType l_scale = 1)
+   explicit laplace_distribution(RealType l_location = 0, RealType l_scale = 1)
       : m_location(l_location), m_scale(l_scale)
    {
       RealType result;
@@ -78,14 +78,21 @@ private:
 
 //
 // Convenient type synonym for double.
-typedef laplace_distribution<double> laplace;
+using laplace = laplace_distribution<double>;
+
+#ifdef __cpp_deduction_guides
+template <class RealType>
+laplace_distribution(RealType)->laplace_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+template <class RealType>
+laplace_distribution(RealType,RealType)->laplace_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+#endif
 
 //
 // Non-member functions.
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> range(const laplace_distribution<RealType, Policy>&)
+inline std::pair<RealType, RealType> range(const laplace_distribution<RealType, Policy>&)
 {
-   if (std::numeric_limits<RealType>::has_infinity)
+  if (std::numeric_limits<RealType>::has_infinity)
   {  // Can use infinity.
      return std::pair<RealType, RealType>(-std::numeric_limits<RealType>::infinity(), std::numeric_limits<RealType>::infinity()); // - to + infinity.
   }
@@ -98,7 +105,7 @@ inline const std::pair<RealType, RealType> range(const laplace_distribution<Real
 }
 
 template <class RealType, class Policy>
-inline const std::pair<RealType, RealType> support(const laplace_distribution<RealType, Policy>&)
+inline std::pair<RealType, RealType> support(const laplace_distribution<RealType, Policy>&)
 {
   if (std::numeric_limits<RealType>::has_infinity)
   { // Can Use infinity.
@@ -142,6 +149,48 @@ inline RealType pdf(const laplace_distribution<RealType, Policy>& dist, const Re
 
    return result;
 } // pdf
+
+template <class RealType, class Policy>
+inline RealType logpdf(const laplace_distribution<RealType, Policy>& dist, const RealType& x)
+{
+   BOOST_MATH_STD_USING // for ADL of std functions
+
+   // Checking function argument
+   RealType result = -std::numeric_limits<RealType>::infinity();
+   const char* function = "boost::math::logpdf(const laplace_distribution<%1%>&, %1%))";
+
+   // Check scale and location.
+   if (false == dist.check_parameters(function, &result))
+   {
+       return result;
+   }
+   // Special pdf values.
+   if((boost::math::isinf)(x))
+   {
+      return result; // pdf + and - infinity is zero so logpdf is -INF
+   }
+   if (false == detail::check_x(function, x, &result, Policy()))
+   {
+       return result;
+   }
+
+   const RealType mu = dist.scale();
+   const RealType b = dist.location();
+
+   // if b is 0 avoid divde by 0 error
+   if(abs(b) < std::numeric_limits<RealType>::epsilon())
+   {
+      result = log(pdf(dist, x));
+   }
+   else
+   {
+      // General case
+      const RealType log2 = boost::math::constants::ln_two<RealType>();
+      result = -abs(x-mu)/b - log(b) - log2;
+   }
+
+   return result;
+} // logpdf
 
 template <class RealType, class Policy>
 inline RealType cdf(const laplace_distribution<RealType, Policy>& dist, const RealType& x)
@@ -194,14 +243,14 @@ inline RealType quantile(const laplace_distribution<RealType, Policy>& dist, con
    {
       result = policies::raise_overflow_error<RealType>(function,
         "probability parameter is 0, but must be > 0!", Policy());
-      return -result; // -std::numeric_limits<RealType>::infinity();
+      return -result; // -inf
    }
   
    if(p == 1)
    {
       result = policies::raise_overflow_error<RealType>(function,
         "probability parameter is 1, but must be < 1!", Policy());
-      return result; // std::numeric_limits<RealType>::infinity();
+      return result; // inf
    }
    // Calculate Quantile
    RealType scale( dist.scale() );
@@ -231,8 +280,6 @@ inline RealType cdf(const complemented2_type<laplace_distribution<RealType, Poli
    const char* function = "boost::math::cdf(const complemented2_type<laplace_distribution<%1%>, %1%>&)";
 
    // Check scale and location.
-   //if(false == detail::check_scale(function, scale, result, Policy())) return false;
-   //if(false == detail::check_location(function, location, result, Policy())) return false;
     if (false == c.dist.check_parameters(function, &result)) return result;
 
    // Special cdf values.
@@ -340,7 +387,7 @@ inline RealType entropy(const laplace_distribution<RealType, Policy> & dist)
    return log(2*dist.scale()*constants::e<RealType>());
 }
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #  pragma warning(pop)
 #endif
 

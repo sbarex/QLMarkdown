@@ -270,7 +270,7 @@ struct hypergeometric_pdf_prime_loop_result_entry
    const hypergeometric_pdf_prime_loop_result_entry* next;
 };
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4510 4512 4610)
 #endif
@@ -285,7 +285,7 @@ struct hypergeometric_pdf_prime_loop_data
    unsigned current_prime;
 };
 
-#ifdef BOOST_MSVC
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 
@@ -392,7 +392,7 @@ template <class T, class Policy>
 T hypergeometric_pdf_factorial_imp(unsigned x, unsigned r, unsigned n, unsigned N, const Policy&)
 {
    BOOST_MATH_STD_USING
-   BOOST_ASSERT(N <= boost::math::max_factorial<T>::value);
+   BOOST_MATH_ASSERT(N <= boost::math::max_factorial<T>::value);
    T result = boost::math::unchecked_factorial<T>(n);
    T num[3] = {
       boost::math::unchecked_factorial<T>(r),

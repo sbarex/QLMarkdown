@@ -23,11 +23,11 @@ You can download the last compiled release (as universal binary) from [this link
   - [Difference with the GitHub Markdown engine](#difference-with-the-github-markdown-engine)
   - [Settings](#settings)
     - [Themes](#themes)
-    - [Basic options](#basic-options)
-    - [Advanced options](#advanced-options)
+    - [Options](#options)
     - [Extensions](#extensions)
       - [Emoji](#emoji)
       - [Inline local images](#inline-local-images)
+      - [Mathematical expressions](#mathematical-expressions)
       - [Syntax Highlighting](#syntax-highlighting)
       - [YAML header](#yaml-header)
   - [Command line interface](#command-line-interface)
@@ -106,6 +106,7 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - [`Emoji`](#emoji): translate the emoji placeholders like `:smile:` to :smile:.
 - [`Heads anchors`](#heads-anchors): create anchors for the heads.
 - [`Inline local images`](#inline-local-images): embed the image files inside the formatted output (required for the Quick Look preview).
+- [`Math`](#mathematical-expressions): format the mathematical expressions.
 - [`Syntax highlighting`](#syntax-highlighting): highlight the code inside fenced block.
 - [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` or `qmd` files.
 
@@ -154,54 +155,45 @@ The custom style is appended after the CSS used for the highlight the source cod
 The theme popup menu has some extra commands available pressing the `alt` key.
 
 
-### Basic options
+### Options
 
 |Option|Description|
 |:--|:--|
 |Smart quotes|Convert straight quotes to curly, ```---``` to _em dashes_ and ```--``` to _en dashes_.|
 |Footnotes|Parse the footnotes. Footnotes are not supported by GitHub.|
-|Emoji|Enable the [Emoji extension](#emoji).|
-|Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
-|Strikethrough|Strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.|
-|Syntax highlighting|Enable the [Syntax highlighting extension](#syntax-highlighting). On the adavanced options you can customize the formatting options.|
-
-
-### Advanced options
-
-Some lesser-used options are available in the advanced panel.
-
-![main interface](./assets/img/main_interface_advanced.png)
-
-|Option|Description|
-|:--|:--|
 |Hard break|Render `softbreak` elements as hard line breaks.|
 |No soft break|Render `softbreak` elements as spaces.|
-|Validate UTF|Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).|
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|
-|Render source code|Shows the highlighted source code instead of the formatted output.|
-|Debug info|Insert in the output some debug information.|
-
-|Extension|Description|
-|:--|:--|
-|Autolink|Automatically translate URL to link and parse email addresses.|
-|GitHub mentions|Translate mentions to link to the GitHub account.|
-|<a name="heads-anchors"></a>Heads anchors|Create anchors for the heads to use as cross internal reference. Each anchor is named with the lowercased caption, stripped of any punctuation marks (except the dash) and spaces replaced with dash (`-`). UTF8 character encoding is supported.|
-|Inline local images|Enable the [Inline local images extension](#inline-local-images).|
-|Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|
-|Task list|Parse task list as defined by the GitHub extension to the standard Markdown language.|
-|YAML header|Enable the [YAML header extension](#YAML-header).|
-
-In the advanced options, you can also choose if open external link inside the Quick Look preview window or in the default browser.
-
-The `Quick Look window` option allow you to force a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.
+|Validate UTF|Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).|
+|Show debug info|Insert in the output some debug information.|
+|Render as source code|Shows the highlighted source code instead of the formatted output.|
 
 
 ### Extensions
 
+|Extension|Description|
+|:--|:--|
+|Autolink|Automatically translate URL to link and parse email addresses.|
+|Emoji|Enable the [Emoji extension](#emoji).|
+|GitHub mentions|Translate mentions to link to the GitHub account.|
+|<a name="heads-anchors"></a>Heads anchors|Create anchors for the heads to use as cross internal reference. Each anchor is named with the lowercased caption, stripped of any punctuation marks (except the dash) and spaces replaced with dash (`-`). UTF8 character encoding is supported.|
+|Inline local images|Enable the [Inline local images extension](#inline-local-images).|
+|Math|Enable the [formatting of math expressions](#mathematical-expressions).|
+|Strikethrough|Strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.|
+|Syntax highlighting|Enable the [Syntax highlighting extension](#syntax-highlighting). |
+|Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
+|Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|
+|Task list|Parse task list as defined by the GitHub extension to the standard Markdown language.|
+|YAML header|Enable the [YAML header extension](#YAML-header).|
+
+Tou can also choose if open external link inside the Quick Look preview window or in the default browser.
+
+The `Quick Look window` option allow you to force a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.
+
 
 #### Emoji
 
-From the [Basic options panel](#basic-options) you can enable the Emoji extension to handle the placeholders defined by [GitHub](https://api.github.com/emojis). You can render the emoji with an emoticon glyph or using the image provided by GitHub (internet connection required). 
+You can enable the Emoji extension to handle the placeholders defined by [GitHub](https://api.github.com/emojis). You can render the emoji with an emoticon glyph or using the image provided by GitHub (internet connection required). 
 
 Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. 
 
@@ -212,7 +204,7 @@ A list of GitHub emoji placeholder is available [here](https://github.com/ikatya
  
 ### Inline local images 
 
-In the [Advanced options panel](#advanced-options), you can enable the Inline image extension required to preview images within the Quick Look window by injecting the images as base64 data into the HTML code. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. 
+You can enable the Inline image extension required to preview images within the Quick Look window by injecting the images into the HTML code. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. 
 
 For security reasons are handled only URLs without schema (e.g., `./image.jpg`, `image.jpg` or `assets/image.jpg`), or with the `file` schema (e.g.,  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. 
 With the `file://` schema you *must always set the full path*. For images inside the same folder of the Markdown file do not use the  `file://` schema and also the path `./` is optional.
@@ -220,13 +212,27 @@ With the `file://` schema you *must always set the full path*. For images inside
 The extension process both images defined in the Markdown syntax and also with HTML `<img>` tag if the raw HTML code option is enabled.
 
 
+#### Mathematical expressions
+
+This extension allow to format the mathematical expressions using the LaTeX syntax like [GitHub](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions).
+Math rendering capability uses [MathJax](https://www.mathjax.org/) display engine.
+
+Inline math expressions are delimited with a dollar symbol `$`. Block expressions are delimited with a double dollar symbols `$$`.
+
+Alternatively, you can use the ` ```math ` code block syntax to display a math expression as a block.
+
+The [MathJax](https://www.mathjax.org/) library is loaded from cdn.jsdelivr.net. The library is loaded if the markdown code contains ` ```math ` code blocks or one or more dollar sign.
+
+
 #### Syntax Highlighting
 
 This extension highlights the source code inside a fenced box.
 
-The rendering engine is based on the [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) library. No external program is called, the engine is embedded in the app.
+The rendering engine is based on the [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) library embedded in the app.
 
-In the [advanced options panel](#advanced-options) you can customize the settings:
+![syntax highlighting settings](./assets/img/syntax_interface.png)
+
+You can customize the settings:
 
 - Colors scheme (for light and dark appearance).
 - Line numbers visibility.
@@ -237,11 +243,9 @@ In the [advanced options panel](#advanced-options) you can customize the setting
 
 Some colors scheme (especially those for light appearance) uses a white background that is the same of the Markdown document, making the code block not immediately recognizable. For this reason, it is possible to override the background color in order to use a personal one or the one defined by the Markdown theme. 
 
-Setting a custom font also change the font used in the code blocks enclosed by back-ticks (\`).
-
 When the code block does not specify the language, it is possible to activate a guessing function. Two engines are available:
 
-- Fast guess: it is based on the `magic` library;
+- Simple guess: it is based on the `magic` library;
 - Accurate guess: it is based on the [`Enry`](https://github.com/go-enry/go-enry) library, that is a Golang porting of the Ruby [`linguist`](https://github.com/github/linguist/) library used by GitHub.
 
 If no language is defined and the guessing fail (or is not enabled), the code is rendered as normal text.
@@ -249,7 +253,7 @@ If no language is defined and the guessing fail (or is not enabled), the code is
 
 ### YAML header
 
-In the [Advanced options panel](#advanced-options), you can enable the extension to handle a `yaml` header at the beginning of a file. You can choose to enable the extensions to all `.md` files or only for `.rmd` and `.qmd` files.
+You can enable the extension to handle a `yaml` header at the beginning of a file. You can choose to enable the extensions to all `.md` files or only for `.rmd` and `.qmd` files.
 
 The header is recognized only if the file start with `---`. The yaml block must be closed with `---` or with `...`.
 
@@ -292,6 +296,7 @@ Extensions:
  --github-mentions on|off
  --heads-anchor on|off
  --inline-images on|off
+ --math on|off
  --table on|off
  --tag-filter on|off
  --tasklist on|off
@@ -318,15 +323,12 @@ Some libraries (`Sparkle`, `Yams` and `SwiftSoup`) are handled by the Swift Pack
 
 ### Dependency
 
-The app uses an extra library `highlight wrapper`. This is a custom C++ shared library that expose the `highlight` functionality and the guess detection engines. All the code required by this library is included in the Xcode project, and is compiled as a universal library. 
-
-The wrapper has statically linked the following libraries:
+The app uses the following libraries built directly from Xcode:
 - [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for syntax highlighting.
-- [`magic`](https://www.darwinsys.com/file/), used to guess the source code language when the guess mode is set to _fast_.
+- [`magic`](https://www.darwinsys.com/file/), used to guess the source code language when the guess mode is set to _simple_.
 - [`Enry`](https://github.com/go-enry/go-enry), used to guess the source code language when the guess mode is set to _accurate_.
 - [`PCRE2`](https://github.com/PhilipHazel/pcre2) and [`JPCRE2`](https://github.com/jpcre2/jpcre2) used by the heads extension.
 
-These libraries are automatically compiled by Xcode.
 
 `libpcre` require the `autoconf` utility to be build. You can install it with [`homebrew`](https://brew.sh/):
 

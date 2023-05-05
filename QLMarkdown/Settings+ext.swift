@@ -30,14 +30,17 @@ extension Settings {
         defaultsDomain["checkbox"] = checkboxExtension
         defaultsDomain["inlineimage"] = inlineImageExtension
         defaultsDomain["heads"] = headsExtension
+        defaultsDomain["math"] = mathExtension
         
         defaultsDomain["strikethrough"] = strikethroughExtension
         defaultsDomain["strikethrough_doubletilde"] = strikethroughDoubleTildeOption
         
         defaultsDomain["syntax"] = syntaxHighlightExtension
+        defaultsDomain["syntax_custom_themes"] = syntaxCustomThemes
         defaultsDomain["syntax_light_theme"] = syntaxThemeLight
-        defaultsDomain["syntax_light_background"] = syntaxBackgroundColorLight
         defaultsDomain["syntax_dark_theme"] = syntaxThemeDark
+        defaultsDomain["syntax_background"] = syntaxBackgroundColor.rawValue
+        defaultsDomain["syntax_light_background"] = syntaxBackgroundColorLight
         defaultsDomain["syntax_dark_background"] = syntaxBackgroundColorDark
         defaultsDomain["syntax_word_wrap"] = syntaxWordWrapOption
         defaultsDomain["syntax_line_numbers"] = syntaxLineNumbersOption
@@ -183,14 +186,6 @@ extension Settings {
             }
             if self.syntaxThemeDark == theme.path {
                 self.syntaxThemeDark = ""
-            }
-            if let vc = NSApplication.shared.windows.first(where: {$0.windowController?.contentViewController is ViewController})?.windowController?.contentViewController as? ViewController {
-                if vc.syntaxThemeLight?.path == theme.path {
-                    vc.syntaxThemeLight = nil
-                }
-                if vc.syntaxThemeDark?.path == theme.path {
-                    vc.syntaxThemeDark = nil
-                }
             }
         }
         

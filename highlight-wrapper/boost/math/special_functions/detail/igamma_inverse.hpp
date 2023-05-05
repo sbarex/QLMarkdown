@@ -122,7 +122,7 @@ T find_inverse_gamma(T a, T p, T q, const Policy& pol, bool* p_has_10_digits)
       BOOST_MATH_INSTRUMENT_VARIABLE(b);
       if((b > 0.6) || ((b >= 0.45) && (a >= 0.3)))
       {
-         // DiDonato & Morris Eq 21: 
+         // DiDonato & Morris Eq 21:
          //
          // There is a slight variation from DiDonato and Morris here:
          // the first form given here is unstable when p is close to 1,
@@ -343,9 +343,9 @@ struct gamma_p_inverse_func
       typedef typename policies::evaluation<T, Policy>::type value_type;
       // typedef typename lanczos::lanczos<T, Policy>::type evaluation_type;
       typedef typename policies::normalise<
-         Policy, 
-         policies::promote_float<false>, 
-         policies::promote_double<false>, 
+         Policy,
+         policies::promote_float<false>,
+         policies::promote_double<false>,
          policies::discrete_quantile<>,
          policies::assert_undefined<> >::type forwarding_policy;
 
@@ -354,18 +354,27 @@ struct gamma_p_inverse_func
       T f, f1;
       value_type ft;
       f = static_cast<T>(boost::math::detail::gamma_incomplete_imp(
-               static_cast<value_type>(a), 
-               static_cast<value_type>(x), 
+               static_cast<value_type>(a),
+               static_cast<value_type>(x),
                true, invert,
                forwarding_policy(), &ft));
       f1 = static_cast<T>(ft);
       T f2;
       T div = (a - x - 1) / x;
       f2 = f1;
-      if((fabs(div) > 1) && (tools::max_value<T>() / fabs(div) < f2))
+      if(fabs(div) > 1)
       {
-         // overflow:
-         f2 = -tools::max_value<T>() / 2;
+         // split if statement to address M1 mac clang bug;
+         // see issue 826
+         if (tools::max_value<T>() / fabs(div) < f2)
+         {
+            // overflow:
+            f2 = -tools::max_value<T>() / 2;
+         }
+         else
+         {
+            f2 *= div;
+         }
       }
       else
       {
@@ -400,7 +409,7 @@ T gamma_p_inv_imp(T a, T p, const Policy& pol)
    if((p < 0) || (p > 1))
       return policies::raise_domain_error<T>(function, "Probability must be in the range [0,1] in the incomplete gamma function inverse (got p=%1%).", p, pol);
    if(p == 1)
-      return policies::raise_overflow_error<T>(function, 0, Policy());
+      return policies::raise_overflow_error<T>(function, nullptr, Policy());
    if(p == 0)
       return 0;
    bool has_10_digits;
@@ -414,7 +423,7 @@ T gamma_p_inv_imp(T a, T p, const Policy& pol)
    //
    // Work out how many digits to converge to, normally this is
    // 2/3 of the digits in T, but if the first derivative is very
-   // large convergence is slow, so we'll bump it up to full 
+   // large convergence is slow, so we'll bump it up to full
    // precision to prevent premature termination of the root-finding routine.
    //
    unsigned digits = policies::digits<T, Policy>();
@@ -433,7 +442,7 @@ T gamma_p_inv_imp(T a, T p, const Policy& pol)
    //
    // Go ahead and iterate:
    //
-   boost::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
+   std::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
    guess = tools::halley_iterate(
       detail::gamma_p_inverse_func<T, Policy>(a, p, false),
       guess,
@@ -460,7 +469,7 @@ T gamma_q_inv_imp(T a, T q, const Policy& pol)
    if((q < 0) || (q > 1))
       return policies::raise_domain_error<T>(function, "Probability must be in the range [0,1] in the incomplete gamma function inverse (got q=%1%).", q, pol);
    if(q == 0)
-      return policies::raise_overflow_error<T>(function, 0, Policy());
+      return policies::raise_overflow_error<T>(function, nullptr, Policy());
    if(q == 1)
       return 0;
    bool has_10_digits;
@@ -473,7 +482,7 @@ T gamma_q_inv_imp(T a, T q, const Policy& pol)
    //
    // Work out how many digits to converge to, normally this is
    // 2/3 of the digits in T, but if the first derivative is very
-   // large convergence is slow, so we'll bump it up to full 
+   // large convergence is slow, so we'll bump it up to full
    // precision to prevent premature termination of the root-finding routine.
    //
    unsigned digits = policies::digits<T, Policy>();
@@ -492,7 +501,7 @@ T gamma_q_inv_imp(T a, T q, const Policy& pol)
    //
    // Go ahead and iterate:
    //
-   boost::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
+   std::uintmax_t max_iter = policies::get_max_root_iterations<Policy>();
    guess = tools::halley_iterate(
       detail::gamma_p_inverse_func<T, Policy>(a, q, true),
       guess,
@@ -509,7 +518,7 @@ T gamma_q_inv_imp(T a, T q, const Policy& pol)
 } // namespace detail
 
 template <class T1, class T2, class Policy>
-inline typename tools::promote_args<T1, T2>::type 
+inline typename tools::promote_args<T1, T2>::type
    gamma_p_inv(T1 a, T2 p, const Policy& pol)
 {
    typedef typename tools::promote_args<T1, T2>::type result_type;
@@ -519,7 +528,7 @@ inline typename tools::promote_args<T1, T2>::type
 }
 
 template <class T1, class T2, class Policy>
-inline typename tools::promote_args<T1, T2>::type 
+inline typename tools::promote_args<T1, T2>::type
    gamma_q_inv(T1 a, T2 p, const Policy& pol)
 {
    typedef typename tools::promote_args<T1, T2>::type result_type;
@@ -529,14 +538,14 @@ inline typename tools::promote_args<T1, T2>::type
 }
 
 template <class T1, class T2>
-inline typename tools::promote_args<T1, T2>::type 
+inline typename tools::promote_args<T1, T2>::type
    gamma_p_inv(T1 a, T2 p)
 {
    return gamma_p_inv(a, p, policies::policy<>());
 }
 
 template <class T1, class T2>
-inline typename tools::promote_args<T1, T2>::type 
+inline typename tools::promote_args<T1, T2>::type
    gamma_q_inv(T1 a, T2 p)
 {
    return gamma_q_inv(a, p, policies::policy<>());

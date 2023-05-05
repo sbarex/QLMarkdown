@@ -75,6 +75,10 @@ namespace boost { namespace fusion
             }
         };
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4512) // assignment operator could not be generated.
+#endif
         template <typename Tag, typename Stream>
         class string_ios_manip
         {
@@ -143,10 +147,10 @@ namespace boost { namespace fusion
             }
 
             Stream& stream;
-
-            // silence MSVC warning C4512: assignment operator could not be generated
-            BOOST_DELETED_FUNCTION(string_ios_manip& operator= (string_ios_manip const&))
         };
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
     } // detail
 

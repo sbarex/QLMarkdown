@@ -46,6 +46,7 @@ func usage(exitCode: Int = -1) {
     print(" --github-mentions on|off")
     print(" --heads-anchor on|off")
     print(" --inline-images on|off")
+    print(" --math on|off")
     print(" --table on|off")
     print(" --tag-filter on|off")
     print(" --tasklist on|off")
@@ -111,6 +112,9 @@ while i < Int(CommandLine.argc) {
                 let opt = CommandLine.arguments[i+1]
                 settings.emojiExtension = opt != "off"
                 settings.emojiImageOption = opt == "image"
+                i += 1
+            case "--math":
+                settings.mathExtension = parseArgOnOff(index: i)
                 i += 1
             case "--table":
                 settings.tableExtension = parseArgOnOff(index: i)
@@ -248,6 +252,7 @@ if verbose {
     print("    github-mentions: \(settings.mentionExtension ? "on" : "off")")
     print("    heads-anchor: \(settings.headsExtension ? "on" : "off")")
     print("    inline-images: \(settings.inlineImageExtension ? "on" : "off")")
+    print("    math: \(settings.mathExtension ? "on" : "off")")
     print("    table: \(settings.tableExtension ? "on" : "off")")
     print("    tag-filter: \(settings.tagFilterExtension ? "on" : "off")")
     print("    tasklist: \(settings.taskListExtension ? "on" : "off")")

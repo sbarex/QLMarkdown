@@ -9,6 +9,7 @@
 #import "../cmark-extra/extensions/syntaxhighlight.h"
 #import "../cmark-extra/extensions/emoji.h"
 #import "../cmark-extra/extensions/inlineimage.h"
+#import "../cmark-extra/extensions/math_ext.h"
 #import "../cmark-extra/extensions/extra-extensions.h"
 
 #import "wrapper_highlight.h"

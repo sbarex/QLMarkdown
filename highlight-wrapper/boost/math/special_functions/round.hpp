@@ -20,12 +20,15 @@ namespace boost{ namespace math{
 namespace detail{
 
 template <class T, class Policy>
-inline typename tools::promote_args<T>::type round(const T& v, const Policy& pol, const boost::false_type&)
+inline tools::promote_args_t<T> round(const T& v, const Policy& pol, const std::false_type&)
 {
    BOOST_MATH_STD_USING
-      typedef typename tools::promote_args<T>::type result_type;
+   using result_type = tools::promote_args_t<T>;
+
    if(!(boost::math::isfinite)(v))
-      return policies::raise_rounding_error("boost::math::round<%1%>(%1%)", 0, static_cast<result_type>(v), static_cast<result_type>(v), pol);
+   {
+      return policies::raise_rounding_error("boost::math::round<%1%>(%1%)", nullptr, static_cast<result_type>(v), static_cast<result_type>(v), pol);
+   }
    //
    // The logic here is rather convoluted, but avoids a number of traps,
    // see discussion here https://github.com/boostorg/math/pull/8
@@ -52,7 +55,7 @@ inline typename tools::promote_args<T>::type round(const T& v, const Policy& pol
    }
 }
 template <class T, class Policy>
-inline typename tools::promote_args<T>::type round(const T& v, const Policy&, const boost::true_type&)
+inline tools::promote_args_t<T> round(const T& v, const Policy&, const std::true_type&)
 {
    return v;
 }
@@ -60,12 +63,12 @@ inline typename tools::promote_args<T>::type round(const T& v, const Policy&, co
 } // namespace detail
 
 template <class T, class Policy>
-inline typename tools::promote_args<T>::type round(const T& v, const Policy& pol)
+inline tools::promote_args_t<T> round(const T& v, const Policy& pol)
 {
-   return detail::round(v, pol, boost::integral_constant<bool, detail::is_integer_for_rounding<T>::value>());
+   return detail::round(v, pol, std::integral_constant<bool, detail::is_integer_for_rounding<T>::value>());
 }
 template <class T>
-inline typename tools::promote_args<T>::type round(const T& v)
+inline tools::promote_args_t<T> round(const T& v)
 {
    return round(v, policies::policy<>());
 }
@@ -74,17 +77,25 @@ inline typename tools::promote_args<T>::type round(const T& v)
 // implicit conversion to the integer types.  For user-defined
 // number types this will likely not be the case.  In that case
 // these functions should either be specialized for the UDT in
-// question, or else overloads should be placed in the same 
+// question, or else overloads should be placed in the same
 // namespace as the UDT: these will then be found via argument
 // dependent lookup.  See our concept archetypes for examples.
+//
+// Non-standard numeric limits syntax "(std::numeric_limits<int>::max)()"
+// is to avoid macro substiution from MSVC
+// https://stackoverflow.com/questions/27442885/syntax-error-with-stdnumeric-limitsmax
 //
 template <class T, class Policy>
 inline int iround(const T& v, const Policy& pol)
 {
    BOOST_MATH_STD_USING
+   using result_type = tools::promote_args_t<T>;
+
    T r = boost::math::round(v, pol);
-   if((r > (std::numeric_limits<int>::max)()) || (r < (std::numeric_limits<int>::min)()))
-      return static_cast<int>(policies::raise_rounding_error("boost::math::iround<%1%>(%1%)", 0, v, 0, pol));
+   if(r > static_cast<result_type>((std::numeric_limits<int>::max)()) || r < static_cast<result_type>((std::numeric_limits<int>::min)()))
+   {
+      return static_cast<int>(policies::raise_rounding_error("boost::math::iround<%1%>(%1%)", nullptr, v, 0, pol));
+   }
    return static_cast<int>(r);
 }
 template <class T>
@@ -97,9 +108,12 @@ template <class T, class Policy>
 inline long lround(const T& v, const Policy& pol)
 {
    BOOST_MATH_STD_USING
+   using result_type = tools::promote_args_t<T>;
    T r = boost::math::round(v, pol);
-   if((r > (std::numeric_limits<long>::max)()) || (r < (std::numeric_limits<long>::min)()))
-      return static_cast<long int>(policies::raise_rounding_error("boost::math::lround<%1%>(%1%)", 0, v, 0L, pol));
+   if(r > static_cast<result_type>((std::numeric_limits<long>::max)()) || r < static_cast<result_type>((std::numeric_limits<long>::min)()))
+   {
+      return static_cast<long int>(policies::raise_rounding_error("boost::math::lround<%1%>(%1%)", nullptr, v, 0L, pol));
+   }
    return static_cast<long int>(r);
 }
 template <class T>
@@ -108,24 +122,25 @@ inline long lround(const T& v)
    return lround(v, policies::policy<>());
 }
 
-#ifdef BOOST_HAS_LONG_LONG
-
 template <class T, class Policy>
-inline boost::long_long_type llround(const T& v, const Policy& pol)
+inline long long llround(const T& v, const Policy& pol)
 {
    BOOST_MATH_STD_USING
+   using result_type = tools::promote_args_t<T>;
+
    T r = boost::math::round(v, pol);
-   if((r > (std::numeric_limits<boost::long_long_type>::max)()) || (r < (std::numeric_limits<boost::long_long_type>::min)()))
-      return static_cast<boost::long_long_type>(policies::raise_rounding_error("boost::math::llround<%1%>(%1%)", 0, v, static_cast<boost::long_long_type>(0), pol));
-   return static_cast<boost::long_long_type>(r);
+   if(r > static_cast<result_type>((std::numeric_limits<long long>::max)()) ||
+      r < static_cast<result_type>((std::numeric_limits<long long>::min)()))
+   {
+      return static_cast<long long>(policies::raise_rounding_error("boost::math::llround<%1%>(%1%)", nullptr, v, static_cast<long long>(0), pol));
+   }
+   return static_cast<long long>(r);
 }
 template <class T>
-inline boost::long_long_type llround(const T& v)
+inline long long llround(const T& v)
 {
    return llround(v, policies::policy<>());
 }
-
-#endif
 
 }} // namespaces
 

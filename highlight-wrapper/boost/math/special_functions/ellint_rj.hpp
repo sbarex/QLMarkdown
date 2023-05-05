@@ -124,13 +124,13 @@ T ellint_rj_imp(T x, T y, T z, T p, const Policy& pol)
       if(x > y)
          std::swap(x, y);
 
-      BOOST_ASSERT(x <= y);
-      BOOST_ASSERT(y <= z);
+      BOOST_MATH_ASSERT(x <= y);
+      BOOST_MATH_ASSERT(y <= z);
 
       T q = -p;
       p = (z * (x + y + q) - x * y) / (z + q);
 
-      BOOST_ASSERT(p >= 0);
+      BOOST_MATH_ASSERT(p >= 0);
 
       T value = (p - z) * ellint_rj_imp(x, y, z, p, pol);
       value -= 3 * ellint_rf_imp(x, y, z, pol);

@@ -3,7 +3,15 @@
 
 ### 1.0.16 (41)
 New features:
-- cmark-gfm updated to version 0.29.0.gfm.11.
+- Support mathematical expressions with the MathJax engine.
+- Update libraries:
+    - cmark-gfm 0.29.0.gfm.11
+    - highlight 4.5
+    - lua 5.4.4
+    - libmagic 5.44
+    - go-enry v2.8.4
+    - boost.
+- Settings UI redesigned.
   
 Bugfix:
 - Alt attribute for emoji rendered as image.

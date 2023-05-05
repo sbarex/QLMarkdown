@@ -44,11 +44,6 @@
 #include <boost/math/tools/roots.hpp> // for root finding.
 #include <boost/math/distributions/detail/inv_discrete_quantile.hpp>
 
-#include <boost/type_traits/is_floating_point.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/type_traits/is_same.hpp>
-#include <boost/mpl/if.hpp>
-
 #include <limits> // using std::numeric_limits;
 #include <utility>
 
@@ -163,7 +158,7 @@ namespace boost
         // Discrete Distributions" Yong CAI and K. KRISHNAMOORTHY
         // http://www.ucs.louisiana.edu/~kxk4695/Discrete_new.pdf
         //
-        return ibeta_inv(successes, failures + 1, alpha, static_cast<RealType*>(0), Policy());
+        return ibeta_inv(successes, failures + 1, alpha, static_cast<RealType*>(nullptr), Policy());
       } // find_lower_bound_on_p
 
       static RealType find_upper_bound_on_p(
@@ -192,7 +187,7 @@ namespace boost
         // Discrete Distributions" Yong CAI and K. Krishnamoorthy
         // http://www.ucs.louisiana.edu/~kxk4695/Discrete_new.pdf
         //
-        return ibetac_inv(successes, failures, alpha, static_cast<RealType*>(0), Policy());
+        return ibetac_inv(successes, failures, alpha, static_cast<RealType*>(nullptr), Policy());
       } // find_upper_bound_on_p
 
       // Estimate number of trials :
@@ -227,7 +222,7 @@ namespace boost
         if(false == geometric_detail::check_dist_and_k(
           function, p, k, &result, Policy())
           &&  detail::check_probability(function, alpha, &result, Policy()))
-        { 
+        {
           return result;
         }
         result = ibetac_inva(k + 1, p, alpha, Policy());  // returns n - k
@@ -240,6 +235,11 @@ namespace boost
     }; // template <class RealType, class Policy> class geometric_distribution
 
     typedef geometric_distribution<double> geometric; // Reserved name of type double.
+
+    #ifdef __cpp_deduction_guides
+    template <class RealType>
+    geometric_distribution(RealType)->geometric_distribution<typename boost::math::tools::promote_args<RealType>::type>;
+    #endif
 
     template <class RealType, class Policy>
     inline const std::pair<RealType, RealType> range(const geometric_distribution<RealType, Policy>& /* dist */)
@@ -270,7 +270,7 @@ namespace boost
       BOOST_MATH_STD_USING // ADL of std functions.
       return 0;
     } // mode
-    
+
     template <class RealType, class Policy>
     inline RealType variance(const geometric_distribution<RealType, Policy>& dist)
     { // Variance of Binomial distribution = (1-p) / p^2.
@@ -446,7 +446,7 @@ namespace boost
       {
         return 0;
       }
-   
+
       // log(1-x) /log(1-success_fraction) -1; but use log1p in case success_fraction is small
       result = boost::math::log1p(-x, Policy()) / boost::math::log1p(-success_fraction, Policy()) - 1;
       // Subtract a few epsilons here too?

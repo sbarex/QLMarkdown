@@ -93,7 +93,7 @@ inline T sph_bessel_j_prime_imp(unsigned v, T x, const Policy& pol)
    // Special case for v == 0:
    //
    if (v == 0)
-      return (x == 0) ? boost::math::policies::raise_overflow_error<T>(function, 0, pol)
+      return (x == 0) ? boost::math::policies::raise_overflow_error<T>(function, nullptr, pol)
          : static_cast<T>(-boost::math::detail::sph_bessel_j_imp<T>(1, x, pol));
    //
    // Special case for x == 0 and v > 0:

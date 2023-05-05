@@ -312,21 +312,21 @@ static void html_render(cmark_syntax_extension *extension,
                         cmark_event_type ev_type, int options) {
     cmark_html_render_cr(renderer->html);
     
+    cmark_strbuf_puts(renderer->html, "<pre");
+    cmark_html_render_sourcepos(node, renderer->html, options);
+    cmark_strbuf_puts(renderer->html, " class='hl'");
     if (options & CMARK_OPT_GITHUB_PRE_LANG) {
-      cmark_strbuf_puts(renderer->html, "<pre");
-      cmark_html_render_sourcepos(node, renderer->html, options);
-      cmark_strbuf_puts(renderer->html, " class='hl' lang=\"");
+      cmark_strbuf_puts(renderer->html, " lang=\"");
       houdini_escape_html0(renderer->html, node->as.code.info.data, node->as.code.info.len, 0);
       cmark_strbuf_puts(renderer->html, "\"><code>");
     } else {
-      cmark_strbuf_puts(renderer->html, "<pre");
-      cmark_html_render_sourcepos(node, renderer->html, options);
-      cmark_strbuf_puts(renderer->html, " class='hl'><code class=\"language-");
+      
+      cmark_strbuf_puts(renderer->html, "><code class=\"language-");
       houdini_escape_html0(renderer->html, node->as.code.info.data, node->as.code.info.len, 0);
       cmark_strbuf_puts(renderer->html, "\">");
     }
     
-    cmark_html_render_sourcepos(node, renderer->html, options);
+    // cmark_html_render_sourcepos(node, renderer->html, options);
     // cmark_strbuf_puts(renderer->html, "lang: ");
     // cmark_strbuf_put(renderer->html, node->as.code.info.data, node->as.code.info.len);
     
@@ -431,6 +431,7 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_CODE_BLOCK) {
             if (strcmp((const char *)node->as.code.info.data, "math") == 0) {
                 // Do not process, require the Math extension.
+                continue;
             } else {
                 cmark_node_set_syntax_extension(node, ext);
             }

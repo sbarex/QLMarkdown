@@ -10,6 +10,7 @@
 		830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3B272D68E500378FFE /* SwiftSoup */; };
 		830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3D272D68F700378FFE /* SwiftSoup */; };
 		830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3F272D68FB00378FFE /* SwiftSoup */; };
+		8310245129E9F8D5004651DC /* HighlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310245029E9F8D5004651DC /* HighlightViewController.swift */; };
 		831834E6277E10150044ECDA /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 831834E5277E10150044ECDA /* Sparkle */; };
 		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
@@ -33,7 +34,6 @@
 		8343797A271D498800A5D6EA /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 83437979271D498800A5D6EA /* Yams */; };
 		8343797B271D499A00A5D6EA /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		83437980271D49EA00A5D6EA /* url.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83327D1E2593FB0700E76CF6 /* url.cpp */; };
-		83437981271D49EE00A5D6EA /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83437982271D49F500A5D6EA /* buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A1D25B8E93D00B49FEC /* buffer.c */; };
 		83437983271D49F700A5D6EA /* decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2025B8E93D00B49FEC /* decode.c */; };
 		83437984271D49FA00A5D6EA /* encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 83720A2125B8E93D00B49FEC /* encode.c */; };
@@ -176,6 +176,9 @@
 		8357EB862588AB88002C2C45 /* ThemeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB852588AB88002C2C45 /* ThemeTableView.swift */; };
 		8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8357EB892588AE10002C2C45 /* ThemePreviewView.xib */; };
 		8357EB8D2588AE16002C2C45 /* ThemePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB8C2588AE16002C2C45 /* ThemePreviewView.swift */; };
+		835886B329E960050088DF7D /* math_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 835886B229E960050088DF7D /* math_ext.c */; };
+		835886B429E960050088DF7D /* math_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 835886B229E960050088DF7D /* math_ext.c */; };
+		835886B529E960050088DF7D /* math_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 835886B229E960050088DF7D /* math_ext.c */; };
 		83598E6525818808004664D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83598E6425818808004664D3 /* AppDelegate.swift */; };
 		83598E6725818808004664D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83598E6625818808004664D3 /* ViewController.swift */; };
 		83598E692581880A004664D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83598E682581880A004664D3 /* Assets.xcassets */; };
@@ -211,8 +214,6 @@
 		8382D05C2664051400210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05B2664051400210A0A /* Yams */; };
 		8382D05E2664052E00210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05D2664052E00210A0A /* Yams */; };
 		83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */; };
-		83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
-		83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B3C259A70EE004C1367 /* string_utils.cpp */; };
 		83D82A89277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83D82A8A277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
@@ -410,6 +411,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8310245029E9F8D5004651DC /* HighlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightViewController.swift; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		831A8C43258ABADA00E36182 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -525,6 +527,8 @@
 		8357EB852588AB88002C2C45 /* ThemeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeTableView.swift; sourceTree = "<group>"; };
 		8357EB892588AE10002C2C45 /* ThemePreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemePreviewView.xib; sourceTree = "<group>"; };
 		8357EB8C2588AE16002C2C45 /* ThemePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePreviewView.swift; sourceTree = "<group>"; };
+		835886B129E960050088DF7D /* math_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_ext.h; sourceTree = "<group>"; };
+		835886B229E960050088DF7D /* math_ext.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = math_ext.c; sourceTree = "<group>"; };
 		83598E6125818808004664D3 /* QLMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83598E6425818808004664D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		83598E6625818808004664D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -560,6 +564,8 @@
 		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
 		838109C525840429000AFE3C /* checkbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checkbox.h; sourceTree = "<group>"; };
 		838109C625840429000AFE3C /* checkbox.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = checkbox.c; sourceTree = "<group>"; };
+		838A5D5C29F1139200D704AB /* makefile2.makefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = makefile2.makefile; sourceTree = "<group>"; };
+		838A5D5E29F1139200D704AB /* makefile2.makefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = makefile2.makefile; sourceTree = "<group>"; };
 		83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesSelectorViewController.swift; sourceTree = "<group>"; };
 		83C44B3C259A70EE004C1367 /* string_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_utils.cpp; sourceTree = "<group>"; };
 		83C44B3D259A70EE004C1367 /* string_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string_utils.hpp; sourceTree = "<group>"; };
@@ -692,6 +698,8 @@
 				83F8825D25991BFC008C5071 /* heads_utils.hpp */,
 				83598EF425818B8B004664D3 /* syntaxhighlight.h */,
 				83598EF525818BCB004664D3 /* syntaxhighlight.c */,
+				835886B129E960050088DF7D /* math_ext.h */,
+				835886B229E960050088DF7D /* math_ext.c */,
 				838109C1258403CA000AFE3C /* mention.h */,
 				838109C2258403CA000AFE3C /* mention.c */,
 				834A4F8029E92AE800692964 /* extra-extensions.h */,
@@ -857,12 +865,13 @@
 			isa = PBXGroup;
 			children = (
 				83598E6D2581880A004664D3 /* Info.plist */,
+				83598E682581880A004664D3 /* Assets.xcassets */,
 				83598E6E2581880A004664D3 /* QLMarkdown.entitlements */,
 				83598E7925818839004664D3 /* QLMarkdown-Bridging-Header.h */,
 				83598E6425818808004664D3 /* AppDelegate.swift */,
 				83598E6625818808004664D3 /* ViewController.swift */,
+				8310245029E9F8D5004651DC /* HighlightViewController.swift */,
 				83598E6A2581880A004664D3 /* Main.storyboard */,
-				83598E682581880A004664D3 /* Assets.xcassets */,
 				8357EB762587DBDE002C2C45 /* Themes */,
 				836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */,
 				83598EF92582098A004664D3 /* test1.md */,
@@ -898,6 +907,7 @@
 		836B3019259E222700A6A5F7 /* highlight-wrapper */ = {
 			isa = PBXGroup;
 			children = (
+				838A5D5B29F1139200D704AB /* highlight_custom */,
 				836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */,
 				836B720A259E226F00A6A5F7 /* wrapper_highlight.h */,
 			);
@@ -931,6 +941,23 @@
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		838A5D5B29F1139200D704AB /* highlight_custom */ = {
+			isa = PBXGroup;
+			children = (
+				838A5D5C29F1139200D704AB /* makefile2.makefile */,
+				838A5D5D29F1139200D704AB /* src */,
+			);
+			path = highlight_custom;
+			sourceTree = "<group>";
+		};
+		838A5D5D29F1139200D704AB /* src */ = {
+			isa = PBXGroup;
+			children = (
+				838A5D5E29F1139200D704AB /* makefile2.makefile */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		83BD380429E7E7A2003F35CA /* cmark-extra */ = {
@@ -1255,7 +1282,6 @@
 				83760302258C1813004799ED /* inlineimage.c in Sources */,
 				834A4F5029E8AD8E00692964 /* commonmark.c in Sources */,
 				834A4F2729E8AD8D00692964 /* houdini_href_e.c in Sources */,
-				83C44B41259A71F4004C1367 /* string_utils.cpp in Sources */,
 				834A4F5329E8AD8E00692964 /* map.c in Sources */,
 				83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				834A4F5629E8AD8E00692964 /* html.c in Sources */,
@@ -1286,6 +1312,7 @@
 				834A4F1929E8AD8D00692964 /* blocks.c in Sources */,
 				831A8C71258ABD9300E36182 /* mention.c in Sources */,
 				836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
+				835886B429E960050088DF7D /* math_ext.c in Sources */,
 				834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */,
 				834A4F1C29E8AD8D00692964 /* cmark_ctype.c in Sources */,
 				834A4F1F29E8AD8D00692964 /* inlines.c in Sources */,
@@ -1309,7 +1336,6 @@
 			files = (
 				834A4F6B29E8AD8E00692964 /* node.c in Sources */,
 				834A4F5A29E8AD8E00692964 /* plugin.c in Sources */,
-				83437981271D49EE00A5D6EA /* string_utils.cpp in Sources */,
 				834A4F2B29E8AD8D00692964 /* syntax_extension.c in Sources */,
 				83437989271D4A1900A5D6EA /* heads_utils.cpp in Sources */,
 				83437983271D49F700A5D6EA /* decode.c in Sources */,
@@ -1350,6 +1376,7 @@
 				83437985271D49FF00A5D6EA /* MIMEtype.c in Sources */,
 				834A4F5429E8AD8E00692964 /* map.c in Sources */,
 				834A4F3C29E8AD8D00692964 /* utf8.c in Sources */,
+				835886B529E960050088DF7D /* math_ext.c in Sources */,
 				83437982271D49F500A5D6EA /* buffer.c in Sources */,
 				834A4F4829E8AD8E00692964 /* arena.c in Sources */,
 				834A4F0929E8AD8C00692964 /* core-extensions.c in Sources */,
@@ -1371,12 +1398,12 @@
 				834A4EF429E8AD8C00692964 /* autolink.c in Sources */,
 				8376EADD27E8BD3D00AB44B8 /* Log.swift in Sources */,
 				834A4EFC29E8AD8C00692964 /* ext_scanners.c in Sources */,
-				83C44B3E259A70EE004C1367 /* string_utils.cpp in Sources */,
 				834A4F1E29E8AD8D00692964 /* inlines.c in Sources */,
 				834A4F2329E8AD8D00692964 /* latex.c in Sources */,
 				83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				83F88259259906C7008C5071 /* heads.c in Sources */,
 				834CAB8E2591DE0F00673002 /* SaveAsFormatView.swift in Sources */,
+				835886B329E960050088DF7D /* math_ext.c in Sources */,
 				836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
 				83327D202593FCEB00E76CF6 /* url.cpp in Sources */,
 				834A4F5529E8AD8E00692964 /* html.c in Sources */,
@@ -1393,6 +1420,7 @@
 				834A4EF129E8AD8C00692964 /* strikethrough.c in Sources */,
 				83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */,
 				834A4EFF29E8AD8C00692964 /* tagfilter.c in Sources */,
+				8310245129E9F8D5004651DC /* HighlightViewController.swift in Sources */,
 				834A4F4029E8AD8D00692964 /* render.c in Sources */,
 				834A4F3529E8AD8D00692964 /* plaintext.c in Sources */,
 				83720A2925B8E93D00B49FEC /* encode.c in Sources */,
@@ -1590,7 +1618,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1613,7 +1641,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1630,7 +1658,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1653,7 +1681,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1886,7 +1914,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1911,7 +1939,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1932,7 +1960,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1957,7 +1985,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

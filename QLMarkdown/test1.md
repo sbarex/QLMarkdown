@@ -19,6 +19,7 @@ The previous block placed at the top of the document, starting with `---` and en
   - [GitHub mentions extension](#github-mentions-extension)
   - [Heads extension](#heads-extension)
   - [Inline images extension](#inline-images-extension)
+  - [Math extension](#math-extension)
   - [Table extension](#table-extension)
   - [Strikethrough extension](#strikethrough-extension)
   - [Syntax Highlight extension](#syntax-highlight-extension)
@@ -70,7 +71,26 @@ image url: `https://octodex.github.com/images/minion.png`
 ![Minion](https://octodex.github.com/images/minion.png)
 
 
+## Math extension
+
+If enabled, the math extension allow to render the mathematical expressions:
+
+- inside a fanced blocks ` ```math  ``` `:
+```math
+\sqrt{x+2}
+```
+
+- block expressions ` $$ code $$ `:
+
+$$\sqrt{x+2}$$
+
+- or inline expressions `$ code $`:
+
+_To split <span>$</span>100 in half, we calculate $\\$100/2$._
+
+
 ## Table extension
+
 | Option | Description |
 | ------:| :-----------|
 | data   | path to data files to supply the data that will be passed into templates. |
@@ -80,6 +100,7 @@ image url: `https://octodex.github.com/images/minion.png`
 
 ## Strikethrough extension
 You can choose to recognize the single tilde \~ on ~test~ or only the double tilde \~\~ on ~~another test~~.
+
 
 ## Syntax Highlight extension
 
@@ -94,7 +115,17 @@ function test(array $a, string $b, $c = null): boolean {
 }
 ```
 
-You can choose the theme.
+If the block of code does not specify the language it is necessary to enable the `guess` option to try to automatically recognize the language used.
+
+```
+phpinfo();
+$a = [];
+$a[] = "hello world";
+function test(array $a, string $b, $c = null): boolean {
+	return true;
+}
+```
+
 
 ## Task list extension
 * [x] step 1

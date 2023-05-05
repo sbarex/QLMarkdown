@@ -23,13 +23,12 @@
 #ifndef BOOST_MATH_REAL_CONCEPT_HPP
 #define BOOST_MATH_REAL_CONCEPT_HPP
 
-#include <boost/config.hpp>
-#include <boost/limits.hpp>
 #include <boost/math/special_functions/round.hpp>
 #include <boost/math/special_functions/trunc.hpp>
 #include <boost/math/special_functions/modf.hpp>
 #include <boost/math/tools/big_constant.hpp>
 #include <boost/math/tools/precision.hpp>
+#include <boost/math/tools/config.hpp>
 #include <boost/math/policies/policy.hpp>
 #include <boost/math/special_functions/asinh.hpp>
 #include <boost/math/special_functions/atanh.hpp>
@@ -38,8 +37,9 @@
 #endif
 #include <ostream>
 #include <istream>
-#include <boost/config/no_tr1/cmath.hpp>
-#include <math.h> // fmodl
+#include <limits>
+#include <cmath>
+#include <cstdint>
 
 #if defined(__SGI_STL_PORT) || defined(_RWSTD_VER) || defined(__LIBCOMO__)
 #  include <cstdio>
@@ -62,9 +62,7 @@ public:
    // Constructors:
    real_concept() : m_value(0){}
    real_concept(char c) : m_value(c){}
-#ifndef BOOST_NO_INTRINSIC_WCHAR_T
    real_concept(wchar_t c) : m_value(c){}
-#endif
    real_concept(unsigned char c) : m_value(c){}
    real_concept(signed char c) : m_value(c){}
    real_concept(unsigned short c) : m_value(c){}
@@ -73,16 +71,8 @@ public:
    real_concept(int c) : m_value(c){}
    real_concept(unsigned long c) : m_value(c){}
    real_concept(long c) : m_value(c){}
-#if defined(__DECCXX) || defined(__SUNPRO_CC)
    real_concept(unsigned long long c) : m_value(static_cast<real_concept_base_type>(c)){}
    real_concept(long long c) : m_value(static_cast<real_concept_base_type>(c)){}
-#elif defined(BOOST_HAS_LONG_LONG)
-   real_concept(boost::ulong_long_type c) : m_value(static_cast<real_concept_base_type>(c)){}
-   real_concept(boost::long_long_type c) : m_value(static_cast<real_concept_base_type>(c)){}
-#elif defined(BOOST_HAS_MS_INT64)
-   real_concept(unsigned __int64 c) : m_value(static_cast<real_concept_base_type>(c)){}
-   real_concept(__int64 c) : m_value(static_cast<real_concept_base_type>(c)){}
-#endif
    real_concept(float c) : m_value(c){}
    real_concept(double c) : m_value(c){}
    real_concept(long double c) : m_value(c){}
@@ -94,19 +84,15 @@ public:
    real_concept& operator=(char c) { m_value = c; return *this; }
    real_concept& operator=(unsigned char c) { m_value = c; return *this; }
    real_concept& operator=(signed char c) { m_value = c; return *this; }
-#ifndef BOOST_NO_INTRINSIC_WCHAR_T
    real_concept& operator=(wchar_t c) { m_value = c; return *this; }
-#endif
    real_concept& operator=(short c) { m_value = c; return *this; }
    real_concept& operator=(unsigned short c) { m_value = c; return *this; }
    real_concept& operator=(int c) { m_value = c; return *this; }
    real_concept& operator=(unsigned int c) { m_value = c; return *this; }
    real_concept& operator=(long c) { m_value = c; return *this; }
    real_concept& operator=(unsigned long c) { m_value = c; return *this; }
-#ifdef BOOST_HAS_LONG_LONG
-   real_concept& operator=(boost::long_long_type c) { m_value = static_cast<real_concept_base_type>(c); return *this; }
-   real_concept& operator=(boost::ulong_long_type c) { m_value = static_cast<real_concept_base_type>(c); return *this; }
-#endif
+   real_concept& operator=(long long c) { m_value = static_cast<real_concept_base_type>(c); return *this; }
+   real_concept& operator=(unsigned long long c) { m_value = static_cast<real_concept_base_type>(c); return *this; }
    real_concept& operator=(float c) { m_value = c; return *this; }
    real_concept& operator=(double c) { m_value = c; return *this; }
    real_concept& operator=(long double c) { m_value = c; return *this; }
@@ -289,13 +275,11 @@ inline long lround(const concepts::real_concept& v, const Policy& pol)
 inline long lround(const concepts::real_concept& v)
 { return boost::math::lround(v.value(), policies::policy<>()); }
 
-#ifdef BOOST_HAS_LONG_LONG
 template <class Policy>
-inline boost::long_long_type llround(const concepts::real_concept& v, const Policy& pol)
+inline long long llround(const concepts::real_concept& v, const Policy& pol)
 { return boost::math::llround(v.value(), pol); }
-inline boost::long_long_type llround(const concepts::real_concept& v)
+inline long long llround(const concepts::real_concept& v)
 { return boost::math::llround(v.value(), policies::policy<>()); }
-#endif
 
 template <class Policy>
 inline int itrunc(const concepts::real_concept& v, const Policy& pol)
@@ -308,13 +292,11 @@ inline long ltrunc(const concepts::real_concept& v, const Policy& pol)
 inline long ltrunc(const concepts::real_concept& v)
 { return boost::math::ltrunc(v.value(), policies::policy<>()); }
 
-#ifdef BOOST_HAS_LONG_LONG
 template <class Policy>
-inline boost::long_long_type lltrunc(const concepts::real_concept& v, const Policy& pol)
+inline long long lltrunc(const concepts::real_concept& v, const Policy& pol)
 { return boost::math::lltrunc(v.value(), pol); }
-inline boost::long_long_type lltrunc(const concepts::real_concept& v)
+inline long long lltrunc(const concepts::real_concept& v)
 { return boost::math::lltrunc(v.value(), policies::policy<>()); }
-#endif
 
 // Streaming:
 template <class charT, class traits>
@@ -337,7 +319,7 @@ namespace tools
 {
 
 template <>
-inline concepts::real_concept make_big_value<concepts::real_concept>(boost::math::tools::largest_float val, const char* , boost::false_type const&, boost::false_type const&)
+inline concepts::real_concept make_big_value<concepts::real_concept>(boost::math::tools::largest_float val, const char* , std::false_type const&, std::false_type const&)
 {
    return val;  // Can't use lexical_cast here, sometimes it fails....
 }
@@ -377,7 +359,7 @@ inline concepts::real_concept epsilon<concepts::real_concept>(BOOST_MATH_EXPLICI
 }
 
 template <>
-inline BOOST_MATH_CONSTEXPR int digits<concepts::real_concept>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(concepts::real_concept)) BOOST_NOEXCEPT
+inline constexpr int digits<concepts::real_concept>(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(concepts::real_concept)) noexcept
 {
    // Assume number of significand bits is same as real_concept_base_type,
    // unless std::numeric_limits<T>::is_specialized to provide digits.

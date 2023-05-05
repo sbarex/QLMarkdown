@@ -109,11 +109,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         if menuItem.action == #selector(self.checkForUpdates(_:)) {
             return self.updater?.canCheckForUpdates ?? false
         }
-        if menuItem.identifier?.rawValue == "advanced settings" {
-            let defaults = UserDefaults.standard
-            if let a = defaults.value(forKey: "advanced-settings") as? Bool {
-                menuItem.state = !a ? .on : .off
-            }
+        if menuItem.identifier?.rawValue == "update_refresh" {
+            menuItem.state = ((NSApplication.shared.delegate as? AppDelegate)?.updater?.updateCheckInterval == TimeInterval(menuItem.tag)) ? .on : .off
         } else if menuItem.identifier?.rawValue == "auto refresh" {
             let defaults = UserDefaults.standard
             if let a = defaults.value(forKey: "auto refresh") as? Bool {
@@ -175,6 +172,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             
             alert.runModal()
         }
+    }
+    
+    @IBAction func onUpdateRate(_ sender: NSMenuItem) {
+        updater?.updateCheckInterval = TimeInterval(sender.tag)
     }
 }
 

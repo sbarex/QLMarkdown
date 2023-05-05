@@ -6,7 +6,7 @@
 //
 
 #include "heads_utils.hpp"
-#include "string_utils.hpp"
+// #include "string_utils.hpp"
 
 #define PCRE2_LIBRARY 1
 

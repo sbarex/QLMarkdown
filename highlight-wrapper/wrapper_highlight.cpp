@@ -102,7 +102,6 @@ int highlight_init_generator() {
     generator->setBaseFont ( "" ) ;
     generator->setBaseFontSize ( "10" ) ;
     generator->setLineNumberWidth ( 5 );
-    generator->setStartingNestedLang( "");
     generator->disableTrailingNL(0);
     generator->setPluginParameter("");
 
@@ -153,8 +152,7 @@ int highlight_init_generator() {
          */
         return EXIT_FAILURE;
     }
-    generator->setIndentationOptions({""});
-
+    
     return EXIT_SUCCESS;
 }
 

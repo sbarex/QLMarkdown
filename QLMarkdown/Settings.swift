@@ -24,8 +24,14 @@ enum Appearance: Int {
 
 @objc enum GuessEngine: Int {
     case none = 0
-    case fast
+    case simple
     case accurate
+}
+
+@objc enum BackgroundColor: Int {
+    case fromMarkdown = 0
+    case fromScheme = 1
+    case custom = 2
 }
 
 extension NSNotification.Name {
@@ -44,10 +50,14 @@ class Settings: Codable {
         case strikethroughExtension
         case strikethroughDoubleTildeOption
         
+        case mathExtension
+        
         case syntaxHighlightExtension
+        case syntaxCustomThemes
         case syntaxThemeLight
-        case syntaxBackgroundColorLight
         case syntaxThemeDark
+        case syntaxBackgroundColor
+        case syntaxBackgroundColorLight
         case syntaxBackgroundColorDark
         case syntaxWordWrapOption
         case syntaxLineNumbersOption
@@ -99,10 +109,14 @@ class Settings: Codable {
     @objc var strikethroughExtension: Bool = true
     @objc var strikethroughDoubleTildeOption: Bool = false
     
+    @objc var mathExtension: Bool = true
+    
     @objc var syntaxHighlightExtension: Bool = true
+    @objc var syntaxCustomThemes: Bool = false
     @objc var syntaxThemeLight: String = ""
-    @objc var syntaxBackgroundColorLight: String = ""
     @objc var syntaxThemeDark: String = ""
+    @objc var syntaxBackgroundColor: BackgroundColor = .fromMarkdown 
+    @objc var syntaxBackgroundColorLight: String = ""
     @objc var syntaxBackgroundColorDark: String = ""
     @objc var syntaxWordWrapOption: Int = 0
     @objc var syntaxLineNumbersOption: Bool = false
@@ -185,10 +199,14 @@ class Settings: Codable {
         self.strikethroughExtension = try container.decode(Bool.self, forKey:.strikethroughExtension)
         self.strikethroughDoubleTildeOption = try container.decode(Bool.self, forKey:.strikethroughDoubleTildeOption)
     
+        self.mathExtension = try container.decode(Bool.self, forKey: .mathExtension)
+        
         self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
+        self.syntaxCustomThemes = try container.decode(Bool.self, forKey: .syntaxCustomThemes)
         self.syntaxThemeLight = try container.decode(String.self, forKey: .syntaxThemeLight)
-        self.syntaxBackgroundColorLight = try container.decode(String.self, forKey: .syntaxBackgroundColorLight)
         self.syntaxThemeDark = try container.decode(String.self, forKey: .syntaxThemeDark)
+        self.syntaxBackgroundColor = BackgroundColor(rawValue: try container.decode(Int.self, forKey: .syntaxBackgroundColor)) ?? .fromMarkdown
+        self.syntaxBackgroundColorLight = try container.decode(String.self, forKey: .syntaxBackgroundColorLight)
         self.syntaxBackgroundColorDark = try container.decode(String.self, forKey: .syntaxBackgroundColorDark)
         self.syntaxWordWrapOption = try container.decode(Int.self, forKey: .syntaxWordWrapOption)
         self.syntaxLineNumbersOption = try container.decode(Bool.self, forKey: .syntaxLineNumbersOption)
@@ -243,11 +261,14 @@ class Settings: Codable {
         try container.encode(self.mentionExtension, forKey: .mentionExtension)
         try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
         try container.encode(self.strikethroughDoubleTildeOption, forKey: .strikethroughDoubleTildeOption)
-    
+        try container.encode(self.mathExtension, forKey: .mathExtension)
+        
         try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
+        try container.encode(self.syntaxCustomThemes, forKey: .syntaxCustomThemes)
         try container.encode(self.syntaxThemeLight, forKey: .syntaxThemeLight)
-        try container.encode(self.syntaxBackgroundColorLight, forKey: .syntaxBackgroundColorLight)
         try container.encode(self.syntaxThemeDark, forKey: .syntaxThemeDark)
+        try container.encode(self.syntaxBackgroundColor.rawValue, forKey: .syntaxBackgroundColor)
+        try container.encode(self.syntaxBackgroundColorLight, forKey: .syntaxBackgroundColorLight)
         try container.encode(self.syntaxBackgroundColorDark, forKey: .syntaxBackgroundColorDark)
         try container.encode(self.syntaxWordWrapOption, forKey: .syntaxWordWrapOption)
         try container.encode(self.syntaxLineNumbersOption, forKey: .syntaxLineNumbersOption)
@@ -350,17 +371,28 @@ class Settings: Codable {
             headsExtension = ext
         }
         
+        if let ext = defaultsDomain["math"] as? Bool {
+            mathExtension = ext
+        }
+        
         if let ext = defaultsDomain["syntax"] as? Bool {
             syntaxHighlightExtension = ext
+        }
+        
+        if let state = defaultsDomain["syntax_custom_themes"] as? Bool {
+            syntaxCustomThemes = state
         }
         if let theme = defaultsDomain["syntax_light_theme"] as? String {
             syntaxThemeLight = theme
         }
-        if let color = defaultsDomain["syntax_light_background"] as? String {
-            syntaxBackgroundColorLight = color
-        }
         if let theme = defaultsDomain["syntax_dark_theme"] as? String {
             syntaxThemeDark = theme
+        }
+        if let bg = defaultsDomain["syntax_background"] as? Int, let b = BackgroundColor(rawValue: bg) {
+            syntaxBackgroundColor = b
+        }
+        if let color = defaultsDomain["syntax_light_background"] as? String {
+            syntaxBackgroundColorLight = color
         }
         if let color = defaultsDomain["syntax_dark_background"] as? String {
             syntaxBackgroundColorDark = color
@@ -477,10 +509,14 @@ class Settings: Codable {
             self.strikethroughExtension = s.strikethroughExtension
             self.strikethroughDoubleTildeOption = s.strikethroughDoubleTildeOption
             
+            self.mathExtension = s.mathExtension
+            
             self.syntaxHighlightExtension = s.syntaxHighlightExtension
+            self.syntaxCustomThemes = s.syntaxCustomThemes
             self.syntaxThemeLight = s.syntaxThemeLight
-            self.syntaxBackgroundColorLight = s.syntaxBackgroundColorLight
             self.syntaxThemeDark = s.syntaxThemeDark
+            self.syntaxBackgroundColor = s.syntaxBackgroundColor
+            self.syntaxBackgroundColorLight = s.syntaxBackgroundColorLight
             self.syntaxBackgroundColorDark = s.syntaxBackgroundColorDark
             self.syntaxWordWrapOption = s.syntaxWordWrapOption
             self.syntaxLineNumbersOption = s.syntaxLineNumbersOption
@@ -962,10 +998,21 @@ class Settings: Codable {
             }
         }
         
+        if self.mathExtension {
+            if let ext = cmark_find_syntax_extension("math") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                
+                os_log(
+                    "Enabled markdown `math` extension.",
+                    log: OSLog.rendering,
+                    type: .debug)
+            } else {
+                os_log("Could not enable markdown `math` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
         if self.syntaxHighlightExtension {
             if let ext = cmark_find_syntax_extension("syntaxhighlight") {
-                // TODO: set a property
-                
                 if let path = getHighlightSupportPath() {
                     cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
                 } else {
@@ -973,23 +1020,43 @@ class Settings: Codable {
                 }
                 
                 let theme: String
-                let background: String
-                switch appearance {
-                case .light:
-                    theme = self.syntaxThemeLight
-                    background = self.syntaxBackgroundColorLight
-                case .dark:
-                    theme = self.syntaxThemeDark
-                    background = self.syntaxBackgroundColorDark
-                case .undefined:
-                    let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
-                    if mode == "Light" {
-                        theme = self.syntaxThemeLight
+                var background: String = ""
+                switch self.syntaxBackgroundColor {
+                case .fromMarkdown:
+                    background = "var(--hl_Background)" 
+                case .fromScheme:
+                    background = "" // Do not override the background color.
+                case .custom:
+                    switch appearance {
+                    case .light:
                         background = self.syntaxBackgroundColorLight
-                    } else {
-                        theme = self.syntaxThemeDark
+                    case .dark:
                         background = self.syntaxBackgroundColorDark
+                    case .undefined:
+                        let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                        if mode == "Light" {
+                            background = self.syntaxBackgroundColorLight
+                        } else {
+                            background = self.syntaxBackgroundColorDark
+                        }
                     }
+                }
+                if self.syntaxCustomThemes {
+                    switch appearance {
+                    case .light:
+                        theme = self.syntaxThemeLight
+                    case .dark:
+                        theme = self.syntaxThemeDark
+                    case .undefined:
+                        let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                        if mode == "Light" {
+                            theme = self.syntaxThemeLight
+                        } else {
+                            theme = self.syntaxThemeDark
+                        }
+                    }
+                } else {
+                    theme = ""
                 }
                 
                 cmark_syntax_extension_highlight_set_theme_name(ext, theme)
@@ -998,7 +1065,7 @@ class Settings: Codable {
                 cmark_syntax_extension_highlight_set_tab_spaces(ext, Int32(self.syntaxTabsOption))
                 cmark_syntax_extension_highlight_set_wrap_limit(ext, Int32(self.syntaxWordWrapOption))
                 cmark_syntax_extension_highlight_set_guess_language(ext, guess_type(UInt32(self.guessEngine.rawValue)))
-                if self.guessEngine == .fast, let f = self.resourceBundle.path(forResource: "magic", ofType: "mgc") {
+                if self.guessEngine == .simple, let f = self.resourceBundle.path(forResource: "magic", ofType: "mgc") {
                     cmark_syntax_extension_highlight_set_magic_file(ext, f)
                 }
                 
@@ -1085,17 +1152,137 @@ table.debug td {
 
         html_debug += "<tr><td>options</td><td>\(html_options)</td></tr>\n"
         
-        html_debug += "<tr><td>table extension</td><td>"
-        if self.tableExtension {
-            html_debug += "on " + (cmark_find_syntax_extension("table") == nil ? " (NOT AVAILABLE" : "")
+        html_debug += "<tr><td>autolink extension</td><td>"
+        if self.autoLinkExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("autolink") == nil ? " (NOT AVAILABLE" : "")
         } else {
             html_debug += "off"
         }
         html_debug += "</td></tr>\n"
-
-        html_debug += "<tr><td>autolink extension</td><td>"
-        if self.autoLinkExtension {
-            html_debug += "on " + (cmark_find_syntax_extension("autolink") == nil ? " (NOT AVAILABLE" : "")
+        
+        html_debug += "<tr><td>emoji extension</td><td>"
+        if self.emojiExtension {
+            html_debug += "on" + (cmark_find_syntax_extension("emoji") == nil ? " (NOT AVAILABLE" : "")
+            html_debug += " / \(self.emojiImageOption ? "using images" : "using emoji")"
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>heads extension</td><td>" + (self.headsExtension ?  "on" : "off") + "</td></tr>\n"
+        
+        html_debug += "<tr><td>inlineimage extension</td><td>"
+        if self.inlineImageExtension {
+            html_debug += "on" + (cmark_find_syntax_extension("inlineimage") == nil ? " (NOT AVAILABLE" : "")
+            html_debug += "<br />basedir: \(baseDir)"
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>math extension</td><td>"
+        if self.mathExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("math") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>mention extension</td><td>"
+        if self.mentionExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("mention") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>strikethrough extension</td><td>"
+        if self.strikethroughExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("strikethrough") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>syntax highlighting extension</td><td>"
+        if self.syntaxHighlightExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("syntaxhighlight") == nil ? " (NOT AVAILABLE" : "")
+            
+            var theme: String
+            var background: String
+            
+            if self.syntaxCustomThemes {
+                switch appearance {
+                case .light:
+                    theme = self.syntaxThemeLight
+                case .dark:
+                    theme = self.syntaxThemeDark
+                case .undefined:
+                    let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                    if mode == "Light" {
+                        theme = self.syntaxThemeLight
+                    } else {
+                        theme = self.syntaxThemeDark
+                    }
+                }
+                if theme.isEmpty {
+                    theme = "N/D"
+                }
+            } else {
+                theme = "Inherit from markdown style"
+            }
+            
+            switch self.syntaxBackgroundColor {
+            case .fromMarkdown:
+                background = "use markdown settings"
+            case .fromScheme:
+                background = "use scheme settings"
+            case .custom:
+                switch appearance {
+                case .light:
+                    background = self.syntaxBackgroundColorLight
+                case .dark:
+                    background = self.syntaxBackgroundColorDark
+                case .undefined:
+                    let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                    if mode == "Light" {
+                        background = self.syntaxBackgroundColorLight
+                    } else {
+                        background = self.syntaxBackgroundColorDark
+                    }
+                }
+            }
+            
+            html_debug += "<table>\n"
+            html_debug += "<tr><td>datadir</td><td>\(getHighlightSupportPath() ?? "missing")</td></tr>\n"
+            html_debug += "<tr><td>theme</td><td>\(theme)</td></tr>\n"
+            html_debug += "<tr><td>background</td><td>\(background)</td></tr>\n"
+            html_debug += "<tr><td>line numbers</td><td>\(self.syntaxLineNumbersOption ? "on" : "off")</td></tr>\n"
+            html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
+            html_debug += "<tr><td>wrap</td><td> \(self.syntaxWordWrapOption > 0 ? "after \(self.syntaxWordWrapOption) characters" : "disabled")</td></tr>\n"
+            html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
+            html_debug += "<tr><td>guess language</td><td>"
+            switch self.guessEngine {
+            case .none:
+                html_debug += "off"
+            case .simple:
+                html_debug += "simple<br />"
+                html_debug += "magic db: \(self.resourceBundle.path(forResource: "magic", ofType: "mgc") ?? "missing")"
+            case .accurate:
+                html_debug += "accurate"
+            }
+            html_debug += "</td></tr>\n"
+            html_debug += "<tr><td>font family</td><td>\(self.syntaxFontFamily.isEmpty ? "not set" : self.syntaxFontFamily)</td></tr>\n"
+            html_debug += "<tr><td>font size</td><td>\(self.syntaxFontSize > 0 ? "\(self.syntaxFontSize)" : "not set")</td></tr>\n"
+            html_debug += "</table>\n"
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>table extension</td><td>"
+        if self.tableExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("table") == nil ? " (NOT AVAILABLE" : "")
         } else {
             html_debug += "off"
         }
@@ -1125,105 +1312,6 @@ table.debug td {
         }
         html_debug += "</td></tr>\n"
         
-        html_debug += "<tr><td>strikethrough extension</td><td>"
-        if self.strikethroughExtension {
-            html_debug += "on " + (cmark_find_syntax_extension("strikethrough") == nil ? " (NOT AVAILABLE" : "")
-        } else {
-            html_debug += "off"
-        }
-        html_debug += "</td></tr>\n"
-        
-        html_debug += "<tr><td>mention extension</td><td>"
-        if self.mentionExtension {
-            html_debug += "on " + (cmark_find_syntax_extension("mention") == nil ? " (NOT AVAILABLE" : "")
-        } else {
-            html_debug += "off"
-        }
-        html_debug += "</td></tr>\n"
-        
-        html_debug += "<tr><td>inlineimage extension</td><td>"
-        if self.inlineImageExtension {
-            html_debug += "on" + (cmark_find_syntax_extension("inlineimage") == nil ? " (NOT AVAILABLE" : "")
-            html_debug += "<br />basedir: \(baseDir)"
-        } else {
-            html_debug += "off"
-        }
-        html_debug += "</td></tr>\n"
-        
-        html_debug += "<tr><td>heads extension</td><td>" + (self.headsExtension ?  "on" : "off") + "</td></tr>\n"
-        
-        html_debug += "<tr><td>emoji extension</td><td>"
-        if self.emojiExtension {
-            html_debug += "on" + (cmark_find_syntax_extension("emoji") == nil ? " (NOT AVAILABLE" : "")
-            html_debug += " / \(self.emojiImageOption ? "using images" : "using emoji")"
-        } else {
-            html_debug += "off"
-        }
-        html_debug += "</td></tr>\n"
-        
-        html_debug += "<tr><td>syntax highlighting</td><td>"
-        if self.syntaxHighlightExtension {
-            html_debug += "on " + (cmark_find_syntax_extension("syntaxhighlight") == nil ? " (NOT AVAILABLE" : "")
-            
-            var theme: String
-            var background: String
-            
-            switch appearance {
-            case .light:
-                theme = self.syntaxThemeLight
-                background = self.syntaxBackgroundColorLight
-            case .dark:
-                theme = self.syntaxThemeDark
-                background = self.syntaxBackgroundColorDark
-            case .undefined:
-                let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
-                if mode == "Light" {
-                    theme = self.syntaxThemeLight
-                    background = self.syntaxBackgroundColorLight
-                } else {
-                    theme = self.syntaxThemeDark
-                    background = self.syntaxBackgroundColorDark
-                }
-            }
-            
-            if theme.isEmpty {
-                theme = "Inherit from document style"
-                background = "Inherit from document style"
-            } else {
-                if background.isEmpty {
-                    background = "use theme settings"
-                } else if background == "ignore" {
-                    background = "use markdown settings"
-                }
-            }
-            
-            html_debug += "<table>\n"
-            html_debug += "<tr><td>datadir</td><td>\(getHighlightSupportPath() ?? "missing")</td></tr>\n"
-            html_debug += "<tr><td>theme</td><td>\(theme)</td></tr>\n"
-            html_debug += "<tr><td>background</td><td>\(background)</td></tr>\n"
-            html_debug += "<tr><td>line numbers</td><td>\(self.syntaxLineNumbersOption ? "on" : "off")</td></tr>\n"
-            html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
-            html_debug += "<tr><td>wrap</td><td> \(self.syntaxWordWrapOption > 0 ? "after \(self.syntaxWordWrapOption) characters" : "disabled")</td></tr>\n"
-            html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
-            html_debug += "<tr><td>guess language</td><td>"
-            switch self.guessEngine {
-            case .none:
-                html_debug += "off"
-            case .fast:
-                html_debug += "fast<br />"
-                html_debug += "magic db: \(self.resourceBundle.path(forResource: "magic", ofType: "mgc") ?? "missing")"
-            case .accurate:
-                html_debug += "accurate"
-            }
-            html_debug += "</td></tr>\n"
-            html_debug += "<tr><td>font family</td><td>\(self.syntaxFontFamily.isEmpty ? "not set" : self.syntaxFontFamily)</td></tr>\n"
-            html_debug += "<tr><td>font size</td><td>\(self.syntaxFontSize > 0 ? "\(self.syntaxFontSize)" : "not set")</td></tr>\n"
-            html_debug += "</table>\n"
-        } else {
-            html_debug += "off"
-        }
-        html_debug += "</td></tr>\n"
-        
         html_debug += "<tr><td>link</td><td>" + (self.openInlineLink ? "open inline" : "open in standard browser") + "</td></tr>\n"
         
         html_debug += "</table>\n"
@@ -1244,6 +1332,9 @@ table.debug td {
         
         let css_doc: String
         let css_doc_extended: String
+        
+        var s_header = header
+        var s_footer = footer
         
         let formatCSS = { (code: String?) -> String in
             guard let css = code, !css.isEmpty else {
@@ -1272,8 +1363,9 @@ table.debug td {
             
         var css_highlight: String = ""
         if self.renderAsCode {
+            var exit_code: Int32 = 0
+            
             let theme: String
-            var background: String = ""
             switch appearance {
             case .light:
                 theme = self.syntaxThemeLight.isEmpty ? "acid" : self.syntaxThemeLight
@@ -1287,42 +1379,95 @@ table.debug td {
                     theme = self.syntaxThemeDark.isEmpty ? "zenburn" : self.syntaxThemeDark
                 }
             }
-            var release: ReleaseTheme?
-            var exit_code: Int32 = 0
-            let t = highlight_get_theme2(theme, &exit_code, &release)
-            defer {
-                release?(t)
+            var background: String = ""
+            
+            switch self.syntaxBackgroundColor {
+            case .fromMarkdown:
+                background = ""
+            case .fromScheme:
+                var release: ReleaseTheme?
+                let t = highlight_get_theme2(theme, &exit_code, &release)
+                defer {
+                    release?(t)
+                }
+                
+                if exit_code == EXIT_SUCCESS, let s = t?.pointee.canvas.pointee.color {
+                    background = String(cString: s)
+                }
+            case .custom:
+                let mode = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+                if mode == "Light" {
+                    background = self.syntaxBackgroundColorLight
+                } else {
+                    background = self.syntaxBackgroundColorDark
+                }
             }
-            if exit_code == EXIT_SUCCESS, let s = t?.pointee.canvas.pointee.color {
-                background = String(cString: s)
-            }
+            
             exit_code = 0
-            let p = highlight_format_style2(&exit_code, background)
+            let p = highlight_format_style2(&exit_code, background.isEmpty ? nil : background)
             defer {
                 p?.deallocate()
             }
+            css_highlight += "pre.hl { white-space: pre; }\n"
             if exit_code == EXIT_SUCCESS, let p = p {
-                css_highlight = String(cString: p) + "\npre.hl { white-space: pre; }\n"
+                css_highlight = String(cString: p) + "\n"
             }
         } else if self.syntaxHighlightExtension, let ext = cmark_find_syntax_extension("syntaxhighlight"), cmark_syntax_extension_highlight_get_rendered_count(ext) > 0 {
-            let theme = String(cString: cmark_syntax_extension_highlight_get_theme_name(ext))
+            let theme = self.syntaxCustomThemes ? String(cString: cmark_syntax_extension_highlight_get_theme_name(ext)) : ""
             if !theme.isEmpty, let p = cmark_syntax_extension_get_style(ext) {
                 // Embed the theme style.
                 css_highlight = String(cString: p)
                 p.deallocate()
+            } else {
+                if let s = cmark_syntax_extension_highlight_get_background_color(ext) {
+                    let background_color = String(cString: s)
+                    if background_color != "ignore" && !background_color.isEmpty {
+                        css_highlight += "body.hl, pre.hl { background-color: \(background_color); }\n"
+                    }
+                }
+            }
+            if let s = cmark_syntax_extension_highlight_get_font_family(ext) {
+                let font_name = String(cString: s)
+                if !font_name.isEmpty && font_name != "-" {
+                    let font = "\"\(font_name)\", ui-monospace, -apple-system, Menlo, monospace"
+                    css_highlight += "body.hl, pre.hl, pre.hl code { font-family: \(font); }\n"
+                }
+            }
+            let size = cmark_syntax_extension_highlight_get_font_size(ext)
+            if size > 0 {
+                css_highlight += "body.hl, pre.hl, pre.hl code { font-size: \(size)pt; }\n"
             }
         }
-        if !css_highlight.isEmpty {
-            let font = self.syntaxFontFamily
-            if font != "" {
-                let code = """
-:root {
---code-font: "\(font)", ui-monospace, -apple-system, Menlo, monospace;
-}
+        css_highlight = formatCSS(css_highlight)
+        
+        if !self.renderAsCode, self.mathExtension, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 || body.contains("$") {
+            s_header += """
+<script type="text/javascript">
+MathJax = {
+  options: {
+    enableMenu: \(self.debug ? "true" : "false"),
+  },
+  tex: {
+    // packages: ['base'],        // extensions to use
+    inlineMath: [              // start/end delimiter pairs for in-line math
+      ['$', '$']
+      // , ['\\(', '\\)']
+    ],
+    displayMath: [             // start/end delimiter pairs for display math
+      ['$$', '$$']
+      //, ['\\[', '\\]']
+    ],
+    processEscapes: true,       // use \\$ to produce a literal dollar sign
+    processEnvironments: false
+  }
+};
+</script>
 """
-                css_highlight += code
-            }
-            css_highlight = formatCSS(css_highlight)
+            s_footer += """
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+"""
         }
         
         let style = css_doc + css_highlight + css_doc_extended
@@ -1338,13 +1483,13 @@ table.debug td {
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 <title>\(title)</title>
 \(style)
-\(header)
+\(s_header)
 </head>
 <body\(body_style)>
 \(wrapper_open)
 \(body)
 \(wrapper_close)
-\(footer)
+\(s_footer)
 </body>
 </html>
 """

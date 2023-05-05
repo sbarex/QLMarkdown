@@ -6,6 +6,16 @@
 #ifndef BOOST_MATH_SPECIAL_FUNCTIONS_RSQRT_HPP
 #define BOOST_MATH_SPECIAL_FUNCTIONS_RSQRT_HPP
 #include <cmath>
+#include <type_traits>
+#include <limits>
+
+#include <boost/math/tools/is_standalone.hpp>
+#ifndef BOOST_MATH_STANDALONE
+#include <boost/config.hpp>
+#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
+#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
+#endif
+#endif
 
 namespace boost::math {
 
@@ -21,7 +31,7 @@ inline Real rsqrt(Real const & x)
     {
         // if it's so tiny it rounds to 0 as long double,
         // no performance gains are possible:
-        if (x < std::numeric_limits<long double>::denorm_min() || x > std::numeric_limits<long double>::max()) {
+        if (x < std::numeric_limits<long double>::denorm_min() || x > (std::numeric_limits<long double>::max)()) {
             return 1/sqrt(x);
         }
         Real x0 = 1/sqrt(static_cast<long double>(x));
