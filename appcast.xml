@@ -3,6 +3,38 @@
     <channel>
         <title>QLMarkdown</title> 
         <item>
+            <title>1.0.16</title>
+            <pubDate>ven, 5 mag 2023 12:23:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.16/QLMarkdown.zip" sparkle:shortVersionString="1.0.16" sparkle:version="41" sparkle:edSignature="wS50y6jjuaQSYFiOvUDwiV8CNxGZxkVvYZ1MSOw4neUnoUtwXin6T1cu+Ab3ipGx96MKoEn0nM7mvnz0C1I9BQ==" length="18075597" />
+            <description><![CDATA[
+                <h2>1.0.16 (41)</h2>
+                <p>New features:</p>
+                <ul>
+                <li>Support mathematical expressions with the MathJax engine.</li>
+                <li>Update libraries:</li>
+                    <ul>
+                        <li>cmark-gfm 0.29.0.gfm.11</li>
+                        <li>highlight 4.5</li>
+                        <li>lua 5.4.4</li>
+                        <li>libmagic 5.44</li>
+                        <li>go-enry v2.8.4</li>
+                        <li>boost.</li>
+                    </ul>
+                <li>Settings UI redesigned.</li>
+                </ul>
+
+                <p>Bugfix:</p>
+                <ul>
+                <li>Alt attribute for emoji rendered as image.</li>
+                </ul>
+
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
+        <item>
             <title>1.0.15</title>
             <pubDate>lun, 4 apr 2022 23:37:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
