@@ -1,7 +1,32 @@
 <?xml version="1.0" standalone="yes"?>
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
-        <title>QLMarkdown</title> 
+        <title>QLMarkdown</title>
+        <item>
+            <title>1.0.17</title>
+            <pubDate>lun, 22 mag 2023 08:45:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.17/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.0.17" sparkle:version="42" 
+                       sparkle:edSignature="2ucsTNer3BaUJI483PQaFoGSqY2RVWxZDYoRVfVTPRyTmH3PyTXFEvCjbJTzo6gjyig0AQM5KkhoJs/Oa87QAA==" length="18080419" 
+                       />
+            <description><![CDATA[
+                <h2>1.0.17 (42)</h2>
+                <p>New features:</p>
+                <ul>
+                <li>Improved Math (Latex) support (thanks to @mccann):</li>
+                <ul>
+                   <li>Prevent Markdown processing inside $'s</li>
+                   <li>Allow multi-line Latex, like that supported by: jupyter notebook, vscode, obsidian, probably many more - only tested the above.</li>
+                   <li>Now prevents arbitrary html getting passed through.</li>
+                </ul>
+                </ul>
+
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
         <item>
             <title>1.0.16</title>
             <pubDate>ven, 5 mag 2023 12:23:00 +0100</pubDate>
