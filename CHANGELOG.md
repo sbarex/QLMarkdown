@@ -1,6 +1,18 @@
 # Changelog
 
 
+### 1.0.17 (42)
+New Features:
+- Improved Math (Latex) support (thanks to @mccann):
+    - Prevent Markdown processing inside $'s
+    - Allow multi-line Latex, like that supported by:
+        - jupyter notebook
+        - vscode
+        - obsidian
+        - probably many more - only tested the above.
+    - Now prevents arbitrary html getting passed through.
+
+
 ### 1.0.16 (41)
 New features:
 - Support mathematical expressions with the MathJax engine.

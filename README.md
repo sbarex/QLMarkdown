@@ -166,7 +166,7 @@ The theme popup menu has some extra commands available pressing the `alt` key.
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|
 |Validate UTF|Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).|
 |Show debug info|Insert in the output some debug information.|
-|Render as source code|Shows the highlighted source code instead of the formatted output.|
+|Render as source code|Show the plain text file (raw version) instead of the formatted output. Syntax highlighting remains.|
 
 
 ### Extensions
