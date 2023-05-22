@@ -86,7 +86,7 @@ $$\sqrt{x+2}$$
 
 - or inline expressions `$ code $`:
 
-_To split <span>$</span>100 in half, we calculate $\\$100/2$._
+_To split <span>$</span>100 in half, we calculate $100/2$_
 
 
 ## Table extension
