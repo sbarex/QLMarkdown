@@ -67,7 +67,7 @@ else
 	lua_libraries    += ${BUILD_DIR}/liblua-arm64.a
 	magic_libraries  += ${BUILD_DIR}/libmagic-arm64.a
 	goutils_libraries  += ${BUILD_DIR}/libgoutils-arm64.a
-	highlight_libraries = ${BUILD_DIR}/libhighlight_arm64.dylyb
+	highlight_libraries = ${BUILD_DIR}/libhighlight-arm64.a
 	libraries_shared += ${BUILD_DIR}/libwrapper_highlight-arm64.dylib
 	libraries_static += ${BUILD_DIR}/libwrapper_highlight-arm64.a
 endif

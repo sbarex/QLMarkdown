@@ -62,7 +62,7 @@ ifeq ($(NATIVE_ARCH),x86_64)
 else
 		# build intel code
 		libraries_shared += ${BUILD_DIR}/libcmark-gfm-x86_64.dylib
-		libraries_static += ${BUILD_DIR}/libcmark-gfmt-x86_64.a
+		libraries_static += ${BUILD_DIR}/libcmark-gfm-x86_64.a
 endif
 endif
 

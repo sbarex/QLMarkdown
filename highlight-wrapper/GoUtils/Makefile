@@ -55,7 +55,7 @@ endif
 
 ${BUILD_DIR}/libgoutils-x86_64.a: goutils.go
 	@echo "Compiling x86_64 static library…"
-	CGO_CFLAGS="-mmacosx-version-min=10.15" go build --buildmode=c-archive -gcflags "${GCFLAGS}" -ldflags "${LDFLAGS}" -o ${BUILD_DIR}/libgoutils-x86_64.a
+	GOOS=darwin GOARCH=amd64 CGO_ENABLED=1 CGO_CFLAGS="-mmacosx-version-min=10.15" go build --buildmode=c-archive -gcflags "${GCFLAGS}" -ldflags "${LDFLAGS}" -o ${BUILD_DIR}/libgoutils-x86_64.a
 	@cp ${BUILD_DIR}/libgoutils-x86_64.h ${BUILD_DIR}/goutils.h
 
 ${BUILD_DIR}/libgoutils-arm64.a: goutils.go
