@@ -2,6 +2,42 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title>
+        
+        <item>
+            <title>1.0.18</title>
+            <pubDate>mer, 04 giu 2024 21:48:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.18/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.0.18" sparkle:version="43" 
+                       sparkle:edSignature="xRZC2EkKTgemcMa0Kd8M/WRSGDEOq7T7niGEtjNJYuynQDcXU+hzxudWKhiRWtsECumN//REhKQvqiSypFxKAg==" length="18023077" 
+                       />
+            <description><![CDATA[
+                <h2>1.0.18 (43)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+    
+                <p>New features:</p>
+                <ul>
+                    <li>Support for <code>com.nutstore.down</code> UTI.</li>
+                    <li>cmark-gfm updated to version 0.29.0.gfm.13.</li>
+                    <li>pcre2 updated to version 10.43.</li>
+                    <li>Enry updated to version 2.8.8.</li>
+                    <li>Settings to show about app info on the footer preview.</li>
+                    <li>Link to buy me a coffee</li>
+                </ul>
+
+                <p>Bug fix:</p>
+                <ul>
+                    <li>Exported html head title filled with the filename.</li>
+                </ul>
+
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+
+        
         <item>
             <title>1.0.17</title>
             <pubDate>lun, 22 mag 2023 08:45:00 +0100</pubDate>
