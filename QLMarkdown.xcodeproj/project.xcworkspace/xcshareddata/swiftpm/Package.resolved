@@ -1,12 +1,13 @@
 {
+  "originHash" : "78780b2782c2b0293770936100c0826054b4958c6c2356347748416892efa8d3",
   "pins" : [
     {
       "identity" : "sparkle",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sparkle-project/Sparkle",
       "state" : {
-        "revision" : "7907f058bcef1132c9b4af6c049cac598330a5f9",
-        "version" : "2.4.1"
+        "revision" : "b456fd404954a9e13f55aa0c88cd5a40b8399638",
+        "version" : "2.6.3"
       }
     },
     {
@@ -14,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/scinfu/SwiftSoup",
       "state" : {
-        "revision" : "f707b8680cddb96dc1855632340a572ef37bbb98",
-        "version" : "2.5.3"
+        "revision" : "028487d4a8a291b2fe1b4392b5425b6172056148",
+        "version" : "2.7.2"
       }
     },
     {
@@ -28,5 +29,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

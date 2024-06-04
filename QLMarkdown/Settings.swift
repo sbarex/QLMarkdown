@@ -90,6 +90,7 @@ class Settings: Codable {
         case qlWindowWidth
         case qlWindowHeight
         
+        case about
         case debug
     }
 
@@ -161,6 +162,25 @@ class Settings: Codable {
     }
     
     @objc var debug: Bool = false
+    @objc var about: Bool = true
+    
+    var app_version: String {
+        var title: String = "<a href='https://github.com/sbarex/QLMarkdown'>";
+        if let info = Bundle.main.infoDictionary {
+            title += (info["CFBundleExecutable"] as? String ?? "QLMarkdown") + "</a>"
+            if let version = info["CFBundleShortVersionString"] as? String,
+                let build = info["CFBundleVersion"] as? String {
+                title += ", version \(version) (\(build))"
+            }
+            if let copy = info["NSHumanReadableCopyright"] as? String {
+                title += ".<br />\n\(copy.trimmingCharacters(in: CharacterSet(charactersIn: ". ")) + " with <span style='font-style: normal'>❤️</span>")"
+            }
+        } else {
+            title += "QLMarkdown</a>"
+        }
+        title += ".<br/>\nIf you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!"
+        return title
+    }
     
     lazy fileprivate (set) var resourceBundle: Bundle = {
         return getResourceBundle()
@@ -240,6 +260,7 @@ class Settings: Codable {
         self.qlWindowHeight = try container.decode(Int?.self, forKey: .qlWindowHeight)
     
         self.debug = try container.decode(Bool.self, forKey: .debug)
+        self.about = try container.decode(Bool.self, forKey: .about)
     }
     
     init(defaults defaultsDomain: [String: Any]) {
@@ -298,6 +319,7 @@ class Settings: Codable {
         try container.encode(self.useLegacyPreview, forKey: .useLegacyPreview)
         try container.encode(self.qlWindowWidth, forKey: .qlWindowWidth)
         try container.encode(self.qlWindowHeight, forKey: .qlWindowHeight)
+        try container.encode(self.about, forKey: .about)
         try container.encode(self.debug, forKey: .debug)
     }
     
@@ -459,6 +481,10 @@ class Settings: Codable {
             guessEngine = guess
         }
         
+        if let opt = defaultsDomain["about"] as? Bool {
+            about = opt
+        }
+        
         if let opt = defaultsDomain["debug"] as? Bool {
             debug = opt
         }
@@ -543,6 +569,7 @@ class Settings: Codable {
     
             self.openInlineLink = s.openInlineLink
     
+            self.about = s.about
             self.debug = s.debug
             
             self.renderAsCode = s.renderAsCode
@@ -1096,6 +1123,7 @@ class Settings: Codable {
         defer {
             cmark_node_free(doc)
         }
+        let about = self.about ? "<div style='font-size: 72%; margin-top: 1.5em; padding-top: .5em; -webkit-user-select: none;'><hr style='height: 0; border: none; border-top: 1px solid rgba(0,0,0,.5); box-shadow: 0 1px 1px rgba(255, 255, 255, .5)'/>\(self.app_version)</div>" : ""
         
         let html_debug = self.renderDebugInfo(forAppearance: appearance, baseDir: baseDir)
         // Render
@@ -1104,7 +1132,7 @@ class Settings: Codable {
                 free(html2)
             }
             
-            return html_debug + header + String(cString: html2)
+            return html_debug + header + String(cString: html2) + about
         } else {
             return html_debug + "<p>RENDER FAILED!</p>"
         }

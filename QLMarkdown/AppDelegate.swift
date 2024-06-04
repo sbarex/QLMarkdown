@@ -177,5 +177,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     @IBAction func onUpdateRate(_ sender: NSMenuItem) {
         updater?.updateCheckInterval = TimeInterval(sender.tag)
     }
+    
+    @IBAction func buyMeACoffee(_ sender: Any?) {
+        let url = URL(string: "https://www.buymeacoffee.com/sbarex")!
+        NSWorkspace.shared.open(url)
+    }
 }
 

@@ -326,6 +326,13 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var isAboutVisible: Bool = Settings.factorySettings.about {
+        didSet {
+            guard oldValue != isAboutVisible else { return }
+            isDirty = true
+        }
+    }
+    
     func initStylesPopup(resetStyles: Bool = false) {
         stylesPopup.removeAllItems()
         // Standard CSS
@@ -737,7 +744,7 @@ class ViewController: NSViewController {
             body = "Error"
         }
         
-        let html = settings.getCompleteHTML(title: ".md", body: body, basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
+        let html = settings.getCompleteHTML(title: markdown_file?.lastPathComponent ?? "markdown", body: body, basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
         do {
             try html.write(to: dst, atomically: true, encoding: .utf8)
         } catch {
@@ -1151,6 +1158,8 @@ document.addEventListener('scroll', function(e) {
         
         self.guessEngine = settings.guessEngine.rawValue
         
+        self.isAboutVisible = settings.about
+        
         inlineLinkPopup.selectItem(at: settings.openInlineLink ? 0 : 1)
         
         isDirty = false
@@ -1232,6 +1241,7 @@ document.addEventListener('scroll', function(e) {
         
         settings.openInlineLink = inlineLinkPopup.indexOfSelectedItem == 0
         
+        settings.about = self.isAboutVisible
         return settings
     }
 }

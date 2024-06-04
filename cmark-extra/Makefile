@@ -96,7 +96,7 @@ ${BUILD_DIR}/libcmark-gfm-x86_64.a:
 	@rm -rf "$(PROJECT_DIR)/cmark-x86_64" > /dev/null
 	${MAKE} CMAKE_OSX_ARCHITECTURES=x86_64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=10.15 BUILDDIR="cmark-x86_64" CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" CPPFLAGS="${CFLAGS} -std=c++11 ${CFLAGS_x86_64}" LDFLAGS="${LDFLAGS_x86_64}" -C $(CMARK_DIR) $(ACTION)
 	cp cmark-x86_64/src/libcmark-gfm.a ${BUILD_DIR}/libcmark-gfm-x86_64.a
-	cp cmark-x86_64/src/libcmark-gfm.${SPECVERSION}.0.gfm.11.dylib ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.11.dylib
+	cp cmark-x86_64/src/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.13.dylib
 	@cp cmark-x86_64/src/cmark-gfm_export.h ${BUILD_DIR}/cmark-gfm_export.h
 	@cp cmark-x86_64/src/cmark-gfm_version.h ${BUILD_DIR}/cmark-gfm_version.h
 	@cp cmark-x86_64/src/config.h ${BUILD_DIR}/config.h
@@ -107,7 +107,7 @@ ${BUILD_DIR}/libcmark-gfm-arm64.a:
 	@rm -rf "$(PROJECT_DIR)/cmark-arm64" > /dev/null
 	${MAKE} CMAKE_OSX_ARCHITECTURES=arm64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=11 BUILDDIR="cmark-arm64" CFLAGS="${CFLAGS} ${CFLAGS_arm64}" CPPFLAGS="${CFLAGS} -std=c++11 ${CFLAGS_arm64}" LDFLAGS="${LDFLAGS_arm64}" -C $(CMARK_DIR) $(ACTION)
 	@cp cmark-arm64/src/libcmark-gfm.a ${BUILD_DIR}/libcmark-gfm-arm64.a
-	@cp cmark-arm64/src/libcmark-gfm.${SPECVERSION}.0.gfm.11.dylib ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.11.dylib
+	@cp cmark-arm64/src/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.13.dylib
 	@cp cmark-arm64/src/cmark-gfm_export.h ${BUILD_DIR}/cmark-gfm_export.h
 	@cp cmark-arm64/src/cmark-gfm_version.h ${BUILD_DIR}/cmark-gfm_version.h
 	@cp cmark-arm64/src/config.h ${BUILD_DIR}/config.h
@@ -117,22 +117,22 @@ ${BUILD_DIR}/libcmark-gfm.a: ${libraries_static}
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 		@echo "${bold}Creating cmark universal library...${normal}"
 		lipo -create -output ${BUILD_DIR}/libcmark-gfm.a ${BUILD_DIR}/libcmark-gfm-x86_64.a ${BUILD_DIR}/libcmark-gfm-arm64.a
-		lipo -create -output ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.11.dylib ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.11.dylib ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.11.dylib
+		lipo -create -output ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.13.dylib
 else
 		@echo "${bold}Creating cmark library for ${NATIVE_ARCH}...${normal}"
 		@rm -f ${BUILD_DIR}/libcmark-gfm.a > /dev/null
 		ln ${BUILD_DIR}/libcmark-gfm-${NATIVE_ARCH}.a ${BUILD_DIR}/libcmark-gfm.a
-		ln ${BUILD_DIR}/libcmark-gfm-${NATIVE_ARCH}.${SPECVERSION}.0.gfm.11.dylib ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.11.dylib
+		ln ${BUILD_DIR}/libcmark-gfm-${NATIVE_ARCH}.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib
 endif
-	ln -f ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.11.dylib ${BUILD_DIR}/libcmark-gfm.dylib
+	ln -f ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm.dylib
 	@echo ""
 
 all: check_arch build_dir cmark
 
 clean:
-	@rm ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.11.dylib 2> /dev/null
-	@rm ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.11.dylib 2> /dev/null
-	@rm ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.11.dylib 2> /dev/null
+	@rm ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib 2> /dev/null
+	@rm ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.13.dylib 2> /dev/null
+	@rm ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.13.dylib 2> /dev/null
 	
 	@rm ${BUILD_DIR}/libcmark-gfm.a 2> /dev/null
 	@rm ${BUILD_DIR}/libcmark-gfm-x86_64.a 2> /dev/null

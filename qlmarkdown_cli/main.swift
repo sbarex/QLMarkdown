@@ -30,29 +30,30 @@ func usage(exitCode: Int = -1) {
     // print(" --app\t<path> Set the path of \"QLMarkdown.app\" otherwise assume that \(name) is called from the Contents/Resources of the app bundle.")
     
     print("\nOptions:")
-    print(" --footnotes on|off")
-    print(" --hard-break on|off")
-    print(" --no-soft-break on|off")
-    print(" --raw-html on|off")
-    print(" --smart-quotes on|off")
-    print(" --validate-utf8 on|off")
-    print(" --code on|off")
-    print(" --appearance light|dark.")
-    print(" --debug on|off")
+    print(" --footnotes on|off        Parse the footnotes.")
+    print(" --hard-break on|off       Render softbreak elements as hard line breaks.")
+    print(" --no-soft-break on|off    Render softbreak elements as spaces.")
+    print(" --raw-html on|off         Render raw HTML and unsafe links.")
+    print(" --smart-quotes on|off     Convert straight quotes to curly.")
+    print(" --validate-utf8 on|off    Validate UTF-8 in the input before parsing.")
+    print(" --code on|off             Show the plain text file (raw version) instead of the formatted output.")
+    print(" --appearance light|dark   ")
+    print(" --about on|off            Show/Hide a footer with info about QLMarkdown.")
+    print(" --debug on|off            Insert in the output some debug information.")
     
     print("\nExtensions:")
-    print(" --autolink on|off")
-    print(" --emoji image|font|off")
-    print(" --github-mentions on|off")
-    print(" --heads-anchor on|off")
-    print(" --inline-images on|off")
-    print(" --math on|off")
-    print(" --table on|off")
-    print(" --tag-filter on|off")
-    print(" --tasklist on|off")
-    print(" --strikethrough single|double|off")
-    print(" --syntax-highlight on|off")
-    print(" --yaml rmd|qmd|all|off")
+    print(" --autolink on|off         Automatically translate URL/email to link.")
+    print(" --emoji image|font|off    Translate the emoji placeholders.")
+    print(" --github-mentions on|off  Translate mentions to link to the GitHub account.")
+    print(" --heads-anchor on|off     Create anchors for the heads.")
+    print(" --inline-images on|off    Embed the image files inside the formatted output.")
+    print(" --math on|off             Format the mathematical expressions.")
+    print(" --table on|off            Enable table format.")
+    print(" --tag-filter on|off       Strip potentially dangerous HTML tags.")
+    print(" --tasklist on|off         Parse task list.")
+    print(" --strikethrough single|double|off Recognize single/double ~ for the strikethrough style.")
+    print(" --syntax-highlight on|off Highlight the code inside fenced block")
+    print(" --yaml rmd|qmd|all|off    Render the yaml header")
     
     print("\nUnspecified rendering options will use the settings defined in the main application.")
 
@@ -171,6 +172,9 @@ while i < Int(CommandLine.argc) {
             case "--appearance":
                 let opt = CommandLine.arguments[i+1]
                 type = opt.lowercased() == "light" ? "Lifht" : "Dark"
+            case "--about":
+                settings.about = parseArgOnOff(index: i)
+                i += 1
             default:
                 print("\(cliUrl.lastPathComponent): illegal option -\(arg)\n", to: &standardError)
                 usage(exitCode: 1)

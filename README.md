@@ -88,13 +88,14 @@ mdls -name kMDItemContentType PATH_OF_AN_EXISTS_MD_FILE
 The output is the UTI associated with the `.md` file.
 
 This application handle these UTIs:
+- `public.markdown`
 - `com.rstudio.rmarkdown`
 - `com.unknown.md`
 - `net.daringfireball.markdown`
 - `net.ia.markdown`
 - `org.quarto.qmarkdown`
-- `public.markdown`
 - `org.textbundle.package`
+- `com.nutstore.down`
 - `dyn.ah62d4rv4ge8043a` (dynamic UTI for unassociated .md files)
 - `dyn.ah62d4rv4ge81e5pe` (dynamic UTI for unassociated .rmd files)
 - `dyn.ah62d4rv4ge81c5pe` (dynamic UTI for unassociated .qmd files)
@@ -169,6 +170,7 @@ The theme popup menu has some extra commands available pressing the `alt` key.
 |No soft break|Render `softbreak` elements as spaces.|
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|
 |Validate UTF|Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).|
+|Show about info|Insert a footer with info about the QLMarkdown app.|
 |Show debug info|Insert in the output some debug information.|
 |Render as source code|Show the plain text file (raw version) instead of the formatted output. Syntax highlighting remains.|
 
@@ -360,3 +362,5 @@ Also, I am not a native English speaker :sweat_smile:.
 Thanks to [hazarek](https://github.com/hazarek) for the app icon and the CSS style.
 
 **This application was developed for pleasure :heart:.**
+
+If you find this application useful, [buy me a coffee](https://www.buymeacoffee.com/sbarex).

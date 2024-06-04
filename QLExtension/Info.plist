@@ -37,6 +37,7 @@
 				<string>org.textbundle.package</string>
 				<string>org.quarto.qmarkdown</string>
 				<string>public.markdown</string>
+				<string>com.nutstore.down</string>
 				<string>dyn.ah62d4rv4ge81e5pe</string>
 				<string>dyn.ah62d4rv4ge8043a</string>
 				<string>dyn.ah62d4rv4ge81c5pe</string>
@@ -50,6 +51,6 @@
 		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Developed by SBAREX 2020 - 2023.</string>
+	<string>Developed by SBAREX 2020 - 2024.</string>
 </dict>
 </plist>

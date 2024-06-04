@@ -1,6 +1,19 @@
 # Changelog
 
 
+### 1.0.18 (43)
+New Features:
+- Support for `com.nutstore.down` UTI.
+- cmark-gfm updated to version 0.29.0.gfm.13.
+- pcre2 updated to version 10.43.
+- Enty updated to version 2.8.8.
+- Settings to show about app info on the footer preview.
+- Link to buy me a :coffee: (:heart:)
+
+Bugfix:
+- Exported html head title filled with the filename.
+
+
 ### 1.0.17 (42)
 New Features:
 - Improved Math (Latex) support (thanks to @mccann):
