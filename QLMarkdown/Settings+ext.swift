@@ -61,6 +61,7 @@ extension Settings {
         defaultsDomain["guess-engine"] = guessEngine.rawValue
         
         defaultsDomain["debug"] = self.debug
+        defaultsDomain["about"] = self.about
         defaultsDomain["inline-link"] = openInlineLink
         defaultsDomain["render-as-code"] = self.renderAsCode
         

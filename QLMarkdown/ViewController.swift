@@ -1101,6 +1101,7 @@ document.addEventListener('scroll', function(e) {
         initStylesPopup()
         
         self.debugMode = settings.debug
+        self.isAboutVisible = settings.about
         self.renderAsCode = settings.renderAsCode
         
         self.qlWindowSizeCustomized = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0

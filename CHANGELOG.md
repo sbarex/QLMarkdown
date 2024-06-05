@@ -1,6 +1,10 @@
 # Changelog
 
 
+### 1.0.18 (44)
+Bugfix:
+- Fixed saving about flag settings.
+
 ### 1.0.18 (43)
 New Features:
 - Support for `com.nutstore.down` UTI.
