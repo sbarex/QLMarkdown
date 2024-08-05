@@ -219,7 +219,7 @@ cmark_syntax_extension *create_emoji_extension(void) {
     cmark_mem *mem = cmark_get_default_mem_allocator();
     cmark_llist *special_chars = NULL;
     special_chars = cmark_llist_append(mem, special_chars, (void *)':');
-        cmark_syntax_extension_set_special_inline_chars(ext, special_chars);
+    cmark_syntax_extension_set_special_inline_chars(ext, special_chars);
     
     return ext;
 }

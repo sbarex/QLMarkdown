@@ -217,9 +217,22 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             url.path
         )
         
+        
         let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
         
         let settings = Settings.shared
+        settings.renderStats += 1
+        
+        if settings.renderStats > 0 && settings.renderStats % 100 == 0, let msg = self.getBundleContents(forResource: "stats", ofType: "html") {
+            let icon: String
+            if let url = Bundle.main.url(forResource: "icon", withExtension: "png"), let data = try? Data(contentsOf: url) {
+                icon = data.base64EncodedString()
+            } else {
+                icon = ""
+            }
+            
+            return msg.replacingOccurrences(of: "%n_files%", with: "\(settings.renderStats)").replacingOccurrences(of: "%icon_path%", with: "data:image/png;base64,\(icon)")
+        }
         
         let markdown_url: URL
         if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {

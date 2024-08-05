@@ -43,16 +43,19 @@ func usage(exitCode: Int = -1) {
     
     print("\nExtensions:")
     print(" --autolink on|off         Automatically translate URL/email to link.")
-    print(" --emoji image|font|off    Translate the emoji placeholders.")
+    print(" --emoji image|font|off    Translate the emoji shortcodes.")
     print(" --github-mentions on|off  Translate mentions to link to the GitHub account.")
     print(" --heads-anchor on|off     Create anchors for the heads.")
+    print(" --highlight on|off        Highlight text marked with `==`.")
     print(" --inline-images on|off    Embed the image files inside the formatted output.")
     print(" --math on|off             Format the mathematical expressions.")
     print(" --table on|off            Enable table format.")
     print(" --tag-filter on|off       Strip potentially dangerous HTML tags.")
     print(" --tasklist on|off         Parse task list.")
-    print(" --strikethrough single|double|off Recognize single/double ~ for the strikethrough style.")
+    print(" --strikethrough single|double|off Recognize single/double `~` for the strikethrough style.")
     print(" --syntax-highlight on|off Highlight the code inside fenced block")
+    print(" --sub on|off              Format subscript characters inside `~` markers.")
+    print(" --sup on|off              Format superscript characters inside `^` markers.")
     print(" --yaml rmd|qmd|all|off    Render the yaml header")
     
     print("\nUnspecified rendering options will use the settings defined in the main application.")
@@ -116,6 +119,9 @@ while i < Int(CommandLine.argc) {
                 i += 1
             case "--math":
                 settings.mathExtension = parseArgOnOff(index: i)
+                i += 1
+            case "--highlight":
+                settings.highlightExtension = parseArgOnOff(index: i)
                 i += 1
             case "--table":
                 settings.tableExtension = parseArgOnOff(index: i)
@@ -257,6 +263,7 @@ if verbose {
     print("    heads-anchor: \(settings.headsExtension ? "on" : "off")")
     print("    inline-images: \(settings.inlineImageExtension ? "on" : "off")")
     print("    math: \(settings.mathExtension ? "on" : "off")")
+    print("    highlight: \(settings.highlightExtension ? "on" : "off")")
     print("    table: \(settings.tableExtension ? "on" : "off")")
     print("    tag-filter: \(settings.tagFilterExtension ? "on" : "off")")
     print("    tasklist: \(settings.taskListExtension ? "on" : "off")")

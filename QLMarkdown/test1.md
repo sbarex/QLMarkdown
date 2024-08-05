@@ -18,8 +18,10 @@ The previous block placed at the top of the document, starting with `---` and en
   - [Emoji extension](#emoji-extension)
   - [GitHub mentions extension](#github-mentions-extension)
   - [Heads extension](#heads-extension)
+  - [Highlight extension](#highlight-extension)
   - [Inline images extension](#inline-images-extension)
   - [Math extension](#math-extension)
+  - [Sub/Superscript extension](#sub-Superscript-extension)
   - [Table extension](#table-extension)
   - [Strikethrough extension](#strikethrough-extension)
   - [Syntax Highlight extension](#syntax-highlight-extension)
@@ -30,7 +32,7 @@ The previous block placed at the top of the document, starting with `---` and en
 
 ---
 
-#  Extensions
+# Extensions
 
 ## Autolink extension
 
@@ -53,6 +55,10 @@ With the `heads` extension for each heads is created an anchor named with the ti
 The anchors can be used for cross links. 
 
 If enabled the links inside the [TOC](#toc) section works. 
+
+## Highlight extension
+
+Words delimited with `==` tag are ==highlighted==.
 
 ## Inline images extension
 
@@ -87,6 +93,17 @@ $$\sqrt{x+2}$$
 - or inline expressions `$ code $`:
 
 _To split <span>$</span>100 in half, we calculate $100/2$_
+
+
+## Sub/Superscript extension
+
+You can format subscritpt text with the `~` tag, and superspript with the `^` tag:
+
+H~2~O
+
+m^2^
+
+Please note that the Strikethrough extension must be disabled or set to recognize the double tilde `~~`.
 
 
 ## Table extension

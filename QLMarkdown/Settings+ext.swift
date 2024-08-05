@@ -30,10 +30,14 @@ extension Settings {
         defaultsDomain["checkbox"] = checkboxExtension
         defaultsDomain["inlineimage"] = inlineImageExtension
         defaultsDomain["heads"] = headsExtension
+        defaultsDomain["highlight"] = highlightExtension
         defaultsDomain["math"] = mathExtension
         
         defaultsDomain["strikethrough"] = strikethroughExtension
         defaultsDomain["strikethrough_doubletilde"] = strikethroughDoubleTildeOption
+        
+        defaultsDomain["sub"] = subExtension
+        defaultsDomain["sup"] = supExtension
         
         defaultsDomain["syntax"] = syntaxHighlightExtension
         defaultsDomain["syntax_custom_themes"] = syntaxCustomThemes

@@ -45,13 +45,14 @@ class Settings: Codable {
         case emojiExtension
         case emojiImageOption
         case headsExtension
+        case hightlightExtension
         case inlineImageExtension
+        case mathExtension
         case mentionExtension
+        case subExtension
+        case supExtension
         case strikethroughExtension
         case strikethroughDoubleTildeOption
-        
-        case mathExtension
-        
         case syntaxHighlightExtension
         case syntaxCustomThemes
         case syntaxThemeLight
@@ -105,13 +106,14 @@ class Settings: Codable {
     @objc var emojiExtension: Bool = true
     @objc var emojiImageOption: Bool = false
     @objc var headsExtension: Bool = true
+    @objc var highlightExtension: Bool = false
     @objc var inlineImageExtension: Bool = true
+    @objc var mathExtension: Bool = true
     @objc var mentionExtension: Bool = false
     @objc var strikethroughExtension: Bool = true
     @objc var strikethroughDoubleTildeOption: Bool = false
-    
-    @objc var mathExtension: Bool = true
-    
+    @objc var subExtension: Bool = false
+    @objc var supExtension: Bool = false
     @objc var syntaxHighlightExtension: Bool = true
     @objc var syntaxCustomThemes: Bool = false
     @objc var syntaxThemeLight: String = ""
@@ -145,6 +147,17 @@ class Settings: Codable {
     @objc var openInlineLink: Bool = false
     
     @objc var renderAsCode: Bool = false
+    
+    var renderStats: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "ql-markdown-render-count");
+        }
+        set {
+            print("Rendered \(newValue) files.")
+            UserDefaults.standard.setValue(newValue, forKey: "ql-markdown-render-count")
+            UserDefaults.standard.synchronize();
+        }
+    }
     
     var useLegacyPreview: Bool = false
     
@@ -214,13 +227,15 @@ class Settings: Codable {
         self.emojiExtension = try container.decode(Bool.self, forKey:.emojiExtension)
         self.emojiImageOption = try container.decode(Bool.self, forKey:.emojiImageOption)
         self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
+        self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
         self.inlineImageExtension = try container.decode(Bool.self, forKey:.inlineImageExtension)
+        
+        self.mathExtension = try container.decode(Bool.self, forKey: .mathExtension)
         self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
         self.strikethroughExtension = try container.decode(Bool.self, forKey:.strikethroughExtension)
         self.strikethroughDoubleTildeOption = try container.decode(Bool.self, forKey:.strikethroughDoubleTildeOption)
-    
-        self.mathExtension = try container.decode(Bool.self, forKey: .mathExtension)
-        
+        self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
+        self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
         self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
         self.syntaxCustomThemes = try container.decode(Bool.self, forKey: .syntaxCustomThemes)
         self.syntaxThemeLight = try container.decode(String.self, forKey: .syntaxThemeLight)
@@ -278,12 +293,12 @@ class Settings: Codable {
         try container.encode(self.emojiExtension, forKey: .emojiExtension)
         try container.encode(self.emojiImageOption, forKey: .emojiImageOption)
         try container.encode(self.headsExtension, forKey: .headsExtension)
+        try container.encode(self.highlightExtension, forKey: .hightlightExtension)
         try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
+        try container.encode(self.mathExtension, forKey: .mathExtension)
         try container.encode(self.mentionExtension, forKey: .mentionExtension)
         try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
         try container.encode(self.strikethroughDoubleTildeOption, forKey: .strikethroughDoubleTildeOption)
-        try container.encode(self.mathExtension, forKey: .mathExtension)
-        
         try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
         try container.encode(self.syntaxCustomThemes, forKey: .syntaxCustomThemes)
         try container.encode(self.syntaxThemeLight, forKey: .syntaxThemeLight)
@@ -296,6 +311,9 @@ class Settings: Codable {
         try container.encode(self.syntaxTabsOption, forKey: .syntaxTabsOption)
         try container.encode(self.syntaxFontFamily, forKey: .syntaxFontFamily)
         try container.encode(self.syntaxFontSize, forKey: .syntaxFontSize)
+        try container.encode(self.subExtension, forKey: .subExtension)
+        try container.encode(self.supExtension, forKey: .supExtension)
+        
         try container.encode(self.guessEngine.rawValue, forKey: .guessEngine)
     
         try container.encode(self.tableExtension, forKey: .tableExtension)
@@ -383,6 +401,10 @@ class Settings: Codable {
             strikethroughDoubleTildeOption = ext
         }
         
+        
+        if let ext = defaultsDomain["math"] as? Bool {
+            mathExtension = ext
+        }
         if let ext = defaultsDomain["mention"] as? Bool {
             mentionExtension = ext
         }
@@ -393,8 +415,8 @@ class Settings: Codable {
             headsExtension = ext
         }
         
-        if let ext = defaultsDomain["math"] as? Bool {
-            mathExtension = ext
+        if let ext = defaultsDomain["highlight"] as? Bool {
+            highlightExtension = ext
         }
         
         if let ext = defaultsDomain["syntax"] as? Bool {
@@ -433,6 +455,13 @@ class Settings: Codable {
         }
         if let size = defaultsDomain["syntax_font_size"] as? CGFloat {
             syntaxFontSize = size
+        }
+        
+        if let ext = defaultsDomain["sub"] as? Bool {
+            subExtension = ext
+        }
+        if let ext = defaultsDomain["sup"] as? Bool {
+            supExtension = ext
         }
         
         if let ext = defaultsDomain["emoji"] as? Bool {
@@ -529,13 +558,14 @@ class Settings: Codable {
             self.emojiImageOption = s.emojiImageOption
             
             self.headsExtension = s.headsExtension
+            self.highlightExtension = s.highlightExtension
             self.inlineImageExtension = s.inlineImageExtension
+            
+            self.mathExtension = s.mathExtension
             self.mentionExtension = s.mentionExtension
             
             self.strikethroughExtension = s.strikethroughExtension
             self.strikethroughDoubleTildeOption = s.strikethroughDoubleTildeOption
-            
-            self.mathExtension = s.mathExtension
             
             self.syntaxHighlightExtension = s.syntaxHighlightExtension
             self.syntaxCustomThemes = s.syntaxCustomThemes
@@ -549,6 +579,8 @@ class Settings: Codable {
             self.syntaxTabsOption = s.syntaxTabsOption
             self.syntaxFontFamily = s.syntaxFontFamily
             self.syntaxFontSize = s.syntaxFontSize
+            self.subExtension = s.subExtension
+            self.supExtension = s.supExtension
             self.guessEngine = s.guessEngine
             
             self.tableExtension = s.tableExtension
@@ -910,6 +942,46 @@ class Settings: Codable {
             }
         }
         
+        if self.highlightExtension {
+            if let ext = cmark_find_syntax_extension("highlight") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                
+                os_log(
+                    "Enabled markdown `highlight` extension.",
+                    log: OSLog.rendering,
+                    type: .debug)
+            } else {
+                os_log("Could not enable markdown `highlight` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
+        
+        if self.subExtension {
+            if let ext = cmark_find_syntax_extension("sub") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                
+                os_log(
+                    "Enabled markdown `sub` extension.",
+                    log: OSLog.rendering,
+                    type: .debug)
+            } else {
+                os_log("Could not enable markdown `sub` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
+        if self.supExtension {
+            if let ext = cmark_find_syntax_extension("sup") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                
+                os_log(
+                    "Enabled markdown `sup` extension.",
+                    log: OSLog.rendering,
+                    type: .debug)
+            } else {
+                os_log("Could not enable markdown `sup` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+        
         if self.inlineImageExtension {
             if let ext = cmark_find_syntax_extension("inlineimage") {
                 cmark_parser_attach_syntax_extension(parser, ext)
@@ -1199,6 +1271,14 @@ table.debug td {
         
         html_debug += "<tr><td>heads extension</td><td>" + (self.headsExtension ?  "on" : "off") + "</td></tr>\n"
         
+        html_debug += "<tr><td>highlight extension</td><td>"
+        if self.highlightExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("highlight") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
         html_debug += "<tr><td>inlineimage extension</td><td>"
         if self.inlineImageExtension {
             html_debug += "on" + (cmark_find_syntax_extension("inlineimage") == nil ? " (NOT AVAILABLE" : "")
@@ -1303,6 +1383,21 @@ table.debug td {
             html_debug += "<tr><td>font family</td><td>\(self.syntaxFontFamily.isEmpty ? "not set" : self.syntaxFontFamily)</td></tr>\n"
             html_debug += "<tr><td>font size</td><td>\(self.syntaxFontSize > 0 ? "\(self.syntaxFontSize)" : "not set")</td></tr>\n"
             html_debug += "</table>\n"
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>sub extension</td><td>"
+        if self.subExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("sub") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        html_debug += "<tr><td>sup extension</td><td>"
+        if self.supExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("sup") == nil ? " (NOT AVAILABLE" : "")
         } else {
             html_debug += "off"
         }

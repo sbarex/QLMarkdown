@@ -194,6 +194,20 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var highlightExtension: Bool = Settings.factorySettings.highlightExtension {
+        didSet {
+            guard oldValue != highlightExtension else { return }
+            isDirty = true
+        }
+    }
+    
+    @objc dynamic var subSuperScriptExtension: Bool = Settings.factorySettings.subExtension {
+        didSet {
+            guard oldValue != subSuperScriptExtension else { return }
+            isDirty = true
+        }
+    }
+    
     @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension {
         didSet {
             guard oldValue != emojiExtension else { return }
@@ -1119,16 +1133,17 @@ document.addEventListener('scroll', function(e) {
         self.strikethroughExtension = settings.strikethroughExtension
         self.strikethroughDoubleTildeOption = settings.strikethroughDoubleTildeOption
         
+        self.mathExtension = settings.mathExtension
         self.mentionExtension = settings.mentionExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
         self.emojiExtension = settings.emojiExtension
         self.emojiImageOption = settings.emojiImageOption
         
-        self.inlineImageExtension = settings.inlineImageExtension
         self.headsExtension = settings.headsExtension
-        
-        self.mathExtension = settings.mathExtension
+        self.highlightExtension = settings.highlightExtension
+        self.inlineImageExtension = settings.inlineImageExtension
+        self.subSuperScriptExtension = settings.supExtension
         
         self.hardBreakOption = settings.hardBreakOption
         self.noSoftBreakOption = settings.noSoftBreakOption
@@ -1184,14 +1199,18 @@ document.addEventListener('scroll', function(e) {
         settings.taskListExtension = self.taskListExtension
         settings.yamlExtension = self.yamlExtension
         settings.yamlExtensionAll = self.yamlExtensionAll
+        
+        settings.mathExtension = self.mathExtension
         settings.mentionExtension = self.mentionExtension
-        settings.inlineImageExtension = self.inlineImageExtension
-        settings.headsExtension = self.headsExtension
         
         settings.emojiExtension = self.emojiExtension
         settings.emojiImageOption = self.emojiImageOption
         
-        settings.mathExtension = self.mathExtension
+        settings.headsExtension = self.headsExtension
+        settings.highlightExtension = self.highlightExtension
+        settings.inlineImageExtension = self.inlineImageExtension
+        settings.subExtension = self.subSuperScriptExtension
+        settings.supExtension = self.subSuperScriptExtension
         
         settings.strikethroughExtension = self.strikethroughExtension
         settings.strikethroughDoubleTildeOption = self.strikethroughDoubleTildeOption

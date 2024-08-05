@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		830277F42C60B3B40066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
+		830277F52C60B3E20066EBCC /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
+		830277F62C60B3EA0066EBCC /* stats.html in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D62C60AB300066A195 /* stats.html */; };
+		830277F72C60E48F0066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
 		830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3B272D68E500378FFE /* SwiftSoup */; };
 		830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3D272D68F700378FFE /* SwiftSoup */; };
 		830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3F272D68FB00378FFE /* SwiftSoup */; };
@@ -186,7 +190,6 @@
 		83598EF625818BCB004664D3 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
 		83598EFC25820A72004664D3 /* test2.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EFA258209C7004664D3 /* test2.md */; };
 		83598EFD25820A72004664D3 /* test1.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EF92582098A004664D3 /* test1.md */; };
-		83598F24258263C0004664D3 /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
 		836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
@@ -214,6 +217,15 @@
 		8382D05C2664051400210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05B2664051400210A0A /* Yams */; };
 		8382D05E2664052E00210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05D2664052E00210A0A /* Yams */; };
 		83C44B38259A1DF4004C1367 /* ThemesSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */; };
+		83CF71C92C5FCD780066A195 /* highlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71C82C5FCD780066A195 /* highlight.c */; };
+		83CF71CA2C5FCD780066A195 /* highlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71C82C5FCD780066A195 /* highlight.c */; };
+		83CF71CB2C5FCD780066A195 /* highlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71C82C5FCD780066A195 /* highlight.c */; };
+		83CF71CE2C60023E0066A195 /* sup_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71CD2C60023E0066A195 /* sup_ext.c */; };
+		83CF71CF2C60023E0066A195 /* sup_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71CD2C60023E0066A195 /* sup_ext.c */; };
+		83CF71D02C60023E0066A195 /* sup_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71CD2C60023E0066A195 /* sup_ext.c */; };
+		83CF71D32C60053A0066A195 /* sub_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71D22C60053A0066A195 /* sub_ext.c */; };
+		83CF71D42C60053A0066A195 /* sub_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71D22C60053A0066A195 /* sub_ext.c */; };
+		83CF71D52C60053A0066A195 /* sub_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71D22C60053A0066A195 /* sub_ext.c */; };
 		83D82A89277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83D82A8A277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
@@ -569,6 +581,18 @@
 		83C44B37259A1DF4004C1367 /* ThemesSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemesSelectorViewController.swift; sourceTree = "<group>"; };
 		83C44B3C259A70EE004C1367 /* string_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = string_utils.cpp; sourceTree = "<group>"; };
 		83C44B3D259A70EE004C1367 /* string_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = string_utils.hpp; sourceTree = "<group>"; };
+		83CF71C72C5FCD780066A195 /* highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = highlight.h; sourceTree = "<group>"; };
+		83CF71C82C5FCD780066A195 /* highlight.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = highlight.c; sourceTree = "<group>"; };
+		83CF71CC2C60023E0066A195 /* sup_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sup_ext.h; sourceTree = "<group>"; };
+		83CF71CD2C60023E0066A195 /* sup_ext.c */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.c.c; path = sup_ext.c; sourceTree = "<group>"; };
+		83CF71D12C6005370066A195 /* sub_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sub_ext.h; sourceTree = "<group>"; };
+		83CF71D22C60053A0066A195 /* sub_ext.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = sub_ext.c; sourceTree = "<group>"; };
+		83CF71D62C60AB300066A195 /* stats.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = stats.html; sourceTree = "<group>"; };
+		83CF71D82C60ADA60066A195 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		83CF71DB2C60ADA60066A195 /* main_interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_interface.png; sourceTree = "<group>"; };
+		83CF71DC2C60ADA60066A195 /* preview-screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "preview-screenshot.png"; sourceTree = "<group>"; };
+		83CF71DE2C60ADA60066A195 /* syntax_interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = syntax_interface.png; sourceTree = "<group>"; };
+		83CF71E02C60ADA60066A195 /* icon.afdesign */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.afdesign; sourceTree = "<group>"; };
 		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		83D82A5D277BCAED00C9B99F /* MakefilePCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefilePCRE; sourceTree = "<group>"; usesTabs = 1; };
 		83D82A87277BD21A00C9B99F /* MakefileJPCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefileJPCRE; sourceTree = "<group>"; usesTabs = 1; };
@@ -696,12 +720,18 @@
 				83F88258259906C7008C5071 /* heads.c */,
 				83F8825C25991BFC008C5071 /* heads_utils.cpp */,
 				83F8825D25991BFC008C5071 /* heads_utils.hpp */,
+				83CF71C72C5FCD780066A195 /* highlight.h */,
+				83CF71C82C5FCD780066A195 /* highlight.c */,
 				83598EF425818B8B004664D3 /* syntaxhighlight.h */,
 				83598EF525818BCB004664D3 /* syntaxhighlight.c */,
 				835886B129E960050088DF7D /* math_ext.h */,
 				835886B229E960050088DF7D /* math_ext.c */,
 				838109C1258403CA000AFE3C /* mention.h */,
 				838109C2258403CA000AFE3C /* mention.c */,
+				83CF71CC2C60023E0066A195 /* sup_ext.h */,
+				83CF71CD2C60023E0066A195 /* sup_ext.c */,
+				83CF71D12C6005370066A195 /* sub_ext.h */,
+				83CF71D22C60053A0066A195 /* sub_ext.c */,
 				834A4F8029E92AE800692964 /* extra-extensions.h */,
 				834A4F8129E92AE800692964 /* extra-extensions.c */,
 			);
@@ -730,22 +760,22 @@
 		834A4EA829E8AD8B00692964 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
-				834A4EA929E8AD8B00692964 /* strikethrough.c */,
-				834A4EAA29E8AD8B00692964 /* cmark-gfm-core-extensions.h */,
 				834A4EAB29E8AD8B00692964 /* autolink.c */,
-				834A4EAC29E8AD8B00692964 /* table.c */,
-				834A4EAD29E8AD8B00692964 /* CMakeLists.txt */,
-				834A4EAE29E8AD8B00692964 /* tasklist.h */,
-				834A4EAF29E8AD8B00692964 /* ext_scanners.c */,
-				834A4EB029E8AD8B00692964 /* tagfilter.c */,
 				834A4EB129E8AD8B00692964 /* autolink.h */,
-				834A4EB229E8AD8B00692964 /* strikethrough.h */,
-				834A4EB329E8AD8B00692964 /* ext_scanners.re */,
-				834A4EB429E8AD8B00692964 /* tasklist.c */,
-				834A4EB529E8AD8B00692964 /* table.h */,
-				834A4EB629E8AD8B00692964 /* tagfilter.h */,
-				834A4EB729E8AD8B00692964 /* ext_scanners.h */,
+				834A4EAD29E8AD8B00692964 /* CMakeLists.txt */,
+				834A4EAA29E8AD8B00692964 /* cmark-gfm-core-extensions.h */,
 				834A4EB829E8AD8B00692964 /* core-extensions.c */,
+				834A4EAF29E8AD8B00692964 /* ext_scanners.c */,
+				834A4EB729E8AD8B00692964 /* ext_scanners.h */,
+				834A4EB329E8AD8B00692964 /* ext_scanners.re */,
+				834A4EA929E8AD8B00692964 /* strikethrough.c */,
+				834A4EB229E8AD8B00692964 /* strikethrough.h */,
+				834A4EAC29E8AD8B00692964 /* table.c */,
+				834A4EB529E8AD8B00692964 /* table.h */,
+				834A4EB029E8AD8B00692964 /* tagfilter.c */,
+				834A4EB629E8AD8B00692964 /* tagfilter.h */,
+				834A4EB429E8AD8B00692964 /* tasklist.c */,
+				834A4EAE29E8AD8B00692964 /* tasklist.h */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -836,6 +866,7 @@
 				83E7FEED258FBE54003ECF9B /* TODO.md */,
 				837F291E2597AAC000A5F7DE /* LICENSE.txt */,
 				832D256125CC8894005F41AC /* .gitignore */,
+				83CF71E12C60ADA60066A195 /* assets */,
 				83D9CCA427A12F8F00E86BC9 /* dependencies */,
 				836B3019259E222700A6A5F7 /* highlight-wrapper */,
 				83BD380429E7E7A2003F35CA /* cmark-extra */,
@@ -939,6 +970,7 @@
 			children = (
 				83598F22258263C0004664D3 /* default.css */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
+				83CF71D62C60AB300066A195 /* stats.html */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -975,6 +1007,26 @@
 				8376EAE127E8C67F00AB44B8 /* c_log.c */,
 			);
 			path = "cmark-extra";
+			sourceTree = "<group>";
+		};
+		83CF71DF2C60ADA60066A195 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				83CF71D82C60ADA60066A195 /* icon.png */,
+				83CF71DB2C60ADA60066A195 /* main_interface.png */,
+				83CF71DC2C60ADA60066A195 /* preview-screenshot.png */,
+				83CF71DE2C60ADA60066A195 /* syntax_interface.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
+		83CF71E12C60ADA60066A195 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				83CF71DF2C60ADA60066A195 /* img */,
+				83CF71E02C60ADA60066A195 /* icon.afdesign */,
+			);
+			path = assets;
 			sourceTree = "<group>";
 		};
 		83D9CCA427A12F8F00E86BC9 /* dependencies */ = {
@@ -1224,7 +1276,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				834A4EFB29E8AD8C00692964 /* CMakeLists.txt in Resources */,
+				830277F42C60B3B40066EBCC /* icon.png in Resources */,
 				834A4F3929E8AD8D00692964 /* config.h.in in Resources */,
+				830277F62C60B3EA0066EBCC /* stats.html in Resources */,
 				834A4F6D29E8AD8E00692964 /* cmark-gfm_version.h.in in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
 				834A4F0329E8AD8C00692964 /* ext_scanners.re in Resources */,
@@ -1243,11 +1297,12 @@
 				83598E6C2581880A004664D3 /* Main.storyboard in Resources */,
 				8342418B25894328000093EC /* ThemesView.xib in Resources */,
 				837D20D6258362A5008FC698 /* example.jpg in Resources */,
+				830277F72C60E48F0066EBCC /* icon.png in Resources */,
 				834CAB8F2591DE0F00673002 /* SaveAsFormatView.xib in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
+				830277F52C60B3E20066EBCC /* default.css in Resources */,
 				836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */,
 				8357EB822588A8D3002C2C45 /* ThemeTableView.xib in Resources */,
-				83598F24258263C0004664D3 /* default.css in Resources */,
 				8357EB8A2588AE10002C2C45 /* ThemePreviewView.xib in Resources */,
 				834A4F6C29E8AD8E00692964 /* cmark-gfm_version.h.in in Resources */,
 				834CAB98259261F300673002 /* ThemeCollectionViewItem.xib in Resources */,
@@ -1297,9 +1352,12 @@
 				8376EAE327E8C67F00AB44B8 /* c_log.c in Sources */,
 				83720A4725B8EA9700B49FEC /* buffer.c in Sources */,
 				831A8C74258ABD9600E36182 /* checkbox.c in Sources */,
+				83CF71CF2C60023E0066A195 /* sup_ext.c in Sources */,
 				834A4F2A29E8AD8D00692964 /* syntax_extension.c in Sources */,
 				834A4F4429E8AD8D00692964 /* iterator.c in Sources */,
 				834A4EFD29E8AD8C00692964 /* ext_scanners.c in Sources */,
+				83CF71CA2C5FCD780066A195 /* highlight.c in Sources */,
+				83CF71D32C60053A0066A195 /* sub_ext.c in Sources */,
 				831A8CC1258AC18300E36182 /* Settings.swift in Sources */,
 				831A8C6B258ABD8900E36182 /* syntaxhighlight.c in Sources */,
 				834A4F0E29E8AD8C00692964 /* cmark.c in Sources */,
@@ -1338,6 +1396,7 @@
 				834A4F5A29E8AD8E00692964 /* plugin.c in Sources */,
 				834A4F2B29E8AD8D00692964 /* syntax_extension.c in Sources */,
 				83437989271D4A1900A5D6EA /* heads_utils.cpp in Sources */,
+				83CF71CB2C5FCD780066A195 /* highlight.c in Sources */,
 				83437983271D49F700A5D6EA /* decode.c in Sources */,
 				834A4F2529E8AD8D00692964 /* latex.c in Sources */,
 				834A4F5F29E8AD8E00692964 /* scanners.c in Sources */,
@@ -1359,6 +1418,7 @@
 				83437992271D4A1900A5D6EA /* emoji_utils.cpp in Sources */,
 				834A4F3729E8AD8D00692964 /* plaintext.c in Sources */,
 				834A4F2029E8AD8D00692964 /* inlines.c in Sources */,
+				83CF71D42C60053A0066A195 /* sub_ext.c in Sources */,
 				834A4F0629E8AD8C00692964 /* tasklist.c in Sources */,
 				834A4F2829E8AD8D00692964 /* houdini_href_e.c in Sources */,
 				834A4EF929E8AD8C00692964 /* table.c in Sources */,
@@ -1373,6 +1433,7 @@
 				834A4F3429E8AD8D00692964 /* houdini_html_e.c in Sources */,
 				834A4F4E29E8AD8E00692964 /* linked_list.c in Sources */,
 				83437978271D47E700A5D6EA /* Settings.swift in Sources */,
+				83CF71D02C60023E0066A195 /* sup_ext.c in Sources */,
 				83437985271D49FF00A5D6EA /* MIMEtype.c in Sources */,
 				834A4F5429E8AD8E00692964 /* map.c in Sources */,
 				834A4F3C29E8AD8D00692964 /* utf8.c in Sources */,
@@ -1416,6 +1477,7 @@
 				834A4F2929E8AD8D00692964 /* syntax_extension.c in Sources */,
 				834A4F5D29E8AD8E00692964 /* scanners.c in Sources */,
 				834A4EF729E8AD8C00692964 /* table.c in Sources */,
+				83CF71CE2C60023E0066A195 /* sup_ext.c in Sources */,
 				834A4F3A29E8AD8D00692964 /* utf8.c in Sources */,
 				834A4EF129E8AD8C00692964 /* strikethrough.c in Sources */,
 				83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */,
@@ -1450,6 +1512,7 @@
 				834A4F6929E8AD8E00692964 /* node.c in Sources */,
 				838109C725840429000AFE3C /* checkbox.c in Sources */,
 				834A4F5829E8AD8E00692964 /* plugin.c in Sources */,
+				83CF71C92C5FCD780066A195 /* highlight.c in Sources */,
 				834A4F6329E8AD8E00692964 /* houdini_html_u.c in Sources */,
 				834A4F5229E8AD8E00692964 /* map.c in Sources */,
 				83720A4A25B8EA9700B49FEC /* buffer.c in Sources */,
@@ -1458,6 +1521,7 @@
 				834A4F1229E8AD8C00692964 /* man.c in Sources */,
 				8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */,
 				83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */,
+				83CF71D52C60053A0066A195 /* sub_ext.c in Sources */,
 				83720A2825B8E93D00B49FEC /* decode.c in Sources */,
 				834A4F8229E92AE800692964 /* extra-extensions.c in Sources */,
 				8357EB7F2588262C002C2C45 /* String+ext.swift in Sources */,
@@ -1618,7 +1682,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1641,7 +1705,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.19;
+				MARKETING_VERSION = 1.0.20;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1658,7 +1722,7 @@
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1681,7 +1745,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.19;
+				MARKETING_VERSION = 1.0.20;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1916,7 +1980,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1941,7 +2005,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.19;
+				MARKETING_VERSION = 1.0.20;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1962,7 +2026,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1987,7 +2051,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 1.0.19;
+				MARKETING_VERSION = 1.0.20;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

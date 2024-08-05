@@ -1,6 +1,13 @@
 # Changelog
 
 
+### 1.0.20 (45)
+New Features:
+- Support for some extended syntax:
+  - highlight text with `==`
+  - subscript (`~`) and superscript (`^`)
+
+
 ### 1.0.19 (44)
 Bugfix:
 - Fixed saving about flag settings.

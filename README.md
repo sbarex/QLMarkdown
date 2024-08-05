@@ -14,7 +14,7 @@ _This application is not intended to be used as a standalone markdown file edito
 
 > **Please note that this software is provided "as is", without any warranty of any kind.**
 
-If you like this application and find it useful, [buy me a coffee](https://www.buymeacoffee.com/sbarex)!
+If you like this application and find it useful, [__buy me a coffee__](https://www.buymeacoffee.com/sbarex)!
 
 The Quick Look extension can also preview rmarkdown (`.rmd`) files (_without_ evaluating `r` code), Quarto files (`.qmd`) and textbundle packages.
 
@@ -108,9 +108,12 @@ Please inform me of any other UTI associated to `.md` files.
 For maximum compatibility with the Markdown format, the [`cmark-gfm`](https://github.com/github/cmark-gfm) library is used. The library is a GitHub fork of the standard cmark tool to [process the Markdown files](https://github.github.com/gfm/). 
 
 Compared to the `cmark-gfm`, these extensions have been added:
-- [`Emoji`](#emoji): translate the emoji placeholders like `:smile:` to :smile:.
+- [`Emoji`](#emoji): translate the emoji shortcodes like `:smile:` to :smile:.
 - [`Heads anchors`](#heads-anchors): create anchors for the heads.
+- `Highlight`: highlight the text contained between the markers `==`.
 - [`Inline local images`](#inline-local-images): embed the image files inside the formatted output (required for the Quick Look preview).
+- `Subscript`: subscript text between the markers `~`.
+- `Superscript`: superscript text between the markers `^`.
 - [`Math`](#mathematical-expressions): format the mathematical expressions.
 - [`Syntax highlighting`](#syntax-highlighting): highlight the code inside fenced block.
 - [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` or `qmd` files.
@@ -183,9 +186,11 @@ The theme popup menu has some extra commands available pressing the `alt` key.
 |Emoji|Enable the [Emoji extension](#emoji).|
 |GitHub mentions|Translate mentions to link to the GitHub account.|
 |<a name="heads-anchors"></a>Heads anchors|Create anchors for the heads to use as cross internal reference. Each anchor is named with the lowercased caption, stripped of any punctuation marks (except the dash) and spaces replaced with dash (`-`). UTF8 character encoding is supported.|
+|Highlight|Highlight the text contained between the markers `==`.|
 |Inline local images|Enable the [Inline local images extension](#inline-local-images).|
 |Math|Enable the [formatting of math expressions](#mathematical-expressions).|
 |Strikethrough|Strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.|
+|Sub/Superscript|Allow to subscript text inside `~` tag pairs, and superscript text inside `^` tag pairs. Please note that the Strikethrough extension must be disabled or set to recognize double `~`.|
 |Syntax highlighting|Enable the [Syntax highlighting extension](#syntax-highlighting). |
 |Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
 |Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|
@@ -199,13 +204,13 @@ The `Quick Look window` option allow you to force a custom size for the content 
 
 #### Emoji
 
-You can enable the Emoji extension to handle the placeholders defined by [GitHub](https://api.github.com/emojis). You can render the emoji with an emoticon glyph or using the image provided by GitHub (internet connection required). 
+You can enable the Emoji extension to handle the shortcodes defined by [GitHub](https://api.github.com/emojis). You can render the emoji with an emoticon glyph or using the image provided by GitHub (internet connection required). 
 
 Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. 
 
 Some emoji do not have an equivalent glyph on the standard font and will be replaced always with the relative image.
 
-A list of GitHub emoji placeholder is available [here](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#people--body).
+A list of GitHub emoji shortcodes is available [here](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#people--body).
 
  
 ### Inline local images 
@@ -305,6 +310,7 @@ Extensions:
  --emoji image|font|off
  --github-mentions on|off
  --heads-anchor on|off
+ --highlight on|off
  --inline-images on|off
  --math on|off
  --table on|off
@@ -367,4 +373,4 @@ Thanks to [hazarek](https://github.com/hazarek) for the app icon and the CSS sty
 
 **This application was developed for pleasure :heart:.**
 
-If you find this application useful, [buy me a coffee](https://www.buymeacoffee.com/sbarex).
+If you find this application useful, [__buy me a coffee!__](https://www.buymeacoffee.com/sbarex)

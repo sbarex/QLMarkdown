@@ -635,3 +635,15 @@ input[type="checkbox"] {
   background: var(--thead-background);
   border-top: 0;
 }
+
+.markdown-body mark {
+    padding: .2em;
+    background-color: #fcf1b5;
+}
+
+@media (prefers-color-scheme: dark) {
+    .markdown-body mark {
+        padding: .2em;
+        background-color: #fcf8e3;
+    }
+}
