@@ -244,7 +244,7 @@ Bugfix:
 ### 1.0b12
 1.0b12
 New features:
-- New icon (thanks to [hazarek](https://github.com/hazarek)). 
+- New icon (thanks to [setanarut](https://github.com/setanarut)). 
 - Wrapper highlight library build inside the Xcode project.
 - Wrapper highlight embed goutils with enry guess engine.
 - Better about dialog.
@@ -271,7 +271,7 @@ Bugfix:
 
 ### 1.0.b9
 New features:
-- Updated the default CSS style (thanks to [hazarek](https://github.com/hazarek)). 
+- Updated the default CSS style (thanks to [setanarut](https://github.com/setanarut)). 
 - For Syntax highlighting, option to choose the document style or a specific language style.
 
 

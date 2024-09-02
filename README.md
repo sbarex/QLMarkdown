@@ -369,7 +369,7 @@ On Big Sur there is a bug in the Quick Look engine and WebKit that cause the imm
 I am not primarily an application developer. There may be possible bugs in the code, be patient.
 Also, I am not a native English speaker :sweat_smile:. 
 
-Thanks to [hazarek](https://github.com/hazarek) for the app icon and the CSS style.
+Thanks to [setanarut](https://github.com/setanarut) for the app icon and the CSS style.
 
 **This application was developed for pleasure :heart:.**
 

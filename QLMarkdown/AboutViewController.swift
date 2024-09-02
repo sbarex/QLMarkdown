@@ -61,7 +61,7 @@ class AboutViewController: NSViewController {
         s += "Yams (<a href=\"https://github.com/jpsim/Yams.git\">https://github.com/jpsim/Yams.git</a>)<br />\n"
         s += "SwiftSoup (<a href=\"https://github.com/scinfu/SwiftSoup\">https://github.com/scinfu/SwiftSoup</a>)<br />\n"
         s += "<br />\n———<br />\n<br />\n"
-        s += "Thanks to hazarek (<a href=\"https://github.com/hazarek\">https://github.com/hazarek</a>) for the app icon and CSS style.<br />\n"
+        s += "Thanks to setanarut (<a href=\"https://github.com/setanarut\">https://github.com/setanarut</a>) for the app icon and CSS style.<br />\n"
         
         s += "</div>"
        
