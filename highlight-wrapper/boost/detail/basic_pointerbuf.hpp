@@ -18,7 +18,8 @@
 # pragma once
 #endif
 
-#include "boost/config.hpp"
+#include <boost/config.hpp>
+
 #include <streambuf>
 
 namespace boost { namespace detail {
@@ -42,13 +43,8 @@ public:
    basic_pointerbuf() : base_type() { this_type::setbuf(0, 0); }
    const charT* getnext() { return this->gptr(); }
 
-#ifndef BOOST_NO_USING_TEMPLATE
     using base_type::pptr;
     using base_type::pbase;
-#else
-    charT* pptr() const { return base_type::pptr(); }
-    charT* pbase() const { return base_type::pbase(); }
-#endif
 
 protected:
    // VC mistakenly assumes that `setbuf` and other functions are not referenced.
@@ -76,7 +72,7 @@ template<class charT, class BufferT>
 typename basic_pointerbuf<charT, BufferT>::pos_type
 basic_pointerbuf<charT, BufferT>::seekoff(off_type off, ::std::ios_base::seekdir way, ::std::ios_base::openmode which)
 {
-   typedef typename boost::int_t<sizeof(way) * CHAR_BIT>::least cast_type;
+   typedef ::std::ios_base::seekdir cast_type;
 
    if(which & ::std::ios_base::out)
       return pos_type(off_type(-1));

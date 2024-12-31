@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="22690"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="23504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -763,7 +763,7 @@
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="514" y="369" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1440" height="875"/>
-                        <toolbar key="toolbar" implicitIdentifier="A717D99C-3786-4D86-865B-BA19D2ABC1AD" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="QHW-KZ-sTw">
+                        <toolbar key="toolbar" implicitIdentifier="A717D99C-3786-4D86-865B-BA19D2ABC1AD" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="QHW-KZ-sTw">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="OkB-Ti-gMh"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="6pH-Qf-g7v"/>
@@ -871,7 +871,7 @@
                                                     <rect key="frame" x="-3" y="-4" width="137" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" selectedItem="upt-Nc-npm" id="5A6-vC-PPy">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="message"/>
                                                         <menu key="menu" autoenablesItems="NO" id="8Hj-ZS-NpU">
                                                             <items>
                                                                 <menuItem title="Item 1" state="on" hidden="YES" id="upt-Nc-npm"/>
@@ -911,7 +911,7 @@
                                                     <rect key="frame" x="176" y="-4" width="137" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" autoenablesItems="NO" selectedItem="bdK-dl-Co2" id="1L7-JE-KC4">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="message"/>
                                                         <menu key="menu" autoenablesItems="NO" id="L1U-WB-X5c">
                                                             <items>
                                                                 <menuItem title="Item 1" state="on" hidden="YES" id="bdK-dl-Co2"/>
@@ -963,7 +963,7 @@
                                                     <rect key="frame" x="-3" y="-4" width="178" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="From Markdown theme" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="scR-Ba-k1H" id="h1d-Po-OMx">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="message"/>
                                                         <menu key="menu" id="pcO-We-h9F">
                                                             <items>
                                                                 <menuItem title="From Markdown theme" state="on" id="scR-Ba-k1H"/>
@@ -1175,7 +1175,7 @@
                                             <rect key="frame" x="112" y="30" width="136" height="25"/>
                                             <popUpButtonCell key="cell" type="push" title="No replacement" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="mED-Tw-gtu" id="3sm-5I-YnJ">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
+                                                <font key="font" metaFont="message"/>
                                                 <menu key="menu" id="Nsl-et-cHX">
                                                     <items>
                                                         <menuItem title="No replacement" state="on" id="mED-Tw-gtu"/>
@@ -1206,7 +1206,7 @@
                                             <rect key="frame" x="112" y="-4" width="94" height="25"/>
                                             <popUpButtonCell key="cell" type="push" title="None" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="kmQ-9l-Stp" id="Uyr-dl-lqC">
                                                 <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="menu"/>
+                                                <font key="font" metaFont="message"/>
                                                 <menu key="menu" id="bIx-hu-6rK">
                                                     <items>
                                                         <menuItem title="None" state="on" id="kmQ-9l-Stp">
@@ -1289,7 +1289,7 @@ DQ
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <gridView verticalHuggingPriority="248" verticalCompressionResistancePriority="749" xPlacement="leading" yPlacement="top" rowAlignment="firstBaseline" rowSpacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dOo-mR-WPE">
-                                                    <rect key="frame" x="149" y="71" width="816" height="106"/>
+                                                    <rect key="frame" x="177" y="71" width="820" height="106"/>
                                                     <rows>
                                                         <gridRow id="mhm-BQ-Lxb"/>
                                                         <gridRow id="b1T-4W-Sf6"/>
@@ -1341,7 +1341,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="mhm-BQ-Lxb" column="LDl-3O-4gf" id="7As-8P-bIu">
                                                             <button key="contentView" toolTip="Allow raw HTML code inside the Markdown file." horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="Yvy-aE-Sho">
-                                                                <rect key="frame" x="293" y="89" width="170" height="18"/>
+                                                                <rect key="frame" x="293" y="89" width="174" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Inline HTML (unsafe)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yq1-8R-Fo4">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1358,7 +1358,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="mhm-BQ-Lxb" column="Frg-Lu-cBX" id="pI0-e9-veM">
                                                             <button key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JOR-VR-oKE">
-                                                                <rect key="frame" x="467" y="89" width="128" height="18"/>
+                                                                <rect key="frame" x="471" y="89" width="128" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Show debug info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5wj-Mt-t0a">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1410,7 +1410,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="b1T-4W-Sf6" column="LDl-3O-4gf" id="N1k-V5-DgQ">
                                                             <button key="contentView" toolTip="Fix invalid characters in the Markdown code with the standard replacement char." horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="ac7-uv-mn3">
-                                                                <rect key="frame" x="293" y="69" width="170" height="18"/>
+                                                                <rect key="frame" x="293" y="69" width="174" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Validate UTF-8" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Dy7-So-arL">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1427,7 +1427,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="b1T-4W-Sf6" column="Frg-Lu-cBX" id="ZBD-cN-hT5">
                                                             <button key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x4z-Y6-XXg">
-                                                                <rect key="frame" x="467" y="69" width="165" height="18"/>
+                                                                <rect key="frame" x="471" y="69" width="165" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Render as source code" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Etf-lz-kHh">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1491,7 +1491,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="mRf-rL-ZFR" column="Frg-Lu-cBX" id="KMj-3S-0ZU">
                                                             <stackView key="contentView" distribution="equalSpacing" orientation="horizontal" alignment="firstBaseline" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yNC-sm-OWg">
-                                                                <rect key="frame" x="469" y="42" width="163" height="16"/>
+                                                                <rect key="frame" x="473" y="42" width="163" height="16"/>
                                                                 <subviews>
                                                                     <button horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CIP-6p-ITA">
                                                                         <rect key="frame" x="-2" y="-1" width="142" height="18"/>
@@ -1541,7 +1541,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="mRf-rL-ZFR" column="EM0-Js-ao5" id="VqE-kq-364">
                                                             <button key="contentView" toolTip="Recognize GitHub task list syntax." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AmY-2H-gOr">
-                                                                <rect key="frame" x="636" y="41" width="75" height="18"/>
+                                                                <rect key="frame" x="640" y="41" width="75" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Task list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="AVG-X3-Ldi">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1579,7 +1579,7 @@ DQ
                                                                         <rect key="frame" x="13" y="0.0" width="135" height="16"/>
                                                                         <popUpButtonCell key="cell" type="roundTextured" title="Emoji" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="ZGu-RG-R6K" id="6F7-ij-5zY">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="menu"/>
+                                                                            <font key="font" metaFont="message"/>
                                                                             <menu key="menu" id="KjD-3W-qa8">
                                                                                 <items>
                                                                                     <menuItem title="Emoji" hidden="YES" id="ZGu-RG-R6K">
@@ -1617,8 +1617,8 @@ DQ
                                                             </stackView>
                                                         </gridCell>
                                                         <gridCell row="6bo-pC-VNr" column="h9h-fV-gFn" id="bET-fr-Yti">
-                                                            <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="swd-4Z-jlR">
-                                                                <rect key="frame" x="152" y="20" width="137" height="18"/>
+                                                            <button key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="swd-4Z-jlR">
+                                                                <rect key="frame" x="152" y="20" width="81" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Highlight" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="pdn-vI-OrX">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1634,8 +1634,8 @@ DQ
                                                             </button>
                                                         </gridCell>
                                                         <gridCell row="6bo-pC-VNr" column="LDl-3O-4gf" id="knr-aD-ybh">
-                                                            <button key="contentView" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QgC-En-p40">
-                                                                <rect key="frame" x="293" y="20" width="170" height="18"/>
+                                                            <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QgC-En-p40">
+                                                                <rect key="frame" x="293" y="20" width="174" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Sub/Superscript" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uzV-0j-0aP">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1652,7 +1652,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="6bo-pC-VNr" column="Frg-Lu-cBX" id="DYN-La-dlC">
                                                             <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V1O-A3-p8C">
-                                                                <rect key="frame" x="467" y="20" width="165" height="18"/>
+                                                                <rect key="frame" x="471" y="20" width="165" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Table" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZTh-0e-tfH">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1669,7 +1669,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="6bo-pC-VNr" column="EM0-Js-ao5" id="1Aw-9q-DfA">
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZV-G2-qY1">
-                                                                <rect key="frame" x="638" y="22" width="178" height="16"/>
+                                                                <rect key="frame" x="642" y="22" width="178" height="16"/>
                                                                 <subviews>
                                                                     <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-OK-azv">
                                                                         <rect key="frame" x="-2" y="-1" width="18" height="18"/>
@@ -1690,7 +1690,7 @@ DQ
                                                                         <rect key="frame" x="13" y="0.0" width="165" height="16"/>
                                                                         <popUpButtonCell key="cell" type="roundTextured" title="YAML header" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="vHd-22-hfh">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="menu"/>
+                                                                            <font key="font" metaFont="message"/>
                                                                             <menu key="menu" id="ZCo-te-Lyb">
                                                                                 <items>
                                                                                     <menuItem title="YAML header" state="on" hidden="YES" id="JQj-Yd-BmL"/>
@@ -1761,7 +1761,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="axC-Xg-GDO" column="LDl-3O-4gf" id="5GD-Kd-5dQ">
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2od-9W-Y3h">
-                                                                <rect key="frame" x="295" y="1" width="168" height="16"/>
+                                                                <rect key="frame" x="295" y="1" width="172" height="16"/>
                                                                 <subviews>
                                                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lis-9d-r8z">
                                                                         <rect key="frame" x="-2" y="-1" width="18" height="18"/>
@@ -1779,10 +1779,10 @@ DQ
                                                                         </connections>
                                                                     </button>
                                                                     <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="6kk-X1-8Lv">
-                                                                        <rect key="frame" x="13" y="0.0" width="155" height="16"/>
+                                                                        <rect key="frame" x="13" y="0.0" width="159" height="16"/>
                                                                         <popUpButtonCell key="cell" type="roundTextured" title="Strikethrough" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="F4l-OJ-iBd">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="menu"/>
+                                                                            <font key="font" metaFont="message"/>
                                                                             <menu key="menu" id="SwK-Eq-Wzm">
                                                                                 <items>
                                                                                     <menuItem title="Strikethrough" hidden="YES" id="YIu-d7-Osw">
@@ -1821,7 +1821,7 @@ DQ
                                                         </gridCell>
                                                         <gridCell row="axC-Xg-GDO" column="Frg-Lu-cBX" id="K9i-4S-k16">
                                                             <button key="contentView" toolTip="Strip potentially dangerous HTML tags in the Markdown file." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XMk-CW-qDQ">
-                                                                <rect key="frame" x="467" y="-1" width="80" height="18"/>
+                                                                <rect key="frame" x="471" y="-1" width="80" height="18"/>
                                                                 <buttonCell key="cell" type="check" title="Tag filter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OB0-ev-VJc">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -1845,7 +1845,7 @@ DQ
                                                     </gridCells>
                                                 </gridView>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ccb-oe-cYh">
-                                                    <rect key="frame" x="18" y="188" width="125" height="16"/>
+                                                    <rect key="frame" x="18" y="188" width="153" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme:" id="egL-L9-5T4">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1853,10 +1853,10 @@ DQ
                                                     </textFieldCell>
                                                 </textField>
                                                 <popUpButton allowsExpansionToolTips="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CTX-6L-I3O">
-                                                    <rect key="frame" x="146" y="181" width="203" height="25"/>
+                                                    <rect key="frame" x="174" y="181" width="296" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="Default style" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingMiddle" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="dcy-bx-VMQ" id="syl-p2-kQE">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="message"/>
                                                         <menu key="menu" id="lJi-V8-dyv">
                                                             <items>
                                                                 <menuItem title="Default style" state="on" id="dcy-bx-VMQ"/>
@@ -1871,7 +1871,7 @@ DQ
                                                     </connections>
                                                 </popUpButton>
                                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="8An-Xf-Ur1">
-                                                    <rect key="frame" x="348" y="188" width="98" height="14"/>
+                                                    <rect key="frame" x="469" y="188" width="98" height="14"/>
                                                     <popUpButtonCell key="cell" type="bevel" title="Extend default" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="Mxg-xO-key" id="hsm-b5-QMf">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
@@ -1892,7 +1892,7 @@ DQ
                                                     </connections>
                                                 </popUpButton>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X7y-52-Juj">
-                                                    <rect key="frame" x="18" y="161" width="125" height="16"/>
+                                                    <rect key="frame" x="18" y="161" width="153" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Options:" id="MBC-m2-kpW">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1900,7 +1900,7 @@ DQ
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kiL-yb-W3n">
-                                                    <rect key="frame" x="181" y="8" width="112" height="16"/>
+                                                    <rect key="frame" x="209" y="8" width="112" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Autosave settings" id="Hgy-S8-PZu">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1908,7 +1908,7 @@ DQ
                                                     </textFieldCell>
                                                 </textField>
                                                 <switch toolTip="Save changes to settings immediately. " horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="gn8-wq-9v6">
-                                                    <rect key="frame" x="148" y="7" width="28" height="16"/>
+                                                    <rect key="frame" x="176" y="7" width="28" height="16"/>
                                                     <connections>
                                                         <binding destination="XfG-lQ-9wD" name="value" keyPath="self.isAutoSaving" id="Acn-8k-0UL">
                                                             <dictionary key="options">
@@ -1918,7 +1918,7 @@ DQ
                                                     </connections>
                                                 </switch>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sCa-ZB-Sb2">
-                                                    <rect key="frame" x="18" y="113" width="125" height="16"/>
+                                                    <rect key="frame" x="18" y="113" width="153" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Extensions:" id="bF1-0k-vem">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1926,10 +1926,10 @@ DQ
                                                     </textFieldCell>
                                                 </textField>
                                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iLd-SC-WJ6">
-                                                    <rect key="frame" x="146" y="27" width="203" height="25"/>
+                                                    <rect key="frame" x="174" y="27" width="296" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="Open on default browser" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="rt9-6q-gO1" id="ffn-bH-ubv">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="message"/>
                                                         <menu key="menu" id="0DD-rT-3vk">
                                                             <items>
                                                                 <menuItem title="View in Quick Look window" id="yzH-Mt-sgy">
@@ -1949,7 +1949,7 @@ DQ
                                                     </connections>
                                                 </popUpButton>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eHs-tN-Pey">
-                                                    <rect key="frame" x="18" y="34" width="125" height="16"/>
+                                                    <rect key="frame" x="18" y="34" width="153" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="External link:" id="DHz-Hl-maQ">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1957,7 +1957,7 @@ DQ
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tlu-P4-LJS">
-                                                    <rect key="frame" x="611" y="31" width="50" height="21"/>
+                                                    <rect key="frame" x="779" y="31" width="50" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="EEa-Mv-Dvw"/>
                                                     </constraints>
@@ -1982,8 +1982,8 @@ DQ
                                                     </connections>
                                                 </textField>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pJd-It-2KM">
-                                                    <rect key="frame" x="667" y="34" width="20" height="16"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title=" ⨉ " id="mLO-QN-MiG">
+                                                    <rect key="frame" x="835" y="34" width="46" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="height:" id="mLO-QN-MiG">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1997,7 +1997,7 @@ DQ
                                                     </connections>
                                                 </textField>
                                                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r8q-Bk-FWd">
-                                                    <rect key="frame" x="693" y="31" width="50" height="21"/>
+                                                    <rect key="frame" x="887" y="31" width="50" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="OwP-3Q-NJE"/>
                                                     </constraints>
@@ -2018,7 +2018,7 @@ DQ
                                                     </connections>
                                                 </textField>
                                                 <textField focusRingType="none" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k29-Pk-l7W">
-                                                    <rect key="frame" x="749" y="34" width="20" height="14"/>
+                                                    <rect key="frame" x="943" y="34" width="20" height="14"/>
                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title=" px" id="0Ij-aM-aOd">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2033,10 +2033,10 @@ DQ
                                                     </connections>
                                                 </textField>
                                                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uGz-Oo-fnE">
-                                                    <rect key="frame" x="489" y="27" width="72" height="25"/>
+                                                    <rect key="frame" x="647" y="27" width="72" height="25"/>
                                                     <popUpButtonCell key="cell" type="push" title="Auto" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="SWu-0V-FXS" id="yQd-sI-d0L">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="menu"/>
+                                                        <font key="font" metaFont="message"/>
                                                         <menu key="menu" id="Xcr-mb-lfX">
                                                             <items>
                                                                 <menuItem title="Auto" state="on" id="SWu-0V-FXS"/>
@@ -2049,8 +2049,8 @@ DQ
                                                     </connections>
                                                 </popUpButton>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ee6-2t-xH5">
-                                                    <rect key="frame" x="573" y="34" width="32" height="16"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="size:" id="Zqc-gP-iVf">
+                                                    <rect key="frame" x="731" y="34" width="42" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="width:" id="Zqc-gP-iVf">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2064,23 +2064,23 @@ DQ
                                                     </connections>
                                                 </textField>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C8t-xT-dXa">
-                                                    <rect key="frame" x="361" y="34" width="125" height="16"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Quick Look window:" id="rbl-Ov-brv">
+                                                    <rect key="frame" x="491" y="34" width="153" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Quick Look window size:" id="rbl-Ov-brv">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s9x-wg-UTg">
-                                                    <rect key="frame" x="476" y="8" width="102" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s9x-wg-UTg">
+                                                    <rect key="frame" x="363" y="8" width="102" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Show about info" id="5IO-mU-4yw">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <switch toolTip="Save changes to settings immediately. " horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XA7-Gl-MRu">
-                                                    <rect key="frame" x="443" y="7" width="28" height="16"/>
+                                                <switch toolTip="Save changes to settings immediately. " horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XA7-Gl-MRu">
+                                                    <rect key="frame" x="330" y="7" width="28" height="16"/>
                                                     <connections>
                                                         <binding destination="XfG-lQ-9wD" name="value" keyPath="self.isAboutVisible" id="yEn-7v-IXL">
                                                             <dictionary key="options">
@@ -2093,6 +2093,8 @@ DQ
                                             <constraints>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8An-Xf-Ur1" secondAttribute="trailing" constant="20" symbolic="YES" id="0HA-YX-gBY"/>
                                                 <constraint firstItem="CTX-6L-I3O" firstAttribute="top" secondItem="z2a-cF-5GG" secondAttribute="top" constant="8" id="150-c8-lhX"/>
+                                                <constraint firstItem="uGz-Oo-fnE" firstAttribute="leading" secondItem="C8t-xT-dXa" secondAttribute="trailing" constant="8" id="2P8-rF-L2z"/>
+                                                <constraint firstItem="iLd-SC-WJ6" firstAttribute="trailing" secondItem="w9X-nc-ti0" secondAttribute="trailing" id="3c2-eU-df1"/>
                                                 <constraint firstItem="dOo-mR-WPE" firstAttribute="leading" secondItem="sCa-ZB-Sb2" secondAttribute="trailing" constant="8" symbolic="YES" id="3uI-Jl-n4X"/>
                                                 <constraint firstAttribute="bottom" secondItem="gn8-wq-9v6" secondAttribute="bottom" constant="8" id="62s-OU-Bzr"/>
                                                 <constraint firstItem="X7y-52-Juj" firstAttribute="firstBaseline" secondItem="QND-4B-AbJ" secondAttribute="firstBaseline" id="6Ah-yr-hvG"/>
@@ -2118,14 +2120,14 @@ DQ
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="leading" secondItem="dOo-mR-WPE" secondAttribute="leading" id="YC3-2N-InM"/>
                                                 <constraint firstItem="s9x-wg-UTg" firstAttribute="leading" secondItem="XA7-Gl-MRu" secondAttribute="trailing" constant="8" symbolic="YES" id="Zhm-St-E6U"/>
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="firstBaseline" secondItem="eHs-tN-Pey" secondAttribute="firstBaseline" id="aul-Id-v0y"/>
+                                                <constraint firstItem="uGz-Oo-fnE" firstAttribute="leading" secondItem="XMk-CW-qDQ" secondAttribute="leading" id="bKL-bT-1HP"/>
                                                 <constraint firstItem="tlu-P4-LJS" firstAttribute="leading" secondItem="ee6-2t-xH5" secondAttribute="trailing" constant="8" symbolic="YES" id="bZp-xS-Ja3"/>
                                                 <constraint firstItem="r8q-Bk-FWd" firstAttribute="leading" secondItem="pJd-It-2KM" secondAttribute="trailing" constant="8" symbolic="YES" id="d0K-fX-BJw"/>
                                                 <constraint firstItem="tlu-P4-LJS" firstAttribute="firstBaseline" secondItem="ee6-2t-xH5" secondAttribute="firstBaseline" id="dge-G6-GBf"/>
                                                 <constraint firstItem="sCa-ZB-Sb2" firstAttribute="firstBaseline" secondItem="MIB-mW-C6G" secondAttribute="firstBaseline" id="dvz-Z7-fF5"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dOo-mR-WPE" secondAttribute="trailing" constant="20" symbolic="YES" id="g2W-1o-URO"/>
                                                 <constraint firstItem="XA7-Gl-MRu" firstAttribute="centerY" secondItem="gn8-wq-9v6" secondAttribute="centerY" id="jDa-JZ-jsK"/>
-                                                <constraint firstItem="C8t-xT-dXa" firstAttribute="leading" secondItem="iLd-SC-WJ6" secondAttribute="trailing" constant="18" id="kCR-FE-IsR"/>
-                                                <constraint firstItem="uGz-Oo-fnE" firstAttribute="leading" secondItem="C8t-xT-dXa" secondAttribute="trailing" constant="8" symbolic="YES" id="kUX-cW-C5k"/>
+                                                <constraint firstItem="XA7-Gl-MRu" firstAttribute="leading" secondItem="w9X-nc-ti0" secondAttribute="leading" id="kbJ-UO-p6U"/>
                                                 <constraint firstItem="pJd-It-2KM" firstAttribute="firstBaseline" secondItem="tlu-P4-LJS" secondAttribute="firstBaseline" id="koT-0u-HnP"/>
                                                 <constraint firstItem="eHs-tN-Pey" firstAttribute="width" secondItem="Ccb-oe-cYh" secondAttribute="width" id="kqf-zR-ao2"/>
                                                 <constraint firstItem="s9x-wg-UTg" firstAttribute="centerY" secondItem="XA7-Gl-MRu" secondAttribute="centerY" id="l88-VB-iPn"/>
@@ -2134,6 +2136,7 @@ DQ
                                                 <constraint firstItem="C8t-xT-dXa" firstAttribute="firstBaseline" secondItem="iLd-SC-WJ6" secondAttribute="firstBaseline" id="qDf-Iy-bSX"/>
                                                 <constraint firstItem="8An-Xf-Ur1" firstAttribute="firstBaseline" secondItem="CTX-6L-I3O" secondAttribute="firstBaseline" id="sfk-NJ-pPq"/>
                                                 <constraint firstItem="gn8-wq-9v6" firstAttribute="leading" secondItem="iLd-SC-WJ6" secondAttribute="leading" id="tDt-BK-nWx"/>
+                                                <constraint firstItem="C8t-xT-dXa" firstAttribute="leading" secondItem="6kk-X1-8Lv" secondAttribute="leading" constant="3" id="uZ7-qi-OSg"/>
                                                 <constraint firstItem="X7y-52-Juj" firstAttribute="leading" secondItem="Ccb-oe-cYh" secondAttribute="leading" id="vWz-ae-uZm"/>
                                                 <constraint firstItem="eHs-tN-Pey" firstAttribute="leading" secondItem="Ccb-oe-cYh" secondAttribute="leading" id="wZQ-hS-fG5"/>
                                                 <constraint firstItem="ee6-2t-xH5" firstAttribute="leading" secondItem="uGz-Oo-fnE" secondAttribute="trailing" constant="18" id="x0N-HL-9uF"/>

@@ -11,10 +11,10 @@
 
 #include <boost/math/tools/is_standalone.hpp>
 #ifndef BOOST_MATH_STANDALONE
-#include <boost/config.hpp>
-#ifdef BOOST_NO_CXX17_IF_CONSTEXPR
-#error "The header <boost/math/norms.hpp> can only be used in C++17 and later."
-#endif
+#  include <boost/config.hpp>
+#  ifdef BOOST_MATH_NO_CXX17_IF_CONSTEXPR
+#    error "The header <boost/math/rqrt.hpp> can only be used in C++17 and later."
+#  endif
 #endif
 
 namespace boost::math {
@@ -23,7 +23,7 @@ template<typename Real>
 inline Real rsqrt(Real const & x)
 {
     using std::sqrt;
-    if constexpr (std::is_same_v<Real, float> || std::is_same_v<Real, double> || std::is_same_v<Real, long double>)
+    if constexpr (std::is_arithmetic_v<Real> && !std::is_integral_v<Real>)
     {
         return 1/sqrt(x);
     }

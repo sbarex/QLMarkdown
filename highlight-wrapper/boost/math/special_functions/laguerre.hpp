@@ -105,7 +105,7 @@ T laguerre_imp(unsigned n, unsigned m, T x, const Policy& pol)
    while(c < n)
    {
       std::swap(p0, p1);
-      p1 = laguerre_next(c, m, x, p0, p1);
+      p1 = static_cast<T>(laguerre_next(c, m, x, p0, p1));
       ++c;
    }
    return p1;

@@ -1,0 +1,456 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "all files" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tutti i files"
+          }
+        }
+      }
+    },
+    "Allow inline HTML (unsafe)" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consenti codice HTML in linea (non sicuro)"
+          }
+        }
+      }
+    },
+    "Autolink" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genera link automaticamente"
+          }
+        }
+      }
+    },
+    "Convert ${inputFile} into a HTML file." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Converti ${inputFile} in un file HTML."
+          }
+        }
+      }
+    },
+    "Convert a Markdown file to HTML." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Converte un file Markdown in formato HTML."
+          }
+        }
+      }
+    },
+    "Embed local images" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incapsula immagini locali"
+          }
+        }
+      }
+    },
+    "Emoji option state" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzione per le emoji"
+          }
+        }
+      }
+    },
+    "Emoji replacement" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituisci emoji"
+          }
+        }
+      }
+    },
+    "Footnotes" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note di fondo pagina"
+          }
+        }
+      }
+    },
+    "Format ${inputFile} in an HTML code (${generateFullCode})." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatta il ${inputFile} in codice HTML (${generateFullCode})."
+          }
+        }
+      }
+    },
+    "Format a markdown file to HTML" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatta un file markdown in codice HTML"
+          }
+        }
+      }
+    },
+    "Generate a complete HTML page or only the body fragment." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genera il codice HTML completo oppure solo il frammento del corpo."
+          }
+        }
+      }
+    },
+    "Hard breaks" : {
+
+    },
+    "Heads anchor" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collegamenti ai titoli"
+          }
+        }
+      }
+    },
+    "Highlight" : {
+
+    },
+    "HTML code generation" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generazione del codice HTML"
+          }
+        }
+      }
+    },
+    "Input File" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markdown file"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File Markdown"
+          }
+        }
+      }
+    },
+    "Markdown convert" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Converti file Markdown"
+          }
+        }
+      }
+    },
+    "Markdown format" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatta file Markdown"
+          }
+        }
+      }
+    },
+    "Math extension" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estensione Math"
+          }
+        }
+      }
+    },
+    "No soft breaks" : {
+
+    },
+    "off" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "disattivato"
+          }
+        }
+      }
+    },
+    "on" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "attivato"
+          }
+        }
+      }
+    },
+    "only for .rmd and .qmd files" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo per i file .rmd e .qmd"
+          }
+        }
+      }
+    },
+    "Option state" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzione"
+          }
+        }
+      }
+    },
+    "page" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pagina"
+          }
+        }
+      }
+    },
+    "predefined" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "predefinito"
+          }
+        }
+      }
+    },
+    "recognize double ~" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "riconosci doppia ~"
+          }
+        }
+      }
+    },
+    "recognize single ~" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "riconosci singola ~"
+          }
+        }
+      }
+    },
+    "Render as source code" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatta il codice sorgente"
+          }
+        }
+      }
+    },
+    "replace using font" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sostituisci usando il font"
+          }
+        }
+      }
+    },
+    "replace using images" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sostituisci con immagini"
+          }
+        }
+      }
+    },
+    "Show debug info" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra informazioni di debug"
+          }
+        }
+      }
+    },
+    "Smart quotes" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usa virgolette tipografiche"
+          }
+        }
+      }
+    },
+    "snippet" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "frammento"
+          }
+        }
+      }
+    },
+    "Strikethrough extension" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estensione testo barrato"
+          }
+        }
+      }
+    },
+    "Strikethrough option state" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzione testo barrato"
+          }
+        }
+      }
+    },
+    "Sub/Superscript extension" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estensione apice/pedice"
+          }
+        }
+      }
+    },
+    "Syntax highlight extension" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evidenzia sintassi dei blocchi di codice"
+          }
+        }
+      }
+    },
+    "Table extension" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estensione tabella"
+          }
+        }
+      }
+    },
+    "Tag filter" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtra tag HTML"
+          }
+        }
+      }
+    },
+    "Task list" : {
+
+    },
+    "The Markdown file to convert." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File Markdown da convertire."
+          }
+        }
+      }
+    },
+    "The Markdown file to format." : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "File Markdown da formattare."
+          }
+        }
+      }
+    },
+    "Validate UTF8" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valida UTF8"
+          }
+        }
+      }
+    },
+    "YAML header" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Intestazione YAML"
+          }
+        }
+      }
+    },
+    "YAML header option state" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzione Intestazione YAML"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

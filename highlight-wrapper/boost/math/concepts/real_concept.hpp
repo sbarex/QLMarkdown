@@ -45,6 +45,14 @@
 #  include <cstdio>
 #endif
 
+#if defined __has_include
+#  if __cplusplus > 202002L || _MSVC_LANG > 202002L 
+#    if __has_include (<stdfloat>)
+#    include <stdfloat>
+#    endif
+#  endif
+#endif
+
 namespace boost{ namespace math{
 
 namespace concepts
@@ -79,6 +87,12 @@ public:
 #ifdef BOOST_MATH_USE_FLOAT128
    real_concept(BOOST_MATH_FLOAT128_TYPE c) : m_value(c){}
 #endif
+#ifdef __STDCPP_FLOAT32_T__
+   real_concept(std::float32_t c) : m_value(static_cast<real_concept_base_type>(c)){}
+#endif
+#ifdef __STDCPP_FLOAT64_T__
+   real_concept(std::float64_t c) : m_value(static_cast<real_concept_base_type>(c)){}
+#endif
 
    // Assignment:
    real_concept& operator=(char c) { m_value = c; return *this; }
@@ -96,6 +110,12 @@ public:
    real_concept& operator=(float c) { m_value = c; return *this; }
    real_concept& operator=(double c) { m_value = c; return *this; }
    real_concept& operator=(long double c) { m_value = c; return *this; }
+   #ifdef __STDCPP_FLOAT32_T__
+   real_concept& operator=(std::float32_t c) { m_value = c; return *this; }
+   #endif
+   #ifdef __STDCPP_FLOAT64_T__
+   real_concept& operator=(std::float64_t c) { m_value = c; return *this; }
+   #endif
 
    // Access:
    real_concept_base_type value()const{ return m_value; }

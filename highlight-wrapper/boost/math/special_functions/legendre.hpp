@@ -66,7 +66,7 @@ T legendre_imp(unsigned l, T x, const Policy& pol, bool second = false)
    while(n < l)
    {
       std::swap(p0, p1);
-      p1 = boost::math::legendre_next(n, x, p0, p1);
+      p1 = static_cast<T>(boost::math::legendre_next(n, x, p0, p1));
       ++n;
    }
    return p1;
@@ -115,7 +115,7 @@ T legendre_p_prime_imp(unsigned l, T x, const Policy& pol, T* Pn
     while(n < l - 1)
     {
        std::swap(p0, p1);
-       p1 = boost::math::legendre_next(n, x, p0, p1);
+       p1 = static_cast<T>(boost::math::legendre_next(n, x, p0, p1));
        ++n;
        if (odd)
        {
@@ -131,7 +131,7 @@ T legendre_p_prime_imp(unsigned l, T x, const Policy& pol, T* Pn
     if (Pn)
     {
         std::swap(p0, p1);
-        *Pn = boost::math::legendre_next(n, x, p0, p1);
+        *Pn = static_cast<T>(boost::math::legendre_next(n, x, p0, p1));
     }
     return p_prime;
 }
@@ -206,6 +206,11 @@ std::vector<T> legendre_p_zeros_imp(int n, const Policy& pol)
                                               lower_bound, upper_bound,
                                               policies::digits<T, Policy>(),
                                               number_of_iterations);
+        if (number_of_iterations >= policies::get_max_root_iterations<Policy>())
+        {
+           policies::raise_evaluation_error<T>("legendre_p_zeros<%1%>", "Unable to locate solution in a reasonable time:"  // LCOV_EXCL_LINE
+              " either there is no answer or the answer is infinite.  Current best guess is %1%", x_nk, Policy()); // LCOV_EXCL_LINE
+        }
 
         BOOST_MATH_ASSERT(lower_bound < x_nk);
         BOOST_MATH_ASSERT(upper_bound > x_nk);
@@ -322,7 +327,7 @@ T legendre_p_imp(int l, int m, T x, T sin_theta_power, const Policy& pol)
    }
    if (-m == l)
    {
-      return pow((1 - x * x) / 4, T(l) / 2) / boost::math::tgamma(l + 1, pol);
+      return pow((1 - x * x) / 4, T(l) / 2) / boost::math::tgamma<T>(l + 1, pol);
    }
    if(m < 0)
    {

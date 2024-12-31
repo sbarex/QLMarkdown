@@ -2,6 +2,8 @@
 
 // Copyright John Maddock 2006.
 // Copyright Paul A. Bristow 2006.
+// Copyright Matt Borland 2023.
+// Copyright Ryan Elandt 2023.
 
 // Use, modification and distribution are subject to the
 // Boost Software License, Version 1.0.
@@ -23,7 +25,7 @@
 #endif
 
 #include <boost/math/tools/config.hpp>
-#include <type_traits>
+#include <boost/math/tools/type_traits.hpp>
 
 namespace boost
 {
@@ -31,150 +33,103 @@ namespace boost
   {
     namespace tools
     {
+      ///// This promotion system works as follows:
+      // 
+      // Rule<T1> (one argument promotion rule):
+      //   - Promotes `T` to `double` if `T` is an integer type as identified by
+      //     `std::is_integral`, otherwise is `T`
+      //
+      // Rule<T1, T2_to_TN...> (two or more argument promotion rule):
+      //   - 1. Calculates type using applying Rule<T1>.
+      //   - 2. Calculates type using applying Rule<T2_to_TN...> 
+      //   - If the type calculated in 1 and 2 are both floating point types, as
+      //     identified by `std::is_floating_point`, then return the type
+      //     determined by `std::common_type`. Otherwise return the type using
+      //     an asymmetric convertibility rule.
+      //
+      ///// Discussion:
+      //
       // If either T1 or T2 is an integer type,
       // pretend it was a double (for the purposes of further analysis).
       // Then pick the wider of the two floating-point types
       // as the actual signature to forward to.
       // For example:
-      // foo(int, short) -> double foo(double, double);
-      // foo(int, float) -> double foo(double, double);
-      // Note: NOT float foo(float, float)
-      // foo(int, double) -> foo(double, double);
-      // foo(double, float) -> double foo(double, double);
-      // foo(double, float) -> double foo(double, double);
-      // foo(any-int-or-float-type, long double) -> foo(long double, long double);
-      // but ONLY float foo(float, float) is unchanged.
-      // So the only way to get an entirely float version is to call foo(1.F, 2.F),
-      // But since most (all?) the math functions convert to double internally,
-      // probably there would not be the hoped-for gain by using float here.
-
+      //    foo(int, short) -> double foo(double, double);  // ***NOT*** float foo(float, float)
+      //    foo(int, float) -> double foo(double, double);  // ***NOT*** float foo(float, float)
+      //    foo(int, double) -> foo(double, double);
+      //    foo(double, float) -> double foo(double, double);
+      //    foo(double, float) -> double foo(double, double);
+      //    foo(any-int-or-float-type, long double) -> foo(long double, long double);
+      // ONLY float foo(float, float) is unchanged, so the only way to get an
+      // entirely float version is to call foo(1.F, 2.F). But since most (all?) the
+      // math functions convert to double internally, probably there would not be the
+      // hoped-for gain by using float here.
+      //
       // This follows the C-compatible conversion rules of pow, etc
       // where pow(int, float) is converted to pow(double, double).
 
+
+      // Promotes a single argument to double if it is an integer type
       template <class T>
-      struct promote_arg
-      { // If T is integral type, then promote to double.
-        using type = typename std::conditional<std::is_integral<T>::value, double, T>::type;
+      struct promote_arg {
+         using type = typename boost::math::conditional<boost::math::is_integral<T>::value, double, T>::type;
       };
-      // These full specialisations reduce std::conditional usage and speed up
-      // compilation:
-      template <> struct promote_arg<float> { using type = float; };
-      template <> struct promote_arg<double>{ using type = double; };
-      template <> struct promote_arg<long double> { using type = long double; };
-      template <> struct promote_arg<int> {  using type = double; };
 
-      template <typename T>
-      using promote_arg_t = typename promote_arg<T>::type;
 
+      // Promotes two arguments, neither of which is an integer type using an asymmetric
+      // convertibility rule.
+      template <class T1, class T2, bool = (boost::math::is_floating_point<T1>::value && boost::math::is_floating_point<T2>::value)>
+      struct pa2_integral_already_removed {
+         using type = typename boost::math::conditional<
+            !boost::math::is_floating_point<T2>::value && boost::math::is_convertible<T1, T2>::value, 
+            T2, T1>::type;
+      };
+      // For two floating point types, promotes using `std::common_type` functionality 
       template <class T1, class T2>
-      struct promote_args_2
-      { // Promote, if necessary, & pick the wider of the two floating-point types.
-        // for both parameter types, if integral promote to double.
-        using T1P = typename promote_arg<T1>::type; // T1 perhaps promoted.
-        using T2P = typename promote_arg<T2>::type; // T2 perhaps promoted.
+      struct pa2_integral_already_removed<T1, T2, true> {
+         using type = boost::math::common_type_t<T1, T2, float>;
+      };
 
-        using type = typename std::conditional<
-          std::is_floating_point<T1P>::value && std::is_floating_point<T2P>::value, // both T1P and T2P are floating-point?
-#ifdef BOOST_MATH_USE_FLOAT128
-           typename std::conditional<std::is_same<__float128, T1P>::value || std::is_same<__float128, T2P>::value, // either long double?
-            __float128,
-#endif
-             typename std::conditional<std::is_same<long double, T1P>::value || std::is_same<long double, T2P>::value, // either long double?
-               long double, // then result type is long double.
-               typename std::conditional<std::is_same<double, T1P>::value || std::is_same<double, T2P>::value, // either double?
-                  double, // result type is double.
-                  float // else result type is float.
-             >::type
-#ifdef BOOST_MATH_USE_FLOAT128
-             >::type
-#endif
-             >::type,
-          // else one or the other is a user-defined type:
-          typename std::conditional<!std::is_floating_point<T2P>::value && std::is_convertible<T1P, T2P>::value, T2P, T1P>::type>::type;
-      }; // promote_arg2
-      // These full specialisations reduce std::conditional usage and speed up
-      // compilation:
-      template <> struct promote_args_2<float, float> { using type = float; };
-      template <> struct promote_args_2<double, double>{ using type = double; };
-      template <> struct promote_args_2<long double, long double> { using type = long double; };
-      template <> struct promote_args_2<int, int> {  using type = double; };
-      template <> struct promote_args_2<int, float> {  using type = double; };
-      template <> struct promote_args_2<float, int> {  using type = double; };
-      template <> struct promote_args_2<int, double> {  using type = double; };
-      template <> struct promote_args_2<double, int> {  using type = double; };
-      template <> struct promote_args_2<int, long double> {  using type = long double; };
-      template <> struct promote_args_2<long double, int> {  using type = long double; };
-      template <> struct promote_args_2<float, double> {  using type = double; };
-      template <> struct promote_args_2<double, float> {  using type = double; };
-      template <> struct promote_args_2<float, long double> {  using type = long double; };
-      template <> struct promote_args_2<long double, float> {  using type = long double; };
-      template <> struct promote_args_2<double, long double> {  using type = long double; };
-      template <> struct promote_args_2<long double, double> {  using type = long double; };
 
-      template <typename T, typename U>
-      using promote_args_2_t = typename promote_args_2<T, U>::type;
+      // Template definition for promote_args_permissive
+      template <typename... Args>
+      struct promote_args_permissive;
+      // Specialization for one argument
+      template <typename T>
+      struct promote_args_permissive<T> {
+         using type = typename promote_arg<typename boost::math::remove_cv<T>::type>::type;
+      };
+      // Specialization for two or more arguments
+      template <typename T1, typename... T2_to_TN>
+      struct promote_args_permissive<T1, T2_to_TN...> {
+         using type = typename pa2_integral_already_removed<
+                  typename promote_args_permissive<T1>::type,
+                  typename promote_args_permissive<T2_to_TN...>::type
+               >::type;
+      };
 
-      template <class T1, class T2=float, class T3=float, class T4=float, class T5=float, class T6=float>
-      struct promote_args
-      {
-         using type = typename promote_args_2<
-            typename std::remove_cv<T1>::type,
-            typename promote_args_2<
-               typename std::remove_cv<T2>::type,
-               typename promote_args_2<
-                  typename std::remove_cv<T3>::type,
-                  typename promote_args_2<
-                     typename std::remove_cv<T4>::type,
-                     typename promote_args_2<
-                        typename std::remove_cv<T5>::type, typename std::remove_cv<T6>::type
-                     >::type
-                  >::type
-               >::type
-            >::type
-         >::type;
+      template <class... Args>
+      using promote_args_permissive_t = typename promote_args_permissive<Args...>::type;
 
+
+      // Same as `promote_args_permissive` but with a static assertion that the promoted type
+      // is not `long double` if `BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS` is defined
+      template <class... Args>
+      struct promote_args {
+         using type = typename promote_args_permissive<Args...>::type;
 #if defined(BOOST_MATH_NO_LONG_DOUBLE_MATH_FUNCTIONS)
          //
          // Guard against use of long double if it's not supported:
          //
-         static_assert((0 == std::is_same<type, long double>::value), "Sorry, but this platform does not have sufficient long double support for the special functions to be reliably implemented.");
+         static_assert((0 == boost::math::is_same<type, long double>::value), "Sorry, but this platform does not have sufficient long double support for the special functions to be reliably implemented.");
 #endif
       };
 
-      template <class T1, class T2=float, class T3=float, class T4=float, class T5=float, class T6=float>
-      using promote_args_t = typename promote_args<T1, T2, T3, T4, T5, T6>::type;
-
-      //
-      // This struct is the same as above, but has no static assert on long double usage,
-      // it should be used only on functions that can be implemented for long double
-      // even when std lib support is missing or broken for that type.
-      //
-      template <class T1, class T2=float, class T3=float, class T4=float, class T5=float, class T6=float>
-      struct promote_args_permissive
-      {
-         using type = typename promote_args_2<
-            typename std::remove_cv<T1>::type,
-            typename promote_args_2<
-               typename std::remove_cv<T2>::type,
-               typename promote_args_2<
-                  typename std::remove_cv<T3>::type,
-                  typename promote_args_2<
-                     typename std::remove_cv<T4>::type,
-                     typename promote_args_2<
-                        typename std::remove_cv<T5>::type, typename std::remove_cv<T6>::type
-                     >::type
-                  >::type
-               >::type
-            >::type
-         >::type;
-      };
-
-      template <class T1, class T2=float, class T3=float, class T4=float, class T5=float, class T6=float>
-      using promote_args_permissive_t = typename promote_args_permissive<T1, T2, T3, T4, T5, T6>::type;
+      template <class... Args>
+      using promote_args_t = typename promote_args<Args...>::type;
 
     } // namespace tools
   } // namespace math
 } // namespace boost
 
 #endif // BOOST_MATH_PROMOTION_HPP
-

@@ -532,14 +532,14 @@ auto median_absolute_deviation(ExecutionPolicy&& exec, RandomAccessIterator firs
     {
         auto middle = first + (num_elems - 1)/2;
         std::nth_element(exec, first, middle, last, comparator);
-        return abs(*middle);
+        return abs(*middle-center);
     }
     else
     {
         auto middle = first + num_elems/2 - 1;
         std::nth_element(exec, first, middle, last, comparator);
         std::nth_element(exec, middle, middle+1, last, comparator);
-        return (abs(*middle) + abs(*(middle+1)))/abs(static_cast<Real>(2));
+        return (abs(*middle-center) + abs(*(middle+1)-center))/abs(static_cast<Real>(2));
     }
 }
 
@@ -1070,14 +1070,14 @@ Real median_absolute_deviation(RandomAccessIterator first, RandomAccessIterator 
     {
         auto middle = first + (num_elems - 1)/2;
         std::nth_element(first, middle, last, comparator);
-        return abs(*middle);
+        return abs(*middle-center);
     }
     else
     {
         auto middle = first + num_elems/2 - 1;
         std::nth_element(first, middle, last, comparator);
         std::nth_element(middle, middle+1, last, comparator);
-        return (abs(*middle) + abs(*(middle+1)))/abs(static_cast<Real>(2));
+        return (abs(*middle-center) + abs(*(middle+1)-center))/abs(static_cast<Real>(2));
     }
 }
 

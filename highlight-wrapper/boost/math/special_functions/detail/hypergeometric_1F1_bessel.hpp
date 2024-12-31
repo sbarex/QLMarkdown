@@ -84,7 +84,7 @@
            }
            else
               log_scale = 0;
-#ifndef BOOST_NO_CXX17_IF_CONSTEXPR
+#ifndef BOOST_MATH_NO_CXX17_IF_CONSTEXPR
            if constexpr (std::numeric_limits<T>::has_infinity)
            {
               if (!(boost::math::isfinite)(bessel_cache[cache_size - 1]))
@@ -184,7 +184,7 @@
                     //
                     if ((j < cache_size - 2) && (tools::max_value<T>() / fabs(64 * bessel_cache[j] / bessel_cache[j + 1]) < fabs(bessel_cache[j])))
                     {
-                       T rescale = pow(fabs(bessel_cache[j] / bessel_cache[j + 1]), j + 1) * 2;
+                       T rescale = static_cast<T>(pow(fabs(bessel_cache[j] / bessel_cache[j + 1]), T(j + 1)) * 2);
                        if (!((boost::math::isfinite)(rescale)))
                           rescale = tools::max_value<T>();
                        for (int k = j; k < cache_size; ++k)
@@ -259,7 +259,7 @@
                     //
                     if ((j < cache_size - 2) && (tools::max_value<T>() / fabs(64 * bessel_cache[j] / bessel_cache[j + 1]) < fabs(bessel_cache[j])))
                     {
-                       T rescale = pow(fabs(bessel_cache[j] / bessel_cache[j + 1]), j + 1) * 2;
+                       T rescale = static_cast<T>(pow(fabs(bessel_cache[j] / bessel_cache[j + 1]), T(j + 1)) * 2);
                        if (!((boost::math::isfinite)(rescale)))
                           rescale = tools::max_value<T>();
                        for (int k = j; k < cache_size; ++k)
@@ -339,14 +339,14 @@
         if(b == 2 * a)
            return hypergeometric_1F1_divergent_fallback(a, b, z, pol, log_scale);
 
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
         try
 #endif
         {
            prefix = boost::math::tgamma(b, pol);
            prefix *= exp(z / 2);
         }
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
         catch (const std::runtime_error&)
         {
            use_logs = true;
@@ -364,14 +364,14 @@
         std::uintmax_t max_iter = boost::math::policies::get_max_series_iterations<Policy>();
         bool retry = false;
         long long series_scale = 0;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
         try
 #endif
         {
            hypergeometric_1F1_AS_13_3_7_tricomi_series<T, Policy> s(a, b, z, pol);
            series_scale = s.scale();
            log_scale += s.scale();
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
            try
 #endif
            {
@@ -386,7 +386,7 @@
               if (norm / fabs(result) > 1 / boost::math::tools::root_epsilon<T>())
                  retry = true;  // fatal cancellation
            }
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
            catch (const std::overflow_error&)
            {
               retry = true;
@@ -397,7 +397,7 @@
            }
 #endif
         }
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
         catch (const std::overflow_error&)
         {
            log_scale -= scale;
@@ -558,7 +558,7 @@
               //
               if((j < cache_size - 2) && (bessel_i_cache[j + 1] != 0) && (tools::max_value<T>() / fabs(64 * bessel_i_cache[j] / bessel_i_cache[j + 1]) < fabs(bessel_i_cache[j])))
               {
-                 T rescale = pow(fabs(bessel_i_cache[j] / bessel_i_cache[j + 1]), j + 1) * 2;
+                 T rescale = static_cast<T>(pow(fabs(bessel_i_cache[j] / bessel_i_cache[j + 1]), T(j + 1)) * 2);
                  if (rescale > tools::max_value<T>())
                     rescale = tools::max_value<T>();
                  for (int k = j; k < cache_size; ++k)
@@ -591,7 +591,7 @@
         std::uintmax_t max_iter = boost::math::policies::get_max_series_iterations<Policy>();
         T result = boost::math::tools::sum_series(s, boost::math::policies::get_epsilon<T, Policy>(), max_iter);
         boost::math::policies::check_series_iterations<T>("boost::math::hypergeometric_1F1_AS_13_3_6<%1%>(%1%,%1%,%1%)", max_iter, pol);
-        result *= boost::math::tgamma(b_minus_a - 0.5f, pol) * pow(z / 4, -b_minus_a + 0.5f);
+        result *= boost::math::tgamma(b_minus_a - 0.5f, pol) * pow(z / 4, -b_minus_a + T(0.5f));
         long long scale = lltrunc(z / 2);
         log_scaling += scale;
         log_scaling += s.scaling();

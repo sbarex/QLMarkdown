@@ -14,9 +14,9 @@
 #define BOOST_OPTIONAL_DETAIL_OPTIONAL_CONFIG_AJK_28JAN2015_HPP
 
 #include <boost/config.hpp>
-#include <boost/detail/workaround.hpp>
+#include <boost/config/workaround.hpp>
 
-#if (defined BOOST_NO_CXX11_RVALUE_REFERENCES) || (defined BOOST_OPTIONAL_CONFIG_NO_RVALUE_REFERENCES)
+#if (defined BOOST_OPTIONAL_CONFIG_NO_RVALUE_REFERENCES)
 # define BOOST_OPTIONAL_DETAIL_NO_RVALUE_REFERENCES
 #endif
 
@@ -53,9 +53,9 @@
 #endif
 
 #if (defined(_MSC_VER) && _MSC_VER <= 1800)
-// on MSCV 2013 and earlier an unwanted temporary is created when you assign from
+// on MSVC 2013 and earlier an unwanted temporary is created when you assign from
 // a const lvalue of integral type. Thus we bind not to the original address but
-// to a temporary. 
+// to a temporary.
 # define BOOST_OPTIONAL_CONFIG_NO_PROPER_ASSIGN_FROM_CONST_INT
 #endif
 
@@ -82,7 +82,7 @@
 
 #endif // defined(__GNUC__)
 
-#if (defined __GNUC__) && (!defined BOOST_NO_CXX11_RVALUE_REFERENCES)
+#if (defined __GNUC__)
 // On some initial rvalue reference implementations GCC does it in a strange way,
 // preferring perfect-forwarding constructor to implicit copy constructor.
 
@@ -114,9 +114,9 @@
 #endif
 
 
-// Detect suport for defaulting move operations
+// Detect support for defaulting move operations
 // (some older compilers implement rvalue references,
-// defaulted funcitons but move operations are not special members and cannot be defaulted)
+// defaulted functions but move operations are not special members and cannot be defaulted)
 
 #ifdef BOOST_NO_CXX11_DEFAULTED_FUNCTIONS
 # define BOOST_OPTIONAL_DETAIL_NO_DEFAULTED_MOVE_FUNCTIONS
@@ -129,6 +129,15 @@
 
 #ifdef BOOST_OPTIONAL_CONFIG_NO_DIRECT_STORAGE_SPEC
 # define BOOST_OPTIONAL_DETAIL_NO_DIRECT_STORAGE_SPEC
+#endif
+
+
+#ifdef BOOST_NO_CXX11_REF_QUALIFIERS
+# define BOOST_OPTIONAL_CONST_REF_QUAL const
+# define BOOST_OPTIONAL_REF_QUAL
+#else
+# define BOOST_OPTIONAL_CONST_REF_QUAL const&
+# define BOOST_OPTIONAL_REF_QUAL &
 #endif
 
 

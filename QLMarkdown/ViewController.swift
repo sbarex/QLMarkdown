@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-import WebKit
+@preconcurrency import WebKit
 import OSLog
 
 class ViewController: NSViewController {
@@ -347,6 +347,8 @@ class ViewController: NSViewController {
         }
     }
     
+    var firstView = true
+    
     func initStylesPopup(resetStyles: Bool = false) {
         stylesPopup.removeAllItems()
         // Standard CSS
@@ -668,7 +670,10 @@ class ViewController: NSViewController {
         guard result.rawValue == NSApplication.ModalResponse.OK.rawValue, let dst = savePanel.url else {
             return
         }
-        
+        _ = self.exportCurrentMarkdown(to: dst)
+    }
+    
+    func exportCurrentMarkdown(to dst: URL) -> Bool {
         do {
             try self.textView.string.write(to: dst, atomically: true, encoding: .utf8)
         } catch {
@@ -677,7 +682,9 @@ class ViewController: NSViewController {
             alert.messageText = "Unable to export the Markdown source!"
             alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             alert.runModal()
+            return false
         }
+        return true
     }
     
     @IBAction func reloadMarkdown(_ sender: Any) {
@@ -1080,6 +1087,34 @@ document.addEventListener('scroll', function(e) {
         doRefresh(self)
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        guard firstView else {
+            return
+        }
+        firstView = true;
+        
+        guard !UserDefaults.standard.bool(forKey: "qlmarkdown-suppress-editor-warning") else {
+            return
+        }
+        
+        let alert = NSAlert()
+        
+        alert.alertStyle = .warning
+        alert.showsSuppressionButton = true
+        alert.messageText = "QLMarkdown Preferences"
+        alert.informativeText = "This application is not intended to be a Markdown editor, but the interface for customising the quicklook preview."
+        alert.suppressionButton?.title = "Do not show this warning again"
+        
+        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+        alert.runModal()
+        
+        if let suppressionButton = alert.suppressionButton, suppressionButton.state == .on {
+            UserDefaults.standard.set(true, forKey: "qlmarkdown-suppress-editor-warning")
+        }
+    }
+    
     
     @IBAction func doAutoRefresh(_ sender: NSMenuItem) {
         autoRefresh = !autoRefresh
@@ -1348,6 +1383,34 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
                 // Do not close the window
                 return false
             default:
+                return true
+            }
+        }
+        
+        if contentViewController.edited, let file = contentViewController.markdown_file, !file.relativePath.contains(Bundle.main.bundleURL.relativePath) {
+            let alert = NSAlert()
+            alert.alertStyle = .warning
+            alert.messageText = "The markdown file is changed!"
+            alert.informativeText = "Do you want to save them before closing?"
+            alert.addButton(withTitle: "Save").keyEquivalent = "\r"
+            alert.addButton(withTitle: "Do not Save").keyEquivalent = "d"
+            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            
+            let r = alert.runModal()
+            switch r {
+            case .OK, .alertFirstButtonReturn:
+                // Save the markdown file
+                if contentViewController.exportCurrentMarkdown(to: file) {
+                    contentViewController.edited = false
+                    return true
+                } else {
+                    return false
+                }
+            case .cancel, .alertThirdButtonReturn: // Cancel
+                // Do not close the window
+                return false
+            default:
+                contentViewController.edited = false
                 return true
             }
         }

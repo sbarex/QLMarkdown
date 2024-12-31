@@ -123,13 +123,13 @@ namespace boost { namespace math { namespace detail {
             {
                if (boost::math::policies::digits<T, Policy>() <= 64)
                   return hypergeometric_1F1_from_function_ratio_negative_b_forwards(a, b, z, pol, log_scaling);
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                try
 #endif
                {
                   return hypergeometric_1F1_checked_series_impl(a, b, z, pol, log_scaling);
                }
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                catch (const evaluation_error&)
                {
                   //
@@ -355,7 +355,9 @@ namespace boost { namespace math { namespace detail {
          if ((a < 0) && (a == ceil(a)) && (a > -50))
             return detail::hypergeometric_1F1_generic_series(a, b, z, pol, log_scaling, function);
 
-         return (b + z) * exp(z) / b;
+         log_scaling = lltrunc(floor(z));
+         T local_z = z - log_scaling;
+         return (b + z) * exp(local_z) / b;
       }
 
       if ((a == 1) && (b == 2))
@@ -417,13 +419,13 @@ namespace boost { namespace math { namespace detail {
       if (detail::hypergeometric_1F1_asym_region(a, b, z, pol))
       {
          long long saved_scale = log_scaling;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
          try
 #endif
          {
             return hypergeometric_1F1_asym_large_z_series(a, b, z, pol, log_scaling);
          }
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
          catch (const evaluation_error&)
          {
          }
@@ -460,13 +462,28 @@ namespace boost { namespace math { namespace detail {
                return hypergeometric_1F1_checked_series_impl(a, b, z, pol, log_scaling);
             }
          }
-         // Let's otherwise make z positive (almost always)
-         // by Kummer's transformation
-         // (we also don't transform if z belongs to [-1,0])
-         long long scaling = lltrunc(z);
-         T r = exp(z - scaling) * detail::hypergeometric_1F1_imp<T>(b_minus_a, b, -z, pol, log_scaling);
-         log_scaling += scaling;
-         return r;
+         if ((b < 0) && (floor(b) == b))
+         {
+            // Negative integer b, so a must be a negative integer too.
+            // Kummer's transformation fails here!
+            if(a > -50)
+               return detail::hypergeometric_1F1_generic_series(a, b, z, pol, log_scaling, function);
+            // Is there anything better than this??
+            return hypergeometric_1F1_imp(a, float_next(b), z, pol, log_scaling);
+         }
+         else
+         {
+            // Let's otherwise make z positive (almost always)
+            // by Kummer's transformation
+            // (we also don't transform if z belongs to [-1,0])
+            // Also note that Kummer's transformation fails when b is 
+            // a negative integer, although this seems to be unmentioned
+            // in the literature...
+            long long scaling = lltrunc(z);
+            T r = exp(z - scaling) * detail::hypergeometric_1F1_imp<T>(b_minus_a, b, -z, pol, log_scaling);
+            log_scaling += scaling;
+            return r;
+         }
       }
       //
       // Check for initial divergence:

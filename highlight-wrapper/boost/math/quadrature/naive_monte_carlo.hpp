@@ -21,6 +21,11 @@
 #include <map>
 #include <type_traits>
 #include <boost/math/policies/error_handling.hpp>
+#include <boost/math/special_functions/fpclassify.hpp>
+
+#ifdef BOOST_NAIVE_MONTE_CARLO_DEBUG_FAILURES
+#  include <iostream>
+#endif
 
 namespace boost { namespace math { namespace quadrature {
 
@@ -45,6 +50,8 @@ public:
     {
         using std::numeric_limits;
         using std::sqrt;
+        using boost::math::isinf;
+
         uint64_t n = bounds.size();
         m_lbs.resize(n);
         m_dxs.resize(n);
@@ -58,9 +65,9 @@ public:
                 boost::math::policies::raise_domain_error(function, "The upper bound is <= the lower bound.\n", bounds[i].second, Policy());
                 return;
             }
-            if (bounds[i].first == -numeric_limits<Real>::infinity())
+            if (isinf(bounds[i].first))
             {
-                if (bounds[i].second == numeric_limits<Real>::infinity())
+                if (isinf(bounds[i].second))
                 {
                     m_limit_types[i] = detail::limit_classification::DOUBLE_INFINITE;
                 }
@@ -72,7 +79,7 @@ public:
                     m_dxs[i] = numeric_limits<Real>::quiet_NaN();
                 }
             }
-            else if (bounds[i].second == numeric_limits<Real>::infinity())
+            else if (isinf(bounds[i].second))
             {
                 m_limit_types[i] = detail::limit_classification::UPPER_BOUND_INFINITE;
                 if (singular)
@@ -285,17 +292,17 @@ private:
             m_done = false;
 
 #ifdef BOOST_NAIVE_MONTE_CARLO_DEBUG_FAILURES
-            std::cout << "Failed to achieve required tolerance first time through..\n";
-            std::cout << "  variance =    " << m_variance << std::endl;
-            std::cout << "  average =     " << m_avg << std::endl;
-            std::cout << "  total calls = " << m_total_calls << std::endl;
+            std::cerr << "Failed to achieve required tolerance first time through..\n";
+            std::cerr << "  variance =    " << m_variance << std::endl;
+            std::cerr << "  average =     " << m_avg << std::endl;
+            std::cerr << "  total calls = " << m_total_calls << std::endl;
 
             for (std::size_t i = 0; i < m_num_threads; ++i)
-               std::cout << "  thread_calls[" << i << "] = " << m_thread_calls[i] << std::endl;
+               std::cerr << "  thread_calls[" << i << "] = " << m_thread_calls[i] << std::endl;
             for (std::size_t i = 0; i < m_num_threads; ++i)
-               std::cout << "  thread_averages[" << i << "] = " << m_thread_averages[i] << std::endl;
+               std::cerr << "  thread_averages[" << i << "] = " << m_thread_averages[i] << std::endl;
             for (std::size_t i = 0; i < m_num_threads; ++i)
-               std::cout << "  thread_Ss[" << i << "] = " << m_thread_Ss[i] << std::endl;
+               std::cerr << "  thread_Ss[" << i << "] = " << m_thread_Ss[i] << std::endl;
 #endif
          }
 

@@ -98,11 +98,19 @@ static cmark_node *match_inline_math(cmark_syntax_extension *ext, cmark_parser *
 
     if (character != '$')
         return NULL;
+    
+    int pos = cmark_inline_parser_get_offset(inline_parser);
 
     delims = cmark_inline_parser_scan_delimiters(
         inline_parser, sizeof(buffer) - 1, '$',
         &left_flanking,
         &right_flanking, &punct_before, &punct_after);
+    
+    if (delims != 2 && delims != 1) {
+        // Restore the original pos, allow to other extensions to process the same character.
+        cmark_inline_parser_set_offset(inline_parser, pos);
+        return NULL;
+    }
 
     memset(buffer, '$', delims);
     buffer[delims] = 0;

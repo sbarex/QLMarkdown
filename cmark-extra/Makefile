@@ -94,7 +94,8 @@ SPECVERSION=$(shell perl -ne 'print $$1 if /^version: *([0-9.]+)/' "$(SPEC)")
 ${BUILD_DIR}/libcmark-gfm-x86_64.a:
 	@echo "${bold}Building cmark for x86_64 platform...${normal}"
 	@rm -rf "$(PROJECT_DIR)/cmark-x86_64" > /dev/null
-	${MAKE} CMAKE_OSX_ARCHITECTURES=x86_64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=10.15 BUILDDIR="cmark-x86_64" CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" CPPFLAGS="${CFLAGS} -std=c++11 ${CFLAGS_x86_64}" LDFLAGS="${LDFLAGS_x86_64}" -C $(CMARK_DIR) $(ACTION)
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} clean
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} CMAKE_OSX_ARCHITECTURES=x86_64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=10.15 BUILDDIR="cmark-x86_64" CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" CPPFLAGS="${CFLAGS} -std=c++17 ${CFLAGS_x86_64}" LDFLAGS="${LDFLAGS_x86_64}" -C $(CMARK_DIR) $(ACTION)
 	cp cmark-x86_64/src/libcmark-gfm.a ${BUILD_DIR}/libcmark-gfm-x86_64.a
 	cp cmark-x86_64/src/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.13.dylib
 	@cp cmark-x86_64/src/cmark-gfm_export.h ${BUILD_DIR}/cmark-gfm_export.h
@@ -105,7 +106,8 @@ ${BUILD_DIR}/libcmark-gfm-x86_64.a:
 ${BUILD_DIR}/libcmark-gfm-arm64.a:
 	@echo "${bold}Building cmark for arm64 platform...${normal}"
 	@rm -rf "$(PROJECT_DIR)/cmark-arm64" > /dev/null
-	${MAKE} CMAKE_OSX_ARCHITECTURES=arm64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=11 BUILDDIR="cmark-arm64" CFLAGS="${CFLAGS} ${CFLAGS_arm64}" CPPFLAGS="${CFLAGS} -std=c++11 ${CFLAGS_arm64}" LDFLAGS="${LDFLAGS_arm64}" -C $(CMARK_DIR) $(ACTION)
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} clean
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} CMAKE_OSX_ARCHITECTURES=arm64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=11 BUILDDIR="cmark-arm64" CFLAGS="${CFLAGS} ${CFLAGS_arm64}" CPPFLAGS="${CFLAGS} -std=c++17 ${CFLAGS_arm64}" LDFLAGS="${LDFLAGS_arm64}" -C $(CMARK_DIR) $(ACTION)
 	@cp cmark-arm64/src/libcmark-gfm.a ${BUILD_DIR}/libcmark-gfm-arm64.a
 	@cp cmark-arm64/src/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.13.dylib
 	@cp cmark-arm64/src/cmark-gfm_export.h ${BUILD_DIR}/cmark-gfm_export.h

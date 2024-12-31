@@ -225,7 +225,7 @@ cardinal_cubic_b_spline_imp<Real>::cardinal_cubic_b_spline_imp(BidiIterator f, B
     // mapsto
     // 1 0 -1 | r0
     // 0 1 1/2| (r1 - r0)/4
-    super_diagonal[1] = 0.5;
+    super_diagonal[1] = static_cast<Real>(0.5);
     rhs[1] = (rhs[1] - rhs[0])/4;
 
     // Now do a tridiagonal row reduction the standard way, until just before the last row:

@@ -28,7 +28,7 @@ template<class T> struct icast_identity
 // The use of identity creates a non-deduced form, so that the
 // explicit template argument must be supplied
 template <typename T>
-BOOST_CONSTEXPR inline T implicit_cast (typename boost::detail::icast_identity<T>::type x) {
+constexpr T implicit_cast (typename boost::detail::icast_identity<T>::type x) {
     return x;
 }
 

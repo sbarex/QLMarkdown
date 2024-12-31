@@ -25,7 +25,7 @@
 #include <boost/math/tools/assert.hpp>
 #include <boost/math/tools/config.hpp>
 
-#ifdef BOOST_HAS_THREADS
+#ifdef BOOST_MATH_HAS_THREADS
 #include <mutex>
 #endif
 
@@ -53,7 +53,7 @@ namespace boost { namespace math { namespace detail{
         if(n == 1) return 1 / x;
         T nlx = n * log(x);
         if((nlx < tools::log_max_value<T>()) && (n < (int)max_factorial<T>::value))
-           return ((n & 1) ? 1 : -1) * boost::math::factorial<T>(n - 1, pol) * pow(x, -n);
+           return ((n & 1) ? 1 : -1) * boost::math::factorial<T>(n - 1, pol) * static_cast<T>(pow(x, T(-n)));
         else
          return ((n & 1) ? 1 : -1) * exp(boost::math::lgamma(T(n), pol) - n * log(x));
      }
@@ -80,12 +80,12 @@ namespace boost { namespace math { namespace detail{
      // know that we have to use logs for the initial terms:
      //
      part_term = ((n > (int)boost::math::max_factorial<T>::value) && (T(n) * n > tools::log_max_value<T>()))
-        ? T(0) : static_cast<T>(boost::math::factorial<T>(n - 1, pol) * pow(x, -n - 1));
+        ? T(0) : static_cast<T>(boost::math::factorial<T>(n - 1, pol) * pow(x, T(-n - 1)));
      if(part_term == 0)
      {
         // Either n is very large, or the power term underflows,
         // set the initial values of part_term, term and sum via logs:
-        part_term = static_cast<T>(boost::math::lgamma(n, pol) - (n + 1) * log(x));
+        part_term = static_cast<T>(T(boost::math::lgamma(n, pol)) - (n + 1) * log(x));
         sum = exp(part_term + log(n + 2 * x) - boost::math::constants::ln_two<T>());
         part_term += log(T(n) * (n + 1)) - boost::math::constants::ln_two<T>() - log(x);
         part_term = exp(part_term);
@@ -159,7 +159,7 @@ namespace boost { namespace math { namespace detail{
     {
        for(int k = 1; k <= iter; ++k)
        {
-          z_plus_k_pow_minus_m_minus_one = pow(z, minus_m_minus_one);
+          z_plus_k_pow_minus_m_minus_one = static_cast<T>(pow(z, T(minus_m_minus_one)));
           sum0 += z_plus_k_pow_minus_m_minus_one;
           z += 1;
        }
@@ -203,7 +203,7 @@ namespace boost { namespace math { namespace detail{
      // be n! / z^(n+1), but since we're scaling by n! it's just
      // 1 / z^(n+1) for now:
      //
-     T prefix = pow(x, n + 1);
+     T prefix = static_cast<T>(pow(x, T(n + 1)));  // Warning supression: Integer power returns at least a double
      if(prefix == 0)
         return boost::math::policies::raise_overflow_error<T>(function, nullptr, pol);
      prefix = 1 / prefix;
@@ -406,7 +406,7 @@ namespace boost { namespace math { namespace detail{
      //
      if((unsigned)n / 2u > policies::get_max_series_iterations<Policy>())
         return policies::raise_evaluation_error<T>(function, "The value of n is so large that we're unable to compute the result in reasonable time, best guess is %1%", 0, pol);
-#ifdef BOOST_HAS_THREADS
+#ifdef BOOST_MATH_HAS_THREADS
      static std::mutex m;
      std::lock_guard<std::mutex> l(m);
 #endif

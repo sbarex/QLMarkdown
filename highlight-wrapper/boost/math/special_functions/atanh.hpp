@@ -15,7 +15,7 @@
 #pragma once
 #endif
 
-#include <cmath>
+#include <boost/math/tools/config.hpp>
 #include <boost/math/tools/precision.hpp>
 #include <boost/math/policies/error_handling.hpp>
 #include <boost/math/special_functions/math_fwd.hpp>
@@ -33,28 +33,22 @@ namespace boost
         // This is the main fare
 
         template<typename T, typename Policy>
-        inline T    atanh_imp(const T x, const Policy& pol)
+        BOOST_MATH_GPU_ENABLED inline T    atanh_imp(const T x, const Policy& pol)
         {
             BOOST_MATH_STD_USING
-            static const char* function = "boost::math::atanh<%1%>(%1%)";
+            constexpr auto function = "boost::math::atanh<%1%>(%1%)";
 
             if(x < -1)
             {
-               return policies::raise_domain_error<T>(
-                  function,
-                  "atanh requires x >= -1, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>(function, "atanh requires x >= -1, but got x = %1%.", x, pol);
             }
             else if(x > 1)
             {
-               return policies::raise_domain_error<T>(
-                  function,
-                  "atanh requires x <= 1, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>(function, "atanh requires x <= 1, but got x = %1%.", x, pol);
             }
             else if((boost::math::isnan)(x))
             {
-               return policies::raise_domain_error<T>(
-                  function,
-                  "atanh requires -1 <= x <= 1, but got x = %1%.", x, pol);
+               return policies::raise_domain_error<T>(function, "atanh requires -1 <= x <= 1, but got x = %1%.", x, pol);
             }
             else if(x < -1 + tools::epsilon<T>())
             {
@@ -93,7 +87,7 @@ namespace boost
        }
 
         template<typename T, typename Policy>
-        inline typename tools::promote_args<T>::type atanh(T x, const Policy&)
+        BOOST_MATH_GPU_ENABLED inline typename tools::promote_args<T>::type atanh(T x, const Policy&)
         {
             typedef typename tools::promote_args<T>::type result_type;
             typedef typename policies::evaluation<result_type, Policy>::type value_type;
@@ -108,7 +102,7 @@ namespace boost
               "boost::math::atanh<%1%>(%1%)");
         }
         template<typename T>
-        inline typename tools::promote_args<T>::type atanh(T x)
+        BOOST_MATH_GPU_ENABLED inline typename tools::promote_args<T>::type atanh(T x)
         {
            return boost::math::atanh(x, policies::policy<>());
         }

@@ -195,7 +195,7 @@ class Settings: Codable {
         return title
     }
     
-    lazy fileprivate (set) var resourceBundle: Bundle = {
+    lazy fileprivate(set) var resourceBundle: Bundle = {
         return getResourceBundle()
     }()
     
@@ -630,12 +630,21 @@ class Settings: Codable {
     }
     
     func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?) throws -> String {
-        guard let data = FileManager.default.contents(atPath: url.path), let markdown_string = String(data: data, encoding: .utf8) else {
+        guard let data = FileManager.default.contents(atPath: url.path) else {
             os_log("Unable to read the file %{private}@", log: OSLog.rendering, type: .error, url.path)
             return ""
         }
         
-        return try self.render(text: markdown_string, filename: url.lastPathComponent, forAppearance: appearance, baseDir: baseDir ?? url.deletingLastPathComponent().path)
+        return try self.render(data: data, forAppearance: appearance, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
+    }
+    
+    func render(data: Data, forAppearance appearance: Appearance, filename: String = "file.md", baseDir: String) throws -> String {
+        guard let markdown_string = String(data: data, encoding: .utf8) else {
+            os_log("Unable to read the data %{private}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
+            return ""
+        }
+        
+        return try self.render(text: markdown_string, filename: filename, forAppearance: appearance, baseDir: baseDir)
     }
     
     /// Get the Bundle with the resources.
@@ -659,6 +668,9 @@ class Settings: Codable {
                 type: .error,
                 url.path
             )
+            if let appBundle = Bundle(url: Bundle.main.bundleURL.appendingPathComponent("Contents/Resources")) {
+                return appBundle
+            }
         }
         return Bundle.main
     }

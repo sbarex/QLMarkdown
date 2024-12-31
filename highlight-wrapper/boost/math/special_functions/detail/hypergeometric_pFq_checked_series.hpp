@@ -146,7 +146,13 @@
                  return std::make_pair(r, r);
               }
               std::pair<Real, Real> r = hypergeometric_pFq_checked_series_impl(aj, bj, Real(1 / z), pol, termination, log_scale);
+              
+              #if (defined(__GNUC__) && __GNUC__ == 13)
+              Real mul = pow(-z, Real(-*aj.begin()));
+              #else
               Real mul = pow(-z, -*aj.begin());
+              #endif
+              
               r.first *= mul;
               r.second *= mul;
               return r;
@@ -265,7 +271,7 @@
         //
         if(bj.size() > BOOST_MATH_PFQ_MAX_B_TERMS)
            policies::raise_domain_error<Real>("boost::math::hypergeometric_pFq<%1%>(Seq, Seq, %1%)",
-              "The number of b terms must be less than the value of BOOST_MATH_PFQ_MAX_B_TERMS (" BOOST_STRINGIZE(BOOST_MATH_PFQ_MAX_B_TERMS)  "), but got %1%.",
+              "The number of b terms must be less than the value of BOOST_MATH_PFQ_MAX_B_TERMS (" BOOST_MATH_STRINGIZE(BOOST_MATH_PFQ_MAX_B_TERMS)  "), but got %1%.",
               Real(bj.size()), pol);
 
         unsigned crossover_locations[BOOST_MATH_PFQ_MAX_B_TERMS];

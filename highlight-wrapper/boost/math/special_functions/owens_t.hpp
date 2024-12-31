@@ -575,12 +575,12 @@ namespace boost
             // when the last accelerated term was small enough...
             //
             int n;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
             try
             {
 #endif
                n = itrunc(T(tools::log_max_value<T>() / 6));
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
             }
             catch(...)
             {
@@ -588,7 +588,7 @@ namespace boost
             }
 #endif
             n = (std::min)(n, 1500);
-            T d = pow(3 + sqrt(T(8)), n);
+            T d = pow(3 + sqrt(T(8)), T(n));
             d = (d + 1 / d) / 2;
             T b = -1;
             T c = -d;
@@ -693,12 +693,12 @@ namespace boost
             // when the last accelerated term was small enough...
             //
             int n;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
             try
             {
 #endif
                n = itrunc(RealType(tools::log_max_value<RealType>() / 6));
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
             }
             catch(...)
             {
@@ -706,7 +706,7 @@ namespace boost
             }
 #endif
             n = (std::min)(n, 1500);
-            RealType d = pow(3 + sqrt(RealType(8)), n);
+            RealType d = pow(3 + sqrt(RealType(8)), RealType(n));
             d = (d + 1 / d) / 2;
             RealType b = -1;
             RealType c = -d;
@@ -866,7 +866,7 @@ namespace boost
             bool have_t1(false), have_t2(false);
             if(ah < 3)
             {
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                try
                {
 #endif
@@ -874,14 +874,14 @@ namespace boost
                   p1 = owens_t_T1_accelerated(h, a, forwarding_policy());
                   if(p1.second < target_precision)
                      return p1.first;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                }
                catch(const boost::math::evaluation_error&){}  // T1 may fail and throw, that's OK
 #endif
             }
             if(ah > 1)
             {
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                try
                {
 #endif
@@ -889,7 +889,7 @@ namespace boost
                   p2 = owens_t_T2_accelerated(h, a, ah, forwarding_policy());
                   if(p2.second < target_precision)
                      return p2.first;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                }
                catch(const boost::math::evaluation_error&){}  // T2 may fail and throw, that's OK
 #endif
@@ -900,7 +900,7 @@ namespace boost
             //
             if(!have_t1)
             {
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                try
                {
 #endif
@@ -908,7 +908,7 @@ namespace boost
                   p1 = owens_t_T1_accelerated(h, a, forwarding_policy());
                   if(p1.second < target_precision)
                      return p1.first;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                }
                catch(const boost::math::evaluation_error&){}  // T1 may fail and throw, that's OK
 #endif
@@ -919,7 +919,7 @@ namespace boost
             //
             if(!have_t2)
             {
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                try
                {
 #endif
@@ -927,7 +927,7 @@ namespace boost
                   p2 = owens_t_T2_accelerated(h, a, ah, forwarding_policy());
                   if(p2.second < target_precision)
                      return p2.first;
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
                }
                catch(const boost::math::evaluation_error&){}  // T2 may fail and throw, that's OK
 #endif
@@ -936,12 +936,12 @@ namespace boost
             // OK, nothing left to do but try the most expensive option which is T4,
             // this is often slow to converge, but when it does converge it tends to
             // be accurate:
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
             try
             {
 #endif
                return T4_mp(h, a, pol);
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
             }
             catch(const boost::math::evaluation_error&){}  // T4 may fail and throw, that's OK
 #endif
@@ -949,7 +949,7 @@ namespace boost
             // Now look back at the results from T1 and T2 and see if either gave better
             // results than we could get from the 64-bit precision versions.
             //
-            if((std::min)(p1.second, p2.second) < 1e-20)
+            if((std::min)(p1.second, p2.second) < RealType(1e-20))
             {
                return p1.second < p2.second ? p1.first : p2.first;
             }
@@ -993,7 +993,7 @@ namespace boost
             const RealType fabs_a = fabs(a);
             const RealType fabs_ah = fabs_a*h;
 
-            RealType val = 0.0; // avoid compiler warnings, 0.0 will be overwritten in any case
+            RealType val = static_cast<RealType>(0.0f); // avoid compiler warnings, 0.0 will be overwritten in any case
 
             if(fabs_a <= 1)
             {
@@ -1001,7 +1001,7 @@ namespace boost
             } // if(fabs_a <= 1.0)
             else 
             {
-               if( h <= 0.67 )
+               if( h <= RealType(0.67) )
                {
                   const RealType normh = owens_t_znorm1(h, pol);
                   const RealType normah = owens_t_znorm1(fabs_ah, pol);

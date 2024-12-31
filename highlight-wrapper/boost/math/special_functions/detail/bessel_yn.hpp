@@ -10,9 +10,11 @@
 #pragma once
 #endif
 
+#include <boost/math/tools/config.hpp>
 #include <boost/math/special_functions/detail/bessel_y0.hpp>
 #include <boost/math/special_functions/detail/bessel_y1.hpp>
 #include <boost/math/special_functions/detail/bessel_jy_series.hpp>
+#include <boost/math/special_functions/sign.hpp>
 #include <boost/math/policies/error_handling.hpp>
 
 // Bessel function of the second kind of integer order
@@ -21,14 +23,14 @@
 namespace boost { namespace math { namespace detail{
 
 template <typename T, typename Policy>
-T bessel_yn(int n, T x, const Policy& pol)
+BOOST_MATH_GPU_ENABLED T bessel_yn(int n, T x, const Policy& pol)
 {
     BOOST_MATH_STD_USING
     T value, factor, current, prev;
 
     using namespace boost::math::tools;
 
-    static const char* function = "boost::math::bessel_yn<%1%>(%1%,%1%)";
+    constexpr auto function = "boost::math::bessel_yn<%1%>(%1%,%1%)";
 
     if ((x == 0) && (n == 0))
     {
@@ -36,8 +38,7 @@ T bessel_yn(int n, T x, const Policy& pol)
     }
     if (x <= 0)
     {
-       return policies::raise_domain_error<T>(function,
-            "Got x = %1%, but x must be > 0, complex result not supported.", x, pol);
+       return policies::raise_domain_error<T>(function, "Got x = %1%, but x must be > 0, complex result not supported.", x, pol);
     }
 
     //
@@ -56,7 +57,7 @@ T bessel_yn(int n, T x, const Policy& pol)
     {
        T scale = 1;
        value = bessel_yn_small_z(n, x, &scale, pol);
-       if(tools::max_value<T>() * fabs(scale) < fabs(value))
+       if (tools::max_value<T>() * fabs(scale) < fabs(value))
           return boost::math::sign(scale) * boost::math::sign(value) * policies::raise_overflow_error<T>(function, nullptr, pol);
        value /= scale;
     }
@@ -99,7 +100,7 @@ T bessel_yn(int n, T x, const Policy& pol)
            current = value;
            ++k;
        }
-       if(fabs(tools::max_value<T>() * factor) < fabs(value))
+       if (fabs(tools::max_value<T>() * factor) < fabs(value))
           return sign(value) * sign(factor) * policies::raise_overflow_error<T>(function, nullptr, pol);
        value /= factor;
     }

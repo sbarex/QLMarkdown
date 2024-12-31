@@ -168,7 +168,7 @@ The theme popup menu has some extra commands available pressing the `alt` key.
 |Option|Description|
 |:--|:--|
 |Smart quotes|Convert straight quotes to curly, ```---``` to _em dashes_ and ```--``` to _en dashes_.|
-|Footnotes|Parse the footnotes. Footnotes are not supported by GitHub.|
+|Footnotes|Parse the footnotes. |
 |Hard break|Render `softbreak` elements as hard line breaks.|
 |No soft break|Render `softbreak` elements as spaces.|
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|

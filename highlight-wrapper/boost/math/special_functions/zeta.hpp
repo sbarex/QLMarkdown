@@ -936,7 +936,7 @@ T zeta_imp(T s, T sc, const Policy& pol, const Tag& tag)
    //
    if(floor(s) == s)
    {
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
       // Without exceptions we expect itrunc to return INT_MAX on overflow
       // and we fall through anyway.
       try
@@ -956,15 +956,15 @@ T zeta_imp(T s, T sc, const Policy& pol, const Tag& tag)
             else if((v & 1) == 0)
             {
                if(((v / 2) <= (int)boost::math::max_bernoulli_b2n<T>::value) && (v <= (int)boost::math::max_factorial<T>::value))
-                  return T(((v / 2 - 1) & 1) ? -1 : 1) * ldexp(T(1), v - 1) * pow(constants::pi<T, Policy>(), v) *
+                  return T(((v / 2 - 1) & 1) ? -1 : 1) * ldexp(T(1), v - 1) * static_cast<T>(pow(constants::pi<T, Policy>(), T(v))) *
                      boost::math::unchecked_bernoulli_b2n<T>(v / 2) / boost::math::unchecked_factorial<T>(v);
-               return T(((v / 2 - 1) & 1) ? -1 : 1) * ldexp(T(1), v - 1) * pow(constants::pi<T, Policy>(), v) *
+               return T(((v / 2 - 1) & 1) ? -1 : 1) * ldexp(T(1), v - 1) * static_cast<T>(pow(constants::pi<T, Policy>(), T(v))) *
                   boost::math::bernoulli_b2n<T>(v / 2) / boost::math::factorial<T>(v, pol);
             }
             else
                return zeta_imp_odd_integer(v, sc, pol, std::integral_constant<bool, (Tag::value <= 113) && Tag::value>());
          }
-#ifndef BOOST_NO_EXCEPTIONS
+#ifndef BOOST_MATH_NO_EXCEPTIONS
       }
       catch(const boost::math::rounding_error&){} // Just fall through, s is too large to round
       catch(const std::overflow_error&){}

@@ -10,11 +10,12 @@
 
 #include <boost/math/policies/error_handling.hpp>
 #include <boost/math/distributions/detail/hypergeometric_pdf.hpp>
+#include <cstdint>
 
 namespace boost{ namespace math{ namespace detail{
 
    template <class T, class Policy>
-   T hypergeometric_cdf_imp(unsigned x, unsigned r, unsigned n, unsigned N, bool invert, const Policy& pol)
+   T hypergeometric_cdf_imp(std::uint64_t x, std::uint64_t r, std::uint64_t n, std::uint64_t N, bool invert, const Policy& pol)
    {
 #ifdef _MSC_VER
 #  pragma warning(push)
@@ -27,7 +28,7 @@ namespace boost{ namespace math{ namespace detail{
       {
          result = hypergeometric_pdf<T>(x, r, n, N, pol);
          T diff = result;
-         unsigned lower_limit = static_cast<unsigned>((std::max)(0, static_cast<int>(n + r) - static_cast<int>(N)));
+         const auto lower_limit = static_cast<std::uint64_t>((std::max)(INT64_C(0), static_cast<std::int64_t>(n + r) - static_cast<std::int64_t>(N)));
          while(diff > (invert ? T(1) : result) * tools::epsilon<T>())
          {
             diff = T(x) * T((N + x) - n - r) * diff / (T(1 + n - x) * T(1 + r - x));
@@ -43,7 +44,7 @@ namespace boost{ namespace math{ namespace detail{
       else
       {
          invert = !invert;
-         unsigned upper_limit = (std::min)(r, n);
+         const auto upper_limit = (std::min)(r, n);
          if(x != upper_limit)
          {
             ++x;
@@ -69,7 +70,7 @@ namespace boost{ namespace math{ namespace detail{
    }
 
    template <class T, class Policy>
-   inline T hypergeometric_cdf(unsigned x, unsigned r, unsigned n, unsigned N, bool invert, const Policy&)
+   inline T hypergeometric_cdf(std::uint64_t x, std::uint64_t r, std::uint64_t n, std::uint64_t N, bool invert, const Policy&)
    {
       BOOST_FPU_EXCEPTION_GUARD
       typedef typename tools::promote_args<T>::type result_type;

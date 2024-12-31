@@ -188,6 +188,12 @@ static char *process_title_pcre2(const char *title) {
         return nullptr;
     }
     
+    std::string current_locale = setlocale(LC_ALL, NULL);
+    if (setlocale(LC_ALL, "en_US.UTF-8") == NULL) {
+        cerr << "setlocale failed.\n";
+        // os_log_error(getLogForHeadsExt(), "`setlocale` failed!");
+    }
+    
     wstring text = stringToWstring(title);
     
     // Removes characters that are not alphanumeric or spaces or dashes.
@@ -215,6 +221,10 @@ static char *process_title_pcre2(const char *title) {
               towlower);
     
     char *buffer = wstringToChar(s2);
+    
+    // Restore previous locale.
+    setlocale(LC_ALL, current_locale.c_str());
+    
     return buffer;
 }
 #endif

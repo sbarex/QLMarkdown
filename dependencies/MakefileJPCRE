@@ -100,10 +100,10 @@ ${SOURCE_ROOT}/jpcre2/configure.ac :
 ${SOURCE_ROOT}/jpcre2/configure :
 	@echo ""
 	@echo "${bold}Autogen configuration files…${normal}"
-	cd "${SOURCE_ROOT}/jpcre2" && PATH="/usr/local/bin:${PATH}" sh ./autogen.sh
+	cd "${SOURCE_ROOT}/jpcre2" && PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" sh ./autogen.sh
 
 autogen:
-ifeq (, $(shell PATH="/usr/local/bin:${PATH}" which autoreconf))
+ifeq (, $(shell PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" which autoreconf))
 		$(error ${bold}No autoreconf in PATH${normal} ($(PATH)), ${bold}try install autogen tools with homebrew${normal})
 endif
 
@@ -137,11 +137,11 @@ $(makefiles) &:
 $(libjpcre2_files) :
 	@echo ""
 	@echo "${bold}Compiling libjpcre2 for ${ARCH} platform…${normal}"
-	PATH="/usr/local/bin:${PATH}" ${MAKE} -C "${BUILD_DIR}/libjpcre2/${ARCH}" -j${N_CPU}
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} -C "${BUILD_DIR}/libjpcre2/${ARCH}" -j${N_CPU}
 
 	@echo ""
 	@echo "${bold}Installing libjpcre2 for ${ARCH} platform on ${BUILD_DIR}/libjpcre2/${ARCH} …${normal}"
-	PATH="/usr/local/bin:${PATH}" ${MAKE} -C "${BUILD_DIR}/libjpcre2/${ARCH}" -j${N_CPU} install
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} -C "${BUILD_DIR}/libjpcre2/${ARCH}" -j${N_CPU} install
 	
 # Build the library.
 ${BUILD_DIR}/libjpcre2/include/jpcre2.hpp : source-libjpcre2 ${libjpcre2_files}

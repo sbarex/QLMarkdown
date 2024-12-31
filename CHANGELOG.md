@@ -1,11 +1,21 @@
 # Changelog
 
 
+### 1.0.21 (46)
+New Features:
+- Warning about this is not a Markdown editor app.
+- Alert when the app is closed and the current markdown file was changed.
+- Experimental Shortcut Action (require macOS 15.2). 
+
+Bugfix:
+- Temporary fix for $ recognition without mathematical expression.
+
+
 ### 1.0.20 (45)
 New Features:
 - Support for some extended syntax:
   - highlight text with `==`
-  - subscript (`~`) and superscript (`^`)
+  - subscript (`~`) and superscript (`^`).
 
 
 ### 1.0.19 (44)

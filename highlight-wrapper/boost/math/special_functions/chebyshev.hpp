@@ -6,6 +6,7 @@
 #ifndef BOOST_MATH_SPECIAL_CHEBYSHEV_HPP
 #define BOOST_MATH_SPECIAL_CHEBYSHEV_HPP
 #include <cmath>
+#include <type_traits>
 #include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/policies/error_handling.hpp>
 #include <boost/math/constants/constants.hpp>
@@ -30,6 +31,31 @@ inline tools::promote_args_t<T1, T2, T3> chebyshev_next(T1 const & x, T2 const &
 
 namespace detail {
 
+// https://stackoverflow.com/questions/5625431/efficient-way-to-compute-pq-exponentiation-where-q-is-an-integer
+template <typename T, typename std::enable_if<std::is_arithmetic<T>::value, bool>::type = true>
+T expt(T p, unsigned q)
+{
+    T r = 1;
+
+    while (q != 0) {
+        if (q % 2 == 1) {    // q is odd
+            r *= p;
+            q--;
+        }
+        p *= p;
+        q /= 2;
+    }
+
+    return r;
+}
+
+template <typename T, typename std::enable_if<!std::is_arithmetic<T>::value, bool>::type = true>
+T expt(T p, unsigned q)
+{
+    using std::pow;
+    return pow(p, static_cast<int>(q));
+}
+
 template<class Real, bool second, class Policy>
 inline Real chebyshev_imp(unsigned n, Real const & x, const Policy&)
 {
@@ -46,12 +72,12 @@ inline Real chebyshev_imp(unsigned n, Real const & x, const Policy&)
     Real T0 = 1;
     Real T1;
 
-    BOOST_IF_CONSTEXPR (second)
+    BOOST_MATH_IF_CONSTEXPR (second)
     {
         if (x > 1 || x < -1)
         {
             Real t = sqrt(x*x -1);
-            return static_cast<Real>((pow(x+t, static_cast<int>(n+1)) - pow(x-t, static_cast<int>(n+1)))/(2*t));
+            return static_cast<Real>((expt(static_cast<Real>(x+t), n+1) - expt(static_cast<Real>(x-t), n+1))/(2*t));
         }
         T1 = 2*x;
     }
@@ -84,7 +110,7 @@ inline Real chebyshev_imp(unsigned n, Real const & x, const Policy&)
     while(l < n)
     {
        std::swap(T0, T1);
-       T1 = boost::math::chebyshev_next(x, T0, T1);
+       T1 = static_cast<Real>(boost::math::chebyshev_next(x, T0, T1));
        ++l;
     }
     return T1;

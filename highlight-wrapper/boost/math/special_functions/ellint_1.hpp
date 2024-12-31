@@ -1,5 +1,6 @@
 //  Copyright (c) 2006 Xiaogang Zhang
 //  Copyright (c) 2006 John Maddock
+//  Copyright (c) 2024 Matt Borland
 //  Use, modification and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,6 +19,8 @@
 #pragma once
 #endif
 
+#include <boost/math/tools/config.hpp>
+#include <boost/math/tools/type_traits.hpp>
 #include <boost/math/special_functions/math_fwd.hpp>
 #include <boost/math/special_functions/ellint_rf.hpp>
 #include <boost/math/constants/constants.hpp>
@@ -31,26 +34,28 @@
 namespace boost { namespace math {
 
 template <class T1, class T2, class Policy>
-typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const Policy& pol);
+BOOST_MATH_GPU_ENABLED typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const Policy& pol);
 
 namespace detail{
 
 template <typename T, typename Policy>
-T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 0> const&);
+BOOST_MATH_GPU_ENABLED BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, boost::math::integral_constant<int, 0> const&);
 template <typename T, typename Policy>
-T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 1> const&);
+BOOST_MATH_GPU_ENABLED BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, boost::math::integral_constant<int, 1> const&);
 template <typename T, typename Policy>
-T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 2> const&);
+BOOST_MATH_GPU_ENABLED BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, boost::math::integral_constant<int, 2> const&);
+template <typename T, typename Policy>
+BOOST_MATH_GPU_ENABLED BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, T one_minus_k2);
 
 // Elliptic integral (Legendre form) of the first kind
 template <typename T, typename Policy>
-T ellint_f_imp(T phi, T k, const Policy& pol)
+BOOST_MATH_GPU_ENABLED T ellint_f_imp(T phi, T k, const Policy& pol, T one_minus_k2)
 {
     BOOST_MATH_STD_USING
     using namespace boost::math::tools;
     using namespace boost::math::constants;
 
-    static const char* function = "boost::math::ellint_f<%1%>(%1%,%1%)";
+    constexpr auto function = "boost::math::ellint_f<%1%>(%1%,%1%)";
     BOOST_MATH_INSTRUMENT_VARIABLE(phi);
     BOOST_MATH_INSTRUMENT_VARIABLE(k);
     BOOST_MATH_INSTRUMENT_VARIABLE(function);
@@ -75,12 +80,7 @@ T ellint_f_imp(T phi, T k, const Policy& pol)
     {
        // Phi is so large that phi%pi is necessarily zero (or garbage),
        // just return the second part of the duplication formula:
-       typedef std::integral_constant<int,
-          std::is_floating_point<T>::value&& std::numeric_limits<T>::digits && (std::numeric_limits<T>::digits <= 54) ? 0 :
-          std::is_floating_point<T>::value && std::numeric_limits<T>::digits && (std::numeric_limits<T>::digits <= 64) ? 1 : 2
-       > precision_tag_type;
-
-       result = 2 * phi * ellint_k_imp(k, pol, precision_tag_type()) / constants::pi<T>();
+       result = 2 * phi * ellint_k_imp(k, pol, one_minus_k2) / constants::pi<T>();
        BOOST_MATH_INSTRUMENT_VARIABLE(result);
     }
     else
@@ -98,7 +98,7 @@ T ellint_f_imp(T phi, T k, const Policy& pol)
        T m = boost::math::round((phi - rphi) / constants::half_pi<T>());
        BOOST_MATH_INSTRUMENT_VARIABLE(m);
        int s = 1;
-       if(boost::math::tools::fmod_workaround(m, T(2)) > 0.5)
+       if(boost::math::tools::fmod_workaround(m, T(2)) > T(0.5))
        {
           m += 1;
           s = -1;
@@ -121,41 +121,54 @@ T ellint_f_imp(T phi, T k, const Policy& pol)
           BOOST_MATH_ASSERT(rphi != 0); // precondition, can't be true if sin(rphi) != 0.
           //
           // Use http://dlmf.nist.gov/19.25#E5, note that
-          // c-1 simplifies to cot^2(rphi) which avoid cancellation:
+          // c-1 simplifies to cot^2(rphi) which avoids cancellation.
+          // Likewise c - k^2 is the same as (c - 1) + (1 - k^2).
           //
           T c = 1 / sinp;
-          result = static_cast<T>(s * ellint_rf_imp(T(cosp / sinp), T(c - k * k), c, pol));
+          T c_minus_one = cosp / sinp;
+          T arg2;
+          if (k != 0)
+          {
+             T cross = fabs(c / (k * k));
+             if ((cross > 0.9f) && (cross < 1.1f))
+                arg2 = c_minus_one + one_minus_k2;
+             else
+                arg2 = c - k * k;
+          }
+          else
+             arg2 = c;
+          result = static_cast<T>(s * ellint_rf_imp(c_minus_one, arg2, c, pol));
        }
        else
           result = s * sin(rphi);
        BOOST_MATH_INSTRUMENT_VARIABLE(result);
        if(m != 0)
        {
-          typedef std::integral_constant<int,
-             std::is_floating_point<T>::value&& std::numeric_limits<T>::digits && (std::numeric_limits<T>::digits <= 54) ? 0 :
-             std::is_floating_point<T>::value && std::numeric_limits<T>::digits && (std::numeric_limits<T>::digits <= 64) ? 1 : 2
-          > precision_tag_type;
-
-          result += m * ellint_k_imp(k, pol, precision_tag_type());
+          result += m * ellint_k_imp(k, pol, one_minus_k2);
           BOOST_MATH_INSTRUMENT_VARIABLE(result);
        }
     }
     return invert ? T(-result) : result;
 }
 
+template <typename T, typename Policy>
+BOOST_MATH_GPU_ENABLED inline T ellint_f_imp(T phi, T k, const Policy& pol)
+{
+   return ellint_f_imp(phi, k, pol, T(1 - k * k));
+}
+
 // Complete elliptic integral (Legendre form) of the first kind
 template <typename T, typename Policy>
-T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 2> const&)
+BOOST_MATH_GPU_ENABLED T ellint_k_imp(T k, const Policy& pol, T one_minus_k2)
 {
     BOOST_MATH_STD_USING
     using namespace boost::math::tools;
 
-    static const char* function = "boost::math::ellint_k<%1%>(%1%)";
+    constexpr auto function = "boost::math::ellint_k<%1%>(%1%)";
 
     if (abs(k) > 1)
     {
-       return policies::raise_domain_error<T>(function,
-            "Got k = %1%, function requires |k| <= 1", k, pol);
+       return policies::raise_domain_error<T>(function, "Got k = %1%, function requires |k| <= 1", k, pol);
     }
     if (abs(k) == 1)
     {
@@ -163,11 +176,15 @@ T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 2> const&)
     }
 
     T x = 0;
-    T y = 1 - k * k;
     T z = 1;
-    T value = ellint_rf_imp(x, y, z, pol);
+    T value = ellint_rf_imp(x, one_minus_k2, z, pol);
 
     return value;
+}
+template <typename T, typename Policy>
+BOOST_MATH_GPU_ENABLED inline T ellint_k_imp(T k, const Policy& pol, boost::math::integral_constant<int, 2> const&)
+{
+   return ellint_k_imp(k, pol, T(1 - k * k));
 }
 
 //
@@ -187,9 +204,9 @@ T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 2> const&)
 // archived in the code below), but was found to have slightly higher error rates.
 //
 template <typename T, typename Policy>
-BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 0> const&)
+BOOST_MATH_GPU_ENABLED BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, boost::math::integral_constant<int, 0> const&)
 {
-   using std::abs;
+   BOOST_MATH_STD_USING
    using namespace boost::math::tools;
 
    T m = k * k;
@@ -202,20 +219,20 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    {
       constexpr T coef[] =
       {
-         1.591003453790792180,
-         0.416000743991786912,
-         0.245791514264103415,
-         0.179481482914906162,
-         0.144556057087555150,
-         0.123200993312427711,
-         0.108938811574293531,
-         0.098853409871592910,
-         0.091439629201749751,
-         0.085842591595413900,
-         0.081541118718303215,
-         0.078199656811256481910
+         static_cast<T>(1.591003453790792180),
+         static_cast<T>(0.416000743991786912),
+         static_cast<T>(0.245791514264103415),
+         static_cast<T>(0.179481482914906162),
+         static_cast<T>(0.144556057087555150),
+         static_cast<T>(0.123200993312427711),
+         static_cast<T>(0.108938811574293531),
+         static_cast<T>(0.098853409871592910),
+         static_cast<T>(0.091439629201749751),
+         static_cast<T>(0.085842591595413900),
+         static_cast<T>(0.081541118718303215),
+         static_cast<T>(0.078199656811256481910)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.05);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.05));
    }
    case 2:
    case 3:
@@ -223,20 +240,20 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    {
       constexpr T coef[] =
       {
-         1.635256732264579992,
-         0.471190626148732291,
-         0.309728410831499587,
-         0.252208311773135699,
-         0.226725623219684650,
-         0.215774446729585976,
-         0.213108771877348910,
-         0.216029124605188282,
-         0.223255831633057896,
-         0.234180501294209925,
-         0.248557682972264071,
-         0.266363809892617521
+         static_cast<T>(1.635256732264579992),
+         static_cast<T>(0.471190626148732291),
+         static_cast<T>(0.309728410831499587),
+         static_cast<T>(0.252208311773135699),
+         static_cast<T>(0.226725623219684650),
+         static_cast<T>(0.215774446729585976),
+         static_cast<T>(0.213108771877348910),
+         static_cast<T>(0.216029124605188282),
+         static_cast<T>(0.223255831633057896),
+         static_cast<T>(0.234180501294209925),
+         static_cast<T>(0.248557682972264071),
+         static_cast<T>(0.266363809892617521)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.15);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.15));
    }
    case 4:
    case 5:
@@ -244,20 +261,20 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    {
       constexpr T coef[] =
       {
-         1.685750354812596043,
-         0.541731848613280329,
-         0.401524438390690257,
-         0.369642473420889090,
-         0.376060715354583645,
-         0.405235887085125919,
-         0.453294381753999079,
-         0.520518947651184205,
-         0.609426039204995055,
-         0.724263522282908870,
-         0.871013847709812357,
-         1.057652872753547036
+         static_cast<T>(1.685750354812596043),
+         static_cast<T>(0.541731848613280329),
+         static_cast<T>(0.401524438390690257),
+         static_cast<T>(0.369642473420889090),
+         static_cast<T>(0.376060715354583645),
+         static_cast<T>(0.405235887085125919),
+         static_cast<T>(0.453294381753999079),
+         static_cast<T>(0.520518947651184205),
+         static_cast<T>(0.609426039204995055),
+         static_cast<T>(0.724263522282908870),
+         static_cast<T>(0.871013847709812357),
+         static_cast<T>(1.057652872753547036)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.25);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.25));
    }
    case 6:
    case 7:
@@ -265,21 +282,21 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    {
       constexpr T coef[] =
       {
-         1.744350597225613243,
-         0.634864275371935304,
-         0.539842564164445538,
-         0.571892705193787391,
-         0.670295136265406100,
-         0.832586590010977199,
-         1.073857448247933265,
-         1.422091460675497751,
-         1.920387183402304829,
-         2.632552548331654201,
-         3.652109747319039160,
-         5.115867135558865806,
-         7.224080007363877411
+         static_cast<T>(1.744350597225613243),
+         static_cast<T>(0.634864275371935304),
+         static_cast<T>(0.539842564164445538),
+         static_cast<T>(0.571892705193787391),
+         static_cast<T>(0.670295136265406100),
+         static_cast<T>(0.832586590010977199),
+         static_cast<T>(1.073857448247933265),
+         static_cast<T>(1.422091460675497751),
+         static_cast<T>(1.920387183402304829),
+         static_cast<T>(2.632552548331654201),
+         static_cast<T>(3.652109747319039160),
+         static_cast<T>(5.115867135558865806),
+         static_cast<T>(7.224080007363877411)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.35);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.35));
    }
    case 8:
    case 9:
@@ -287,22 +304,22 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    {
       constexpr T coef[] =
       {
-         1.813883936816982644,
-         0.763163245700557246,
-         0.761928605321595831,
-         0.951074653668427927,
-         1.315180671703161215,
-         1.928560693477410941,
-         2.937509342531378755,
-         4.594894405442878062,
-         7.330071221881720772,
-         11.87151259742530180,
-         19.45851374822937738,
-         32.20638657246426863,
-         53.73749198700554656,
-         90.27388602940998849
+         static_cast<T>(1.813883936816982644),
+         static_cast<T>(0.763163245700557246),
+         static_cast<T>(0.761928605321595831),
+         static_cast<T>(0.951074653668427927),
+         static_cast<T>(1.315180671703161215),
+         static_cast<T>(1.928560693477410941),
+         static_cast<T>(2.937509342531378755),
+         static_cast<T>(4.594894405442878062),
+         static_cast<T>(7.330071221881720772),
+         static_cast<T>(11.87151259742530180),
+         static_cast<T>(19.45851374822937738),
+         static_cast<T>(32.20638657246426863),
+         static_cast<T>(53.73749198700554656),
+         static_cast<T>(90.27388602940998849)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.45);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.45));
    }
    case 10:
    case 11:
@@ -310,23 +327,23 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    {
       constexpr T coef[] =
       {
-         1.898924910271553526,
-         0.950521794618244435,
-         1.151077589959015808,
-         1.750239106986300540,
-         2.952676812636875180,
-         5.285800396121450889,
-         9.832485716659979747,
-         18.78714868327559562,
-         36.61468615273698145,
-         72.45292395127771801,
-         145.1079577347069102,
-         293.4786396308497026,
-         598.3851815055010179,
-         1228.420013075863451,
-         2536.529755382764488
+         static_cast<T>(1.898924910271553526),
+         static_cast<T>(0.950521794618244435),
+         static_cast<T>(1.151077589959015808),
+         static_cast<T>(1.750239106986300540),
+         static_cast<T>(2.952676812636875180),
+         static_cast<T>(5.285800396121450889),
+         static_cast<T>(9.832485716659979747),
+         static_cast<T>(18.78714868327559562),
+         static_cast<T>(36.61468615273698145),
+         static_cast<T>(72.45292395127771801),
+         static_cast<T>(145.1079577347069102),
+         static_cast<T>(293.4786396308497026),
+         static_cast<T>(598.3851815055010179),
+         static_cast<T>(1228.420013075863451),
+         static_cast<T>(2536.529755382764488)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.55);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.55));
    }
    case 12:
    case 13:
@@ -334,113 +351,113 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    {
       constexpr T coef[] =
       {
-         2.007598398424376302,
-         1.248457231212347337,
-         1.926234657076479729,
-         3.751289640087587680,
-         8.119944554932045802,
-         18.66572130873555361,
-         44.60392484291437063,
-         109.5092054309498377,
-         274.2779548232413480,
-         697.5598008606326163,
-         1795.716014500247129,
-         4668.381716790389910,
-         12235.76246813664335,
-         32290.17809718320818,
-         85713.07608195964685,
-         228672.1890493117096,
-         612757.2711915852774
+         static_cast<T>(2.007598398424376302),
+         static_cast<T>(1.248457231212347337),
+         static_cast<T>(1.926234657076479729),
+         static_cast<T>(3.751289640087587680),
+         static_cast<T>(8.119944554932045802),
+         static_cast<T>(18.66572130873555361),
+         static_cast<T>(44.60392484291437063),
+         static_cast<T>(109.5092054309498377),
+         static_cast<T>(274.2779548232413480),
+         static_cast<T>(697.5598008606326163),
+         static_cast<T>(1795.716014500247129),
+         static_cast<T>(4668.381716790389910),
+         static_cast<T>(12235.76246813664335),
+         static_cast<T>(32290.17809718320818),
+         static_cast<T>(85713.07608195964685),
+         static_cast<T>(228672.1890493117096),
+         static_cast<T>(612757.2711915852774)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.65);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.65));
    }
    case 14:
    case 15:
-      //else if (m < 0.8)
+      //else if (m < static_cast<T>(0.8))
    {
       constexpr T coef[] =
       {
-         2.156515647499643235,
-         1.791805641849463243,
-         3.826751287465713147,
-         10.38672468363797208,
-         31.40331405468070290,
-         100.9237039498695416,
-         337.3268282632272897,
-         1158.707930567827917,
-         4060.990742193632092,
-         14454.00184034344795,
-         52076.66107599404803,
-         189493.6591462156887,
-         695184.5762413896145,
-         2567994.048255284686,
-         9541921.966748386322,
-         35634927.44218076174,
-         133669298.4612040871,
-         503352186.6866284541,
-         1901975729.538660119,
-         7208915015.330103756
+         static_cast<T>(2.156515647499643235),
+         static_cast<T>(1.791805641849463243),
+         static_cast<T>(3.826751287465713147),
+         static_cast<T>(10.38672468363797208),
+         static_cast<T>(31.40331405468070290),
+         static_cast<T>(100.9237039498695416),
+         static_cast<T>(337.3268282632272897),
+         static_cast<T>(1158.707930567827917),
+         static_cast<T>(4060.990742193632092),
+         static_cast<T>(14454.00184034344795),
+         static_cast<T>(52076.66107599404803),
+         static_cast<T>(189493.6591462156887),
+         static_cast<T>(695184.5762413896145),
+         static_cast<T>(2567994.048255284686),
+         static_cast<T>(9541921.966748386322),
+         static_cast<T>(35634927.44218076174),
+         static_cast<T>(133669298.4612040871),
+         static_cast<T>(503352186.6866284541),
+         static_cast<T>(1901975729.538660119),
+         static_cast<T>(7208915015.330103756)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.75);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.75));
    }
    case 16:
-      //else if (m < 0.85)
+      //else if (m < static_cast<T>(0.85))
    {
       constexpr T coef[] =
       {
-         2.318122621712510589,
-         2.616920150291232841,
-         7.897935075731355823,
-         30.50239715446672327,
-         131.4869365523528456,
-         602.9847637356491617,
-         2877.024617809972641,
-         14110.51991915180325,
-         70621.44088156540229,
-         358977.2665825309926,
-         1847238.263723971684,
-         9600515.416049214109,
-         50307677.08502366879,
-         265444188.6527127967,
-         1408862325.028702687,
-         7515687935.373774627
+         static_cast<T>(2.318122621712510589),
+         static_cast<T>(2.616920150291232841),
+         static_cast<T>(7.897935075731355823),
+         static_cast<T>(30.50239715446672327),
+         static_cast<T>(131.4869365523528456),
+         static_cast<T>(602.9847637356491617),
+         static_cast<T>(2877.024617809972641),
+         static_cast<T>(14110.51991915180325),
+         static_cast<T>(70621.44088156540229),
+         static_cast<T>(358977.2665825309926),
+         static_cast<T>(1847238.263723971684),
+         static_cast<T>(9600515.416049214109),
+         static_cast<T>(50307677.08502366879),
+         static_cast<T>(265444188.6527127967),
+         static_cast<T>(1408862325.028702687),
+         static_cast<T>(7515687935.373774627)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.825);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.825));
    }
    case 17:
-      //else if (m < 0.90)
+      //else if (m < static_cast<T>(0.90))
    {
       constexpr T coef[] =
       {
-         2.473596173751343912,
-         3.727624244118099310,
-         15.60739303554930496,
-         84.12850842805887747,
-         506.9818197040613935,
-         3252.277058145123644,
-         21713.24241957434256,
-         149037.0451890932766,
-         1043999.331089990839,
-         7427974.817042038995,
-         53503839.67558661151,
-         389249886.9948708474,
-         2855288351.100810619,
-         21090077038.76684053,
-         156699833947.7902014,
-         1170222242422.439893,
-         8777948323668.937971,
-         66101242752484.95041,
-         499488053713388.7989,
-         37859743397240299.20
+         static_cast<T>(2.473596173751343912),
+         static_cast<T>(3.727624244118099310),
+         static_cast<T>(15.60739303554930496),
+         static_cast<T>(84.12850842805887747),
+         static_cast<T>(506.9818197040613935),
+         static_cast<T>(3252.277058145123644),
+         static_cast<T>(21713.24241957434256),
+         static_cast<T>(149037.0451890932766),
+         static_cast<T>(1043999.331089990839),
+         static_cast<T>(7427974.817042038995),
+         static_cast<T>(53503839.67558661151),
+         static_cast<T>(389249886.9948708474),
+         static_cast<T>(2855288351.100810619),
+         static_cast<T>(21090077038.76684053),
+         static_cast<T>(156699833947.7902014),
+         static_cast<T>(1170222242422.439893),
+         static_cast<T>(8777948323668.937971),
+         static_cast<T>(66101242752484.95041),
+         static_cast<T>(499488053713388.7989),
+         static_cast<T>(37859743397240299.20)
       };
-      return boost::math::tools::evaluate_polynomial(coef, m - 0.875);
+      return boost::math::tools::evaluate_polynomial(coef, m - static_cast<T>(0.875));
    }
    default:
       //
       // This handles all cases where m > 0.9, 
       // including all error handling:
       //
-      return ellint_k_imp(k, pol, std::integral_constant<int, 2>());
+      return ellint_k_imp(k, pol, boost::math::integral_constant<int, 2>());
 #if 0
    else
    {
@@ -460,9 +477,9 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
    }
 }
 template <typename T, typename Policy>
-BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<int, 1> const&)
+BOOST_MATH_GPU_ENABLED BOOST_MATH_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, boost::math::integral_constant<int, 1> const&)
 {
-   using std::abs;
+   BOOST_MATH_STD_USING
    using namespace boost::math::tools;
 
    T m = k * k;
@@ -741,44 +758,37 @@ BOOST_FORCEINLINE T ellint_k_imp(T k, const Policy& pol, std::integral_constant<
       // All cases where m > 0.9
       // including all error handling:
       //
-      return ellint_k_imp(k, pol, std::integral_constant<int, 2>());
+      return ellint_k_imp(k, pol, boost::math::integral_constant<int, 2>());
    }
 }
 
 template <typename T, typename Policy>
-BOOST_FORCEINLINE typename tools::promote_args<T>::type ellint_1(T k, const Policy& pol, const std::true_type&)
+BOOST_MATH_GPU_ENABLED typename tools::promote_args<T>::type ellint_1(T k, const Policy& pol, const boost::math::true_type&)
 {
    typedef typename tools::promote_args<T>::type result_type;
    typedef typename policies::evaluation<result_type, Policy>::type value_type;
-   typedef std::integral_constant<int, 
+   typedef boost::math::integral_constant<int, 
 #if defined(__clang_major__) && (__clang_major__ == 7)
       2
 #else
-      std::is_floating_point<T>::value && std::numeric_limits<T>::digits && (std::numeric_limits<T>::digits <= 54) ? 0 :
-      std::is_floating_point<T>::value && std::numeric_limits<T>::digits && (std::numeric_limits<T>::digits <= 64) ? 1 : 2
+      boost::math::is_floating_point<T>::value && boost::math::numeric_limits<T>::digits && (boost::math::numeric_limits<T>::digits <= 54) ? 0 :
+      boost::math::is_floating_point<T>::value && boost::math::numeric_limits<T>::digits && (boost::math::numeric_limits<T>::digits <= 64) ? 1 : 2
 #endif
    > precision_tag_type;
    return policies::checked_narrowing_cast<result_type, Policy>(detail::ellint_k_imp(static_cast<value_type>(k), pol, precision_tag_type()), "boost::math::ellint_1<%1%>(%1%)");
 }
 
 template <class T1, class T2>
-BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const std::false_type&)
+BOOST_MATH_GPU_ENABLED typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const boost::math::false_type&)
 {
    return boost::math::ellint_1(k, phi, policies::policy<>());
 }
 
-}
-
-// Complete elliptic integral (Legendre form) of the first kind
-template <typename T>
-BOOST_FORCEINLINE typename tools::promote_args<T>::type ellint_1(T k)
-{
-   return ellint_1(k, policies::policy<>());
-}
+} // namespace detail
 
 // Elliptic integral (Legendre form) of the first kind
 template <class T1, class T2, class Policy>
-BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const Policy& pol)
+BOOST_MATH_GPU_ENABLED typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi, const Policy& pol)  // LCOV_EXCL_LINE gcc misses this but sees the function body, strange!
 {
    typedef typename tools::promote_args<T1, T2>::type result_type;
    typedef typename policies::evaluation<result_type, Policy>::type value_type;
@@ -786,10 +796,17 @@ BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 p
 }
 
 template <class T1, class T2>
-BOOST_FORCEINLINE typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi)
+BOOST_MATH_GPU_ENABLED typename tools::promote_args<T1, T2>::type ellint_1(T1 k, T2 phi)
 {
    typedef typename policies::is_policy<T2>::type tag_type;
    return detail::ellint_1(k, phi, tag_type());
+}
+
+// Complete elliptic integral (Legendre form) of the first kind
+template <typename T>
+BOOST_MATH_GPU_ENABLED typename tools::promote_args<T>::type ellint_1(T k)
+{
+   return ellint_1(k, policies::policy<>());
 }
 
 }} // namespaces

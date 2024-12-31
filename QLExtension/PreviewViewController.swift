@@ -189,24 +189,25 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     }
     
     @available(macOSApplicationExtension 12.0, *)
-    func providePreview(for request: QLFilePreviewRequest, completionHandler handler: @escaping (QLPreviewReply?, Error?) -> Void) {
+    func providePreview(for request: QLFilePreviewRequest) async throws -> QLPreviewReply {
         // This code will be called on macOS 12 Monterey with QLIsDataBasedPreview set.
         
         // print("providePreview for \(request.fileURL)")
         
-        do {
-            Settings.shared.initFromDefaults()
-            let html = try renderMD(url: request.fileURL)
-            let replay = QLPreviewReply(dataOfContentType: .html, contentSize: Settings.shared.qlWindowSize) { _ in
-                return html.data(using: .utf8)!
-            }
+        Settings.shared.initFromDefaults()
+        let html = try renderMD(url: request.fileURL)
+        
+        let reply = QLPreviewReply(dataOfContentType: .html, contentSize: Settings.shared.qlWindowSize) { (replyToUpdate : QLPreviewReply) in
             
-            // replay.title = request.fileURL.lastPathComponent
-            replay.stringEncoding = .utf8
-            handler(replay, nil)
-        } catch {
-            handler(nil, error)
+            //replyToUpdate.title = request.fileURL.lastPathComponent
+            
+            //setting the stringEncoding for text and html data is optional and defaults to String.Encoding.utf8
+            replyToUpdate.stringEncoding = .utf8
+            
+            return html.data(using: .utf8)!
         }
+                
+        return reply
     }
     
     func renderMD(url: URL) throws -> String {
@@ -223,7 +224,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         let settings = Settings.shared
         settings.renderStats += 1
         
-        if settings.renderStats > 0 && settings.renderStats % 100 == 0, let msg = self.getBundleContents(forResource: "stats", ofType: "html") {
+        let no_nag = UserDefaults.standard.bool(forKey: "qlmarkdown-no-nag-screen")
+        if !no_nag && settings.renderStats > 0 && settings.renderStats % 100 == 0, let msg = self.getBundleContents(forResource: "stats", ofType: "html") {
             let icon: String
             if let url = Bundle.main.url(forResource: "icon", withExtension: "png"), let data = try? Data(contentsOf: url) {
                 icon = data.base64EncodedString()

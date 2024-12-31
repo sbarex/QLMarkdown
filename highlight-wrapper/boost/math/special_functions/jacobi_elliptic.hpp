@@ -107,7 +107,7 @@ T jacobi_imp(const T& x, const T& k, T* cn, T* dn, const Policy& pol, const char
    }*/
    T T1;
    T kc = 1 - k;
-   T k_prime = k < 0.5 ? T(sqrt(1 - k * k)) : T(sqrt(2 * kc - kc * kc));
+   T k_prime = k < T(0.5) ? T(sqrt(1 - k * k)) : T(sqrt(2 * kc - kc * kc));
    T T0 = jacobi_recurse(x, k, T(1), k_prime, 0, &T1, pol);
    *cn = cos(T0);
    *dn = cos(T0) / cos(T1 - T0);

@@ -18,7 +18,7 @@ ifeq ($(ONLY_ACTIVE_ARCH),)
 endif
 
 CXX=clang++
-CFLAGS=-Wall -std=c++11 -D_FILE_OFFSET_BITS=64 \
+CFLAGS=-Wall -std=c++17 -D_FILE_OFFSET_BITS=64 \
        -I ${CURRENT_DIR}/${HIGHLIGHT_DIR}/src/include \
        -I ${CURRENT_DIR}/${LUA_DIR}/src \
        -I ${CURRENT_DIR}/${MAGIC_DIR}/src \
@@ -234,7 +234,7 @@ ${BUILD_DIR}/libmagic-arm64.a:
 ifneq ("$(wildcard $(MAGIC_DIR)/Makefile)","")
 	@${MAKE} -C ${MAGIC_DIR} clean
 endif
-	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_arm64}" ./configure --host=arm-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
+	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_arm64}" PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ./configure --host=arm-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
 ifneq ($(NATIVE_ARCH),arm64)
 # Change the path of the native `file`.
 	/usr/bin/sed -i.bak -E 's/^FILE_COMPILE.*$$/FILE_COMPILE = $$\{BUILD_DIR\}\/file-$$\{NATIVE_ARCH\}/g' $(MAGIC_DIR)/magic/Makefile
@@ -280,12 +280,12 @@ clean_goutils:
 
 ${BUILD_DIR}/libgoutils-x86_64.a:
 	@echo "${bold}Building goutils for x86_64 platform...${normal}"
-	${MAKE} BUILT_PRODUCTS_DIR=${BUILD_DIR} -C GoUtils static_intel
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} BUILT_PRODUCTS_DIR=${BUILD_DIR} -C GoUtils static_intel
 	@echo ""
 
 ${BUILD_DIR}/libgoutils-arm64.a:
 	@echo "${bold}Building magic for arm64 platform...${normal}"
-	${MAKE} BUILT_PRODUCTS_DIR=${BUILD_DIR} -C GoUtils static_arm
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} BUILT_PRODUCTS_DIR=${BUILD_DIR} -C GoUtils static_arm
 	@echo ""
 
 ${BUILD_DIR}/libgoutils.a: ${goutils_libraries}
