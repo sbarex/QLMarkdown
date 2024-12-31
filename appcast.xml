@@ -4,6 +4,37 @@
         <title>QLMarkdown</title>
 
         <item>
+            <title>1.0.21</title>
+            <pubDate>mar, 31 dic 2024 18:36:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.21/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.0.21" sparkle:version="46" 
+                       sparkle:edSignature="vHzyyw0KeIPEXuXscaAHxYJvORGPgiw0e7It8sAmrXzqD5/1mrLEumFUfx2aTUqtYhlV51fdkPstlYVqvxgqCg==" length="21979332"
+                       />
+            <description><![CDATA[
+                <h2>Release 1.0.21 (46)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+
+                <p>New features:</p>
+                <ul>
+                    <li>Warning about this is not a Markdown editor app.</li>
+                    <li>Alert when the app is closed and the current markdown file was changed.</li>
+                    <li>Experimental <b>Shortcut Action</b> (require macOS 15.2).</li>
+                </ul>
+
+                <p>Bug fix:</p>
+                <ul>
+                    <li>Temporary fix for $ recognition without mathematical expression.</li>
+                </ul>
+                
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+        
+        <item>
             <title>1.0.20</title>
             <pubDate>lun, 05 ago 2024 19:58:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
