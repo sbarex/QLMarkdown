@@ -9,6 +9,7 @@ New Features:
 - Lua updated to 5.4.7.
 - File updated to 5.46.
 - Enry updated to 2.9.2.
+- Support for UTI `io.typora.markdown`.
 
 Bugfix:
 - Rewrite settings management to bypass warnings about accessing settings from other applications. **You will need to reset any preferences you have changed.**

@@ -32,6 +32,7 @@
 			<array>
 				<string>com.unknown.md</string>
 				<string>com.rstudio.rmarkdown</string>
+				<string>io.typora.markdown</string>
 				<string>net.daringfireball.markdown</string>
 				<string>net.ia.markdown</string>
 				<string>org.textbundle.package</string>

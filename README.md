@@ -91,6 +91,7 @@ This application handle these UTIs:
 - `public.markdown`
 - `com.rstudio.rmarkdown`
 - `com.unknown.md`
+- `io.typora.markdown`
 - `net.daringfireball.markdown`
 - `net.ia.markdown`
 - `org.quarto.qmarkdown`
