@@ -37,18 +37,16 @@ typedef jpcre2::select<wchar_t> jpw;
 #endif
 
 #include "c_log.h"
+#include "utf8cpp.h"
 
 using namespace std;
 
 //! Convert a string to a wide string.
 static std::wstring stringToWstring(const std::string& t_str)
 {
-    //setup converter
-    typedef std::codecvt_utf8<wchar_t> convert_type;
-    std::wstring_convert<convert_type, wchar_t> converter;
-
-    //use converter (.to_bytes: wstr->str, .from_bytes: str->wstr)
-    return converter.from_bytes(t_str);
+    std::wstring wstr;
+    utf8::utf8to16(t_str.begin(), t_str.end(), std::back_inserter(wstr));
+    return wstr;
 }
 
 //! Convert a wide string to a c string.

@@ -3,9 +3,9 @@
 SPACE     := $(null) $(null)
 CURRENT_DIR := $(subst $(SPACE),"\\ ",$(CURDIR))
 
-LUA_DIR=lua-5.4.4
+LUA_DIR=lua-5.4.7
 HIGHLIGHT_DIR=highlight
-MAGIC_DIR=file-5.44
+MAGIC_DIR=file-5.46
 
 ifeq ($(BUILT_PRODUCTS_DIR),)
 	BUILD_DIR=${CURRENT_DIR}/build
@@ -25,6 +25,7 @@ CFLAGS=-Wall -std=c++17 -D_FILE_OFFSET_BITS=64 \
        -I ${CURRENT_DIR} \
        -I ${BUILD_DIR}
 LDFLAGS=-L${BUILD_DIR}
+CXXFLAGS=-std=c++17 -stdlib=libc++
 
 CFLAGS_x86_64=-target x86_64-apple-macos10.15 -mmacosx-version-min=10.15
 CFLAGS_arm64=-target arm64-apple-macos11 -mmacosx-version-min=11
@@ -98,9 +99,9 @@ ifeq ($(filter $(NATIVE_ARCH),$(VALID_ARCHS)),)
 		$(error "Current arch ${NATIVE_ARCH} is not supported! Valid archs are: ${VALID_ARCHS}.")
 endif
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
-		@echo "Building universal binary"
+		@echo "${bold}Building universal binary${normal}"
 else
-		@echo "Building $(NATIVE_ARCH) architecture"
+		@echo "${bold}Building $(NATIVE_ARCH) architecture${normal}"
 endif
 	@echo ""
 
@@ -216,14 +217,17 @@ endif
 
 ${BUILD_DIR}/libmagic-x86_64.a:
 	@echo "${bold}Building magic for x86_64 platform...${normal}"
+	@echo $(magic_libraries)
 ifneq ("$(wildcard $(MAGIC_DIR)/Makefile)","")
 	@${MAKE} -C ${MAGIC_DIR} clean
 endif
 	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_x86_64}" ./configure --host=x86_64-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
-ifneq ($(NATIVE_ARCH),x86_64)
-# Change the path of the native `file`.
-	/usr/bin/sed -i.bak -E 's/^FILE_COMPILE.*$$/FILE_COMPILE = $$\{BUILD_DIR\}\/file-$$\{NATIVE_ARCH\}/g' $(MAGIC_DIR)/magic/Makefile
-endif
+#ifeq ($(NATIVE_ARCH),x86_64)
+## Change the path of the native `file`.
+#	ESCAPED_FILE = $(shell printf '%s\n' "$(BUILD_DIR)/file-$(NATIVE_ARCH)" | sed 's/[\/&]/\\&/g')
+#	echo "Using $(ESCAPED_FILE)"
+#	/usr/bin/sed -i.bak -E "s/^FILE_COMPILE = .*$$/FILE_COMPILE = $(ESCAPED_FILE)/g" $(MAGIC_DIR)/magic/Makefile
+#endif
 	${MAKE} -C ${MAGIC_DIR}
 	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-x86_64.a
 	mv ${MAGIC_DIR}/src/file ${BUILD_DIR}/file-x86_64
@@ -235,10 +239,12 @@ ifneq ("$(wildcard $(MAGIC_DIR)/Makefile)","")
 	@${MAKE} -C ${MAGIC_DIR} clean
 endif
 	cd $(MAGIC_DIR) && CFLAGS="${CFLAGS_arm64}" PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ./configure --host=arm-apple --enable-static --disable-zlib --disable-bzlib --disable-xzlib
-ifneq ($(NATIVE_ARCH),arm64)
-# Change the path of the native `file`.
-	/usr/bin/sed -i.bak -E 's/^FILE_COMPILE.*$$/FILE_COMPILE = $$\{BUILD_DIR\}\/file-$$\{NATIVE_ARCH\}/g' $(MAGIC_DIR)/magic/Makefile
-endif
+#ifeq ($(NATIVE_ARCH),arm64)
+## Change the path of the native `file`.
+#	ESCAPED_FILE = $(shell printf '%s\n' "$(BUILD_DIR)/file-$(NATIVE_ARCH)" | sed 's/[\/&]/\\&/g')
+#	echo "Using $(ESCAPED_FILE)"
+#	/usr/bin/sed -i.bak -E "s/^FILE_COMPILE = .*$$/FILE_COMPILE = $(ESCAPED_FILE)/g" $(MAGIC_DIR)/magic/Makefile
+#endif
 	${MAKE} -C ${MAGIC_DIR}
 	mv ${MAGIC_DIR}/src/.libs/libmagic.a ${BUILD_DIR}/libmagic-arm64.a
 	mv ${MAGIC_DIR}/src/file ${BUILD_DIR}/file-arm64

@@ -4,10 +4,6 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
-	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>org.sbarex.qlmarkdown</string>
-	</array>
 	<key>com.apple.security.files.user-selected.read-only</key>
 	<true/>
 	<key>com.apple.security.get-task-allow</key>
@@ -21,10 +17,6 @@
 	<key>com.apple.security.temporary-exception.mach-lookup.global-name</key>
 	<array>
 		<string>com.apple.nsurlsessiond</string>
-	</array>
-	<key>com.apple.security.temporary-exception.shared-preference.read-only</key>
-	<array>
-		<string>org.sbarex.qlmarkdown</string>
 	</array>
 </dict>
 </plist>

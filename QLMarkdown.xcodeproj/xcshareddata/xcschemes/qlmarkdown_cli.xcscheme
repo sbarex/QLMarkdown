@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1620"
+   LastUpgradeVersion = "1630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/sbaldiss/Develop/OSX/QLMarkdown/README.md"
+            argument = "/Users/sbaldiss/Develop/macos/QLMarkdown/README.md"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -60,7 +60,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--app &quot;/Users/sbaldiss/Library/Developer/Xcode/DerivedData/QLMarkdown-bjxoxhbfoixaiferlgcudaxguuin/Build/Products/Debug/QLMarkdown.app&quot;"
+            argument = "--app &quot;/Users/sbaldiss/Library/Developer/Xcode/DerivedData/QLMarkdown-chrnkknslzsavkgnqhuomtzxdsea/Build/Products/Debug/QLMarkdown.app&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

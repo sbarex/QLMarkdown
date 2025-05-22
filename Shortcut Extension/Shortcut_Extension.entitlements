@@ -4,10 +4,6 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
-	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>org.sbarex.qlmarkdown</string>
-	</array>
 	<key>com.apple.security.assets.movies.read-only</key>
 	<true/>
 	<key>com.apple.security.assets.music.read-only</key>
@@ -23,10 +19,6 @@
 	<key>com.apple.security.temporary-exception.files.absolute-path.read-only</key>
 	<array>
 		<string>/</string>
-	</array>
-	<key>com.apple.security.temporary-exception.shared-preference.read-only</key>
-	<array>
-		<string>org.sbarex.qlmarkdown</string>
 	</array>
 </dict>
 </plist>

@@ -14,6 +14,7 @@
 
 #CXX ?= clang++
 CXX ?= g++
+CXXFLAGS = -std=c++17 -stdlib=libc++
 
 QMAKE ?= qmake
 

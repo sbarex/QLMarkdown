@@ -1941,13 +1941,12 @@ char *get_emoji(const char *placeholder) {
     size_t size = (std::wcslen(rune) + 1) * sizeof(wchar_t);
     char *buffer = (char *)calloc(1, size);
 
-    size_t convertedSize;
     #ifdef __STDC_LIB_EXT1__
         // wcstombs_s is only guaranteed to be available if __STDC_LIB_EXT1__ is defined
 
         std::wcstombs_s(&convertedSize, buffer, size, rune, size);
     #else
-        convertedSize = std::wcstombs(buffer, rune, size);
+        std::wcstombs(buffer, rune, size);
     #endif
         
     // Restore previous locale.

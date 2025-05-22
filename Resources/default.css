@@ -79,7 +79,7 @@
   --keyword-color: #9194a1;
   --code-font: ui-monospace, Menlo, monospace;
 
-      /* Highlight Dark */
+  /* Highlight Dark */
   --hl_Background: #161b22 ;
   --hl_Number: #79c0ff ;
   --hl_Escape: #a5d6ff ;
@@ -101,8 +101,7 @@
 }
 
 /*Syntax Highlight*/
-pre.hl	{ background-color: var(--hl_Background);
-}
+pre.hl	{ background-color: var(--hl_Background);}
 .hl.num { color: var(--hl_Number); font-weight: normal;}
 .hl.esc { color: var(--hl_Escape); font-weight: normal;}
 .hl.str { color: var(--hl_String); font-weight: normal;}

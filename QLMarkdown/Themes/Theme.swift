@@ -148,6 +148,15 @@ import Cocoa
             self.init(color: color, italic: italic, bold: bold, underline: underline)
         }
         
+        convenience init(dictionary dict: [String: Any?])
+        {
+            let color = dict["color"] as? String
+            let italic = dict["italic"] as? Bool
+            let bold = dict["bold"] as? Bool
+            let underline = dict["underline"] as? Bool
+            self.init(color: color, italic: italic, bold: bold, underline: underline)
+        }
+        
         func getCSSStyle() -> String {
             var style = ""
             if let italic = self.italic {
@@ -207,6 +216,15 @@ import Cocoa
                     }
                 }
             }
+        }
+        
+        func toDictionaty() -> [String: Any?] {
+            return [
+                "color": color,
+                "italic": italic,
+                "bold": bold,
+                "underline": underline
+            ]
         }
         
         func export() -> String {
@@ -387,6 +405,92 @@ import Cocoa
         self.isDirty = false
     }
     
+    convenience init?(dictionary dict: [String: Any]) {
+        guard let name = dict["name"] as? String else {
+            return nil
+        }
+        self.init(name: name)
+        
+        if let s = dict["desc"] as? String {
+            self.desc = s
+        }
+        if let s = dict["path"] as? String {
+            self.path = s
+        }
+        if let i = dict["appearance"] as? Int, let a = ThemeAppearance(rawValue: i) {
+            self.appearance = a
+        }
+        if let d = dict["plain"] as? [String: Any?] {
+            self.plain = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["canvas"] as? [String: Any?] {
+            self.canvas = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["number"] as? [String: Any?] {
+            self.number = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["string"] as? [String: Any?] {
+            self.string = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["escape"] as? [String: Any?] {
+            self.escape = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["preProcessor"] as? [String: Any?] {
+            self.preProcessor = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["stringPreProc"] as? [String: Any?] {
+            self.stringPreProc = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["blockComment"] as? [String: Any?] {
+            self.blockComment = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["lineComment"] as? [String: Any?] {
+            self.lineComment = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["lineNum"] as? [String: Any?] {
+            self.lineNum = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["operator"] as? [String: Any?] {
+            self.operator = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["interpolation"] as? [String: Any?] {
+            self.interpolation = PropertyStyle(dictionary: d)
+        }
+        if let d = dict["keywords"] as? [[String: Any?]] {
+            self.keywords = d.map({ PropertyStyle(dictionary: $0) })
+        }
+        if let b = dict["isBase16"] as? Bool {
+            self.isBase16 = b
+        }
+        if let b = dict["isStandalone"] as? Bool {
+            self.isStandalone = b
+        }
+        self.isDirty = false
+    }
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "name": self.name,
+            "desc": self.desc,
+            "path": self.path,
+            "appearance": self.appearance.rawValue,
+            "plain": self.plain.toDictionaty(),
+            "canvas": self.canvas.toDictionaty(),
+            "number": self.number.toDictionaty(),
+            "string": self.string.toDictionaty(),
+            "escape": self.escape.toDictionaty(),
+            "preProcessor": self.preProcessor.toDictionaty(),
+            "stringPreProc": self.stringPreProc.toDictionaty(),
+            "blockComment": self.blockComment.toDictionaty(),
+            "lineComment": self.blockComment.toDictionaty(),
+            "lineNum": self.blockComment.toDictionaty(),
+            "operator": self.operator.toDictionaty(),
+            "interpolation": self.interpolation.toDictionaty(),
+            "keywords": self.keywords.map({ $0.toDictionaty() }),
+            "isBase16": self.isBase16,
+            "isStandalone": self.isStandalone
+        ]
+    }
     
     func getCSSStyle() -> String {
         let formatPropertyCss = { (name: PropertyName, property: PropertyStyle) -> String in
@@ -668,128 +772,6 @@ body {
             }
         }
     }
-    
-    enum ErrorSave: Error {
-        case missingThemeFolder
-    }
-    
-    func save() throws {
-        if self.path.isEmpty {
-            guard let dest = Settings.themesFolder?.appendingPathComponent(UUID().uuidString + ".theme") else {
-                throw ErrorSave.missingThemeFolder
-            }
-            self.path = dest.path
-        }
-        try self.write(toFile: self.path)
-        self.isDirty = false
-        NotificationCenter.default.post(name: .themeDidSaved, object: self)
-    }
-    
-    func write(toFile file: String) throws {
-        var s = ""
-        s += "Name = \"\(self.name.escapingForLua())\"\n\n"
-        s += "Description = \"\(self.desc.escapingForLua())\"\n\n"
-
-        if self.appearance != .undefined {
-            s += "Categories = { \"\(self.appearance == .light ? "light" : "dark")\" }\n\n"
-        }
-        
-        let exportProperty = { (property: PropertyStyle, name: String) -> String in
-            var s = ""
-            if !name.isEmpty {
-                s += "\(name)\t= "
-            } else {
-                s += "\t"
-            }
-            s += "{ "
-            var n = 0
-            if let c = property.color {
-                s += "Colour=\"\(c)\""
-                n += 1
-            }
-            if let v = property.bold {
-                if n > 0 {
-                    s += ", "
-                }
-                s += "Bold=\(v ? "True" : "False")"
-                n += 1
-            }
-            if let v = property.italic {
-                if n > 0 {
-                    s += ", "
-                }
-                s += "Italic=\(v ? "True" : "False")"
-                n += 1
-            }
-            if let v = property.underline {
-                if n > 0 {
-                    s += ", "
-                }
-                s += "Underline=\(v ? "True" : "False")"
-                n += 1
-            }
-            s += " }"
-            if name.isEmpty {
-                s += ", "
-            }
-            s += "\n"
-            return s
-        }
-        
-        s += exportProperty(self.plain, "Default")
-        s += exportProperty(self.canvas, "Canvas")
-        s += exportProperty(self.number, "Number")
-        s += exportProperty(self.escape, "Escape")
-        s += exportProperty(self.string, "String")
-        s += exportProperty(self.stringPreProc, "StringPreProc")
-        s += exportProperty(self.blockComment, "BlockComment")
-        s += exportProperty(self.lineComment, "LineComment")
-        s += exportProperty(self.preProcessor, "PreProcessor")
-        s += exportProperty(self.lineNum, "LineNum")
-        s += exportProperty(self.operator, "Operator")
-        s += exportProperty(self.interpolation, "Interpolation")
-        s += "\nKeywords = {\n"
-        if self.keywords.count > 0 {
-            for keyword in self.keywords {
-                s += exportProperty(keyword, "")
-            }
-        }
-        s += "}\n"
-        s += "\n"
-        
-        try s.write(toFile: file, atomically: true, encoding: .utf8)
-    }
-    
-    func duplicate() -> Theme {
-        let t = Theme(name: self.name)
-        t.desc = self.desc
-        
-        let exportProperty = { (dstTheme: Theme, name: PropertyName) in
-            let src = self[name]!
-            let dst = dstTheme[name]!
-            dst.color = src.color
-            dst.bold = src.bold
-            dst.italic = src.italic
-            dst.underline = src.underline
-        }
-        exportProperty(t, .plain)
-        exportProperty(t, .canvas)
-        exportProperty(t, .number)
-        exportProperty(t, .string)
-        exportProperty(t, .escape)
-        exportProperty(t, .preProcessor)
-        exportProperty(t, .stringPreProc)
-        exportProperty(t, .blockComment)
-        exportProperty(t, .lineComment)
-        exportProperty(t, .lineNum)
-        exportProperty(t, .operator)
-        exportProperty(t, .interpolation)
-        for keyword in self.keywords {
-            let k = PropertyStyle(color: keyword.color, italic: keyword.italic, bold: keyword.bold, underline: keyword.underline)
-            t.keywords.append(k)
-        }
-        return t
-    }
 }
 
 class ThemePreview: Theme {
@@ -818,42 +800,4 @@ class ThemePreview: Theme {
         }
         return s
     }
-    
-    override func duplicate() -> ThemePreview {
-        let t = ThemePreview(name: self.name)
-        t.desc = self.desc
-        
-        let exportProperty = { (dstTheme: Theme, name: PropertyName) in
-            let src = self[name]!
-            let dst = dstTheme[name]!
-            dst.color = src.color
-            dst.bold = src.bold
-            dst.italic = src.italic
-            dst.underline = src.underline
-        }
-        exportProperty(t, .plain)
-        exportProperty(t, .canvas)
-        exportProperty(t, .number)
-        exportProperty(t, .string)
-        exportProperty(t, .escape)
-        exportProperty(t, .preProcessor)
-        exportProperty(t, .stringPreProc)
-        exportProperty(t, .blockComment)
-        exportProperty(t, .lineComment)
-        exportProperty(t, .lineNum)
-        exportProperty(t, .operator)
-        exportProperty(t, .interpolation)
-        for keyword in self.keywords {
-            let k = PropertyStyle(color: keyword.color, italic: keyword.italic, bold: keyword.bold, underline: keyword.underline)
-            t.keywords.append(k)
-        }
-        return t
-    }
-}
-
-extension NSNotification.Name {
-    static let currentThemeDidChange = NSNotification.Name("currentThemeDidChange")
-    static let themeDidSaved = NSNotification.Name("themeDidSaved")
-    static let themeDidAdded = NSNotification.Name("themeDidAdded")
-    static let themeDidDeleted = NSNotification.Name("themeDidDeleted")
 }

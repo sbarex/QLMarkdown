@@ -226,7 +226,7 @@ struct MdToHtml_Extension: AppIntent {
          
         os_log("Processng file %{private}@", log: OSLog.shortcutExtension, type: .debug, markdown_url.path)
          
-        let appearance: Appearance = (UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light") == "Light" ? .light : .dark
+        let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
         let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
          
         let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, basedir: markdown_url.deletingLastPathComponent(), forAppearance: appearance)

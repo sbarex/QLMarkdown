@@ -72,8 +72,9 @@ var files: [URL] = []
 var dest: URL?
 var verbose = false
 
-let settings = Settings.shared
-var type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+let d = UserDefaults(suiteName: "org.sbarex.QLMarkdownXPCHelper");
+let settings = Settings(defaults: d?.dictionaryRepresentation() ?? [:]) 
+var type = Settings.isLightAppearance ? "Light" : "Dark"
 
 func parseArgOnOff(index i: Int) -> Bool {
     guard i+1 < CommandLine.arguments.count else {
@@ -183,7 +184,7 @@ while i < Int(CommandLine.argc) {
                 i += 1
             case "--appearance":
                 let opt = CommandLine.arguments[i+1]
-                type = opt.lowercased() == "light" ? "Lifht" : "Dark"
+                type = opt.lowercased() == "light" ? "Light" : "Dark"
             case "--about":
                 settings.about = parseArgOnOff(index: i)
                 i += 1
@@ -284,7 +285,6 @@ if appUrl == nil {
 }
 
 let appBundleUrl = appUrl.appendingPathComponent("Contents/Resources")
-
 
 if files.count > 1 {
     var isDir: ObjCBool = false

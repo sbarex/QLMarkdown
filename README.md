@@ -16,7 +16,7 @@ _This application is not intended to be used as a standalone markdown file edito
 
 If you like this application and find it useful, [__buy me a coffee__](https://www.buymeacoffee.com/sbarex)!
 
-The Quick Look extension can also preview rmarkdown (`.rmd`) files (_without_ evaluating `r` code), Quarto files (`.qmd`) and textbundle packages.
+The Quick Look extension can also preview rmarkdown files (`.rmd`, _without_ evaluating `r` code), MDX files (`.mdx`, _without_ JSX rendering), Cursor Rulers (`.mdc`), Quarto files (`.qmd`) and textbundle packages.
 
 You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases). 
 
@@ -245,14 +245,10 @@ The rendering engine is based on the [Highlight](http://www.andre-simon.de/doku/
 
 You can customize the settings:
 
-- Colors scheme (for light and dark appearance).
 - Line numbers visibility.
 - Word wrap options.
 - Tabs replacements.
-- Font.
 - Guess engine for undefined languages.
-
-Some colors scheme (especially those for light appearance) uses a white background that is the same of the Markdown document, making the code block not immediately recognizable. For this reason, it is possible to override the background color in order to use a personal one or the one defined by the Markdown theme. 
 
 When the code block does not specify the language, it is possible to activate a guessing function. Two engines are available:
 

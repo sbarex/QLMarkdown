@@ -31,7 +31,7 @@ N_CPU = $(shell sysctl -n hw.physicalcpu)
 SDK_PATH = $(shell /usr/bin/xcrun --show-sdk-path)
 
 CXX = clang++
-CXXFLAGS = -I"${BUILD_DIR}/libpcre2/include" -I"${CURRENT_DIR}"
+CXXFLAGS = -I"${BUILD_DIR}/libpcre2/include" -I"${CURRENT_DIR}" -std=c++17 -stdlib=libc++
 LDFLAGDS = -L${SDK_PATH}/usr/lib
 
 CXXFLAGS_x86_64 = -target x86_64-apple-macos10.15
@@ -130,7 +130,7 @@ $(makefiles) &:
 	@echo ""
 	@echo "${bold}libjpcre2 configuration for ${ARCH} platform…${normal}"
 	@mkdir -p "${BUILD_DIR}/libjpcre2/${ARCH}"
-	@cd "${BUILD_DIR}/libjpcre2/${ARCH}" && CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" CXX="/usr/bin/clang++ -target ${ARCH}-apple-macos" ${SOURCE_ROOT}/jpcre2/configure --host=${HOST} --prefix="${BUILD_DIR}/libjpcre2/${ARCH}" --enable-cpp11
+	@cd "${BUILD_DIR}/libjpcre2/${ARCH}" && CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" CXX="/usr/bin/clang++ -target ${ARCH}-apple-macos -std=c++17 -stdlib=libc++" ${SOURCE_ROOT}/jpcre2/configure --host=${HOST} --prefix="${BUILD_DIR}/libjpcre2/${ARCH}" --enable-cpp11
 	@${MAKE} -C "${BUILD_DIR}/libjpcre2/${ARCH}" -j${N_CPU} clean
 
 # Build the library for a CPU architecture.

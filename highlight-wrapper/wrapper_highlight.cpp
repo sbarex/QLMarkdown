@@ -1,7 +1,9 @@
+#include <__bit_reference>
 #include "wrapper_highlight.h"
 #include "highlight/src/include/codegenerator.h"
 #include "highlight/src/include/datadir.h"
 #include "highlight/src/include/version.h"
+#include "highlight/src/include/syntaxreader.h"
 #include "goutils.h"
 #include <os/log.h>
 #include <cstdio>
@@ -9,6 +11,8 @@
 #include <regex>
 #include <magic.h>
 #include <filesystem>
+
+using namespace std;
 
 #define EXPORT __attribute__((visibility("default")))
 

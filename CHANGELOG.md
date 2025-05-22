@@ -1,6 +1,20 @@
 # Changelog
 
 
+### 1.0.22 (47)
+New Features:
+- Support for MDX files (`.mdx`, _without_ JSX rendering).
+- Support for Cursor Rulers files (`.mdc`).
+- Highlight updated to 4.16.
+- Lua updated to 5.4.7.
+- File updated to 5.46.
+- Enry updated to 2.9.2.
+
+Bugfix:
+- Rewrite settings management to bypass warnings about accessing settings from other applications. **You will need to reset any preferences you have changed.**
+- Unused code has been removed (including the ability to choose a theme for code formatting, now to change it you will need to edit the css file)
+
+
 ### 1.0.21 (46)
 New Features:
 - Warning about this is not a Markdown editor app.

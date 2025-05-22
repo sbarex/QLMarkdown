@@ -7,7 +7,7 @@
 
 import Cocoa
 import Quartz
-import WebKit
+@preconcurrency import WebKit
 import OSLog
 import external_launcher
 
@@ -48,6 +48,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
 
     deinit {
         Settings.shared.stopMonitorChange()
+        XPCWrapper.invalidateSharedConnection()
     }
     
     override func viewDidDisappear() {
@@ -194,7 +195,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         
         // print("providePreview for \(request.fileURL)")
         
-        Settings.shared.initFromDefaults()
         let html = try renderMD(url: request.fileURL)
         
         let reply = QLPreviewReply(dataOfContentType: .html, contentSize: Settings.shared.qlWindowSize) { (replyToUpdate : QLPreviewReply) in
@@ -206,7 +206,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             
             return html.data(using: .utf8)!
         }
-                
+        
+        XPCWrapper.invalidateSharedConnection()
         return reply
     }
     
@@ -218,8 +219,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             url.path
         )
         
-        
-        let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
         
         let settings = Settings.shared
         settings.renderStats += 1
@@ -247,7 +246,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             markdown_url = url
         }
         
-        let appearance: Appearance = type == "Light" ? .light : .dark
+        let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
         let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
         
         let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent(), forAppearance: appearance)
@@ -315,3 +314,4 @@ extension PreviewViewController: WKNavigationDelegate {
         decisionHandler(.allow)
     }
 }
+

@@ -86,46 +86,6 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var syntaxCustomThemes: Bool = Settings.factorySettings.syntaxCustomThemes {
-        didSet {
-            guard oldValue != syntaxCustomThemes else { return }
-            isDirty = true
-        }
-    }
-    
-    @objc dynamic var syntaxThemeLight: ThemePreview? = nil {
-        didSet {
-            guard oldValue != syntaxThemeLight else { return }
-            isDirty = true
-        }
-    }
-    @objc dynamic var syntaxThemeDark: ThemePreview? = nil {
-        didSet {
-            guard oldValue != syntaxThemeDark else { return }
-            isDirty = true
-        }
-    }
-    
-    @objc dynamic var customBackgroundColor: Int = Settings.factorySettings.syntaxBackgroundColor.rawValue {
-        didSet {
-            guard oldValue != customBackgroundColor else { return }
-            isDirty = true
-        }
-    }
-    @objc dynamic var backgroundColorLight: NSColor = NSColor(css: Settings.factorySettings.syntaxBackgroundColorLight) ?? NSColor.textBackgroundColor {
-        didSet {
-            guard oldValue != backgroundColorLight else { return }
-            isDirty = true
-        }
-    }
-    
-    @objc dynamic var backgroundColorDark: NSColor = NSColor(css: Settings.factorySettings.syntaxBackgroundColorDark) ?? NSColor.textBackgroundColor {
-        didSet {
-            guard oldValue != backgroundColorDark else { return }
-            isDirty = true
-        }
-    }
-    
     @objc dynamic var syntaxLineNumbers: Bool = Settings.factorySettings.syntaxLineNumbersOption {
         didSet {
             guard oldValue != syntaxLineNumbers else { return }
@@ -150,32 +110,6 @@ class ViewController: NSViewController {
     @objc dynamic var syntaxTabsOption: Int = Settings.factorySettings.syntaxTabsOption {
         didSet {
             guard oldValue != syntaxTabsOption else { return }
-            isDirty = true
-        }
-    }
-    
-    @objc dynamic var isFontCustomized: Bool = !Settings.factorySettings.syntaxFontFamily.isEmpty {
-        didSet {
-            guard oldValue != isFontCustomized else { return }
-            isDirty = true
-        }
-    }
-    @objc dynamic var syntaxFontSize: CGFloat = Settings.factorySettings.syntaxFontSize {
-        didSet {
-            guard oldValue != syntaxFontSize else { return }
-            isDirty = true
-            refreshFontPreview()
-        }
-    }
-    @objc dynamic var syntaxFontFamily: String = Settings.factorySettings.syntaxFontFamily {
-        /*willSet {
-            self.willChangeValue(forKey: #keyPath(isFontCustomized))
-        }*/
-        didSet {
-            guard oldValue != syntaxFontFamily else { return }
-            isFontCustomized = !syntaxFontFamily.isEmpty
-            //self.didChangeValue(forKey: #keyPath(isFontCustomized))
-            refreshFontPreview()
             isDirty = true
         }
     }
@@ -393,11 +327,12 @@ class ViewController: NSViewController {
         // stylesPopup.menu?.insertItem(NSMenuItem.separator(), at: stylesPopup.numberOfItems-6)
     }
     
+    
     @discardableResult
     internal func addStyleSheet(_ file: URL) -> Int {
         let name: String
         let standalone: Bool
-        if let folder = Settings.stylesFolder?.path, file.path.hasPrefix(folder) {
+        if let folder = Settings.getStylesFolder()?.path, file.path.hasPrefix(folder) {
             name = String(file.path.dropFirst(folder.count + 1))
             standalone = true
         } else {
@@ -431,7 +366,7 @@ class ViewController: NSViewController {
                 self.stylesPopup.selectItem(withTag: -101)
                 return
             }
-            let base = Settings.stylesFolder
+            let base = Settings.getStylesFolder()
             if let index = stylesPopup.itemArray.firstIndex(where: {
                 guard !$0.isSeparatorItem && $0.tag >= 0 else {
                     return false
@@ -455,12 +390,10 @@ class ViewController: NSViewController {
     
     var autoRefresh: Bool {
         get {
-            let defaults = UserDefaults.standard
-            return defaults.value(forKey: "auto-refresh") as? Bool ?? true
+            return UserDefaults.standard.value(forKey: "auto-refresh") as? Bool ?? true
         }
         set {
-            let defaults = UserDefaults.standard
-            defaults.setValue(newValue, forKey: "auto-refresh")
+            UserDefaults.standard.setValue(newValue, forKey: "auto-refresh")
             if newValue {
                 doRefresh(self)
             }
@@ -796,6 +729,7 @@ class ViewController: NSViewController {
         if r == .alertFirstButtonReturn {
             let settings = Settings.shared
             settings.resetToFactory()
+            settings.saveToSharedFile()
             self.initFromSettings(settings)
         }
     }
@@ -811,7 +745,7 @@ class ViewController: NSViewController {
     @IBAction func saveAction(_ sender: Any) {
         let settings = self.updateSettings()
         
-        if settings.synchronize() {
+        if settings.saveToSharedFile() {
             isDirty = false
         } else {
             let panel = NSAlert()
@@ -900,36 +834,11 @@ document.addEventListener('scroll', function(e) {
         }
             
         if copyOnSharedFolder {
-            guard let folder = Settings.stylesFolder else {
-                return nil
+            var url: URL? = nil
+            XPCWrapper.getSynchronousService()?.storeStyle(name: src.lastPathComponent, data: try? Data(contentsOf: src)) { u, success in
+                url = success ? u : nil
             }
-            let dst = folder.appendingPathComponent(src.lastPathComponent)
-            do {
-                if FileManager.default.fileExists(atPath: dst.path) {
-                    let alert = NSAlert()
-                    alert.messageText = "A file with the same name already exists. \nDo you want to overwrite?"
-                    alert.alertStyle = .warning
-                    alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
-                    alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
-                    
-                    let r = alert.runModal()
-                    guard r == .alertSecondButtonReturn else {
-                        return nil
-                    }
-                    try FileManager.default.removeItem(at: dst)
-                }
-                try FileManager.default.copyItem(at: src, to: dst)
-                return dst
-            } catch {
-                let alert = NSAlert()
-                alert.messageText = "Unable to copy the file"
-                alert.alertStyle = .critical
-                alert.addButton(withTitle: "Close").keyEquivalent = "\r"
-                
-                alert.runModal()
-                
-                return nil
-            }
+            return url
         } else {
             return src
         }
@@ -1012,7 +921,7 @@ document.addEventListener('scroll', function(e) {
         default:
             if let item = sender.selectedItem, item.tag >= 0 {
                 let url: URL
-                if item.tag == 1, let base = Settings.stylesFolder {
+                if item.tag == 1, let base = Settings.getStylesFolder() {
                     url = base.appendingPathComponent(item.title)
                 } else {
                     url = URL(fileURLWithPath: item.title)
@@ -1031,10 +940,11 @@ document.addEventListener('scroll', function(e) {
     }
     
     @IBAction func revealApplicationSupportInFinder(_ sender: Any) {
-        guard let url = Settings.stylesFolder else {
-            return
+        XPCWrapper.getSynchronousService()?.getStylesFolder() { url in
+            if let url = url {
+                NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
+            }
         }
-        NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
@@ -1057,7 +967,7 @@ document.addEventListener('scroll', function(e) {
         self.textView.isAutomaticDashSubstitutionEnabled = false
         textView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         
-        let type = UserDefaults.standard.string(forKey: "AppleInterfaceStyle") ?? "Light"
+        let type = Settings.isLightAppearance ? "Light" : "Dark"
         
         self.appearanceButton.state = type != "Light" ? .on : .off
         self.appearanceButton.toolTip = self.appearanceButton.state == .on ? "Switch to light appearance." : "Switch to dark appearance."
@@ -1066,6 +976,8 @@ document.addEventListener('scroll', function(e) {
         contentController.add(self, name: "scrollHandler")
         
         let settings = Settings.shared
+        
+        // let settings = Settings.shared
         
         self.initFromSettings(settings)
         
@@ -1104,7 +1016,7 @@ document.addEventListener('scroll', function(e) {
         alert.alertStyle = .warning
         alert.showsSuppressionButton = true
         alert.messageText = "QLMarkdown Preferences"
-        alert.informativeText = "This application is not intended to be a Markdown editor, but the interface for customising the quicklook preview."
+        alert.informativeText = "This application is not intended to be a Markdown editor, but the interface for customising the Quick Look preview."
         alert.suppressionButton?.title = "Do not show this warning again"
         
         alert.addButton(withTitle: "OK").keyEquivalent = "\r"
@@ -1124,13 +1036,6 @@ document.addEventListener('scroll', function(e) {
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
-        }
-    }
-    
-    /// Refresh the preview font.
-    internal func refreshFontPreview() {
-        if let hvc = self.presentedViewControllers?.first(where: {$0 is HighlightViewController}) as? HighlightViewController {
-            hvc.refreshFontPreview()
         }
     }
     
@@ -1189,23 +1094,11 @@ document.addEventListener('scroll', function(e) {
         
         self.customCSSFile = settings.customCSS
         self.customCSSOverride = settings.customCSSOverride
-        
-        let themes = Settings.shared.getAvailableThemes()
-        
-        self.syntaxCustomThemes = settings.syntaxCustomThemes
-        self.syntaxThemeLight = HighlightViewController.searchTheme(settings.syntaxThemeLight, in: themes, appearance: .light)
-        self.syntaxThemeDark = HighlightViewController.searchTheme(settings.syntaxThemeDark, in: themes, appearance: .dark)
-        
+                
         self.syntaxLineNumbers = settings.syntaxLineNumbersOption
         self.syntaxWrapEnabled = settings.syntaxWordWrapOption > 0
         self.syntaxWrapCharacters = settings.syntaxWordWrapOption > 0 ? settings.syntaxWordWrapOption : 80
         self.syntaxTabsOption = settings.syntaxTabsOption
-        self.syntaxFontFamily = settings.syntaxFontFamily
-        self.syntaxFontSize = settings.syntaxFontSize
-        
-        self.customBackgroundColor = settings.syntaxBackgroundColor.rawValue
-        self.backgroundColorLight = NSColor(css: settings.syntaxBackgroundColorLight) ?? NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.9, alpha: 1)
-        self.backgroundColorDark = NSColor(css: settings.syntaxBackgroundColorDark) ?? NSColor(white: 0.4, alpha: 1)
         
         self.guessEngine = settings.guessEngine.rawValue
         
@@ -1251,24 +1144,11 @@ document.addEventListener('scroll', function(e) {
         settings.strikethroughDoubleTildeOption = self.strikethroughDoubleTildeOption
         
         settings.syntaxHighlightExtension = self.syntaxHighlightExtension
-        settings.syntaxCustomThemes = self.syntaxCustomThemes
-        settings.syntaxThemeLight = self.syntaxThemeLight?.fullName ?? ""
-        settings.syntaxThemeDark = self.syntaxThemeDark?.fullName ?? ""
         settings.syntaxLineNumbersOption = self.syntaxLineNumbers
         settings.syntaxWordWrapOption = self.syntaxWrapEnabled ? self.syntaxWrapCharacters : 0
         
         settings.syntaxTabsOption = self.syntaxTabsOption
-        if self.isFontCustomized {
-            settings.syntaxFontFamily = self.syntaxFontFamily
-            settings.syntaxFontSize = self.syntaxFontSize
-        } else {
-            settings.syntaxFontFamily = ""
-            settings.syntaxFontSize = 0
-        }
         
-        settings.syntaxBackgroundColor = BackgroundColor(rawValue: self.customBackgroundColor) ?? .fromMarkdown
-        settings.syntaxBackgroundColorLight = self.backgroundColorLight.css() ?? ""
-        settings.syntaxBackgroundColorDark = self.backgroundColorDark.css() ?? ""
         /*
         if self.customBackgroundColor == 0 {
             settings.syntaxBackgroundColorLight = ""
@@ -1502,28 +1382,5 @@ extension ViewController: NSTextDelegate {
             return
         }
         edited = true
-    }
-}
-
-// MARK: - NSFontChanging
-extension ViewController: NSFontChanging {
-    /// Handle the selection of a font.
-    func changeFont(_ sender: NSFontManager?) {
-        guard let fontManager = sender else {
-            return
-        }
-        
-        let font = fontManager.convert(NSFont.systemFont(ofSize: 13.0))
-        
-        self.pauseAutoRefresh += 1
-        self.syntaxFontFamily = font.familyName ?? font.fontName
-        self.syntaxFontSize = font.pointSize
-        self.pauseAutoRefresh -= 1
-    }
-    
-    /// Customize font panel.
-    func validModesForFontPanel(_ fontPanel: NSFontPanel) -> NSFontPanel.ModeMask
-    {
-        return [.collection, .face, .size]
     }
 }

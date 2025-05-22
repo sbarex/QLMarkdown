@@ -31,6 +31,7 @@ N_CPU = $(shell sysctl -n hw.physicalcpu)
 SDK_PATH = $(shell /usr/bin/xcrun --show-sdk-path)
 
 CXX = clang++
+CXXFLAGS=-std=c++17 -stdlib=libc++
 CFLAGS =
 LDFLAGS = -L${SDK_PATH}/usr/lib
 
