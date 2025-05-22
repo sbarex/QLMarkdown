@@ -330,6 +330,13 @@
 			remoteGlobalIDString = 836B3007259E222600A6A5F7;
 			remoteInfo = "highlight-wrapper";
 		};
+		830F3A812DDF332900A0773D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 836B3007259E222600A6A5F7;
+			remoteInfo = "highlight-wrapper";
+		};
 		831A8C4A258ABADA00E36182 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83598E5925818808004664D3 /* Project object */;
@@ -1298,13 +1305,14 @@
 		};
 		83B8DF002DD5DCA20054E345 /* magic.mgc */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "-C -m ${PROJECT_DIR}/highlight-wrapper/magic/*";
+			buildArgumentsString = "-C -m \"${PROJECT_DIR}/highlight-wrapper/magic/\"";
 			buildConfigurationList = 83B8DF012DD5DCA20054E345 /* Build configuration list for PBXLegacyTarget "magic.mgc" */;
 			buildPhases = (
 			);
-			buildToolPath = /usr/bin/file;
+			buildToolPath = ./file;
 			buildWorkingDirectory = $BUILT_PRODUCTS_DIR;
 			dependencies = (
+				830F3A822DDF332900A0773D /* PBXTargetDependency */,
 			);
 			name = magic.mgc;
 			packageProductDependencies = (
@@ -1979,6 +1987,11 @@
 		830DF9F027202265004429F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			productRef = 830DF9EF27202265004429F8 /* Yams */;
+		};
+		830F3A822DDF332900A0773D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "highlight-wrapper";
+			targetProxy = 830F3A812DDF332900A0773D /* PBXContainerItemProxy */;
 		};
 		831A8C4B258ABADA00E36182 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

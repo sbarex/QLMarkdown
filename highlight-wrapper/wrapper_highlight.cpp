@@ -974,9 +974,13 @@ void highlight_set_formatting_mode(int wrap_at_characters, int tab_replace_space
 }
 
 char *magic_guess_language(const char *buffer, const char *magic_database) {
+#ifdef DEBUG
+    magic_t cookie = magic_open(MAGIC_NONE | MAGIC_DEBUG);
+#else
     magic_t cookie = magic_open(MAGIC_NONE);
+#endif
     if (cookie == nullptr) {
-        os_log_error(sLog, "libmagic: %{public}s", magic_error(cookie));
+        os_log_error(sLog, "Unabel to open magic: %{public}s", magic_error(cookie));
         return nullptr;
     }
 
@@ -984,7 +988,7 @@ char *magic_guess_language(const char *buffer, const char *magic_database) {
     string lang = "-";
 
     if (magic_load(cookie, magic_database) != 0) {
-        os_log_error(sLog, "libmagic: %{public}s", magic_error(cookie));
+        os_log_error(sLog, "Unable to set magic database: %{public}s", magic_error(cookie));
         goto exit_func;
     }
 
@@ -1071,7 +1075,11 @@ char *enry_guess_language(const char *buffer) {
 }
 
 char *magic_get_mime_by_file(const char *filename, const char *magic_database) {
+#ifdef DEBUG
+    magic_t cookie = magic_open(MAGIC_MIME_TYPE | MAGIC_DEBUG);
+#else
     magic_t cookie = magic_open(MAGIC_MIME_TYPE);
+#endif
     if (cookie == nullptr) {
         os_log_error(sLog, "libmagic: %{public}s", magic_error(cookie));
         return nullptr;
