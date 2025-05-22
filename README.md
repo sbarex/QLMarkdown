@@ -16,7 +16,7 @@ _This application is not intended to be used as a standalone markdown file edito
 
 If you like this application and find it useful, [__buy me a coffee__](https://www.buymeacoffee.com/sbarex)!
 
-The Quick Look extension can also preview rmarkdown files (`.rmd`, _without_ evaluating `r` code), MDX files (`.mdx`, _without_ JSX rendering), Cursor Rulers (`.mdc`), Quarto files (`.qmd`) and textbundle packages.
+The Quick Look extension can also preview rmarkdown files (`.rmd`, _without_ evaluating `r` code), MDX files (`.mdx`, _without_ JSX rendering), Cursor Rulers (`.mdc`), Quarto files (`.qmd`), Api Blueprint files (`.apib`) and textbundle packages.
 
 You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases). 
 
@@ -94,12 +94,14 @@ This application handle these UTIs:
 - `io.typora.markdown`
 - `net.daringfireball.markdown`
 - `net.ia.markdown`
+- `org.apiblueprint.file`
 - `org.quarto.qmarkdown`
 - `org.textbundle.package`
 - `com.nutstore.down`
 - `dyn.ah62d4rv4ge8043a` (dynamic UTI for unassociated .md files)
 - `dyn.ah62d4rv4ge81e5pe` (dynamic UTI for unassociated .rmd files)
 - `dyn.ah62d4rv4ge81c5pe` (dynamic UTI for unassociated .qmd files)
+- `dyn.ah62d4rv4ge80c6dmqk` (dynamic UTI for unassociated .apib files)
 
 Please inform me of any other UTI associated to `.md` files.
 

@@ -35,6 +35,7 @@
 				<string>io.typora.markdown</string>
 				<string>net.daringfireball.markdown</string>
 				<string>net.ia.markdown</string>
+				<string>org.apiblueprint.file</string>
 				<string>org.textbundle.package</string>
 				<string>org.quarto.qmarkdown</string>
 				<string>public.markdown</string>
@@ -44,6 +45,7 @@
 				<string>dyn.ah62d4rv4ge81c5pe</string>
 				<string>dyn.ah62d4rv4ge8043d2</string>
 				<string>dyn.ah62d4rv4ge8043dd</string>
+				<string>dyn.ah62d4rv4ge80c6dmqk</string>
 			</array>
 			<key>QLSupportsSearchableItems</key>
 			<false/>
