@@ -576,17 +576,18 @@ class Settings: Codable {
     }
     
     @discardableResult
-    func saveToSharedFile() -> Bool {
+    func saveToSharedFile() -> (Bool, String?) {
         guard let data = try? JSONEncoder().encode(self) else {
-            return false
+            return (false, "Could not encode settings")
         }
         
         var r = false
-        XPCWrapper.getSynchronousService()?.setSettings(data: data) { success in
-            print("Impostazioni salvate: \(success)")
+        var msg: String? = nil
+        XPCWrapper.getSynchronousService()?.setSettings(data: data) { (success, _msg) in
             r = success
+            msg = _msg
         }
-        return r
+        return (r, msg)
     }
     
     private func sanitizeEmojiOption() {

@@ -1,6 +1,11 @@
 # Changelog
 
 
+### 1.0.23 (48)
+Bugfix:
+- Better message error on saving settings. 
+
+
 ### 1.0.22 (47)
 New Features:
 - Support for MDX files (`.mdx`, _without_ JSX rendering).

@@ -44,18 +44,18 @@ class QLMarkdownXPCHelper: NSObject, QLMarkdownXPCHelperProtocol {
     }
     
     /// Set and store the settings.
-    func setSettings(data: Data, with reply: @escaping (Bool) -> Void) {
+    func setSettings(data: Data, with reply: @escaping (Bool, String?) -> Void) {
         let decoder = JSONDecoder()
         if let s = try? decoder.decode(Settings.self, from: data) {
             if s.save(toUserDefaults: .standard) {
-                reply(true)
+                reply(true, nil)
                 
                 DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)
             } else {
-                reply(false)
+                reply(false, "Fail to store data.")
             }
         } else {
-            reply(false)
+            reply(false, "Fail to decode data.")
         }
     }
     

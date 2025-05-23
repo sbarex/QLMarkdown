@@ -745,11 +745,21 @@ class ViewController: NSViewController {
     @IBAction func saveAction(_ sender: Any) {
         let settings = self.updateSettings()
         
-        if settings.saveToSharedFile() {
+        let r = settings.saveToSharedFile()
+        if r.0 {
             isDirty = false
         } else {
+            print("Error saving settings: \(r.1 ?? "")")
+            os_log(
+                "Error saving settings: %{public}@",
+                log: OSLog.quickLookExtension,
+                type: .error,
+                r.1 ?? ""
+            )
+            
             let panel = NSAlert()
             panel.messageText = "Error saving the settings!"
+            panel.informativeText = r.1 ?? ""
             panel.alertStyle = .warning
             panel.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             panel.runModal()

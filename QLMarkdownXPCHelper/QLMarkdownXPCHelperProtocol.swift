@@ -13,7 +13,7 @@ import Foundation
     func getSettings(with reply: @escaping (Data?) -> Void)
     
     /// Set and store the settings.
-    func setSettings(data settings: Data, with reply: @escaping (Bool) -> Void)
+    func setSettings(data settings: Data, with reply: @escaping (Bool, String?) -> Void)
     
     func getStylesFolder(reply: @escaping (URL?) -> Void)
     func getAvailableStyles(resetCache: Bool, reply: @escaping ([String]) -> Void)
