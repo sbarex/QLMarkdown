@@ -8,9 +8,6 @@
 import Foundation
 import OSLog
 
-import Yams
-import SwiftSoup
-
 enum CMARK_Error: Error {
     case parser_create
     case parser_parse
@@ -73,6 +70,8 @@ class Settings: Codable {
         case validateUTFOption
         
         case customCSS
+        case customCSSCode
+        case customCSSCodeFetched
         case customCSSOverride
         case openInlineLink
         
@@ -137,6 +136,8 @@ class Settings: Codable {
     @objc var validateUTFOption: Bool = false
     
     @objc var customCSS: URL?
+    @objc var customCSSFetched: Bool = false
+    @objc var customCSSCode: String?
     @objc var customCSSOverride: Bool = false
     
     @objc var openInlineLink: Bool = false
@@ -148,7 +149,7 @@ class Settings: Codable {
             return UserDefaults.standard.integer(forKey: "ql-markdown-render-count");
         }
         set {
-            print("Rendered \(newValue) files.")
+            // print("Rendered \(newValue) files.")
             UserDefaults.standard.setValue(newValue, forKey: "ql-markdown-render-count")
             UserDefaults.standard.synchronize();
         }
@@ -252,6 +253,8 @@ class Settings: Codable {
         self.validateUTFOption = try container.decode(Bool.self, forKey: .validateUTFOption)
     
         self.customCSS = try container.decode(URL?.self, forKey: .customCSS)
+        self.customCSSFetched = try container.decode(Bool.self, forKey: .customCSSCodeFetched)
+        self.customCSSCode = try container.decode(String?.self, forKey: .customCSSCode)
         self.customCSSOverride = try container.decode(Bool.self, forKey: .customCSSOverride)
         self.openInlineLink = try container.decode(Bool.self, forKey: .openInlineLink)
     
@@ -314,6 +317,8 @@ class Settings: Codable {
         try container.encode(self.validateUTFOption, forKey: .validateUTFOption)
     
         try container.encode(self.customCSS, forKey: .customCSS)
+        try container.encode(self.customCSSCode, forKey: .customCSSCode)
+        try container.encode(self.customCSSFetched, forKey: .customCSSCodeFetched)
         try container.encode(self.customCSSOverride, forKey: .customCSSOverride)
         try container.encode(self.openInlineLink, forKey: .openInlineLink)
         try container.encode(self.renderAsCode, forKey: .renderAsCode)
@@ -325,8 +330,11 @@ class Settings: Codable {
         try container.encode(self.debug, forKey: .debug)
     }
     
-    fileprivate var isMonitoring = false
+    var isMonitoring = false
     func startMonitorChange() {
+        guard !isMonitoring else {
+            return
+        }
         isMonitoring = true
         DistributedNotificationCenter.default().addObserver(self, selector: #selector(self.handleSettingsChanged(_:)), name: .QLMarkdownSettingsUpdated, object: nil)
     }
@@ -388,6 +396,7 @@ class Settings: Codable {
         self.validateUTFOption = s.validateUTFOption
         
         self.customCSS = s.customCSS
+        self.customCSSCode = s.customCSSCode
         self.customCSSOverride = s.customCSSOverride
 
         self.openInlineLink = s.openInlineLink
@@ -630,95 +639,6 @@ class Settings: Codable {
         return path
     }
     
-    internal func parseYaml(node: Yams.Node) throws -> Any {
-        switch node {
-        case .scalar(let scalar):
-            return scalar.string
-        case .mapping(let mapping):
-            var r: [(key: AnyHashable, value: Any)] = []
-            for n in mapping {
-                guard let k = try parseYaml(node: n.key) as? AnyHashable else {
-                    continue
-                }
-                let v = try parseYaml(node: n.value)
-                r.append((key: k, value: v))
-            }
-            return r
-        case .sequence(let sequence):
-            var r: [Any] = []
-            for n in sequence {
-                r.append(try parseYaml(node: n))
-            }
-            return r
-        }
-    }
-    
-    internal func renderYaml(_ yaml: [(key: AnyHashable, value: Any)]) -> String {
-        guard yaml.count > 0 else {
-            return ""
-        }
-        
-        var s = "<table>"
-        for element in yaml {
-            let key: String = "<strong>\(element.key)</strong>"
-            /*
-            do {
-                key = try self.render(text: "**\(element.key)**", filename: "", forAppearance: .light, baseDir: "")
-            } catch {
-                key = "<strong>\(element.key)</strong>"
-            }*/
-            s += "<tr><td align='right'>\(key)</td><td>"
-            if let t = element.value as? [(key: AnyHashable, value: Any)] {
-                s += renderYaml(t)
-            } else if let t = element.value as? [Any] {
-                s += "<ul>\n" + t.map({ v in
-                    let s: String = "\(v)"
-                    /*
-                    if let t = v as? String {
-                        do {
-                            s = try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
-                        } catch {
-                            s = t
-                        }
-                    } else {
-                        s = "\(v)"
-                    }*/
-                    return "<li>\(s)</li>"
-                }).joined(separator: "\n")
-            } else if let t = element.value as? String {
-                s += t
-                /*
-                do {
-                    s += try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
-                } catch {
-                    s += t.replacingOccurrences(of: "|", with: #"\|"#)
-                }
-                */
-            } else {
-                s += "\(element.value)"
-            }
-            s += "</td></tr>\n"
-        }
-        s += "</table>"
-        return s
-    }
-    
-    internal func renderYamlHeader(_ text: String, isHTML: inout Bool) -> String {
-        if self.tableExtension {
-            do {
-                if let node = try Yams.compose(yaml: text), let yaml = try self.parseYaml(node: node) as? [(key: AnyHashable, value: Any)] {
-                    isHTML = true
-                    return renderYaml(yaml)
-                }
-            } catch {
-                // print(error)
-            }
-        }
-        // Embed the header inside a yaml block.
-        isHTML = false
-        return "```yaml\n"+text+"```\n"
-    }
-    
     func getBundleContents(forResource: String, ofType: String) -> String? {
         if let p = self.resourceBundle.path(forResource: forResource, ofType: ofType), let data = FileManager.default.contents(atPath: p), let s = String(data: data, encoding: .utf8) {
             return s
@@ -726,10 +646,4 @@ class Settings: Codable {
             return nil
         }
     }
-    
-    
-}
-
-extension Settings {
-    
 }

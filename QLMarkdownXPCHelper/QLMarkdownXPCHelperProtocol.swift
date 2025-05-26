@@ -9,6 +9,8 @@ import Foundation
 
 /// The protocol that this service will vend as its API. This protocol will also need to be visible to the process hosting the service.
 @objc protocol QLMarkdownXPCHelperProtocol {
+    var isHalted: Bool { get }
+    
     /// Get the settings.
     func getSettings(with reply: @escaping (Data?) -> Void)
     
@@ -18,9 +20,6 @@ import Foundation
     func getStylesFolder(reply: @escaping (URL?) -> Void)
     func getAvailableStyles(resetCache: Bool, reply: @escaping ([String]) -> Void)
     func storeStyle(name: String, data: Data?, reply: @escaping (URL?, Bool)->Void)
-    
-    func getAvailableThemes(resetCache: Bool, reply: @escaping (Data?) -> Void)
-    func removeTheme(path: String, reply: @escaping (Bool, Data?) -> Void)
     
     func getFileContents(_ url: URL, withReply: @escaping (String?) -> Void)
     

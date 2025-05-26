@@ -232,7 +232,6 @@
 		83598EFC25820A72004664D3 /* test2.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EFA258209C7004664D3 /* test2.md */; };
 		83598EFD25820A72004664D3 /* test1.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EF92582098A004664D3 /* test1.md */; };
 		836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
-		836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
 		836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
@@ -257,6 +256,8 @@
 		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		8382D05C2664051400210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05B2664051400210A0A /* Yams */; };
 		8382D05E2664052E00210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05D2664052E00210A0A /* Yams */; };
+		838715F62DE0C1DC000DC216 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		838715FE2DE44661000DC216 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		838D19782DCDD93C00963323 /* Settings+XPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D19772DCDD93400963323 /* Settings+XPC.swift */; };
 		838D19792DCDD95000963323 /* Settings+XPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D19772DCDD93400963323 /* Settings+XPC.swift */; };
 		838D197A2DCDD95000963323 /* Settings+XPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D19772DCDD93400963323 /* Settings+XPC.swift */; };
@@ -266,8 +267,6 @@
 		839E5B352D1C9DA800AD63BD /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
 		839E5B362D1C9DAC00AD63BD /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
 		83C8C18C2D272CA200FBB33F /* QLMarkdownXPCHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83C8C1802D272CA200FBB33F /* QLMarkdownXPCHelper.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		83C8C1942D272F8C00FBB33F /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 83C8C1932D272F8C00FBB33F /* SwiftSoup */; };
-		83C8C1962D272F9600FBB33F /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 83C8C1952D272F9600FBB33F /* Yams */; };
 		83C8C1972D2733CA00FBB33F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376EADC27E8BD3D00AB44B8 /* Log.swift */; };
 		83CF71C92C5FCD780066A195 /* highlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71C82C5FCD780066A195 /* highlight.c */; };
 		83CF71CA2C5FCD780066A195 /* highlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71C82C5FCD780066A195 /* highlight.c */; };
@@ -283,11 +282,9 @@
 		83D22E652DCA65C60013EB9D /* Settings+render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D22E632DCA65980013EB9D /* Settings+render.swift */; };
 		83D22E662DCA65C60013EB9D /* Settings+render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D22E632DCA65980013EB9D /* Settings+render.swift */; };
 		83D22E672DCA70050013EB9D /* Settings+render.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D22E632DCA65980013EB9D /* Settings+render.swift */; };
-		83D22E692DCA73A00013EB9D /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		83D22E6C2DCA74110013EB9D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7B2587F8EB002C2C45 /* Theme.swift */; };
 		83D22E6D2DCB2F950013EB9D /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83D22E6E2DCB2FA20013EB9D /* String+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7E2588262C002C2C45 /* String+ext.swift */; };
-		83D22E872DCB35D80013EB9D /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83D82A89277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83D82A8A277C45B500C9B99F /* libpcre2-32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83D82A88277C45B500C9B99F /* libpcre2-32.a */; };
 		83E7FEF1258FBF37003ECF9B /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
@@ -539,13 +536,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		83E7FF07258FCCF9003ECF9B /* Embed Libraries */ = {
+		838715F72DE0C1DC000DC216 /* Embed Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				836B2FF6259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Embed Libraries */,
+				838715F62DE0C1DC000DC216 /* libwrapper_highlight.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		838715FF2DE44661000DC216 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				838715FE2DE44661000DC216 /* libwrapper_highlight.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -877,10 +885,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				83D22E872DCB35D80013EB9D /* libpcre2-32.a in Frameworks */,
-				83C8C1962D272F9600FBB33F /* Yams in Frameworks */,
-				83D22E692DCA73A00013EB9D /* libwrapper_highlight.dylib in Frameworks */,
-				83C8C1942D272F8C00FBB33F /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1128,8 +1132,8 @@
 				83F4B99125868A7400FC58A7 /* Settings.swift */,
 				838D19772DCDD93400963323 /* Settings+XPC.swift */,
 				838D197B2DCDD96100963323 /* Settings+NoXPC.swift */,
-				83327D452595E15700E76CF6 /* Settings+ext.swift */,
 				83D22E632DCA65980013EB9D /* Settings+render.swift */,
+				83327D452595E15700E76CF6 /* Settings+ext.swift */,
 				8357EB7E2588262C002C2C45 /* String+ext.swift */,
 				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
 				8376EADC27E8BD3D00AB44B8 /* Log.swift */,
@@ -1421,6 +1425,7 @@
 				8343796D271D47DF00A5D6EA /* Sources */,
 				8343796E271D47DF00A5D6EA /* Frameworks */,
 				8343796F271D47DF00A5D6EA /* CopyFiles */,
+				838715F72DE0C1DC000DC216 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -1449,9 +1454,9 @@
 				83598E5E25818808004664D3 /* Frameworks */,
 				83598E5F25818808004664D3 /* Resources */,
 				831A8C4C258ABADA00E36182 /* Embed Foundation Extensions */,
-				83E7FF07258FCCF9003ECF9B /* Embed Libraries */,
 				83F8816F2597EE45008C5071 /* Embed XPC Services */,
 				8320D5952D1C25B1005868BD /* Embed ExtensionKit Extensions */,
+				838715FF2DE44661000DC216 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -1495,8 +1500,6 @@
 			);
 			name = QLMarkdownXPCHelper;
 			packageProductDependencies = (
-				83C8C1932D272F8C00FBB33F /* SwiftSoup */,
-				83C8C1952D272F9600FBB33F /* Yams */,
 			);
 			productName = QLMarkdownXPCSettings;
 			productReference = 83C8C1802D272CA200FBB33F /* QLMarkdownXPCHelper.xpc */;
@@ -2149,12 +2152,13 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 48;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 49;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/cmark-extra\"",
 					"\"$(SRCROOT)/cmark-extra/extensions\"",
@@ -2164,6 +2168,7 @@
 				INFOPLIST_FILE = QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
+					"@loader_path/../../../../Frameworks",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
@@ -2190,12 +2195,13 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = QLExtension/QLExtension.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 48;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 49;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/cmark-extra\"",
 					"\"$(SRCROOT)/cmark-extra/extensions\"",
@@ -2205,6 +2211,7 @@
 				INFOPLIST_FILE = QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
+					"@loader_path/../../../../Frameworks",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
@@ -2231,9 +2238,10 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = "Shortcut Extension/Shortcut_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2249,6 +2257,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Developed by SBAREX 2020 - 2025.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/../Frameworks",
+					"@loader_path/../../../../Frameworks",
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
@@ -2264,6 +2273,7 @@
 				MARKETING_VERSION = 1.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.QLMarkdown.Shortcut-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2278,9 +2288,10 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = "Shortcut Extension/Shortcut_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2296,6 +2307,7 @@
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Developed by SBAREX 2020 - 2025.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/../Frameworks",
+					"@loader_path/../../../../Frameworks",
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
@@ -2311,6 +2323,7 @@
 				MARKETING_VERSION = 1.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.QLMarkdown.Shortcut-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
@@ -2323,6 +2336,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CODE_SIGN_ENTITLEMENTS = qlmarkdown_cli/qlmarkdown_cli.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2350,6 +2365,7 @@
 					"-stdlib=libc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2361,6 +2377,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
 				CODE_SIGN_ENTITLEMENTS = qlmarkdown_cli/qlmarkdown_cli.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
@@ -2388,6 +2406,7 @@
 					"-stdlib=libc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				REGISTER_APP_GROUPS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -2556,13 +2575,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QLMarkdown/QLMarkdown.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/cmark-extra\"",
@@ -2574,6 +2594,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libjpcre2/include",
 				);
 				INFOPLIST_FILE = QLMarkdown/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
@@ -2604,13 +2625,14 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = QLMarkdown/QLMarkdown.entitlements;
-				CODE_SIGN_IDENTITY = "-";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
-				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"\"$(SRCROOT)/cmark-extra\"",
@@ -2622,6 +2644,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libjpcre2/include",
 				);
 				INFOPLIST_FILE = QLMarkdown/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
@@ -2682,10 +2705,11 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = QLMarkdownXPCHelper/QLMarkdownXPCHelper.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2703,7 +2727,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 					"@loader_path/../Frameworks",
-					"@executable_path/../Frameworks",
+					"@loader_path/../../../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/highlight-wrapper",
@@ -2714,6 +2738,7 @@
 				MARKETING_VERSION = 1.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdownXPCHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2728,10 +2753,11 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = QLMarkdownXPCHelper/QLMarkdownXPCHelper.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 48;
+				CURRENT_PROJECT_VERSION = 49;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2749,7 +2775,7 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(LD_RUNPATH_SEARCH_PATHS_$(IS_MACCATALYST)_$(_BOOL_$(SKIP_INSTALL)))",
 					"@loader_path/../Frameworks",
-					"@executable_path/../Frameworks",
+					"@loader_path/../../../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/highlight-wrapper",
@@ -2760,6 +2786,7 @@
 				MARKETING_VERSION = 1.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdownXPCHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "QLMarkdown/QLMarkdown-Bridging-Header.h";
@@ -2834,7 +2861,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -2849,6 +2877,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.qlmarkdown.external-launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
@@ -2862,7 +2891,8 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -2877,6 +2907,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.qlmarkdown.external-launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
@@ -3097,16 +3128,6 @@
 			productName = Yams;
 		};
 		8382D05D2664052E00210A0A /* Yams */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
-			productName = Yams;
-		};
-		83C8C1932D272F8C00FBB33F /* SwiftSoup */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 830B5B3A272D68E500378FFE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
-			productName = SwiftSoup;
-		};
-		83C8C1952D272F9600FBB33F /* Yams */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8382D054266403B000210A0A /* XCRemoteSwiftPackageReference "Yams" */;
 			productName = Yams;

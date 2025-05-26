@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 class XPCWrapper {
     private static var connection: NSXPCConnection?
@@ -15,9 +16,24 @@ class XPCWrapper {
     static func createNewConnection() -> NSXPCConnection {
         let connection = NSXPCConnection(serviceName: "org.sbarex.QLMarkdownXPCHelper")
         connection.invalidationHandler = {
+            guard !((connection.exportedObject as? QLMarkdownXPCHelperProtocol)?.isHalted ?? false) else {
+                return
+            }
+            os_log(
+                "Unable to connect to QLMarkdownXPCHelper service!",
+                log: OSLog.quickLookExtension,
+                type: .error
+            )
             print("Unable to connect to QLMarkdownXPCHelper service!")
         }
+        
         connection.interruptionHandler = {
+            os_log(
+                "QLMarkdownXPCHelper interrupted",
+                log: OSLog.quickLookExtension,
+                type: .error
+            )
+            
             print("QLMarkdownXPCHelper interrupted!")
             connection.invalidate()
             if XPCWrapper.connection == connection {
@@ -51,6 +67,12 @@ class XPCWrapper {
         if serviceAsync == nil {
             serviceAsync = getSharedConnection().remoteObjectProxyWithErrorHandler { error in
                 print("Received error:", error)
+                os_log(
+                    "Async QLMarkdownXPCHelper received error: %{public}s",
+                    log: OSLog.quickLookExtension,
+                    type: .error,
+                    error.localizedDescription
+                )
             } as? QLMarkdownXPCHelperProtocol
         }
         return serviceAsync
@@ -60,6 +82,12 @@ class XPCWrapper {
         if serviceSync == nil {
             serviceSync = getSharedConnection().synchronousRemoteObjectProxyWithErrorHandler { error in
                 print("Received error:", error)
+                os_log(
+                    "Sync QLMarkdownXPCHelper received error: %{public}s",
+                    log: OSLog.quickLookExtension,
+                    type: .error,
+                    error.localizedDescription
+                )
             } as? QLMarkdownXPCHelperProtocol
         }
         return serviceSync

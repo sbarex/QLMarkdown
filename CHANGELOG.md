@@ -1,9 +1,9 @@
 # Changelog
 
 
-### 1.0.23 (48)
+### 1.0.23 (49)
 Bugfix:
-- Better message error on saving settings. 
+- Unable to save the settings.
 
 
 ### 1.0.22 (47)

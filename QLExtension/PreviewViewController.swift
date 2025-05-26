@@ -45,11 +45,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     }
     
     var launcherService: ExternalLauncherProtocol?
-
-    deinit {
-        Settings.shared.stopMonitorChange()
-        XPCWrapper.invalidateSharedConnection()
-    }
     
     override func viewDidDisappear() {
         // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
@@ -191,6 +186,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
     
     @available(macOSApplicationExtension 12.0, *)
     func providePreview(for request: QLFilePreviewRequest) async throws -> QLPreviewReply {
+        Settings.shared.startMonitorChange()
         // This code will be called on macOS 12 Monterey with QLIsDataBasedPreview set.
         
         // print("providePreview for \(request.fileURL)")

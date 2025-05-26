@@ -18,8 +18,6 @@ extension Settings {
     }
     
     class var applicationSupportUrl: URL? {
-        // FIXME: questo codice non deve essere eseguito perchè crea un avviso di accesso
-        
         if Self.isSandboxed() {
             return FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
         } else {

@@ -7,12 +7,12 @@
 
 import Foundation
 import Security
+import OSLog
 
 /// This object implements the protocol which we have defined. It provides the actual behavior for the service. It is 'exported' by the service to make it available to the process hosting the service over an NSXPCConnection.
 class QLMarkdownXPCHelper: NSObject, QLMarkdownXPCHelperProtocol {
+    public fileprivate(set) var isHalted = false
     var styles: [String]? = nil
-    var themes: [ThemePreview]? = nil
-    var highlight_initialized = false
     
     static let serviceBundle: Bundle = {
         if Bundle.main.bundlePath.hasSuffix(".xpc") || Bundle.main.bundlePath.hasSuffix(".appex") {
@@ -38,24 +38,78 @@ class QLMarkdownXPCHelper: NSObject, QLMarkdownXPCHelperProtocol {
     func getSettings(with reply: @escaping (Data?) -> Void) {
         let settings = Settings(fromUserDefaults: .standard)
         
+        settings.customCSSFetched = true
+        settings.customCSSCode = nil
+        
+        if let url = settings.customCSS, url.lastPathComponent != "-" {
+            do {
+                let css = try String(contentsOf: url)
+                settings.customCSSCode = css
+            } catch {
+                os_log(
+                    "Unable to fetch the CSS file %{public}@: %{public}@",
+                    log: OSLog.quickLookExtension,
+                    type: .error,
+                    url.path,
+                    error.localizedDescription
+                )
+                settings.customCSSFetched = false
+            }
+            
+            if let css = try? String(contentsOf: url) {
+                settings.customCSSCode = css
+            } else {
+                os_log(
+                    "Unable to fetch the CSS file %{public}@!",
+                    log: OSLog.quickLookExtension,
+                    type: .error,
+                    url.path
+                )
+                settings.customCSSFetched = false
+            }
+        } else {
+            settings.customCSSCode = ""
+        }
+        
         let encoder = JSONEncoder()
-        let data = try? encoder.encode(settings)
-        reply(data)
+        if let data = try? encoder.encode(settings) {
+            reply(data)
+        } else {
+            os_log(
+                "Unable to encode the settings!",
+                log: OSLog.quickLookExtension,
+                type: .error
+            )
+            reply(nil)
+        }
     }
     
     /// Set and store the settings.
     func setSettings(data: Data, with reply: @escaping (Bool, String?) -> Void) {
         let decoder = JSONDecoder()
-        if let s = try? decoder.decode(Settings.self, from: data) {
+        do {
+            let s = try decoder.decode(Settings.self, from: data)
             if s.save(toUserDefaults: .standard) {
                 reply(true, nil)
-                
-                DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)
+                DistributedNotificationCenter.default().postNotificationName(.QLMarkdownSettingsUpdated, object: nil, deliverImmediately: true)
+                // DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)
             } else {
+                os_log(
+                    "Fail to store data!",
+                    log: OSLog.quickLookExtension,
+                    type: .error
+                )
                 reply(false, "Fail to store data.")
             }
-        } else {
-            reply(false, "Fail to decode data.")
+        } catch {
+            os_log(
+                "Fail to decode settings data %{public}@!",
+                log: OSLog.quickLookExtension,
+                type: .error,
+                error.localizedDescription
+            )
+            
+            reply(false, "Fail to decode settings data: \(error.localizedDescription)")
         }
     }
     
@@ -108,121 +162,6 @@ class QLMarkdownXPCHelper: NSObject, QLMarkdownXPCHelperProtocol {
         }
     }
     
-    func initHighlight()
-    {
-        guard !highlight_initialized else {
-            return;
-        }
-        if let path = Self.serviceBundle.resourceURL?.appendingPathComponent("highlight").path {
-            highlight_init("\(path)/".cString(using: .utf8))
-            highlight_initialized = true
-        }
-    }
-    
-    func getAvailableThemes(resetCache: Bool) -> [ThemePreview]
-    {
-        if self.themes == nil || resetCache {
-            initHighlight()
-            
-            self.themes = []
-            var me = self
-            // Get standalone themes.
-            _ = withUnsafeMutablePointer(to: &me) { (context) in
-                highlight_list_themes(context) { (context1, themes, count, exit_code) in
-                    /*
-                    guard let context = context?.assumingMemoryBound(to: Settings.self).pointee else {
-                        return
-                    }
-                    */
-                    guard exit_code == EXIT_SUCCESS else {
-                        return
-                    }
-                    let wrapper = context1!.bindMemory(to: QLMarkdownXPCHelper.self, capacity: 1)
-                    for i in 0 ..< Int(count) {
-                        guard let theme_info = themes?.advanced(by: i).pointee else {
-                            continue
-                        }
-                        
-                        var exit_code: Int32 = 0
-                        var release: ReleaseTheme? = nil
-                        let theme_p = highlight_get_theme2(theme_info.pointee.path, &exit_code, &release)
-                        defer {
-                            release?(theme_p)
-                        }
-                        guard exit_code == EXIT_SUCCESS, let theme = theme_p?.pointee else {
-                            continue;
-                        }
-                        
-                        
-                        wrapper.pointee.themes!.append(ThemePreview(theme: theme))
-                    }
-                }
-            }
-            
-            // Get customized themes.
-            if let url = Settings.themesFolder {
-                if !FileManager.default.fileExists(atPath: url.path) {
-                    try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
-                }
-                let dirEnum = FileManager.default.enumerator(atPath: url.path)
-                while let file = dirEnum?.nextObject() as? String {
-                    guard file.hasSuffix(".theme") else {
-                        continue
-                    }
-                    var exit_code: Int32 = 0
-                    var release: ReleaseTheme? = nil
-                    let theme_url = url.appendingPathComponent(file)
-                    let theme_p = highlight_get_theme2(theme_url.path, &exit_code, &release)
-                    defer {
-                        release?(theme_p)
-                    }
-                    guard exit_code == EXIT_SUCCESS, let theme = theme_p?.pointee else {
-                        continue;
-                    }
-                    self.themes!.append(ThemePreview(theme: theme))
-                }
-            }
-        }
-        
-        return self.themes ?? []
-    }
-    
-    func getAvailableThemes(resetCache: Bool, reply: @escaping (Data?) -> Void)
-    {
-        let themes = getAvailableThemes(resetCache: resetCache)
-        reply(try? JSONSerialization.data(withJSONObject: themes.map({ $0.toDictionary() }), options: []))
-    }
-    
-    func removeTheme(path: String, reply: @escaping (Bool, Data?) -> Void) {
-        var themes = getAvailableThemes(resetCache: false)
-        
-        guard let theme = themes.first(where: { $0.path == path }), !theme.isStandalone else {
-            reply(false, try? JSONSerialization.data(withJSONObject: themes.map({ $0.toDictionary() }), options: []))
-            return
-        }
-        
-        var r = false
-        
-        if !theme.path.isEmpty {
-            let url = URL(fileURLWithPath: theme.path)
-            if FileManager.default.fileExists(atPath: url.path) {
-                do {
-                    try FileManager.default.removeItem(at: url)
-                    
-                    if let index = themes.firstIndex(of: theme) {
-                        themes.remove(at: index)
-                    }
-                    
-                    r = true
-                } catch {
-                    r = false
-                }
-            }
-        }
-        
-        reply(r, try? JSONSerialization.data(withJSONObject: themes.map({ $0.toDictionary() }), options: []))
-    }
-    
     func getFileContents(_ url: URL, withReply reply: @escaping (String?) -> Void) {
         reply(try? String(contentsOf: url))
     }
@@ -239,7 +178,9 @@ class QLMarkdownXPCHelper: NSObject, QLMarkdownXPCHelperProtocol {
         reply(response)
     }
     
+    /// Halt the XPC process.
     func shutdown() {
+        isHalted = true
         exit(0)
     }
 }
