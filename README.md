@@ -64,7 +64,7 @@ To fix, you can launch the app with right click (or ctrl click) on the app icon 
 You can also execute this command from the terminal:
 
 ```sh
-$ xattr -r -d com.apple.quarantine "FULL PATH OF THE QLMarkdown.app (you can drag the file to get the pull path)"
+$ xattr -r -d com.apple.quarantine /Applications/QLMarkdown.app # Default path; change if necessary
 ```
 
 Alternatively, after trying to launch the app for the first time, you can open the System Preferences > Security & Privacy > General (tab) and click the Open Anyway button.
