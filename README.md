@@ -82,7 +82,7 @@ Finally, the problems may depend on how the `.md` files were registered on the s
 In the terminal try the following command:
 
 ```shell
-mdls -name kMDItemContentType PATH_OF_AN_EXISTS_MD_FILE
+touch /tmp/qlmarkdown.md && mdls -name kMDItemContentType /tmp/qlmarkdown.md && rm /tmp/qlmarkdown.md
 ```
 
 The output is the UTI associated with the `.md` file.
