@@ -363,7 +363,7 @@ extension Settings {
             cmark_node_free(doc)
         }
         
-        let about = self.about ? "<div style='font-size: 72%; margin-top: 1.5em; padding-top: .5em; -webkit-user-select: none;'><hr style='height: 0; border: none; border-top: 1px solid rgba(0,0,0,.5); box-shadow: 0 1px 1px rgba(255, 255, 255, .5)'/>\(self.app_version)</div>\n\(self.app_version2)" : ""
+        let about = ""
         
         let html_debug = self.renderDebugInfo(forAppearance: appearance, baseDir: baseDir)
         // Render
@@ -717,7 +717,107 @@ MathJax = {
 </script>
 """
         }
-        
+
+        // Add copy button script for code blocks
+        if !self.renderAsCode {
+            s_footer += """
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('pre').forEach(function(pre) {
+    if (pre.parentElement.classList.contains('code-block-wrapper')) {
+      return; // Already wrapped
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'code-block-wrapper';
+    pre.parentNode.insertBefore(wrapper, pre);
+    wrapper.appendChild(pre);
+
+    const button = document.createElement('button');
+    button.className = 'copy-button';
+    button.textContent = 'Copy';
+    button.setAttribute('aria-label', 'Copy code to clipboard');
+
+    function copyCode() {
+      const code = pre.querySelector('code') || pre;
+      const text = code.textContent;
+
+      navigator.clipboard.writeText(text).then(function() {
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+        setTimeout(function() {
+          button.textContent = 'Copy';
+          button.classList.remove('copied');
+        }, 2000);
+      }).catch(function(err) {
+        console.error('Failed to copy:', err);
+        button.textContent = 'Error';
+        setTimeout(function() {
+          button.textContent = 'Copy';
+        }, 2000);
+      });
+    }
+
+    // Copy on button click
+    button.addEventListener('click', function(e) {
+      e.stopPropagation();
+      copyCode();
+    });
+
+    // Copy on wrapper click, but only if no text is selected
+    wrapper.addEventListener('click', function(e) {
+      // Don't copy if clicking the button (already handled above)
+      if (e.target === button) {
+        return;
+      }
+
+      // Don't copy if user has selected text
+      const selection = window.getSelection();
+      if (selection && selection.toString().length > 0) {
+        return;
+      }
+
+      copyCode();
+    });
+
+    wrapper.insertBefore(button, pre);
+  });
+
+  // Add document copy button
+  const article = document.querySelector('.markdown-body');
+  if (article) {
+    const docButton = document.createElement('button');
+    docButton.className = 'copy-document-button';
+    docButton.textContent = 'Copy All';
+    docButton.setAttribute('aria-label', 'Copy entire document to clipboard');
+
+    docButton.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const text = article.textContent;
+
+      navigator.clipboard.writeText(text).then(function() {
+        docButton.textContent = 'Copied!';
+        docButton.classList.add('copied');
+        setTimeout(function() {
+          docButton.textContent = 'Copy All';
+          docButton.classList.remove('copied');
+        }, 2000);
+      }).catch(function(err) {
+        console.error('Failed to copy:', err);
+        docButton.textContent = 'Error';
+        setTimeout(function() {
+          docButton.textContent = 'Copy All';
+        }, 2000);
+      });
+    });
+
+    article.insertBefore(docButton, article.firstChild);
+  }
+});
+</script>
+"""
+        }
+
         let style = css_doc + css_highlight + css_doc_extended
         let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
         let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"

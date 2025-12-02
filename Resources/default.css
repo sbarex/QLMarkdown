@@ -121,7 +121,7 @@ pre.hl	{ background-color: var(--hl_Background);}
 
 
 pre {
-  max-width: 902px;
+  max-width: 900px;
 }
 * {
   box-sizing: border-box;
@@ -146,23 +146,14 @@ body {
   background-color: var(--background);
 }
 
-/* If the window is bigger than 902 pixels, the border will be visible. */
-@media (min-width: 902px) {
-  article {
-    border-radius: 8px;
-    border-width: 1px;  
-    border-style: solid;
-    border-color: var(--body-border-color);
-  }
-}
 
 article {
-  margin: auto;
-  max-width: 902px;
+  margin: 8px auto 80px auto;
+  max-width: 900px;
   font-size: inherit;
   line-height: 1.5;
   word-wrap: break-word;
-  padding: 32px;
+  padding: 12px 16px;
 }
 
 a {
@@ -645,4 +636,91 @@ input[type="checkbox"] {
         padding: .2em;
         background-color: #fcf8e3;
     }
+}
+
+/* Copy button styles */
+.markdown-body .code-block-wrapper {
+  display: grid;
+  cursor: pointer;
+  background-color: var(--hl_Background);
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.markdown-body .code-block-wrapper pre {
+  grid-area: 1 / 1;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+.markdown-body .copy-button {
+  grid-area: 1 / 1;
+  justify-self: end;
+  align-self: start;
+  position: sticky;
+  top: 8px;
+  margin: 8px;
+  padding: 6px 10px;
+  background-color: var(--code-background);
+  border: 1px solid var(--thead-border);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--textPrimary);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s, background-color 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 10;
+}
+
+.markdown-body .code-block-wrapper:hover .copy-button:not(.copied) {
+  background-color: var(--thead-border);
+}
+
+.markdown-body .copy-button:active {
+  transform: scale(0.95);
+}
+
+.markdown-body .copy-button.copied {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+  opacity: 1;
+}
+
+/* Document copy button */
+.copy-document-button {
+  position: fixed;
+  top: 8px;
+  right: 20px;
+  padding: 6px 10px;
+  background-color: var(--code-background);
+  border: 1px solid var(--thead-border);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--textPrimary);
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s, background-color 0.2s;
+  -webkit-user-select: none;
+  user-select: none;
+  z-index: 100;
+}
+
+.copy-document-button:hover {
+  background-color: var(--thead-border);
+}
+
+.copy-document-button:active {
+  transform: scale(0.95);
+}
+
+.copy-document-button.copied {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
 }
