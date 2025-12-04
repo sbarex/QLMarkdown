@@ -620,7 +620,8 @@ table.debug td {
         
         var s_header = header
         var s_footer = footer
-        
+        let mermaidEnabled = !self.renderAsCode && (body.contains("language-mermaid") || body.contains("class=\"mermaid\""))
+
         let formatCSS = { (code: String?) -> String in
             guard let css = code, !css.isEmpty else {
                 return ""
@@ -646,7 +647,41 @@ table.debug td {
             css_doc_extended = ""
             css_doc = ""
         }
-            
+
+        if mermaidEnabled, let mermaidURL = self.resourceBundle.url(forResource: "mermaid", withExtension: "min.js"),
+           let mermaidContent = try? String(contentsOf: mermaidURL, encoding: .utf8) {
+            // Embed mermaid.js inline for compatibility with data-based Quick Look preview (macOS 12+)
+            s_header += "<script type=\"text/javascript\">\(mermaidContent)</script>\n"
+            s_footer += """
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof mermaid === 'undefined') {
+        return;
+    }
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('pre code.language-mermaid, pre code.mermaid, .mermaid'));
+    if (!blocks.length) {
+        return;
+    }
+    blocks.forEach(function(block) {
+        if (block.tagName && block.tagName.toLowerCase() === 'code') {
+            var pre = block.parentElement;
+            var container = document.createElement('div');
+            container.className = 'mermaid';
+            container.textContent = block.textContent;
+            if (pre && pre.parentElement) {
+                pre.parentElement.replaceChild(container, pre);
+            }
+        } else if (block.classList && !block.classList.contains('mermaid')) {
+            block.classList.add('mermaid');
+        }
+    });
+    mermaid.initialize({ startOnLoad: true, theme: prefersDark ? 'dark' : 'default' });
+});
+</script>
+"""
+        }
+
         var css_highlight: String = ""
         if self.renderAsCode {
             var exit_code: Int32 = 0

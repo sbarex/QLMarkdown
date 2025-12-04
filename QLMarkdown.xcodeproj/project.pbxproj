@@ -11,6 +11,8 @@
 		830277F52C60B3E20066EBCC /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
 		830277F62C60B3EA0066EBCC /* stats.html in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D62C60AB300066A195 /* stats.html */; };
 		830277F72C60E48F0066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
+		83FA00042E00000100000004 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83FA00012E00000100000001 /* mermaid.min.js */; };
+		83FA00052E00000100000005 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83FA00012E00000100000001 /* mermaid.min.js */; };
 		830B160A2D274F180042D876 /* QLMarkdownXPCHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83C8C1802D272CA200FBB33F /* QLMarkdownXPCHelper.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3B272D68E500378FFE /* SwiftSoup */; };
 		830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3D272D68F700378FFE /* SwiftSoup */; };
@@ -703,6 +705,7 @@
 		83598EF92582098A004664D3 /* test1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test1.md; sourceTree = "<group>"; };
 		83598EFA258209C7004664D3 /* test2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test2.md; sourceTree = "<group>"; };
 		83598F22258263C0004664D3 /* default.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = default.css; sourceTree = "<group>"; };
+		83FA00012E00000100000001 /* mermaid.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = mermaid.min.js; sourceTree = "<group>"; };
 		836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
 		836B720A259E226F00A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		836B7474259E2B4000A6A5F7 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1193,6 +1196,7 @@
 			isa = PBXGroup;
 			children = (
 				83598F22258263C0004664D3 /* default.css */,
+				83FA00012E00000100000001 /* mermaid.min.js */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 				83CF71D62C60AB300066A195 /* stats.html */,
 			);
@@ -1606,6 +1610,7 @@
 			files = (
 				830277F42C60B3B40066EBCC /* icon.png in Resources */,
 				830277F62C60B3EA0066EBCC /* stats.html in Resources */,
+				83FA00052E00000100000005 /* mermaid.min.js in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
 				834A4F0329E8AD8C00692964 /* ext_scanners.re in Resources */,
 			);
@@ -1634,6 +1639,7 @@
 				830277F72C60E48F0066EBCC /* icon.png in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				830277F52C60B3E20066EBCC /* default.css in Resources */,
+				83FA00042E00000100000004 /* mermaid.min.js in Resources */,
 				836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */,
 				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
 				834A4F0229E8AD8C00692964 /* ext_scanners.re in Resources */,
