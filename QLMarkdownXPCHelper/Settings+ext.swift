@@ -71,13 +71,10 @@ extension Settings {
         
         defaults.set(self.qlWindowWidth ?? 0, forKey: "ql-window-width")
         defaults.set(self.qlWindowHeight ?? 0, forKey: "ql-window-height")
-        
-        if self.useLegacyPreview {
-            defaults.set(useLegacyPreview, forKey: "legacy-preview")
-        } else {
-            defaults.removeObject(forKey: "legacy-preview")
-        }
-        
+
+        // Clean up legacy setting if it exists
+        defaults.removeObject(forKey: "legacy-preview")
+
         let file: String
         if let url = customCSS {
             if let folder = Settings.stylesFolder?.path, url.path.hasPrefix(folder) {

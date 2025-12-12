@@ -15,19 +15,7 @@ class MyWKWebView: WKWebView {
     override var canBecomeKeyView: Bool {
         return false
     }
-    
-    override func becomeFirstResponder() -> Bool {
-        // Quick Look window do not allow first responder child.
-        return false
-    }
-}
 
-@available(macOS, deprecated: 10.14)
-class MyWebView: WebView {
-    override var canBecomeKeyView: Bool {
-        return false
-    }
-    
     override func becomeFirstResponder() -> Bool {
         // Quick Look window do not allow first responder child.
         return false
@@ -36,108 +24,73 @@ class MyWebView: WebView {
 
 class PreviewViewController: NSViewController, QLPreviewingController {
     var webView: MyWKWebView?
-    var legacyWebView: MyWebView?
-    
+
     var handler: ((Error?) -> Void)? = nil
-    
+
     override var nibName: NSNib.Name? {
         return NSNib.Name("PreviewViewController")
     }
-    
+
     var launcherService: ExternalLauncherProtocol?
-    
+
     override func viewDidDisappear() {
         // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
-        
+
         self.launcherService = nil
     }
-    
+
     override func loadView() {
         // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
-        
+
         super.loadView()
         // Do any additional setup after loading the view.
-        
+
         Settings.shared.startMonitorChange()
-        
+
         if #available(macOS 11, *) {
             let connection = NSXPCConnection(serviceName: "org.sbarex.qlmarkdown.external-launcher")
-            
+
             connection.remoteObjectInterface = NSXPCInterface(with: ExternalLauncherProtocol.self)
             connection.resume()
-            
+
             self.launcherService = connection.synchronousRemoteObjectProxyWithErrorHandler { error in
                 print("Received error:", error)
             } as? ExternalLauncherProtocol
         }
-        
+
         let settings = Settings.shared
-        
+
         self.preferredContentSize = settings.qlWindowSize
-        
+
         let previewRect: CGRect
         if #available(macOS 11, *) {
             previewRect = self.view.bounds
         } else {
             previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
         }
-        
-        if settings.useLegacyPreview {
-            // On Big Sur there are some bugs with the current WKWebView:
-            // - WKWebView crash on launch because ignore the com.apple.security.network.client entitlement (workaround setting the com.apple.security.temporary-exception.mach-lookup.global-name exception for com.apple.nsurlsessiond
-            // - WKWebView cannot scroll when QL preview window is in fullscreen.
-            // Old WebView API works.
-            let webView = MyWebView(frame: previewRect)
-            webView.autoresizingMask = [.height, .width]
-            webView.preferences.isJavaScriptEnabled = false
-            webView.preferences.allowsAirPlayForMediaPlayback = false
-            webView.preferences.arePlugInsEnabled = false
-            webView.preferences.loadsImagesAutomatically = true
-            
-            self.view.addSubview(webView)
-            
-            self.legacyWebView = webView
-            webView.frameLoadDelegate = self
-            webView.drawsBackground = false // Best solution is use the same color of the body
-        } else {
-            // Create a configuration for the preferences
-            let configuration = WKWebViewConfiguration()
-            configuration.preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
-            configuration.allowsAirPlayForMediaPlayback = false
-        
-            self.webView = MyWKWebView(frame: previewRect, configuration: configuration)
-            self.webView!.autoresizingMask = [.height, .width]
-            
-            self.webView!.wantsLayer = true
-            if #available(macOS 11, *) {
-                self.webView!.layer?.borderWidth = 0
-            } else {
-                // Draw a border around the web view
-                self.webView!.layer?.borderColor = NSColor.gridColor.cgColor
-                self.webView!.layer?.borderWidth = 1
-            }
-        
-            self.webView!.navigationDelegate = self
-            // webView!.uiDelegate = self
 
-            self.view.addSubview(self.webView!)
-        
-            /*
-            self.webView!.translatesAutoresizingMaskIntoConstraints = false
-            var padding: CGFloat = 2
-            if #available(macOS 11, *) {
-                padding = 0
-            }
-        
-            NSLayoutConstraint(item: self.webView!, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: padding).isActive = true
-            NSLayoutConstraint(item: self.webView!, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: padding).isActive = true
-            NSLayoutConstraint(item: self.webView!, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: padding).isActive = true
-            NSLayoutConstraint(item: self.webView!, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: padding).isActive = true
-            */
-            
+        // Create a configuration for the preferences
+        let configuration = WKWebViewConfiguration()
+        configuration.preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
+        configuration.allowsAirPlayForMediaPlayback = false
+
+        self.webView = MyWKWebView(frame: previewRect, configuration: configuration)
+        self.webView!.autoresizingMask = [.height, .width]
+
+        self.webView!.wantsLayer = true
+        if #available(macOS 11, *) {
+            self.webView!.layer?.borderWidth = 0
+        } else {
+            // Draw a border around the web view
+            self.webView!.layer?.borderColor = NSColor.gridColor.cgColor
+            self.webView!.layer?.borderWidth = 1
         }
+
+        self.webView!.navigationDelegate = self
+
+        self.view.addSubview(self.webView!)
     }
-    
+
     internal func getBundleContents(forResource: String, ofType: String) -> String?
     {
         if let p = Bundle.main.path(forResource: forResource, ofType: ofType), let data = FileManager.default.contents(atPath: p), let s = String(data: data, encoding: .utf8) {
@@ -147,66 +100,44 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         }
     }
 
-    /*
-     * Implement this method and set QLSupportsSearchableItems to YES in the Info.plist of the extension if you support CoreSpotlight.
-     *
-    func preparePreviewOfSearchableItem(identifier: String, queryString: String?, completionHandler handler: @escaping (Error?) -> Void) {
-        // Perform any setup necessary in order to prepare the view.
-        
-        // Call the completion handler so Quick Look knows that the preview is fully loaded.
-        // Quick Look will display a loading spinner while the completion handler is not called.
-        handler(nil)
-    }
-     */
-    
     func preparePreviewOfFile(at url: URL, completionHandler handler: @escaping (Error?) -> Void) {
         // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
-        
+
         // Add the supported content types to the QLSupportedContentTypes array in the Info.plist of the extension.
-        
+
         // Perform any setup necessary in order to prepare the view.
-        
+
         // Call the completion handler so Quick Look knows that the preview is fully loaded.
         // Quick Look will display a loading spinner while the completion handler is not called.
-        
+
         do {
             self.handler = handler
-            
+
             let html = try renderMD(url: url)
-            if Settings.shared.useLegacyPreview, let webView = self.legacyWebView {
-                webView.mainFrame.loadHTMLString("LEGACY VIEW " + html, baseURL: nil)
-            } else {
-                self.webView?.isHidden = true // hide the webview until complete rendering
-                self.webView?.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
-            }
+            self.webView?.isHidden = true // hide the webview until complete rendering
+            self.webView?.loadHTMLString(html, baseURL: url.deletingLastPathComponent())
         } catch {
             handler(error)
         }
     }
-    
+
+    /// Provides HTML preview data for Quick Look.
+    /// This is the primary entry point on macOS 12+ when QLIsDataBasedPreview is set to true.
     @available(macOSApplicationExtension 12.0, *)
     func providePreview(for request: QLFilePreviewRequest) async throws -> QLPreviewReply {
         Settings.shared.startMonitorChange()
-        // This code will be called on macOS 12 Monterey with QLIsDataBasedPreview set.
-        
-        // print("providePreview for \(request.fileURL)")
-        
+
         let html = try renderMD(url: request.fileURL)
-        
-        let reply = QLPreviewReply(dataOfContentType: .html, contentSize: Settings.shared.qlWindowSize) { (replyToUpdate : QLPreviewReply) in
-            
-            //replyToUpdate.title = request.fileURL.lastPathComponent
-            
-            //setting the stringEncoding for text and html data is optional and defaults to String.Encoding.utf8
+
+        let reply = QLPreviewReply(dataOfContentType: .html, contentSize: Settings.shared.qlWindowSize) { (replyToUpdate: QLPreviewReply) in
             replyToUpdate.stringEncoding = .utf8
-            
             return html.data(using: .utf8)!
         }
-        
+
         XPCWrapper.invalidateSharedConnection()
         return reply
     }
-    
+
     func renderMD(url: URL) throws -> String {
         os_log(
             "Generating preview for file %{public}s",
@@ -214,11 +145,10 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             type: .info,
             url.path
         )
-        
-        
+
         let settings = Settings.shared
         settings.renderStats += 1
-        
+
         let no_nag = UserDefaults.standard.bool(forKey: "qlmarkdown-no-nag-screen")
         if !no_nag && settings.renderStats > 0 && settings.renderStats % 100 == 0, let msg = self.getBundleContents(forResource: "stats", ofType: "html") {
             let icon: String
@@ -227,10 +157,10 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             } else {
                 icon = ""
             }
-            
+
             return msg.replacingOccurrences(of: "%n_files%", with: "\(settings.renderStats)").replacingOccurrences(of: "%icon_path%", with: "data:image/png;base64,\(icon)")
         }
-        
+
         let markdown_url: URL
         if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {
             if FileManager.default.fileExists(atPath: url.appendingPathComponent("text.md").path) {
@@ -241,29 +171,13 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         } else {
             markdown_url = url
         }
-        
+
         let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
         let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
-        
-        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent(), forAppearance: appearance)
-            
-        return html
-    }
-}
 
-@available(macOS, deprecated: 10.14)
-extension PreviewViewController: WebFrameLoadDelegate {
-    func webView(_ sender: WebView!, didFinishLoadFor frame: WebFrame!) {
-        if let handler = self.handler {
-            handler(nil)
-        }
-        self.handler = nil
-    }
-    func webView(_ sender: WebView!, didFailLoadWithError error: Error!, for frame: WebFrame!) {
-        if let handler = self.handler {
-            handler(error)
-        }
-        self.handler = nil
+        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent(), forAppearance: appearance)
+
+        return html
     }
 }
 
@@ -279,7 +193,7 @@ extension PreviewViewController: WKNavigationDelegate {
             self.webView?.isHidden = false
         }
     }
-    
+
     func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
         if let handler = self.handler {
             handler(error)
@@ -287,7 +201,7 @@ extension PreviewViewController: WKNavigationDelegate {
             self.webView?.isHidden = false
         }
     }
-    
+
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if !Settings.shared.openInlineLink, navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
             if #available(macOS 11, *) {
@@ -310,4 +224,3 @@ extension PreviewViewController: WKNavigationDelegate {
         decisionHandler(.allow)
     }
 }
-
