@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		830277F42C60B3B40066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
 		830277F52C60B3E20066EBCC /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
+		83AABB00000000000000A002 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000A001 /* mermaid.min.js */; };
 		830277F62C60B3EA0066EBCC /* stats.html in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D62C60AB300066A195 /* stats.html */; };
 		830277F72C60E48F0066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
 		830B160A2D274F180042D876 /* QLMarkdownXPCHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83C8C1802D272CA200FBB33F /* QLMarkdownXPCHelper.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -264,6 +265,7 @@
 		838D197D2DCDD97D00963323 /* Settings+NoXPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D197B2DCDD96100963323 /* Settings+NoXPC.swift */; };
 		838D197E2DCDD97D00963323 /* Settings+NoXPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D197B2DCDD96100963323 /* Settings+NoXPC.swift */; };
 		839E5B342D1C9DA600AD63BD /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
+		83AABB00000000000000A003 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000A001 /* mermaid.min.js */; };
 		839E5B352D1C9DA800AD63BD /* highlight in Resources */ = {isa = PBXBuildFile; fileRef = 83E7FEF0258FBF37003ECF9B /* highlight */; };
 		839E5B362D1C9DAC00AD63BD /* magic.mgc in Resources */ = {isa = PBXBuildFile; fileRef = 836B7474259E2B4000A6A5F7 /* magic.mgc */; };
 		83C8C18C2D272CA200FBB33F /* QLMarkdownXPCHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83C8C1802D272CA200FBB33F /* QLMarkdownXPCHelper.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -703,6 +705,7 @@
 		83598EF92582098A004664D3 /* test1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test1.md; sourceTree = "<group>"; };
 		83598EFA258209C7004664D3 /* test2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test2.md; sourceTree = "<group>"; };
 		83598F22258263C0004664D3 /* default.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = default.css; sourceTree = "<group>"; };
+		83AABB00000000000000A001 /* mermaid.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = mermaid.min.js; sourceTree = "<group>"; };
 		836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
 		836B720A259E226F00A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
 		836B7474259E2B4000A6A5F7 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1193,6 +1196,7 @@
 			isa = PBXGroup;
 			children = (
 				83598F22258263C0004664D3 /* default.css */,
+				83AABB00000000000000A001 /* mermaid.min.js */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 				83CF71D62C60AB300066A195 /* stats.html */,
 			);
@@ -1616,6 +1620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				839E5B342D1C9DA600AD63BD /* default.css in Resources */,
+				83AABB00000000000000A003 /* mermaid.min.js in Resources */,
 				839E5B352D1C9DA800AD63BD /* highlight in Resources */,
 				839E5B362D1C9DAC00AD63BD /* magic.mgc in Resources */,
 			);
@@ -1634,6 +1639,7 @@
 				830277F72C60E48F0066EBCC /* icon.png in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				830277F52C60B3E20066EBCC /* default.css in Resources */,
+				83AABB00000000000000A002 /* mermaid.min.js in Resources */,
 				836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */,
 				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
 				834A4F0229E8AD8C00692964 /* ext_scanners.re in Resources */,
