@@ -102,7 +102,8 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         } else {
             // Create a configuration for the preferences
             let configuration = WKWebViewConfiguration()
-            configuration.preferences.javaScriptEnabled = settings.unsafeHTMLOption && settings.inlineImageExtension
+            // Enable JavaScript for unsafe HTML with inline images, or when Mermaid/Math extensions are active
+            configuration.preferences.javaScriptEnabled = (settings.unsafeHTMLOption && settings.inlineImageExtension) || settings.mermaidExtension || settings.mathExtension
             configuration.allowsAirPlayForMediaPlayback = false
         
             self.webView = MyWKWebView(frame: previewRect, configuration: configuration)

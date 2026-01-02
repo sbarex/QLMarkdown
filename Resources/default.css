@@ -646,3 +646,21 @@ input[type="checkbox"] {
         background-color: #fcf8e3;
     }
 }
+
+/* Mermaid diagrams */
+.mermaid {
+    text-align: center;
+    margin: 16px 0;
+    background-color: transparent;
+}
+
+.mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+    .mermaid {
+        background-color: transparent;
+    }
+}
