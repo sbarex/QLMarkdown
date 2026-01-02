@@ -32,6 +32,7 @@ You can download the last compiled release (as universal binary) from [this link
       - [Emoji](#emoji)
       - [Inline local images](#inline-local-images)
       - [Mathematical expressions](#mathematical-expressions)
+      - [Mermaid diagrams](#mermaid-diagrams)
       - [Syntax Highlighting](#syntax-highlighting)
       - [YAML header](#yaml-header)
   - [Command line interface](#command-line-interface)
@@ -236,6 +237,35 @@ Inline math expressions are delimited with a dollar symbol `$`. Block expression
 Alternatively, you can use the ` ```math ` code block syntax to display a math expression as a block.
 
 The [MathJax](https://www.mathjax.org/) library is loaded from cdn.jsdelivr.net. The library is loaded if the markdown code contains ` ```math ` code blocks or one or more dollar sign.
+
+
+#### Mermaid diagrams
+
+This extension renders [Mermaid](https://mermaid.js.org/) diagrams directly in the Quick Look preview. Mermaid is a JavaScript-based diagramming and charting tool that uses Markdown-inspired text definitions.
+
+Supported diagram types include:
+- Flowcharts
+- Sequence diagrams
+- Class diagrams
+- State diagrams
+- Entity Relationship diagrams
+- Pie charts
+- And more...
+
+To create a Mermaid diagram, use a fenced code block with the `mermaid` language identifier:
+
+~~~markdown
+```mermaid
+graph TD
+    A[Start] --> B{Decision}
+    B -->|Yes| C[Do Something]
+    B -->|No| D[Do Something Else]
+```
+~~~
+
+**Note:** The Mermaid library (mermaid.min.js v10.9.3) is bundled locally with the application - no network connection is required at preview time. The library is initialized with `securityLevel: 'strict'` for safety.
+
+The diagram theme automatically adapts to the system appearance (light/dark mode).
 
 
 #### Syntax Highlighting
