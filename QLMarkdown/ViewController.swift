@@ -127,7 +127,14 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
-    
+
+    @objc dynamic var mermaidExtension: Bool = Settings.factorySettings.mermaidExtension {
+        didSet {
+            guard oldValue != mermaidExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var highlightExtension: Bool = Settings.factorySettings.highlightExtension {
         didSet {
             guard oldValue != highlightExtension else { return }
@@ -1084,6 +1091,7 @@ document.addEventListener('scroll', function(e) {
         self.strikethroughDoubleTildeOption = settings.strikethroughDoubleTildeOption
         
         self.mathExtension = settings.mathExtension
+        self.mermaidExtension = settings.mermaidExtension
         self.mentionExtension = settings.mentionExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
@@ -1139,8 +1147,9 @@ document.addEventListener('scroll', function(e) {
         settings.yamlExtensionAll = self.yamlExtensionAll
         
         settings.mathExtension = self.mathExtension
+        settings.mermaidExtension = self.mermaidExtension
         settings.mentionExtension = self.mentionExtension
-        
+
         settings.emojiExtension = self.emojiExtension
         settings.emojiImageOption = self.emojiImageOption
         

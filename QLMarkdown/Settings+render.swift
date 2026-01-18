@@ -463,7 +463,18 @@ table.debug td {
             html_debug += "off"
         }
         html_debug += "</td></tr>\n"
-        
+
+        html_debug += "<tr><td>mermaid extension</td><td>"
+        if self.mermaidExtension {
+            html_debug += "on"
+            if self.resourceBundle.path(forResource: "mermaid.min", ofType: "js") == nil {
+                html_debug += " (mermaid.min.js NOT FOUND)"
+            }
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+
         html_debug += "<tr><td>mention extension</td><td>"
         if self.mentionExtension {
             html_debug += "on " + (cmark_find_syntax_extension("mention") == nil ? " (NOT AVAILABLE" : "")
@@ -717,7 +728,34 @@ MathJax = {
 </script>
 """
         }
-        
+
+        // Mermaid diagrams support
+        var processedBody = body
+        if !self.renderAsCode, self.mermaidExtension, body.contains("language-mermaid") {
+            // Transform mermaid code blocks to mermaid divs
+            processedBody = transformMermaidBlocks(body)
+
+            // Inject mermaid.min.js from bundle
+            if let mermaidPath = self.resourceBundle.path(forResource: "mermaid.min", ofType: "js"),
+               let mermaidJS = try? String(contentsOfFile: mermaidPath, encoding: .utf8) {
+                // Embed mermaid.js inline and initialize
+                s_footer += """
+<script type="text/javascript">
+\(mermaidJS)
+</script>
+<script type="text/javascript">
+mermaid.initialize({
+  startOnLoad: true,
+  theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+  securityLevel: 'strict'
+});
+</script>
+"""
+            } else {
+                os_log("Could not load mermaid.min.js from bundle", log: OSLog.rendering, type: .error)
+            }
+        }
+
         let style = css_doc + css_highlight + css_doc_extended
         let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
         let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"
@@ -735,7 +773,7 @@ MathJax = {
 </head>
 <body\(body_style)>
 \(wrapper_open)
-\(body)
+\(processedBody)
 \(wrapper_close)
 \(s_footer)
 </body>
@@ -783,6 +821,30 @@ MathJax = {
         return "```yaml\n"+text+"```\n"
     }
     
+    /// Transform mermaid code blocks from `<pre...><code class="language-mermaid">...</code></pre>` to `<div class="mermaid">...</div>`
+    private func transformMermaidBlocks(_ html: String) -> String {
+        // Match <pre...><code...class="...language-mermaid..."...>...</code></pre>
+        // We need to handle potential attributes and whitespace variations
+        let pattern = #"<pre[^>]*>\s*<code[^>]*class="[^"]*language-mermaid[^"]*"[^>]*>([\s\S]*?)</code>\s*</pre>"#
+
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            os_log("Failed to create mermaid regex pattern", log: OSLog.rendering, type: .error)
+            return html
+        }
+
+        let range = NSRange(html.startIndex..., in: html)
+
+        // Replace with <div class="mermaid">$1</div>, but we need to decode HTML entities in the content
+        let result = regex.stringByReplacingMatches(
+            in: html,
+            options: [],
+            range: range,
+            withTemplate: #"<div class="mermaid">$1</div>"#
+        )
+
+        return result
+    }
+
     internal func renderYaml(_ yaml: [(key: AnyHashable, value: Any)]) -> String {
         guard yaml.count > 0 else {
             return ""
