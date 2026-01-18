@@ -2,6 +2,38 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title>
+
+        
+        <item>
+            <title>1.0.24</title>
+            <pubDate>dom, 18 gen 2026 20:05:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.0.24/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.0.24" sparkle:version="50" 
+                       sparkle:edSignature="OmmRS/V7vRaVHLXl0z7gvg74sGO58pEQVtGgsF+zOeXJ52p9DFG5a8augRl6f5c5nAtwaltHftNLctnBdNJBDA==" length="25009092"
+                       />
+            <description><![CDATA[
+                <h2>Release 1.0.24 (50)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+
+                <p>New features:</p>
+                <ul>
+                    <li>Support to Mermaid diagram (thanks to <a href="https://github.com/SethCalkins">@SethCalkins</a> and <a href="https://github.com/Alfahad">@Alfahad</a>)</li>
+                </ul>
+
+                <p>Bug fix:</p>
+                <ul>
+                    <li>sub/sup extension.</li>
+                    <li>support for encoded url for inline images.</li>
+                    <li>removed some legacy code (thanks to <a href="https://github.com/deepc0py">@deepc0py</a>).</li>
+                </ul>
+                
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
         
         <item>
             <title>1.0.23</title>
