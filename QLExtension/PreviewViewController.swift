@@ -13,12 +13,11 @@ import external_launcher
 
 class MyWKWebView: WKWebView {
     override var canBecomeKeyView: Bool {
-        return false
+        return true
     }
 
     override func becomeFirstResponder() -> Bool {
-        // Quick Look window do not allow first responder child.
-        return false
+        return true
     }
 }
 
