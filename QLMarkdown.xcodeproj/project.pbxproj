@@ -273,6 +273,12 @@
 		83A9C2922F1D59F9005B668D /* examples in Resources */ = {isa = PBXBuildFile; fileRef = 834CAB89259167B800673002 /* examples */; };
 		83AABB00000000000000A002 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000A001 /* mermaid.min.js */; };
 		83AABB00000000000000A003 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000A001 /* mermaid.min.js */; };
+		83AABB00000000000000B001 /* react.production.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000B010 /* react.production.min.js */; };
+		83AABB00000000000000B002 /* react.production.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000B010 /* react.production.min.js */; };
+		83AABB00000000000000B003 /* react-dom.production.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000B020 /* react-dom.production.min.js */; };
+		83AABB00000000000000B004 /* react-dom.production.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000B020 /* react-dom.production.min.js */; };
+		83AABB00000000000000B005 /* babel.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000B030 /* babel.min.js */; };
+		83AABB00000000000000B006 /* babel.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 83AABB00000000000000B030 /* babel.min.js */; };
 		83C8C18C2D272CA200FBB33F /* QLMarkdownXPCHelper.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83C8C1802D272CA200FBB33F /* QLMarkdownXPCHelper.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83C8C1972D2733CA00FBB33F /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8376EADC27E8BD3D00AB44B8 /* Log.swift */; };
 		83CF71C92C5FCD780066A195 /* highlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71C82C5FCD780066A195 /* highlight.c */; };
@@ -737,6 +743,9 @@
 		838D19772DCDD93400963323 /* Settings+XPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+XPC.swift"; sourceTree = "<group>"; };
 		838D197B2DCDD96100963323 /* Settings+NoXPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+NoXPC.swift"; sourceTree = "<group>"; };
 		83AABB00000000000000A001 /* mermaid.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = mermaid.min.js; sourceTree = "<group>"; };
+		83AABB00000000000000B010 /* react.production.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = react.production.min.js; sourceTree = "<group>"; };
+		83AABB00000000000000B020 /* react-dom.production.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = react-dom.production.min.js; sourceTree = "<group>"; };
+		83AABB00000000000000B030 /* babel.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = babel.min.js; sourceTree = "<group>"; };
 		83B8DF082DD5EBE60054E345 /* checked.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checked.h; sourceTree = "<group>"; };
 		83B8DF092DD5EBE60054E345 /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
 		83B8DF0A2DD5EBE60054E345 /* cpp11.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpp11.h; sourceTree = "<group>"; };
@@ -1206,6 +1215,9 @@
 			children = (
 				83598F22258263C0004664D3 /* default.css */,
 				83AABB00000000000000A001 /* mermaid.min.js */,
+				83AABB00000000000000B010 /* react.production.min.js */,
+				83AABB00000000000000B020 /* react-dom.production.min.js */,
+				83AABB00000000000000B030 /* babel.min.js */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 				83CF71D62C60AB300066A195 /* stats.html */,
 			);
@@ -1630,6 +1642,9 @@
 			files = (
 				839E5B342D1C9DA600AD63BD /* default.css in Resources */,
 				83AABB00000000000000A003 /* mermaid.min.js in Resources */,
+				83AABB00000000000000B002 /* react.production.min.js in Resources */,
+				83AABB00000000000000B004 /* react-dom.production.min.js in Resources */,
+				83AABB00000000000000B006 /* babel.min.js in Resources */,
 				839E5B352D1C9DA800AD63BD /* highlight in Resources */,
 				839E5B362D1C9DAC00AD63BD /* magic.mgc in Resources */,
 			);
@@ -1649,6 +1664,9 @@
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				830277F52C60B3E20066EBCC /* default.css in Resources */,
 				83AABB00000000000000A002 /* mermaid.min.js in Resources */,
+				83AABB00000000000000B001 /* react.production.min.js in Resources */,
+				83AABB00000000000000B003 /* react-dom.production.min.js in Resources */,
+				83AABB00000000000000B005 /* babel.min.js in Resources */,
 				836B7475259E2B4100A6A5F7 /* magic.mgc in Resources */,
 				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
 				834A4F0229E8AD8C00692964 /* ext_scanners.re in Resources */,

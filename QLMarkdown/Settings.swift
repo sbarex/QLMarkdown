@@ -47,6 +47,7 @@ class Settings: Codable {
         case mathExtension
         case mermaidExtension
         case mentionExtension
+        case reactExtension
         case subExtension
         case supExtension
         case strikethroughExtension
@@ -106,6 +107,7 @@ class Settings: Codable {
     @objc var inlineImageExtension: Bool = true
     @objc var mathExtension: Bool = true
     @objc var mermaidExtension: Bool = true
+    @objc var reactExtension: Bool = true
     @objc var mentionExtension: Bool = false
     
     @objc var strikethroughExtension: Bool = true
@@ -227,6 +229,7 @@ class Settings: Codable {
         
         self.mathExtension = try container.decode(Bool.self, forKey: .mathExtension)
         self.mermaidExtension = (try? container.decode(Bool.self, forKey: .mermaidExtension)) ?? true
+        self.reactExtension = (try? container.decode(Bool.self, forKey: .reactExtension)) ?? true
         self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
         self.strikethroughExtension = try container.decode(Bool.self, forKey:.strikethroughExtension)
         self.strikethroughDoubleTildeOption = try container.decode(Bool.self, forKey:.strikethroughDoubleTildeOption)
@@ -289,6 +292,7 @@ class Settings: Codable {
         try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
         try container.encode(self.mathExtension, forKey: .mathExtension)
         try container.encode(self.mermaidExtension, forKey: .mermaidExtension)
+        try container.encode(self.reactExtension, forKey: .reactExtension)
         try container.encode(self.mentionExtension, forKey: .mentionExtension)
         try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
         try container.encode(self.strikethroughDoubleTildeOption, forKey: .strikethroughDoubleTildeOption)
@@ -365,6 +369,7 @@ class Settings: Codable {
         
         self.mathExtension = s.mathExtension
         self.mermaidExtension = s.mermaidExtension
+        self.reactExtension = s.reactExtension
         self.mentionExtension = s.mentionExtension
         
         self.strikethroughExtension = s.strikethroughExtension
@@ -445,6 +450,9 @@ class Settings: Codable {
         }
         if let ext = defaultsDomain["mermaid"] as? Bool {
             mermaidExtension = ext
+        }
+        if let ext = defaultsDomain["react"] as? Bool {
+            reactExtension = ext
         }
         if let ext = defaultsDomain["mention"] as? Bool {
             mentionExtension = ext

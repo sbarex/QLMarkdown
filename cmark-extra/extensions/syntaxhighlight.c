@@ -429,8 +429,9 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
         // type = node->type;
         
         if (ev == CMARK_EVENT_ENTER && node->type == CMARK_NODE_CODE_BLOCK) {
-            if (strcmp((const char *)node->as.code.info.data, "math") == 0) {
-                // Do not process, require the Math extension.
+            if (strcmp((const char *)node->as.code.info.data, "math") == 0 ||
+                strcmp((const char *)node->as.code.info.data, "react") == 0) {
+                // Do not process math (requires Math extension) or react (requires React extension).
                 continue;
             } else {
                 cmark_node_set_syntax_extension(node, ext);

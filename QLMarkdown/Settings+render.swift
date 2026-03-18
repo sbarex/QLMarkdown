@@ -756,6 +756,55 @@ mermaid.initialize({
             }
         }
 
+        // React component rendering support
+        if !self.renderAsCode, self.reactExtension, processedBody.contains("language-react") {
+            processedBody = transformReactBlocks(processedBody)
+
+            var reactScripts = ""
+            if let reactPath = self.resourceBundle.path(forResource: "react.production.min", ofType: "js"),
+               let reactJS = try? String(contentsOfFile: reactPath, encoding: .utf8),
+               let reactDOMPath = self.resourceBundle.path(forResource: "react-dom.production.min", ofType: "js"),
+               let reactDOMJS = try? String(contentsOfFile: reactDOMPath, encoding: .utf8),
+               let babelPath = self.resourceBundle.path(forResource: "babel.min", ofType: "js"),
+               let babelJS = try? String(contentsOfFile: babelPath, encoding: .utf8) {
+                reactScripts = """
+<script type="text/javascript">\(reactJS)</script>
+<script type="text/javascript">\(reactDOMJS)</script>
+<script type="text/javascript">\(babelJS)</script>
+<script type="text/javascript">
+(function() {
+    document.querySelectorAll('.react-component').forEach(function(el) {
+        var code = el.textContent;
+        // Strip export statements for Babel compatibility
+        code = code.replace(/export\\s+default\\s+/g, 'module.exports = ');
+        code = code.replace(/export\\s+/g, '');
+        var container = document.createElement('div');
+        container.className = 'react-render';
+        el.parentNode.replaceChild(container, el);
+        try {
+            var transformed = Babel.transform(code, { presets: ['react'] }).code;
+            var mod = { exports: {} };
+            var fn = new Function('React', 'ReactDOM', 'module', 'exports', transformed);
+            fn(React, ReactDOM, mod, mod.exports);
+            var Component = mod.exports.default || mod.exports;
+            if (typeof Component === 'function') {
+                ReactDOM.render(React.createElement(Component), container);
+            } else {
+                container.innerHTML = '<pre style="color:#94a3b8;font-size:12px;">No default export found</pre>';
+            }
+        } catch(e) {
+            container.innerHTML = '<pre style="color:#ef4444;font-size:12px;padding:8px;background:#fef2f2;border-radius:6px;">' + e.message + '</pre>';
+        }
+    });
+})();
+</script>
+"""
+            } else {
+                os_log("Could not load React/Babel JS from bundle", log: OSLog.rendering, type: .error)
+            }
+            s_footer += reactScripts
+        }
+
         let style = css_doc + css_highlight + css_doc_extended
         let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
         let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"
@@ -840,6 +889,27 @@ mermaid.initialize({
             options: [],
             range: range,
             withTemplate: #"<div class="mermaid">$1</div>"#
+        )
+
+        return result
+    }
+
+    /// Transform react code blocks from `<pre...><code class="language-react">...</code></pre>` to `<div class="react-component">...</div>`
+    private func transformReactBlocks(_ html: String) -> String {
+        let pattern = #"<pre[^>]*>\s*<code[^>]*class="[^"]*language-react[^"]*"[^>]*>([\s\S]*?)</code>\s*</pre>"#
+
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            os_log("Failed to create react regex pattern", log: OSLog.rendering, type: .error)
+            return html
+        }
+
+        let range = NSRange(html.startIndex..., in: html)
+
+        let result = regex.stringByReplacingMatches(
+            in: html,
+            options: [],
+            range: range,
+            withTemplate: #"<div class="react-component" style="display:none">$1</div>"#
         )
 
         return result
