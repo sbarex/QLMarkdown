@@ -2,7 +2,41 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title>
+        
+        <item>
+            <title>1.5.0</title>
+            <pubDate>mer, 8 apr 2026 18:40:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.5.0/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.5.0" sparkle:version="51" 
+                       sparkle:edSignature="lJ2DvRLXDwJHmR17erRvhBXmleq1Zrcj8/cBskqrT3m3pLseWknf5nciBtnJU4/ixZRP3KVDX2iV1d1/LMEPBw==" length="21566460"
+                       />
+            <description><![CDATA[
+                <h2>Release 1.5.0 (51)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
 
+                <p>New features:</p>
+                <ul>
+                    <li><b>Application is now codesigned and notarized!</b></li>
+                    <li>Option to set the base font size.</li>
+                    <li>All dependency libraries have been updated.</li>
+                    <li>The application size has been reduced.</li>
+                    <li><code>Marmeid.js</code> and <code>MathJax.js</code> libraries can be linked to the web or embedded in the html output. You can also update from the web to the last release of the libraries.</li>
+                </ul>
+                <p><b>Breaking changed:</b></p>
+                <ul>
+                    <li>This release will reset all previous settings.</li>
+                    <li>The command line tool do not more use the same settings of the main application or the Quick Look extension.</li>
+                    <li>Command line tool uses some different arguments.</li>
+                    <li>Dropped support for guess the scripting language inside fenced blocks.</li>
+                </ul>
+                
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
         
         <item>
             <title>1.0.24</title>
