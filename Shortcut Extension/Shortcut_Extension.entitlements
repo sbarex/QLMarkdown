@@ -4,13 +4,15 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.org.sbarex.qlmarkdown</string>
+	</array>
 	<key>com.apple.security.assets.movies.read-only</key>
 	<true/>
 	<key>com.apple.security.assets.music.read-only</key>
 	<true/>
 	<key>com.apple.security.assets.pictures.read-only</key>
-	<true/>
-	<key>com.apple.security.cs.disable-library-validation</key>
 	<true/>
 	<key>com.apple.security.files.downloads.read-only</key>
 	<true/>

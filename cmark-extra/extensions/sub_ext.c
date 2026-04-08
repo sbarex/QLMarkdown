@@ -27,7 +27,7 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
       &left_flanking,
       &right_flanking, &punct_before, &punct_after);
 
-  if (!((left_flanking && right_flanking) && delims == 1)) {
+  if (delims != 1) {
     // Restore the original pos, allow to other extensions to process the same character.
     cmark_inline_parser_set_offset(inline_parser, pos);
     return NULL;
@@ -42,7 +42,7 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
   res->start_line = res->end_line = cmark_inline_parser_get_line(inline_parser);
   res->start_column = cmark_inline_parser_get_column(inline_parser) - delims;
 
-  if ((left_flanking || right_flanking) && delims == 1) {
+  if (delims == 1) {
     cmark_inline_parser_push_delimiter(inline_parser, '!', left_flanking, right_flanking, res); // Use a fake delimiter (`!`) to prevent conflict with strikethroungh extension.
   }
 

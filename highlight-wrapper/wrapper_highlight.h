@@ -246,36 +246,6 @@ EXPORT int highlight_get_theme( const char *theme, void *context, ResultThemeCal
  */
 EXPORT HTheme *highlight_get_theme2(const char *theme, int *exit_code, ReleaseTheme *release);
 
-/*!
- * Store the theme inside a file.
- * @param filename Destination file name.
- * @param theme HTheme to store.
- * @return EXIT_SUCCESS on success.
- */
-EXPORT int highlight_save_theme( const char *filename, const HTheme *theme);
-
-/**
- * Try to guess the language with magic library
- * @param buffer Source code to analyze.
- * @param magic_database Location of the magic mgc database definition. Pass NULL to use the system file.
- * @return The Language guessed or NULL. **The user must free the result.**
- */
-EXPORT char *magic_guess_language(const char *buffer, const char *magic_database);
-
-/**
- * Try to guess the language with Enry engine
- * @param buffer Source code to analyze.
- * @return The Language guessed or NULL. **The user must free the result.**
- */
-EXPORT char *enry_guess_language(const char *buffer);
-
-/**
- * Get a mime type of a file.
- * @param filename Path of the file to get the mime.
- * @param magic_database Location of the magic mgc database definition. Pass NULL to use the system file.
- * @return The detected mime or NULL. **The user must free the result.**
- */
-EXPORT char *magic_get_mime_by_file(const char *filename, const char *magic_database);
 
 #ifdef __cplusplus
 }

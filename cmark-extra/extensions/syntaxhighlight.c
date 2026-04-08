@@ -24,7 +24,6 @@ typedef struct {
     int line_numbers;
     int tab_spaces;
     int wrap_limit;
-    guess_type guess_language;
     char *magic_file;
     /*! Number of rendered code. */
     int count;
@@ -47,7 +46,6 @@ static syntax_highlight_settings *init_settings(void ) {
     settings->line_numbers = 0;
     settings->tab_spaces = 0;
     settings->wrap_limit = 0;
-    settings->guess_language = no_guess;
     
     settings->count = 0;
     return settings;
@@ -234,52 +232,6 @@ void cmark_syntax_extension_highlight_set_wrap_limit(cmark_syntax_extension *ext
     settings->wrap_limit = spaces;
 }
 
-//! Get if the undefined languag is guessed.
-guess_type cmark_syntax_extension_highlight_get_guess_language(cmark_syntax_extension *extension) {
-    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
-    if (settings) {
-        return settings->guess_language;
-    } else {
-        return 0;
-    }
-}
-//! Set if the undefined languag is guessed.
-void cmark_syntax_extension_highlight_set_guess_language(cmark_syntax_extension *extension, guess_type state) {
-    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
-    if (!settings) {
-        settings = init_settings();
-        cmark_syntax_extension_set_private(extension, settings, syntax_highlight_settings_release);
-    }
-    settings->guess_language = state;
-}
-
-
-//! Get the path of the magic database.
-const char *cmark_syntax_extension_highlight_get_magic_file(cmark_syntax_extension *extension) {
-    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
-    if (settings) {
-        return settings->magic_file;
-    } else {
-        return NULL;
-    }
-}
-//! Set the path of the magic database.
-void cmark_syntax_extension_highlight_set_magic_file(cmark_syntax_extension *extension, const char *file) {
-    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
-    if (!settings) {
-        settings = init_settings();
-        cmark_syntax_extension_set_private(extension, settings, syntax_highlight_settings_release);
-    }
-    if (settings->magic_file) {
-        free(settings->magic_file);
-    }
-    if (file) {
-        settings->magic_file = strdup(file);
-    } else {
-        settings->magic_file = NULL;
-    }
-}
-
 int cmark_syntax_extension_highlight_get_rendered_count(cmark_syntax_extension *extension) {
     syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
     if (settings) {
@@ -330,23 +282,7 @@ static void html_render(cmark_syntax_extension *extension,
     // cmark_strbuf_puts(renderer->html, "lang: ");
     // cmark_strbuf_put(renderer->html, node->as.code.info.data, node->as.code.info.len);
     
-    char *language = NULL;
-    if (strlen((const char *)node->as.code.info.data) == 0) {
-        guess_type guess = cmark_syntax_extension_highlight_get_guess_language(extension);
-        if (guess == fast_guess) {
-            const char *magic_db = cmark_syntax_extension_highlight_get_magic_file(extension);
-            language = magic_guess_language((const char *)node->as.code.literal.data, magic_db);
-            if (language == NULL) {
-                language = strdup("");
-            }
-        } else if (guess == accurate_guess) {
-            language = enry_guess_language((const char *)node->as.code.literal.data);
-        } else {
-            language = strdup((const char *)node->as.code.info.data);
-        }
-    } else {
-        language = strdup((const char *)node->as.code.info.data);
-    }
+    char *language = strdup((const char *)node->as.code.info.data);
     
     int exit_code = 0;
     char *formatted = highlight_format_string2((const char *)node->as.code.literal.data, (const char *)language, &exit_code, true);

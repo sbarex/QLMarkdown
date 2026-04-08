@@ -9,23 +9,7 @@ import AppIntents
 import OSLog
 import UniformTypeIdentifiers
 
-enum QLMError: Error {
-    case noFile
-    case cannotReadFile
-}
-extension QLMError: LocalizedError {
-    public var errorDescription: String? {
-        switch self {
-        case .noFile:
-            return "No file selected."
-        case .cannotReadFile:
-            return "Cannot read file."
-        }
-    }
-}
-
-
-struct MdToHtml_Extension: AppIntent {
+struct MdToHtml_Extension: AppIntent {    
     static var title: LocalizedStringResource { "Markdown convert" }
     static var description: LocalizedStringResource { "Convert a Markdown file to HTML." }
     static var openAppWhenRun: Bool = false
@@ -39,13 +23,14 @@ struct MdToHtml_Extension: AppIntent {
             \.$allowInlineHtml
             \.$validateUTF8
             \.$showDebugInfo
-            \.$renderAsSource
+            
             \.$autolink
             \.$emojiReplacement
             \.$headsAnchor
             \.$highlight
             \.$inlineLocalImages
             \.$mathExtension
+            \.$mermaidExtension
             \.$subExtension
             \.$strikethrough
             \.$syntaxHighlight
@@ -53,6 +38,8 @@ struct MdToHtml_Extension: AppIntent {
             \.$tagFilter
             \.$taskExtension
             \.$yamlExtension
+            
+            \.$renderAsSource
         }
     }
     
@@ -101,8 +88,11 @@ struct MdToHtml_Extension: AppIntent {
     @Parameter(title: "Embed local images", default: OptionalBoolEnum.predefined)
     var inlineLocalImages: OptionalBoolEnum
     
-    @Parameter(title: "Math extension", default: OptionalBoolEnum.predefined)
-    var mathExtension: OptionalBoolEnum
+    @Parameter(title: "Math extension", default: JsLibratyOptionalEnum.predefined)
+    var mathExtension: JsLibratyOptionalEnum
+    
+    @Parameter(title: "Diagram extension", default: JsLibratyOptionalEnum.predefined)
+    var mermaidExtension: JsLibratyOptionalEnum
     
     @Parameter(title: "Sub/Superscript extension", default: OptionalBoolEnum.predefined)
     var subExtension: OptionalBoolEnum
@@ -133,91 +123,35 @@ struct MdToHtml_Extension: AppIntent {
         let _ = inputFile.data // FIXME: consente l'accesso al file?
         
         // FIXME: L'estensione non ha i privilegi per accedere al bundle dell'applicazione.
-        Settings.appBundleUrl = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Contents/Resources")
+        Settings.appBundleUrl = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+        
         let settings = Settings.shared
         
-        if self.smartQuotes != .predefined {
-            settings.smartQuotesOption = self.smartQuotes == .on
-        }
-        if self.footNotes != .predefined {
-            settings.footnotesOption = self.footNotes == .on
-        }
-        if self.hardBreak != .predefined {
-            settings.hardBreakOption = self.hardBreak == .on
-        }
-        if self.noSoftBreak != .predefined {
-            settings.noSoftBreakOption = self.noSoftBreak == .on
-        }
-        if self.allowInlineHtml != .predefined {
-            settings.unsafeHTMLOption = self.allowInlineHtml == .on
-        }
-        if self.validateUTF8 != .predefined {
-            settings.validateUTFOption = self.validateUTF8 == .on
-        }
-        if self.showDebugInfo != .predefined {
-            settings.debug = self.showDebugInfo == .on
-        }
-        if self.renderAsSource != .predefined {
-            settings.renderAsCode = self.renderAsSource == .on
-        }
+        smartQuotes.updateValue(state: &settings.smartQuotesOption)
+        footNotes.updateValue(state: &settings.footnotesOption)
+        hardBreak.updateValue(state: &settings.hardBreakOption)
+        noSoftBreak.updateValue(state: &settings.noSoftBreakOption)
+        allowInlineHtml.updateValue(state: &settings.unsafeHTMLOption)
+        validateUTF8.updateValue(state: &settings.validateUTFOption)
+        showDebugInfo.updateValue(state: &settings.debug)
+        renderAsSource.updateValue(state: &settings.renderAsCode)
+        autolink.updateValue(state: &settings.autoLinkExtension)
+        emojiReplacement.updateValue(state: &settings.emojiExtension)
+        headsAnchor.updateValue(state: &settings.headsExtension)
+        highlight.updateValue(state: &settings.highlightExtension)
+        inlineLocalImages.updateValue(state: &settings.inlineImageExtension)
+        mathExtension.updateValue(state: &settings.mathExtension)
+        mermaidExtension.updateValue(state: &settings.mermaidExtension)
+        subExtension.updateValue(state: &settings.subExtension)
+        subExtension.updateValue(state: &settings.supExtension)
+        strikethrough.updateValue(state: &settings.strikethroughExtension)
+        syntaxHighlight.updateValue(state: &settings.syntaxHighlightExtension)
+        tableExtension.updateValue(state: &settings.tableExtension)
+        tagFilter.updateValue(state: &settings.tagFilterExtension)
+        taskExtension.updateValue(state: &settings.taskListExtension)
+        yamlExtension.updateValue(state: &settings.yamlExtension)
         
-        
-        if self.autolink != .predefined {
-            settings.autoLinkExtension = self.autolink == .on
-        }
-        
-        if self.emojiReplacement != .predefined {
-            settings.emojiExtension = self.emojiReplacement != .off
-            settings.emojiImageOption = self.emojiReplacement == .useImage
-        }
-        
-        if self.headsAnchor != .predefined {
-            settings.headsExtension = self.headsAnchor == .on
-        }
-        if self.highlight != .predefined {
-            settings.highlightExtension = self.highlight == .on
-        }
-        if self.inlineLocalImages != .predefined {
-            settings.inlineImageExtension = self.inlineLocalImages == .on
-        }
-        if self.mathExtension != .predefined {
-            settings.mathExtension = self.mathExtension == .on
-        }
-        if self.subExtension != .predefined {
-            settings.supExtension = self.subExtension == .on
-            settings.supExtension = self.subExtension == .on
-        }
-        if self.strikethrough != .predefined {
-            settings.strikethroughExtension = self.strikethrough != .off
-            settings.strikethroughDoubleTildeOption = self.strikethrough == .double
-        }
-        if self.syntaxHighlight != .predefined {
-            settings.syntaxHighlightExtension = self.syntaxHighlight == .on
-        }
-        if self.tableExtension != .predefined {
-            settings.tableExtension = self.tableExtension == .on
-        }
-        if self.tagFilter != .predefined {
-            settings.tagFilterExtension = self.tagFilter == .on
-        }
-        if self.taskExtension != .predefined {
-            settings.taskListExtension = self.taskExtension == .on
-        }
-        if self.yamlExtension != .predefined {
-            settings.yamlExtension = self.yamlExtension != .off
-            settings.yamlExtensionAll = self.yamlExtension == .all
-        }
-        
-        let markdown_url: URL
-        if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {
-            if FileManager.default.fileExists(atPath: url.appendingPathComponent("text.md").path) {
-                markdown_url = url.appendingPathComponent("text.md")
-            } else {
-                markdown_url = url.appendingPathComponent("text.markdown")
-            }
-        } else {
-            markdown_url = url
-        }
+        let markdown_url = Settings.getMarkdownFile(from: url)
         
         guard FileManager.default.isReadableFile(atPath: markdown_url.path) else {
             os_log("Unable to read the file %{private}@", log: OSLog.shortcutExtension, type: .error, markdown_url.path)
@@ -229,7 +163,7 @@ struct MdToHtml_Extension: AppIntent {
         let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
         let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
          
-        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, basedir: markdown_url.deletingLastPathComponent(), forAppearance: appearance)
+        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
          
         let dst = markdown_url.deletingPathExtension().lastPathComponent + ".html"
         return .result(value: IntentFile(data: Data(html.utf8), filename: dst, type: UTType.html))

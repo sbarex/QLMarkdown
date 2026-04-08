@@ -12,12 +12,6 @@
 
 cmark_syntax_extension *create_syntaxhighlight_extension(void);
 
-typedef enum {
-    no_guess,
-    fast_guess,
-    accurate_guess
-} guess_type;
-
 //! Initialize the search dir for highlight support files.
 void cmark_syntax_highlight_init(const char *search_dir);
 
@@ -53,16 +47,6 @@ void cmark_syntax_extension_highlight_set_tab_spaces(cmark_syntax_extension *ext
 int cmark_syntax_extension_highlight_get_wrap_limit(cmark_syntax_extension *extension);
 //! Set the number of character before line wrap.
 void cmark_syntax_extension_highlight_set_wrap_limit(cmark_syntax_extension *extension, int spaces);
-
-//! Get if the undefined languag is guessed.
-guess_type cmark_syntax_extension_highlight_get_guess_language(cmark_syntax_extension *extension);
-//! Set if the undefined languag is guessed.
-void cmark_syntax_extension_highlight_set_guess_language(cmark_syntax_extension *extension, guess_type state);
-
-//! Get the path of the magic database.
-const char *cmark_syntax_extension_highlight_get_magic_file(cmark_syntax_extension *extension);
-//! Set the path of the magic database.
-void cmark_syntax_extension_highlight_set_magic_file(cmark_syntax_extension *extension, const char *file);
 
 
 const char *cmark_syntax_extension_highlight_get_background_color(cmark_syntax_extension *extension);

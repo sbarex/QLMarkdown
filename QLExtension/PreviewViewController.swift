@@ -43,7 +43,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
 
         super.loadView()
-        // Do any additional setup after loading the view.
 
         Settings.shared.startMonitorChange()
 
@@ -72,7 +71,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         // Create a configuration for the preferences
         let configuration = WKWebViewConfiguration()
         // Enable JavaScript for unsafe HTML with inline images, or when Mermaid/Math extensions are active
-        configuration.preferences.javaScriptEnabled = (settings.unsafeHTMLOption && settings.inlineImageExtension) || settings.mermaidExtension || settings.mathExtension
+        configuration.preferences.javaScriptEnabled = (settings.unsafeHTMLOption && settings.inlineImageExtension) || !settings.mermaidExtension.isDisabled || !settings.mathExtension.isDisabled
         configuration.allowsAirPlayForMediaPlayback = false
 
         self.webView = MyWKWebView(frame: previewRect, configuration: configuration)
@@ -106,8 +105,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
 
         // Add the supported content types to the QLSupportedContentTypes array in the Info.plist of the extension.
 
-        // Perform any setup necessary in order to prepare the view.
-
         // Call the completion handler so Quick Look knows that the preview is fully loaded.
         // Quick Look will display a loading spinner while the completion handler is not called.
 
@@ -135,7 +132,6 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             return html.data(using: .utf8)!
         }
 
-        XPCWrapper.invalidateSharedConnection()
         return reply
     }
 
@@ -148,34 +144,37 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         )
 
         let settings = Settings.shared
-        settings.renderStats += 1
+        Settings.renderStats += 1
 
-        if settings.renderStats > 0 && settings.renderStats % 100 == 0, let msg = self.getBundleContents(forResource: "stats", ofType: "html") {
+        let markdown_url = Settings.getMarkdownFile(from: url)
+        let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
+        var text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+        
+        if Settings.renderStats > 0 && Settings.renderStats % 100 == 0 {
             let icon: String
             if let url = Bundle.main.url(forResource: "icon", withExtension: "png"), let data = try? Data(contentsOf: url) {
                 icon = data.base64EncodedString()
             } else {
                 icon = ""
             }
+            
+            let msg =
+                """
+                        <div id="container" style="font-size: 1.5rem">
+                            <h1><img src="data:image/png;base64,\(icon)" width="75" height="75" alt="logo" id="logo" /> QLMarkdown</h1>
+                            <p>Thanks to this application you have viewed over <b>\(Settings.renderStats) files</b>.</p>
+                            <p>If you find it useful and you have the possibility, consider <a href="https://buymeacoffee.com/sbarex"><b>buying me a coffee!</b></a></p>
+                            <br />
+                            <hr size="1" />
+                            <p class="small">Developed by SBAREX with ❤️ | <a href="https://github.com/sbarex/QLMarkdown">https://github.com/sbarex/QLMarkdown</a></p>
+                            </p>
+                        </div>
+                """
 
-            return msg.replacingOccurrences(of: "%n_files%", with: "\(settings.renderStats)").replacingOccurrences(of: "%icon_path%", with: "data:image/png;base64,\(icon)")
+            text += msg
         }
 
-        let markdown_url: URL
-        if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {
-            if FileManager.default.fileExists(atPath: url.appendingPathComponent("text.md").path) {
-                markdown_url = url.appendingPathComponent("text.md")
-            } else {
-                markdown_url = url.appendingPathComponent("text.markdown")
-            }
-        } else {
-            markdown_url = url
-        }
-
-        let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
-        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
-
-        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, footer: "", basedir: url.deletingLastPathComponent(), forAppearance: appearance)
+        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
 
         return html
     }

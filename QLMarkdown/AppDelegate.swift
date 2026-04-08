@@ -63,6 +63,21 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             alert.runModal()
         }
         
+        Settings.shared.installDependencies()
+        
+        if let path = Settings.mermaidCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+            // Try to download Mermaid library from web.
+            Settings.shared.updateMemaidCache { (success) in
+                print("Mermaid reflesh: \(success ? "success" : "failure")")
+            }
+        }
+        if let path = Settings.mathJaxCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+            // Try to download MathJax library from web.
+            Settings.shared.updateMathJaxUCache { (success) in
+                print("MathJax reflesh: \(success ? "success" : "failure")")
+            }
+        }
+        
         self.markdownFiles.append(Bundle.main.url(forResource: "test1", withExtension: "md")!)
         self.markdownFiles.append(Bundle.main.url(forResource: "test2", withExtension: "md")!)
         
@@ -94,7 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        XPCWrapper.invalidateSharedConnection()
+        
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

@@ -93,6 +93,7 @@ ${SOURCE_ROOT}/pcre2/configure.ac :
 	@echo ""
 	@echo "${bold}Submodule update…${normal}"
 	cd "${SOURCE_ROOT}/.." && git submodule update --init
+	cd "${SOURCE_ROOT}" && git submodule update --init --recursive
 	
 # Autogen
 ${SOURCE_ROOT}/pcre2/configure :

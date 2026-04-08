@@ -6,7 +6,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "tutti i files"
+            "value" : "tutti i file"
           }
         }
       }
@@ -16,7 +16,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Consenti codice HTML in linea (non sicuro)"
+            "value" : "Codice HTML in linea (non sicuro)"
           }
         }
       }
@@ -26,7 +26,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Genera link automaticamente"
+            "value" : "Link automaticatici"
           }
         }
       }
@@ -51,6 +51,17 @@
         }
       }
     },
+    "Diagram extension" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagrammi"
+          }
+        }
+      }
+    },
     "Embed local images" : {
       "localizations" : {
         "it" : {
@@ -66,7 +77,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opzione per le emoji"
+            "value" : "Emoji"
           }
         }
       }
@@ -76,7 +87,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sostituisci emoji"
+            "value" : "Emoji"
           }
         }
       }
@@ -86,7 +97,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Note di fondo pagina"
+            "value" : "Note di pié pagina"
           }
         }
       }
@@ -96,7 +107,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Formatta il ${inputFile} in codice HTML (${generateFullCode})."
+            "value" : "Formatta ${inputFile} in codice HTML (${generateFullCode})."
           }
         }
       }
@@ -135,7 +146,14 @@
       }
     },
     "Highlight" : {
-
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatta contenuto evidenziato"
+          }
+        }
+      }
     },
     "HTML code generation" : {
       "localizations" : {
@@ -159,6 +177,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "File Markdown"
+          }
+        }
+      }
+    },
+    "linked from web" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "libreria js dal web"
+          }
+        }
+      }
+    },
+    "locally embedded" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "libreria js incapsulata"
           }
         }
       }
@@ -189,7 +227,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estensione Math"
+            "value" : "Formule matematiche"
           }
         }
       }
@@ -239,10 +277,16 @@
     },
     "page" : {
       "localizations" : {
-        "it" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "pagina"
+            "value" : "complete code"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "codice completo"
           }
         }
       }
@@ -282,7 +326,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Formatta il codice sorgente"
+            "value" : "Formatta come codice sorgente"
           }
         }
       }
@@ -312,7 +356,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostra informazioni di debug"
+            "value" : "Informazioni di debug"
           }
         }
       }
@@ -322,7 +366,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Usa virgolette tipografiche"
+            "value" : "Virgolette tipografiche"
           }
         }
       }
@@ -342,7 +386,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estensione testo barrato"
+            "value" : "Testo barrato"
           }
         }
       }
@@ -352,7 +396,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opzione testo barrato"
+            "value" : "Testo barrato"
           }
         }
       }
@@ -362,7 +406,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estensione apice/pedice"
+            "value" : "Apice/pedice"
           }
         }
       }
@@ -372,7 +416,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evidenzia sintassi dei blocchi di codice"
+            "value" : "Sintassi nei blocchi di codice"
           }
         }
       }
@@ -382,7 +426,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Estensione tabella"
+            "value" : "Tabelle"
           }
         }
       }

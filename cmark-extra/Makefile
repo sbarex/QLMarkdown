@@ -132,6 +132,9 @@ endif
 
 all: check_arch build_dir cmark
 
+install:
+	@echo "installed"
+
 clean:
 	@rm ${BUILD_DIR}/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib 2> /dev/null
 	@rm ${BUILD_DIR}/libcmark-gfm-x86_64.${SPECVERSION}.0.gfm.13.dylib 2> /dev/null

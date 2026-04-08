@@ -280,6 +280,102 @@ continue_loop:
     return encoded;
 }
 
+char *get_base64_image2(const char *url, const char *mime, DataCallback *remote_callback, void *remote_context) {
+    char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
+    const char *image_path;
+    char *encoded = NULL;
+    
+    char *decoded = curl_easy_unescape(NULL, url, 0, NULL);
+    parse_url(decoded, &protocol, &host, &path, &query);
+    
+    if (strcmp(protocol, "file") == 0) {
+        // The url path is the local file path.
+        image_path = path;
+    } else if (strlen(host) == 0) {
+        // No host, the url is a local file path.
+        image_path = (const char *)decoded;
+    } else {
+        if (remote_callback != NULL) {
+            char *buffer = remote_callback(url, remote_context);
+            if (buffer == NULL) {
+                goto continue_loop;
+            }
+            char temp[strlen(path)+1], *fname, *ext;
+            strcpy(temp, path); //todo rewrite own basename to take const char*
+            fname = basename(temp);
+            ext = strchr(fname, '.');
+            if (ext == NULL) {
+                ext = fname;
+            } else {
+                ext++; // skip the dot
+            }
+            lowercase(ext);
+            
+            mime  = get_mime_from_buffer(ext, buffer, 2);
+            
+            char *data = b64_encode((const unsigned char *)buffer, strlen(buffer));
+            size_t encoded_length = strlen(data);
+            
+            encoded = (char *)calloc(strlen(mime) + strlen("data:;base64,") + encoded_length + 1, sizeof(char));
+            sprintf(encoded, "data:%s;base64,%s", mime, data);
+            
+            free(data);
+            free(buffer);
+            
+            goto continue_loop;
+        } else {
+            // Not a local file.
+            goto continue_loop;
+        }
+    }
+    
+    if (access(image_path, F_OK | R_OK) == 0) {
+        if (!mime || !startsWith("image/", mime)) {
+            os_log_error(getLogForImageExt(), "%{private}s (%{public}s) is not an image!", image_path, mime);
+            fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
+            goto continue_loop;
+        }
+        
+        char * buffer = 0;
+        long length = 0;
+        FILE * f = fopen((const char *)image_path, "rb");
+        if (f) {
+            fseek (f, 0, SEEK_END);
+            length = ftell(f);
+            fseek (f, 0, SEEK_SET);
+            buffer = malloc(length);
+            if (buffer) {
+                fread(buffer, 1, length, f);
+            }
+            fclose(f);
+            
+            char *data = b64_encode((const unsigned char *)buffer, length);
+            size_t encoded_length = strlen(data);
+            
+            encoded = (char *)calloc(strlen(mime) + strlen("data:;base64,") + encoded_length + 1, sizeof(char));
+            sprintf(encoded, "data:%s;base64,%s", mime, data);
+            
+            free(data);
+            free(buffer);
+        } else {
+            os_log_error(getLogForImageExt(), "Error to get magic for file %{private}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+            fprintf(stderr, "Error to get magic for file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
+        }
+    } else {
+        os_log_error(getLogForImageExt(), "Unable to open file %{private}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+        fprintf(stderr, "Unable to open file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
+    }
+    
+continue_loop:
+    free(protocol);
+    free(path);
+    free(host);
+    free(query);
+    curl_free(decoded);
+    
+    return encoded;
+}
+
 static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser, cmark_node *root) {
     cmark_iter *iter;
     cmark_event_type ev;
@@ -320,11 +416,18 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
             DataCallback *data_callback = cmark_syntax_extension_inlineimage_get_remote_data_callback(ext);
             void *data_context = cmark_syntax_extension_inlineimage_get_remote_data_context(ext);
             
-            encoded = get_base64_image(url, mime_callback, mime_context, data_callback, data_context);
+            if (mime_callback) {
+                encoded = get_base64_image(url, mime_callback, mime_context, data_callback, data_context);
+            } else {
+                char *mime = mime_from_image_name(url);
+                encoded = get_base64_image2(url, mime, data_callback, data_context);
+                free(mime);
+            }
             
             if (encoded != NULL) {
                 cmark_mem *mem = cmark_get_default_mem_allocator();
                 // Replace the original url with the encoded data.
+                cmark_chunk_set_cstr(mem, &node->as.link.title, strdup(url));
                 cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
                 free(encoded);
             }
@@ -437,6 +540,7 @@ ProcessFragment *cmark_syntax_extension_inlineimage_get_unsafe_html_processor_ca
         return NULL;
     }
 }
+
 void *cmark_syntax_extension_inlineimage_get_unsafe_html_context(cmark_syntax_extension *extension)
 {
     inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
@@ -446,6 +550,7 @@ void *cmark_syntax_extension_inlineimage_get_unsafe_html_context(cmark_syntax_ex
         return NULL;
     }
 }
+
 void cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(cmark_syntax_extension *extension, ProcessFragment *callback, void *context)
 {
     inlineimage_settings *settings = (inlineimage_settings *)cmark_syntax_extension_get_private(extension);
@@ -456,6 +561,7 @@ void cmark_syntax_extension_inlineimage_set_unsafe_html_processor_callback(cmark
     settings->html_callback = callback;
     settings->html_context = context;
 }
+
 cmark_syntax_extension *create_inlineimage_extension(void)
 {
     cmark_syntax_extension *ext = cmark_syntax_extension_new("inlineimage");
@@ -466,4 +572,39 @@ cmark_syntax_extension *create_inlineimage_extension(void)
     cmark_syntax_extension_set_postprocess_func(ext, postprocess);
     
     return ext;
+}
+
+
+char *mime_from_image_name(const char *image_path) {
+    if (!image_path) return NULL;
+    
+    // Trova l'ultimo '.' nella stringa
+    const char *dot = strrchr(image_path, '.');
+    
+    // Nessun punto o punto all'inizio (es. ".gitignore")
+    if (!dot || dot == image_path) {
+        return NULL;
+    }
+
+    // Se il punto è l'ultimo carattere ("file.")
+    if (*(dot + 1) == '\0') {
+        return NULL;
+    }
+    
+    const char *ext = dot + 1;
+    
+    if (strcmp(ext, "jpg") == 0) {
+        return strdup("image/jpeg");
+    } else if (strcmp(ext, "tif") == 0) {
+        return strdup("image/tiff");
+    } else if (strcmp(ext, "svg") == 0) {
+        return strdup("image/svg+xml");
+    }
+
+    size_t len = strlen(ext) + 7; // "image/" + ext + '\0'
+    char *mime = malloc(len);
+    if (!mime) return NULL;
+
+    snprintf(mime, len, "image/%s", ext);
+    return mime;
 }

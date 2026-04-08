@@ -42,14 +42,14 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
-    @objc dynamic var yamlExtension: Bool = Settings.factorySettings.yamlExtension {
+    @objc dynamic var yamlExtension: Bool = Settings.factorySettings.yamlExtension != .disabled {
         didSet {
             guard oldValue != yamlExtension else { return }
             updateYamlPopup()
             isDirty = true
         }
     }
-    @objc dynamic var yamlExtensionAll: Bool = Settings.factorySettings.yamlExtensionAll {
+    @objc dynamic var yamlExtensionAll: Bool = Settings.factorySettings.yamlExtension == .allFiles {
         didSet {
             guard oldValue != yamlExtensionAll else { return }
             updateYamlPopup()
@@ -57,14 +57,14 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var strikethroughExtension: Bool = Settings.factorySettings.strikethroughExtension {
+    @objc dynamic var strikethroughExtension: Bool = Settings.factorySettings.strikethroughExtension != .disabled {
         didSet {
             guard oldValue != strikethroughExtension else { return }
             isDirty = true
             updateStrikethroughPopup()
         }
     }
-    dynamic var strikethroughDoubleTildeOption: Bool = Settings.factorySettings.strikethroughDoubleTildeOption {
+    dynamic var strikethroughDoubleTildeOption: Bool = Settings.factorySettings.strikethroughExtension == .double {
         didSet {
             guard oldValue != strikethroughDoubleTildeOption else { return }
             isDirty = true
@@ -114,23 +114,34 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var guessEngine: Int = Settings.factorySettings.guessEngine.rawValue {
+    @objc dynamic var mathExtension: Bool = !Settings.factorySettings.mathExtension.isDisabled {
         didSet {
-            guard oldValue != guessEngine else { return }
+            guard oldValue != mathExtension else { return }
+            updateMathPopup()
             isDirty = true
         }
     }
     
-    @objc dynamic var mathExtension: Bool = Settings.factorySettings.mathExtension {
+    @objc dynamic var mathExtensionEmbed: Bool = false {
         didSet {
-            guard oldValue != mathExtension else { return }
+            guard oldValue != mathExtensionEmbed else { return }
+            updateMathPopup()
             isDirty = true
         }
     }
 
-    @objc dynamic var mermaidExtension: Bool = Settings.factorySettings.mermaidExtension {
+    @objc dynamic var mermaidExtension: Bool = !Settings.factorySettings.mermaidExtension.isDisabled {
         didSet {
             guard oldValue != mermaidExtension else { return }
+            updateMermaidPopup()
+            isDirty = true
+        }
+    }
+    
+    @objc dynamic var mermaidExtensionEmbed: Bool = false {
+        didSet {
+            guard oldValue != mermaidExtensionEmbed else { return }
+            updateMermaidPopup()
             isDirty = true
         }
     }
@@ -149,14 +160,14 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension {
+    @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension != .disabled {
         didSet {
             guard oldValue != emojiExtension else { return }
             updateEmojiPopup()
             isDirty = true
         }
     }
-    @objc dynamic var emojiImageOption: Bool = Settings.factorySettings.emojiImageOption {
+    @objc dynamic var emojiImageOption: Bool = Settings.factorySettings.emojiExtension == .images {
         didSet {
             guard oldValue != emojiImageOption else { return }
             updateEmojiPopup()
@@ -168,6 +179,9 @@ class ViewController: NSViewController {
         didSet {
             guard oldValue != inlineImageExtension else { return }
             isDirty = true
+            if inlineImageExtension {
+                self.unsafeHTMLOption = true
+            }
         }
     }
     
@@ -242,6 +256,21 @@ class ViewController: NSViewController {
         }
     }
 
+    
+    @objc dynamic var useBaseFontSize: Bool = Settings.factorySettings.baseFontSize > 0 {
+        didSet {
+            guard oldValue != useBaseFontSize else { return }
+            isDirty = true
+        }
+    }
+    
+    @objc dynamic var baseFontSize: CGFloat = Settings.factorySettings.baseFontSize {
+        didSet {
+            guard oldValue != baseFontSize else { return }
+            isDirty = true
+        }
+    }
+    
     @objc dynamic var customCSSOverride: Bool = Settings.factorySettings.customCSSOverride {
         didSet {
             guard oldValue != customCSSOverride else { return }
@@ -325,8 +354,7 @@ class ViewController: NSViewController {
         stylesPopup.lastItem?.keyEquivalentModifierMask = [.option]
         stylesPopup.lastItem?.toolTip = "Use a custom CSS file without importing into the standard themes folder."
 
-        let settings = Settings.shared
-        let custom_styles = settings.getAvailableStyles(resetCache: resetStyles)
+        let custom_styles = Settings.getAvailableStyles(resetCache: resetStyles)
         for url in custom_styles {
             addStyleSheet(url)
         }
@@ -339,7 +367,7 @@ class ViewController: NSViewController {
     internal func addStyleSheet(_ file: URL) -> Int {
         let name: String
         let standalone: Bool
-        if let folder = Settings.getStylesFolder()?.path, file.path.hasPrefix(folder) {
+        if let folder = Settings.stylesFolder?.path, file.path.hasPrefix(folder) {
             name = String(file.path.dropFirst(folder.count + 1))
             standalone = true
         } else {
@@ -373,7 +401,7 @@ class ViewController: NSViewController {
                 self.stylesPopup.selectItem(withTag: -101)
                 return
             }
-            let base = Settings.getStylesFolder()
+            let base = Settings.stylesFolder
             if let index = stylesPopup.itemArray.firstIndex(where: {
                 guard !$0.isSeparatorItem && $0.tag >= 0 else {
                     return false
@@ -447,6 +475,10 @@ class ViewController: NSViewController {
     @IBOutlet weak var strikethroughPopupButton: NSPopUpButton!
     @IBOutlet weak var emojiPopupButton: NSPopUpButton!
     @IBOutlet weak var yamlPopupButton: NSPopUpButton!
+    
+    @IBOutlet weak var mathPopupButton: NSPopUpButton!
+    @IBOutlet weak var mermaidPopupButton: NSPopUpButton!
+    
     @IBOutlet weak var unsafeButton: NSButton!
     
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
@@ -456,6 +488,9 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var qlWindowSizePopupButton: NSPopUpButton!
     
+    @IBOutlet weak var fontSizeField: NSTextField!
+    @IBOutlet weak var fontSizeStepper: NSStepper!
+    
     var edited: Bool = false
     var allow_reload: Bool = true
     fileprivate var markdown_source: DispatchSourceFileSystemObject?
@@ -463,7 +498,7 @@ class ViewController: NSViewController {
         didSet {
             if let file = markdown_file {
                 do {
-                    let s = try String(contentsOf: file)
+                    let s = try String(contentsOf: file, encoding: .utf8)
                     self.textView.string = s
                 } catch {
                     self.textView.string = "** Error loading file *\(file.path)*! **"
@@ -504,11 +539,14 @@ class ViewController: NSViewController {
     }
     
     @IBAction func handleStrikethroughPopup(_ sender: NSPopUpButton) {
-        if sender.indexOfSelectedItem == 3 {
+        let tag = sender.selectedTag()
+        if tag == -1 {
             self.strikethroughExtension = false
         } else {
+            pauseAutoRefresh += 1
             self.strikethroughExtension = true
-            self.strikethroughDoubleTildeOption = sender.indexOfSelectedItem == 2
+            self.strikethroughDoubleTildeOption = tag == 2
+            pauseAutoRefresh -= 1
         }
     }
     
@@ -521,12 +559,13 @@ class ViewController: NSViewController {
     }
     
     @IBAction func handleEmojiPopup(_ sender: NSPopUpButton) {
-        if sender.indexOfSelectedItem == 3 {
+        let tag = sender.selectedTag()
+        if tag == -1 {
             self.emojiExtension = false
         } else {
             pauseAutoRefresh += 1
             self.emojiExtension = true
-            self.emojiImageOption = sender.indexOfSelectedItem == 2
+            self.emojiImageOption = tag == 2
             pauseAutoRefresh -= 1
         }
     }
@@ -535,16 +574,19 @@ class ViewController: NSViewController {
         if !emojiExtension {
             emojiPopupButton.title = "Emoji"
         } else {
-            emojiPopupButton.title = "Emoji as \(self.emojiImageOption ? "images" : "font")"
+            emojiPopupButton.title = "Emoji (\(self.emojiImageOption ? "images" : "font"))"
         }
     }
     
     @IBAction func handleYamlPopup(_ sender: NSPopUpButton) {
-        if sender.indexOfSelectedItem == 3 {
+        let tag = sender.selectedTag()
+        if tag == -1 {
             self.yamlExtension = false
         } else {
+            pauseAutoRefresh += 1
             self.yamlExtension = true
-            self.yamlExtensionAll = sender.indexOfSelectedItem == 2
+            self.yamlExtensionAll = tag == 2
+            pauseAutoRefresh -= 1
         }
     }
     
@@ -553,6 +595,83 @@ class ViewController: NSViewController {
             yamlPopupButton.title = "YAML header"
         } else {
             yamlPopupButton.title = "YAML header (\(self.yamlExtensionAll ? "all files" : ".rmd, .qmd files"))"
+        }
+    }
+    
+    @IBAction func handleMathPopup(_ sender: NSPopUpButton) {
+        let tag = sender.selectedTag()
+        if tag == -1 {
+            self.mathExtension = false
+        } else if tag == 10 {
+            let alert = NSAlert()
+            alert.messageText = "Are you sure to download the MathJax library from web?"
+            alert.alertStyle = .informational
+            alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            let r = alert.runModal()
+            if r == .alertFirstButtonReturn {
+                Settings.shared.updateMathJaxUCache { (success) in
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.alertStyle = success ? .warning : .informational
+                        alert.messageText = success ? "MathJax library downloaded from web." : "Error downloading the MathJax library."
+                        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+                        alert.runModal()
+                    }
+                }
+            }
+        } else {
+            pauseAutoRefresh += 1
+            self.mathExtension = true
+            self.mathExtensionEmbed = tag == 1
+            pauseAutoRefresh -= 1
+        }
+    }
+    
+    func updateMathPopup() {
+        if !mathExtension {
+            mathPopupButton.title = "Math extension"
+        } else {
+            mathPopupButton.title = "Math extension (\(self.mathExtensionEmbed ? "embedded" : "linked"))"
+        }
+    }
+    
+    @IBAction func handleMermaidPopup(_ sender: NSPopUpButton) {
+        let tag = sender.selectedTag()
+        if tag == -1 {
+            self.mermaidExtension = false
+        } else if tag == 10 {
+            let alert = NSAlert()
+            alert.messageText = "Are you sure to download the Marmaid library from web?"
+            alert.alertStyle = .informational
+            alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            let r = alert.runModal()
+            if r == .alertFirstButtonReturn {
+                Settings.shared.updateMemaidCache { (success) in
+                    DispatchQueue.main.async {
+                        let alert = NSAlert()
+                        alert.alertStyle = success ? .warning : .informational
+                        alert.messageText = success ? "Marmaid library downloaded from web." : "Error downloading the Marmaid library."
+                        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+                        alert.runModal()
+                    }
+                }
+            }
+            
+        } else {
+            pauseAutoRefresh += 1
+            self.mermaidExtension = true
+            self.mermaidExtensionEmbed = tag == 1
+            pauseAutoRefresh -= 1
+        }
+    }
+    
+    func updateMermaidPopup() {
+        if !mermaidExtension {
+            mermaidPopupButton.title = "Mermaid diagram"
+        } else {
+            mermaidPopupButton.title = "Mermaid diagram (\(self.mermaidExtensionEmbed ? "embedded" : "linked"))"
         }
     }
     
@@ -705,7 +824,7 @@ class ViewController: NSViewController {
             body = "Error"
         }
         
-        let html = settings.getCompleteHTML(title: markdown_file?.lastPathComponent ?? "markdown", body: body, basedir: Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
+        let html = settings.getCompleteHTML(title: markdown_file?.lastPathComponent ?? "markdown", body: body)
         do {
             try html.write(to: dst, atomically: true, encoding: .utf8)
         } catch {
@@ -736,7 +855,7 @@ class ViewController: NSViewController {
         if r == .alertFirstButtonReturn {
             let settings = Settings.shared
             settings.resetToFactory()
-            settings.saveToSharedFile()
+            settings.save()
             self.initFromSettings(settings)
         }
     }
@@ -752,21 +871,19 @@ class ViewController: NSViewController {
     @IBAction func saveAction(_ sender: Any) {
         let settings = self.updateSettings()
         
-        let r = settings.saveToSharedFile()
-        if r.0 {
+        let r = settings.save()
+        if r {
             isDirty = false
         } else {
-            print("Error saving settings: \(r.1 ?? "")")
+            print("Error saving settings")
             os_log(
-                "Error saving settings: %{public}@",
+                "Error saving settings",
                 log: OSLog.quickLookExtension,
-                type: .error,
-                r.1 ?? ""
+                type: .error
             )
             
             let panel = NSAlert()
             panel.messageText = "Error saving the settings!"
-            panel.informativeText = r.1 ?? ""
             panel.alertStyle = .warning
             panel.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
             panel.runModal()
@@ -829,7 +946,7 @@ document.addEventListener('scroll', function(e) {
 </script>
 """
         
-        let html = settings.getCompleteHTML(title: ".md", body: body, header: header, footer: "", basedir: self.markdown_file?.deletingLastPathComponent() ?? Bundle.main.resourceURL ?? Bundle.main.bundleURL.deletingLastPathComponent(), forAppearance: appearance)
+        let html = settings.getCompleteHTML(title: ".md", body: body, header: header)
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
         
@@ -851,11 +968,7 @@ document.addEventListener('scroll', function(e) {
         }
             
         if copyOnSharedFolder {
-            var url: URL? = nil
-            XPCWrapper.getSynchronousService()?.storeStyle(name: src.lastPathComponent, data: try? Data(contentsOf: src)) { u, success in
-                url = success ? u : nil
-            }
-            return url
+            return Settings.storeStyle(name: src.lastPathComponent, data: try? Data(contentsOf: src));
         } else {
             return src
         }
@@ -938,7 +1051,7 @@ document.addEventListener('scroll', function(e) {
         default:
             if let item = sender.selectedItem, item.tag >= 0 {
                 let url: URL
-                if item.tag == 1, let base = Settings.getStylesFolder() {
+                if item.tag == 1, let base = Settings.stylesFolder{
                     url = base.appendingPathComponent(item.title)
                 } else {
                     url = URL(fileURLWithPath: item.title)
@@ -957,10 +1070,8 @@ document.addEventListener('scroll', function(e) {
     }
     
     @IBAction func revealApplicationSupportInFinder(_ sender: Any) {
-        XPCWrapper.getSynchronousService()?.getStylesFolder() { url in
-            if let url = url {
-                NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
-            }
+        if let url = Settings.stylesFolder{
+            NSWorkspace.shared.selectFile(url.path, inFileViewerRootedAtPath: "")
         }
     }
     
@@ -975,7 +1086,7 @@ document.addEventListener('scroll', function(e) {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let path = Bundle.main.resourceURL?.appendingPathComponent("highlight").path {
+        if let path = Settings.shared.getHighlightSupportPath() {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
         }
         
@@ -1002,6 +1113,8 @@ document.addEventListener('scroll', function(e) {
         self.updateEmojiPopup()
         self.updateStrikethroughPopup()
         self.updateYamlPopup()
+        self.updateMathPopup()
+        self.updateMermaidPopup()
         
         markdown_file = Bundle.main.url(forResource: "test1", withExtension: "md")
         
@@ -1012,6 +1125,10 @@ document.addEventListener('scroll', function(e) {
         }
         
         isLoaded = true
+        
+        if baseFontSize <= 0 {
+            baseFontSize = 12
+        }
         
         doRefresh(self)
     }
@@ -1084,19 +1201,23 @@ document.addEventListener('scroll', function(e) {
         self.tagFilterExtension = settings.tagFilterExtension
         self.taskListExtension = settings.taskListExtension
         
-        self.yamlExtension = settings.yamlExtension
-        self.yamlExtensionAll = settings.yamlExtensionAll
+        self.yamlExtension = settings.yamlExtension != .disabled
+        self.yamlExtensionAll = settings.yamlExtension == .allFiles
         
-        self.strikethroughExtension = settings.strikethroughExtension
-        self.strikethroughDoubleTildeOption = settings.strikethroughDoubleTildeOption
+        self.strikethroughExtension = settings.strikethroughExtension != .disabled
+        self.strikethroughDoubleTildeOption = settings.strikethroughExtension == .double
         
-        self.mathExtension = settings.mathExtension
-        self.mermaidExtension = settings.mermaidExtension
+        self.mathExtension = !settings.mathExtension.isDisabled
+        self.mathExtensionEmbed = settings.mathExtension.getMode()?.embed ?? false
+        
+        self.mermaidExtension = !settings.mermaidExtension.isDisabled
+        self.mermaidExtensionEmbed = settings.mermaidExtension.getMode()?.embed ?? false
+        
         self.mentionExtension = settings.mentionExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
-        self.emojiExtension = settings.emojiExtension
-        self.emojiImageOption = settings.emojiImageOption
+        self.emojiExtension = settings.emojiExtension != .disabled
+        self.emojiImageOption = settings.emojiExtension == .images
         
         self.headsExtension = settings.headsExtension
         self.highlightExtension = settings.highlightExtension
@@ -1117,8 +1238,6 @@ document.addEventListener('scroll', function(e) {
         self.syntaxWrapEnabled = settings.syntaxWordWrapOption > 0
         self.syntaxWrapCharacters = settings.syntaxWordWrapOption > 0 ? settings.syntaxWordWrapOption : 80
         self.syntaxTabsOption = settings.syntaxTabsOption
-        
-        self.guessEngine = settings.guessEngine.rawValue
         
         self.isAboutVisible = settings.about
         
@@ -1143,15 +1262,13 @@ document.addEventListener('scroll', function(e) {
         settings.autoLinkExtension = self.autoLinkExtension
         settings.tagFilterExtension = self.tagFilterExtension
         settings.taskListExtension = self.taskListExtension
-        settings.yamlExtension = self.yamlExtension
-        settings.yamlExtensionAll = self.yamlExtensionAll
+        settings.yamlExtension = self.yamlExtension ? ( self.yamlExtensionAll ? .allFiles : .onlyRmd) : .disabled
         
-        settings.mathExtension = self.mathExtension
-        settings.mermaidExtension = self.mermaidExtension
+        settings.mathExtension = self.mathExtension ? (self.mathExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
+        settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mentionExtension = self.mentionExtension
 
-        settings.emojiExtension = self.emojiExtension
-        settings.emojiImageOption = self.emojiImageOption
+        settings.emojiExtension = self.emojiExtension ? (self.emojiImageOption ? .images : .font) : .disabled
         
         settings.headsExtension = self.headsExtension
         settings.highlightExtension = self.highlightExtension
@@ -1159,29 +1276,12 @@ document.addEventListener('scroll', function(e) {
         settings.subExtension = self.subSuperScriptExtension
         settings.supExtension = self.subSuperScriptExtension
         
-        settings.strikethroughExtension = self.strikethroughExtension
-        settings.strikethroughDoubleTildeOption = self.strikethroughDoubleTildeOption
+        settings.strikethroughExtension = self.strikethroughExtension ? (self.strikethroughDoubleTildeOption ? .double : .single) : .disabled
         
         settings.syntaxHighlightExtension = self.syntaxHighlightExtension
         settings.syntaxLineNumbersOption = self.syntaxLineNumbers
         settings.syntaxWordWrapOption = self.syntaxWrapEnabled ? self.syntaxWrapCharacters : 0
-        
         settings.syntaxTabsOption = self.syntaxTabsOption
-        
-        /*
-        if self.customBackgroundColor == 0 {
-            settings.syntaxBackgroundColorLight = ""
-            settings.syntaxBackgroundColorDark = ""
-        } else if self.customBackgroundColor == 1 {
-            settings.syntaxBackgroundColorLight = "ignore"
-            settings.syntaxBackgroundColorDark = "ignore"
-        } else {
-            settings.syntaxBackgroundColorLight = self.backgroundColorLight.css() ?? ""
-            settings.syntaxBackgroundColorDark = self.backgroundColorDark.css() ?? ""
-        }
-        */
-        
-        settings.guessEngine = GuessEngine(rawValue: self.guessEngine) ?? .none
         
         settings.hardBreakOption = self.hardBreakOption
         settings.noSoftBreakOption = self.noSoftBreakOption
@@ -1190,6 +1290,7 @@ document.addEventListener('scroll', function(e) {
         settings.smartQuotesOption = self.smartQuotesOption
         settings.footnotesOption = self.footnotesOption
         
+        settings.baseFontSize = self.useBaseFontSize ? self.baseFontSize : 0
         settings.customCSSOverride = self.customCSSOverride
         settings.customCSS = self.customCSSFile
         
@@ -1198,6 +1299,22 @@ document.addEventListener('scroll', function(e) {
         settings.about = self.isAboutVisible
         return settings
     }
+    
+    @IBAction func resetDependencyLibraries(_ sender: Any) {
+        Settings.shared.installDependencies(override: true)
+        
+        if let path = Settings.mermaidCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+            Settings.shared.updateMemaidCache { (success) in
+                print("Mermaid reflesh: \(success ? "success" : "failure")")
+            }
+        }
+        if let path = Settings.mathJaxCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+            Settings.shared.updateMathJaxUCache { (success) in
+                print("MathJax reflesh: \(success ? "success" : "failure")")
+            }
+        }
+    }
+
 }
 
 // MARK: - NSMenuItemValidation
@@ -1210,7 +1327,72 @@ extension ViewController: NSMenuItemValidation {
             return self.isDirty
         } else if menuItem.action == #selector(self.revertDocumentToSaved(_:)) {
             return self.isDirty
+        } else {
+            switch menuItem.identifier?.rawValue {
+            case "mnu_emoji":
+                menuItem.isEnabled = false
+                return false
+            case "mnu_emoji_font":
+                menuItem.state = self.emojiExtension && !self.emojiImageOption ? .on : .off
+            case "mnu_emoji_image":
+                menuItem.state = self.emojiExtension && self.emojiImageOption ? .on : .off
+            case "mnu_emoji_off":
+                menuItem.state = self.emojiExtension ? .off : .on
+                
+            case "mnu_math":
+                menuItem.isEnabled = false
+                return false
+            case "mnu_math_embed":
+                menuItem.state = self.mathExtension && self.mathExtensionEmbed ? .on : .off
+                if Settings.shared.allowToEmbedMathJax() {
+                    menuItem.title = "Embed"
+                } else {
+                    menuItem.title = "Embed (file missing)"
+                    return false
+                }
+            case "mnu_math_link":
+                menuItem.state = self.mathExtension && !self.mathExtensionEmbed ? .on : .off
+            case "mnu_math_disabled":
+                menuItem.state = self.mathExtension ? .off : .on
+                
+            case "mnu_mermaid":
+                return false
+            case "mnu_mermaid_embed":
+                menuItem.state = self.mermaidExtension && self.mermaidExtensionEmbed ? .on : .off
+                if Settings.shared.allowToEmbedMermaid() {
+                    menuItem.title = "Embed"
+                } else {
+                    menuItem.title = "Embed (file missing)"
+                    return false
+                }
+            case "mnu_mermaid_link":
+                menuItem.state = self.mermaidExtension && !self.mermaidExtensionEmbed ? .on : .off
+            case "mnu_mermaid_disabled":
+                menuItem.state = self.mermaidExtension ? .off : .on
+                
+            case "mnu_yaml":
+                
+                return false
+            case "mnu_yaml_rmd":
+                menuItem.state = self.yamlExtension && !self.yamlExtensionAll ? .on : .off
+            case "mnu_yaml_all":
+                menuItem.state = self.yamlExtension && self.yamlExtensionAll ? .on : .off
+            case "mnu_yaml_disabled":
+                menuItem.state = self.yamlExtension ? .off : .on
+            case "mnu_strikethrough":
+                menuItem.isEnabled = false
+                return false
+            case "mnu_strikethrough_1":
+                menuItem.state = self.strikethroughExtension && !self.strikethroughDoubleTildeOption ? .on : .off
+            case "mnu_strikethrough_2":
+                menuItem.state = self.strikethroughExtension && self.strikethroughDoubleTildeOption ? .on : .off
+            case "mnu_strikethrough_0":
+                menuItem.state = self.strikethroughExtension ? .off : .on
+            default:
+                break
+            }
         }
+        
         return true
     }
 }
@@ -1270,7 +1452,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             alert.messageText = "There are some modified settings"
             alert.informativeText = "Do you want to save them before closing?"
             alert.addButton(withTitle: "Save").keyEquivalent = "\r"
-            alert.addButton(withTitle: "Don't Save").keyEquivalent = "d"
+            alert.addButton(withTitle: "Ignore").keyEquivalent = "d"
             alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
             
             let r = alert.runModal()
@@ -1384,7 +1566,7 @@ class DropableTextView: NSTextView {
         return true
         /*
         do {
-            let s = try String(contentsOf: url)
+            let s = try String(contentsOf: url, encoding: .utf8)
             self.string = s
             return true
         } catch {

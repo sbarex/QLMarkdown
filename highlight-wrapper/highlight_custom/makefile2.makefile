@@ -57,7 +57,7 @@ desktop_apps = ${data_dir}applications/
 desktop_icons = ${data_dir}icons/hicolor/256x256/apps/
 
 # Commands:
-GZIP=gzip -9f
+GZIP=gzip -9fn
 INSTALL_DATA=install -m644
 INSTALL_PROGRAM=install -m755
 MKDIR=mkdir -p -m 755
@@ -180,9 +180,9 @@ uninstall:
 	${RMDIR} ${DESTDIR}${examples_dir}
 	rm -rf ${DESTDIR}${man_dir}man1/highlight.1.gz
 	rm -rf ${DESTDIR}${man_dir}man5/filetypes.conf.5.gz
-	rm -rf ${DESTDIR}${bash_comp_dir}highlight.bash
+	rm -rf ${DESTDIR}${bash_comp_dir}highlight
 	rm -rf ${DESTDIR}${fish_comp_dir}highlight.fish
-
+	rm -rf ${DESTDIR}${zsh_comp_dir}_highlight
 	rm -rf ${DESTDIR}${bin_dir}highlight
 	rm -rf ${DESTDIR}${bin_dir}highlight-gui
 	rm -rf ${DESTDIR}${desktop_apps}highlight.desktop
@@ -214,6 +214,10 @@ help:
 	@echo "uninstall        Remove highlight files from system."
 	@echo
 	@echo "See src/makefile for compilation and linking options."
+	@echo
+	@echo "The latest highlight packages also include CMake and Meson"
+	@echo "scripts to compile and install highlight."
+
 
 # Target needed for redhat 9.0 rpmbuild
 install-strip:

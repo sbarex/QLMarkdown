@@ -141,7 +141,7 @@ html {
 
 body {
   margin: 0;
-  /* padding: 1em; */
+  /* padding: 1rem; */
   color: var(--textPrimary);
   background-color: var(--background);
 }
@@ -198,7 +198,7 @@ table, table *, pre {
 }
 
 pre, code, kbd {
-  font-size: 1em;
+  font-size: 1rem;
   font-family: var(--code-font);
 }
 
@@ -230,14 +230,14 @@ input[type="checkbox"] {
 
 .markdown-body kbd {
   display: inline-block;
-  padding: 0.18em 0.31em;
-  font-size: 0.7em;
-  line-height: 1.2em;
+  padding: 0.18rem 0.31rem;
+  font-size: 0.7rem;
+  line-height: 1.2rem;
   color: var(--kbd-color);
   vertical-align: middle;
   background-color: var(--kbd-background);
   border: 1px solid var(--kbd-border);
-  border-radius: 0.25em;
+  border-radius: 0.25rem;
   box-shadow: inset 0 -1px 0 var(--kbd-border);
   margin-right: 2px;
 }
@@ -289,7 +289,7 @@ input[type="checkbox"] {
 }
 
 .markdown-body hr {
-  height: .25em;
+  height: .25rem;
   padding: 0;
   margin: 24px 0;
   background-color: var(--hr-background);
@@ -297,9 +297,9 @@ input[type="checkbox"] {
 }
 
 .markdown-body blockquote {
-  padding-left: 1em;
+  padding-left: 1rem;
   color: var(--blockquote-color);
-  border-left: .25em solid var(--blockquote-border);
+  border-left: .25rem solid var(--blockquote-border);
 }
 
 .markdown-body blockquote > :first-child {
@@ -336,37 +336,37 @@ input[type="checkbox"] {
 }
 
 .markdown-body h1 {
-  font-size: 2em;
+  font-size: 2rem;
 }
 
 .markdown-body h1, .markdown-body h2 {
-  padding-bottom: .3em;
+  padding-bottom: .3rem;
   border-bottom: 1px solid var(--header-bottom-border);
 }
 
 .markdown-body h2 {
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 
 .markdown-body h3 {
-  font-size: 1.25em;
+  font-size: 1.25rem;
 }
 
 .markdown-body h4 {
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 .markdown-body h5 {
-  font-size: .875em;
+  font-size: .875rem;
 }
 
 .markdown-body h6 {
-  font-size: .85em;
+  font-size: .85rem;
   color: var(--h6-color);
 }
 
 .markdown-body ol, .markdown-body ul {
-  padding-left: 1.5em;
+  padding-left: 1.5rem;
 }
 
 .markdown-body ol.no-list, .markdown-body ul.no-list {
@@ -388,7 +388,7 @@ input[type="checkbox"] {
 }
 
 .markdown-body li + li {
-  margin-top: .25em;
+  margin-top: .25rem;
 }
 
 .markdown-body dl {
@@ -398,7 +398,7 @@ input[type="checkbox"] {
 .markdown-body dl dt {
   padding: 0;
   margin-top: 16px;
-  font-size: 1em;
+  font-size: 1rem;
   font-style: italic;
   font-weight: 600;
 }
@@ -550,7 +550,7 @@ input[type="checkbox"] {
 }
 
 .markdown-body code, .markdown-body tt {
-  padding: .2em .4em;
+  padding: .2rem .4rem;
   margin: 0;
   font-size: 85%;
   background-color: var(--code-background);
@@ -636,13 +636,13 @@ input[type="checkbox"] {
 }
 
 .markdown-body mark {
-    padding: .2em;
+    padding: .2rem;
     background-color: #fcf1b5;
 }
 
 @media (prefers-color-scheme: dark) {
     .markdown-body mark {
-        padding: .2em;
+        padding: .2rem;
         background-color: #fcf8e3;
     }
 }

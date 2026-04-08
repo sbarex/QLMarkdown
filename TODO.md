@@ -1,6 +1,6 @@
 #  TODO
 
-- [ ] Bugfix: footnote option and super/sub script extension are incompatible.
+- [ ] Bugfix: footnote option and super script extension are incompatible.
 - [ ] Bugfix: on dark style, there is a flashing white rectangle before show the preview on Monterey.
 - [ ] Investigate if export syntax highlighting colors scheme style as CSS var overriding the default style
 - [ ] Check inline images on network / mounted disk

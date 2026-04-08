@@ -8,24 +8,30 @@
 
 # QLMarkdown
 
-QLMarkdown is a macOS Quick Look extension to preview Markdown files. 
+QLMarkdown is a Mac OS application that provides:
+- a Quick Look extension for viewing Markdown files
+- a Shortcut extension for converting Markdown files to HTML
+- a command-line executable for converting Markdown files to HTML
+- a graphical interface for configuring Quick Look preview display settings. 
 
-_This application is not intended to be used as a standalone markdown file editor or viewer._ 
-
+> **This application is not intended to be used as a standalone markdown file editor or viewer.**
+>
 > **Please note that this software is provided "as is", without any warranty of any kind.**
 
 If you like this application and find it useful, [__buy me a coffee__](https://www.buymeacoffee.com/sbarex)!
 
 The Quick Look extension can also preview rmarkdown files (`.rmd`, _without_ evaluating `r` code), MDX files (`.mdx`, _without_ JSX rendering), Cursor Rulers (`.mdc`), Quarto files (`.qmd`), Api Blueprint files (`.apib`) and textbundle packages.
 
-You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases). 
+You can download the last compiled release from [this link](https://github.com/sbarex/QLMarkdown/releases). 
 
   - [Screenshots](#screenshots)
-    - [Quick Look Markdown preview](#quick-look-markdown-preview)
+    - [Quick Look preview](#quick-look-preview)
+    - [Shortcut Command preview](#shortcut-command-preview)
   - [Installation](#installation)
+  - [Uninstall](#uninstall)
   - [Markdown processing](#markdown-processing)
   - [Difference with the GitHub Markdown engine](#difference-with-the-github-markdown-engine)
-  - [Settings](#settings)
+  - [Quick Look Settings](#quick-look-settings)
     - [Themes](#themes)
     - [Options](#options)
     - [Extensions](#extensions)
@@ -36,8 +42,10 @@ You can download the last compiled release (as universal binary) from [this link
       - [Syntax Highlighting](#syntax-highlighting)
       - [YAML header](#yaml-header)
   - [Command line interface](#command-line-interface)
+  - [Shortcut Commands](#shortcut-commands)
   - [Build from source](#build-from-source)
     - [Dependency](#dependency)
+  - [FAQ](#faq)
   - [Note about security](#note-about-security)
   - [Note about the developer](#note-about-the-developer)
 
@@ -45,66 +53,34 @@ You can download the last compiled release (as universal binary) from [this link
 ## Screenshots
 
 
-### Quick Look Markdown preview
+### Quick Look preview
 
-![main interface](./assets/img/preview-screenshot.png)
+![quick look interface](./assets/img/preview_quicklook.png)
+
+
+### Shortcut Command preview
+
+![shortcut interface](./assets/img/preview_shortcut.png)
 
 
 ## Installation
 
-You can download the last compiled release (as universal binary) from [this link](https://github.com/sbarex/QLMarkdown/releases) or you can install the Application with [Homebrew](https://brew.sh/):   
+You can download the last compiled release from [this link](https://github.com/sbarex/QLMarkdown/releases) or you can install with [Homebrew](https://brew.sh/):   
 
 ```shell
 brew install --cask qlmarkdown
 ```
 
-The precompiled app is not notarized or signed, so the first time you run the app the system may show a warning about the impossibility to check for malicious software.
+_The precompiled app is notarized and signed_.
 
-To fix, you can launch the app with right click (or ctrl click) on the app icon and choose the open action.
-
-You can also execute this command from the terminal:
-
-```sh
-xattr -r -d com.apple.quarantine /Applications/QLMarkdown.app # Default path; change if necessary
-```
-
-Alternatively, after trying to launch the app for the first time, you can open the System Preferences > Security & Privacy > General (tab) and click the Open Anyway button.
-
-This will resolve the error of an unsigned application when launching the app.
-
-To use the Quick Look preview you must launch the application at least once. In this way the Quick Look extension will be discovered by the system. 
+**You must launch the application at least once**. In this way the Quick Look extension will be discovered by the system and some shared files are installed for the Shortcut extension. 
 After the first execution, the Quick Look extension will be available (and enabled) among those present in the System preferences/Extensions.
 
-If you have problems, try moving the application to the trash and then back in the Applications folder. 
-If the `QLMarkdown Preview Extension` is present (and checked) in the list of Quick Look Extensions in the System preferences but the `.md` files are not displayed it is probably due to other applications that have registered support for that type of file. You can change the order of priority of the Quick Look Extensions inside the System preferences.
 
-Finally, the problems may depend on how the `.md` files were registered on the system by other applications.
+## Uninstall
 
-In the terminal try the following command:
-
-```shell
-touch /tmp/qlmarkdown.md && mdls -name kMDItemContentType /tmp/qlmarkdown.md && rm /tmp/qlmarkdown.md
-```
-
-The output is the UTI associated with the `.md` file.
-
-This application handle these UTIs:
-- `public.markdown`
-- `com.rstudio.rmarkdown`
-- `com.unknown.md`
-- `io.typora.markdown`
-- `net.daringfireball.markdown`
-- `net.ia.markdown`
-- `org.apiblueprint.file`
-- `org.quarto.qmarkdown`
-- `org.textbundle.package`
-- `com.nutstore.down`
-- `dyn.ah62d4rv4ge8043a` (dynamic UTI for unassociated .md files)
-- `dyn.ah62d4rv4ge81e5pe` (dynamic UTI for unassociated .rmd files)
-- `dyn.ah62d4rv4ge81c5pe` (dynamic UTI for unassociated .qmd files)
-- `dyn.ah62d4rv4ge80c6dmqk` (dynamic UTI for unassociated .apib files)
-
-Please inform me of any other UTI associated to `.md` files.
+To install the application, simply drag it to the trash.
+Support files can be deleted by removing the folder `~/Library/Group Containers/group.org.sbarex.qlmarkdown`.
 
 
 ## Markdown processing
@@ -118,7 +94,8 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - [`Inline local images`](#inline-local-images): embed the image files inside the formatted output (required for the Quick Look preview).
 - `Subscript`: subscript text between the markers `~`.
 - `Superscript`: superscript text between the markers `^`.
-- [`Math`](#mathematical-expressions): format the mathematical expressions.
+- [`Math`](#mathematical-expressions): format the mathematical expressions with the MathJax library.
+- [`Mermaid`](#mermaid-diagrams): render the diagrams with the Mermaid library.
 - [`Syntax highlighting`](#syntax-highlighting): highlight the code inside fenced block.
 - [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` or `qmd` files.
 
@@ -131,10 +108,8 @@ GitHub uses a number of libraries in Ruby for parsing and formatting source code
 The main difference between this application and GitHub is the formatting of the source code.
 Syntax highlighting uses a different library, so the formatting, colors scheme, and language token recognition are potentially different.
 
-This application, when set to use the accurate engine for the language detection (used only when the language is not specified) uses a library derived from the [`Linguistic`](https://github.com/github/linguist#syntax-highlighting) framework adopted by GitHub.
 
-
-## Settings
+## Quick Look Settings
 
 Launching the application, you can configure the options, enable the desired extensions and set the theme for formatting the Quick Look preview of Markdown files.
 
@@ -144,7 +119,7 @@ __To make the settings effective you need to save them (`cmd-s` or menu `File` >
 
 The window interface has an inline editor to test the settings with a markdown file. You can open a custom markdown file and export the edited source code.
 
-> Please note that this application is not intended to be used as a standalone markdown file editor or viewer but only to set Quick Look preview formatting preferences. No warning about unsaved markdown code is displayed when closing the application. 
+> Please note that **this application is not intended to be used as a standalone markdown file editor or viewer** but only to set Quick Look preview formatting preferences. 
 
 
 ### Themes
@@ -162,9 +137,9 @@ User customized style sheet must have the settings for both light and dark appea
 
 The custom style is appended after the CSS used for the highlight the source code. In this way you can customize also the style of the syntax highlight. 
 
-[Syntax highlighting extension](#syntax-highlighting) allow to customize the appearance of the code blocks.
-
 The theme popup menu has some extra commands available pressing the `alt` key.
+
+It is possibile to set a custom base font size. This size (in points) will be used for set the dimension of `1rem` in the css style sheet.
 
 
 ### Options
@@ -193,6 +168,7 @@ The theme popup menu has some extra commands available pressing the `alt` key.
 |Highlight|Highlight the text contained between the markers `==`.|
 |Inline local images|Enable the [Inline local images extension](#inline-local-images).|
 |Math|Enable the [formatting of math expressions](#mathematical-expressions).|
+|Mermaid|Enable the [Mermaid diagram](#mermaid-diagrams) extension.|
 |Strikethrough|Strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.|
 |Sub/Superscript|Allow to subscript text inside `~` tag pairs, and superscript text inside `^` tag pairs. Please note that the Strikethrough extension must be disabled or set to recognize double `~`.|
 |Syntax highlighting|Enable the [Syntax highlighting extension](#syntax-highlighting). |
@@ -210,16 +186,16 @@ The `Quick Look window` option allow you to force a custom size for the content 
 
 You can enable the Emoji extension to handle the shortcodes defined by [GitHub](https://api.github.com/emojis). You can render the emoji with an emoticon glyph or using the image provided by GitHub (internet connection required). 
 
-Multibyte emoji are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. 
+Multibyte emojis are supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:. 
 
-Some emoji do not have an equivalent glyph on the standard font and will be replaced always with the relative image.
+Some emojis do not have a glyph equivalent in the standard font and will always be replaced with the corresponding image.
 
 A list of GitHub emoji shortcodes is available [here](https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md#people--body).
 
  
 ### Inline local images 
 
-You can enable the Inline image extension required to preview images within the Quick Look window by injecting the images into the HTML code. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around the limitation. 
+You can enable the Inline image extension required to preview images within the Quick Look window by injecting the images into the HTML code. The Quick Look extension, for security limitations, cannot access to the local images defined inside the Markdown code, so embedding the data it's a way around this limitation. 
 
 For security reasons are handled only URLs without schema (e.g., `./image.jpg`, `image.jpg` or `assets/image.jpg`), or with the `file` schema (e.g.,  `file:///Users/username/Documents/image.jpg`) referring to existing files with an image mime type. 
 With the `file://` schema you *must always set the full path*. For images inside the same folder of the Markdown file do not use the  `file://` schema and also the path `./` is optional.
@@ -236,7 +212,12 @@ Inline math expressions are delimited with a dollar symbol `$`. Block expression
 
 Alternatively, you can use the ` ```math ` code block syntax to display a math expression as a block.
 
-The [MathJax](https://www.mathjax.org/) library is loaded from cdn.jsdelivr.net. The library is loaded if the markdown code contains ` ```math ` code blocks or one or more dollar sign.
+The [MathJax](https://www.mathjax.org/) library is loaded if the markdown code contains ` ```math ` code blocks or one or more dollar sign.
+
+You can choose to link the library from the web (internet connection required, fetched from `cdn.jsdelivr.net`) or embed the source code in the html output. 
+At the first execution of the main Application a local copy of the library is downloaded and cached. You can fetch an update version from the extension poup menu.
+
+![shortcut interface](./assets/img/mathjax_menu.png)
 
 
 #### Mermaid diagrams
@@ -263,7 +244,11 @@ graph TD
 ```
 ~~~
 
-**Note:** The Mermaid library (mermaid.min.js v10.9.3) is bundled locally with the application - no network connection is required at preview time. The library is initialized with `securityLevel: 'strict'` for safety.
+You can choose to link the library from the web (require a network connection to `cdn.jsdelivr.net`) or embed the code in the html output. 
+You can choose to link the library from the web (internet connection required, fetched from `cdn.jsdelivr.net`) or embed the source code in the html output. 
+At the first execution of the main Application a local copy of the library is downloaded and cached. You can fetch an update version from the extension poup menu.
+
+> **Note:** The library is initialized with `securityLevel: 'strict'` for safety.
 
 The diagram theme automatically adapts to the system appearance (light/dark mode).
 
@@ -281,14 +266,8 @@ You can customize the settings:
 - Line numbers visibility.
 - Word wrap options.
 - Tabs replacements.
-- Guess engine for undefined languages.
 
-When the code block does not specify the language, it is possible to activate a guessing function. Two engines are available:
-
-- Simple guess: it is based on the `magic` library;
-- Accurate guess: it is based on the [`Enry`](https://github.com/go-enry/go-enry) library, that is a Golang porting of the Ruby [`linguist`](https://github.com/github/linguist/) library used by GitHub.
-
-If no language is defined and the guessing fail (or is not enabled), the code is rendered as normal text.
+If no language is defined for the fanced block, the code is rendered as a plain text.
 
 
 ### YAML header
@@ -306,57 +285,98 @@ A `qlmarkdown_cli` command line interface (CLI) is available to perform batch co
 
 The tool is located inside the `QLMarkdown.app/Contents/Resources` folder (and should not be moved outside). 
 
-You can create a symbolic link into your `$PATH` to use the tool from any folder. Open Terminal.app and type:
+You can create a symbolic link into `usr/local/bin` from the `QLMarkdown` menu, or manually from the Terminal app:
 
 ```sh
 ln -s /Applications/QLMarkdown.app/Contents/Resources/qlmarkdown_cli /usr/local/bin/qlmarkdown_cli
 ```
 
 ```
-Usage: qlmarkdown_cli [-o <file|dir>] <file> [..]
+OVERVIEW: Command line tool to convert markdown files to html.
 
-Arguments:
- -h    Show this help and exit.
- -o    <file|dir> Destination output. If you pass a directory, a new file is 
-       created with the name of the processed source with html extension. 
-       The destination file is always overwritten. 
-       If this argument is not provided, the output will be printed to the 
-       stdout.
- -v    Verbose mode. Valid only with the -o option.
+Developed by SBAREX 2020 - 2026.
+https://github.com/sbarex/QLMarkdown
 
-Options:
- --footnotes on|off
- --hard-break on|off
- --no-soft-break on|off
- --raw-html on|off
- --smart-quotes on|off
- --validate-utf8 on|off
- --code on|off
- --debug on|off
+USAGE: ql-markdown-cli [<options>] [<files> ...]
 
-Extensions:
- --autolink on|off
- --emoji image|font|off
- --github-mentions on|off
- --heads-anchor on|off
- --highlight on|off
- --inline-images on|off
- --math on|off
- --table on|off
- --tag-filter on|off
- --tasklist on|off
- --strikethrough single|double|off
- --syntax-highlight on|off
- --yaml rmd|qmd|all|off
+ARGUMENTS:
+  <files>                 File to be processed.
 
-Unspecified rendering options will use the settings defined in the main application.
+MARKDOWN OPTIONS:
+  --appearance <appearance>
+                          (values: light, dark)
+  --base-font-size <number>
+                          Set the base font size, in points.
+  --footnotes <on|off>    Parse the footnotes. (values: on, off)
+  --hard-break <on|off>   Render softb-reak elements as hard line breaks. (values: on, off)
+  --no-soft-break <on|off>
+                          Render soft-break elements as spaces. (values: on, off)
+  --raw-html <on|off>     Convert straight quotes to curly. (values: on, off)
+  --render-as-code <on|off>
+                          Show the plain text file (raw version) instead of the formatted output. (values: on, off)
+  --smart-quotes <on|off> Convert straight quotes to curly. (values: on, off)
+  --validate-utf8 <on|off>
+                          Validate UTF-8 in the input before parsing. (values: on, off)
+  --debug <on|off>        Insert in the output some debug information. (values: on, off)
 
-To handle multiple files at time you need to pass the -o arguments with a destination folder.
+MARKDOWN EXTENSIONS:
+  --autolink <on|off>     Automatically translate URL/email to link. (values: on, off)
+  --emoji <emoji>         Translate the emoji shortcodes.
+        font              - replace with font glyphs
+        images            - repolace with web images
+        off               - disabled
+  --github-mentions <on|off>
+                          Translate mentions to link to the GitHub account (values: on, off)
+  --heads-anchor <on|off> Create anchors for the heads. (values: on, off)
+  --highlight <on|off>    Highlight text marked with `==`. (values: on, off)
+  --inline-images <on|off>
+                          Embed local image files inside the formatted output. (values: on, off)
+  --math <path|url>       Format the mathematical expressions with MathJax. You can specify the path or url of the MathJax.js library.
+  --math-embed <on|off>   Embed/Link the MathJax library. (values: on, off)
+  --mermaid <path|url>    Format the mermaid diagrams. You can specify the path or url of the MathJax.js library.
+  --mermaid-embed <on|off>
+                          Embed/Link the mermaid library. (values: on, off)
+  --table <on|off>        Enable table extension. (values: on, off)
+  --tag-filter <on|off>   Strip potentially dangerous HTML tags. (values: on, off)
+  --tasklist <on|off>     Parse task list. (values: on, off)
+  --strikethrough <strikethrough>
+                          Recognize single/double `~` for the strikethrough style.
+        single            - detect single tilde (~)
+        double            - detect double tilde (~~)
+        off               - disabled
+  --syntax-highlight <on|off>
+                          Highlight the code inside fenced block. (values: on, off)
+  --sub <on|off>          Format subscript characters inside `~` markers. (values: on, off)
+  --sup <on|off>          Format superscript characters inside `^` markers. (values: on, off)
+  --yaml <yaml>           Render the yaml header.
+        rmd               - enabled only for .rmd and .qmd files
+        all               - enabled for all files
+        off               - disabled
+
+OPTIONS:
+  --help
+  -o <path>               Destination output. If you pass a directory, a new file is created with the name of the processed source with .html extension. 
+                          The destination file is always overwritten. If this argument is not provided, the output will be printed to the stdout.
+                          To handle multiple files at time you need to pass the -o argument with a destination folder.
+  -v, --verbose           Verbose mode. Valid only with the -o option.
+  --app <path>            Path of the main QLMarkdown.app application.
+  --show-settings         Show the customized settings and exit.
+  --version               Show the version.
+  -h, --help              Show help information.
 ```
 
-The CLI interface uses the same settings as the Quick Look extension, but you can override it if you wish. 
+> **Note:** the CLI interface do not share the settings with the main Application or the Quick Look extension. 
 
 Any relative paths inside raw HTML fragments are not updated according to the destination folder. 
+
+
+## Shortcut Commands
+
+The application provides two commands for the `Shortcuts` Application:
+- `Markdown format`: format a markdown file and output the converted html code. 
+- `Markdown convert`: format a markdown file and save the converted html code to a file.
+
+![shortcut interface](./assets/img/preview_shortcut.png)
 
 
 ## Build from source
@@ -368,12 +388,11 @@ Some libraries (`Sparkle`, `Yams` and `SwiftSoup`) are handled by the Swift Pack
 
 ### Dependency
 
-The app uses the following libraries built directly from Xcode:
+The app uses the following libraries:
 - [`highlight`](http://www.andre-simon.de/doku/highlight/en/highlight.php) for syntax highlighting.
-- [`magic`](https://www.darwinsys.com/file/), used to guess the source code language when the guess mode is set to _simple_.
-- [`Enry`](https://github.com/go-enry/go-enry), used to guess the source code language when the guess mode is set to _accurate_.
 - [`PCRE2`](https://github.com/PhilipHazel/pcre2) and [`JPCRE2`](https://github.com/jpcre2/jpcre2) used by the heads extension.
-
+- [MathJax](https://www.mathjax.org/) for mathematical expressions rendering.
+- [Mermaid](https://mermaid.js.org/) for diagrams rendering.
 
 `libpcre` require the `autoconf` utility to be build. You can install it with [`homebrew`](https://brew.sh/):
 
@@ -381,16 +400,67 @@ The app uses the following libraries built directly from Xcode:
 brew install autoconf
 ``` 
 
-Because `Enry` is developed in `go`, to build the wrapper library you must have the `go` compiler installed (you can use `brew install go`). 
-
 The compilation of `cmark-gfm` require `cmake` (`brew install cmake`). 
 
 
 ## Note about security
 
+** This application does not collect any information about your system or the files it processes.**
+
 To allow the Quick Look view of local images the application and the extension has an entitlement exception to allow *only read access* to the entire system. 
 
-On Big Sur there is a bug in the Quick Look engine and WebKit that cause the immediate crash of any WebView inside a Quick Look preview. To temporary fix this problem this Quick Look extension uses a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement. 
+On macOS 11 (Big Sur) there is a bug in the Quick Look engine and WebKit that cause the immediate crash of any WebView inside a Quick Look preview. To temporary fix this problem this Quick Look extension uses a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement. 
+
+
+## FAQ
+
+> The Quick Look preview do not works
+There could be many reasons why the preview isn't working.
+
+First, check that QLMarkdown is enabled in `System Settings` > `General` > `Login Items & Extensions` > `Quick Look`.
+
+![System Settings / General / Login Items & Extensions / Quick Look screenshot](./assets/img/system_setings1.png)
+
+If the application doesn't appear in the list, try dragging it to the Trash, then briefly dragging it back to the Applications folder and launching it. This may force the extension to be automatically recognized.
+
+If the QLMarkdown Quick Look Extension is present (and checked) in the list but the `.md` files are not displayed it is probably due to other applications that have registered support for that type of file. 
+From the `System Settings` > `General` > `Login Items & Extensions` > `Quick Look`, try disabling all Quick Look extensions except QLMarkdown and see if the preview works. If so, re-enable the Quick Look extensions of the other applications one at a time until you find the one causing the conflict.
+
+If it still doesn't work, it might be because of how other applications have redefined the markdown format (UTI). 
+
+In the Terminal try the following command:
+
+```shell
+touch /tmp/qlmarkdown.md && mdls -name kMDItemContentType /tmp/qlmarkdown.md && rm /tmp/qlmarkdown.md
+```
+
+The output is the UTI associated with the `.md` file.
+
+This application handle these UTIs:
+- `public.markdown`
+- `com.rstudio.rmarkdown`
+- `com.unknown.md`
+- `io.typora.markdown`
+- `net.daringfireball.markdown`
+- `net.ia.markdown`
+- `org.apiblueprint.file`
+- `org.quarto.qmarkdown`
+- `org.textbundle.package`
+- `com.nutstore.down`
+- `dyn.ah62d4rv4ge8043a` (dynamic UTI for unassociated .md files)
+- `dyn.ah62d4rv4ge81e5pe` (dynamic UTI for unassociated .rmd files)
+- `dyn.ah62d4rv4ge81c5pe` (dynamic UTI for unassociated .qmd files)
+- `dyn.ah62d4rv4ge80c6dmqk` (dynamic UTI for unassociated .apib files)
+
+**Please inform me of any other UTI associated to `.md` files.**
+
+---
+
+> QLMarkdown doesn't appear in the list of applications that can open a Markdown file (for example, from the `Open With…` menu)
+
+> Double-clicking the file doesn't open QLMarkdown
+
+This is a desired behavior. QLMarkdown is not intended to be used as a standalone markdown file editor or viewer.
 
 
 ## Note about the developer

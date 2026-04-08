@@ -11,8 +11,66 @@ import SwiftSoup
 import Yams
 
 extension Settings {
+    /**
+     * Get the correct markdown file to process.
+     *
+     * If the source file is a bundle, extract the correct path of the markdown file.
+     */
+    static func getMarkdownFile(from url: URL) -> URL {
+        if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {
+            if FileManager.default.fileExists(atPath: url.appendingPathComponent("text.md").path) {
+                return url.appendingPathComponent("text.md")
+            } else {
+                return url.appendingPathComponent("text.markdown")
+            }
+        } else {
+            return url
+        }
+    }
+    
+    /**
+     * Render a markdown file to an html fragment.
+     * - parameters:
+     *   - url: Url of the Markdown file to format.
+     *   - appearance:
+     *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code. if not specified, it gets it from the file path.
+     */
+    func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?) throws -> String {
+        guard let data = FileManager.default.contents(atPath: url.path) else {
+            os_log("Unable to read the file %{private}@", log: OSLog.rendering, type: .error, url.path)
+            return ""
+        }
+        
+        return try self.render(data: data, forAppearance: appearance, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
+    }
+    
+    /**
+     * Render a markdown file to an html fragment.
+     * - parameters:
+     *   - data: Data with the the Markdown code to format.
+     *   - appearance:
+     *   - filename: Name of the source file.
+     *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
+     */
+    func render(data: Data, forAppearance appearance: Appearance, filename: String = "file.md", baseDir: String) throws -> String {
+        guard let markdown_string = String(data: data, encoding: .utf8) else {
+            os_log("Unable to read the data %{private}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
+            return ""
+        }
+        
+        return try self.render(text: markdown_string, filename: filename, forAppearance: appearance, baseDir: baseDir)
+    }
+    
+    /**
+     * Render the markdown to an html fragment.
+     * - parameters:
+     *   - text: Markdown code to format.
+     *   - filename: Name of the source file.
+     *   - appearance:
+     *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
+     */
     func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String) throws -> String {
-        if self.renderAsCode, let code = self.renderCode(text: text, forAppearance: appearance, baseDir: baseDir) {
+        if self.renderAsCode, let code = self.renderAsSourceCode(text: text, forAppearance: appearance, baseDir: baseDir) {
             return code
         }
         
@@ -40,7 +98,7 @@ extension Settings {
             options |= CMARK_OPT_FOOTNOTES
         }
         
-        if self.strikethroughExtension && self.strikethroughDoubleTildeOption {
+        if self.strikethroughExtension == .double {
             options |= CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE
         }
         
@@ -102,7 +160,7 @@ extension Settings {
         
         var header = ""
         
-        if self.yamlExtension && (self.yamlExtensionAll || filename.lowercased().hasSuffix("rmd") || filename.lowercased().hasSuffix("qmd")) && md_text.hasPrefix("---") {
+        if self.yamlExtension != .disabled && (self.yamlExtension == .allFiles || filename.lowercased().hasSuffix("rmd") || filename.lowercased().hasSuffix("qmd")) && md_text.hasPrefix("---") {
             /*
              (?s): Turn on "dot matches newline" for the remainder of the regular expression. For “single line mode” makes the dot match all characters, including line breaks.
              (?<=---\n): Positive lookbehind. Matches at a position if the pattern inside the lookbehind can be matched ending at that position. Find expression .* where expression `---\n` precedes.
@@ -123,7 +181,7 @@ extension Settings {
             }
         }
         
-        if self.strikethroughExtension {
+        if self.strikethroughExtension != .disabled {
             if let ext = cmark_find_syntax_extension("strikethrough") {
                 cmark_parser_attach_syntax_extension(parser, ext)
                 os_log("Enabled markdown `strikethrough` extension.", log: OSLog.rendering, type: .debug)
@@ -194,11 +252,7 @@ extension Settings {
             if let ext = cmark_find_syntax_extension("inlineimage") {
                 cmark_parser_attach_syntax_extension(parser, ext)
                 cmark_syntax_extension_inlineimage_set_wd(ext, baseDir.cString(using: .utf8))
-                cmark_syntax_extension_inlineimage_set_mime_callback(ext, { (path, context) in
-                    let magic_file = Settings.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
-                    let r = magic_get_mime_by_file(path, magic_file)
-                    return r
-                }, nil)
+                cmark_syntax_extension_inlineimage_set_mime_callback(ext, nil, nil)
                 /*
                 cmark_syntax_extension_inlineimage_set_remote_data_callback(ext, { (url, context) -> UnsafeMutablePointer<Int8>? in
                     guard let uu = url, let u = URL(string: String(cString: uu)) else {
@@ -221,6 +275,7 @@ extension Settings {
                         guard let fragment = fragment else {
                             return
                         }
+                        // Base64 encode images inside the md code.
                         
                         let baseDir: URL
                         if let s = workingDir {
@@ -236,7 +291,7 @@ extension Settings {
                             for img in try doc.select("img") {
                                 let src = try img.attr("src")
                                 
-                                guard !src.isEmpty, !src.hasPrefix("http"), !src.hasPrefix("HTTP") else {
+                                guard !src.isEmpty, !src.hasPrefix("http"), !src.lowercased().hasPrefix("http") else {
                                     // Do not handle external image.
                                     continue
                                 }
@@ -245,20 +300,29 @@ extension Settings {
                                     continue
                                 }
                                 
+                                
                                 let file = baseDir.appendingPathComponent(src).path
                                 guard FileManager.default.fileExists(atPath: file) else {
                                     os_log("Image %{private}@ not found!", log: OSLog.rendering, type: .error)
                                     continue // File not found.
                                 }
-                                guard let data = get_base64_image(
+                                
+                                let ext = URL(fileURLWithPath: file).pathExtension
+                                let mime: String
+                                switch ext {
+                                case "jpeg":
+                                    mime = "image/jpeg"
+                                case "tif":
+                                    mime = "image/tiff"
+                                case "svg":
+                                    mime = "image/svg+xml"
+                                default:
+                                    mime = "image/\(ext)"
+                                }
+                                
+                                guard let data = get_base64_image2(
                                     file.cString(using: .utf8),
-                                    { (path: UnsafePointer<Int8>?, context: UnsafeMutableRawPointer?) -> UnsafeMutablePointer<Int8>? in
-                                        let magic_file = Settings.getResourceBundle().path(forResource: "magic", ofType: "mgc")?.cString(using: .utf8)
-                                        
-                                        let r = magic_get_mime_by_file(path, magic_file)
-                                        return r
-                                    },
-                                    nil,
+                                    mime.cString(using: .utf8),
                                     /*{ (url, _ )->UnsafeMutablePointer<Int8>? in
                                         guard let s = url else {
                                             return nil
@@ -295,17 +359,17 @@ extension Settings {
             }
         }
         
-        if self.emojiExtension {
+        if self.emojiExtension != .disabled {
             if let ext = cmark_find_syntax_extension("emoji") {
-                cmark_syntax_extension_emoji_set_use_characters(ext, !self.emojiImageOption)
+                cmark_syntax_extension_emoji_set_use_characters(ext, self.emojiExtension == .font)
                 cmark_parser_attach_syntax_extension(parser, ext)
-                os_log("Enabled markdown `emoji` extension using %{public}s.", log: OSLog.rendering, type: .debug, self.emojiImageOption ? "images" : "glyphs")
+                os_log("Enabled markdown `emoji` extension using %{public}s.", log: OSLog.rendering, type: .debug, self.emojiExtension == .images ? "images" : "glyphs")
             } else {
                 os_log("Could not enable markdown `emoji` extension!", log: OSLog.rendering, type: .error)
             }
         }
         
-        if self.mathExtension {
+        if !self.mathExtension.isDisabled {
             if let ext = cmark_find_syntax_extension("math") {
                 cmark_parser_attach_syntax_extension(parser, ext)
                 
@@ -331,18 +395,15 @@ extension Settings {
                 cmark_syntax_extension_highlight_set_line_number(ext, self.syntaxLineNumbersOption ? 1 : 0)
                 cmark_syntax_extension_highlight_set_tab_spaces(ext, Int32(self.syntaxTabsOption))
                 cmark_syntax_extension_highlight_set_wrap_limit(ext, Int32(self.syntaxWordWrapOption))
-                cmark_syntax_extension_highlight_set_guess_language(ext, guess_type(UInt32(self.guessEngine.rawValue)))
-                if self.guessEngine == .simple, let f = self.resourceBundle.path(forResource: "magic", ofType: "mgc") {
-                    cmark_syntax_extension_highlight_set_magic_file(ext, f)
-                }
                 
+                /*
                 if !self.syntaxFontFamily.isEmpty {
                     cmark_syntax_extension_highlight_set_font_family(ext, self.syntaxFontFamily, Float(self.syntaxFontSize))
                 } else {
-                    // cmark_syntax_extension_highlight_set_font_family(ext, "-apple-system, BlinkMacSystemFont, sans-serif", 0.0)
                     // Pass a fake value, so will be used the font defined inside the main css file.
                     cmark_syntax_extension_highlight_set_font_family(ext, "-", 0.0)
                 }
+                */
                 
                 cmark_parser_attach_syntax_extension(parser, ext)
                 
@@ -363,7 +424,7 @@ extension Settings {
             cmark_node_free(doc)
         }
         
-        let about = self.about ? "<div style='font-size: 72%; margin-top: 1.5em; padding-top: .5em; -webkit-user-select: none;'><hr style='height: 0; border: none; border-top: 1px solid rgba(0,0,0,.5); box-shadow: 0 1px 1px rgba(255, 255, 255, .5)'/>\(self.app_version)</div>\n\(self.app_version2)" : ""
+        let about = self.about ? "<div style='font-size: 72%; margin-top: 1.5em; padding-top: .5em; -webkit-user-select: none;'><hr style='height: 0; border: none; border-top: 1px solid rgba(0,0,0,.5); box-shadow: 0 1px 1px rgba(255, 255, 255, .5)'/>\(Self.aboutInfo)</div>\n" : ""
         
         let html_debug = self.renderDebugInfo(forAppearance: appearance, baseDir: baseDir)
         // Render
@@ -378,8 +439,13 @@ extension Settings {
         }
     }
     
-    internal func renderDebugInfo(forAppearance appearance: Appearance, baseDir: String) -> String
-    {
+    /**
+     * Get a debug info with the current settings.
+     * - parameters:
+     *   - appearance:
+     *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
+     */
+    internal func renderDebugInfo(forAppearance appearance: Appearance, baseDir: String) -> String {
         guard debug else {
             return ""
         }
@@ -394,7 +460,7 @@ table.debug td {
 """
         html_debug += "<table class='debug'>\n<caption>Debug info</caption>"
         var html_options = ""
-        if self.unsafeHTMLOption || (self.emojiExtension && self.emojiImageOption) {
+        if self.unsafeHTMLOption {
             html_options += "CMARK_OPT_UNSAFE "
         }
         
@@ -414,7 +480,7 @@ table.debug td {
             html_options += "CMARK_OPT_FOOTNOTES "
         }
         
-        if self.strikethroughExtension && self.strikethroughDoubleTildeOption {
+        if self.strikethroughExtension == .double {
             html_options += "CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE "
         }
 
@@ -429,11 +495,13 @@ table.debug td {
         html_debug += "</td></tr>\n"
         
         html_debug += "<tr><td>emoji extension</td><td>"
-        if self.emojiExtension {
-            html_debug += "on" + (cmark_find_syntax_extension("emoji") == nil ? " (NOT AVAILABLE" : "")
-            html_debug += " / \(self.emojiImageOption ? "using images" : "using emoji")"
-        } else {
+        switch self.emojiExtension {
+        case .disabled:
             html_debug += "off"
+        case .font:
+            html_debug += "on" + (cmark_find_syntax_extension("emoji") == nil ? " (NOT AVAILABLE" : "") + " using font glyphs"
+        case .images:
+            html_debug += "on" + (cmark_find_syntax_extension("emoji") == nil ? " (NOT AVAILABLE" : "") + " using images"
         }
         html_debug += "</td></tr>\n"
         
@@ -457,21 +525,44 @@ table.debug td {
         html_debug += "</td></tr>\n"
         
         html_debug += "<tr><td>math extension</td><td>"
-        if self.mathExtension {
-            html_debug += "on " + (cmark_find_syntax_extension("math") == nil ? " (NOT AVAILABLE" : "")
-        } else {
-            html_debug += "off"
+        switch self.mathExtension {
+            case .disabled:
+                html_debug += "off"
+            case .embed:
+                html_debug += "embedded"
+                if let file = self.mathJaxUrl {
+                    html_debug += " (\(file.path)"
+                    
+                    if file.isFileURL && !FileManager.default.fileExists(atPath: file.path) {
+                        html_debug += " <b>NOT FOUND!</b>"
+                    }
+                    html_debug += ")"
+                } else {
+                    html_debug += " (fallback: \(Self.mathJaxWebUrl.absoluteString))"
+                }
+            case .link:
+                html_debug += "linked (\(Self.mathJaxWebUrl.absoluteString))"
         }
         html_debug += "</td></tr>\n"
 
         html_debug += "<tr><td>mermaid extension</td><td>"
-        if self.mermaidExtension {
-            html_debug += "on"
-            if self.resourceBundle.path(forResource: "mermaid.min", ofType: "js") == nil {
-                html_debug += " (mermaid.min.js NOT FOUND)"
-            }
-        } else {
+        switch self.mermaidExtension {
+        case .disabled:
             html_debug += "off"
+        case .embed:
+            html_debug += "embedded"
+            if let file = self.mermaidUrl {
+                html_debug += " (\(file.path)"
+                
+                if file.isFileURL && !FileManager.default.fileExists(atPath: file.path) {
+                    html_debug += " <b>NOT FOUND!</b>"
+                }
+                html_debug += ")"
+            } else {
+                html_debug += " (fallback: \(Self.mermaidWebUrl.absoluteString))"
+            }
+        case .link:
+            html_debug += "linked (\(Self.mermaidWebUrl.absoluteString))"
         }
         html_debug += "</td></tr>\n"
 
@@ -484,10 +575,13 @@ table.debug td {
         html_debug += "</td></tr>\n"
         
         html_debug += "<tr><td>strikethrough extension</td><td>"
-        if self.strikethroughExtension {
-            html_debug += "on " + (cmark_find_syntax_extension("strikethrough") == nil ? " (NOT AVAILABLE" : "")
-        } else {
+        switch self.strikethroughExtension {
+        case .disabled:
             html_debug += "off"
+        case .single:
+            html_debug += "on " + (cmark_find_syntax_extension("strikethrough") == nil ? " (NOT AVAILABLE" : "") + " (single ~)"
+        case .double:
+            html_debug += "on " + (cmark_find_syntax_extension("strikethrough") == nil ? " (NOT AVAILABLE" : "") + " (double ~)"
         }
         html_debug += "</td></tr>\n"
         
@@ -501,19 +595,6 @@ table.debug td {
             html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
             html_debug += "<tr><td>wrap</td><td> \(self.syntaxWordWrapOption > 0 ? "after \(self.syntaxWordWrapOption) characters" : "disabled")</td></tr>\n"
             html_debug += "<tr><td>spaces for a tab</td><td>\(self.syntaxTabsOption)</td></tr>\n"
-            html_debug += "<tr><td>guess language</td><td>"
-            switch self.guessEngine {
-            case .none:
-                html_debug += "off"
-            case .simple:
-                html_debug += "simple<br />"
-                html_debug += "magic db: \(self.resourceBundle.path(forResource: "magic", ofType: "mgc") ?? "missing")"
-            case .accurate:
-                html_debug += "accurate"
-            }
-            html_debug += "</td></tr>\n"
-            html_debug += "<tr><td>font family</td><td>\(self.syntaxFontFamily.isEmpty ? "not set" : self.syntaxFontFamily)</td></tr>\n"
-            html_debug += "<tr><td>font size</td><td>\(self.syntaxFontSize > 0 ? "\(self.syntaxFontSize)" : "not set")</td></tr>\n"
             html_debug += "</table>\n"
         } else {
             html_debug += "off"
@@ -560,10 +641,13 @@ table.debug td {
         html_debug += "</td></tr>\n"
         
         html_debug += "<tr><td>YAML extension</td><td>"
-        if self.yamlExtension {
-            html_debug += "on "+(self.yamlExtensionAll ? "for all files" : "only for .rmd and .qmd files")
-        } else {
+        switch self.yamlExtension {
+        case .disabled:
             html_debug += "off"
+        case .allFiles:
+            html_debug += "on for all files"
+        case .onlyRmd:
+            html_debug += "only for .rmd and .qmd files"
         }
         html_debug += "</td></tr>\n"
         
@@ -574,14 +658,21 @@ table.debug td {
         return html_debug
     }
     
-    func renderCode(text: String, forAppearance appearance: Appearance, baseDir: String) -> String? {
+    /**
+     * Render the markdown as the highlighted source code to an html fragment.
+     * - parameters:
+     *   - text: Markdown code to format.
+     *   - appearance:
+     *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
+     */
+    func renderAsSourceCode(text: String, forAppearance appearance: Appearance, baseDir: String) -> String? {
         if let path = getHighlightSupportPath() {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
         } else {
             os_log("Unable to found the `highlight` support dir!", log: OSLog.rendering, type: .error)
         }
         
-        let theme = Self.isLightAppearance ? "acid" : "zenburn"
+        let theme = Self.isLightAppearance ? "acid" : "zenburn" // FIXME: allow to customize the theme
         
         // Initialize a new generator and clear previous settings.
         highlight_init_generator()
@@ -589,11 +680,14 @@ table.debug td {
         highlight_set_print_line_numbers(self.syntaxLineNumbersOption ? 1 : 0)
         highlight_set_formatting_mode(Int32(self.syntaxWordWrapOption), Int32(self.syntaxTabsOption))
         
+        /*
         if !self.syntaxFontFamily.isEmpty {
             highlight_set_current_font(self.syntaxFontFamily, self.syntaxFontSize > 0 ? String(format: "%.02f", self.syntaxFontSize) : "1rem") // 1rem is rendered as 1rempt, so it is ignored.
         } else {
             highlight_set_current_font("ui-monospace, -apple-system, BlinkMacSystemFont, sans-serif", "10");
         }
+         */
+        highlight_set_current_font("ui-monospace, -apple-system, BlinkMacSystemFont, sans-serif", "10");
         
         if let s = colorizeCode(text, "md", theme, true, self.syntaxLineNumbersOption) {
             defer {
@@ -606,25 +700,54 @@ table.debug td {
         }
     }
     
-    func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?) throws -> String {
-        guard let data = FileManager.default.contents(atPath: url.path) else {
-            os_log("Unable to read the file %{private}@", log: OSLog.rendering, type: .error, url.path)
-            return ""
-        }
+    
+    /**
+     * Embed a JS library.
+     * - parameters:
+     *  - mode:
+     *  - fileUrl: Path (local file or web uRL) of the library, from the cache folder or the main bundle.
+     *  - cdnUrl:Web url from download the library. Tipically from a CDN service.
+     *  - extraTagLink: Extra code to put in the `<script>` tag when the library is linked.
+     *  - extraTagEmbed: Extra code to put in the `<script>` tag when the library is embedded.
+     */
+    internal func embedJsLibrary(mode: JSExtension, fileUrl: URL?, cdnUrl: URL, extraTagLink: String = "", extraTagEmbed: String = "") -> String {
         
-        return try self.render(data: data, forAppearance: appearance, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
+        return mode.getScriptCode(extraTagLink: extraTagLink, extraTagEmbed: extraTagEmbed)
+        /*
+        switch mode {
+        case .disabled:
+            return ""
+        case .link(let url):
+            let libraryUrl: URL
+            if url?.isFileURL ?? true {
+                // Only web url can be linked
+                libraryUrl = cdnUrl
+            } else {
+                libraryUrl = url!
+            }
+            return "<script type='text/javascript' \(extraTagLink) src='\(libraryUrl.absoluteString)'></script>\n"
+        case .embed(let url):
+            let libraryUrl = url ?? fileUrl ?? cdnUrl
+            if libraryUrl.isFileURL {
+                if let code = try? String(contentsOfFile: libraryUrl.path, encoding: .utf8) {
+                    // Embed the libraty inline
+                    return "<script type='text/javascript' \(extraTagEmbed)>\n\(code)\n</script>\n"
+                }
+            }
+            return embedJsLibrary(mode: .link(url: url), fileUrl: fileUrl, cdnUrl: cdnUrl, extraTagLink: extraTagLink, extraTagEmbed: extraTagEmbed)
+        }
+        */
     }
     
-    func render(data: Data, forAppearance appearance: Appearance, filename: String = "file.md", baseDir: String) throws -> String {
-        guard let markdown_string = String(data: data, encoding: .utf8) else {
-            os_log("Unable to read the data %{private}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
-            return ""
-        }
-        
-        return try self.render(text: markdown_string, filename: filename, forAppearance: appearance, baseDir: baseDir)
-    }
-    
-    func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "", basedir: URL, forAppearance appearance: Appearance) -> String {
+    /**
+     * Build a complete html file.
+     * - parameters:
+     *  - title: Title of the page.
+     *  - body: Contents of the page.
+     *  - header: Header block.
+     *  - footer: Code to put at the end of the body.
+     */
+    func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "") -> String {
         
         let css_doc: String
         let css_doc_extended: String
@@ -632,25 +755,26 @@ table.debug td {
         var s_header = header
         var s_footer = footer
         
-        let formatCSS = { (code: String?) -> String in
+        let formatCSS = { (code: String?, fontSize: CGFloat) -> String in
             guard let css = code, !css.isEmpty else {
                 return ""
             }
+            
             return "<style type='text/css'>\(css)\n</style>\n"
         }
             
         if !self.renderAsCode {
             let css = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
             if !css.isEmpty {
-                css_doc_extended = formatCSS(css)
+                css_doc_extended = formatCSS(css, self.baseFontSize)
                 if !self.customCSSOverride {
-                    css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
+                    css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"), self.baseFontSize)
                 } else {
                     css_doc = ""
                 }
             } else {
                 css_doc_extended = ""
-                css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"))
+                css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"), self.baseFontSize)
             }
             // css_doc = "<style type=\"text/css\">\n\(css_doc)\n</style>\n"
         } else {
@@ -697,9 +821,9 @@ table.debug td {
                 css_highlight += "body.hl, pre.hl, pre.hl code { font-size: \(size)pt; }\n"
             }
         }
-        css_highlight = formatCSS(css_highlight)
+        css_highlight = formatCSS(css_highlight, self.baseFontSize)
         
-        if !self.renderAsCode, self.mathExtension, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 || body.contains("$") {
+        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 || body.contains("$") {
             s_header += """
 <script type="text/javascript">
 MathJax = {
@@ -722,38 +846,26 @@ MathJax = {
 };
 </script>
 """
-            s_footer += """
-<script type="text/javascript" id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
-"""
+            s_footer += embedJsLibrary(mode: mathExtension, fileUrl: self.mathJaxUrl, cdnUrl: Self.mathJaxWebUrl, extraTagLink: "id='MathJax-script' async", extraTagEmbed: "id='MathJax-script'")
         }
 
         // Mermaid diagrams support
         var processedBody = body
-        if !self.renderAsCode, self.mermaidExtension, body.contains("language-mermaid") {
+        if !self.renderAsCode, !self.mermaidExtension.isDisabled, body.contains("language-mermaid") {
             // Transform mermaid code blocks to mermaid divs
             processedBody = transformMermaidBlocks(body)
 
-            // Inject mermaid.min.js from bundle
-            if let mermaidPath = self.resourceBundle.path(forResource: "mermaid.min", ofType: "js"),
-               let mermaidJS = try? String(contentsOfFile: mermaidPath, encoding: .utf8) {
-                // Embed mermaid.js inline and initialize
-                s_footer += """
-<script type="text/javascript">
-\(mermaidJS)
-</script>
+            // Inject mermaid.min.js
+            s_footer += embedJsLibrary(mode: mermaidExtension, fileUrl: self.mermaidUrl, cdnUrl: Self.mermaidWebUrl)
+            s_footer += """
 <script type="text/javascript">
 mermaid.initialize({
-  startOnLoad: true,
-  theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
-  securityLevel: 'strict'
+startOnLoad: true,
+theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+securityLevel: 'strict'
 });
 </script>
 """
-            } else {
-                os_log("Could not load mermaid.min.js from bundle", log: OSLog.rendering, type: .error)
-            }
         }
 
         let style = css_doc + css_highlight + css_doc_extended
@@ -776,6 +888,7 @@ mermaid.initialize({
 \(processedBody)
 \(wrapper_close)
 \(s_footer)
+\(Self.aboutComment)
 </body>
 </html>
 """
@@ -802,6 +915,8 @@ mermaid.initialize({
                 r.append(try parseYaml(node: n))
             }
             return r
+        case .alias(let alias):
+            return alias.anchor.rawValue // FIXME:
         }
     }
     
@@ -821,7 +936,9 @@ mermaid.initialize({
         return "```yaml\n"+text+"```\n"
     }
     
-    /// Transform mermaid code blocks from `<pre...><code class="language-mermaid">...</code></pre>` to `<div class="mermaid">...</div>`
+    /**
+     * Transform mermaid code blocks from `<pre...><code class="language-mermaid">...</code></pre>` to `<div class="mermaid">...</div>`.
+     */
     private func transformMermaidBlocks(_ html: String) -> String {
         // Match <pre...><code...class="...language-mermaid..."...>...</code></pre>
         // We need to handle potential attributes and whitespace variations
@@ -894,5 +1011,4 @@ mermaid.initialize({
         s += "</table>"
         return s
     }
-    
 }

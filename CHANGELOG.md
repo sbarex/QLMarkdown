@@ -1,5 +1,19 @@
 # Changelog
 
+### 1.5 (51)
+New Features:
+- **Application is now codesigned and notarized!**
+- Option to set the base font size.
+- All dependency libraries have been updated.
+- The application size has been reduced.
+- `Marmeid.js` and `MathJax.js` libraries can be linked to the web or embedded in the html output. You can also update from the web to the last release of the libreries.
+
+**Breaking changed:**
+- This release will reset all previous settings.
+- The command line tool do not more use the same settings of the main application or the Quick Look extension.
+- Command line tool uses some different arguments.
+- Dropped support for guess the scriping language inside fanced blocks.
+
 
 ### 1.0.24 (50)
 New Features:

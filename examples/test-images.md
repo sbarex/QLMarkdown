@@ -1,6 +1,6 @@
 # Test images
 
-image url: `example.jpg`
+image url: `image.jpg`
 
 ![Colibrì](image.jpg)
 
@@ -8,13 +8,13 @@ image url: `example.jpg`
 
 > __Space inside file name is not allowed from the standard!__
 
-image url: `example 1.jpg`
+image url: `image 1.jpg`
 
 ![Colibrì](image 1.jpg)
 
 ## Image with encoded url
 
-image url: `example%201.jpg`
+image url: `image%201.jpg`
 
 ![Colibrì](image%201.jpg)
 

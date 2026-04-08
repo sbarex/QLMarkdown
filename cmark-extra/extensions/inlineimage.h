@@ -53,4 +53,8 @@ void cmark_syntax_extension_inlineimage_set_remote_data_callback(cmark_syntax_ex
  */
 char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_context, DataCallback *remote_callback, void *remote_context);
 
+char *get_base64_image2(const char *url, const char *mime, DataCallback *remote_callback, void *remote_context);
+
+char *mime_from_image_name(const char *image_path);
+
 #endif /* inlineimage_h */
