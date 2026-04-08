@@ -47,7 +47,7 @@ enum EmojiArgumentEnum: String, ExpressibleByArgument {
     static var allValueDescriptions: [String : String] {
         return [
             "font": "replace with font glyphs",
-            "images": "repolace with web images",
+            "images": "replace with web images",
             "off": "disabled"
         ]
     }
@@ -106,7 +106,7 @@ struct OptionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Parse the footnotes.", valueName: "on|off"))
     var footnotes: BoolArgumentEnum? = nil
     
-    @Option(help: ArgumentHelp("Render softb-reak elements as hard line breaks.", valueName: "on|off"))
+    @Option(help: ArgumentHelp("Render soft-break elements as hard line breaks.", valueName: "on|off"))
     var hardBreak: BoolArgumentEnum? = nil
     
     @Option(help: ArgumentHelp("Render soft-break elements as spaces.", valueName: "on|off"))

@@ -313,7 +313,7 @@ MARKDOWN OPTIONS:
   --base-font-size <number>
                           Set the base font size, in points.
   --footnotes <on|off>    Parse the footnotes. (values: on, off)
-  --hard-break <on|off>   Render softb-reak elements as hard line breaks. (values: on, off)
+  --hard-break <on|off>   Render soft-break elements as hard line breaks. (values: on, off)
   --no-soft-break <on|off>
                           Render soft-break elements as spaces. (values: on, off)
   --raw-html <on|off>     Convert straight quotes to curly. (values: on, off)
@@ -328,7 +328,7 @@ MARKDOWN EXTENSIONS:
   --autolink <on|off>     Automatically translate URL/email to link. (values: on, off)
   --emoji <emoji>         Translate the emoji shortcodes.
         font              - replace with font glyphs
-        images            - repolace with web images
+        images            - replace with web images
         off               - disabled
   --github-mentions <on|off>
                           Translate mentions to link to the GitHub account (values: on, off)
@@ -379,7 +379,7 @@ Unlike the Quick Look extension and the Shortcut command, the CLI tool allows yo
 
 ## Shortcut Commands
 
-The application provides two exprerimental commands for the `Shortcuts` Application:
+The application provides two experimental commands for the `Shortcuts` Application:
 - `Markdown format`: format a markdown file and output the converted html code. 
 - `Markdown convert`: format a markdown file and save the converted html code to a file.
 
@@ -469,7 +469,7 @@ This application handle these UTIs:
 
 > Q: Double-clicking the file doesn't open QLMarkdown
 
-This is a desired behavior. QLMarkdown is not intended to be used as a standalone markdown file editor or viewer.
+This is a desired behaviour. QLMarkdown is not intended to be used as a standalone markdown file editor or viewer.
 
 
 ## Note about the developer
