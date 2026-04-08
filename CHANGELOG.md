@@ -6,13 +6,13 @@ New Features:
 - Option to set the base font size.
 - All dependency libraries have been updated.
 - The application size has been reduced.
-- `Marmeid.js` and `MathJax.js` libraries can be linked to the web or embedded in the html output. You can also update from the web to the last release of the libreries.
+- `Marmeid.js` and `MathJax.js` libraries can be linked to the web or embedded in the html output. You can also update from the web to the last release of the libraries.
 
 **Breaking changed:**
 - This release will reset all previous settings.
 - The command line tool do not more use the same settings of the main application or the Quick Look extension.
 - Command line tool uses some different arguments.
-- Dropped support for guess the scriping language inside fanced blocks.
+- Dropped support for guess the scripting language inside fanced blocks.
 
 
 ### 1.0.24 (50)
