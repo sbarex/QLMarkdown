@@ -151,14 +151,16 @@ struct MdToHtml_Extension: AppIntent {
         taskExtension.updateValue(state: &settings.taskListExtension)
         yamlExtension.updateValue(state: &settings.yamlExtension)
         
+        settings.sanitize()
+        
         let markdown_url = Settings.getMarkdownFile(from: url)
         
         guard FileManager.default.isReadableFile(atPath: markdown_url.path) else {
-            os_log("Unable to read the file %{private}@", log: OSLog.shortcutExtension, type: .error, markdown_url.path)
+            os_log("Unable to read the file %{public}@", log: OSLog.shortcutExtension, type: .error, markdown_url.path)
             throw QLMError.cannotReadFile
         }
          
-        os_log("Processng file %{private}@", log: OSLog.shortcutExtension, type: .debug, markdown_url.path)
+        os_log("Processng file %{public}@", log: OSLog.shortcutExtension, type: .debug, markdown_url.path)
          
         let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
         let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)

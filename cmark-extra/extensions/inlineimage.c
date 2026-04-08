@@ -233,7 +233,7 @@ char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_con
             mime = get_mime(image_path, 2);
         }
         if (!mime || !startsWith("image/", mime)) {
-            os_log_error(getLogForImageExt(), "%{private}s (%{public}s) is not an image!", image_path, mime);
+            os_log_error(getLogForImageExt(), "%{public}s (%{public}s) is not an image!", image_path, mime);
             fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
             goto continue_loop;
         }
@@ -260,11 +260,11 @@ char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_con
             free(data);
             free(buffer);
         } else {
-            os_log_error(getLogForImageExt(), "Error to get magic for file %{private}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+            os_log_error(getLogForImageExt(), "Error to get magic for file %{public}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
             fprintf(stderr, "Error to get magic for file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
         }
     } else {
-        os_log_error(getLogForImageExt(), "Unable to open file %{private}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+        os_log_error(getLogForImageExt(), "Unable to open file %{public}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
         fprintf(stderr, "Unable to open file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
     }
     
@@ -331,7 +331,7 @@ char *get_base64_image2(const char *url, const char *mime, DataCallback *remote_
     
     if (access(image_path, F_OK | R_OK) == 0) {
         if (!mime || !startsWith("image/", mime)) {
-            os_log_error(getLogForImageExt(), "%{private}s (%{public}s) is not an image!", image_path, mime);
+            os_log_error(getLogForImageExt(), "%{public}s (%{public}s) is not an image!", image_path, mime);
             fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
             goto continue_loop;
         }
@@ -358,11 +358,11 @@ char *get_base64_image2(const char *url, const char *mime, DataCallback *remote_
             free(data);
             free(buffer);
         } else {
-            os_log_error(getLogForImageExt(), "Error to get magic for file %{private}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+            os_log_error(getLogForImageExt(), "Error to get magic for file %{public}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
             fprintf(stderr, "Error to get magic for file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
         }
     } else {
-        os_log_error(getLogForImageExt(), "Unable to open file %{private}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+        os_log_error(getLogForImageExt(), "Unable to open file %{public}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
         fprintf(stderr, "Unable to open file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
     }
     

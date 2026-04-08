@@ -20,457 +20,569 @@ extension FileHandle : @retroactive TextOutputStream {
     }
 }
 
-func usage(exitCode: Int = -1) {
-    let name = cliUrl.lastPathComponent
-    print("\(name)")
-    print("Usage: \(name) [-o <file|dir>] [-v] <file> [..]")
-    print("\nArguments:")
-    print(" -h\tShow this help and exit.")
-    print(" -o\t<file|dir> Destination output. If you pass a directory, a new file is created with the name of the processed source with html extension. \n   \tThe destination file is always overwritten. If this argument is not provided, the output will be printed to the stdout.")
-    print(" -v\tVerbose mode. Valid only with the -o option.")
-    // print(" --app\t<path> Set the path of \"QLMarkdown.app\" otherwise assume that \(name) is called from the Contents/Resources of the app bundle.")
+
+enum BoolArgumentEnum: String, ExpressibleByArgument {
+    case on, off
     
-    print("\nOptions:")
-    print(" --footnotes on|off        Parse the footnotes.")
-    print(" --hard-break on|off       Render softbreak elements as hard line breaks.")
-    print(" --no-soft-break on|off    Render softbreak elements as spaces.")
-    print(" --raw-html on|off         Render raw HTML and unsafe links.")
-    print(" --smart-quotes on|off     Convert straight quotes to curly.")
-    print(" --validate-utf8 on|off    Validate UTF-8 in the input before parsing.")
-    print(" --code on|off             Show the plain text file (raw version) instead of the formatted output.")
-    print(" --appearance light|dark   ")
-    print(" --about on|off            Show/Hide a footer with info about QLMarkdown.")
-    print(" --debug on|off            Insert in the output some debug information.")
-    print(" --baseFontSize number     Set the base font size in points.")
-    
-    print("\nExtensions:")
-    print(" --autolink on|off         Automatically translate URL/email to link.")
-    print(" --emoji image|font|off    Translate the emoji shortcodes.")
-    print(" --github-mentions on|off  Translate mentions to link to the GitHub account.")
-    print(" --heads-anchor on|off     Create anchors for the heads.")
-    print(" --highlight on|off        Highlight text marked with `==`.")
-    print(" --inline-images on|off    Embed the image files inside the formatted output.")
-    print(" --math [off|url|path]     Format the mathematical expressions with MathJax.")
-    print(" --math-embed on|off       Embed/Link the MathJax library.")
-    print(" --mermaid [off|url|path]  Format the mermaid diagrams.")
-    print(" --mermaid-embed on|off    Embed/Link the mermaid library.")
-    print(" --table on|off            Enable table format.")
-    print(" --tag-filter on|off       Strip potentially dangerous HTML tags.")
-    print(" --tasklist on|off         Parse task list.")
-    print(" --strikethrough single|double|off Recognize single/double `~` for the strikethrough style.")
-    print(" --syntax-highlight on|off Highlight the code inside fenced block")
-    print(" --sub on|off              Format subscript characters inside `~` markers.")
-    print(" --sup on|off              Format superscript characters inside `^` markers.")
-    print(" --yaml rmd|qmd|all|off    Render the yaml header")
-    
-    print("\nTo handle multiple files at time you need to pass the -o argument with a destination folder.")
-    
-    if exitCode >= 0 {
-        exit(Int32(exitCode))
+    static var allValueStrings: [String] {
+        return ["on", "off"]
     }
 }
 
-var appUrl: URL!
-var files: [URL] = []
-var dest: URL?
-var verbose = false
-
-let settings = Settings.settingsFromSharedFile() ?? Settings()
-
-var type = Settings.isLightAppearance ? "Light" : "Dark"
-
-func parseArgOnOff(index i: Int) -> Bool {
-    guard i+1 < CommandLine.arguments.count else {
-        print("\(cliUrl.lastPathComponent): \(CommandLine.arguments[i]) require an on|off argument.\n", to: &standardError)
-        usage(exitCode: 1)
-        return false
-    }
+enum AppearanceEnum: String, ExpressibleByArgument {
+    case light, dark
     
-    let u = CommandLine.arguments[i+1]
-    switch u {
-    case "on", "1": return true
-    case "off", "0": return false
-    default:
-        print("\(cliUrl.lastPathComponent): illegal argument '\(u)' for \(CommandLine.arguments[i]) option.\n", to: &standardError)
-        usage(exitCode: 1)
-        return false
+    static var allValueStrings: [String] {
+        return ["light", "dark"]
     }
 }
 
-var mermaid_embedded = false
-var mermaid_file: URL? = nil
+enum EmojiArgumentEnum: String, ExpressibleByArgument {
+    case font, images, off
+    
+    static var allValueStrings: [String] {
+        return ["font", "images", "off"]
+    }
+    
+    static var allValueDescriptions: [String : String] {
+        return [
+            "font": "replace with font glyphs",
+            "images": "repolace with web images",
+            "off": "disabled"
+        ]
+    }
+}
 
-var math_embedded = false
-var math_file: URL? = nil
+enum StrikethroughArgumentEnum: String, ExpressibleByArgument {
+    case single, double, off
+    
+    static var allValueStrings: [String] {
+        return ["single", "double", "off"]
+    }
+    static var allValueDescriptions: [String : String] {
+        return [
+            "single": "detect single tilde (~)",
+            "double": "detect double tilde (~~)",
+            "off": "disabled"
+        ]
+    }
+}
 
-var i = 1
-while i < Int(CommandLine.argc) {
-    var arg = CommandLine.arguments[i]
-    if arg.hasPrefix("-") {
-        if arg.hasPrefix("--") {
-            // process a --arg
-            switch arg {
-            case "--help":
-                usage(exitCode: 0)
-            case "--baseFontSize":
-                let u = CommandLine.arguments[i+1]
-                if let n = Double(u) {
-                    settings.baseFontSize = CGFloat(n)
-                }
-            case "--app":
-                let u = CommandLine.arguments[i+1]
-                appUrl = URL(fileURLWithPath: u)
-                i += 1
-            case "--smart-quotes":
-                settings.smartQuotesOption = parseArgOnOff(index: i)
-                i += 1
-            case "--footnotes":
-                settings.footnotesOption = parseArgOnOff(index: i)
-                i += 1
-            case "--emoji":
-                let opt = CommandLine.arguments[i+1]
-                switch opt {
-                case "off":
-                    settings.emojiExtension = .disabled
-                case "image":
-                    settings.emojiExtension = .images
-                default:
-                    settings.emojiExtension = .font
-                }
-                i += 1
-            case "--math":
-                if i < CommandLine.argc - 1 {
-                    let u = CommandLine.arguments[i+1]
-                    if u == "off" {
-                        settings.mathExtension = .disabled
-                    } else {
-                        settings.mathExtension = .link(url: math_file)
-                        if u != "on" {
-                            mermaid_file = URL(string: u)
-                        }
-                    }
-                } else {
-                    settings.mathExtension = .link(url: nil)
-                }
-                i += 1
-            case "--math-embed":
-                math_embedded = parseArgOnOff(index: i)
-                i += 1
-            case "--mermaid":
-                if i < CommandLine.argc - 1 {
-                    let u = CommandLine.arguments[i+1]
-                    if u == "off" {
-                        settings.mermaidExtension = .disabled
-                    } else {
-                        settings.mermaidExtension = .link(url: mermaid_file)
-                        if u != "on" {
-                            mermaid_file = URL(string: u)
-                        }
-                    }
-                } else {
-                    settings.mermaidExtension = .link(url: nil)
-                }
-                i += 1
-            case "--mermaid-embed":
-                mermaid_embedded = parseArgOnOff(index: i)
-                i += 1
-                
-            case "--highlight":
-                settings.highlightExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--table":
-                settings.tableExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--strikethrough":
-                let opt = CommandLine.arguments[i+1]
-                settings.strikethroughExtension = opt != "off"
-                settings.strikethroughDoubleTildeOption = opt == "double"
-                i += 1
-            case "--syntax-highlight":
-                settings.syntaxHighlightExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--sub":
-                settings.subExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--sup":
-                settings.supExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--hard-break":
-                settings.hardBreakOption = parseArgOnOff(index: i)
-                i += 1
-            case "--no-soft-break":
-                settings.noSoftBreakOption = parseArgOnOff(index: i)
-                i += 1
-            case "--validate-utf8":
-                settings.validateUTFOption = parseArgOnOff(index: i)
-                i += 1
-            case "--raw-html":
-                settings.unsafeHTMLOption = parseArgOnOff(index: i)
-                i += 1
-            case "--autolink":
-                settings.autoLinkExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--github-mentions":
-                settings.mentionExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--heads-anchor":
-                settings.headsExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--inline-images":
-                settings.inlineImageExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--tag-filter":
-                settings.tagFilterExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--tasklist":
-                settings.taskListExtension = parseArgOnOff(index: i)
-                i += 1
-            case "--yaml":
-                let opt = CommandLine.arguments[i+1]
-                switch opt {
-                case "all":
-                    settings.yamlExtension = .allFiles
-                case "off":
-                    settings.yamlExtension = .disabled
-                default:
-                    settings.yamlExtension = .onlyRmd
-                }
-                i += 1
-            case "--debug":
-                settings.debug = parseArgOnOff(index: i)
-                i += 1
-            case "--code":
-                settings.renderAsCode = parseArgOnOff(index: i)
-                i += 1
-            case "--appearance":
-                let opt = CommandLine.arguments[i+1]
-                type = opt.lowercased() == "light" ? "Light" : "Dark"
-            case "--about":
-                settings.about = parseArgOnOff(index: i)
-                i += 1
-            default:
-                print("\(cliUrl.lastPathComponent): illegal option -\(arg)\n", to: &standardError)
-                usage(exitCode: 1)
-            }
-        } else {
-            // process a -arg
-            arg.removeFirst()
-            for (j, arg1) in arg.enumerated() {
-                switch arg1 {
-                case "h":
-                    usage(exitCode: 0)
-                case "o":
-                    if j + 1 == arg.count {
-                        if CommandLine.arguments[i+1].description.hasPrefix("-") {
-                            print("\(cliUrl.lastPathComponent): option -\(arg1) require a destination path\n", to: &standardError)
-                            usage(exitCode: 1)
-                        }
-                        dest = URL(fileURLWithPath: CommandLine.arguments[i+1])
-                        i += 1
-                    } else {
-                        print("\(cliUrl.lastPathComponent): option -\(arg1) require a destination path\n", to: &standardError)
-                        usage(exitCode: 1)
-                    }
-                case "v":
-                    verbose = true
-                default:
-                    print("\(cliUrl.lastPathComponent): illegal option -\(arg1)\n", to: &standardError)
-                    usage(exitCode: 1)
-                }
+enum YamlArgumentEnum: String, ExpressibleByArgument {
+    case all, rmd, off
+    
+    init?(argument: String) {
+        switch argument.lowercased() {
+        case "rmd", "qmd":
+            self = .rmd
+        case "all":
+            self = .all
+        case "off":
+            self = .off
+        default:
+            return nil
+        }
+    }
+    
+    static var allValueStrings: [String] {
+        return ["rmd", "all", "off"]
+    }
+    
+    static var allValueDescriptions: [String : String] {
+        return [
+            "rmd": "enabled only for .rmd and .qmd files",
+            "all": "enabled for all files",
+            "off": "disabled"
+        ]
+    }
+}
+
+struct OptionsOptions: ParsableArguments {
+    @Option var appearance: AppearanceEnum? = nil
+    
+    @Option(help: ArgumentHelp("Set the base font size, in points.", valueName: "number"))
+    var baseFontSize: Float? = nil
+    
+    @Option(help: ArgumentHelp("Parse the footnotes.", valueName: "on|off"))
+    var footnotes: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Render softb-reak elements as hard line breaks.", valueName: "on|off"))
+    var hardBreak: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Render soft-break elements as spaces.", valueName: "on|off"))
+    var noSoftBreak: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Convert straight quotes to curly.", valueName: "on|off"))
+    var rawHtml: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Show the plain text file (raw version) instead of the formatted output.", valueName: "on|off"))
+    var renderAsCode: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Convert straight quotes to curly.", valueName: "on|off"))
+    var smartQuotes: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Validate UTF-8 in the input before parsing.", valueName: "on|off"))
+    var validateUtf8: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Show/Hide a footer with info about QLMarkdown.", valueName: "on|off", visibility: .private))
+    var about: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Insert in the output some debug information.", valueName: "on|off"))
+    var debug: BoolArgumentEnum? = nil
+}
+
+struct ExtensionsOptions: ParsableArguments {
+    @Option(help: ArgumentHelp("Automatically translate URL/email to link.", valueName: "on|off"))
+    var autolink: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Translate the emoji shortcodes."))
+    var emoji: EmojiArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Translate mentions to link to the GitHub account", valueName: "on|off"))
+    var githubMentions: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Create anchors for the heads.", valueName: "on|off"))
+    var headsAnchor: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Highlight text marked with `==`.", valueName: "on|off"))
+    var highlight: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Embed local image files inside the formatted output.", valueName: "on|off"))
+    var inlineImages: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Format the mathematical expressions with MathJax. You can specify the path or url of the MathJax.js library.", valueName: "path|url"))
+    var math: String? = nil
+    
+    @Option(help: ArgumentHelp("Embed/Link the MathJax library.", valueName: "on|off"))
+    var mathEmbed: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Format the mermaid diagrams. You can specify the path or url of the Mermaid.js library.", valueName: "path|url"))
+    var mermaid: String? = nil
+    
+    @Option(help: ArgumentHelp("Embed/Link the Mermaid library.", valueName: "on|off"))
+    var mermaidEmbed: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Enable table extension.", valueName: "on|off"))
+    var table: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Strip potentially dangerous HTML tags.", valueName: "on|off"))
+    var tagFilter: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Parse task list.", valueName: "on|off"))
+    var tasklist: BoolArgumentEnum? = nil
+    
+    @Option(help: "Recognize single/double `~` for the strikethrough style.")
+    var strikethrough: StrikethroughArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Highlight the code inside fenced block.", valueName: "on|off"))
+    var syntaxHighlight: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Format subscript characters inside `~` markers.", valueName: "on|off"))
+    var sub: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Format superscript characters inside `^` markers.", valueName: "on|off"))
+    var sup: BoolArgumentEnum? = nil
+    
+    @Option(help: "Render the yaml header.")
+    var yaml: YamlArgumentEnum? = nil
+}
+
+@main
+struct QLMarkdownCLI: ParsableCommand {
+    enum QLError: LocalizedError, CustomStringConvertible {
+        case destinationMustBeAFolder
+        case unableToReadSource(path: String)
+        case processError(path: String, error: Error?)
+        
+        var description: String {
+            switch self {
+            case .processError(let path, let error): return "Error processing the source file \(path)\(error != nil ? ": \(error!.localizedDescription)" : "")"
+            case .destinationMustBeAFolder: return "Destination path must be a folder!"
+            case .unableToReadSource(let path): return "Unable to read the source file (\(path))!"
             }
         }
-    } else {
-        files.append(URL(fileURLWithPath: arg))
-    }
-    /*
-    switch arg {
-    case "--help", "-h":
-        usage()
-        exit(0)
-    case "--app":
-        let u = CommandLine.arguments[i+1]
-        i += 1
-        appUrl = URL(fileURLWithPath: u)
-    case "-o":
-        dest = URL(fileURLWithPath: CommandLine.arguments[i+1])
-        i += 1
-    case "-v":
-        verbose = true
-    default:
-        if arg.hasPrefix("-") {
-            print("\(cliUrl.lastPathComponent): illegal option \(arg)", to: &standardError)
-            usage()
-            exit(1)
-        }
-        files.append(URL(fileURLWithPath: arg))
-    }
-    */
-    i += 1
-}
-
-if !settings.mermaidExtension.isDisabled {
-    settings.mermaidExtension = mermaid_embedded ? .embed(url: mermaid_file) : .link(url: mermaid_file)
-}
-
-settings.sanitize()
-
-verbose = verbose && dest != nil
-if verbose {
-    print("\n\(cliUrl.lastPathComponent)")
-    print("    appearance: \(type)")
-    
-    print("\n- options:")
-    print("    footnotes: \(settings.footnotesOption ? "on" : "off")")
-    print("    hard-break: \(settings.hardBreakOption ? "on" : "off")")
-    print("    no-soft-break: \(settings.noSoftBreakOption ? "on" : "off")")
-    print("    raw-html: \(settings.unsafeHTMLOption ? "on" : "off")")
-    print("    smart-quotes: \(settings.smartQuotesOption ? "on" : "off")")
-    print("    validate-utf8: \(settings.validateUTFOption ? "on" : "off")")
-    print("    render source code: \(settings.renderAsCode ? "on" : "off")")
-    print("    debug: \(settings.debug ? "on" : "off")")
-    
-    print("\n- extensions:")
-    print("    autolink: \(settings.autoLinkExtension ? "on" : "off")")
-    switch settings.emojiExtension {
-    case .disabled:
-        print("    emoji: off")
-    case .font:
-        print("    emoji: using font glyphs")
-    case .images:
-        print("    emoji: using images")
-    }
-    print("    github-mentions: \(settings.mentionExtension ? "on" : "off")")
-    print("    heads-anchor: \(settings.headsExtension ? "on" : "off")")
-    print("    inline-images: \(settings.inlineImageExtension ? "on" : "off")")
-    switch settings.mathExtension {
-    case .disabled:
-        print("    math: off")
-    case .embed:
-        print("    math: embedded\(math_file != nil ? " (\(math_file!))" : "")")
-    case .link:
-        print("    math: linked\(math_file != nil ? " (\(math_file!))" : "")")
     }
     
-    switch settings.mermaidExtension {
-    case .disabled:
-        print("    mermaid: off")
-    case .embed:
-        print("    mermaid: embedded\(mermaid_file != nil ? " (\(mermaid_file!))" : "")")
-    case .link:
-        print("    mermaid: linked\(mermaid_file != nil ? " (\(mermaid_file!))" : "")")
-    }
-    print("    highlight: \(settings.highlightExtension ? "on" : "off")")
-    print("    table: \(settings.tableExtension ? "on" : "off")")
-    print("    tag-filter: \(settings.tagFilterExtension ? "on" : "off")")
-    print("    tasklist: \(settings.taskListExtension ? "on" : "off")")
-    print("    strikethrough: \(settings.strikethroughExtension ? (settings.strikethroughDoubleTildeOption ? "double tilde" : "single tilde") : "off")")
-    print("    syntax-highlight: \(settings.syntaxHighlightExtension ? "on" : "off")")
-    switch settings.yamlExtension {
-    case .disabled:
-        print("    yaml: off")
-    case .allFiles:
-        print("    yaml: for all files")
-    case .onlyRmd:
-        print("    yaml: only for .rmd and .qmd files")
-    }
-    print("")
-}
-
-if appUrl == nil {
-    appUrl = cliUrl.deletingLastPathComponent().deletingLastPathComponent()
-}
-
-let appBundleUrl = appUrl.appendingPathComponent("Contents/Resources")
-
-if files.count > 1 {
-    var isDir: ObjCBool = false
-    if let dest = dest {
-        FileManager.default.fileExists(atPath: dest.path, isDirectory: &isDir)
-    }
-    if !isDir.boolValue {
-        print("Error: to process multiple files you must use the -o argument with a folder path!", to: &standardError)
-        exit(1)
-    }
-}
-
-var n = 0
-defer {
-    if verbose {
-        print(n != 1 ? "Processed \(n) files." : "Processed 1 file.")
-    }
-}
-
-Settings.appBundleUrl = appBundleUrl
-
-if files.isEmpty {
-    usage(exitCode: 1)
-}
-
-for url in files {
-    let markdown_url: URL
-    if let typeIdentifier = (try? url.resourceValues(forKeys: [.typeIdentifierKey]))?.typeIdentifier, typeIdentifier == "org.textbundle.package" {
-        if FileManager.default.fileExists(atPath: url.appendingPathComponent("text.md").path) {
-            markdown_url = url.appendingPathComponent("text.md")
+    static var configuration = CommandConfiguration(
+        abstract: "Command line tool to convert markdown files to html.",
+        discussion: "Developed by SBAREX 2020 - 2026.\nhttps://github.com/sbarex/QLMarkdown"
+    )
+    
+    @Flag var help: Bool = false
+    @Option(name: .customShort("o"), help: ArgumentHelp("Destination output. If you pass a directory, a new file is created with the name of the processed source with .html extension. \nThe destination file is always overwritten. If this argument is not provided, the output will be printed to the stdout.\nTo handle multiple files at time you need to pass the -o argument with a destination folder.", valueName: "path"))
+    var dest: String? = nil
+    
+    @Flag(name: NameSpecification.shortAndLong, help: "Verbose mode. Valid only with the -o option.")
+    var verbose: Bool = false
+    
+    @OptionGroup(title: "Markdown Options")
+    var options: OptionsOptions
+    @OptionGroup(title: "Markdown Extensions")
+    var extensions: ExtensionsOptions
+    
+    @Option(help: ArgumentHelp("Path of the main QLMarkdown.app application.", valueName: "path"))
+    var app: String? = nil
+    
+    @Argument(help: "File to be processed.")
+    var files: [String] = []
+    
+    @Flag(help: ArgumentHelp("Show the customized settings and exit."))
+    var showSettings: Bool = false
+    
+    @Flag(help: ArgumentHelp("Show the version number and exit.", visibility: .hidden))
+    var version: Bool = false
+    
+    var appUrl: URL {
+        if let app {
+            return URL(fileURLWithPath: app)
         } else {
-            markdown_url = url.appendingPathComponent("text.markdown")
+            return cliUrl.deletingLastPathComponent().deletingLastPathComponent()
         }
-    } else {
-        markdown_url = url
     }
     
-    do {
-        guard FileManager.default.isReadableFile(atPath: markdown_url.path) else {
-            print("Unable to read the file \(markdown_url.path)", to: &standardError)
-            os_log("Unable to read the file %{private}@", log: OSLog.cli, type: .error, markdown_url.path)
-            exit(127)
-        }
-        if verbose {
-            print("- processing \(markdown_url.path) ...")
-        }
-        let appearance: Appearance = type == "Light" ? .light : .dark
-        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+    var settings: Settings!
+    
+    func getSettings() -> Settings {
+        let settings = Settings.settingsFromSharedFile() ?? Settings()
         
-        let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text, basedir: markdown_url.deletingLastPathComponent(), forAppearance: appearance, mermaidPath: mermaid_file)
-        
-        Settings.renderStats += 1
-        if Settings.renderStats > 0 && Settings.renderStats % 100 == 0 {
-            print("""
-*** *** *** *** *** ***
-Thanks to this application you have viewed over \(Settings.renderStats) files.
-If you find it useful and you have the possibility, consider buying me a coffee! (https://buymeacoffee.com/sbarex)
-*** *** *** *** *** ***
-""")
+        // options
+        if let o = options.footnotes {
+            settings.footnotesOption = o == .on
+        }
+        if let o = options.hardBreak {
+            settings.hardBreakOption = o == .on
+        }
+        if let o = options.noSoftBreak {
+            settings.noSoftBreakOption = o == .on
+        }
+        if let o = options.rawHtml {
+            settings.unsafeHTMLOption = o == .on
+        }
+        if let o = options.smartQuotes {
+            settings.smartQuotesOption = o == .on
+        }
+        if let o = options.validateUtf8 {
+            settings.validateUTFOption = o == .on
+        }
+        if let o = options.renderAsCode {
+            settings.renderAsCode = o == .on
+        }
+        if let size = options.baseFontSize {
+            settings.baseFontSize = CGFloat(size)
+        }
+        if let o = options.about {
+            settings.about = o == .on
+        }
+        if let o = options.debug {
+            settings.debug = o == .on
         }
         
-        var output: URL?
-        if let dest = dest {
-            var isDir: ObjCBool = false
-            FileManager.default.fileExists(atPath: dest.path, isDirectory: &isDir)
-            if isDir.boolValue {
-                output = dest.appendingPathComponent(url.deletingPathExtension().lastPathComponent).appendingPathExtension("html")
+        // extensions
+        
+        if let o = extensions.autolink {
+            settings.autoLinkExtension = o == .on
+        }
+        if let o = extensions.emoji {
+            switch o {
+            case .font:
+                settings.emojiExtension = .font
+            case .images:
+                settings.emojiExtension = .images
+            case .off:
+                settings.emojiExtension = .disabled
+            }
+        }
+        if let o = extensions.githubMentions {
+            settings.mentionExtension = o == .on
+        }
+        if let o = extensions.headsAnchor {
+            settings.headsExtension = o == .on
+        }
+        if let o = extensions.highlight {
+            settings.highlightExtension = o == .on
+        }
+        if let o = extensions.inlineImages {
+            settings.inlineImageExtension = o == .on
+        }
+        if let o = extensions.math {
+            if o == "off" {
+                settings.mathExtension = .disabled
             } else {
-                output = dest
+                switch extensions.mathEmbed ?? (settings.mathExtension.getMode()?.embed ?? false ? .off : .on) {
+                case .on:
+                    settings.mathExtension = .embed(url: o.isEmpty ? nil : URL(string: o))
+                case .off:
+                    settings.mathExtension = .link(url: o.isEmpty ? nil : URL(string: o))
+                }
             }
-            /*
-            if !(output?.pathExtension.lowercased().hasPrefix("htm") ?? false) {
-                output?.appendPathExtension("html")
-            }
-            */
         }
         
-        if let output = output {
-            try html.write(to: output, atomically: true, encoding: .utf8)
-            if verbose {
-                print("  ... stored in \(output.path)")
+        if let o = extensions.mermaid {
+            if o == "off" {
+                settings.mermaidExtension = .disabled
+            } else {
+                switch extensions.mermaidEmbed ?? (settings.mermaidExtension.getMode()?.embed ?? false ? .off : .on) {
+                case .on:
+                    settings.mermaidExtension = .embed(url: o.isEmpty ? nil : URL(string: o))
+                case .off:
+                    settings.mermaidExtension = .link(url: o.isEmpty ? nil : URL(string: o))
+                }
             }
-            n += 1
-        } else {
-            FileHandle.standardOutput.write(html)
-            n += 1
         }
-    } catch {
-        print("Error processing \(url.path): \(error.localizedDescription)", to: &standardError)
-        os_log("Error processing the file %{private}@: %{public}@", log: OSLog.cli, type: .error, url.path, error.localizedDescription)
-        exit(1)
+        if let o = extensions.table {
+            settings.tableExtension = o == .on
+        }
+        if let o = extensions.tagFilter {
+            settings.tagFilterExtension = o == .on
+        }
+        if let o = extensions.tasklist {
+            settings.taskListExtension = o == .on
+        }
+        if let o = extensions.strikethrough {
+            switch o {
+            case .single:
+                settings.strikethroughExtension = .single
+            case .double:
+                settings.strikethroughExtension = .double
+            case .off:
+                settings.strikethroughExtension = .disabled
+            }
+        }
+        if let o = extensions.syntaxHighlight {
+            settings.syntaxHighlightExtension = o == .on
+        }
+        if let o = extensions.sub {
+            settings.subExtension = o == .on
+        }
+        if let o = extensions.sup {
+            settings.supExtension = o == .on
+        }
+        if let o = extensions.yaml {
+            switch o {
+            case .all:
+                settings.yamlExtension = .allFiles
+            case .rmd:
+                settings.yamlExtension = .onlyRmd
+            case .off:
+                settings.yamlExtension = .disabled
+            }
+        }
+        
+        var messages: [String] = []
+        settings.sanitize(allowLinkFile: true, messages: &messages)
+        if !messages.isEmpty {
+            print("Warning: there are some errors on the config settings: ")
+            messages.forEach({print($0)})
+        }
+        return settings
+    }
+    
+    func printSettings(_ settings: Settings) {
+        print("\n\(cliUrl.lastPathComponent) settings")
+        let appearance = self.options.appearance != nil ? self.options.appearance!.rawValue.capitalized : (Settings.isLightAppearance ? "Light" : "Dark")
+        
+        print("\nMain app path: \(self.appUrl.path)")
+        
+        print("\nMARKDOWN OPTIONS:")
+        print("    --appearance: \(appearance)")
+        print("    --base-font-size: \(settings.baseFontSize > 0 ? "\(settings.baseFontSize) pt" : "auto")")
+        print("    --footnotes: \(settings.footnotesOption ? "on" : "off")")
+        print("    --hard-break: \(settings.hardBreakOption ? "on" : "off")")
+        print("    --no-soft-break: \(settings.noSoftBreakOption ? "on" : "off")")
+        print("    --raw-html: \(settings.unsafeHTMLOption ? "on" : "off")")
+        print("    --smart-quotes: \(settings.smartQuotesOption ? "on" : "off")")
+        print("    --validate-utf8: \(settings.validateUTFOption ? "on" : "off")")
+        print("    --render-as-code: \(settings.renderAsCode ? "on" : "off")")
+        print("    --debug: \(settings.debug ? "on" : "off")")
+        
+        print("\nMARKDOWN EXTENSIONS:")
+        print("    --autolink: \(settings.autoLinkExtension ? "on" : "off")")
+        switch settings.emojiExtension {
+        case .disabled:
+            print("    --emoji: off")
+        case .font:
+            print("    --emoji: using font glyphs")
+        case .images:
+            print("    --emoji: using images")
+        }
+        print("    --github-mentions: \(settings.mentionExtension ? "on" : "off")")
+        print("    --heads-anchor: \(settings.headsExtension ? "on" : "off")")
+        print("    --highlight: \(settings.highlightExtension ? "on" : "off")")
+        print("    --inline-images: \(settings.inlineImageExtension ? "on" : "off")")
+        switch settings.mathExtension {
+        case .disabled:
+            print("    --math: off")
+        case .embed(let url):
+            let url = url ?? settings.mathJaxFileUrl ?? Settings.mathJaxWebUrl
+            print("    --math: embedded \(url.absoluteString))")
+        case .link(let url):
+            let url = url ?? settings.mathJaxFileUrl ?? Settings.mathJaxWebUrl
+            print("    --math: linked \(url.absoluteString)")
+        }
+        
+        switch settings.mermaidExtension {
+        case .disabled:
+            print("    --mermaid: off")
+        case .embed(let url):
+            let url = url ?? settings.mermaidFileUrl ?? Settings.mermaidWebUrl
+            print("    --mermaid: embedded \(url.absoluteString)")
+        case .link(let url):
+            let url = url ?? settings.mermaidFileUrl ?? Settings.mermaidWebUrl
+            print("    --mermaid: linked \(url.absoluteString)")
+        }
+        print("    --table: \(settings.tableExtension ? "on" : "off")")
+        print("    --tasklist: \(settings.taskListExtension ? "on" : "off")")
+        print("    --tag-filter: \(settings.tagFilterExtension ? "on" : "off")")
+        switch settings.strikethroughExtension {
+        case .disabled:
+            print("    --strikethrough: off")
+        case .single:
+            print("    --strikethrough: single tilde")
+        case .double:
+            print("    --strikethrough: double tilde")
+        }
+        print("    --syntax-highlight: \(settings.syntaxHighlightExtension ? "on" : "off")")
+        switch settings.yamlExtension {
+        case .disabled:
+            print("    --yaml: off")
+        case .allFiles:
+            print("    --yaml: for all files")
+        case .onlyRmd:
+            print("    --yaml: only for .rmd and .qmd files")
+        }
+        print("")
+    }
+
+    mutating func validate() throws {
+        verbose = verbose && self.dest != nil
+        
+        settings = self.getSettings()
+        
+        if !showSettings {
+            if files.isEmpty {
+                print(QLMarkdownCLI.helpMessage(for: QLMarkdownCLI.self))
+                QLMarkdownCLI.exit()
+            } else if files.count > 1 {
+                var isDir: ObjCBool = false
+                if let dest = dest {
+                    FileManager.default.fileExists(atPath: dest, isDirectory: &isDir)
+                }
+                
+                if !isDir.boolValue {
+                    QLMarkdownCLI.exit(withError: QLError.destinationMustBeAFolder) // "Error: to process multiple files you must use the -o argument with a folder path!"
+                }
+            }
+        }
+        
+        let appBundleUrl = appUrl 
+        Settings.appBundleUrl = appUrl
+        
+        if let v = Settings.getResourceBundle().object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            Self.configuration.version = v // Change the version at runtime do not reflect in the usage screen :(
+        } else {
+            Self.configuration.version = "N/D"
+        }
+        
+        if version {
+            // Print the version number and exit.
+            
+            // print(Self.usageString() + "\n")
+            print("Version \(Self.configuration.version)")
+            QLMarkdownCLI.exit()
+        }
+    }
+    
+    mutating func run() throws {
+        let files: [URL] = self.files.map { URL(fileURLWithPath: $0) }
+        let dest: URL? = self.dest != nil ? URL(string: self.dest!) : nil
+        
+        var isDir: ObjCBool = false
+        if let dest {
+            FileManager.default.fileExists(atPath: dest.path, isDirectory: &isDir)
+        }
+        
+        let appearance: Appearance
+        if let a = self.options.appearance {
+            switch a {
+            case .light:
+                appearance = .light
+            case .dark:
+                appearance = .dark
+            }
+        } else {
+            appearance = Settings.isLightAppearance ? .light : .dark
+        }
+        
+        if verbose || showSettings {
+            printSettings(settings)
+            if showSettings {
+                QLMarkdownCLI.exit()
+            }
+        }
+
+        var show_stats = false
+        var n = 0
+        defer {
+            if verbose {
+                print(n != 1 ? "Processed \(n) files." : "Processed 1 file.")
+            }
+            
+            if show_stats {
+                print("""
+    *** *** *** *** *** ***
+    Thanks to this tool you have converted over \(Settings.renderStats) files.
+    If you find it useful and you have the possibility, consider buying me a coffee! (https://buymeacoffee.com/sbarex)
+    *** *** *** *** *** ***
+    """)
+            }
+        }
+        
+        for url in files {
+            let markdown_url = Settings.getMarkdownFile(from: url)
+            
+            do {
+                guard FileManager.default.isReadableFile(atPath: markdown_url.path) else {
+                    // print("Unable to read the file \(markdown_url.path)", to: &standardError)
+                    os_log("Unable to read the file %{public}@", log: OSLog.cli, type: .error, markdown_url.path)
+                    QLMarkdownCLI.exit(withError: QLError.unableToReadSource(path: markdown_url.path))
+                }
+                if verbose {
+                    print("- processing \(markdown_url.path) ...")
+                }
+                
+                let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+                let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
+                
+                Settings.renderStats += 1
+                if !show_stats && Settings.renderStats > 0 && Settings.renderStats % 100 == 0 {
+                    show_stats = true
+                }
+                
+                var output: URL?
+                if let dest {
+                    if isDir.boolValue {
+                        output = dest.appendingPathComponent(url.deletingPathExtension().lastPathComponent).appendingPathExtension("html")
+                    } else {
+                        output = dest
+                    }
+                }
+                
+                if let output {
+                    try html.write(to: output, atomically: true, encoding: .utf8)
+                    if verbose {
+                        print("  ... stored in \(output.path)")
+                    }
+                    n += 1
+                } else {
+                    FileHandle.standardOutput.write(html)
+                    n += 1
+                }
+            } catch {
+                // print("Error processing \(url.path): \(error.localizedDescription)", to: &standardError)
+                os_log("Error processing the file %{public}@: %{public}@", log: OSLog.cli, type: .error, url.path, error.localizedDescription)
+                QLMarkdownCLI.exit(withError: QLError.processError(path: url.path, error: error))
+            }
+        }
+
     }
 }

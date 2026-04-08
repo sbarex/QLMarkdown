@@ -13,7 +13,6 @@
 		830B5B3C272D68E500378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3B272D68E500378FFE /* SwiftSoup */; };
 		830B5B3E272D68F700378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3D272D68F700378FFE /* SwiftSoup */; };
 		830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3F272D68FB00378FFE /* SwiftSoup */; };
-		8310245129E9F8D5004651DC /* HighlightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8310245029E9F8D5004651DC /* HighlightViewController.swift */; };
 		831834E6277E10150044ECDA /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 831834E5277E10150044ECDA /* Sparkle */; };
 		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
@@ -215,7 +214,6 @@
 		834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		834D64A9259E9DC400DCA121 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
-		8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357EB7B2587F8EB002C2C45 /* Theme.swift */; };
 		835886B329E960050088DF7D /* math_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 835886B229E960050088DF7D /* math_ext.c */; };
 		835886B429E960050088DF7D /* math_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 835886B229E960050088DF7D /* math_ext.c */; };
 		835886B529E960050088DF7D /* math_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 835886B229E960050088DF7D /* math_ext.c */; };
@@ -224,8 +222,6 @@
 		83598E692581880A004664D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83598E682581880A004664D3 /* Assets.xcassets */; };
 		83598E6C2581880A004664D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83598E6A2581880A004664D3 /* Main.storyboard */; };
 		83598EF625818BCB004664D3 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
-		83598EFC25820A72004664D3 /* test2.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EFA258209C7004664D3 /* test2.md */; };
-		83598EFD25820A72004664D3 /* test1.md in Resources */ = {isa = PBXBuildFile; fileRef = 83598EF92582098A004664D3 /* test1.md */; };
 		836B2FF5259DEE2F00A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		836B2FFD259DEEA700A6A5F7 /* libwrapper_highlight.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; };
 		836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */; };
@@ -245,7 +241,6 @@
 		8376EAE227E8C67F00AB44B8 /* c_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 8376EAE127E8C67F00AB44B8 /* c_log.c */; };
 		8376EAE327E8C67F00AB44B8 /* c_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 8376EAE127E8C67F00AB44B8 /* c_log.c */; };
 		8376EAE427E8C67F00AB44B8 /* c_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 8376EAE127E8C67F00AB44B8 /* c_log.c */; };
-		837D20D6258362A5008FC698 /* example.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 837D20D5258362A5008FC698 /* example.jpg */; };
 		837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */ = {isa = PBXBuildFile; fileRef = 837F97CE271EA098009F4605 /* qlmarkdown_cli */; };
 		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
 		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
@@ -524,7 +519,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8310245029E9F8D5004651DC /* HighlightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightViewController.swift; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		831A8C43258ABADA00E36182 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -626,7 +620,6 @@
 		834CAB9B2593650800673002 /* emoji_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = emoji_utils.hpp; sourceTree = "<group>"; };
 		834CABA02593C57B00673002 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		834D676827EDF554006BECBE /* libcurl.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libcurl.tbd; path = usr/lib/libcurl.tbd; sourceTree = SDKROOT; };
-		8357EB7B2587F8EB002C2C45 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		835886B129E960050088DF7D /* math_ext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math_ext.h; sourceTree = "<group>"; };
 		835886B229E960050088DF7D /* math_ext.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = math_ext.c; sourceTree = "<group>"; };
 		83598E6125818808004664D3 /* QLMarkdown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QLMarkdown.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -639,12 +632,9 @@
 		83598E7925818839004664D3 /* QLMarkdown-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "QLMarkdown-Bridging-Header.h"; sourceTree = "<group>"; };
 		83598EF425818B8B004664D3 /* syntaxhighlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = syntaxhighlight.h; sourceTree = "<group>"; };
 		83598EF525818BCB004664D3 /* syntaxhighlight.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = syntaxhighlight.c; sourceTree = "<group>"; };
-		83598EF92582098A004664D3 /* test1.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test1.md; sourceTree = "<group>"; };
-		83598EFA258209C7004664D3 /* test2.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = test2.md; sourceTree = "<group>"; };
 		83598F22258263C0004664D3 /* default.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = default.css; sourceTree = "<group>"; };
 		836B7194259E226E00A6A5F7 /* highlight-wrapper.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "highlight-wrapper.xcodeproj"; sourceTree = "<group>"; };
 		836B720A259E226F00A6A5F7 /* wrapper_highlight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wrapper_highlight.h; sourceTree = "<group>"; };
-		836B7474259E2B4000A6A5F7 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = BUILT_PRODUCTS_DIR; };
 		836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		83720A1D25B8E93D00B49FEC /* buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = buffer.c; sourceTree = "<group>"; };
 		83720A1E25B8E93D00B49FEC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -657,7 +647,6 @@
 		8376EADC27E8BD3D00AB44B8 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		8376EAE027E8C67F00AB44B8 /* c_log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = c_log.h; sourceTree = "<group>"; };
 		8376EAE127E8C67F00AB44B8 /* c_log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = c_log.c; sourceTree = "<group>"; };
-		837D20D5258362A5008FC698 /* example.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example.jpg; sourceTree = "<group>"; };
 		837F291E2597AAC000A5F7DE /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		837F97CE271EA098009F4605 /* qlmarkdown_cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = qlmarkdown_cli; sourceTree = BUILT_PRODUCTS_DIR; };
 		838109C1258403CA000AFE3C /* mention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mention.h; sourceTree = "<group>"; };
@@ -687,7 +676,6 @@
 		83CF71D82C60ADA60066A195 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		83CF71DB2C60ADA60066A195 /* main_interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_interface.png; sourceTree = "<group>"; };
 		83CF71DC2C60ADA60066A195 /* preview_quicklook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preview_quicklook.png; sourceTree = "<group>"; };
-		83CF71DE2C60ADA60066A195 /* syntax_interface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = syntax_interface.png; sourceTree = "<group>"; };
 		83CF71E02C60ADA60066A195 /* icon.afdesign */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.afdesign; sourceTree = "<group>"; };
 		83D22E632DCA65980013EB9D /* Settings+render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+render.swift"; sourceTree = "<group>"; };
 		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -963,14 +951,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		8357EB762587DBDE002C2C45 /* Themes */ = {
-			isa = PBXGroup;
-			children = (
-				8357EB7B2587F8EB002C2C45 /* Theme.swift */,
-			);
-			path = Themes;
-			sourceTree = "<group>";
-		};
 		83598E5825818808004664D3 = {
 			isa = PBXGroup;
 			children = (
@@ -1016,13 +996,8 @@
 				83598E7925818839004664D3 /* QLMarkdown-Bridging-Header.h */,
 				83598E6425818808004664D3 /* AppDelegate.swift */,
 				83598E6625818808004664D3 /* ViewController.swift */,
-				8310245029E9F8D5004651DC /* HighlightViewController.swift */,
 				83598E6A2581880A004664D3 /* Main.storyboard */,
-				8357EB762587DBDE002C2C45 /* Themes */,
 				836B747C259E2D7B00A6A5F7 /* AboutViewController.swift */,
-				83598EF92582098A004664D3 /* test1.md */,
-				83598EFA258209C7004664D3 /* test2.md */,
-				837D20D5258362A5008FC698 /* example.jpg */,
 				83F4B99125868A7400FC58A7 /* Settings.swift */,
 				83D22E632DCA65980013EB9D /* Settings+render.swift */,
 				83327D452595E15700E76CF6 /* Settings+ext.swift */,
@@ -1045,7 +1020,6 @@
 				83F8822C2598A5C0008C5071 /* WebKit.framework */,
 				831A8C40258ABADA00E36182 /* Quartz.framework */,
 				83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */,
-				836B7474259E2B4000A6A5F7 /* magic.mgc */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1145,7 +1119,6 @@
 				83AD13782F8535C3004B91FB /* mathjax_menu.png */,
 				83CF71DB2C60ADA60066A195 /* main_interface.png */,
 				83CF71DC2C60ADA60066A195 /* preview_quicklook.png */,
-				83CF71DE2C60ADA60066A195 /* syntax_interface.png */,
 				83AD13762F852B33004B91FB /* preview_shortcut.png */,
 				83AD13772F85305F004B91FB /* system_setings1.png */,
 			);
@@ -1465,9 +1438,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				830277F72C60E48F0066EBCC /* icon.png in Resources */,
-				83598EFD25820A72004664D3 /* test1.md in Resources */,
-				83598EFC25820A72004664D3 /* test2.md in Resources */,
-				837D20D6258362A5008FC698 /* example.jpg in Resources */,
 				83F4B9962586AB9700FC58A7 /* README.md in Resources */,
 				83598E692581880A004664D3 /* Assets.xcassets in Resources */,
 				83598E6C2581880A004664D3 /* Main.storyboard in Resources */,
@@ -1709,7 +1679,6 @@
 				834A4EF129E8AD8C00692964 /* strikethrough.c in Sources */,
 				83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */,
 				834A4EFF29E8AD8C00692964 /* tagfilter.c in Sources */,
-				8310245129E9F8D5004651DC /* HighlightViewController.swift in Sources */,
 				834A4F4029E8AD8D00692964 /* render.c in Sources */,
 				834A4F3529E8AD8D00692964 /* plaintext.c in Sources */,
 				83720A2925B8E93D00B49FEC /* encode.c in Sources */,
@@ -1741,7 +1710,6 @@
 				834A4F4629E8AD8E00692964 /* arena.c in Sources */,
 				834A4F6029E8AD8E00692964 /* footnotes.c in Sources */,
 				834A4F1229E8AD8C00692964 /* man.c in Sources */,
-				8357EB7C2587F8EB002C2C45 /* Theme.swift in Sources */,
 				83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */,
 				83CF71D52C60053A0066A195 /* sub_ext.c in Sources */,
 				83720A2825B8E93D00B49FEC /* decode.c in Sources */,
@@ -2058,6 +2026,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 51;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;

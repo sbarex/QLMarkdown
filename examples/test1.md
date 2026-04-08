@@ -21,7 +21,7 @@ The previous block placed at the top of the document, starting with `---` and en
   - [Highlight extension](#highlight-extension)
   - [Inline images extension](#inline-images-extension)
   - [Math extension](#math-extension)
-  - [Sub/Superscript extension](#sub-Superscript-extension)
+  - [Sub/Superscript extension](#subsuperscript-extension)
   - [Table extension](#table-extension)
   - [Strikethrough extension](#strikethrough-extension)
   - [Syntax Highlight extension](#syntax-highlight-extension)

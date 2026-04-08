@@ -8,6 +8,32 @@
 import Foundation
 import AppKit
 
+// MARK: -
+extension JSExtension {
+    /**
+     * Strip the url info if is the predefined value.
+     */
+    func stripDefaultUrl(cacheUrl: URL?, cdnUrl: URL?) -> Self {
+        switch self {
+        case .disabled:
+            return .disabled
+        case .link(let url):
+            if url == cdnUrl {
+                return .link(url: nil)
+            } else {
+                return .link(url: url)
+            }
+        case .embed(let url):
+            if url == cacheUrl {
+                return .link(url: nil)
+            } else {
+                return .link(url: url)
+            }
+        }
+    }
+}
+
+// MARK: -
 extension Settings {
     static var styles: [URL]? = nil
     
@@ -66,6 +92,82 @@ extension Settings {
     }
     
     /**
+     * Check if the url is of type file and if it exists.
+     * - parameters:
+     *   - url: Url from fetch the librarty. If not set uses the `mathJaxFileUrl`.
+     */
+    public func allowToEmbedMathJax(customUrl url: URL? = nil) -> Bool {
+        guard let library = url ?? mathJaxFileUrl else {
+            return false
+        }
+        return library.isFileURL && FileManager.default.fileExists(atPath: library.path)
+    }
+    
+    /**
+     * Check if the url is of not a file.
+     * - parameters:
+     *   - url: Url from fetch the librarty. If not set uses the `mathJaxFileUrl`.
+     */
+    public func allowToLinkMathJax(customUrl url: URL? = nil) -> Bool {
+        guard let library = url ?? mathJaxFileUrl else {
+            return false
+        }
+        return !library.isFileURL
+    }
+    
+    public func getMathJaxFileSize() -> Int
+    {
+        return  (try? self.mathJaxFileUrl?.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+    }
+    
+    /// Download and cache the mermaid library from web.
+    func updateMathJaxUCache(_ reply: ((Bool) -> Void)?) {
+        guard let mathJaxCacheFileUrl = Self.mathJaxCacheFileUrl else {
+            reply?(false)
+            return
+        }
+        Self.fetchCacheFile(from: Self.mathJaxWebUrl, to: mathJaxCacheFileUrl, withReply: reply)
+    }
+    
+    /// Download and cache the mermaid library from web.
+    func updateMemaidCache(_ reply: ((Bool) -> Void)?) {
+        guard let mermaidCacheFileUrl = Self.mermaidCacheFileUrl else {
+            reply?(false)
+            return
+        }
+        Self.fetchCacheFile(from: Self.mermaidWebUrl, to: mermaidCacheFileUrl, withReply: reply)
+    }
+    
+    /**
+     * Check if the url is of type file and if it exists.
+     * - parameters:
+     *   - url: Url from fetch the librarty. If not set uses the `mermaidFileUrl`.
+     */
+    public func allowToEmbedMermaid(customUrl url: URL? = nil) -> Bool {
+        guard let library = url ?? mermaidFileUrl else {
+            return false
+        }
+        return library.isFileURL && FileManager.default.fileExists(atPath: library.path)
+    }
+    
+    /**
+     * Check if the url is of not a file.
+     * - parameters:
+     *   - url: Url from fetch the librarty. If not set uses the `mermaidUrl`.
+     */
+    public func allowToLinkMermaid(customUrl url: URL? = nil) -> Bool {
+        guard let library = url ?? mermaidFileUrl else {
+            return false
+        }
+        return !library.isFileURL
+    }
+    
+    public func getMermaidFileSize() -> Int
+    {
+        return  (try? self.mermaidFileUrl?.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+    }
+    
+    /**
      * Save the settings.
      */
     @discardableResult
@@ -81,6 +183,8 @@ extension Settings {
      */
     @discardableResult
     func save(toUserDefaults defaults: UserDefaults)->Bool {
+        self.sanitize(allowLinkFile: false)
+        
         defaults.set(tableExtension, forKey: Self.CodingKeys.tableExtension.rawValue)
         defaults.set(autoLinkExtension, forKey: Self.CodingKeys.autoLinkExtension.rawValue)
         defaults.set(tagFilterExtension, forKey: Self.CodingKeys.tagFilterExtension.rawValue)
@@ -89,8 +193,10 @@ extension Settings {
         
         defaults.set(strikethroughExtension.rawValue, forKey: Self.CodingKeys.strikethroughExtension.rawValue)
         
-        defaults.set(mathExtension.toDict(), forKey: Self.CodingKeys.mathExtension.rawValue)
-        defaults.set(mermaidExtension.toDict(), forKey: Self.CodingKeys.mermaidExtension.rawValue)
+        // Prevent to save the url info if is the predefined value on the math/mermaid extension.
+        defaults.set(mathExtension.stripDefaultUrl(cacheUrl: self.mathJaxFileUrl, cdnUrl: Self.mathJaxWebUrl).toDict(), forKey: Self.CodingKeys.mathExtension.rawValue)
+        defaults.set(mermaidExtension.stripDefaultUrl(cacheUrl: self.mermaidFileUrl, cdnUrl: Self.mermaidWebUrl).toDict(), forKey: Self.CodingKeys.mermaidExtension.rawValue)
+        
         defaults.set(mentionExtension, forKey: Self.CodingKeys.mentionExtension.rawValue)
         defaults.set(checkboxExtension, forKey: Self.CodingKeys.checkboxExtension.rawValue)
         defaults.set(headsExtension, forKey: Self.CodingKeys.headsExtension.rawValue)

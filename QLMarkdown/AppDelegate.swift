@@ -13,6 +13,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     
     @IBOutlet weak var exampleMenu: NSMenuItem!
     
+    /// List o a markdown test files.
     var markdownFiles: [URL] = []
     
     var userDriver: SPUStandardUserDriver?
@@ -65,22 +66,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         
         Settings.shared.installDependencies()
         
-        if let path = Settings.mermaidCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+        if let path = Settings.mermaidCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
             // Try to download Mermaid library from web.
             Settings.shared.updateMemaidCache { (success) in
                 print("Mermaid reflesh: \(success ? "success" : "failure")")
             }
         }
-        if let path = Settings.mathJaxCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+        if let path = Settings.mathJaxCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
             // Try to download MathJax library from web.
             Settings.shared.updateMathJaxUCache { (success) in
                 print("MathJax reflesh: \(success ? "success" : "failure")")
             }
         }
         
-        self.markdownFiles.append(Bundle.main.url(forResource: "test1", withExtension: "md")!)
-        self.markdownFiles.append(Bundle.main.url(forResource: "test2", withExtension: "md")!)
-        
+        // Build the Examples menu
         if let exampleURL = Bundle.main.url(forResource: "examples", withExtension: nil), let files = try? FileManager.default.contentsOfDirectory(
                 at: exampleURL,
                     includingPropertiesForKeys: nil,
@@ -90,21 +89,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             self.markdownFiles.sort { a, b in
                 a.lastPathComponent < b.lastPathComponent
             }
-            
-            for (i, markdownFile) in self.markdownFiles.enumerated() {
-                let mnu = NSMenuItem(title: markdownFile.deletingPathExtension().lastPathComponent, action: #selector(self.handleExample(_:)), keyEquivalent: "")
-                mnu.tag = i
-                self.exampleMenu.submenu?.addItem(mnu)
-            }
         }
         
+        let mnu = NSMenuItem(title: "README.md", action: #selector(self.handleExample(_:)), keyEquivalent: "")
+        mnu.tag = -1
+        self.exampleMenu.submenu?.addItem(mnu)
+        self.exampleMenu.submenu?.addItem(NSMenuItem.separator())
+        
+        for (i, markdownFile) in self.markdownFiles.enumerated() {
+            let mnu = NSMenuItem(title: markdownFile.deletingPathExtension().lastPathComponent, action: #selector(self.handleExample(_:)), keyEquivalent: "")
+            mnu.tag = i
+            self.exampleMenu.submenu?.addItem(mnu)
+        }
     }
     
+    /**
+     * Open an example file.
+     */
     @IBAction func handleExample(_ sender: NSMenuItem) {
-        guard sender.tag >= 0 && sender.tag < markdownFiles.count else {
+        if sender.tag == -1 /* readme */ {
+            if let file = Bundle.main.url(forResource: "README", withExtension: "md") {
+                _ = self.application(NSApplication.shared, openFile: file.path)
+            }
             return
         }
         
+        guard sender.tag >= 0 && sender.tag < markdownFiles.count else {
+            return
+        }
         _ = self.application(NSApplication.shared, openFile: markdownFiles[sender.tag].path)
     }
     

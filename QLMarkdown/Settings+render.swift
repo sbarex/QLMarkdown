@@ -37,7 +37,7 @@ extension Settings {
      */
     func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?) throws -> String {
         guard let data = FileManager.default.contents(atPath: url.path) else {
-            os_log("Unable to read the file %{private}@", log: OSLog.rendering, type: .error, url.path)
+            os_log("Unable to read the file %{public}@", log: OSLog.rendering, type: .error, url.path)
             return ""
         }
         
@@ -54,7 +54,7 @@ extension Settings {
      */
     func render(data: Data, forAppearance appearance: Appearance, filename: String = "file.md", baseDir: String) throws -> String {
         guard let markdown_string = String(data: data, encoding: .utf8) else {
-            os_log("Unable to read the data %{private}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
+            os_log("Unable to read the data %{public}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
             return ""
         }
         
@@ -211,7 +211,6 @@ extension Settings {
         if self.highlightExtension {
             if let ext = cmark_find_syntax_extension("highlight") {
                 cmark_parser_attach_syntax_extension(parser, ext)
-                
                 os_log(
                     "Enabled markdown `highlight` extension.",
                     log: OSLog.rendering,
@@ -303,7 +302,7 @@ extension Settings {
                                 
                                 let file = baseDir.appendingPathComponent(src).path
                                 guard FileManager.default.fileExists(atPath: file) else {
-                                    os_log("Image %{private}@ not found!", log: OSLog.rendering, type: .error)
+                                    os_log("Image %{public}@ not found!", log: OSLog.rendering, type: .error)
                                     continue // File not found.
                                 }
                                 
@@ -395,6 +394,18 @@ extension Settings {
                 cmark_syntax_extension_highlight_set_line_number(ext, self.syntaxLineNumbersOption ? 1 : 0)
                 cmark_syntax_extension_highlight_set_tab_spaces(ext, Int32(self.syntaxTabsOption))
                 cmark_syntax_extension_highlight_set_wrap_limit(ext, Int32(self.syntaxWordWrapOption))
+                
+                if self.mermaidExtension.isEnabled {
+                    cmark_syntax_extension_highlight_add_skipped_languages(ext, "mermaid")
+                } else {
+                    cmark_syntax_extension_highlight_remove_skipped_languages(ext, "mermaid")
+                }
+                if self.mathExtension.isEnabled {
+                    cmark_syntax_extension_highlight_add_skipped_languages(ext, "math")
+                } else {
+                    cmark_syntax_extension_highlight_remove_skipped_languages(ext, "math")
+                }
+                cmark_syntax_extension_highlight_add_skipped_languages(ext, "markdown")
                 
                 /*
                 if !self.syntaxFontFamily.isEmpty {
@@ -530,7 +541,7 @@ table.debug td {
                 html_debug += "off"
             case .embed:
                 html_debug += "embedded"
-                if let file = self.mathJaxUrl {
+                if let file = self.mathJaxFileUrl {
                     html_debug += " (\(file.path)"
                     
                     if file.isFileURL && !FileManager.default.fileExists(atPath: file.path) {
@@ -551,7 +562,7 @@ table.debug td {
             html_debug += "off"
         case .embed:
             html_debug += "embedded"
-            if let file = self.mermaidUrl {
+            if let file = self.mermaidFileUrl {
                 html_debug += " (\(file.path)"
                 
                 if file.isFileURL && !FileManager.default.fileExists(atPath: file.path) {
@@ -711,32 +722,7 @@ table.debug td {
      *  - extraTagEmbed: Extra code to put in the `<script>` tag when the library is embedded.
      */
     internal func embedJsLibrary(mode: JSExtension, fileUrl: URL?, cdnUrl: URL, extraTagLink: String = "", extraTagEmbed: String = "") -> String {
-        
         return mode.getScriptCode(extraTagLink: extraTagLink, extraTagEmbed: extraTagEmbed)
-        /*
-        switch mode {
-        case .disabled:
-            return ""
-        case .link(let url):
-            let libraryUrl: URL
-            if url?.isFileURL ?? true {
-                // Only web url can be linked
-                libraryUrl = cdnUrl
-            } else {
-                libraryUrl = url!
-            }
-            return "<script type='text/javascript' \(extraTagLink) src='\(libraryUrl.absoluteString)'></script>\n"
-        case .embed(let url):
-            let libraryUrl = url ?? fileUrl ?? cdnUrl
-            if libraryUrl.isFileURL {
-                if let code = try? String(contentsOfFile: libraryUrl.path, encoding: .utf8) {
-                    // Embed the libraty inline
-                    return "<script type='text/javascript' \(extraTagEmbed)>\n\(code)\n</script>\n"
-                }
-            }
-            return embedJsLibrary(mode: .link(url: url), fileUrl: fileUrl, cdnUrl: cdnUrl, extraTagLink: extraTagLink, extraTagEmbed: extraTagEmbed)
-        }
-        */
     }
     
     /**
@@ -748,38 +734,29 @@ table.debug td {
      *  - footer: Code to put at the end of the body.
      */
     func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "") -> String {
-        
-        let css_doc: String
-        let css_doc_extended: String
+        var css_doc = ""
+        var css_doc_extended = ""
         
         var s_header = header
         var s_footer = footer
         
-        let formatCSS = { (code: String?, fontSize: CGFloat) -> String in
-            guard let css = code, !css.isEmpty else {
+        if baseFontSize > 0 {
+            css_doc += "<style type='text/css'>\nhtml { font-size: \(baseFontSize)pt;}\n</style>\n"
+        }
+        
+        let formatCSS = { (code: String?) -> String in
+            guard let code, !code.isEmpty else {
                 return ""
             }
-            
-            return "<style type='text/css'>\(css)\n</style>\n"
+            return "<style type='text/css'>\(code)\n</style>\n"
         }
             
         if !self.renderAsCode {
             let css = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
-            if !css.isEmpty {
-                css_doc_extended = formatCSS(css, self.baseFontSize)
-                if !self.customCSSOverride {
-                    css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"), self.baseFontSize)
-                } else {
-                    css_doc = ""
-                }
-            } else {
-                css_doc_extended = ""
-                css_doc = formatCSS(getBundleContents(forResource: "default", ofType: "css"), self.baseFontSize)
+            css_doc_extended = formatCSS(css)
+            if css_doc_extended.isEmpty || !self.customCSSOverride {
+                css_doc += formatCSS(getBundleContents(forResource: "default", ofType: "css"))
             }
-            // css_doc = "<style type=\"text/css\">\n\(css_doc)\n</style>\n"
-        } else {
-            css_doc_extended = ""
-            css_doc = ""
         }
             
         var css_highlight: String = ""
@@ -821,7 +798,7 @@ table.debug td {
                 css_highlight += "body.hl, pre.hl, pre.hl code { font-size: \(size)pt; }\n"
             }
         }
-        css_highlight = formatCSS(css_highlight, self.baseFontSize)
+        css_highlight = formatCSS(css_highlight)
         
         if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 || body.contains("$") {
             s_header += """
@@ -846,7 +823,7 @@ MathJax = {
 };
 </script>
 """
-            s_footer += embedJsLibrary(mode: mathExtension, fileUrl: self.mathJaxUrl, cdnUrl: Self.mathJaxWebUrl, extraTagLink: "id='MathJax-script' async", extraTagEmbed: "id='MathJax-script'")
+            s_footer += mathExtension.getScriptCode(extraTagLink: "id='MathJax-script' async", extraTagEmbed: "id='MathJax-script'")
         }
 
         // Mermaid diagrams support
@@ -856,7 +833,7 @@ MathJax = {
             processedBody = transformMermaidBlocks(body)
 
             // Inject mermaid.min.js
-            s_footer += embedJsLibrary(mode: mermaidExtension, fileUrl: self.mermaidUrl, cdnUrl: Self.mermaidWebUrl)
+            s_footer += mermaidExtension.getScriptCode()
             s_footer += """
 <script type="text/javascript">
 mermaid.initialize({

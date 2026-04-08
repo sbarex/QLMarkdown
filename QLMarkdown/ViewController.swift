@@ -293,6 +293,7 @@ class ViewController: NSViewController {
             }
         }
     }
+    
     @objc dynamic var isAutoSaving: Bool {
         get {
             return UserDefaults.standard.value(forKey: "auto-save") as? Bool ?? true
@@ -456,7 +457,7 @@ class ViewController: NSViewController {
             if isDirty && autoRefresh && isLoaded && pauseAutoRefresh == 0 {
                 self.refresh(self)
             }
-            if isDirty && isAutoSaving && isLoaded && pauseAutoRefresh == 0 {
+            if isDirty && isAutoSaving && isLoaded && pauseAutoSave == 0 {
                 self.saveAction(self)
             }
         }
@@ -475,6 +476,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var strikethroughPopupButton: NSPopUpButton!
     @IBOutlet weak var emojiPopupButton: NSPopUpButton!
     @IBOutlet weak var yamlPopupButton: NSPopUpButton!
+    @IBOutlet weak var highlightPopupButton: NSPopUpButton!
     
     @IBOutlet weak var mathPopupButton: NSPopUpButton!
     @IBOutlet weak var mermaidPopupButton: NSPopUpButton!
@@ -490,6 +492,8 @@ class ViewController: NSViewController {
     
     @IBOutlet weak var fontSizeField: NSTextField!
     @IBOutlet weak var fontSizeStepper: NSStepper!
+    
+    var byteFormatter = ByteCountFormatter()
     
     var edited: Bool = false
     var allow_reload: Bool = true
@@ -598,34 +602,156 @@ class ViewController: NSViewController {
         }
     }
     
-    @IBAction func handleMathPopup(_ sender: NSPopUpButton) {
+    @IBAction func handleSyntaxHighlightMenu(_ menuItem: NSMenuItem) {
+        switch menuItem.identifier?.rawValue {
+        case "mnu_highlight_ln":
+            self.syntaxLineNumbers = !self.syntaxLineNumbers
+        case "mnu_highlight_tab_0", "mnu_highlight_tab_2", "mnu_highlight_tab_4", "mnu_highlight_tab_8":
+            self.syntaxTabsOption = menuItem.tag
+        case "mnu_highlight_ww_0":
+            self.syntaxWrapEnabled = false
+        case "mnu_highlight_ww_80", "mnu_highlight_ww_120", "mnu_highlight_ww_custom":
+            self.syntaxWrapEnabled = true
+            self.syntaxWrapCharacters = menuItem.tag
+        case "mnu_highlight_ww_x":
+            if let v = getNumber(message: "Set a word wrap after this number of chars:", value: 80) {
+                self.syntaxWrapCharacters = v
+            }
+        case "mnu_highlight_on":
+            self.syntaxHighlightExtension = true
+        case "mnu_highlight_off":
+            self.syntaxHighlightExtension = false
+        default:
+            break
+        }
+    }
+    
+    func getNumber(message: String, informativeText: String = "", value: Int) -> Int? {
+        let alert = NSAlert()
+        alert.messageText = message
+        alert.informativeText = informativeText
+        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+        alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+        
+        let input = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
+        input.integerValue = value
+        
+        let formatter = NumberFormatter()
+        formatter.allowsFloats = false
+        input.formatter = formatter
+        
+        alert.accessoryView = input
+        
+        DispatchQueue.main.async {
+            alert.window.makeFirstResponder(input)
+        }
+        
+        if alert.runModal() == .alertFirstButtonReturn {
+            return input.integerValue
+        } else {
+            return nil
+        }
+    }
+    
+    func handleJSExtensionPopup(_ sender: NSPopUpButton, libraryName name: String, `extension`: inout Bool, extensionEmbedded: inout Bool, fileUrl: URL?, cacheUrl: URL?, webUrl: URL) {
         let tag = sender.selectedTag()
-        if tag == -1 {
-            self.mathExtension = false
-        } else if tag == 10 {
+        
+        if tag == -1 /* disabled */ {
+            `extension` = false
+        } else if tag == 10, let cacheUrl /* fetch */ {
             let alert = NSAlert()
-            alert.messageText = "Are you sure to download the MathJax library from web?"
+            alert.messageText = "Are you sure to locally cache the library from the web?"
             alert.alertStyle = .informational
             alert.addButton(withTitle: "OK").keyEquivalent = "\r"
             alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            
             let r = alert.runModal()
             if r == .alertFirstButtonReturn {
-                Settings.shared.updateMathJaxUCache { (success) in
+                Settings.fetchCacheFile(from: webUrl, to: cacheUrl) { (success) in
                     DispatchQueue.main.async {
                         let alert = NSAlert()
                         alert.alertStyle = success ? .warning : .informational
-                        alert.messageText = success ? "MathJax library downloaded from web." : "Error downloading the MathJax library."
+                        alert.messageText = success ? "\(name) library downloaded from web." : "Error downloading the \(name) library."
                         alert.addButton(withTitle: "OK").keyEquivalent = "\r"
                         alert.runModal()
                     }
                 }
             }
+        } else if tag == 20 /* save */ {
+            guard let file = fileUrl, FileManager.default.fileExists(atPath: file.path) else {
+                let alert = NSAlert()
+                alert.messageText = "No cached file do save!"
+                alert.alertStyle = .warning
+                alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                alert.runModal()
+                return
+            }
+            
+            let panel = NSOpenPanel()
+                
+            panel.title = "Choose the destination folder"
+            panel.canChooseFiles = false
+            panel.canChooseDirectories = true
+            panel.allowsMultipleSelection = false
+            
+            panel.begin { response in
+                if response == .OK, let url = panel.url {
+                    let dest = url.appendingPathComponent(file.lastPathComponent)
+                    if FileManager.default.fileExists(atPath: dest.path) {
+                        let alert = NSAlert()
+                        alert.messageText = "A file with the same name already exists. Do you want to overwrite it?"
+                        alert.alertStyle = .informational
+                        alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
+                        alert.addButton(withTitle: "Yes").keyEquivalent = ""
+                        if alert.runModal() == .alertSecondButtonReturn {
+                            do {
+                                try FileManager.default.removeItem(at: dest)
+                            } catch {
+                                let alert = NSAlert()
+                                alert.messageText = "Error deleting exists file!"
+                                alert.alertStyle = .critical
+                                alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                                alert.runModal()
+                                return
+                            }
+                        } else {
+                            return
+                        }
+                    }
+                    do {
+                        try FileManager.default.copyItem(at: file, to: dest)
+                        NSWorkspace.shared.activateFileViewerSelecting([dest])
+                    } catch {
+                        let alert = NSAlert()
+                        alert.messageText = "Unable to save the file!"
+                        alert.alertStyle = .critical
+                        alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                        alert.runModal()
+                        return
+                    }
+                }
+            }
+        } else if tag == 21 /* reveal */ {
+            guard let file = fileUrl, FileManager.default.fileExists(atPath: file.path) else {
+                let alert = NSAlert()
+                alert.messageText = "No cached file do reveal!"
+                alert.alertStyle = .warning
+                alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                alert.runModal()
+                return
+            }
+            
+            NSWorkspace.shared.activateFileViewerSelecting([file])
         } else {
             pauseAutoRefresh += 1
-            self.mathExtension = true
-            self.mathExtensionEmbed = tag == 1
+            `extension` = true
+            extensionEmbedded = tag == 1
             pauseAutoRefresh -= 1
         }
+    }
+    
+    @IBAction func handleMathPopup(_ sender: NSPopUpButton) {
+        handleJSExtensionPopup(sender, libraryName: "MathJax", extension: &self.mathExtension, extensionEmbedded: &self.mathExtensionEmbed, fileUrl: Settings.shared.mathJaxFileUrl, cacheUrl: Settings.mathJaxCacheFileUrl, webUrl: Settings.mathJaxWebUrl)
     }
     
     func updateMathPopup() {
@@ -637,34 +763,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func handleMermaidPopup(_ sender: NSPopUpButton) {
-        let tag = sender.selectedTag()
-        if tag == -1 {
-            self.mermaidExtension = false
-        } else if tag == 10 {
-            let alert = NSAlert()
-            alert.messageText = "Are you sure to download the Marmaid library from web?"
-            alert.alertStyle = .informational
-            alert.addButton(withTitle: "OK").keyEquivalent = "\r"
-            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
-            let r = alert.runModal()
-            if r == .alertFirstButtonReturn {
-                Settings.shared.updateMemaidCache { (success) in
-                    DispatchQueue.main.async {
-                        let alert = NSAlert()
-                        alert.alertStyle = success ? .warning : .informational
-                        alert.messageText = success ? "Marmaid library downloaded from web." : "Error downloading the Marmaid library."
-                        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
-                        alert.runModal()
-                    }
-                }
-            }
-            
-        } else {
-            pauseAutoRefresh += 1
-            self.mermaidExtension = true
-            self.mermaidExtensionEmbed = tag == 1
-            pauseAutoRefresh -= 1
-        }
+        handleJSExtensionPopup(sender, libraryName: "Mermaid", extension: &self.mermaidExtension, extensionEmbedded: &self.mermaidExtensionEmbed, fileUrl: Settings.shared.mermaidFileUrl, cacheUrl: Settings.mermaidCacheFileUrl, webUrl: Settings.mermaidWebUrl)
     }
     
     func updateMermaidPopup() {
@@ -690,12 +789,6 @@ class ViewController: NSViewController {
         }
         self.markdown_file = file
         return true
-    }
-    
-    @IBAction func openReadme(_ sender: Any) {
-        if let file = Bundle.main.url(forResource: "README", withExtension: "md") {
-            self.openMarkdown(file: file)
-        }
     }
     
     @IBAction func openDocument(_ sender: Any) {
@@ -869,7 +962,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func saveAction(_ sender: Any) {
-        let settings = self.updateSettings()
+        let settings = self.updateSettings(withAlert: true)
         
         let r = settings.save()
         if r {
@@ -950,7 +1043,9 @@ document.addEventListener('scroll', function(e) {
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
         
-        elapsedTimeLabel = String(format: "Rendered in %.3f seconds", timeElapsed)
+        let data = html.data(using: .utf8)
+        
+        elapsedTimeLabel = String(format: "Rendered in %.3f seconds | %@", timeElapsed, self.byteFormatter.string(fromByteCount: Int64(data?.count ?? 0)))
     }
     
     func importStyle(copyOnSharedFolder: Bool) -> URL? {
@@ -1075,16 +1170,9 @@ document.addEventListener('scroll', function(e) {
         }
     }
     
-    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-        if segue.identifier == "HighlightSegue" {
-            if let vc = segue.destinationController as? HighlightViewController {
-                vc.settingsViewController = self
-            }
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        pauseAutoSave += 1
         
         if let path = Settings.shared.getHighlightSupportPath() {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
@@ -1115,8 +1203,7 @@ document.addEventListener('scroll', function(e) {
         self.updateYamlPopup()
         self.updateMathPopup()
         self.updateMermaidPopup()
-        
-        markdown_file = Bundle.main.url(forResource: "test1", withExtension: "md")
+        markdown_file = Bundle.main.url(forResource: "test1", withExtension: "md", subdirectory: "examples")
         
         tabView.selectTabViewItem(at: 0)
         
@@ -1131,6 +1218,9 @@ document.addEventListener('scroll', function(e) {
         }
         
         doRefresh(self)
+        
+        isDirty = false
+        pauseAutoSave -= 1
     }
     
     override func viewDidAppear() {
@@ -1250,7 +1340,12 @@ document.addEventListener('scroll', function(e) {
         doRefresh(self)
     }
     
-    internal func updateSettings() -> Settings {
+    /**
+     * Update the settings based on the application UI.
+     * - parameters:
+     *  - withAlert: Show an alert if there are errors on the settings.
+     */
+    internal func updateSettings(withAlert: Bool = false) -> Settings {
         let settings = Settings.shared
         
         settings.debug = self.debugMode
@@ -1297,28 +1392,82 @@ document.addEventListener('scroll', function(e) {
         settings.openInlineLink = inlineLinkPopup.indexOfSelectedItem == 0
         
         settings.about = self.isAboutVisible
+        
+        var msg: [String] = []
+        settings.sanitize(allowLinkFile: false, messages: &msg)
+        if withAlert && !msg.isEmpty {
+            let alert = NSAlert()
+            alert.messageText = "Configuration settings errors!"
+            alert.informativeText = msg.joined(separator: "\n")
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.runModal()
+        }
         return settings
     }
     
     @IBAction func resetDependencyLibraries(_ sender: Any) {
         Settings.shared.installDependencies(override: true)
         
-        if let path = Settings.mermaidCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+        if let path = Settings.mermaidCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
             Settings.shared.updateMemaidCache { (success) in
                 print("Mermaid reflesh: \(success ? "success" : "failure")")
             }
         }
-        if let path = Settings.mathJaxCacheUrl, !FileManager.default.fileExists(atPath: path.path) {
+        if let path = Settings.mathJaxCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
             Settings.shared.updateMathJaxUCache { (success) in
                 print("MathJax reflesh: \(success ? "success" : "failure")")
             }
         }
+    }
+    
+    @IBAction func openSystemSettings(_ sender: Any) {
+        NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.quicklook.preview")!)
+        // NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.ExtensionsPreferences")!)
     }
 
 }
 
 // MARK: - NSMenuItemValidation
 extension ViewController: NSMenuItemValidation {
+    /**
+     * Update the state of a menu item inside the context menu of a javascript library extension.
+     * - Returns: `true` if the menu item must be enabled.
+     */
+    private static func updateJSExtensionMenuItem(_ menu: NSMenuItem, namePrefix prefix: String, state: Bool, embed: Bool, fileUrl: URL?, webUrl: URL, byteFormatter: ByteCountFormatter) -> Bool {
+        switch menu.identifier?.rawValue {
+        case prefix:
+            // Menu item "header"
+            return false
+        case "\(prefix)_embed":
+            menu.state = state && embed ? .on : .off
+            menu.toolTip = fileUrl?.path ?? ""
+            if let url = fileUrl, url.isFileURL && FileManager.default.fileExists(atPath: url.path) {
+                let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+                menu.title = "Embed (\(byteFormatter.string(fromByteCount: Int64(size))))"
+                
+            } else {
+                menu.title = "Embed (file missing)"
+                return false
+            }
+        case "\(prefix)_save", "\(prefix)_reveal":
+            guard let url = fileUrl, url.isFileURL && FileManager.default.fileExists(atPath: url.path) else {
+                return false
+            }
+        case "\(prefix)_download":
+            menu.toolTip = "Cache a local copy of the library from the web (\(webUrl.path))."
+        case "\(prefix)_link":
+            menu.state = state && !embed ? .on : .off
+            menu.toolTip = webUrl.absoluteString
+        case "\(prefix)_disabled":
+            menu.state = state ? .off : .on
+        default:
+            break
+        }
+        
+        return true
+    }
+    
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
     {
         if menuItem.identifier?.rawValue == "auto refresh" {
@@ -1339,39 +1488,13 @@ extension ViewController: NSMenuItemValidation {
             case "mnu_emoji_off":
                 menuItem.state = self.emojiExtension ? .off : .on
                 
-            case "mnu_math":
-                menuItem.isEnabled = false
-                return false
-            case "mnu_math_embed":
-                menuItem.state = self.mathExtension && self.mathExtensionEmbed ? .on : .off
-                if Settings.shared.allowToEmbedMathJax() {
-                    menuItem.title = "Embed"
-                } else {
-                    menuItem.title = "Embed (file missing)"
-                    return false
-                }
-            case "mnu_math_link":
-                menuItem.state = self.mathExtension && !self.mathExtensionEmbed ? .on : .off
-            case "mnu_math_disabled":
-                menuItem.state = self.mathExtension ? .off : .on
+            case "mnu_math", "mnu_math_embed", "mnu_math_link", "mnu_math_disabled", "mnu_math_download", "mnu_math_reveal":
+                return Self.updateJSExtensionMenuItem(menuItem, namePrefix: "mnu_math", state: mathExtension, embed: mathExtensionEmbed, fileUrl: Settings.shared.mathJaxFileUrl, webUrl: Settings.mathJaxWebUrl, byteFormatter: self.byteFormatter)
                 
-            case "mnu_mermaid":
-                return false
-            case "mnu_mermaid_embed":
-                menuItem.state = self.mermaidExtension && self.mermaidExtensionEmbed ? .on : .off
-                if Settings.shared.allowToEmbedMermaid() {
-                    menuItem.title = "Embed"
-                } else {
-                    menuItem.title = "Embed (file missing)"
-                    return false
-                }
-            case "mnu_mermaid_link":
-                menuItem.state = self.mermaidExtension && !self.mermaidExtensionEmbed ? .on : .off
-            case "mnu_mermaid_disabled":
-                menuItem.state = self.mermaidExtension ? .off : .on
+            case "mnu_mermaid", "mnu_mermaid_embed", "mnu_mermaid_link", "mnu_mermaid_disabled", "mnu_mermaid_download", "mnu_mermaid_reveal":
+                return Self.updateJSExtensionMenuItem(menuItem, namePrefix: "mnu_mermaid", state: mermaidExtension, embed: mermaidExtensionEmbed, fileUrl: Settings.shared.mermaidFileUrl, webUrl: Settings.mermaidWebUrl, byteFormatter: self.byteFormatter)
                 
             case "mnu_yaml":
-                
                 return false
             case "mnu_yaml_rmd":
                 menuItem.state = self.yamlExtension && !self.yamlExtensionAll ? .on : .off
@@ -1379,8 +1502,8 @@ extension ViewController: NSMenuItemValidation {
                 menuItem.state = self.yamlExtension && self.yamlExtensionAll ? .on : .off
             case "mnu_yaml_disabled":
                 menuItem.state = self.yamlExtension ? .off : .on
+            
             case "mnu_strikethrough":
-                menuItem.isEnabled = false
                 return false
             case "mnu_strikethrough_1":
                 menuItem.state = self.strikethroughExtension && !self.strikethroughDoubleTildeOption ? .on : .off
@@ -1388,6 +1511,27 @@ extension ViewController: NSMenuItemValidation {
                 menuItem.state = self.strikethroughExtension && self.strikethroughDoubleTildeOption ? .on : .off
             case "mnu_strikethrough_0":
                 menuItem.state = self.strikethroughExtension ? .off : .on
+            
+            case "mnu_highlight":
+                return false
+            case "mnu_highlight_on":
+                menuItem.state = self.syntaxHighlightExtension ? .on : .off
+            case "mnu_highlight_ln":
+                menuItem.state = self.syntaxLineNumbers ? .on : .off
+                return self.syntaxHighlightExtension
+            case "mnu_highlight_tab_0", "mnu_highlight_tab_2", "mnu_highlight_tab_4", "mnu_highlight_tab_8":
+                menuItem.state = self.syntaxTabsOption == menuItem.tag ? .on : .off
+                return self.syntaxHighlightExtension
+            case "mnu_highlight_ww_0":
+                menuItem.state = !self.syntaxWrapEnabled ? .on : .off
+                return self.syntaxHighlightExtension
+            case "mnu_highlight_ww_80", "mnu_highlight_ww_120", "mnu_highlight_ww_custom":
+                menuItem.state = self.syntaxWrapEnabled && self.syntaxWrapCharacters == menuItem.tag ? .on : .off
+                return self.syntaxHighlightExtension
+            case "mnu_highlight_tab", "mnu_highlight_ww", "mnu_highlight_ww_x":
+                return self.syntaxHighlightExtension
+            case "mnu_highlight_off":
+                menuItem.state = !self.syntaxHighlightExtension ? .on : .off
             default:
                 break
             }
@@ -1502,6 +1646,21 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
 extension ViewController: NSMenuDelegate {
     func menuNeedsUpdate(_ menu: NSMenu) {
+        if menu.identifier?.rawValue == "mnu_highlight_ww" {
+            if menu.items.first(where: {$0.tag == self.syntaxWrapCharacters}) == nil {
+                let item = NSMenuItem(title: "\(syntaxWrapCharacters) characters", action: #selector(self.handleSyntaxHighlightMenu(_:)), keyEquivalent: "")
+                item.identifier = NSUserInterfaceItemIdentifier("mnu_highlight_ww_custom")
+                item.tag = syntaxWrapCharacters
+                
+                if let index = menu.items.firstIndex(where: { $0.tag > self.syntaxWrapCharacters}) {
+                    menu.insertItem(item, at: index)
+                } else {
+                    menu.insertItem(item, at: menu.items.count - 1)
+                }
+            }
+            return
+        }
+        
         if let item = menu.item(withTag: -6) {
             item.title = self.customCSSFile == nil ? "Download default CSS theme" : "Reveal CSS in Finder"
         }

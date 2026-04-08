@@ -53,8 +53,8 @@ enum JSExtension: Codable {
             self = .disabled
         } else {
             let url: URL?
-            if dict.keys.contains(Self.CodingKeys.url.rawValue) {
-                url = dict[Self.CodingKeys.url.rawValue] as? URL
+            if dict.keys.contains(Self.CodingKeys.url.rawValue), let s = dict[Self.CodingKeys.url.rawValue] as? String, let u = URL(string: s) {
+                url = u
             } else {
                 url = nil
             }
@@ -73,13 +73,13 @@ enum JSExtension: Codable {
         case .embed(let url):
             var r: [String: Any] = [Self.CodingKeys.state.rawValue: 1]
             if let url {
-                r[Self.CodingKeys.url.rawValue] = url
+                r[Self.CodingKeys.url.rawValue] = url.absoluteString
             }
             return r
         case .link(let url):
             var r: [String: Any] = [Self.CodingKeys.state.rawValue: 2]
             if let url {
-                r[Self.CodingKeys.url.rawValue] = url
+                r[Self.CodingKeys.url.rawValue] = url.absoluteString
             }
             return r
         }
@@ -98,6 +98,10 @@ enum JSExtension: Codable {
             try container.encode(2, forKey: .state)
             try container.encode(url, forKey: .url)
         }
+    }
+    
+    var isEnabled: Bool {
+        return !self.isDisabled
     }
     
     var isDisabled: Bool {
@@ -870,16 +874,35 @@ class Settings: Codable {
         update(from: s)
     }
     
+    func sanitize(allowLinkFile: Bool = false) {
+        var messages: [String] = []
+        sanitize(allowLinkFile: allowLinkFile, messages: &messages)
+        messages.forEach({ print($0) })
+    }
+    
     /**
      * Sanitize the settings.
+     * - parameters:
+     *   - allowLinkFile: allow to link local file for the JSExtension properties
+     *   - messages: Filled with a list of error messages.
      */
-    func sanitize(allowLinkFile: Bool = false) {
+    func sanitize(allowLinkFile: Bool = false, messages: inout [String]) {
+        messages = []
+        
         if baseFontSize < 0 {
             self.baseFontSize = 0
         }
         
-        self.mathExtension.sanitize(cacheUrl: mathJaxUrl, cdnUrl: Self.mathJaxWebUrl, allowLinkFile: allowLinkFile)
-        self.mermaidExtension.sanitize(cacheUrl: mermaidUrl, cdnUrl: Self.mermaidWebUrl, allowLinkFile: allowLinkFile)
+        self.mathExtension.sanitize(cacheUrl: mathJaxFileUrl, cdnUrl: Self.mathJaxWebUrl, allowLinkFile: allowLinkFile)
+        self.mermaidExtension.sanitize(cacheUrl: mermaidFileUrl, cdnUrl: Self.mermaidWebUrl, allowLinkFile: allowLinkFile)
+        
+        if self.subExtension && self.strikethroughExtension == .single {
+            messages.append("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).")
+        }
+        
+        if self.supExtension && self.footnotesOption {
+            messages.append("The Sup extension can cause corrupted output when the Footnotes option is set.")
+        }
     }
     
     /**
@@ -913,8 +936,8 @@ class Settings: Codable {
      * Then copy the support files of highlight.
      */
     func installDependencies(override: Bool = false) {
-        try? installDep(forResource: "mermaid.min", withExtension: "js", to: Self.mermaidCacheUrl, overwrite: override)
-        try? installDep(forResource: "tex-mml-chtml", withExtension: "js", to: Self.mathJaxCacheUrl, overwrite: override)
+        try? installDep(forResource: "mermaid.min", withExtension: "js", to: Self.mermaidCacheFileUrl, overwrite: override)
+        try? installDep(forResource: "tex-mml-chtml", withExtension: "js", to: Self.mathJaxCacheFileUrl, overwrite: override)
         
         try? installDep(forResource: "highlight", withExtension: nil, to: Settings.syntaxHighlightSupportCacheUrl, overwrite: override)
     }
@@ -922,7 +945,7 @@ class Settings: Codable {
     private func installDep(forResource name: String, withExtension ext: String?, to destination: URL?, overwrite: Bool) throws {
         guard let source = self.resourceBundle.url(forResource: name, withExtension: ext) else {
             os_log(
-                "Unable to store cache the file/folder %{public}s: source is missing!",
+                "Unable to store cache the file/folder %{public}s: source is missing on the app bundle!",
                 log: OSLog.quickLookExtension,
                 type: .error,
                 "\(name)\(ext != nil ? "." + ext! : "")"
@@ -1010,7 +1033,7 @@ class Settings: Codable {
                 // Sposta il file temporaneo
                 try fileManager.moveItem(at: tempURL, to: destination)
                 
-                // print("File seved in:", mermaidCacheUrl)
+                // print("File seved in:", mermaidCacheFileUrl)
                 reply?(true)
             } catch {
                 print("Error storing file on \(destination.path):", error)
@@ -1029,47 +1052,14 @@ extension Settings {
     /// Url from which to download the mermaid library.
     static let mermaidWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js")!
     
-    /// Cache of the mermaid library.
-    static var mermaidCacheUrl: URL? {
+    /// Local file with the mermaid library.
+    static var mermaidCacheFileUrl: URL? {
         return Self.jsFolder?.appendingPathComponent("mermaid.min.js")
     }
     
-    /// Location of the mermaid library. Can be from the cache or from the bundle.
-    var mermaidUrl: URL? {
-        return Self.mermaidCacheUrl ?? self.resourceBundle.url(forResource: "mermaid.min", withExtension: "js")
-    }
-    
-    /// Download and cache the mermaid library from web.
-    func updateMemaidCache(_ reply: ((Bool) -> Void)?) {
-        guard let mermaidCacheUrl = Self.mermaidCacheUrl else {
-            reply?(false)
-            return
-        }
-        Self.fetchCacheFile(from: Self.mermaidWebUrl, to: mermaidCacheUrl, withReply: reply)
-    }
-    
-    /**
-     * Check if the url is of type file and if it exists.
-     * - parameters:
-     *   - url: Url from fetch the librarty. If not set uses the `mermaidUrl`.
-     */
-    public func allowToEmbedMermaid(customUrl url: URL? = nil) -> Bool {
-        guard let library = url ?? mermaidUrl else {
-            return false
-        }
-        return library.isFileURL && FileManager.default.fileExists(atPath: library.path)
-    }
-    
-    /**
-     * Check if the url is of not a file.
-     * - parameters:
-     *   - url: Url from fetch the librarty. If not set uses the `mermaidUrl`.
-     */
-    public func allowToLinkMermaid(customUrl url: URL? = nil) -> Bool {
-        guard let library = url ?? mathJaxUrl else {
-            return false
-        }
-        return !library.isFileURL
+    /// Location of the mermaid library. Can be from the file cache or from the bundle.
+    var mermaidFileUrl: URL? {
+        return Self.mermaidCacheFileUrl ?? self.resourceBundle.url(forResource: "mermaid.min", withExtension: "js")
     }
 }
 
@@ -1079,46 +1069,13 @@ extension Settings {
     static let mathJaxWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.js")!
     
     /// Cache of the mermaid library.
-    static var mathJaxCacheUrl: URL? {
+    static var mathJaxCacheFileUrl: URL? {
         return Self.jsFolder?.appendingPathComponent("tex-mml-chtml.js")
     }
     
-    /// Location of the mermaid library. Can be from the cache or from the bundle.
-    var mathJaxUrl: URL? {
-        return Self.mathJaxCacheUrl ?? self.resourceBundle.url(forResource: "tex-mml-chtml", withExtension: "js")
-    }
-    
-    /// Download and cache the mermaid library from web.
-    func updateMathJaxUCache(_ reply: ((Bool) -> Void)?) {
-        guard let mathJaxCacheUrl = Self.mathJaxCacheUrl else {
-            reply?(false)
-            return
-        }
-        Self.fetchCacheFile(from: Self.mathJaxWebUrl, to: mathJaxCacheUrl, withReply: reply)
-    }
-    
-    /**
-     * Check if the url is of type file and if it exists.
-     * - parameters:
-     *   - url: Url from fetch the librarty. If not set uses the `mathJaxUrl`.
-     */
-    public func allowToEmbedMathJax(customUrl url: URL? = nil) -> Bool {
-        guard let library = url ?? mathJaxUrl else {
-            return false
-        }
-        return library.isFileURL && FileManager.default.fileExists(atPath: library.path)
-    }
-    
-    /**
-     * Check if the url is of not a file.
-     * - parameters:
-     *   - url: Url from fetch the librarty. If not set uses the `mathJaxUrl`.
-     */
-    public func allowToLinkMathJax(customUrl url: URL? = nil) -> Bool {
-        guard let library = url ?? mathJaxUrl else {
-            return false
-        }
-        return !library.isFileURL
+    /// Location of the mermaid library. Can be from the file cache or from the bundle.
+    var mathJaxFileUrl: URL? {
+        return Self.mathJaxCacheFileUrl ?? self.resourceBundle.url(forResource: "tex-mml-chtml", withExtension: "js")
     }
 }
 

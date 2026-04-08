@@ -27,6 +27,9 @@ typedef struct {
     char *magic_file;
     /*! Number of rendered code. */
     int count;
+    char **skipped_languages; // array of chars
+    size_t skipped_languages_size; // number of items
+    size_t skipped_languages_capacity; // allocated space
 } syntax_highlight_settings;
 
 /*
@@ -46,6 +49,9 @@ static syntax_highlight_settings *init_settings(void ) {
     settings->line_numbers = 0;
     settings->tab_spaces = 0;
     settings->wrap_limit = 0;
+    settings->skipped_languages = NULL;
+    settings->skipped_languages_size = 0;
+    settings->skipped_languages_capacity = 0;
     
     settings->count = 0;
     return settings;
@@ -75,6 +81,15 @@ static void syntax_highlight_settings_release(cmark_mem *mem, void *user_data)
         if (settings->magic_file) {
             mem->free(settings->magic_file);
             settings->magic_file = NULL;
+        }
+        if (settings->skipped_languages) {
+            for (size_t i = 0; i < settings->skipped_languages_size; i++) {
+                free(settings->skipped_languages[i]);
+            }
+            free(settings->skipped_languages);
+            settings->skipped_languages = NULL;
+            settings->skipped_languages_size = 0;
+            settings->skipped_languages_capacity = 0;
         }
         mem->free(user_data);
     }
@@ -108,8 +123,6 @@ void cmark_syntax_extension_highlight_set_background_color(cmark_syntax_extensio
         settings->background_color = NULL;
     }
 }
-
-
 
 const char *cmark_syntax_extension_highlight_get_theme_name(cmark_syntax_extension *extension) {
     syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
@@ -232,6 +245,86 @@ void cmark_syntax_extension_highlight_set_wrap_limit(cmark_syntax_extension *ext
     settings->wrap_limit = spaces;
 }
 
+static bool is_language_skipped(const char **array, size_t size, const char *key) {
+    if (size <= 0 || array == NULL) {
+        return false;
+    }
+    for (size_t i = 0; i < size; i++) {
+        if (strcmp(array[i], key) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void cmark_syntax_extension_highlight_add_skipped_languages(cmark_syntax_extension *extension, const char *language) {
+    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
+    if (!settings) {
+        settings = init_settings();
+        cmark_syntax_extension_set_private(extension, settings, syntax_highlight_settings_release);
+    }
+    
+    if (is_language_skipped((const char **)settings->skipped_languages, settings->skipped_languages_size, language)) {
+        return;
+    }
+    
+    if (settings->skipped_languages_size >= settings->skipped_languages_capacity) {
+        settings->skipped_languages_capacity += 2;
+        settings->skipped_languages = settings->skipped_languages != NULL ? realloc(settings->skipped_languages, settings->skipped_languages_capacity * sizeof(char *)) : malloc(settings->skipped_languages_capacity * sizeof(char *));
+    }
+    if (settings->skipped_languages == NULL) {
+        return;
+    }
+    
+    char *copy = strdup(language);
+    if (copy) {
+        settings->skipped_languages[settings->skipped_languages_size] = copy;
+        settings->skipped_languages_size += 1;
+    }
+}
+
+void cmark_syntax_extension_highlight_remove_skipped_languages(cmark_syntax_extension *extension, const char *language) {
+    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
+    if (!settings) {
+        return;
+    }
+    
+    for (size_t i = 0; i < settings->skipped_languages_size; i++) {
+        if (strcmp(settings->skipped_languages[i], language) == 0) {
+            // 1. free the string
+            free(settings->skipped_languages[i]);
+
+            // 2. shift the next elements
+            for (size_t j = i; j < settings->skipped_languages_size - 1; j++) {
+                settings->skipped_languages[j] = settings->skipped_languages[j + 1];
+            }
+
+            // 3. reduce the size
+            settings->skipped_languages_size--;
+            return;
+        }
+    }
+}
+
+void cmark_syntax_extension_highlight_clear_skipped_languages(cmark_syntax_extension *extension, const char *language) {
+    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
+    if (!settings) {
+        return;
+    }
+    
+    if (settings->skipped_languages != NULL) {
+        if (settings->skipped_languages) {
+            for (size_t i = 0; i < settings->skipped_languages_size; i++) {
+                free(settings->skipped_languages[i]);
+            }
+            free(settings->skipped_languages);
+            settings->skipped_languages = NULL;
+            settings->skipped_languages_size = 0;
+            settings->skipped_languages_capacity = 0;
+        }
+    }
+}
+
 int cmark_syntax_extension_highlight_get_rendered_count(cmark_syntax_extension *extension) {
     syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
     if (settings) {
@@ -262,19 +355,23 @@ void cmark_syntax_extension_highlight_increment_rendered_count(cmark_syntax_exte
 static void html_render(cmark_syntax_extension *extension,
                         cmark_html_renderer *renderer, cmark_node *node,
                         cmark_event_type ev_type, int options) {
+    syntax_highlight_settings *settings = cmark_syntax_extension_highlight_get_settings(extension);
+    
     cmark_html_render_cr(renderer->html);
     
     cmark_strbuf_puts(renderer->html, "<pre");
     cmark_html_render_sourcepos(node, renderer->html, options);
     cmark_strbuf_puts(renderer->html, " class='hl'");
+    
+    const char *language = (const char *)node->as.code.info.data;
+    
     if (options & CMARK_OPT_GITHUB_PRE_LANG) {
       cmark_strbuf_puts(renderer->html, " lang=\"");
-      houdini_escape_html0(renderer->html, node->as.code.info.data, node->as.code.info.len, 0);
+      houdini_escape_html0(renderer->html, (const uint8_t *)language, node->as.code.info.len, 0);
       cmark_strbuf_puts(renderer->html, "\"><code>");
     } else {
-      
       cmark_strbuf_puts(renderer->html, "><code class=\"language-");
-      houdini_escape_html0(renderer->html, node->as.code.info.data, node->as.code.info.len, 0);
+      houdini_escape_html0(renderer->html, (const uint8_t *)language, node->as.code.info.len, 0);
       cmark_strbuf_puts(renderer->html, "\">");
     }
     
@@ -282,20 +379,27 @@ static void html_render(cmark_syntax_extension *extension,
     // cmark_strbuf_puts(renderer->html, "lang: ");
     // cmark_strbuf_put(renderer->html, node->as.code.info.data, node->as.code.info.len);
     
-    char *language = strdup((const char *)node->as.code.info.data);
-    
+    char *formatted;
     int exit_code = 0;
-    char *formatted = highlight_format_string2((const char *)node->as.code.literal.data, (const char *)language, &exit_code, true);
-    free(language);
+    
+    bool skip = is_language_skipped((const char **)settings->skipped_languages, settings->skipped_languages_size, language);
+    if (!skip) {
+        formatted = highlight_format_string2((const char *)node->as.code.literal.data, (const char *)language, &exit_code, true);
+    } else {
+        formatted = (char *)node->as.code.literal.data;
+    }
+    
     if (exit_code == EXIT_SUCCESS && formatted != NULL) {
         cmark_strbuf_puts(renderer->html, formatted);
     }
     // cmark_strbuf_put(renderer->html, node->as.code.literal.data, node->as.code.literal.len);
-    free(formatted);
     
     cmark_strbuf_puts(renderer->html, "</code></pre>\n");
     
-    cmark_syntax_extension_highlight_increment_rendered_count(extension, 1);
+    if (!skip) {
+        free(formatted);
+        cmark_syntax_extension_highlight_increment_rendered_count(extension, 1);
+    }
 }
 
 char *cmark_syntax_extension_get_style(cmark_syntax_extension *extension) {

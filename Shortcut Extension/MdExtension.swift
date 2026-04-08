@@ -1,7 +1,13 @@
 //
-//  MD.swift
+//  MdExtension.swift
 //  QLMarkdown
 //
-//  Created by Simone Baldissini on 07/04/2026.
+//  Created by Sbarex on 07/04/2026.
 //
 
+import AppIntents
+import ExtensionFoundation
+
+@main
+struct MdExtension: AppIntentsExtension {
+}

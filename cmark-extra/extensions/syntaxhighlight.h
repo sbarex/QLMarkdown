@@ -65,5 +65,14 @@ char *cmark_syntax_extension_get_style(cmark_syntax_extension *extension);
 
 char *colorizeCode(const char *code, const char *lexer, const char *theme, bool export_fragment, bool print_line_numbers);
 
+//! Add an item to the list of languages ​​to ignore in the highlighting process.
+void cmark_syntax_extension_highlight_add_skipped_languages(cmark_syntax_extension *extension, const char *language);
+
+//! Remove an item from the list of languages ​​to ignore in the highlighting process.
+void cmark_syntax_extension_highlight_remove_skipped_languages(cmark_syntax_extension *extension, const char *language);
+
+//! Clea the list of languages ​​to ignore in the highlighting process.
+void cmark_syntax_extension_highlight_clear_skipped_languages(cmark_syntax_extension *extension, const char *language);
+
 
 #endif /* syntaxhighlight_h */

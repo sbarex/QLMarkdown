@@ -10,7 +10,7 @@
 
 QLMarkdown is a Mac OS application that provides:
 - a Quick Look extension for viewing Markdown files
-- a Shortcut extension for converting Markdown files to HTML
+- an experimental Shortcut extension for converting Markdown files to HTML
 - a command-line executable for converting Markdown files to HTML
 - a graphical interface for configuring Quick Look preview display settings. 
 
@@ -30,7 +30,7 @@ You can download the last compiled release from [this link](https://github.com/s
   - [Installation](#installation)
   - [Uninstall](#uninstall)
   - [Markdown processing](#markdown-processing)
-  - [Difference with the GitHub Markdown engine](#difference-with-the-github-markdown-engine)
+  - [Differences with GitHub's Markdown engine](#differences-with-githubs-markdown-engine)
   - [Quick Look Settings](#quick-look-settings)
     - [Themes](#themes)
     - [Options](#options)
@@ -39,6 +39,7 @@ You can download the last compiled release from [this link](https://github.com/s
       - [Inline local images](#inline-local-images)
       - [Mathematical expressions](#mathematical-expressions)
       - [Mermaid diagrams](#mermaid-diagrams)
+      - [Note about external Javascript libraries (MathJax and Mermaid)](#note-about-external-javascript-libraries-mathjax-and-mermaid)
       - [Syntax Highlighting](#syntax-highlighting)
       - [YAML header](#yaml-header)
   - [Command line interface](#command-line-interface)
@@ -100,7 +101,7 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` or `qmd` files.
 
 
-## Difference with the GitHub Markdown engine
+## Differences with GitHub's Markdown engine
 
 Although GitHub has customized the [`cmark-gfm`](https://github.com/github/cmark-gfm) library, it does not use it directly in the rendering process of Markdown files (see [this repository](https://github.com/github/markup)).
 GitHub uses a number of libraries in Ruby for parsing and formatting source code that cannot easily be converted into a compiled library.
@@ -113,7 +114,7 @@ Syntax highlighting uses a different library, so the formatting, colors scheme, 
 
 Launching the application, you can configure the options, enable the desired extensions and set the theme for formatting the Quick Look preview of Markdown files.
 
-__To make the settings effective you need to save them (`cmd-s` or menu `File` > `Save settings`) or enable the autosave option.__
+> To make the settings effective you need to save them (`cmd-s` or menu `File` > `Save settings`) or enable the autosave option.
 
 ![main interface](./assets/img/main_interface.png)
 
@@ -147,7 +148,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Option|Description|
 |:--|:--|
 |Smart quotes|Convert straight quotes to curly, ```---``` to _em dashes_ and ```--``` to _en dashes_.|
-|Footnotes|Parse the footnotes. |
+|Footnotes|Parse the footnotes. **Superscript extension must be disabled.**|
 |Hard break|Render `softbreak` elements as hard line breaks.|
 |No soft break|Render `softbreak` elements as spaces.|
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|
@@ -170,7 +171,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Math|Enable the [formatting of math expressions](#mathematical-expressions).|
 |Mermaid|Enable the [Mermaid diagram](#mermaid-diagrams) extension.|
 |Strikethrough|Strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.|
-|Sub/Superscript|Allow to subscript text inside `~` tag pairs, and superscript text inside `^` tag pairs. Please note that the Strikethrough extension must be disabled or set to recognize double `~`.|
+|Sub/Superscript|Allow to subscript text inside `~` tag pairs, and superscript text inside `^` tag pairs. Please note that the **Strikethrough extension must be disabled or set to recognize double `~`**. Also the **Footnotes options must be disabled**.|
 |Syntax highlighting|Enable the [Syntax highlighting extension](#syntax-highlighting). |
 |Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
 |Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|
@@ -179,7 +180,8 @@ It is possibile to set a custom base font size. This size (in points) will be us
 
 Tou can also choose if open external link inside the Quick Look preview window or in the default browser.
 
-The `Quick Look window` option allow you to force a custom size for the content area of the Quick Look window. _Use with caution on macOS before version 12 Monterey_.
+The `Quick Look window` option allow you to suggest a custom size for the content area of the Quick Look window. macOS does not always honor this setting.
+> _Use with caution on macOS before version 12 Monterey_. 
 
 
 #### Emoji
@@ -214,9 +216,6 @@ Alternatively, you can use the ` ```math ` code block syntax to display a math e
 
 The [MathJax](https://www.mathjax.org/) library is loaded if the markdown code contains ` ```math ` code blocks or one or more dollar sign.
 
-You can choose to link the library from the web (internet connection required, fetched from `cdn.jsdelivr.net`) or embed the source code in the html output. 
-At the first execution of the main Application a local copy of the library is downloaded and cached. You can fetch an update version from the extension poup menu.
-
 ![shortcut interface](./assets/img/mathjax_menu.png)
 
 
@@ -244,13 +243,20 @@ graph TD
 ```
 ~~~
 
-You can choose to link the library from the web (require a network connection to `cdn.jsdelivr.net`) or embed the code in the html output. 
-You can choose to link the library from the web (internet connection required, fetched from `cdn.jsdelivr.net`) or embed the source code in the html output. 
-At the first execution of the main Application a local copy of the library is downloaded and cached. You can fetch an update version from the extension poup menu.
-
 > **Note:** The library is initialized with `securityLevel: 'strict'` for safety.
 
 The diagram theme automatically adapts to the system appearance (light/dark mode).
+
+
+#### Note about external Javascript libraries (MathJax and Mermaid)
+
+The Math and Mermaid extension requires some external javascript libraries.
+
+At the first execution of the main Application a local copy of the libraries are downloaded and cached. You can download an updated version at any time from the pop-up menu of each extension.
+
+You can choose to link the corresponding library from the web (internet connection required) from `cdn.jsdelivr.net`, or embed the source code in the html output, but causing an increase in the size of the html file. 
+
+On the status bar of the Application you can view the final file size.
 
 
 #### Syntax Highlighting
@@ -259,15 +265,14 @@ This extension highlights the source code inside a fenced box.
 
 The rendering engine is based on the [Highlight](http://www.andre-simon.de/doku/highlight/en/highlight.php) library embedded in the app.
 
-![syntax highlighting settings](./assets/img/syntax_interface.png)
-
-You can customize the settings:
-
+You can customize these settings:
 - Line numbers visibility.
 - Word wrap options.
 - Tabs replacements.
 
 If no language is defined for the fanced block, the code is rendered as a plain text.
+
+> The `math` and `mermaid` languages ​​are ignored if the corresponding extensions are enabled.
 
 
 ### YAML header
@@ -333,7 +338,7 @@ MARKDOWN EXTENSIONS:
                           Embed local image files inside the formatted output. (values: on, off)
   --math <path|url>       Format the mathematical expressions with MathJax. You can specify the path or url of the MathJax.js library.
   --math-embed <on|off>   Embed/Link the MathJax library. (values: on, off)
-  --mermaid <path|url>    Format the mermaid diagrams. You can specify the path or url of the MathJax.js library.
+  --mermaid <path|url>    Format the mermaid diagrams. You can specify the path or url of the Mermaid.js library.
   --mermaid-embed <on|off>
                           Embed/Link the mermaid library. (values: on, off)
   --table <on|off>        Enable table extension. (values: on, off)
@@ -369,10 +374,12 @@ OPTIONS:
 
 Any relative paths inside raw HTML fragments are not updated according to the destination folder. 
 
+Unlike the Quick Look extension and the Shortcut command, the CLI tool allows you to link js libraries (MathJax and Mermaid) to file paths as well as web addresses.
+
 
 ## Shortcut Commands
 
-The application provides two commands for the `Shortcuts` Application:
+The application provides two exprerimental commands for the `Shortcuts` Application:
 - `Markdown format`: format a markdown file and output the converted html code. 
 - `Markdown convert`: format a markdown file and save the converted html code to a file.
 
@@ -405,16 +412,16 @@ The compilation of `cmark-gfm` require `cmake` (`brew install cmake`).
 
 ## Note about security
 
-** This application does not collect any information about your system or the files it processes.**
+**This application does not collect any information about your system or the files it processes.**
 
-To allow the Quick Look view of local images the application and the extension has an entitlement exception to allow *only read access* to the entire system. 
+To allow the Quick Look preview of local images, the application and extension have a permission exception that only allows read access to the entire system.
 
 On macOS 11 (Big Sur) there is a bug in the Quick Look engine and WebKit that cause the immediate crash of any WebView inside a Quick Look preview. To temporary fix this problem this Quick Look extension uses a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement. 
 
 
 ## FAQ
 
-> The Quick Look preview do not works
+> Q: The Quick Look preview do not works
 There could be many reasons why the preview isn't working.
 
 First, check that QLMarkdown is enabled in `System Settings` > `General` > `Login Items & Extensions` > `Quick Look`.
@@ -425,6 +432,8 @@ If the application doesn't appear in the list, try dragging it to the Trash, the
 
 If the QLMarkdown Quick Look Extension is present (and checked) in the list but the `.md` files are not displayed it is probably due to other applications that have registered support for that type of file. 
 From the `System Settings` > `General` > `Login Items & Extensions` > `Quick Look`, try disabling all Quick Look extensions except QLMarkdown and see if the preview works. If so, re-enable the Quick Look extensions of the other applications one at a time until you find the one causing the conflict.
+
+You can open the System settings panel with the button on the main app. 
 
 If it still doesn't work, it might be because of how other applications have redefined the markdown format (UTI). 
 
@@ -456,9 +465,9 @@ This application handle these UTIs:
 
 ---
 
-> QLMarkdown doesn't appear in the list of applications that can open a Markdown file (for example, from the `Open With…` menu)
+> Q: QLMarkdown doesn't appear in the list of applications that can open a Markdown file (for example, from the `Open With…` menu)
 
-> Double-clicking the file doesn't open QLMarkdown
+> Q: Double-clicking the file doesn't open QLMarkdown
 
 This is a desired behavior. QLMarkdown is not intended to be used as a standalone markdown file editor or viewer.
 
