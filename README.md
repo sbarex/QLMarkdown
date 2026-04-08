@@ -270,7 +270,7 @@ You can customize these settings:
 - Word wrap options.
 - Tabs replacements.
 
-If no language is defined for the fanced block, the code is rendered as a plain text.
+If no language is defined for a fenced block, the code is rendered as a plain text.
 
 > The `math` and `mermaid` languages ​​are ignored if the corresponding extensions are enabled.
 

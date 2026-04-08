@@ -12,7 +12,7 @@ New Features:
 - This release will reset all previous settings.
 - The command line tool do not more use the same settings of the main application or the Quick Look extension.
 - Command line tool uses some different arguments.
-- Dropped support for guess the scripting language inside fanced blocks.
+- Dropped support for guess the scripting language inside fenced blocks.
 
 
 ### 1.0.24 (50)

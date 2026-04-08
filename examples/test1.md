@@ -81,7 +81,7 @@ image url: `https://picsum.photos/300/200`
 
 If enabled, the math extension allow to render the mathematical expressions:
 
-- inside a fanced blocks ` ```math  ``` `:
+- inside a fenced blocks ` ```math  ``` `:
 ```math
 \sqrt{x+2}
 ```
