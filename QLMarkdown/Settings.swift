@@ -126,7 +126,7 @@ class Settings: Codable {
     @objc var tagFilterExtension: Bool = true
     @objc var taskListExtension: Bool = true
     @objc var yamlExtension: Bool = true
-    @objc var yamlExtensionAll: Bool = false
+    @objc var yamlExtensionAll: Bool = true
     
     @objc var footnotesOption: Bool = true
     @objc var hardBreakOption: Bool = false
