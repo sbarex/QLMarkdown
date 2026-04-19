@@ -1562,6 +1562,11 @@ extension ViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.isFileURL, url.pathExtension.lowercased() == "md", FileManager.default.fileExists(atPath: url.path) {
+            openMarkdown(file: url)
+            decisionHandler(.cancel)
+            return
+        }
         if !Settings.shared.openInlineLink, navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
             let r = NSWorkspace.shared.open(url)
             // print(r, url.absoluteString)
