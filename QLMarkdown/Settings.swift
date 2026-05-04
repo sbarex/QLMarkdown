@@ -477,7 +477,11 @@ class Settings: Codable {
     var validateUTFOption: Bool = false
     
     var baseFontSize: CGFloat = 0
-    var customCSS: URL?
+    var customCSS: URL? {
+        didSet {
+            customCSSFetched = false
+        }
+    }
     var customCSSFetched: Bool = false
     var customCSSCode: String?
     var customCSSOverride: Bool = false
@@ -1081,7 +1085,7 @@ extension Settings {
 
 // MARK: - Syntax highlight
 extension Settings {
-    /// Url from which to download the mermaid library.
+    /// Url from which to download the `highlight` support files.
     static var syntaxHighlightSupportCacheUrl: URL? {
         return Self.applicationSupportUrl?.appendingPathComponent("highlight")
     }

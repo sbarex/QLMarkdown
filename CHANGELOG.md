@@ -1,6 +1,11 @@
 # Changelog
 
-### 1.5 (51)
+### 1.5.1 (52)
+Bugfix:
+- Fixed css popup menu refresh.
+
+
+### 1.5.0 (51)
 New Features:
 - **Application is now codesigned and notarized!**
 - Option to set the base font size.

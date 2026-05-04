@@ -474,7 +474,6 @@ struct QLMarkdownCLI: ParsableCommand {
             }
         }
         
-        let appBundleUrl = appUrl 
         Settings.appBundleUrl = appUrl
         
         if let v = Settings.getResourceBundle().object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
