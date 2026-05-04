@@ -2,6 +2,30 @@
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>QLMarkdown</title>
+
+        <item>
+            <title>1.5.1</title>
+            <pubDate>lun, 4 mag 2026 18:05:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.5.1/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.5.1" sparkle:version="52" 
+                       sparkle:edSignature="U/gGDlaX3dy9sZHvB3PnNQdfX2rErGYiDvFO+ErDjhr1DcGefE4W1tKOgzop9gSlf2hWUDlNbxjcQilWElIgDA==" length="21524359"
+                       />
+            <description><![CDATA[
+                <h2>Release 1.5.1 (52)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+
+                <p>Bugfix:</p>
+                <ul>
+                    <li>Fixed css popup menu refresh..</li>
+                </ul>
+                
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
         
         <item>
             <title>1.5.0</title>
