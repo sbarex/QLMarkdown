@@ -800,7 +800,18 @@ table.debug td {
         }
         css_highlight = formatCSS(css_highlight)
         
-        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 || body.contains("$") {
+        // Gate MathJax injection strictly on whether cmark's math extension actually rendered
+        // a math node. The legacy `|| body.contains("$")` fallback was removed: with the
+        // pandoc-rules fix in cmark-extra/math_ext.c, `rendered_count` is now reliable for
+        // currency-only files. Re-adding the fallback re-introduces the currency-mangling bug
+        // (MathJax v3's `inlineMath: [['$', '$']]` matches `$1.50` pairs client-side regardless
+        // of what cmark did).
+        // KNOWN LIMITATION: mixed files containing BOTH real math (`$x=1$`) and currency (`$100`)
+        // still mangle the currency — MathJax loads for the real math and then re-matches every
+        // `$...$` pair on the page. Fixing that requires either a body post-process to escape
+        // non-math `$` to `\$` (relying on `processEscapes: true` below), or switching cmark-extra
+        // + MathJax to `\(...\)` inline delimiters. Out of scope here.
+        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
             s_header += """
 <script type="text/javascript">
 MathJax = {
