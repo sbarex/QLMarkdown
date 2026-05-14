@@ -800,7 +800,19 @@ table.debug td {
         }
         css_highlight = formatCSS(css_highlight)
         
-        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 || body.contains("$") {
+        // Gate MathJax injection strictly on whether cmark's math extension actually rendered
+        // a math node. The legacy `|| body.contains("$")` fallback was removed: with the
+        // pandoc-rules fix in cmark-extra/math_ext.c, `rendered_count` is now reliable for
+        // currency-only files. Re-adding the fallback re-introduces the currency-mangling bug.
+        //
+        // Mixed files (real math AND currency in the same document) are handled by configuring
+        // MathJax to use `\(...\)` / `\[...\]` as the only delimiters, and post-processing the
+        // rendered body so the inside of each `<span class='hl math'>` / `<div class='hl math'>`
+        // wrapper has its `$...$` / `$$...$$` rewritten to the new delimiters (see
+        // `swapMathDelimiters` below). Stray `$` outside math wrappers (currency, prose, code)
+        // is invisible to MathJax because `$` is no longer a delimiter.
+        var processedBody = body
+        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
             s_header += """
 <script type="text/javascript">
 MathJax = {
@@ -810,12 +822,12 @@ MathJax = {
   tex: {
     // packages: ['base'],        // extensions to use
     inlineMath: [              // start/end delimiter pairs for in-line math
-      ['$', '$']
-      // , ['\\(', '\\)']
+      // ['$', '$']              // disabled to avoid matching currency client-side
+      ['\\(', '\\)']
     ],
     displayMath: [             // start/end delimiter pairs for display math
-      ['$$', '$$']
-      //, ['\\[', '\\]']
+      // ['$$', '$$']
+      ['\\[', '\\]']
     ],
     processEscapes: true,       // use \\$ to produce a literal dollar sign
     processEnvironments: false
@@ -824,13 +836,13 @@ MathJax = {
 </script>
 """
             s_footer += mathExtension.getScriptCode(extraTagLink: "id='MathJax-script' async", extraTagEmbed: "id='MathJax-script'")
+            processedBody = swapMathDelimiters(processedBody)
         }
 
         // Mermaid diagrams support
-        var processedBody = body
-        if !self.renderAsCode, !self.mermaidExtension.isDisabled, body.contains("language-mermaid") {
+        if !self.renderAsCode, !self.mermaidExtension.isDisabled, processedBody.contains("language-mermaid") {
             // Transform mermaid code blocks to mermaid divs
-            processedBody = transformMermaidBlocks(body)
+            processedBody = transformMermaidBlocks(processedBody)
 
             // Inject mermaid.min.js
             s_footer += mermaidExtension.getScriptCode()
@@ -913,6 +925,49 @@ securityLevel: 'strict'
         return "```yaml\n"+text+"```\n"
     }
     
+    /**
+     * Rewrite the inline/display math delimiters inside cmark-extra's `<span class='hl math'>` and
+     * `<div class='hl math'>` wrappers from `$...$` / `$$...$$` to LaTeX-canonical `\(...\)` / `\[...\]`.
+     *
+     * Why: MathJax v3 defaults to `$...$` as an inline delimiter and scans the rendered DOM
+     * client-side, independent of cmark. That re-matches currency pairs like `$1.50 ... $7.89`
+     * as math even though cmark correctly classified them as plain text. Swapping MathJax to
+     * `\(...\)` / `\[...\]` (and rewriting only the spans cmark itself emitted) makes `$`
+     * invisible to MathJax — currency and prose are left alone.
+     *
+     * The trailing `</span>` / `</div>` anchor in each pattern is unforgeable because
+     * `math_ext.c:html_render_math` entity-escapes `<` to `&lt;` inside math content. The
+     * `[^>]*>` allows for any future attributes cmark-extra might add to the open tag (e.g.
+     * `lang="math"` from `CMARK_OPT_GITHUB_PRE_LANG`).
+     */
+    private func swapMathDelimiters(_ html: String) -> String {
+        var result = html
+        // Inline: <span class='hl math'>$...$</span> → <span class='hl math'>\(...\)</span>
+        result = result.replacingOccurrences(
+            of: #"(<span class='hl math'[^>]*>)\$([\s\S]*?)\$(</span>)"#,
+            with: #"$1\\($2\\)$3"#,
+            options: .regularExpression
+        )
+        // Display: <div class='hl math'>$$...$$</div> → <div class='hl math'>\[...\]</div>
+        result = result.replacingOccurrences(
+            of: #"(<div class='hl math'[^>]*>)\$\$([\s\S]*?)\$\$(</div>)"#,
+            with: #"$1\\[$2\\]$3"#,
+            options: .regularExpression
+        )
+        // Defensive: if any math span retained `$...$` (regex miss — e.g., an unforeseen
+        // cmark-extra output variant), log loudly. Under the new MathJax config, an
+        // un-swapped span renders as literal LaTeX source text — silent UX regression.
+        // This converts that silent failure into a loud one for the cost of two
+        // String.range(of:) probes per math-bearing render.
+        if result.range(of: #"<span class='hl math'[^>]*>\$"#, options: .regularExpression) != nil {
+            os_log("math delimiter swap missed an inline span — math may render as literal text. Please report.", log: OSLog.rendering, type: .error)
+        }
+        if result.range(of: #"<div class='hl math'[^>]*>\$\$"#, options: .regularExpression) != nil {
+            os_log("math delimiter swap missed a display block — math may render as literal text. Please report.", log: OSLog.rendering, type: .error)
+        }
+        return result
+    }
+
     /**
      * Transform mermaid code blocks from `<pre...><code class="language-mermaid">...</code></pre>` to `<div class="mermaid">...</div>`.
      */
