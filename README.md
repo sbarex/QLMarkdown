@@ -80,7 +80,7 @@ After the first execution, the Quick Look extension will be available (and enabl
 
 ## Uninstall
 
-To install the application, simply drag it to the trash.
+To uninstall the application, simply drag it to the trash.
 Support files can be deleted by removing the folder `~/Library/Group Containers/group.org.sbarex.qlmarkdown`.
 
 
