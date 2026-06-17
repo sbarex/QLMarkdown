@@ -353,12 +353,18 @@ class Settings: Codable {
                 title += ", version \(version) (\(build))"
             }
             if let copy = info["NSHumanReadableCopyright"] as? String {
-                title += ".<br />\n\(copy.trimmingCharacters(in: CharacterSet(charactersIn: ". ")) + " with <span style='font-style: normal'>❤️</span>")"
+                var copyright = copy.trimmingCharacters(in: CharacterSet(charactersIn: ". "))
+                if copyright.hasPrefix("Developed by ") {
+                    let developer = String(copyright.dropFirst("Developed by ".count))
+                    copyright = String(format: NSLocalizedString("Developed by %@", comment: "About footer developer credit"), developer)
+                }
+                let copyrightTemplate = NSLocalizedString("%@ with <span style='font-style: normal'>❤️</span>", comment: "About footer copyright line")
+                title += ".<br />\n\(String(format: copyrightTemplate, copyright))"
             }
         } else {
             title += "QLMarkdown</a>"
         }
-        title += ".<br/>\nIf you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!"
+        title += ".<br/>\n\(NSLocalizedString("If you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!", comment: "About footer donation link"))"
         return title
     }
     
@@ -901,11 +907,11 @@ class Settings: Codable {
         self.mermaidExtension.sanitize(cacheUrl: mermaidFileUrl, cdnUrl: Self.mermaidWebUrl, allowLinkFile: allowLinkFile)
         
         if self.subExtension && self.strikethroughExtension == .single {
-            messages.append("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).")
+            messages.append(NSLocalizedString("The Sub extension is incompatible with the Strikethrough extension when recognizing a single tilde (~).", comment: "Settings validation message"))
         }
         
         if self.supExtension && self.footnotesOption {
-            messages.append("The Sup extension can cause corrupted output when the Footnotes option is set.")
+            messages.append(NSLocalizedString("The Sup extension can cause corrupted output when the Footnotes option is set.", comment: "Settings validation message"))
         }
     }
     

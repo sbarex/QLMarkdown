@@ -8,6 +8,12 @@
             "state" : "translated",
             "value" : "tutti i file"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "todos los archivos"
+          }
         }
       }
     },
@@ -17,6 +23,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Codice HTML in linea (non sicuro)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permitir HTML en línea (no seguro)"
           }
         }
       }
@@ -28,6 +40,12 @@
             "state" : "translated",
             "value" : "Link automaticatici"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autoenlace"
+          }
         }
       }
     },
@@ -38,6 +56,12 @@
             "state" : "translated",
             "value" : "Converti ${inputFile} in un file HTML."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convertir ${inputFile} en un archivo HTML."
+          }
         }
       }
     },
@@ -47,6 +71,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Converte un file Markdown in formato HTML."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convierte un archivo Markdown a HTML."
           }
         }
       }
@@ -59,6 +89,12 @@
             "state" : "translated",
             "value" : "Diagrammi"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagramas"
+          }
         }
       }
     },
@@ -69,12 +105,24 @@
             "state" : "translated",
             "value" : "Incapsula immagini locali"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incrustar imágenes locales"
+          }
         }
       }
     },
     "Emoji option state" : {
       "localizations" : {
         "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji"
+          }
+        },
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Emoji"
@@ -89,6 +137,12 @@
             "state" : "translated",
             "value" : "Emoji"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Emoji"
+          }
         }
       }
     },
@@ -98,6 +152,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Note di pié pagina"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notas al pie"
           }
         }
       }
@@ -109,6 +169,12 @@
             "state" : "translated",
             "value" : "Formatta ${inputFile} in codice HTML (${generateFullCode})."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatear ${inputFile} como código HTML (${generateFullCode})."
+          }
         }
       }
     },
@@ -118,6 +184,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Formatta un file markdown in codice HTML"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatear un archivo Markdown como HTML"
           }
         }
       }
@@ -129,11 +201,24 @@
             "state" : "translated",
             "value" : "Genera il codice HTML completo oppure solo il frammento del corpo."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genera una página HTML completa o solo el fragmento del cuerpo."
+          }
         }
       }
     },
     "Hard breaks" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saltos duros"
+          }
+        }
+      }
     },
     "Heads anchor" : {
       "localizations" : {
@@ -141,6 +226,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Collegamenti ai titoli"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anclas en encabezados"
           }
         }
       }
@@ -152,6 +243,12 @@
             "state" : "translated",
             "value" : "Formatta contenuto evidenziato"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resaltado"
+          }
         }
       }
     },
@@ -161,6 +258,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Generazione del codice HTML"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generación de código HTML"
           }
         }
       }
@@ -178,6 +281,12 @@
             "state" : "translated",
             "value" : "File Markdown"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo Markdown"
+          }
         }
       }
     },
@@ -188,6 +297,12 @@
             "state" : "translated",
             "value" : "libreria js dal web"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "biblioteca js desde la web"
+          }
         }
       }
     },
@@ -197,6 +312,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "libreria js incapsulata"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "biblioteca js incrustada"
           }
         }
       }
@@ -209,6 +330,12 @@
             "state" : "translated",
             "value" : "Converti file Markdown"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convertir archivo Markdown"
+          }
         }
       }
     },
@@ -218,6 +345,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Formatta file Markdown"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatear archivo Markdown"
           }
         }
       }
@@ -229,11 +362,24 @@
             "state" : "translated",
             "value" : "Formule matematiche"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fórmulas matemáticas"
+          }
         }
       }
     },
     "No soft breaks" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin saltos suaves"
+          }
+        }
+      }
     },
     "off" : {
       "localizations" : {
@@ -241,6 +387,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "disattivato"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "desactivado"
           }
         }
       }
@@ -252,6 +404,12 @@
             "state" : "translated",
             "value" : "attivato"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "activado"
+          }
         }
       }
     },
@@ -262,6 +420,12 @@
             "state" : "translated",
             "value" : "solo per i file .rmd e .qmd"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo para archivos .rmd y .qmd"
+          }
         }
       }
     },
@@ -271,6 +435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opzione"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opción"
           }
         }
       }
@@ -288,6 +458,12 @@
             "state" : "needs_review",
             "value" : "codice completo"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "código completo"
+          }
         }
       }
     },
@@ -297,6 +473,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "predefinito"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "predefinido"
           }
         }
       }
@@ -308,6 +490,12 @@
             "state" : "translated",
             "value" : "riconosci doppia ~"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "reconocer doble ~"
+          }
         }
       }
     },
@@ -317,6 +505,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "riconosci singola ~"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "reconocer una sola ~"
           }
         }
       }
@@ -328,6 +522,12 @@
             "state" : "translated",
             "value" : "Formatta come codice sorgente"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Renderizar como código fuente"
+          }
         }
       }
     },
@@ -337,6 +537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "sostituisci usando il font"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sustituir usando la fuente"
           }
         }
       }
@@ -348,6 +554,12 @@
             "state" : "translated",
             "value" : "sostituisci con immagini"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sustituir con imágenes"
+          }
         }
       }
     },
@@ -357,6 +569,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Informazioni di debug"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de depuración"
           }
         }
       }
@@ -368,6 +586,12 @@
             "state" : "translated",
             "value" : "Virgolette tipografiche"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comillas tipográficas"
+          }
         }
       }
     },
@@ -377,6 +601,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "frammento"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fragmento"
           }
         }
       }
@@ -388,6 +618,12 @@
             "state" : "translated",
             "value" : "Testo barrato"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texto tachado"
+          }
         }
       }
     },
@@ -397,6 +633,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Testo barrato"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texto tachado"
           }
         }
       }
@@ -408,6 +650,12 @@
             "state" : "translated",
             "value" : "Apice/pedice"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superíndice/subíndice"
+          }
         }
       }
     },
@@ -417,6 +665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sintassi nei blocchi di codice"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resaltado de sintaxis en bloques de código"
           }
         }
       }
@@ -428,6 +682,12 @@
             "state" : "translated",
             "value" : "Tabelle"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tablas"
+          }
         }
       }
     },
@@ -438,11 +698,24 @@
             "state" : "translated",
             "value" : "Filtra tag HTML"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrar etiquetas HTML"
+          }
         }
       }
     },
     "Task list" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de tareas"
+          }
+        }
+      }
     },
     "The Markdown file to convert." : {
       "extractionState" : "manual",
@@ -451,6 +724,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "File Markdown da convertire."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo Markdown que se convertirá."
           }
         }
       }
@@ -462,6 +741,12 @@
             "state" : "translated",
             "value" : "File Markdown da formattare."
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo Markdown que se formateará."
+          }
         }
       }
     },
@@ -471,6 +756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Valida UTF8"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Validar UTF-8"
           }
         }
       }
@@ -482,6 +773,12 @@
             "state" : "translated",
             "value" : "Intestazione YAML"
           }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cabecera YAML"
+          }
         }
       }
     },
@@ -491,6 +788,111 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opzione Intestazione YAML"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opción de cabecera YAML"
+          }
+        }
+      }
+    },
+    "Developed by %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desarrollado por %@"
+          }
+        }
+      }
+    },
+    "%@ with <span style='font-style: normal'>❤️</span>" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ con <span style='font-style: normal'>❤️</span>"
+          }
+        }
+      }
+    },
+    "If you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si te gusta esta app, <a href='https://www.buymeacoffee.com/sbarex'><strong>invítame a un café</strong></a>!"
+          }
+        }
+      }
+    },
+    "Rendered in %.3f seconds | %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Renderizado en %.3f segundos | %@"
+          }
+        }
+      }
+    },
+    "This application is not intended to be a Markdown editor, but the interface for customising the Quick Look preview." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta aplicación no está pensada para ser un editor de Markdown, sino una interfaz para personalizar la vista previa de Quick Look."
+          }
+        }
+      }
+    },
+    "Do not show this warning again" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No volver a mostrar este aviso"
+          }
+        }
+      }
+    },
+    "Thanks to this application you have viewed over <b>%d files</b>." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gracias a esta aplicación has visto más de <b>%d archivos</b>."
+          }
+        }
+      }
+    },
+    "If you find it useful and you have the possibility, consider <a href=\"https://buymeacoffee.com/sbarex\"><b>buying me a coffee!</b></a>" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si te resulta útil y tienes la posibilidad, considera <a href=\"https://buymeacoffee.com/sbarex\"><b>invitarme a un café</b></a>"
+          }
+        }
+      }
+    },
+    "Developed by SBAREX with ❤️ | %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desarrollado por SBAREX con ❤️ | %@"
           }
         }
       }
