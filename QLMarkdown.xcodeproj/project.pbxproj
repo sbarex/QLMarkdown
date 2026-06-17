@@ -18,6 +18,8 @@
 		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
 		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
 		831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		83EBA0052FEC000100000005 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83EBA0022FEC000100000002 /* Localizable.strings */; };
+		83EBA0062FEC000100000006 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83EBA0022FEC000100000002 /* Localizable.strings */; };
 		831A8C6B258ABD8900E36182 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
 		831A8C6E258ABD8D00E36182 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
 		831A8C71258ABD9300E36182 /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
@@ -525,6 +527,9 @@
 		831A8C46258ABADA00E36182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreviewViewController.xib; sourceTree = "<group>"; };
 		831A8C48258ABADA00E36182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831A8C49258ABADA00E36182 /* QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QLExtension.entitlements; sourceTree = "<group>"; };
+		83EBA0012FEC000100000001 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		83EBA0032FEC000100000003 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83EBA0042FEC000100000004 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8320D58A2D1C25B1005868BD /* QLMarkdown Shortcut Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = "QLMarkdown Shortcut Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		832D256125CC8894005F41AC /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		83327D1D2593FB0700E76CF6 /* url.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = url.hpp; sourceTree = "<group>"; };
@@ -1057,6 +1062,7 @@
 		837F29172597A01F00A5F7DE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				83EBA0022FEC000100000002 /* Localizable.strings */,
 				83598F22258263C0004664D3 /* default.css */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 			);
@@ -1385,6 +1391,7 @@
 				en,
 				Base,
 				it,
+				es,
 			);
 			mainGroup = 83598E5825818808004664D3;
 			packageReferences = (
@@ -1421,6 +1428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				830277F42C60B3B40066EBCC /* icon.png in Resources */,
+				83EBA0062FEC000100000006 /* Localizable.strings in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1441,6 +1449,7 @@
 				83F4B9962586AB9700FC58A7 /* README.md in Resources */,
 				83598E692581880A004664D3 /* Assets.xcassets in Resources */,
 				83598E6C2581880A004664D3 /* Main.storyboard in Resources */,
+				83EBA0052FEC000100000005 /* Localizable.strings in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				830277F52C60B3E20066EBCC /* default.css in Resources */,
 				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
@@ -1894,8 +1903,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				83598E6B2581880A004664D3 /* Base */,
+				83EBA0012FEC000100000001 /* es */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		83EBA0022FEC000100000002 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83EBA0032FEC000100000003 /* en */,
+				83EBA0042FEC000100000004 /* es */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

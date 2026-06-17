@@ -58,9 +58,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             print("Failed to start updater with error: \(error)")
             
             let alert = NSAlert()
-            alert.messageText = "Updater Error"
-            alert.informativeText = "The Updater failed to start. For detailed error information, check the Console.app log."
-            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.messageText = NSLocalizedString("Updater Error", comment: "Updater failure alert title")
+            alert.informativeText = NSLocalizedString("The Updater failed to start. For detailed error information, check the Console.app log.", comment: "Updater failure alert message")
+            alert.addButton(withTitle: NSLocalizedString("Close", comment: "Default close button")).keyEquivalent = "\u{1b}"
             alert.runModal()
         }
         
@@ -156,20 +156,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         let dstApp = URL(fileURLWithPath: "/usr/local/bin/qlmarkdown_cli")
         
         let alert1 = NSAlert()
-        alert1.messageText = "The tool will be installed in \(dstApp.path) \nDo you want to continue?"
-        alert1.informativeText = "You can call the tool directly from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
+        alert1.messageText = String(format: NSLocalizedString("The tool will be installed in %@ \nDo you want to continue?", comment: "CLI tool install confirmation"), dstApp.path)
+        alert1.informativeText = String(format: NSLocalizedString("You can call the tool directly from this path: \n%@ \n\nManually install from a Terminal shell with this command: \nln -sfv \"%@\" \"%@\"", comment: "CLI tool manual install instructions"), srcApp.path, srcApp.path, dstApp.path)
         alert1.alertStyle = .informational
-        alert1.addButton(withTitle: "OK").keyEquivalent = "\r"
-        alert1.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+        alert1.addButton(withTitle: NSLocalizedString("OK", comment: "Default confirmation button")).keyEquivalent = "\r"
+        alert1.addButton(withTitle: NSLocalizedString("Cancel", comment: "Default cancel button")).keyEquivalent = "\u{1b}"
         guard alert1.runModal() == .alertFirstButtonReturn else {
             return
         }
         guard access(dstApp.deletingLastPathComponent().path, W_OK) == 0 else {
             let alert = NSAlert()
-            alert.messageText = "Unable to install the tool: \(dstApp.deletingLastPathComponent().path) is not writable"
-            alert.informativeText = "You can directly call the tool from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
+            alert.messageText = String(format: NSLocalizedString("Unable to install the tool: %@ is not writable", comment: "CLI tool install permission error"), dstApp.deletingLastPathComponent().path)
+            alert.informativeText = String(format: NSLocalizedString("You can directly call the tool from this path: \n%@ \n\nManually install from a Terminal shell with this command: \nln -sfv \"%@\" \"%@\"", comment: "CLI tool fallback instructions"), srcApp.path, srcApp.path, dstApp.path)
             alert.alertStyle = .warning
-            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.addButton(withTitle: NSLocalizedString("Close", comment: "Default close button")).keyEquivalent = "\u{1b}"
             alert.runModal()
             return
         }
@@ -177,12 +177,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         let alert = NSAlert()
         do {
             try FileManager.default.createSymbolicLink(at: dstApp, withDestinationURL: srcApp)
-            alert.messageText = "Command line tool installed"
-            alert.informativeText = "You can call it from this path: \(dstApp.path)"
+            alert.messageText = NSLocalizedString("Command line tool installed", comment: "CLI tool installed alert title")
+            alert.informativeText = String(format: NSLocalizedString("You can call it from this path: %@", comment: "CLI tool installed alert message"), dstApp.path)
             alert.alertStyle = .informational
         } catch {
-            alert.messageText = "Unable to install the command line tool"
-            alert.informativeText = "(\(error.localizedDescription))\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
+            alert.messageText = NSLocalizedString("Unable to install the command line tool", comment: "CLI tool install failure title")
+            alert.informativeText = String(format: NSLocalizedString("(%@)\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \"%@\" \"%@\"", comment: "CLI tool install failure message"), error.localizedDescription, srcApp.path, dstApp.path)
             alert.alertStyle = .critical
         }
         alert.runModal()
@@ -195,7 +195,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             NSWorkspace.shared.activateFileViewerSelecting([u])
         } else {
             let alert = NSAlert()
-            alert.messageText = "The command line tool is not installed."
+            alert.messageText = NSLocalizedString("The command line tool is not installed.", comment: "CLI tool missing alert title")
             alert.alertStyle = .warning
             
             alert.runModal()
@@ -211,4 +211,3 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         NSWorkspace.shared.open(url)
     }
 }
-

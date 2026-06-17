@@ -158,15 +158,18 @@ class PreviewViewController: NSViewController, QLPreviewingController {
                 icon = ""
             }
             
+            let stats = String(format: NSLocalizedString("Thanks to this application you have viewed over <b>%d files</b>.", comment: "Quick Look about stats"), Settings.renderStats)
+            let donation = NSLocalizedString("If you find it useful and you have the possibility, consider <a href=\"https://buymeacoffee.com/sbarex\"><b>buying me a coffee!</b></a>", comment: "Quick Look about donation link")
+            let credit = String(format: NSLocalizedString("Developed by SBAREX with ❤️ | %@", comment: "Quick Look about developer credit"), "<a href=\"https://github.com/sbarex/QLMarkdown\">https://github.com/sbarex/QLMarkdown</a>")
             let msg =
                 """
                         <div id="container" style="font-size: 1.5rem">
                             <h1><img src="data:image/png;base64,\(icon)" width="75" height="75" alt="logo" id="logo" /> QLMarkdown</h1>
-                            <p>Thanks to this application you have viewed over <b>\(Settings.renderStats) files</b>.</p>
-                            <p>If you find it useful and you have the possibility, consider <a href="https://buymeacoffee.com/sbarex"><b>buying me a coffee!</b></a></p>
+                            <p>\(stats)</p>
+                            <p>\(donation)</p>
                             <br />
                             <hr size="1" />
-                            <p class="small">Developed by SBAREX with ❤️ | <a href="https://github.com/sbarex/QLMarkdown">https://github.com/sbarex/QLMarkdown</a></p>
+                            <p class="small">\(credit)</p>
                             </p>
                         </div>
                 """
