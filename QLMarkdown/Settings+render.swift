@@ -443,11 +443,53 @@ extension Settings {
             defer {
                 free(html2)
             }
-            
-            return html_debug + header + String(cString: html2) + about
+
+            var body = String(cString: html2)
+            // Only pay for the HTML parse when a task-list checkbox is actually present.
+            if self.taskListExtension, body.contains("type=\"checkbox\"") {
+                body = self.addTaskListClasses(body)
+            }
+            return html_debug + header + body + about
         } else {
             return html_debug + "<p>RENDER FAILED!</p>"
         }
+    }
+
+    /// Tag task-list `<ul>`/`<li>` with the GitHub CSS classes (`contains-task-list`
+    /// and `task-list-item`) that cmark-gfm does not emit, so the bundled stylesheet
+    /// can drop the list bullet shown next to each checkbox.
+    private func addTaskListClasses(_ html: String) -> String {
+        do {
+            let doc = try SwiftSoup.parseBodyFragment(html)
+            var changed = false
+            for input in try doc.select("li input[type=checkbox]") {
+                guard let li = self.closestListItem(of: input) else {
+                    continue
+                }
+                try li.addClass("task-list-item")
+                if let list = li.parent(), list.tagName() == "ul" || list.tagName() == "ol" {
+                    try list.addClass("contains-task-list")
+                }
+                changed = true
+            }
+            if changed, let bodyHtml = try doc.body()?.html() {
+                return bodyHtml
+            }
+        } catch {
+            os_log("Unable to tag task-list classes: %{public}@", log: OSLog.rendering, type: .error, error.localizedDescription)
+        }
+        return html
+    }
+
+    private func closestListItem(of element: Element) -> Element? {
+        var node: Element? = element
+        while let current = node {
+            if current.tagName() == "li" {
+                return current
+            }
+            node = current.parent()
+        }
+        return nil
     }
     
     /**
