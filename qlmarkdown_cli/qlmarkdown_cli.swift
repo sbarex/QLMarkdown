@@ -236,7 +236,8 @@ struct QLMarkdownCLI: ParsableCommand {
         if let app {
             return URL(fileURLWithPath: app)
         } else {
-            return cliUrl.deletingLastPathComponent().deletingLastPathComponent()
+            // Resolve symlinks so resources load when invoked via a Homebrew/`ln -s` link. (#144)
+            return cliUrl.resolvingSymlinksInPath().deletingLastPathComponent().deletingLastPathComponent()
         }
     }
     
