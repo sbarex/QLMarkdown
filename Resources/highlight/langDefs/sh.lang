@@ -44,8 +44,10 @@ Keywords={
   { Id=4,
     Regex=[[ \$[\w\#]+ ]],
   },
+  -- \B requires the dash to start a new word so a hyphen inside a path or
+  -- filename (e.g. my-project) is not mistaken for a command option
   { Id=2,
-    Regex=[[ \-\-?[\w\-]+ ]],
+    Regex=[[ \B\-\-?[\w\-]+ ]],
   },
 
   --see OnStateChange
