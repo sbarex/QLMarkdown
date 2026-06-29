@@ -84,6 +84,9 @@ static int can_contain(cmark_syntax_extension *extension, cmark_node *node,
 
 static void opaque_free(cmark_syntax_extension *self, cmark_mem *mem, cmark_node *node) {
     if (node->type == CMARK_NODE_MENTION) {
+        // The opaque chunk may own a buffer allocated by cmark_chunk_to_cstr when
+        // the mention is rendered; free that before the chunk struct itself.
+        cmark_chunk_free(mem, (cmark_chunk *)node->as.opaque);
         mem->free(node->as.opaque);
     }
 }
