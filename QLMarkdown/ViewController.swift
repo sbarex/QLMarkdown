@@ -498,6 +498,7 @@ class ViewController: NSViewController {
     var edited: Bool = false
     var allow_reload: Bool = true
     fileprivate var markdown_source: DispatchSourceFileSystemObject?
+    fileprivate var pendingReload: DispatchWorkItem?
     var markdown_file: URL? {
         didSet {
             if let file = markdown_file {
@@ -865,9 +866,39 @@ class ViewController: NSViewController {
             return
         }
         
-        self.markdown_source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescriptor, eventMask: .all, queue: DispatchQueue.main)
-        self.markdown_source!.setEventHandler { [weak self] in
+        let source = DispatchSource.makeFileSystemObjectSource(fileDescriptor: fileDescriptor, eventMask: .all, queue: DispatchQueue.main)
+        source.setEventHandler { [weak self] in
             guard let me = self else {
+                return
+            }
+            // Editors usually save by writing a temp file and renaming it over the
+            // original, which replaces the inode this descriptor watches. Drop the
+            // now-stale source and debounce the reload so the new file is in place
+            // before reading it; `reloadMarkdown` re-arms the watch on the new inode.
+            me.markdown_source?.cancel()
+            me.markdown_source = nil
+            me.scheduleReloadFromDisk()
+        }
+        source.setCancelHandler {
+            close(fileDescriptor)
+        }
+        self.markdown_source = source
+        source.resume()
+    }
+
+    /// Reload the source file after an external change. Debounced and retried so the
+    /// brief gap of an atomic save (rename over the original) is not mistaken for the
+    /// file being deleted — which previously left the preview stuck on a load error.
+    private func scheduleReloadFromDisk(retriesLeft: Int = 8) {
+        self.pendingReload?.cancel()
+        let work = DispatchWorkItem { [weak self] in
+            guard let me = self, let file = me.markdown_file else {
+                return
+            }
+            guard FileManager.default.fileExists(atPath: file.path) else {
+                if retriesLeft > 0 {
+                    me.scheduleReloadFromDisk(retriesLeft: retriesLeft - 1)
+                }
                 return
             }
             if me.edited {
@@ -881,16 +912,13 @@ class ViewController: NSViewController {
                     me.reloadMarkdown(me)
                 } else {
                     me.allow_reload = false
-                    me.markdown_source?.cancel()
                 }
             } else {
-                self?.reloadMarkdown(me)
+                me.reloadMarkdown(me)
             }
         }
-        self.markdown_source!.setCancelHandler {
-            close(fileDescriptor)
-        }
-        self.markdown_source!.resume()
+        self.pendingReload = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25, execute: work)
     }
     
     @IBAction func exportPreview(_ sender: Any) {
