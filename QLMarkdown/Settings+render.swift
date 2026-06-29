@@ -793,12 +793,12 @@ table.debug td {
             return "<style type='text/css'>\(code)\n</style>\n"
         }
             
-        if !self.renderAsCode {
-            let css = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
-            css_doc_extended = formatCSS(css)
-            if css_doc_extended.isEmpty || !self.customCSSOverride {
-                css_doc += formatCSS(getBundleContents(forResource: "default", ofType: "css"))
-            }
+        // Custom Style applies in both modes; only the bundled GitHub default.css is
+        // specific to Markdown (non-source) mode.
+        let css = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
+        css_doc_extended = formatCSS(css)
+        if !self.renderAsCode, css_doc_extended.isEmpty || !self.customCSSOverride {
+            css_doc += formatCSS(getBundleContents(forResource: "default", ofType: "css"))
         }
             
         var css_highlight: String = ""
