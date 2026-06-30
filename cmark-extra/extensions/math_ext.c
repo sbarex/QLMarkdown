@@ -120,18 +120,37 @@ static cmark_node *match_inline_math(cmark_syntax_extension *ext, cmark_parser *
     res->start_line = res->end_line = cmark_inline_parser_get_line(inline_parser);
     res->start_column = cmark_inline_parser_get_column(inline_parser) - delims;
     
-    if (punct_before) {
-        right_flanking = false;
+    int can_open, can_close;
+
+    if (delims == 1) {
+        // Pandoc-style rules for inline math ($...$), to avoid false positives on currency:
+        // - Opening $ must be followed by a non-space character.
+        // - Closing $ must be preceded by a non-space character AND not followed by a digit.
+        // This prevents text like "$1,667.84 net ... derived $/hr" from being parsed as math.
+        cmark_chunk *chunk = cmark_inline_parser_get_chunk(inline_parser);
+        unsigned char next_char = (pos + delims < chunk->len) ? chunk->data[pos + delims] : 0;
+        unsigned char prev_char = (pos > 0) ? chunk->data[pos - 1] : 0;
+
+        int next_is_space = (next_char == 0 || next_char == ' ' || next_char == '\t' || next_char == '\n' || next_char == '\r');
+        int prev_is_space = (prev_char == 0 || prev_char == ' ' || prev_char == '\t' || prev_char == '\n' || prev_char == '\r');
+        int next_is_digit = (next_char >= '0' && next_char <= '9');
+
+        can_open  = !next_is_space;
+        can_close = !prev_is_space && !next_is_digit;
+    } else {
+        // Display math ($$...$$): keep the original flanking-based logic.
+        if (punct_before) {
+            right_flanking = false;
+        }
+        if (punct_after) {
+            left_flanking = false;
+        }
+        int not_flanking = !(left_flanking || right_flanking);
+        can_open  = left_flanking  || not_flanking;
+        can_close = right_flanking || not_flanking;
     }
-    if (punct_after) {
-        left_flanking = false;
-    }
-    int not_flanking = !(left_flanking || right_flanking);
-    int can_open  = left_flanking  || not_flanking;
-    int can_close = right_flanking || not_flanking;
-    if (delims == 2 || delims == 1) {
-        cmark_inline_parser_push_delimiter(inline_parser, character, can_open, can_close, res);
-    }
+
+    cmark_inline_parser_push_delimiter(inline_parser, character, can_open, can_close, res);
 
     return res;
 }
