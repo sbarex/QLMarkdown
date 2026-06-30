@@ -80,6 +80,13 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var wikilinkExtension: Bool = Settings.factorySettings.wikilinkExtension {
+        didSet {
+            guard oldValue != wikilinkExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var syntaxHighlightExtension: Bool = Settings.factorySettings.syntaxHighlightExtension {
         didSet {
             guard oldValue != syntaxHighlightExtension else { return }
@@ -1357,6 +1364,7 @@ document.addEventListener('scroll', function(e) {
         self.mermaidExtensionEmbed = settings.mermaidExtension.getMode()?.embed ?? false
         
         self.mentionExtension = settings.mentionExtension
+        self.wikilinkExtension = settings.wikilinkExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
         self.emojiExtension = settings.emojiExtension != .disabled
@@ -1418,6 +1426,7 @@ document.addEventListener('scroll', function(e) {
         settings.mathExtension = self.mathExtension ? (self.mathExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mentionExtension = self.mentionExtension
+        settings.wikilinkExtension = self.wikilinkExtension
 
         settings.emojiExtension = self.emojiExtension ? (self.emojiImageOption ? .images : .font) : .disabled
         

@@ -200,6 +200,7 @@ extension Settings {
         defaults.set(mermaidExtension.stripDefaultUrl(cacheUrl: self.mermaidFileUrl, cdnUrl: Self.mermaidWebUrl).toDict(), forKey: Self.CodingKeys.mermaidExtension.rawValue)
         
         defaults.set(mentionExtension, forKey: Self.CodingKeys.mentionExtension.rawValue)
+        defaults.set(wikilinkExtension, forKey: Self.CodingKeys.wikilinkExtension.rawValue)
         defaults.set(checkboxExtension, forKey: Self.CodingKeys.checkboxExtension.rawValue)
         defaults.set(headsExtension, forKey: Self.CodingKeys.headsExtension.rawValue)
         

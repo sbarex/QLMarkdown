@@ -247,6 +247,7 @@ class Settings: Codable {
         case mathExtension
         case mermaidExtension
         case mentionExtension
+        case wikilinkExtension
         case subExtension
         case supExtension
         case tableExtension
@@ -475,6 +476,7 @@ class Settings: Codable {
     var mathExtension: JSExtension = .link(url: nil)
     var mermaidExtension: JSExtension = .link(url: nil)
     var mentionExtension: Bool = false
+    var wikilinkExtension: Bool = false
     var subExtension: Bool = false
     var supExtension: Bool = false
     var tableExtension: Bool = true
@@ -548,6 +550,7 @@ class Settings: Codable {
         self.mermaidExtension = try container.decode(JSExtension.self, forKey:.mermaidExtension)
         
         self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
+        self.wikilinkExtension = try container.decode(Bool.self, forKey:.wikilinkExtension)
         self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
         self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
         self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
@@ -625,6 +628,7 @@ class Settings: Codable {
         try container.encode(self.mermaidExtension, forKey: .mermaidExtension)
         
         try container.encode(self.mentionExtension, forKey: .mentionExtension)
+        try container.encode(self.wikilinkExtension, forKey: .wikilinkExtension)
         try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
         try container.encode(self.headsExtension, forKey: .headsExtension)
         try container.encode(self.highlightExtension, forKey: .hightlightExtension)
@@ -717,6 +721,7 @@ class Settings: Codable {
         self.mathExtension = s.mathExtension
         self.mermaidExtension = s.mermaidExtension
         self.mentionExtension = s.mentionExtension
+        self.wikilinkExtension = s.wikilinkExtension
         self.checkboxExtension = s.checkboxExtension
         self.headsExtension = s.headsExtension
         
@@ -793,6 +798,9 @@ class Settings: Codable {
         }
         if let ext = defaultsDomain[Self.CodingKeys.mentionExtension.rawValue] as? Bool {
             mentionExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.wikilinkExtension.rawValue] as? Bool {
+            wikilinkExtension = ext
         }
         if let ext = defaultsDomain[Self.CodingKeys.checkboxExtension.rawValue] as? Bool {
             checkboxExtension = ext
