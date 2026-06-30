@@ -28,7 +28,7 @@
                     <li>Fixed auto-reload breaking when the file is saved by another app (thanks to @soreavis).</li>
                     <li>Fixed qlmarkdown_cli resource lookup when invoked via a symlink (thanks to @soreavis).</li>
                     <li>Fixed math extension (thanks to @RayCharlizard and @soreavis).</li>
-                    <li>Fixex memory leaks in the inline-image, mention and emoji extensions (thanks to @soreavis).</li>
+                    <li>Fixed memory leaks in the inline-image, mention and emoji extensions (thanks to @soreavis).</li>
                 </ul>
                 <p><b>Remember to launch the main application after updating to automatically refresh the support files.</b></p>
                 
