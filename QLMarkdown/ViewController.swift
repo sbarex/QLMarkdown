@@ -161,6 +161,13 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var alertExtension: Bool = Settings.factorySettings.alertExtension {
+        didSet {
+            guard oldValue != alertExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension != .disabled {
         didSet {
             guard oldValue != emojiExtension else { return }
@@ -1366,6 +1373,7 @@ document.addEventListener('scroll', function(e) {
         self.highlightExtension = settings.highlightExtension
         self.inlineImageExtension = settings.inlineImageExtension
         self.subSuperScriptExtension = settings.supExtension
+        self.alertExtension = settings.alertExtension
         
         self.hardBreakOption = settings.hardBreakOption
         self.noSoftBreakOption = settings.noSoftBreakOption
@@ -1426,6 +1434,7 @@ document.addEventListener('scroll', function(e) {
         settings.inlineImageExtension = self.inlineImageExtension
         settings.subExtension = self.subSuperScriptExtension
         settings.supExtension = self.subSuperScriptExtension
+        settings.alertExtension = self.alertExtension
         
         settings.strikethroughExtension = self.strikethroughExtension ? (self.strikethroughDoubleTildeOption ? .double : .single) : .disabled
         
