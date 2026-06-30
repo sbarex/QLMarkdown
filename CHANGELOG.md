@@ -12,7 +12,7 @@ Bugfix:
 - Fixed auto-reload breaking when the file is saved by another app (thanks to @soreavis).
 - Fixed qlmarkdown_cli resource lookup when invoked via a symlink (thanks to @soreavis).
 - Fixed math extension (thanks to @RayCharlizard and @soreavis).
-- Fixex memory leaks in the inline-image, mention and emoji extensions (thanks to @soreavis).
+- Fixed memory leaks in the inline-image, mention and emoji extensions (thanks to @soreavis).
 
 ** Remember to launch the main application after updating to automatically refresh the support files. **
 
