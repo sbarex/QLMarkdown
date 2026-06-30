@@ -64,7 +64,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             alert.runModal()
         }
         
-        Settings.shared.installDependencies()
+        Settings.shared.installDependencies(override: .onlyOlder)
         
         if let path = Settings.mermaidCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
             // Try to download Mermaid library from web.
@@ -209,6 +209,32 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
     @IBAction func buyMeACoffee(_ sender: Any?) {
         let url = URL(string: "https://www.buymeacoffee.com/sbarex")!
         NSWorkspace.shared.open(url)
+    }
+    
+    @IBAction func printPreview(_ sender: Any?) {
+        guard let controller = NSApplication.shared.windows.first(where: {$0.windowController?.contentViewController is ViewController })?.windowController?.contentViewController as? ViewController else {
+            return
+        }
+        
+        guard let webView = controller.webView, let _ = webView.window else {
+            return
+        }
+        
+        let printInfo = NSPrintInfo.shared.copy() as! NSPrintInfo
+        printInfo.jobDisposition = .spool
+        printInfo.orientation = .portrait
+        
+    
+        let operation = webView.printOperation(with: printInfo)
+        
+        operation.showsPrintPanel = true
+        operation.showsProgressPanel = true
+        
+        operation.view?.frame = webView.bounds
+        operation.jobTitle = webView.title ?? "Markdown"
+        operation.canSpawnSeparateThread = true
+        
+        operation.runModal(for: webView.window!, delegate: nil, didRun: nil, contextInfo: nil)
     }
 }
 

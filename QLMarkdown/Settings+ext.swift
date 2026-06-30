@@ -185,6 +185,8 @@ extension Settings {
     func save(toUserDefaults defaults: UserDefaults)->Bool {
         self.sanitize(allowLinkFile: false)
         
+        defaults.set(appearance.rawValue, forKey: Self.CodingKeys.appearance.rawValue)
+        
         defaults.set(tableExtension, forKey: Self.CodingKeys.tableExtension.rawValue)
         defaults.set(autoLinkExtension, forKey: Self.CodingKeys.autoLinkExtension.rawValue)
         defaults.set(tagFilterExtension, forKey: Self.CodingKeys.tagFilterExtension.rawValue)

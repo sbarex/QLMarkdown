@@ -1,5 +1,22 @@
 # Changelog
 
+### 1.5.2 (53)
+New Features:
+- Support to force a light/dark appearance.
+- Support for printing the markdown preview from the main app.
+- Support for `.mermaid` files.
+- Hightlight render engine updated to release 4.20. 
+
+Bugfix:
+- Fixed list bullet on task-list items (thanks to @soreavis).
+- Fixed auto-reload breaking when the file is saved by another app (thanks to @soreavis).
+- Fixed qlmarkdown_cli resource lookup when invoked via a symlink (thanks to @soreavis).
+- Fixed math extension (thanks to @RayCharlizard and @soreavis).
+- Fixex memory leaks in the inline-image, mention and emoji extensions (thanks to @soreavis).
+
+** Remember to launch the main application after updating to automatically refresh the support files. **
+
+
 ### 1.5.1 (52)
 Bugfix:
 - Fixed css popup menu refresh.

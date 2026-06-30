@@ -12,6 +12,7 @@ import OSLog
 class ViewController: NSViewController {
     @objc dynamic var elapsedTimeLabel: String = ""
     
+    
     @objc dynamic var headsExtension: Bool = Settings.factorySettings.headsExtension {
         didSet {
             guard oldValue != headsExtension else { return }
@@ -470,6 +471,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var stylesPopup: NSPopUpButton!
+    @IBOutlet weak var appearancePopup: NSPopUpButton!
     
     @IBOutlet weak var styleExtendPopup: NSPopUpButton!
     
@@ -529,6 +531,10 @@ class ViewController: NSViewController {
     }
     
     @IBAction func doDirty(_ sender: Any) {
+        isDirty = true
+    }
+    
+    @IBAction func handleAppearancePopup(_ sender: NSPopUpButton) {
         isDirty = true
     }
     
@@ -938,9 +944,20 @@ class ViewController: NSViewController {
         
         let body: String
         let settings = self.updateSettings()
-        let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
+        
+        var appearanceForced = false
+        if settings.appearance == .undefined {
+            settings.appearance = self.appearanceButton.state == .off ? .light : .dark
+            appearanceForced = true
+        }
+        defer {
+            if appearanceForced {
+                settings.appearance = .undefined
+            }
+        }
+        
         do {
-            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
+            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
         } catch {
             body = "Error"
         }
@@ -1023,12 +1040,22 @@ class ViewController: NSViewController {
         
         let body: String
         let settings = self.updateSettings()
-        let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
+
+        var appearanceForced = false
+        if settings.appearance == .undefined {
+            settings.appearance = self.appearanceButton.state == .off ? .light : .dark
+            appearanceForced = true
+        }
+        defer {
+            if appearanceForced {
+                settings.appearance = .undefined
+            }
+        }
         
         let startTime = CFAbsoluteTimeGetCurrent()
         
         do {
-            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
+            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
         } catch {
             body = "Error"
         }
@@ -1210,10 +1237,8 @@ document.addEventListener('scroll', function(e) {
         self.textView.isAutomaticTextReplacementEnabled = false
         self.textView.isAutomaticDashSubstitutionEnabled = false
         textView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        
-        let type = Settings.isLightAppearance ? "Light" : "Dark"
-        
-        self.appearanceButton.state = type != "Light" ? .on : .off
+                
+        self.appearanceButton.state = Settings.isLightAppearance ? .off : .on
         self.appearanceButton.toolTip = self.appearanceButton.state == .on ? "Switch to light appearance." : "Switch to dark appearance."
         self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         let contentController = self.webView.configuration.userContentController
@@ -1361,6 +1386,8 @@ document.addEventListener('scroll', function(e) {
         
         inlineLinkPopup.selectItem(at: settings.openInlineLink ? 0 : 1)
         
+        appearancePopup.selectItem(withTag: settings.appearance.rawValue)
+        
         isDirty = false
         pauseAutoRefresh -= 1
         pauseAutoSave -= 1
@@ -1376,6 +1403,7 @@ document.addEventListener('scroll', function(e) {
     internal func updateSettings(withAlert: Bool = false) -> Settings {
         let settings = Settings.shared
         
+        settings.appearance = Appearance(rawValue: self.appearancePopup.selectedTag()) ?? .undefined
         settings.debug = self.debugMode
         settings.renderAsCode = self.renderAsCode
         settings.qlWindowWidth = self.qlWindowSizeCustomized ? self.qlWindowWidth : nil
@@ -1435,7 +1463,7 @@ document.addEventListener('scroll', function(e) {
     }
     
     @IBAction func resetDependencyLibraries(_ sender: Any) {
-        Settings.shared.installDependencies(override: true)
+        Settings.shared.installDependencies(override: .always)
         
         if let path = Settings.mermaidCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
             Settings.shared.updateMemaidCache { (success) in

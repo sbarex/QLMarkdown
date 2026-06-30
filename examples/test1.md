@@ -86,13 +86,13 @@ If enabled, the math extension allow to render the mathematical expressions:
 \sqrt{x+2}
 ```
 
-- block expressions ` $$ code $$ `:
+- block expressions ` $$ code $$ ` or `\\[ code \\]`:
 
 $$\sqrt{x+2}$$
 
-- or inline expressions `$ code $`:
+- or inline expressions `$ code $` or `\\( code \\)`:
 
-_To split <span>$</span>100 in half, we calculate $100/2$_
+_To split $100 in half, we calculate $100/2$_
 
 
 ## Sub/Superscript extension

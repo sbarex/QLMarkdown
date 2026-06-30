@@ -70,6 +70,12 @@
                                                 <action selector="resetDependencyLibraries:" target="Ady-hI-5gd" id="aN0-O2-2EU"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Reveal application support folder" alternate="YES" id="VdG-tj-mMx">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                            <connections>
+                                                <action selector="revealApplicationSupportInFinder:" target="Ady-hI-5gd" id="fqP-t6-u3D"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="tAM-C8-LiC"/>
                                         <menuItem title="Install the command line tool…" id="eLR-wj-sll">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -175,6 +181,17 @@
                                         <menuItem title="Close" keyEquivalent="w" id="2wd-Ew-wQh">
                                             <connections>
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="7R7-tx-3cM"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="83o-CO-Qgs"/>
+                                        <menuItem title="Page Setup…" keyEquivalent="P" id="EMb-Ru-rhr">
+                                            <connections>
+                                                <action selector="runPageLayout:" target="Ady-hI-5gd" id="Swu-15-Tk3"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Print…" keyEquivalent="p" id="0FO-DF-Psb">
+                                            <connections>
+                                                <action selector="print:" target="Ady-hI-5gd" id="VwT-ne-S9s"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -791,12 +808,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView type="noTabsNoBorder" initialItem="XgS-T3-Gpv" translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="0.0" y="575" width="1065" height="330"/>
+                                <rect key="frame" x="0.0" y="541" width="1065" height="364"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Basic options" identifier="" id="XgS-T3-Gpv">
                                         <view key="view" id="z2a-cF-5GG">
-                                            <rect key="frame" x="0.0" y="0.0" width="1065" height="330"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1065" height="364"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <gridView verticalHuggingPriority="248" verticalCompressionResistancePriority="749" xPlacement="leading" yPlacement="top" rowAlignment="firstBaseline" rowSpacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dOo-mR-WPE">
@@ -1018,7 +1035,7 @@
                                                                                     <menuItem title="Save…" tag="20" alternate="YES" identifier="mnu_math_save" indentationLevel="1" toolTip="Save a local copy of the library." id="Iqg-M1-Szo">
                                                                                         <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                                                                     </menuItem>
-                                                                                    <menuItem title="Fetch from web…" tag="10" identifier="mnu_math_download" indentationLevel="1" id="mcf-6j-ea5">
+                                                                                    <menuItem title="Refresh the cached library from the web…" tag="10" identifier="mnu_math_download" indentationLevel="1" id="mcf-6j-ea5">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                                     </menuItem>
                                                                                     <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_math_download" indentationLevel="1" id="dYQ-r1-7p1">
@@ -1252,7 +1269,7 @@
                                                                                     <menuItem title="Save…" tag="20" alternate="YES" identifier="mnu_mermaid_save" indentationLevel="1" toolTip="Save a local copy of the library." id="OT9-Oz-MMI">
                                                                                         <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                                                                     </menuItem>
-                                                                                    <menuItem title="Fetch from web…" tag="10" identifier="mnu_mermaid_download" indentationLevel="1" id="yqe-lS-xFa">
+                                                                                    <menuItem title="Refresh the cached library from the web…" tag="10" identifier="mnu_mermaid_download" indentationLevel="1" id="yqe-lS-xFa">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                                     </menuItem>
                                                                                     <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_mermaid_reveal" indentationLevel="1" id="xaQ-yQ-VYY">
@@ -1577,7 +1594,7 @@
                                                     </gridCells>
                                                 </gridView>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ccb-oe-cYh">
-                                                    <rect key="frame" x="18" y="302" width="164" height="16"/>
+                                                    <rect key="frame" x="18" y="336" width="164" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme:" id="egL-L9-5T4">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1585,7 +1602,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <popUpButton allowsExpansionToolTips="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CTX-6L-I3O">
-                                                    <rect key="frame" x="188" y="298" width="212" height="24"/>
+                                                    <rect key="frame" x="188" y="332" width="212" height="24"/>
                                                     <popUpButtonCell key="cell" type="push" title="Default style" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingMiddle" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="dcy-bx-VMQ" id="syl-p2-kQE">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="message"/>
@@ -1603,7 +1620,7 @@
                                                     </connections>
                                                 </popUpButton>
                                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="8An-Xf-Ur1">
-                                                    <rect key="frame" x="403" y="302" width="98" height="14"/>
+                                                    <rect key="frame" x="403" y="336" width="98" height="14"/>
                                                     <popUpButtonCell key="cell" type="bevel" title="Extend default" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="Mxg-xO-key" id="hsm-b5-QMf">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
@@ -1895,11 +1912,45 @@
                                                         <action selector="openSystemSettings:" target="XfG-lQ-9wD" id="rLs-7k-9mO"/>
                                                     </connections>
                                                 </button>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0el-fG-DCh">
+                                                    <rect key="frame" x="18" y="302" width="164" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Appearance:" id="Phn-67-W9j">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <popUpButton allowsExpansionToolTips="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kFs-NW-HcF">
+                                                    <rect key="frame" x="188" y="298" width="212" height="24"/>
+                                                    <popUpButtonCell key="cell" type="push" title="Auto" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingMiddle" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="pya-Cj-F48" id="DZu-B4-GAL">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="message"/>
+                                                        <menu key="menu" id="Ios-B9-gpE">
+                                                            <items>
+                                                                <menuItem title="Auto" state="on" id="pya-Cj-F48"/>
+                                                                <menuItem title="Light" tag="1" id="Mqp-5m-gB7">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                                <menuItem title="Dark" tag="2" id="dEx-RW-L3r">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                            </items>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="XfG-lQ-9wD" id="mxo-sh-b2A"/>
+                                                            </connections>
+                                                        </menu>
+                                                    </popUpButtonCell>
+                                                    <connections>
+                                                        <action selector="handleAppearancePopup:" target="XfG-lQ-9wD" id="7cB-A2-Ipa"/>
+                                                    </connections>
+                                                </popUpButton>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="0el-fG-DCh" firstAttribute="trailing" secondItem="Ccb-oe-cYh" secondAttribute="trailing" id="00X-X5-Vf5"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8An-Xf-Ur1" secondAttribute="trailing" constant="20" symbolic="YES" id="0HA-YX-gBY"/>
                                                 <constraint firstItem="CTX-6L-I3O" firstAttribute="top" secondItem="z2a-cF-5GG" secondAttribute="top" constant="8" id="150-c8-lhX"/>
                                                 <constraint firstItem="uGz-Oo-fnE" firstAttribute="leading" secondItem="C8t-xT-dXa" secondAttribute="trailing" constant="8" id="2P8-rF-L2z"/>
+                                                <constraint firstItem="kFs-NW-HcF" firstAttribute="leading" secondItem="CTX-6L-I3O" secondAttribute="leading" id="2bN-2E-1Af"/>
                                                 <constraint firstItem="dOo-mR-WPE" firstAttribute="leading" secondItem="sCa-ZB-Sb2" secondAttribute="trailing" constant="8" symbolic="YES" id="3uI-Jl-n4X"/>
                                                 <constraint firstItem="fVi-EX-Aci" firstAttribute="leading" secondItem="Vsx-tk-3Vv" secondAttribute="trailing" constant="8" symbolic="YES" id="49j-tF-DHX"/>
                                                 <constraint firstAttribute="bottom" secondItem="gn8-wq-9v6" secondAttribute="bottom" constant="8" id="62s-OU-Bzr"/>
@@ -1923,16 +1974,19 @@
                                                 <constraint firstItem="2t7-PJ-hZL" firstAttribute="leading" secondItem="fVi-EX-Aci" secondAttribute="trailing" constant="8" symbolic="YES" id="UdT-Pw-okT"/>
                                                 <constraint firstItem="gn8-wq-9v6" firstAttribute="top" secondItem="g31-cS-g4Y" secondAttribute="bottom" constant="20" symbolic="YES" id="VNY-9T-6lr"/>
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="top" secondItem="dOo-mR-WPE" secondAttribute="bottom" constant="20" symbolic="YES" id="VZy-7n-eby"/>
+                                                <constraint firstItem="0el-fG-DCh" firstAttribute="leading" secondItem="Ccb-oe-cYh" secondAttribute="leading" id="WVp-Q9-ZuK"/>
                                                 <constraint firstItem="uGz-Oo-fnE" firstAttribute="firstBaseline" secondItem="C8t-xT-dXa" secondAttribute="firstBaseline" id="YAk-bk-AvO"/>
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="leading" secondItem="dOo-mR-WPE" secondAttribute="leading" id="YC3-2N-InM"/>
                                                 <constraint firstItem="s9x-wg-UTg" firstAttribute="leading" secondItem="XA7-Gl-MRu" secondAttribute="trailing" constant="8" symbolic="YES" id="Zhm-St-E6U"/>
+                                                <constraint firstItem="0el-fG-DCh" firstAttribute="firstBaseline" secondItem="kFs-NW-HcF" secondAttribute="firstBaseline" id="ast-tr-qde"/>
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="firstBaseline" secondItem="eHs-tN-Pey" secondAttribute="firstBaseline" id="aul-Id-v0y"/>
                                                 <constraint firstItem="EHx-19-1D3" firstAttribute="width" secondItem="Ccb-oe-cYh" secondAttribute="width" id="bGy-Ub-hcx"/>
+                                                <constraint firstItem="kFs-NW-HcF" firstAttribute="top" secondItem="CTX-6L-I3O" secondAttribute="bottom" constant="10" symbolic="YES" id="bU0-3R-UXZ"/>
                                                 <constraint firstItem="sCa-ZB-Sb2" firstAttribute="firstBaseline" secondItem="MIB-mW-C6G" secondAttribute="firstBaseline" id="dvz-Z7-fF5"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jgu-cG-sBC" secondAttribute="trailing" constant="20" symbolic="YES" id="eI9-YD-Rmx"/>
                                                 <constraint firstItem="Vsx-tk-3Vv" firstAttribute="centerY" secondItem="fVi-EX-Aci" secondAttribute="centerY" id="er5-9K-1YM"/>
+                                                <constraint firstItem="fVi-EX-Aci" firstAttribute="top" secondItem="kFs-NW-HcF" secondAttribute="bottom" constant="8" symbolic="YES" id="fL0-hx-PHP"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dOo-mR-WPE" secondAttribute="trailing" constant="20" symbolic="YES" id="g2W-1o-URO"/>
-                                                <constraint firstItem="fVi-EX-Aci" firstAttribute="top" secondItem="CTX-6L-I3O" secondAttribute="bottom" constant="8" symbolic="YES" id="g7T-RP-DfN"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g31-cS-g4Y" secondAttribute="trailing" constant="20" symbolic="YES" id="h4T-WX-YXR"/>
                                                 <constraint firstItem="XA7-Gl-MRu" firstAttribute="centerY" secondItem="gn8-wq-9v6" secondAttribute="centerY" id="jDa-JZ-jsK"/>
                                                 <constraint firstItem="uGz-Oo-fnE" firstAttribute="baseline" secondItem="jgu-cG-sBC" secondAttribute="firstBaseline" id="jW8-He-nvm"/>
@@ -1957,27 +2011,27 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="572" width="1065" height="5"/>
+                                <rect key="frame" x="0.0" y="538" width="1065" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="34" width="1065" height="540"/>
+                                <rect key="frame" x="0.0" y="34" width="1065" height="506"/>
                                 <subviews>
                                     <customView id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="532" height="540"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="0.0" width="532" height="540"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="532" height="540"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH" customClass="DropableTextView" customModule="QLMarkdown" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="532" height="540"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="532" height="540"/>
+                                                            <size key="minSize" width="532" height="506"/>
                                                             <size key="maxSize" width="679" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>
@@ -1992,7 +2046,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="515" y="0.0" width="17" height="540"/>
+                                                    <rect key="frame" x="515" y="0.0" width="17" height="506"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -2005,11 +2059,11 @@
                                         </constraints>
                                     </customView>
                                     <customView id="sp3-sm-w1y">
-                                        <rect key="frame" x="542" y="0.0" width="523" height="540"/>
+                                        <rect key="frame" x="542" y="0.0" width="523" height="506"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="0.0" width="523" height="540"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="523" height="506"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -2020,7 +2074,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator wantsLayer="YES" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="254" y="262" width="16" height="16"/>
+                                                <rect key="frame" x="254" y="245" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
@@ -2099,6 +2153,7 @@
                     </view>
                     <connections>
                         <outlet property="appearanceButton" destination="1nt-58-sRk" id="yd7-o8-TSs"/>
+                        <outlet property="appearancePopup" destination="kFs-NW-HcF" id="xXg-sc-Qm9"/>
                         <outlet property="emojiPopupButton" destination="ZqY-el-ju1" id="tpU-GX-yxZ"/>
                         <outlet property="fontSizeField" destination="fVi-EX-Aci" id="v7P-Ci-Mul"/>
                         <outlet property="fontSizeStepper" destination="2t7-PJ-hZL" id="Mrg-9N-cVz"/>

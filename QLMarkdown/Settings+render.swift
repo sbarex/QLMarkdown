@@ -32,33 +32,41 @@ extension Settings {
      * Render a markdown file to an html fragment.
      * - parameters:
      *   - url: Url of the Markdown file to format.
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code. if not specified, it gets it from the file path.
      */
-    func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?) throws -> String {
-        guard let data = FileManager.default.contents(atPath: url.path) else {
+    func render(file url: URL, baseDir: String?) throws -> String {
+        guard var data = FileManager.default.contents(atPath: url.path) else {
             os_log("Unable to read the file %{public}@", log: OSLog.rendering, type: .error, url.path)
             return ""
         }
         
-        return try self.render(data: data, forAppearance: appearance, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
+        if url.pathExtension.lowercased() == "mermaid" {
+            if var s = String(data: data, encoding: .utf8) {
+                // Inject mermaid fanced block
+                s = "```mermaid\n\(s)\n```"
+                if let d = s.data(using: .utf8) {
+                    data = d
+                }
+            }
+        }
+        
+        return try self.render(data: data, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
     }
     
     /**
      * Render a markdown file to an html fragment.
      * - parameters:
      *   - data: Data with the the Markdown code to format.
-     *   - appearance:
      *   - filename: Name of the source file.
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    func render(data: Data, forAppearance appearance: Appearance, filename: String = "file.md", baseDir: String) throws -> String {
+    func render(data: Data, filename: String = "file.md", baseDir: String) throws -> String {
         guard let markdown_string = String(data: data, encoding: .utf8) else {
             os_log("Unable to read the data %{public}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
             return ""
         }
         
-        return try self.render(text: markdown_string, filename: filename, forAppearance: appearance, baseDir: baseDir)
+        return try self.render(text: markdown_string, filename: filename, baseDir: baseDir)
     }
     
     /**
@@ -66,11 +74,10 @@ extension Settings {
      * - parameters:
      *   - text: Markdown code to format.
      *   - filename: Name of the source file.
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String) throws -> String {
-        if self.renderAsCode, let code = self.renderAsSourceCode(text: text, forAppearance: appearance, baseDir: baseDir) {
+    func render(text: String, filename: String, baseDir: String) throws -> String {
+        if self.renderAsCode, let code = self.renderAsSourceCode(text: text, baseDir: baseDir) {
             return code
         }
         
@@ -299,7 +306,6 @@ extension Settings {
                                     continue
                                 }
                                 
-                                
                                 let file = baseDir.appendingPathComponent(src).path
                                 guard FileManager.default.fileExists(atPath: file) else {
                                     os_log("Image %{public}@ not found!", log: OSLog.rendering, type: .error)
@@ -437,7 +443,7 @@ extension Settings {
         
         let about = self.about ? "<div style='font-size: 72%; margin-top: 1.5em; padding-top: .5em; -webkit-user-select: none;'><hr style='height: 0; border: none; border-top: 1px solid rgba(0,0,0,.5); box-shadow: 0 1px 1px rgba(255, 255, 255, .5)'/>\(Self.aboutInfo)</div>\n" : ""
         
-        let html_debug = self.renderDebugInfo(forAppearance: appearance, baseDir: baseDir)
+        let html_debug = self.renderDebugInfo(baseDir: baseDir)
         // Render
         if let html2 = cmark_render_html(doc, options, cmark_parser_get_syntax_extensions(parser)) {
             defer {
@@ -445,6 +451,17 @@ extension Settings {
             }
 
             var body = String(cString: html2)
+            
+            if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
+                body = swapMathDelimiters(body)
+            }
+            
+            // Mermaid diagrams support
+            if !self.renderAsCode, !self.mermaidExtension.isDisabled, body.contains("language-mermaid") {
+                // Transform mermaid code blocks to mermaid divs
+                body = transformMermaidBlocks(body)
+            }
+            
             // Only pay for the HTML parse when a task-list checkbox is actually present.
             if self.taskListExtension, body.contains("type=\"checkbox\"") {
                 body = self.addTaskListClasses(body)
@@ -459,6 +476,13 @@ extension Settings {
     /// and `task-list-item`) that cmark-gfm does not emit, so the bundled stylesheet
     /// can drop the list bullet shown next to each checkbox.
     private func addTaskListClasses(_ html: String) -> String {
+        return html.replacingOccurrences(
+            of: #"<li>(\s*<input type=\"checkbox\"[^>]*>)"#,
+            with: #"<li class='task-list-item'>$1"#,
+            options: .regularExpression
+        )
+        /*
+        // Do not use SwiftSoup.html() beacuse break some other extension like mermaid.
         do {
             let doc = try SwiftSoup.parseBodyFragment(html)
             var changed = false
@@ -479,6 +503,7 @@ extension Settings {
             os_log("Unable to tag task-list classes: %{public}@", log: OSLog.rendering, type: .error, error.localizedDescription)
         }
         return html
+        */
     }
 
     private func closestListItem(of element: Element) -> Element? {
@@ -495,10 +520,9 @@ extension Settings {
     /**
      * Get a debug info with the current settings.
      * - parameters:
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    internal func renderDebugInfo(forAppearance appearance: Appearance, baseDir: String) -> String {
+    internal func renderDebugInfo(baseDir: String) -> String {
         guard debug else {
             return ""
         }
@@ -715,17 +739,25 @@ table.debug td {
      * Render the markdown as the highlighted source code to an html fragment.
      * - parameters:
      *   - text: Markdown code to format.
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    func renderAsSourceCode(text: String, forAppearance appearance: Appearance, baseDir: String) -> String? {
+    func renderAsSourceCode(text: String, baseDir: String) -> String? {
         if let path = getHighlightSupportPath() {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
         } else {
             os_log("Unable to found the `highlight` support dir!", log: OSLog.rendering, type: .error)
         }
         
-        let theme = Self.isLightAppearance ? "acid" : "zenburn" // FIXME: allow to customize the theme
+        let isLight: Bool
+        switch self.appearance {
+        case .undefined:
+            isLight = Self.isLightAppearance
+        case .light:
+            isLight = true
+        case .dark:
+            isLight = false
+        }
+        let theme = isLight ? "acid" : "zenburn" // FIXME: allow to customize the theme
         
         // Initialize a new generator and clear previous settings.
         highlight_init_generator()
@@ -865,11 +897,11 @@ MathJax = {
     // packages: ['base'],        // extensions to use
     inlineMath: [              // start/end delimiter pairs for in-line math
       // ['$', '$']              // disabled to avoid matching currency client-side
-      ['\\(', '\\)']
+      ['\\\\(', '\\\\)']
     ],
     displayMath: [             // start/end delimiter pairs for display math
       // ['$$', '$$']
-      ['\\[', '\\]']
+      ['\\\\[', '\\\\]']
     ],
     processEscapes: true,       // use \\$ to produce a literal dollar sign
     processEnvironments: false
@@ -878,14 +910,11 @@ MathJax = {
 </script>
 """
             s_footer += mathExtension.getScriptCode(extraTagLink: "id='MathJax-script' async", extraTagEmbed: "id='MathJax-script'")
-            processedBody = swapMathDelimiters(processedBody)
         }
 
         // Mermaid diagrams support
-        if !self.renderAsCode, !self.mermaidExtension.isDisabled, processedBody.contains("language-mermaid") {
-            // Transform mermaid code blocks to mermaid divs
-            processedBody = transformMermaidBlocks(processedBody)
-
+        if !self.renderAsCode, !self.mermaidExtension.isDisabled, processedBody.contains("class=\"mermaid\"") {
+            
             // Inject mermaid.min.js
             s_footer += mermaidExtension.getScriptCode()
             s_footer += """
@@ -899,7 +928,16 @@ securityLevel: 'strict'
 """
         }
 
-        let style = css_doc + css_highlight + css_doc_extended
+        var style = css_doc + css_highlight + css_doc_extended
+        switch self.appearance {
+        case .undefined:
+            break
+        case .light:
+            style = style.replacingOccurrences(of: "@media (prefers-color-scheme: dark)", with: "@media not all")
+        case .dark:
+            style = style.replacingOccurrences(of: "@media (prefers-color-scheme: dark)", with: "@media all")
+        }
+        
         let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
         let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"
         let body_style = self.renderAsCode ? " class='hl'" : ""
@@ -1046,7 +1084,7 @@ securityLevel: 'strict'
             let key: String = "<strong>\(element.key)</strong>"
             /*
             do {
-                key = try self.render(text: "**\(element.key)**", filename: "", forAppearance: .light, baseDir: "")
+                key = try self.render(text: "**\(element.key)**", filename: "", baseDir: "")
             } catch {
                 key = "<strong>\(element.key)</strong>"
             }*/
@@ -1059,7 +1097,7 @@ securityLevel: 'strict'
                     /*
                     if let t = v as? String {
                         do {
-                            s = try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
+                            s = try self.render(text: t, filename: "", baseDir: "")
                         } catch {
                             s = t
                         }
@@ -1072,7 +1110,7 @@ securityLevel: 'strict'
                 s += t
                 /*
                 do {
-                    s += try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
+                    s += try self.render(text: t, filename: "", baseDir: "")
                 } catch {
                     s += t.replacingOccurrences(of: "|", with: #"\|"#)
                 }

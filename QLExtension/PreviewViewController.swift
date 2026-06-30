@@ -147,8 +147,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         Settings.renderStats += 1
 
         let markdown_url = Settings.getMarkdownFile(from: url)
-        let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
-        var text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+        var text = try settings.render(file: markdown_url, baseDir: markdown_url.deletingLastPathComponent().path)
         
         if Settings.renderStats > 0 && Settings.renderStats % 100 == 0 {
             let icon: String

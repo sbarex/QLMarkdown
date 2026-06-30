@@ -13,10 +13,21 @@ enum CMARK_Error: Error {
     case parser_parse
 }
 
-enum Appearance: Int {
+enum Appearance: Int, Codable {
     case undefined
     case light
     case dark
+    
+    var name: String {
+        switch self {
+        case .undefined:
+            return "auto"
+        case .light:
+            return "light"
+        case .dark:
+            return "dark"
+        }
+    }
 }
 
 enum JSExtension: Codable {
@@ -214,6 +225,12 @@ enum StrikethroughMode: Int, Codable {
     case double = 2
 }
 
+enum OverrideMode: Int {
+    case never = 0
+    case always = 1
+    case onlyOlder = 2
+}
+
 extension NSNotification.Name {
     public static let QLMarkdownSettingsUpdated: NSNotification.Name = NSNotification.Name("org.sbarex.qlmarkdown-settings-changed")
 }
@@ -221,6 +238,7 @@ extension NSNotification.Name {
 // MARK: -
 class Settings: Codable {
     enum CodingKeys: String, CodingKey {
+        case appearance
         case autoLinkExtension
         case checkboxExtension
         case headsExtension
@@ -448,6 +466,7 @@ class Settings: Codable {
     
     // MARK: - Instance properties and methods
     
+    var appearance: Appearance = .undefined
     var autoLinkExtension: Bool = true
     var checkboxExtension: Bool = false
     var headsExtension: Bool = true
@@ -515,6 +534,7 @@ class Settings: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        self.appearance = try container.decode(Appearance.self, forKey: .appearance)
         self.tableExtension = try container.decode(Bool.self, forKey: .tableExtension)
         self.autoLinkExtension = try container.decode(Bool.self, forKey:.autoLinkExtension)
         self.tagFilterExtension = try container.decode(Bool.self, forKey: .tagFilterExtension)
@@ -591,6 +611,7 @@ class Settings: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
+        try container.encode(self.appearance, forKey: .appearance)
         try container.encode(self.tableExtension, forKey: .tableExtension)
         try container.encode(self.autoLinkExtension, forKey: .autoLinkExtension)
         try container.encode(self.tagFilterExtension, forKey: .tagFilterExtension)
@@ -682,6 +703,8 @@ class Settings: Codable {
      * Update settings based on other settings provided.
      */
     func update(from s: Settings) {
+        self.appearance = s.appearance
+        
         self.tableExtension = s.tableExtension
         self.autoLinkExtension = s.autoLinkExtension
         self.tagFilterExtension = s.tagFilterExtension
@@ -738,6 +761,10 @@ class Settings: Codable {
      * Update settings based on other settings provided from a UserDefaults dictionary.
      */
     func update(from defaultsDomain: [String: Any]) {
+        if let n = defaultsDomain[Self.CodingKeys.appearance.rawValue] as? Int, let state = Appearance(rawValue: n) {
+            appearance = state
+        }
+        
         if let ext = defaultsDomain[Self.CodingKeys.tableExtension.rawValue] as? Bool {
             tableExtension = ext
         }
@@ -825,7 +852,6 @@ class Settings: Codable {
         if let opt = defaultsDomain[Self.CodingKeys.footnotesOption.rawValue] as? Bool {
             footnotesOption = opt
         }
-        
         
         if let opt = defaultsDomain[Self.CodingKeys.baseFontSize.rawValue] as? CGFloat {
             baseFontSize = opt
@@ -939,14 +965,14 @@ class Settings: Codable {
      * This function create the support folders and copy from the bundle, if available, the mermaid and mathjax libraries.
      * Then copy the support files of highlight.
      */
-    func installDependencies(override: Bool = false) {
+    func installDependencies(override: OverrideMode = .never) {
         try? installDep(forResource: "mermaid.min", withExtension: "js", to: Self.mermaidCacheFileUrl, overwrite: override)
         try? installDep(forResource: "tex-mml-chtml", withExtension: "js", to: Self.mathJaxCacheFileUrl, overwrite: override)
         
         try? installDep(forResource: "highlight", withExtension: nil, to: Settings.syntaxHighlightSupportCacheUrl, overwrite: override)
     }
     
-    private func installDep(forResource name: String, withExtension ext: String?, to destination: URL?, overwrite: Bool) throws {
+    private func installDep(forResource name: String, withExtension ext: String?, to destination: URL?, overwrite: OverrideMode) throws {
         guard let source = self.resourceBundle.url(forResource: name, withExtension: ext) else {
             os_log(
                 "Unable to store cache the file/folder %{public}s: source is missing on the app bundle!",
@@ -972,25 +998,88 @@ class Settings: Codable {
         }
     }
     
-    private func installDep(from source: URL?, to destination: URL?, overwrite: Bool) throws {
+    private func installDep(from source: URL?, to destination: URL?, overwrite: OverrideMode) throws {
         guard let source, let destination else {
             return
         }
         let fileManager = FileManager.default
-        let exists = fileManager.fileExists(atPath: destination.path)
-        guard overwrite || !exists else {
+        var isDirectory: ObjCBool = false
+        
+        let exists = fileManager.fileExists(atPath: destination.path, isDirectory: &isDirectory)
+        guard overwrite != .never || !exists else {
             return
         }
-        if exists {
-            try fileManager.removeItem(at: destination)
-        }
-        let folder = destination.deletingLastPathComponent()
+        guard overwrite != .always else {
+            if exists {
+                // Remove original file/folder
+                try fileManager.removeItem(at: destination)
+            }
+            let folder = destination.deletingLastPathComponent()
             
-        if !fileManager.fileExists(atPath: folder.path) {
-            try fileManager.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+            if !fileManager.fileExists(atPath: folder.path) {
+                // Create the destination folder
+                try fileManager.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+            }
+            
+            try fileManager.copyItem(atPath: source.path, toPath: destination.path)
+            return
         }
         
-        try fileManager.copyItem(atPath: source.path, toPath: destination.path)
+        if isDirectory.boolValue {
+            if !fileManager.fileExists(atPath: destination.path) {
+                // Create the destination folder
+                try fileManager.createDirectory(
+                    at: destination,
+                    withIntermediateDirectories: true
+                )
+            }
+            
+            let contents = try fileManager.contentsOfDirectory(
+                at: source,
+                includingPropertiesForKeys: nil
+            )
+            
+            for item in contents {
+                let target = destination.appendingPathComponent(
+                    item.lastPathComponent
+                )
+                
+                try installDep(
+                    from: item,
+                    to: target,
+                    overwrite: overwrite
+                )
+            }
+        } else {
+            if exists && overwrite == .onlyOlder {
+                let srcValues = try source.resourceValues(
+                    forKeys: [.contentModificationDateKey]
+                )
+                
+                let dstValues = try destination.resourceValues(
+                    forKeys: [.contentModificationDateKey]
+                )
+                
+                let srcDate = srcValues.contentModificationDate ?? .distantPast
+                let dstDate = dstValues.contentModificationDate ?? .distantPast
+                
+                guard srcDate > dstDate else {
+                    // The destination file is newer than the original.
+                    return
+                }
+            }
+            
+            if exists {
+                try fileManager.removeItem(at: destination)
+            }
+            let folder = destination.deletingLastPathComponent()
+            
+            if !fileManager.fileExists(atPath: folder.path) {
+                try fileManager.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+            }
+            
+            try fileManager.copyItem(atPath: source.path, toPath: destination.path)
+        }
     }
     
     /**

@@ -162,8 +162,7 @@ struct MdToHtml_Extension: AppIntent {
          
         os_log("Processng file %{public}@", log: OSLog.shortcutExtension, type: .debug, markdown_url.path)
          
-        let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
-        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+        let text = try settings.render(file: markdown_url, baseDir: markdown_url.deletingLastPathComponent().path)
          
         let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
          

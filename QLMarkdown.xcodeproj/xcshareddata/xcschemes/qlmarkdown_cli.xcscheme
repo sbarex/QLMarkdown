@@ -52,10 +52,6 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/sbaldiss/Develop/macos/QLMarkdown/README.md"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "-o /Users/sbaldiss/Downloads/test.html"
             isEnabled = "YES">
          </CommandLineArgument>

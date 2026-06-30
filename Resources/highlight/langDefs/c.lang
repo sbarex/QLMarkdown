@@ -13,7 +13,8 @@ Keywords={
       "reinterpret_cast", "static_cast", "this", "throw", "try", "catch", "using", "true", "false", "bitand", "and", "bitor", "or", "xor",
       "compl", "and_eq", "or_eq", "xor_eq", "not", "not_eq", "assert", "static_assert",
       "alignas","alignof","concept","consteval","constexpr","constinit","co_await","co_return","co_yield","decltype",
-      "noexcept","requires","thread_local",
+      "noexcept","requires","thread_local", "module", "import", "export", "transaction_safe", "transaction_safe_dynamic",
+      "await", "reflexpr"
     }
   },
   { Id=2,
@@ -27,19 +28,20 @@ Keywords={
       "uint_fast64_t", "intptr_t", "uintptr_t", "intmax_t", "uintmax_t", "char8_t","char16_t","char32_t"
     }
   },
-  { Id=3,
+  { Id=4,
     List= {
       "typedef", "inline", "auto", "class", "explicit", "extern", "friend", "inline", "mutable", "operator",
-      "register", "template", "private", "protected", "public", "typeid", "virtual", "volatile", "constexpr", "nullptr", "decltype"
+      "register", "template", "private", "protected", "public", "typeid", "virtual", "volatile", "constexpr", "nullptr", "decltype",
+      "final", "override", "synchronized"
     }
   },
-  { Id=3,
+  { Id=5,
     Regex=[[(\w+)\s*\:\:]]
   },
   { Id=4,
     Regex=[[(\w+)\s*\(]]
   },
-  { Id=5,
+  { Id=6,
     Regex=[=[ \[\[[\w\:\,\s]+?\]\] ]=]
   }
 }
@@ -48,6 +50,9 @@ Strings = {
   Delimiter=[["|']],
   RawPrefix="R",
   Interpolation = [[ %\w ]],
+  DelimiterPairs= {
+    { Open=[[R\"\(]], Close=[[\)\"]] },
+  }
 }
 
 Comments = {
@@ -72,11 +77,16 @@ Operators=[[\(|\)|\[|\]|\{|\}|\,|\;|\.|\:|\&|<|>|\!|=|\/|\*|\%|\+|\-|\~|\||\^|\?
 
 EnableIndentation=true
 
--- resolve issue with C++14 number separator syntax
 function OnStateChange(oldState, newState, token)
 
+  -- resolve issue with C++14 number separator syntax
   if token=="'" and oldState==HL_NUMBER and newState==HL_STRING then
     return HL_NUMBER
+  end
+
+  --resolve issue with raw string delimiters: cout << (uint8_t*)"1";
+  if token==")\"" and oldState ~= HL_STRING then
+    return HL_REJECT
   end
 
   return newState

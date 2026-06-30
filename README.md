@@ -20,7 +20,7 @@ QLMarkdown is a Mac OS application that provides:
 
 If you like this application and find it useful, [__buy me a coffee__](https://www.buymeacoffee.com/sbarex)!
 
-The Quick Look extension can also preview rmarkdown files (`.rmd`, _without_ evaluating `r` code), MDX files (`.mdx`, _without_ JSX rendering), Cursor Rulers (`.mdc`), Quarto files (`.qmd`), Api Blueprint files (`.apib`) and textbundle packages.
+The Quick Look extension can also preview rmarkdown files (`.rmd`, _without_ evaluating `r` code), MDX files (`.mdx`, _without_ JSX rendering), Cursor Rulers (`.mdc`), Quarto files (`.qmd`), Api Blueprint files (`.apib`) and textbundle packages. Also `.mermaid` files are rendered wrapped inside a mermaid fenced block (the mermaid extension must be enabled).
 
 You can download the last compiled release from [this link](https://github.com/sbarex/QLMarkdown/releases). 
 
@@ -75,7 +75,10 @@ brew install --cask qlmarkdown
 _The precompiled app is notarized and signed_.
 
 **You must launch the application at least once**. In this way the Quick Look extension will be discovered by the system and some shared files are installed for the Shortcut extension. 
-After the first execution, the Quick Look extension will be available (and enabled) among those present in the System preferences/Extensions.
+After the first execution, the Quick Look extension will be available (and enabled) among those present in the System preferences/Extensions. You can check using the button "Open System Settings > … > Quick Look panel…" on the main App.
+
+The application store some support files on `~/Library/Group Containers/group.org.sbarex.qlmarkdown`.
+**Please note that the contents of the `highlight` and `js` subfolders may be overwritten by the App.**
 
 
 ## Uninstall
@@ -309,7 +312,7 @@ ARGUMENTS:
 
 MARKDOWN OPTIONS:
   --appearance <appearance>
-                          (values: light, dark)
+                          (values: auto, light, dark)
   --base-font-size <number>
                           Set the base font size, in points.
   --footnotes <on|off>    Parse the footnotes. (values: on, off)
@@ -460,6 +463,7 @@ This application handle these UTIs:
 - `dyn.ah62d4rv4ge81e5pe` (dynamic UTI for unassociated .rmd files)
 - `dyn.ah62d4rv4ge81c5pe` (dynamic UTI for unassociated .qmd files)
 - `dyn.ah62d4rv4ge80c6dmqk` (dynamic UTI for unassociated .apib files)
+- `dyn.ah62d4rv4ge8043pwrzu0w3a` (dynamic UTI for unassociated .mermaid files)
 
 **Please inform me of any other UTI associated to `.md` files.**
 

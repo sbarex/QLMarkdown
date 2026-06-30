@@ -192,7 +192,7 @@ table, table *, pre {
   touch-action: pan-x;
 }
 
-.markdown-body ul.contains-task-list {
+.markdown-body ul.contains-task-list, .markdown-body li.task-list-item {
   list-style: none;
   padding-left: 0;
 }

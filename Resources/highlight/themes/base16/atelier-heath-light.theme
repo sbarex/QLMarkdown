@@ -14,7 +14,7 @@ For more info on Chris Kempson's Base16, see:
     http://chriskempson.com/projects/base16
 ------------------------------------------------------------------------------]]
 Description = "Base16 Atelier Heath Light"
-Categories = {"light", "base16"}
+Categories = {"light", "base16", "lsp"}
 
 --------------------------------------------------------------------------------
 base00 = "#f7f3f7" --> Default Background
@@ -64,6 +64,25 @@ Keywords = {
   { Colour = base0F, Italic = false, Bold = true  }, --> kwd 5
   { Colour = base09, Italic = false, Bold = true  }, --> kwd 6
 }
+
+-- new LSP based elements:
+
+SemanticTokenTypes = {
+  { Type = 'type', Style = Keywords[2] },
+  { Type = 'class', Style =  { Colour = base0A } },
+  { Type = 'struct', Style = { Colour = base0A } },
+  { Type = 'interface', Style = { Colour = base06 } },
+  { Type = 'parameter', Style = Keywords[6] },
+  { Type = 'variable', Style = Keywords[5] },
+  { Type = 'enumMember', Style = Keywords[5] },
+  { Type = 'function', Style = Keywords[4] },
+  { Type = 'method', Style = Keywords[4] },
+  { Type = 'keyword', Style =  Keywords[1]},
+  { Type = 'number', Style = Number },
+  { Type = 'regexp', Style = String },
+  { Type = 'operator', Style = Operator },
+}
+
 --[[----------------------------------------------------------------------------
 The MIT License
 

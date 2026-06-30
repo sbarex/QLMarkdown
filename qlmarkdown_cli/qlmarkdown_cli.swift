@@ -30,7 +30,7 @@ enum BoolArgumentEnum: String, ExpressibleByArgument {
 }
 
 enum AppearanceEnum: String, ExpressibleByArgument {
-    case light, dark
+    case light, dark, auto
     
     static var allValueStrings: [String] {
         return ["light", "dark"]
@@ -246,6 +246,17 @@ struct QLMarkdownCLI: ParsableCommand {
     func getSettings() -> Settings {
         let settings = Settings.settingsFromSharedFile() ?? Settings()
         
+        if let a = self.options.appearance {
+            switch a {
+            case .auto:
+                settings.appearance = .undefined
+            case .light:
+                settings.appearance = .light
+            case .dark:
+                settings.appearance = .dark
+            }
+        }
+        
         // options
         if let o = options.footnotes {
             settings.footnotesOption = o == .on
@@ -380,12 +391,11 @@ struct QLMarkdownCLI: ParsableCommand {
     
     func printSettings(_ settings: Settings) {
         print("\n\(cliUrl.lastPathComponent) settings")
-        let appearance = self.options.appearance != nil ? self.options.appearance!.rawValue.capitalized : (Settings.isLightAppearance ? "Light" : "Dark")
         
         print("\nMain app path: \(self.appUrl.path)")
         
         print("\nMARKDOWN OPTIONS:")
-        print("    --appearance: \(appearance)")
+        print("    --appearance: \(settings.appearance.name)")
         print("    --base-font-size: \(settings.baseFontSize > 0 ? "\(settings.baseFontSize) pt" : "auto")")
         print("    --footnotes: \(settings.footnotesOption ? "on" : "off")")
         print("    --hard-break: \(settings.hardBreakOption ? "on" : "off")")
@@ -501,18 +511,6 @@ struct QLMarkdownCLI: ParsableCommand {
             FileManager.default.fileExists(atPath: dest.path, isDirectory: &isDir)
         }
         
-        let appearance: Appearance
-        if let a = self.options.appearance {
-            switch a {
-            case .light:
-                appearance = .light
-            case .dark:
-                appearance = .dark
-            }
-        } else {
-            appearance = Settings.isLightAppearance ? .light : .dark
-        }
-        
         if verbose || showSettings {
             printSettings(settings)
             if showSettings {
@@ -550,7 +548,7 @@ struct QLMarkdownCLI: ParsableCommand {
                     print("- processing \(markdown_url.path) ...")
                 }
                 
-                let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+                let text = try settings.render(file: markdown_url, baseDir: markdown_url.deletingLastPathComponent().path)
                 let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
                 
                 Settings.renderStats += 1
