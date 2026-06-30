@@ -824,6 +824,7 @@
                                                         <gridRow topPadding="8" id="mRf-rL-ZFR"/>
                                                         <gridRow id="6bo-pC-VNr"/>
                                                         <gridRow id="axC-Xg-GDO"/>
+                                                        <gridRow id="dEf-Li-st0"/>
                                                     </rows>
                                                     <columns>
                                                         <gridColumn id="Kw4-iz-WrK"/>
@@ -1591,6 +1592,27 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                         </gridCell>
+                                                        <gridCell row="dEf-Li-st0" column="Kw4-iz-WrK" id="dEf-Li-st1">
+                                                            <button key="contentView" toolTip="Render definition lists (a term line followed by `: description` lines)." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dEf-Li-st2">
+                                                                <rect key="frame" x="0.0" y="0.0" width="117" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Definition list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dEf-Li-st3">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.definitionListExtension" id="dEf-Li-st4"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="dEf-Li-st5">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="dEf-Li-st0" column="h9h-fV-gFn" id="dEf-Li-st6"/>
+                                                        <gridCell row="dEf-Li-st0" column="LDl-3O-4gf" id="dEf-Li-st7"/>
+                                                        <gridCell row="dEf-Li-st0" column="Frg-Lu-cBX" id="dEf-Li-st8"/>
+                                                        <gridCell row="dEf-Li-st0" column="EM0-Js-ao5" id="dEf-Li-st9"/>
                                                     </gridCells>
                                                 </gridView>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ccb-oe-cYh">

@@ -15,6 +15,7 @@ The previous block placed at the top of the document, starting with `---` and en
 
 - [Extensions](#extensions)
   - [Autolink extension](#autolink-extension)
+  - [Definition list extension](#definition-list-extension)
   - [Emoji extension](#emoji-extension)
   - [GitHub mentions extension](#github-mentions-extension)
   - [Heads extension](#heads-extension)
@@ -37,6 +38,20 @@ The previous block placed at the top of the document, starting with `---` and en
 ## Autolink extension
 
 If the `autolink` extension is enabled the URL https://www.github.com is displayed as a link.
+
+## Definition list extension
+
+With the `definitionlist` extension a term followed by one or more `: description` lines is rendered as a definition list:
+
+Apple
+: Pomaceous fruit of plants of the genus *Malus*.
+
+Markdown
+: A lightweight markup language with plain-text formatting syntax.
+: Created by John Gruber in 2004.
+
+HTML
+: The standard markup language for documents designed to be displayed in a web browser. It can contain `code`, *emphasis*, and [links](https://example.com).
 
 ## Emoji extension
 

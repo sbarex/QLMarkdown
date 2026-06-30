@@ -214,7 +214,16 @@ extension Settings {
                 os_log("Could not enable markdown `heads` extension!", log: OSLog.rendering, type: .error)
             }
         }
-        
+
+        if self.definitionListExtension {
+            if let ext = cmark_find_syntax_extension("definitionlist") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `definitionlist` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `definitionlist` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+
         if self.highlightExtension {
             if let ext = cmark_find_syntax_extension("highlight") {
                 cmark_parser_attach_syntax_extension(parser, ext)
