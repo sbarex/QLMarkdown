@@ -5,7 +5,7 @@ New Features:
 - Support to force a light/dark appearance.
 - Support for printing the markdown preview from the main app.
 - Support for `.mermaid` files.
-- Hightlight render engine updated to release 4.20. 
+- Highlight render engine updated to release 4.20. 
 
 Bugfix:
 - Fixed list bullet on task-list items (thanks to @soreavis).
