@@ -206,6 +206,15 @@ extension Settings {
             }
         }
         
+        if self.wikilinkExtension {
+            if let ext = cmark_find_syntax_extension("wikilink") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `wikilink` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `wikilink` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+
         if self.headsExtension {
             if let ext = cmark_find_syntax_extension("heads") {
                 cmark_parser_attach_syntax_extension(parser, ext)
@@ -646,6 +655,14 @@ table.debug td {
         html_debug += "<tr><td>mention extension</td><td>"
         if self.mentionExtension {
             html_debug += "on " + (cmark_find_syntax_extension("mention") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+
+        html_debug += "<tr><td>wikilink extension</td><td>"
+        if self.wikilinkExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("wikilink") == nil ? " (NOT AVAILABLE" : "")
         } else {
             html_debug += "off"
         }
