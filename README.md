@@ -404,10 +404,10 @@ The app uses the following libraries:
 - [MathJax](https://www.mathjax.org/) for mathematical expressions rendering.
 - [Mermaid](https://mermaid.js.org/) for diagrams rendering.
 
-`libpcre` require the `autoconf` utility to be build. You can install it with [`homebrew`](https://brew.sh/):
+`libpcre2` requires the `autoconf`, `automake`, and `libtool` utilities to be built. You can install them with [`homebrew`](https://brew.sh/):
 
 ```sh
-brew install autoconf
+brew install autoconf automake libtool
 ``` 
 
 The compilation of `cmark-gfm` require `cmake` (`brew install cmake`). 
