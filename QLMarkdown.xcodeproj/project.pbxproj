@@ -2169,6 +2169,7 @@
 				);
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)/QLMarkdown.app/Contents/Resources";
 				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
 					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
 					"$(inherited)",
@@ -2226,6 +2227,7 @@
 				);
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)/QLMarkdown.app/Contents/Resources";
 				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
 					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
 					"$(inherited)",
