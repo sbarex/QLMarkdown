@@ -499,6 +499,7 @@ class Settings: Codable {
     var customCSS: URL? {
         didSet {
             customCSSFetched = false
+            customCSSCode = nil
         }
     }
     var customCSSFetched: Bool = false
@@ -744,6 +745,7 @@ class Settings: Codable {
         self.baseFontSize = s.baseFontSize
         self.customCSS = s.customCSS
         self.customCSSCode = s.customCSSCode
+        self.customCSSFetched = s.customCSSFetched
         self.customCSSOverride = s.customCSSOverride
         
         self.about = s.about

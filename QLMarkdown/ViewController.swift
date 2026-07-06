@@ -378,10 +378,14 @@ class ViewController: NSViewController {
         }
         
         var index = 1
-        while stylesPopup.item(at: index)?.tag ?? -1 >= 0 {
+        if stylesPopup.item(at: index)?.isSeparatorItem ?? false {
             index += 1
         }
-        index -= 1
+        while index < stylesPopup.numberOfItems,
+              !(stylesPopup.item(at: index)?.isSeparatorItem ?? false),
+              stylesPopup.item(at: index)?.tag ?? -1 >= 0 {
+            index += 1
+        }
         stylesPopup.insertItem(withTitle: name, at: index)
         if standalone {
             stylesPopup.menu?.item(at: index)?.tag = 1
