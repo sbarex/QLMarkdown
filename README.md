@@ -66,6 +66,8 @@ You can download the last compiled release from [this link](https://github.com/s
 
 ## Installation
 
+> 💻 **Windows users / Usuarios de Windows:** While the macOS application GUI and Quick Look features are Mac-exclusive, the core rendering engine and CLI have been fully ported to Windows! See the [Windows Installation & Usage Guide (English)](README-Windows.md) and [Guía de Instalación y Uso para Windows (Español)](LEEME-Windows.md).
+
 You can download the last compiled release from [this link](https://github.com/sbarex/QLMarkdown/releases) or you can install with [Homebrew](https://brew.sh/):   
 
 ```shell
@@ -391,9 +393,15 @@ The application provides two experimental commands for the `Shortcuts` Applicati
 
 ## Build from source
 
+### macOS (Xcode / Swift Package Manager)
 When you clone this repository, remember to fetch also the submodule with `git submodule update --init`.
 
 Some libraries (`Sparkle`, `Yams` and `SwiftSoup`) are handled by the Swift Package Manager. In case of problems it might be useful to reset the cache with the command from the menu `File/Packages/Reset Package Caches`.
+
+### Windows & Cross-Platform (CMake / C++ CLI)
+You can compile the native `qlmarkdown_cli` command line tool on Windows and other platforms using CMake. Please refer to:
+- 📖 [Windows & Cross-Platform Build Guide (English)](README-Windows.md)
+- 📖 [Guía de Compilación para Windows y Multiplataforma (Español)](LEEME-Windows.md)
 
 
 ### Dependency
