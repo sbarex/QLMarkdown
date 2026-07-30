@@ -168,7 +168,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Autolink|Automatically translate URL to link and parse email addresses.|
 |Emoji|Enable the [Emoji extension](#emoji).|
 |GitHub mentions|Translate mentions to link to the GitHub account.|
-|<a name="heads-anchors"></a>Heads anchors|Create anchors for the heads to use as cross internal reference. Each anchor is named with the lowercased caption, stripped of any punctuation marks (except the dash) and spaces replaced with dash (`-`). UTF8 character encoding is supported.|
+|<a name="heads-anchors"></a>Heads anchors|Create anchors for the heads to use as cross internal reference. Each anchor is named with the lowercased caption, stripped of any punctuation marks (except the dash and the underscore) and each space replaced with a dash (`-`). UTF8 character encoding is supported.|
 |Highlight|Highlight the text contained between the markers `==`.|
 |Inline local images|Enable the [Inline local images extension](#inline-local-images).|
 |Math|Enable the [formatting of math expressions](#mathematical-expressions).|
