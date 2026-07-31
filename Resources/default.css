@@ -46,6 +46,10 @@
   --hl_Keyword-4: #6f42c1 ; /* ??? */
   --hl_Keyword-5: #d73a49 ; /* ??? */
   --hl_Keyword-6: #d73a49 ; /* ??? */
+
+  /* Diff-specific colors */
+  --hl_Diff_Deletion: #cf222e ;
+  --hl_Diff_Addition: #1a7f37 ;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -97,6 +101,10 @@
   --hl_Keyword-4: #eea8ff ; /* ??? */
   --hl_Keyword-5: #FF7B72 ; /* ??? */
   --hl_Keyword-6: #FF7B72 ; /* ??? */
+
+  /* Diff-specific colors */
+  --hl_Diff_Deletion: #ff7b72 ;
+  --hl_Diff_Addition: #3fb950 ;
   }
 }
 
@@ -118,6 +126,9 @@ pre.hl	{ background-color: var(--hl_Background);}
 .hl.kwd { color: var(--hl_Keyword-4); font-weight: normal;}
 .hl.kwe { color: var(--hl_Keyword-5); font-weight: normal;}
 .hl.kwf { color: var(--hl_Keyword-6); font-weight: normal;}
+
+code.language-diff .hl.kwa { color: var(--hl_Diff_Deletion); }
+code.language-diff .hl.kwb { color: var(--hl_Diff_Addition); }
 
 
 pre {
