@@ -824,6 +824,7 @@
                                                         <gridRow topPadding="8" id="mRf-rL-ZFR"/>
                                                         <gridRow id="6bo-pC-VNr"/>
                                                         <gridRow id="axC-Xg-GDO"/>
+                                                        <gridRow id="wkl-Rw-grd"/>
                                                     </rows>
                                                     <columns>
                                                         <gridColumn id="Kw4-iz-WrK"/>
@@ -1591,6 +1592,27 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                         </gridCell>
+                                                        <gridCell row="wkl-Rw-grd" column="Kw4-iz-WrK" id="wkl-C0-cel">
+                                                            <button key="contentView" toolTip="Render [[Page Name]] and [[Target|Display]] wikilinks as links." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wkl-Bt-btn">
+                                                                <rect key="frame" x="0.0" y="0.0" width="117" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Wikilinks" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="wkl-Bc-cel">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.wikilinkExtension" id="wkl-Vb-bnd"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="wkl-Eb-bnd">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="wkl-Rw-grd" column="h9h-fV-gFn" id="wkl-C1-cel"/>
+                                                        <gridCell row="wkl-Rw-grd" column="LDl-3O-4gf" id="wkl-C2-cel"/>
+                                                        <gridCell row="wkl-Rw-grd" column="Frg-Lu-cBX" id="wkl-C3-cel"/>
+                                                        <gridCell row="wkl-Rw-grd" column="EM0-Js-ao5" id="wkl-C4-cel"/>
                                                     </gridCells>
                                                 </gridView>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ccb-oe-cYh">

@@ -12,6 +12,7 @@
 #include "plugin.h"
 
 #include "mention.h"
+#include "wikilink.h"
 // #include "checkbox.h"
 #include "syntaxhighlight.h"
 #include "inlineimage.h"
@@ -24,6 +25,7 @@
 
 static int extra_extensions_registration(cmark_plugin *plugin) {
     cmark_plugin_register_syntax_extension(plugin, create_mention_extension());
+    cmark_plugin_register_syntax_extension(plugin, create_wikilink_extension());
     //cmark_plugin_register_syntax_extension(plugin, create_checkbox_extension());
     cmark_plugin_register_syntax_extension(plugin, create_inlineimage_extension());
 

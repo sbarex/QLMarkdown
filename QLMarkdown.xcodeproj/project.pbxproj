@@ -21,6 +21,7 @@
 		831A8C6B258ABD8900E36182 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
 		831A8C6E258ABD8D00E36182 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
 		831A8C71258ABD9300E36182 /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
+		7273677933E44FAD8B3EEA1D /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
 		831A8C74258ABD9600E36182 /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		831A8CC1258AC18300E36182 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		8320D5942D1C25B1005868BD /* QLMarkdown Shortcut Extension.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 8320D58A2D1C25B1005868BD /* QLMarkdown Shortcut Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -76,6 +77,7 @@
 		8320D5E32D1C3AA7005868BD /* sup_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 83CF71CD2C60023E0066A195 /* sup_ext.c */; };
 		8320D5E42D1C3AA7005868BD /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
 		8320D5E52D1C3AA7005868BD /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
+		138DFA4523EA4D8DA48F233D /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
 		8320D5E62D1C3AA7005868BD /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		8320D5E72D1C3AA7005868BD /* math_ext.c in Sources */ = {isa = PBXBuildFile; fileRef = 835886B229E960050088DF7D /* math_ext.c */; };
 		8320D5E82D1C3AA7005868BD /* extra-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 834A4F8129E92AE800692964 /* extra-extensions.c */; };
@@ -99,6 +101,7 @@
 		83437985271D49FF00A5D6EA /* MIMEtype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83327D2E2594066300E76CF6 /* MIMEtype.c */; };
 		83437986271D4A1900A5D6EA /* inlineimage.c in Sources */ = {isa = PBXBuildFile; fileRef = 83760300258C1813004799ED /* inlineimage.c */; };
 		83437987271D4A1900A5D6EA /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
+		CB9185D831D741DCB49AF8D3 /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
 		83437988271D4A1900A5D6EA /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		83437989271D4A1900A5D6EA /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
 		8343798D271D4A1900A5D6EA /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
@@ -243,6 +246,7 @@
 		8376EAE427E8C67F00AB44B8 /* c_log.c in Sources */ = {isa = PBXBuildFile; fileRef = 8376EAE127E8C67F00AB44B8 /* c_log.c */; };
 		837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */ = {isa = PBXBuildFile; fileRef = 837F97CE271EA098009F4605 /* qlmarkdown_cli */; };
 		838109C3258403CA000AFE3C /* mention.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C2258403CA000AFE3C /* mention.c */; };
+		0342FC81767440D68CFDD7B4 /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
 		838109C725840429000AFE3C /* checkbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 838109C625840429000AFE3C /* checkbox.c */; };
 		8382D05C2664051400210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05B2664051400210A0A /* Yams */; };
 		8382D05E2664052E00210A0A /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 8382D05D2664052E00210A0A /* Yams */; };
@@ -651,6 +655,8 @@
 		837F97CE271EA098009F4605 /* qlmarkdown_cli */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = qlmarkdown_cli; sourceTree = BUILT_PRODUCTS_DIR; };
 		838109C1258403CA000AFE3C /* mention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mention.h; sourceTree = "<group>"; };
 		838109C2258403CA000AFE3C /* mention.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mention.c; sourceTree = "<group>"; };
+		8C0194F6D1944DC681276B11 /* wikilink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikilink.h; sourceTree = "<group>"; };
+		1DDD0092C9DF487BBB99BB1D /* wikilink.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wikilink.c; sourceTree = "<group>"; };
 		838109C525840429000AFE3C /* checkbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = checkbox.h; sourceTree = "<group>"; };
 		838109C625840429000AFE3C /* checkbox.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = checkbox.c; sourceTree = "<group>"; };
 		838A5D5C29F1139200D704AB /* makefile2.makefile */ = {isa = PBXFileReference; lastKnownFileType = text; path = makefile2.makefile; sourceTree = "<group>"; usesTabs = 1; };
@@ -843,6 +849,8 @@
 				835886B229E960050088DF7D /* math_ext.c */,
 				838109C1258403CA000AFE3C /* mention.h */,
 				838109C2258403CA000AFE3C /* mention.c */,
+				8C0194F6D1944DC681276B11 /* wikilink.h */,
+				1DDD0092C9DF487BBB99BB1D /* wikilink.c */,
 				83CF71CC2C60023E0066A195 /* sup_ext.h */,
 				83CF71CD2C60023E0066A195 /* sup_ext.c */,
 				83CF71D12C6005370066A195 /* sub_ext.h */,
@@ -1504,6 +1512,7 @@
 				834A4EF829E8AD8C00692964 /* table.c in Sources */,
 				834A4F1929E8AD8D00692964 /* blocks.c in Sources */,
 				831A8C71258ABD9300E36182 /* mention.c in Sources */,
+				7273677933E44FAD8B3EEA1D /* wikilink.c in Sources */,
 				836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
 				835886B429E960050088DF7D /* math_ext.c in Sources */,
 				834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */,
@@ -1561,6 +1570,7 @@
 				8320D5E32D1C3AA7005868BD /* sup_ext.c in Sources */,
 				8320D5E42D1C3AA7005868BD /* syntaxhighlight.c in Sources */,
 				8320D5E52D1C3AA7005868BD /* mention.c in Sources */,
+				138DFA4523EA4D8DA48F233D /* wikilink.c in Sources */,
 				8320D5E62D1C3AA7005868BD /* checkbox.c in Sources */,
 				8320D5E72D1C3AA7005868BD /* math_ext.c in Sources */,
 				8320D5E82D1C3AA7005868BD /* extra-extensions.c in Sources */,
@@ -1622,6 +1632,7 @@
 				834A4F2829E8AD8D00692964 /* houdini_href_e.c in Sources */,
 				834A4EF929E8AD8C00692964 /* table.c in Sources */,
 				83437987271D4A1900A5D6EA /* mention.c in Sources */,
+				CB9185D831D741DCB49AF8D3 /* wikilink.c in Sources */,
 				834A4F1429E8AD8C00692964 /* man.c in Sources */,
 				834A4F6529E8AD8E00692964 /* houdini_html_u.c in Sources */,
 				834A4F0C29E8AD8C00692964 /* xml.c in Sources */,
@@ -1715,6 +1726,7 @@
 				83720A2825B8E93D00B49FEC /* decode.c in Sources */,
 				834A4F8229E92AE800692964 /* extra-extensions.c in Sources */,
 				838109C3258403CA000AFE3C /* mention.c in Sources */,
+				0342FC81767440D68CFDD7B4 /* wikilink.c in Sources */,
 				834A4F6629E8AD8E00692964 /* registry.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

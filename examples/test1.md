@@ -26,6 +26,7 @@ The previous block placed at the top of the document, starting with `---` and en
   - [Strikethrough extension](#strikethrough-extension)
   - [Syntax Highlight extension](#syntax-highlight-extension)
   - [Task list extension](#task-list-extension)
+  - [Wikilink extension](#wikilink-extension)
 - [Options](#options)
 
 (The links on the TOC works only if the `heads` extension is enabled).
@@ -137,6 +138,13 @@ function test(array $a, string $b, $c = null): boolean {
 * [x] step 1
 * [ ] step 2 
 * [ ] step 3
+
+
+## Wikilink extension
+
+With the `wikilink` extension `[[Page Name]]` and `[[Target|Display]]` are rendered as links, matching Obsidian and similar tools.
+
+See [[Getting Started]], the [[Reference|API reference]], or a note in [[Folder/Daily]].
 
 
 # Options

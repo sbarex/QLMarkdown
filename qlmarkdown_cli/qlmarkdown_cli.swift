@@ -141,6 +141,9 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Translate mentions to link to the GitHub account", valueName: "on|off"))
     var githubMentions: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Render [[wikilinks]] as links.", valueName: "on|off"))
+    var wikilink: BoolArgumentEnum? = nil
+
     @Option(help: ArgumentHelp("Create anchors for the heads.", valueName: "on|off"))
     var headsAnchor: BoolArgumentEnum? = nil
     
@@ -307,6 +310,9 @@ struct QLMarkdownCLI: ParsableCommand {
         if let o = extensions.githubMentions {
             settings.mentionExtension = o == .on
         }
+        if let o = extensions.wikilink {
+            settings.wikilinkExtension = o == .on
+        }
         if let o = extensions.headsAnchor {
             settings.headsExtension = o == .on
         }
@@ -417,6 +423,7 @@ struct QLMarkdownCLI: ParsableCommand {
             print("    --emoji: using images")
         }
         print("    --github-mentions: \(settings.mentionExtension ? "on" : "off")")
+        print("    --wikilink: \(settings.wikilinkExtension ? "on" : "off")")
         print("    --heads-anchor: \(settings.headsExtension ? "on" : "off")")
         print("    --highlight: \(settings.highlightExtension ? "on" : "off")")
         print("    --inline-images: \(settings.inlineImageExtension ? "on" : "off")")
