@@ -249,6 +249,7 @@ class Settings: Codable {
         case mentionExtension
         case subExtension
         case supExtension
+        case alertExtension
         case tableExtension
         case tagFilterExtension
         case taskListExtension
@@ -477,6 +478,7 @@ class Settings: Codable {
     var mentionExtension: Bool = false
     var subExtension: Bool = false
     var supExtension: Bool = false
+    var alertExtension: Bool = false
     var tableExtension: Bool = true
     var tagFilterExtension: Bool = true
     var taskListExtension: Bool = true
@@ -560,6 +562,7 @@ class Settings: Codable {
         
         self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
         self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
+        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? false
         
         self.emojiExtension = try container.decode(EmojiMode.self, forKey:.emojiExtension)
         
@@ -637,6 +640,7 @@ class Settings: Codable {
         
         try container.encode(self.subExtension, forKey: .subExtension)
         try container.encode(self.supExtension, forKey: .supExtension)
+        try container.encode(self.alertExtension, forKey: .alertExtension)
         
         try container.encode(self.emojiExtension, forKey: .emojiExtension)
         
@@ -730,6 +734,7 @@ class Settings: Codable {
         
         self.subExtension = s.subExtension
         self.supExtension = s.supExtension
+        self.alertExtension = s.alertExtension
         
         self.emojiExtension = s.emojiExtension
         
@@ -826,6 +831,9 @@ class Settings: Codable {
         }
         if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
             supExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.alertExtension.rawValue] as? Bool {
+            alertExtension = ext
         }
         
         if let n = defaultsDomain[Self.CodingKeys.emojiExtension.rawValue] as? Int, let ext = EmojiMode(rawValue: n) {

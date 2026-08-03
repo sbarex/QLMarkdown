@@ -240,6 +240,19 @@ extension Settings {
                 os_log("Could not enable markdown `sub` extension!", log: OSLog.rendering, type: .error)
             }
         }
+
+        if self.alertExtension {
+            if let ext = cmark_find_syntax_extension("alert") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+
+                os_log(
+                    "Enabled markdown `alert` extension.",
+                    log: OSLog.rendering,
+                    type: .debug)
+            } else {
+                os_log("Could not enable markdown `alert` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
         
         if self.supExtension {
             if let ext = cmark_find_syntax_extension("sup") {
@@ -688,6 +701,13 @@ table.debug td {
         html_debug += "<tr><td>sup extension</td><td>"
         if self.supExtension {
             html_debug += "on " + (cmark_find_syntax_extension("sup") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        html_debug += "<tr><td>alert extension</td><td>"
+        if self.alertExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("alert") == nil ? " (NOT AVAILABLE" : "")
         } else {
             html_debug += "off"
         }
