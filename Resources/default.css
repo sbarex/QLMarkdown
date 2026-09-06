@@ -50,6 +50,10 @@
   /* Diff-specific colors */
   --hl_Diff_Deletion: #cf222e ;
   --hl_Diff_Addition: #1a7f37 ;
+
+  /* Read by QLMarkdown to size the Quick Look window.
+     Keep in sync with the min-width media query below, that can not use a variable. */
+  --content-max-width: 902px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -132,7 +136,7 @@ code.language-diff .hl.kwb { color: var(--hl_Diff_Addition); }
 
 
 pre {
-  max-width: 902px;
+  max-width: var(--content-max-width);
 }
 * {
   box-sizing: border-box;
@@ -169,7 +173,7 @@ body {
 
 article {
   margin: auto;
-  max-width: 902px;
+  max-width: var(--content-max-width);
   font-size: inherit;
   line-height: 1.5;
   word-wrap: break-word;

@@ -244,13 +244,13 @@ class ViewController: NSViewController {
             qlWindowSizePopupButton.selectItem(at: qlWindowSizeCustomized ? 1 : 0)
         }
     }
-    @objc dynamic var qlWindowWidth: Int = Settings.factorySettings.qlWindowWidth ?? 1000 {
+    @objc dynamic var qlWindowWidth: Int = Int(Settings.factorySettings.qlWindowSize.width) {
         didSet {
             guard oldValue != qlWindowWidth else { return }
             isDirty = true
         }
     }
-    @objc dynamic var qlWindowHeight: Int = Settings.factorySettings.qlWindowHeight ?? 800 {
+    @objc dynamic var qlWindowHeight: Int = Int(Settings.factorySettings.qlWindowSize.height) {
         didSet {
             guard oldValue != qlWindowHeight else { return }
             isDirty = true
@@ -1008,6 +1008,12 @@ class ViewController: NSViewController {
     
     @IBAction func handleQLSizeChanged(_ sender: NSPopUpButton) {
         self.qlWindowSizeCustomized = sender.indexOfSelectedItem == 1
+        if !self.qlWindowSizeCustomized {
+            // The fields are disabled but still visible. Show the size used by the automatic mode.
+            let size = Settings.shared.autoQLWindowSize
+            self.qlWindowWidth = Int(size.width)
+            self.qlWindowHeight = Int(size.height)
+        }
     }
     
     @IBAction func saveAction(_ sender: Any) {
@@ -1340,8 +1346,8 @@ document.addEventListener('scroll', function(e) {
         self.renderAsCode = settings.renderAsCode
         
         self.qlWindowSizeCustomized = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0
-        self.qlWindowWidth = settings.qlWindowWidth ?? 1000
-        self.qlWindowHeight = settings.qlWindowHeight ?? 800
+        self.qlWindowWidth = Int(settings.qlWindowSize.width)
+        self.qlWindowHeight = Int(settings.qlWindowSize.height)
         
         self.tableExtension = settings.tableExtension
         self.autoLinkExtension = settings.autoLinkExtension

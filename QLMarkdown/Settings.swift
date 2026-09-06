@@ -513,12 +513,29 @@ class Settings: Codable {
     var qlWindowWidth: Int? = nil
     /// Quick Look window height.
     var qlWindowHeight: Int? = nil
+    /// Width used when the style does not declare a content column.
+    static let defaultQLWindowWidth: CGFloat = 960
+    /// Height suggested to Quick Look. The preview scrolls if the content is longer.
+    static let defaultQLWindowHeight: CGFloat = 1000
+    /// Width used in `Render as code` mode, where the source is not laid out in a column.
+    static let defaultQLWindowWidthAsCode: CGFloat = 1400
     /// Quick Look window size.
+    /// Without a suggestion macOS opens a window as big as the screen.
     var qlWindowSize: CGSize {
         if let w = qlWindowWidth, w > 0, let h = qlWindowHeight, h > 0 {
             return CGSize(width: CGFloat(w), height: CGFloat(h))
         } else {
-            return CGSize(width: 0, height: 0)
+            return self.autoQLWindowSize
+        }
+    }
+    /// Size used when no custom size is set. Fitted to the content column of the style in use.
+    var autoQLWindowSize: CGSize {
+        if let column = self.contentColumnWidth {
+            return CGSize(width: column + 58, height: Self.defaultQLWindowHeight) // gutters and scroller
+        } else if self.renderAsCode {
+            return CGSize(width: Self.defaultQLWindowWidthAsCode, height: Self.defaultQLWindowHeight)
+        } else {
+            return CGSize(width: Self.defaultQLWindowWidth, height: Self.defaultQLWindowHeight)
         }
     }
     
@@ -959,6 +976,38 @@ class Settings: Codable {
             return nil
         }
         return try? String(contentsOf: url, encoding: .utf8)
+    }
+    
+    /**
+     * Get the style sheets applied to the rendered document, in cascade order.
+     * The bundled `default.css` is used only in Markdown mode. The custom style is emitted last.
+     */
+    func getAppliedCSS() -> (bundled: String?, custom: String) {
+        let custom = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
+        let useBundled = !self.renderAsCode && (custom.isEmpty || !self.customCSSOverride)
+        return (useBundled ? self.getBundleContents(forResource: "default", ofType: "css") : nil, custom)
+    }
+    
+    /// Width of the column used by the style to lay out the content. `nil` if no style declares it.
+    var contentColumnWidth: CGFloat? {
+        let css = self.getAppliedCSS()
+        // The custom style is emitted after the bundled one, so its declaration wins.
+        return parseContentColumnWidth(css.custom) ?? parseContentColumnWidth(css.bundled)
+    }
+    
+    /// Read the `--content-max-width` property. As in the cascade, the last declaration wins.
+    private func parseContentColumnWidth(_ css: String?) -> CGFloat? {
+        let pattern = #"--content-max-width\s*:\s*([0-9]+(?:\.[0-9]+)?)px"#
+        guard let css, let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return nil
+        }
+        guard let match = regex.matches(in: css, options: [], range: NSRange(css.startIndex..., in: css)).last,
+              let value = Range(match.range(at: 1), in: css).flatMap({ Double(css[$0]) }),
+              value > 0
+        else {
+            return nil
+        }
+        return CGFloat(value)
     }
     
     /**
