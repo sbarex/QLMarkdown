@@ -213,6 +213,7 @@ extension Settings {
         
         defaults.set(subExtension, forKey: Self.CodingKeys.subExtension.rawValue)
         defaults.set(supExtension, forKey: Self.CodingKeys.supExtension.rawValue)
+        defaults.set(alertExtension, forKey: Self.CodingKeys.alertExtension.rawValue)
         
         defaults.set(emojiExtension.rawValue, forKey: Self.CodingKeys.emojiExtension.rawValue)
         

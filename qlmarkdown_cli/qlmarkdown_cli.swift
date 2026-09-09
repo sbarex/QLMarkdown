@@ -186,6 +186,9 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Format superscript characters inside `^` markers.", valueName: "on|off"))
     var sup: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Render GitHub alerts (blockquotes starting with [!NOTE], [!TIP], …).", valueName: "on|off"))
+    var alert: BoolArgumentEnum? = nil
+
     @Option(help: "Render the yaml header.")
     var yaml: YamlArgumentEnum? = nil
 }
@@ -374,6 +377,9 @@ struct QLMarkdownCLI: ParsableCommand {
         }
         if let o = extensions.sup {
             settings.supExtension = o == .on
+        }
+        if let o = extensions.alert {
+            settings.alertExtension = o == .on
         }
         if let o = extensions.yaml {
             switch o {
