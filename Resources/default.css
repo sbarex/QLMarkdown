@@ -46,6 +46,14 @@
   --hl_Keyword-4: #6f42c1 ; /* ??? */
   --hl_Keyword-5: #d73a49 ; /* ??? */
   --hl_Keyword-6: #d73a49 ; /* ??? */
+
+  /* Diff-specific colors */
+  --hl_Diff_Deletion: #cf222e ;
+  --hl_Diff_Addition: #1a7f37 ;
+
+  /* Read by QLMarkdown to size the Quick Look window.
+     Keep in sync with the min-width media query below, that can not use a variable. */
+  --content-max-width: 902px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -97,6 +105,10 @@
   --hl_Keyword-4: #eea8ff ; /* ??? */
   --hl_Keyword-5: #FF7B72 ; /* ??? */
   --hl_Keyword-6: #FF7B72 ; /* ??? */
+
+  /* Diff-specific colors */
+  --hl_Diff_Deletion: #ff7b72 ;
+  --hl_Diff_Addition: #3fb950 ;
   }
 }
 
@@ -119,9 +131,12 @@ pre.hl	{ background-color: var(--hl_Background);}
 .hl.kwe { color: var(--hl_Keyword-5); font-weight: normal;}
 .hl.kwf { color: var(--hl_Keyword-6); font-weight: normal;}
 
+code.language-diff .hl.kwa { color: var(--hl_Diff_Deletion); }
+code.language-diff .hl.kwb { color: var(--hl_Diff_Addition); }
+
 
 pre {
-  max-width: 902px;
+  max-width: var(--content-max-width);
 }
 * {
   box-sizing: border-box;
@@ -158,7 +173,7 @@ body {
 
 article {
   margin: auto;
-  max-width: 902px;
+  max-width: var(--content-max-width);
   font-size: inherit;
   line-height: 1.5;
   word-wrap: break-word;

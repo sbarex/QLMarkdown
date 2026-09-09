@@ -79,7 +79,14 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
-    
+
+    @objc dynamic var definitionListExtension: Bool = Settings.factorySettings.definitionListExtension {
+        didSet {
+            guard oldValue != definitionListExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var syntaxHighlightExtension: Bool = Settings.factorySettings.syntaxHighlightExtension {
         didSet {
             guard oldValue != syntaxHighlightExtension else { return }
@@ -251,13 +258,13 @@ class ViewController: NSViewController {
             qlWindowSizePopupButton.selectItem(at: qlWindowSizeCustomized ? 1 : 0)
         }
     }
-    @objc dynamic var qlWindowWidth: Int = Settings.factorySettings.qlWindowWidth ?? 1000 {
+    @objc dynamic var qlWindowWidth: Int = Int(Settings.factorySettings.qlWindowSize.width) {
         didSet {
             guard oldValue != qlWindowWidth else { return }
             isDirty = true
         }
     }
-    @objc dynamic var qlWindowHeight: Int = Settings.factorySettings.qlWindowHeight ?? 800 {
+    @objc dynamic var qlWindowHeight: Int = Int(Settings.factorySettings.qlWindowSize.height) {
         didSet {
             guard oldValue != qlWindowHeight else { return }
             isDirty = true
@@ -385,10 +392,14 @@ class ViewController: NSViewController {
         }
         
         var index = 1
-        while stylesPopup.item(at: index)?.tag ?? -1 >= 0 {
+        if stylesPopup.item(at: index)?.isSeparatorItem ?? false {
             index += 1
         }
-        index -= 1
+        while index < stylesPopup.numberOfItems,
+              !(stylesPopup.item(at: index)?.isSeparatorItem ?? false),
+              stylesPopup.item(at: index)?.tag ?? -1 >= 0 {
+            index += 1
+        }
         stylesPopup.insertItem(withTitle: name, at: index)
         if standalone {
             stylesPopup.menu?.item(at: index)?.tag = 1
@@ -1011,6 +1022,12 @@ class ViewController: NSViewController {
     
     @IBAction func handleQLSizeChanged(_ sender: NSPopUpButton) {
         self.qlWindowSizeCustomized = sender.indexOfSelectedItem == 1
+        if !self.qlWindowSizeCustomized {
+            // The fields are disabled but still visible. Show the size used by the automatic mode.
+            let size = Settings.shared.autoQLWindowSize
+            self.qlWindowWidth = Int(size.width)
+            self.qlWindowHeight = Int(size.height)
+        }
     }
     
     @IBAction func saveAction(_ sender: Any) {
@@ -1343,8 +1360,8 @@ document.addEventListener('scroll', function(e) {
         self.renderAsCode = settings.renderAsCode
         
         self.qlWindowSizeCustomized = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0
-        self.qlWindowWidth = settings.qlWindowWidth ?? 1000
-        self.qlWindowHeight = settings.qlWindowHeight ?? 800
+        self.qlWindowWidth = Int(settings.qlWindowSize.width)
+        self.qlWindowHeight = Int(settings.qlWindowSize.height)
         
         self.tableExtension = settings.tableExtension
         self.autoLinkExtension = settings.autoLinkExtension
@@ -1364,6 +1381,7 @@ document.addEventListener('scroll', function(e) {
         self.mermaidExtensionEmbed = settings.mermaidExtension.getMode()?.embed ?? false
         
         self.mentionExtension = settings.mentionExtension
+        self.definitionListExtension = settings.definitionListExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
         self.emojiExtension = settings.emojiExtension != .disabled
@@ -1426,6 +1444,7 @@ document.addEventListener('scroll', function(e) {
         settings.mathExtension = self.mathExtension ? (self.mathExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mentionExtension = self.mentionExtension
+        settings.definitionListExtension = self.definitionListExtension
 
         settings.emojiExtension = self.emojiExtension ? (self.emojiImageOption ? .images : .font) : .disabled
         
