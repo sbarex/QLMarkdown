@@ -604,22 +604,19 @@
                                                                 <menuItem title="Paragraph" enabled="NO" id="ZvO-Gk-QUH">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                 </menuItem>
-                                                                <menuItem id="YGs-j5-SAR">
-                                                                    <string key="title">	Default</string>
+                                                                <menuItem title="    Default" id="YGs-j5-SAR">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="makeBaseWritingDirectionNatural:" target="Ady-hI-5gd" id="qtV-5e-UBP"/>
                                                                     </connections>
                                                                 </menuItem>
-                                                                <menuItem id="Lbh-J2-qVU">
-                                                                    <string key="title">	Left to Right</string>
+                                                                <menuItem title="    Left to Right" id="Lbh-J2-qVU">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="makeBaseWritingDirectionLeftToRight:" target="Ady-hI-5gd" id="S0X-9S-QSf"/>
                                                                     </connections>
                                                                 </menuItem>
-                                                                <menuItem id="jFq-tB-4Kx">
-                                                                    <string key="title">	Right to Left</string>
+                                                                <menuItem title="    Right to Left" id="jFq-tB-4Kx">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="makeBaseWritingDirectionRightToLeft:" target="Ady-hI-5gd" id="5fk-qB-AqJ"/>
@@ -629,22 +626,19 @@
                                                                 <menuItem title="Selection" enabled="NO" id="cqv-fj-IhA">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                 </menuItem>
-                                                                <menuItem id="Nop-cj-93Q">
-                                                                    <string key="title">	Default</string>
+                                                                <menuItem title="    Default" id="Nop-cj-93Q">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="makeTextWritingDirectionNatural:" target="Ady-hI-5gd" id="lPI-Se-ZHp"/>
                                                                     </connections>
                                                                 </menuItem>
-                                                                <menuItem id="BgM-ve-c93">
-                                                                    <string key="title">	Left to Right</string>
+                                                                <menuItem title="    Left to Right" id="BgM-ve-c93">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="makeTextWritingDirectionLeftToRight:" target="Ady-hI-5gd" id="caW-Bv-w94"/>
                                                                     </connections>
                                                                 </menuItem>
-                                                                <menuItem id="RB4-Sm-HuC">
-                                                                    <string key="title">	Right to Left</string>
+                                                                <menuItem title="    Right to Left" id="RB4-Sm-HuC">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="makeTextWritingDirectionRightToLeft:" target="Ady-hI-5gd" id="EXD-6r-ZUu"/>
@@ -808,23 +802,23 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tabView type="noTabsNoBorder" initialItem="XgS-T3-Gpv" translatesAutoresizingMaskIntoConstraints="NO" id="buS-Ph-8Qs">
-                                <rect key="frame" x="0.0" y="541" width="1065" height="364"/>
+                                <rect key="frame" x="0.0" y="521" width="1065" height="384"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Basic options" identifier="" id="XgS-T3-Gpv">
                                         <view key="view" id="z2a-cF-5GG">
-                                            <rect key="frame" x="0.0" y="0.0" width="1065" height="364"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1065" height="384"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <gridView verticalHuggingPriority="248" verticalCompressionResistancePriority="749" xPlacement="leading" yPlacement="top" rowAlignment="firstBaseline" rowSpacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dOo-mR-WPE">
-                                                    <rect key="frame" x="188" y="154" width="837" height="104"/>
+                                                    <rect key="frame" x="188" y="154" width="837" height="124"/>
                                                     <rows>
                                                         <gridRow id="mhm-BQ-Lxb"/>
                                                         <gridRow id="b1T-4W-Sf6"/>
                                                         <gridRow topPadding="8" id="mRf-rL-ZFR"/>
                                                         <gridRow id="6bo-pC-VNr"/>
                                                         <gridRow id="axC-Xg-GDO"/>
-                                                        <gridRow id="alt-Rw-grd"/>
+                                                        <gridRow id="dEf-Li-st0"/>
                                                     </rows>
                                                     <columns>
                                                         <gridColumn id="Kw4-iz-WrK"/>
@@ -836,7 +830,7 @@
                                                     <gridCells>
                                                         <gridCell row="mhm-BQ-Lxb" column="Kw4-iz-WrK" id="goK-yu-aSN">
                                                             <button key="contentView" horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="QND-4B-AbJ">
-                                                                <rect key="frame" x="0.0" y="88" width="150" height="16"/>
+                                                                <rect key="frame" x="0.0" y="108" width="150" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Smart quotes “ ”" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZLB-AL-E6j">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -853,7 +847,7 @@
                                                         </gridCell>
                                                         <gridCell row="mhm-BQ-Lxb" column="h9h-fV-gFn" id="aDd-4H-NsX">
                                                             <button key="contentView" horizontalHuggingPriority="247" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Op8-MC-pdn">
-                                                                <rect key="frame" x="156" y="88" width="133" height="16"/>
+                                                                <rect key="frame" x="156" y="108" width="133" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Hard break" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tbC-K4-tEs">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -870,7 +864,7 @@
                                                         </gridCell>
                                                         <gridCell row="mhm-BQ-Lxb" column="LDl-3O-4gf" id="7As-8P-bIu">
                                                             <button key="contentView" toolTip="Allow raw HTML code inside the Markdown file." horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="Yvy-aE-Sho">
-                                                                <rect key="frame" x="295" y="88" width="180" height="16"/>
+                                                                <rect key="frame" x="295" y="108" width="180" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Inline HTML (unsafe)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="yq1-8R-Fo4">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -887,7 +881,7 @@
                                                         </gridCell>
                                                         <gridCell row="mhm-BQ-Lxb" column="Frg-Lu-cBX" id="pI0-e9-veM">
                                                             <button key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JOR-VR-oKE">
-                                                                <rect key="frame" x="481" y="88" width="124" height="16"/>
+                                                                <rect key="frame" x="481" y="108" width="124" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Show debug info" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="5wj-Mt-t0a">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -905,7 +899,7 @@
                                                         <gridCell row="mhm-BQ-Lxb" column="EM0-Js-ao5" id="oS7-z0-i9N"/>
                                                         <gridCell row="b1T-4W-Sf6" column="Kw4-iz-WrK" id="Y8q-NB-esI">
                                                             <button key="contentView" horizontalHuggingPriority="246" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="LYg-yO-59i">
-                                                                <rect key="frame" x="0.0" y="68" width="150" height="16"/>
+                                                                <rect key="frame" x="0.0" y="88" width="150" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Footnotes" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="o8B-kU-fEh">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -922,7 +916,7 @@
                                                         </gridCell>
                                                         <gridCell row="b1T-4W-Sf6" column="h9h-fV-gFn" id="rb3-ZF-WGa">
                                                             <button key="contentView" horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="tkA-dO-Pi7">
-                                                                <rect key="frame" x="156" y="68" width="133" height="16"/>
+                                                                <rect key="frame" x="156" y="88" width="133" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="No soft break" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CHS-sX-gZb">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -939,7 +933,7 @@
                                                         </gridCell>
                                                         <gridCell row="b1T-4W-Sf6" column="LDl-3O-4gf" id="N1k-V5-DgQ">
                                                             <button key="contentView" toolTip="Fix invalid characters in the Markdown code with the standard replacement char." horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="ac7-uv-mn3">
-                                                                <rect key="frame" x="295" y="68" width="180" height="16"/>
+                                                                <rect key="frame" x="295" y="88" width="180" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Validate UTF-8" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Dy7-So-arL">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -956,7 +950,7 @@
                                                         </gridCell>
                                                         <gridCell row="b1T-4W-Sf6" column="Frg-Lu-cBX" id="ZBD-cN-hT5">
                                                             <button key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x4z-Y6-XXg">
-                                                                <rect key="frame" x="481" y="68" width="161" height="16"/>
+                                                                <rect key="frame" x="481" y="88" width="161" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Render as source code" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Etf-lz-kHh">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -969,7 +963,7 @@
                                                         <gridCell row="b1T-4W-Sf6" column="EM0-Js-ao5" id="Xpw-Ld-DuY"/>
                                                         <gridCell row="mRf-rL-ZFR" column="Kw4-iz-WrK" id="ZwB-5j-pmJ">
                                                             <button key="contentView" toolTip="Handle URL and email addresses as link." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MIB-mW-C6G">
-                                                                <rect key="frame" x="0.0" y="40" width="71" height="16"/>
+                                                                <rect key="frame" x="0.0" y="60" width="71" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Autolink" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ugc-L6-bGe">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -985,15 +979,15 @@
                                                             </button>
                                                         </gridCell>
                                                         <gridCell row="mRf-rL-ZFR" column="h9h-fV-gFn" id="qCU-kM-4MP">
-                                                            <button key="contentView" toolTip="Generate anchor for the heads." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vsq-EY-nuB">
-                                                                <rect key="frame" x="156" y="40" width="107" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Heads anchor" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8Ud-ck-Thq">
+                                                            <button key="contentView" toolTip="GitHub mentions rendered as link." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iwQ-rZ-QIS">
+                                                                <rect key="frame" x="156" y="60" width="117" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="GitHub mention" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5w-Ts-cv1">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.headsExtension" id="OPW-WJ-PXs"/>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="Lml-9v-NSS">
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.mentionExtension" id="6jT-Rn-Zin"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="VmG-j5-r2i">
                                                                         <dictionary key="options">
                                                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                         </dictionary>
@@ -1003,7 +997,7 @@
                                                         </gridCell>
                                                         <gridCell row="mRf-rL-ZFR" column="LDl-3O-4gf" id="13C-AD-a6Q">
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3Y-H8-DoB">
-                                                                <rect key="frame" x="295" y="40" width="180" height="16"/>
+                                                                <rect key="frame" x="295" y="60" width="180" height="16"/>
                                                                 <subviews>
                                                                     <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VWN-lq-eiu">
                                                                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
@@ -1073,242 +1067,8 @@
                                                             </stackView>
                                                         </gridCell>
                                                         <gridCell row="mRf-rL-ZFR" column="Frg-Lu-cBX" id="KMj-3S-0ZU">
-                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2od-9W-Y3h">
-                                                                <rect key="frame" x="481" y="40" width="170" height="16"/>
-                                                                <subviews>
-                                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lis-9d-r8z">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="KEI-ED-7nn">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="gsL-Sp-wc2">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.strikethroughExtension" id="Wpp-39-gwr"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="6kk-X1-8Lv">
-                                                                        <rect key="frame" x="15" y="0.0" width="155" height="16"/>
-                                                                        <popUpButtonCell key="cell" type="roundTextured" title="Strikethrough" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="F4l-OJ-iBd">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message"/>
-                                                                            <menu key="menu" id="SwK-Eq-Wzm">
-                                                                                <items>
-                                                                                    <menuItem title="Strikethrough" hidden="YES" id="YIu-d7-Osw">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Strikethrough detection" enabled="NO" identifier="mnu_strikethrough" id="sts-o1-AqD"/>
-                                                                                    <menuItem title="Single tilde (~)" tag="1" identifier="mnu_strikethrough_1" indentationLevel="1" id="M3C-27-h3Y"/>
-                                                                                    <menuItem title="Duble tilde (~~)" tag="2" identifier="mnu_strikethrough2" indentationLevel="1" id="SIU-Zh-5Tq"/>
-                                                                                    <menuItem isSeparatorItem="YES" id="c9A-Oq-9VQ"/>
-                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_strikethrough_0" indentationLevel="1" id="EGd-o7-R9l">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                </items>
-                                                                            </menu>
-                                                                        </popUpButtonCell>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="AcZ-bb-C2L"/>
-                                                                        </constraints>
-                                                                        <connections>
-                                                                            <action selector="handleStrikethroughPopup:" target="XfG-lQ-9wD" id="YhZ-s8-vxg"/>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="K0s-FM-pKI">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                        </connections>
-                                                                    </popUpButton>
-                                                                </subviews>
-                                                                <visibilityPriorities>
-                                                                    <integer value="1000"/>
-                                                                    <integer value="1000"/>
-                                                                </visibilityPriorities>
-                                                                <customSpacing>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                </customSpacing>
-                                                            </stackView>
-                                                        </gridCell>
-                                                        <gridCell row="mRf-rL-ZFR" column="EM0-Js-ao5" id="VqE-kq-364">
-                                                            <button key="contentView" toolTip="Strip potentially dangerous HTML tags in the Markdown file." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XMk-CW-qDQ">
-                                                                <rect key="frame" x="657" y="40" width="76" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Tag filter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OB0-ev-VJc">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled2" keyPath="self.renderAsCode" previousBinding="Aik-lL-crJ" id="rla-rc-VUH">
-                                                                        <dictionary key="options">
-                                                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                                                            <integer key="NSNullPlaceholder" value="-1"/>
-                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.tagFilterExtension" id="IyO-Ut-9GX"/>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.unsafeHTMLOption" id="Aik-lL-crJ"/>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="6bo-pC-VNr" column="Kw4-iz-WrK" id="GUX-b6-gSZ">
-                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRb-Qn-xOV">
-                                                                <rect key="frame" x="0.0" y="20" width="150" height="16"/>
-                                                                <subviews>
-                                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2yF-Eb-XTJ">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1qc-9f-9t0">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.emojiExtension" id="dHs-kR-gEj"/>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="Y68-lr-1nd">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="ZqY-el-ju1">
-                                                                        <rect key="frame" x="15" y="0.0" width="135" height="16"/>
-                                                                        <popUpButtonCell key="cell" type="roundTextured" title="Emoji" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="6F7-ij-5zY">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message"/>
-                                                                            <menu key="menu" id="KjD-3W-qa8">
-                                                                                <items>
-                                                                                    <menuItem title="Emoji" hidden="YES" id="ZGu-RG-R6K">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Emoji extension" enabled="NO" identifier="mnu_emoji" id="ltp-9Y-XkV"/>
-                                                                                    <menuItem title="Use font" tag="1" identifier="mnu_emoji_font" indentationLevel="1" id="5SQ-z0-AEb"/>
-                                                                                    <menuItem title="Use images" tag="2" identifier="mnu_emoji_image" indentationLevel="1" toolTip="Require unsafe option and internet connection." id="cAD-tI-EYt"/>
-                                                                                    <menuItem isSeparatorItem="YES" id="Wpz-Zi-3G0"/>
-                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_emoji_off" indentationLevel="1" id="fUy-kU-Y35">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                </items>
-                                                                            </menu>
-                                                                        </popUpButtonCell>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="GzB-Bw-XLO"/>
-                                                                        </constraints>
-                                                                        <connections>
-                                                                            <action selector="handleEmojiPopup:" target="XfG-lQ-9wD" id="qhV-Lm-FJx"/>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="gvc-em-c8p">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                        </connections>
-                                                                    </popUpButton>
-                                                                </subviews>
-                                                                <visibilityPriorities>
-                                                                    <integer value="1000"/>
-                                                                    <integer value="1000"/>
-                                                                </visibilityPriorities>
-                                                                <customSpacing>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                </customSpacing>
-                                                            </stackView>
-                                                        </gridCell>
-                                                        <gridCell row="6bo-pC-VNr" column="h9h-fV-gFn" id="bET-fr-Yti">
-                                                            <button key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="swd-4Z-jlR">
-                                                                <rect key="frame" x="156" y="20" width="77" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Highlight" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="pdn-vI-OrX">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.highlightExtension" id="gTS-Od-cYM"/>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="llh-7Q-UHC">
-                                                                        <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="6bo-pC-VNr" column="LDl-3O-4gf" id="knr-aD-ybh">
-                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L4D-FR-IWj">
-                                                                <rect key="frame" x="295" y="20" width="180" height="16"/>
-                                                                <subviews>
-                                                                    <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tql-Or-Mre">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="XtY-sq-l0E">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.mermaidExtension" id="NVS-64-M6A"/>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="3PX-fN-l9r">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <popUpButton horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cvI-MT-rBs">
-                                                                        <rect key="frame" x="15" y="0.0" width="165" height="16"/>
-                                                                        <popUpButtonCell key="cell" type="roundTextured" title="Mermaid diagram" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="si3-lR-FtX">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message"/>
-                                                                            <menu key="menu" id="FZ5-dm-1Yp">
-                                                                                <items>
-                                                                                    <menuItem title="Mermaid diagram" state="on" hidden="YES" id="GWh-C2-PIx"/>
-                                                                                    <menuItem title="Mermaid Library" enabled="NO" identifier="mnu_mermaid" id="cCi-Mu-ec5">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Linked from web" tag="2" identifier="mnu_mermaid_link" indentationLevel="1" id="r4o-4n-lvz"/>
-                                                                                    <menuItem title="Embedded" tag="1" identifier="mnu_mermaid_embed" indentationLevel="1" id="ydg-Fj-IJb"/>
-                                                                                    <menuItem title="Save…" tag="20" alternate="YES" identifier="mnu_mermaid_save" indentationLevel="1" toolTip="Save a local copy of the library." id="OT9-Oz-MMI">
-                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Refresh the cached library from the web…" tag="10" identifier="mnu_mermaid_download" indentationLevel="1" id="yqe-lS-xFa">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_mermaid_reveal" indentationLevel="1" id="xaQ-yQ-VYY">
-                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem isSeparatorItem="YES" id="KJ9-Cr-MFQ"/>
-                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_mermaid_disabled" indentationLevel="1" id="54Q-kb-yNT">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                </items>
-                                                                            </menu>
-                                                                        </popUpButtonCell>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="8pY-Lq-8zq"/>
-                                                                        </constraints>
-                                                                        <connections>
-                                                                            <action selector="handleMermaidPopup:" target="XfG-lQ-9wD" id="FLh-Jd-Zvk"/>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="ACr-UW-Iw0">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                        </connections>
-                                                                    </popUpButton>
-                                                                </subviews>
-                                                                <visibilityPriorities>
-                                                                    <integer value="1000"/>
-                                                                    <integer value="1000"/>
-                                                                </visibilityPriorities>
-                                                                <customSpacing>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                </customSpacing>
-                                                            </stackView>
-                                                        </gridCell>
-                                                        <gridCell row="6bo-pC-VNr" column="Frg-Lu-cBX" id="DYN-La-dlC">
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WuQ-F8-eiK">
-                                                                <rect key="frame" x="481" y="20" width="170" height="16"/>
+                                                                <rect key="frame" x="481" y="60" width="170" height="16"/>
                                                                 <subviews>
                                                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tHc-kT-bjc">
                                                                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
@@ -1447,94 +1207,9 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                         </gridCell>
-                                                        <gridCell row="6bo-pC-VNr" column="EM0-Js-ao5" id="1Aw-9q-DfA">
-                                                            <button key="contentView" toolTip="Recognize GitHub task list syntax." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AmY-2H-gOr">
-                                                                <rect key="frame" x="657" y="20" width="71" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Task list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="AVG-X3-Ldi">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="29g-qZ-30g">
-                                                                        <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.taskListExtension" id="gir-r9-4Qx"/>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="axC-Xg-GDO" column="Kw4-iz-WrK" id="yrz-gj-Bce">
-                                                            <button key="contentView" toolTip="GitHub mentions rendered as link." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iwQ-rZ-QIS">
-                                                                <rect key="frame" x="0.0" y="0.0" width="117" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="GitHub mention" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="m5w-Ts-cv1">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.mentionExtension" id="6jT-Rn-Zin"/>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="VmG-j5-r2i">
-                                                                        <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="axC-Xg-GDO" column="h9h-fV-gFn" id="jhi-VH-TeL">
-                                                            <button key="contentView" toolTip="Embed local images as base64 data for the Quick Look preview." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w9X-nc-ti0">
-                                                                <rect key="frame" x="156" y="0.0" width="133" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Inline local images" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VSj-gs-vQa">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.inlineImageExtension" id="l7n-Xp-VER"/>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="utx-G4-mKa">
-                                                                        <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="axC-Xg-GDO" column="LDl-3O-4gf" id="5GD-Kd-5dQ">
-                                                            <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QgC-En-p40">
-                                                                <rect key="frame" x="295" y="0.0" width="180" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Sub/Superscript" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uzV-0j-0aP">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="bfh-78-DOO">
-                                                                        <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.subSuperScriptExtension" id="Qeg-kd-mbE"/>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="axC-Xg-GDO" column="Frg-Lu-cBX" id="K9i-4S-k16">
-                                                            <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V1O-A3-p8C">
-                                                                <rect key="frame" x="481" y="0.0" width="170" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Table" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZTh-0e-tfH">
-                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="zIN-sR-2l7">
-                                                                        <dictionary key="options">
-                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                        </dictionary>
-                                                                    </binding>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.tableExtension" id="oXt-BX-W6o"/>
-                                                                </connections>
-                                                            </button>
-                                                        </gridCell>
-                                                        <gridCell row="axC-Xg-GDO" column="EM0-Js-ao5" id="3nU-Ni-F5K">
+                                                        <gridCell row="mRf-rL-ZFR" column="EM0-Js-ao5" id="VqE-kq-364">
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZV-G2-qY1">
-                                                                <rect key="frame" x="657" y="0.0" width="180" height="16"/>
+                                                                <rect key="frame" x="657" y="60" width="180" height="16"/>
                                                                 <subviews>
                                                                     <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-OK-azv">
                                                                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
@@ -1592,16 +1267,78 @@
                                                                 </customSpacing>
                                                             </stackView>
                                                         </gridCell>
-                                                        <gridCell row="dEf-Li-st0" column="Kw4-iz-WrK" id="dEf-Li-st1">
-                                                            <button key="contentView" toolTip="Render definition lists (a term line followed by `: description` lines)." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dEf-Li-st2">
-                                                                <rect key="frame" x="0.0" y="0.0" width="117" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="Definition list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dEf-Li-st3">
+                                                        <gridCell row="6bo-pC-VNr" column="Kw4-iz-WrK" id="GUX-b6-gSZ">
+                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRb-Qn-xOV">
+                                                                <rect key="frame" x="0.0" y="40" width="150" height="16"/>
+                                                                <subviews>
+                                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2yF-Eb-XTJ">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1qc-9f-9t0">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.emojiExtension" id="dHs-kR-gEj"/>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="Y68-lr-1nd">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="ZqY-el-ju1">
+                                                                        <rect key="frame" x="15" y="0.0" width="135" height="16"/>
+                                                                        <popUpButtonCell key="cell" type="roundTextured" title="Emoji" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="6F7-ij-5zY">
+                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                            <font key="font" metaFont="message"/>
+                                                                            <menu key="menu" id="KjD-3W-qa8">
+                                                                                <items>
+                                                                                    <menuItem title="Emoji" hidden="YES" id="ZGu-RG-R6K">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                    <menuItem title="Emoji extension" enabled="NO" identifier="mnu_emoji" id="ltp-9Y-XkV"/>
+                                                                                    <menuItem title="Use font" tag="1" identifier="mnu_emoji_font" indentationLevel="1" id="5SQ-z0-AEb"/>
+                                                                                    <menuItem title="Use images" tag="2" identifier="mnu_emoji_image" indentationLevel="1" toolTip="Require unsafe option and internet connection." id="cAD-tI-EYt"/>
+                                                                                    <menuItem isSeparatorItem="YES" id="Wpz-Zi-3G0"/>
+                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_emoji_off" indentationLevel="1" id="fUy-kU-Y35">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                </items>
+                                                                            </menu>
+                                                                        </popUpButtonCell>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="GzB-Bw-XLO"/>
+                                                                        </constraints>
+                                                                        <connections>
+                                                                            <action selector="handleEmojiPopup:" target="XfG-lQ-9wD" id="qhV-Lm-FJx"/>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="gvc-em-c8p">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                        </connections>
+                                                                    </popUpButton>
+                                                                </subviews>
+                                                                <visibilityPriorities>
+                                                                    <integer value="1000"/>
+                                                                    <integer value="1000"/>
+                                                                </visibilityPriorities>
+                                                                <customSpacing>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                </customSpacing>
+                                                            </stackView>
+                                                        </gridCell>
+                                                        <gridCell row="6bo-pC-VNr" column="h9h-fV-gFn" id="bET-fr-Yti">
+                                                            <button key="contentView" toolTip="Generate anchor for the heads." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vsq-EY-nuB">
+                                                                <rect key="frame" x="156" y="40" width="107" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Heads anchor" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8Ud-ck-Thq">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.alertExtension" id="alt-Vb-bnd"/>
-                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="alt-Eb-bnd">
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.headsExtension" id="OPW-WJ-PXs"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="Lml-9v-NSS">
                                                                         <dictionary key="options">
                                                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                         </dictionary>
@@ -1609,26 +1346,287 @@
                                                                 </connections>
                                                             </button>
                                                         </gridCell>
-                                                        <gridCell row="dEf-Li-st0" column="h9h-fV-gFn" id="alt-C1-cel">
-                                                            <button key="contentView" toolTip="GitHub-style alerts ([!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION]) rendered as colored callouts." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="alt-Bt-btn">
-                                                                <rect key="frame" x="0.0" y="0.0" width="117" height="16"/>
-                                                                <buttonCell key="cell" type="check" title="GitHub alert" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="alt-Bc-cel">
+                                                        <gridCell row="6bo-pC-VNr" column="LDl-3O-4gf" id="knr-aD-ybh">
+                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L4D-FR-IWj">
+                                                                <rect key="frame" x="295" y="40" width="180" height="16"/>
+                                                                <subviews>
+                                                                    <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tql-Or-Mre">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="XtY-sq-l0E">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.mermaidExtension" id="NVS-64-M6A"/>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="3PX-fN-l9r">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <popUpButton horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cvI-MT-rBs">
+                                                                        <rect key="frame" x="15" y="0.0" width="165" height="16"/>
+                                                                        <popUpButtonCell key="cell" type="roundTextured" title="Mermaid diagram" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="si3-lR-FtX">
+                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                            <font key="font" metaFont="message"/>
+                                                                            <menu key="menu" id="FZ5-dm-1Yp">
+                                                                                <items>
+                                                                                    <menuItem title="Mermaid diagram" state="on" hidden="YES" id="GWh-C2-PIx"/>
+                                                                                    <menuItem title="Mermaid Library" enabled="NO" identifier="mnu_mermaid" id="cCi-Mu-ec5">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                    <menuItem title="Linked from web" tag="2" identifier="mnu_mermaid_link" indentationLevel="1" id="r4o-4n-lvz"/>
+                                                                                    <menuItem title="Embedded" tag="1" identifier="mnu_mermaid_embed" indentationLevel="1" id="ydg-Fj-IJb"/>
+                                                                                    <menuItem title="Save…" tag="20" alternate="YES" identifier="mnu_mermaid_save" indentationLevel="1" toolTip="Save a local copy of the library." id="OT9-Oz-MMI">
+                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                                                                    </menuItem>
+                                                                                    <menuItem title="Refresh the cached library from the web…" tag="10" identifier="mnu_mermaid_download" indentationLevel="1" id="yqe-lS-xFa">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                    <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_mermaid_reveal" indentationLevel="1" id="xaQ-yQ-VYY">
+                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                                                                    </menuItem>
+                                                                                    <menuItem isSeparatorItem="YES" id="KJ9-Cr-MFQ"/>
+                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_mermaid_disabled" indentationLevel="1" id="54Q-kb-yNT">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                </items>
+                                                                            </menu>
+                                                                        </popUpButtonCell>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="8pY-Lq-8zq"/>
+                                                                        </constraints>
+                                                                        <connections>
+                                                                            <action selector="handleMermaidPopup:" target="XfG-lQ-9wD" id="FLh-Jd-Zvk"/>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="ACr-UW-Iw0">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                        </connections>
+                                                                    </popUpButton>
+                                                                </subviews>
+                                                                <visibilityPriorities>
+                                                                    <integer value="1000"/>
+                                                                    <integer value="1000"/>
+                                                                </visibilityPriorities>
+                                                                <customSpacing>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                </customSpacing>
+                                                            </stackView>
+                                                        </gridCell>
+                                                        <gridCell row="6bo-pC-VNr" column="Frg-Lu-cBX" id="DYN-La-dlC">
+                                                            <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V1O-A3-p8C">
+                                                                <rect key="frame" x="481" y="40" width="170" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Table" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZTh-0e-tfH">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
-                                                                  <binding destination="XfG-lQ-9wD" name="value" keyPath="self.alertExtension" id="alt-Vb-bnd"/>
-                                                                  <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="alt-Eb-bnd">
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="zIN-sR-2l7">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.tableExtension" id="oXt-BX-W6o"/>
                                                                 </connections>
                                                             </button>
                                                         </gridCell>
-                                                        <gridCell row="alt-Rw-grd" column="LDl-3O-4gf" id="alt-C2-cel"/>
-                                                        <gridCell row="alt-Rw-grd" column="Frg-Lu-cBX" id="alt-C3-cel"/>
-                                                        <gridCell row="alt-Rw-grd" column="EM0-Js-ao5" id="alt-C4-cel"/>
+                                                        <gridCell row="6bo-pC-VNr" column="EM0-Js-ao5" id="1Aw-9q-DfA"/>
+                                                        <gridCell row="axC-Xg-GDO" column="Kw4-iz-WrK" id="yrz-gj-Bce">
+                                                            <button key="contentView" toolTip="Render definition lists (a term line followed by `: description` lines)." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dEf-Li-st2">
+                                                                <rect key="frame" x="0.0" y="20" width="102" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Definition list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dEf-Li-st3">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.definitionListExtension" id="dEf-Li-st4"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="dEf-Li-st5">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="axC-Xg-GDO" column="h9h-fV-gFn" id="jhi-VH-TeL">
+                                                            <button key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="swd-4Z-jlR">
+                                                                <rect key="frame" x="156" y="20" width="77" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Highlight" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="pdn-vI-OrX">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.highlightExtension" id="gTS-Od-cYM"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="llh-7Q-UHC">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="axC-Xg-GDO" column="LDl-3O-4gf" id="5GD-Kd-5dQ">
+                                                            <button key="contentView" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QgC-En-p40">
+                                                                <rect key="frame" x="295" y="20" width="180" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Sub/Superscript" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="uzV-0j-0aP">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="bfh-78-DOO">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.subSuperScriptExtension" id="Qeg-kd-mbE"/>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="axC-Xg-GDO" column="Frg-Lu-cBX" id="K9i-4S-k16">
+                                                            <button key="contentView" toolTip="Strip potentially dangerous HTML tags in the Markdown file." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XMk-CW-qDQ">
+                                                                <rect key="frame" x="481" y="20" width="76" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Tag filter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="OB0-ev-VJc">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled2" keyPath="self.renderAsCode" previousBinding="Aik-lL-crJ" id="rla-rc-VUH">
+                                                                        <dictionary key="options">
+                                                                            <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                                                            <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                                                            <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                                                            <integer key="NSNullPlaceholder" value="-1"/>
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.tagFilterExtension" id="IyO-Ut-9GX"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.unsafeHTMLOption" id="Aik-lL-crJ"/>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="axC-Xg-GDO" column="EM0-Js-ao5" id="3nU-Ni-F5K"/>
+                                                        <gridCell row="dEf-Li-st0" column="Kw4-iz-WrK" id="dEf-Li-st1">
+                                                            <button key="contentView" toolTip="GitHub-style alerts ([!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION]) rendered as colored callouts." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="otL-h2-W9g">
+                                                                <rect key="frame" x="0.0" y="0.0" width="96" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="GitHub alert" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0Me-yS-fdq">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="9DU-K0-nQh">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.alertExtension" id="zAx-oT-wlK"/>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="dEf-Li-st0" column="h9h-fV-gFn" id="dEf-Li-st6">
+                                                            <button key="contentView" toolTip="Embed local images as base64 data for the Quick Look preview." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w9X-nc-ti0">
+                                                                <rect key="frame" x="156" y="0.0" width="133" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Inline local images" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VSj-gs-vQa">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.inlineImageExtension" id="l7n-Xp-VER"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="utx-G4-mKa">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="dEf-Li-st0" column="LDl-3O-4gf" id="dEf-Li-st7">
+                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2od-9W-Y3h">
+                                                                <rect key="frame" x="295" y="0.0" width="180" height="16"/>
+                                                                <subviews>
+                                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Lis-9d-r8z">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="KEI-ED-7nn">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="gsL-Sp-wc2">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.strikethroughExtension" id="Wpp-39-gwr"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <popUpButton horizontalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="6kk-X1-8Lv">
+                                                                        <rect key="frame" x="15" y="0.0" width="165" height="16"/>
+                                                                        <popUpButtonCell key="cell" type="roundTextured" title="Strikethrough" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="F4l-OJ-iBd">
+                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                            <font key="font" metaFont="message"/>
+                                                                            <menu key="menu" id="SwK-Eq-Wzm">
+                                                                                <items>
+                                                                                    <menuItem title="Strikethrough" hidden="YES" id="YIu-d7-Osw">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                    <menuItem title="Strikethrough detection" enabled="NO" identifier="mnu_strikethrough" id="sts-o1-AqD"/>
+                                                                                    <menuItem title="Single tilde (~)" tag="1" identifier="mnu_strikethrough_1" indentationLevel="1" id="M3C-27-h3Y"/>
+                                                                                    <menuItem title="Duble tilde (~~)" tag="2" identifier="mnu_strikethrough2" indentationLevel="1" id="SIU-Zh-5Tq"/>
+                                                                                    <menuItem isSeparatorItem="YES" id="c9A-Oq-9VQ"/>
+                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_strikethrough_0" indentationLevel="1" id="EGd-o7-R9l">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                </items>
+                                                                            </menu>
+                                                                        </popUpButtonCell>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="AcZ-bb-C2L"/>
+                                                                        </constraints>
+                                                                        <connections>
+                                                                            <action selector="handleStrikethroughPopup:" target="XfG-lQ-9wD" id="YhZ-s8-vxg"/>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="K0s-FM-pKI">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                        </connections>
+                                                                    </popUpButton>
+                                                                </subviews>
+                                                                <visibilityPriorities>
+                                                                    <integer value="1000"/>
+                                                                    <integer value="1000"/>
+                                                                </visibilityPriorities>
+                                                                <customSpacing>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                </customSpacing>
+                                                            </stackView>
+                                                        </gridCell>
+                                                        <gridCell row="dEf-Li-st0" column="Frg-Lu-cBX" id="dEf-Li-st8">
+                                                            <button key="contentView" toolTip="Recognize GitHub task list syntax." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AmY-2H-gOr">
+                                                                <rect key="frame" x="481" y="0.0" width="71" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Task list" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="AVG-X3-Ldi">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="29g-qZ-30g">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.taskListExtension" id="gir-r9-4Qx"/>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
+                                                        <gridCell row="dEf-Li-st0" column="EM0-Js-ao5" id="dEf-Li-st9"/>
                                                     </gridCells>
                                                 </gridView>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ccb-oe-cYh">
-                                                    <rect key="frame" x="18" y="336" width="164" height="16"/>
+                                                    <rect key="frame" x="18" y="356" width="164" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Theme:" id="egL-L9-5T4">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1636,7 +1634,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <popUpButton allowsExpansionToolTips="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CTX-6L-I3O">
-                                                    <rect key="frame" x="188" y="332" width="212" height="24"/>
+                                                    <rect key="frame" x="188" y="352" width="212" height="24"/>
                                                     <popUpButtonCell key="cell" type="push" title="Default style" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingMiddle" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="dcy-bx-VMQ" id="syl-p2-kQE">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="message"/>
@@ -1654,7 +1652,7 @@
                                                     </connections>
                                                 </popUpButton>
                                                 <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="8An-Xf-Ur1">
-                                                    <rect key="frame" x="403" y="336" width="98" height="14"/>
+                                                    <rect key="frame" x="403" y="356" width="98" height="14"/>
                                                     <popUpButtonCell key="cell" type="bevel" title="Extend default" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="Mxg-xO-key" id="hsm-b5-QMf">
                                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="smallSystem"/>
@@ -1675,7 +1673,7 @@
                                                     </connections>
                                                 </popUpButton>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X7y-52-Juj">
-                                                    <rect key="frame" x="18" y="242" width="164" height="16"/>
+                                                    <rect key="frame" x="18" y="262" width="164" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Options:" id="MBC-m2-kpW">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1701,7 +1699,7 @@
                                                     </connections>
                                                 </switch>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sCa-ZB-Sb2">
-                                                    <rect key="frame" x="18" y="194" width="164" height="16"/>
+                                                    <rect key="frame" x="18" y="214" width="164" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Extensions:" id="bF1-0k-vem">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1739,7 +1737,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s9x-wg-UTg">
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s9x-wg-UTg">
                                                     <rect key="frame" x="386" y="8" width="102" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Show about info" id="5IO-mU-4yw">
                                                         <font key="font" metaFont="system"/>
@@ -1747,7 +1745,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <switch toolTip="Save changes to settings immediately. " horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XA7-Gl-MRu">
+                                                <switch toolTip="Save changes to settings immediately. " horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XA7-Gl-MRu">
                                                     <rect key="frame" x="344" y="8" width="36" height="16"/>
                                                     <connections>
                                                         <binding destination="XfG-lQ-9wD" name="value" keyPath="self.isAboutVisible" id="yEn-7v-IXL">
@@ -1758,7 +1756,7 @@
                                                     </connections>
                                                 </switch>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EHx-19-1D3">
-                                                    <rect key="frame" x="18" y="270" width="164" height="16"/>
+                                                    <rect key="frame" x="18" y="290" width="164" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Base font size:" id="qGt-eO-b6T">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1766,7 +1764,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fVi-EX-Aci">
-                                                    <rect key="frame" x="212" y="266" width="96" height="24"/>
+                                                    <rect key="frame" x="212" y="286" width="96" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="96" id="G8D-Bs-rS1"/>
                                                     </constraints>
@@ -1785,7 +1783,7 @@
                                                     </connections>
                                                 </textField>
                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2t7-PJ-hZL">
-                                                    <rect key="frame" x="316" y="267" width="17" height="22"/>
+                                                    <rect key="frame" x="316" y="287" width="17" height="22"/>
                                                     <stepperCell key="cell" controlSize="small" continuous="YES" alignment="left" minValue="6" maxValue="100" doubleValue="12" id="mvg-bS-bsS"/>
                                                     <connections>
                                                         <binding destination="XfG-lQ-9wD" name="value" keyPath="self.baseFontSize" id="Vji-Xh-x0X"/>
@@ -1793,7 +1791,7 @@
                                                     </connections>
                                                 </stepper>
                                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vsx-tk-3Vv">
-                                                    <rect key="frame" x="188" y="270" width="16" height="16"/>
+                                                    <rect key="frame" x="188" y="290" width="16" height="16"/>
                                                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="emo-jz-1Ic">
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
@@ -1889,12 +1887,12 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XfG-lQ-9wD" name="value" keyPath="self.qlWindowHeight" id="pHT-l1-scy"/>
                                                                 <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.qlWindowSizeCustomized" previousBinding="T3i-gk-t1c" id="FHV-2p-YbD">
                                                                     <dictionary key="options">
                                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                     </dictionary>
                                                                 </binding>
-                                                                <binding destination="XfG-lQ-9wD" name="value" keyPath="self.qlWindowHeight" id="pHT-l1-scy"/>
                                                                 <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="T3i-gk-t1c"/>
                                                                 <outlet property="formatter" destination="ggW-M5-zt1" id="09n-c2-zli"/>
                                                             </connections>
@@ -1907,12 +1905,12 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="Sj5-Yk-6lM"/>
                                                                 <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.qlWindowSizeCustomized" previousBinding="Sj5-Yk-6lM" id="lD2-Pe-xUG">
                                                                     <dictionary key="options">
                                                                         <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                     </dictionary>
                                                                 </binding>
-                                                                <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="Sj5-Yk-6lM"/>
                                                             </connections>
                                                         </textField>
                                                     </subviews>
@@ -1950,7 +1948,7 @@
                                                     </connections>
                                                 </button>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0el-fG-DCh">
-                                                    <rect key="frame" x="18" y="302" width="164" height="16"/>
+                                                    <rect key="frame" x="18" y="322" width="164" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Appearance:" id="Phn-67-W9j">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1958,7 +1956,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <popUpButton allowsExpansionToolTips="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kFs-NW-HcF">
-                                                    <rect key="frame" x="188" y="298" width="212" height="24"/>
+                                                    <rect key="frame" x="188" y="318" width="212" height="24"/>
                                                     <popUpButtonCell key="cell" type="push" title="Auto" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingMiddle" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="pya-Cj-F48" id="DZu-B4-GAL">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="message"/>
@@ -2028,7 +2026,6 @@
                                                 <constraint firstItem="XA7-Gl-MRu" firstAttribute="centerY" secondItem="gn8-wq-9v6" secondAttribute="centerY" id="jDa-JZ-jsK"/>
                                                 <constraint firstItem="uGz-Oo-fnE" firstAttribute="baseline" secondItem="jgu-cG-sBC" secondAttribute="firstBaseline" id="jW8-He-nvm"/>
                                                 <constraint firstItem="jgu-cG-sBC" firstAttribute="leading" secondItem="uGz-Oo-fnE" secondAttribute="trailing" constant="8" symbolic="YES" id="k1x-cb-FBH"/>
-                                                <constraint firstItem="XA7-Gl-MRu" firstAttribute="leading" secondItem="w9X-nc-ti0" secondAttribute="leading" id="kbJ-UO-p6U"/>
                                                 <constraint firstItem="eHs-tN-Pey" firstAttribute="width" secondItem="Ccb-oe-cYh" secondAttribute="width" id="kqf-zR-ao2"/>
                                                 <constraint firstItem="s9x-wg-UTg" firstAttribute="centerY" secondItem="XA7-Gl-MRu" secondAttribute="centerY" id="l88-VB-iPn"/>
                                                 <constraint firstItem="dOo-mR-WPE" firstAttribute="top" secondItem="fVi-EX-Aci" secondAttribute="bottom" constant="8" symbolic="YES" id="nC3-xL-rJE"/>
@@ -2048,27 +2045,27 @@
                                 </tabViewItems>
                             </tabView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="NQb-ad-sJy">
-                                <rect key="frame" x="0.0" y="538" width="1065" height="5"/>
+                                <rect key="frame" x="0.0" y="518" width="1065" height="5"/>
                             </box>
                             <splitView verticalHuggingPriority="251" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RbX-Sy-Yvt">
-                                <rect key="frame" x="0.0" y="34" width="1065" height="506"/>
+                                <rect key="frame" x="0.0" y="34" width="1065" height="486"/>
                                 <subviews>
                                     <customView id="GDJ-WJ-HAB">
-                                        <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="532" height="486"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" findBarPosition="belowContent" translatesAutoresizingMaskIntoConstraints="NO" id="n1h-Pp-I4v">
-                                                <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="532" height="486"/>
                                                 <clipView key="contentView" drawsBackground="NO" id="Lcj-LF-Mgf">
-                                                    <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="532" height="486"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsCharacterPickerTouchBarItem="NO" allowsUndo="YES" textCompletion="NO" id="Q3Q-a2-tMH" customClass="DropableTextView" customModule="QLMarkdown" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="532" height="506"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="532" height="486"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                            <size key="minSize" width="532" height="506"/>
+                                                            <size key="minSize" width="532" height="486"/>
                                                             <size key="maxSize" width="679" height="10000000"/>
                                                             <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>
@@ -2083,7 +2080,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="wmM-BG-laq">
-                                                    <rect key="frame" x="515" y="0.0" width="17" height="506"/>
+                                                    <rect key="frame" x="515" y="0.0" width="17" height="486"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
                                             </scrollView>
@@ -2096,11 +2093,11 @@
                                         </constraints>
                                     </customView>
                                     <customView id="sp3-sm-w1y">
-                                        <rect key="frame" x="542" y="0.0" width="523" height="506"/>
+                                        <rect key="frame" x="542" y="0.0" width="523" height="486"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Op-UnU">
-                                                <rect key="frame" x="0.0" y="0.0" width="523" height="506"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="523" height="486"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <wkWebViewConfiguration key="configuration">
                                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -2111,7 +2108,7 @@
                                                 </connections>
                                             </wkWebView>
                                             <progressIndicator wantsLayer="YES" maxValue="100" displayedWhenStopped="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="uLU-em-oOP">
-                                                <rect key="frame" x="254" y="245" width="16" height="16"/>
+                                                <rect key="frame" x="254" y="235" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>

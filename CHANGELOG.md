@@ -3,6 +3,8 @@
 ### 1.5.3 (54)
 New Features:
 - Better default/auto window size (thanks to @ki7dk)
+- GitHub Alerts extension (thanks to @soreavis)
+- Definition list extension (thanks to @soreavis)
 
 
 ### 1.5.2 (53)
