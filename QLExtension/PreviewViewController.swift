@@ -13,12 +13,12 @@ import external_launcher
 
 class MyWKWebView: WKWebView {
     override var canBecomeKeyView: Bool {
-        return false
+        return true
     }
 
-    override func becomeFirstResponder() -> Bool {
-        // Quick Look window do not allow first responder child.
-        return false
+    override func mouseDown(with event: NSEvent) {
+        self.window?.makeFirstResponder(self)
+        super.mouseDown(with: event)
     }
 }
 
@@ -37,6 +37,11 @@ class PreviewViewController: NSViewController, QLPreviewingController {
         // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
 
         self.launcherService = nil
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        self.view.window?.makeFirstResponder(self.webView)
     }
 
     override func loadView() {
@@ -189,6 +194,7 @@ extension PreviewViewController: WKNavigationDelegate {
         // Wait to show the webview to prevent a resize glitch.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.webView?.isHidden = false
+            self.view.window?.makeFirstResponder(self.webView)
         }
     }
 
