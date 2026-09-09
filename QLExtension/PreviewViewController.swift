@@ -33,6 +33,19 @@ class PreviewViewController: NSViewController, QLPreviewingController {
 
     var launcherService: ExternalLauncherProtocol?
 
+    /// Size suggested to Quick Look. Reduced to fit the screen.
+    static var previewContentSize: CGSize {
+        let size = Settings.shared.qlWindowSize
+        guard let screen = NSScreen.main else {
+            return size
+        }
+        let available = screen.visibleFrame.size
+        return CGSize(
+            width: min(size.width, available.width * 0.9),
+            height: min(size.height, available.height * 0.9)
+        )
+    }
+
     override func viewDidDisappear() {
         // This code will not be called on macOS 12 Monterey with QLIsDataBasedPreview set.
 
@@ -59,7 +72,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
 
         let settings = Settings.shared
 
-        self.preferredContentSize = settings.qlWindowSize
+        self.preferredContentSize = Self.previewContentSize
 
         let previewRect: CGRect
         if #available(macOS 11, *) {
@@ -127,7 +140,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
 
         let html = try renderMD(url: request.fileURL)
 
-        let reply = QLPreviewReply(dataOfContentType: .html, contentSize: Settings.shared.qlWindowSize) { (replyToUpdate: QLPreviewReply) in
+        let reply = QLPreviewReply(dataOfContentType: .html, contentSize: Self.previewContentSize) { (replyToUpdate: QLPreviewReply) in
             replyToUpdate.stringEncoding = .utf8
             return html.data(using: .utf8)!
         }

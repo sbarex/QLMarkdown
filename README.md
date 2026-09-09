@@ -141,6 +141,14 @@ User customized style sheet must have the settings for both light and dark appea
 
 The custom style is appended after the CSS used for the highlight the source code. In this way you can customize also the style of the syntax highlight. 
 
+If your style use a content column with a different width, declare it to size the Quick Look window accordingly:
+
+```css
+:root { --content-max-width: 1200px; }
+```
+
+Only `px` values are recognized.
+
 The theme popup menu has some extra commands available pressing the `alt` key.
 
 It is possibile to set a custom base font size. This size (in points) will be used for set the dimension of `1rem` in the css style sheet.
@@ -183,7 +191,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 
 Tou can also choose if open external link inside the Quick Look preview window or in the default browser.
 
-The `Quick Look window` option allow you to suggest a custom size for the content area of the Quick Look window. macOS does not always honor this setting.
+The `Quick Look window` option allow you to suggest a custom size for the content area of the Quick Look window. macOS does not always honor this setting. With `Auto` the size is derived from the [content column](#themes) of the theme in use (960 x 1000 points with the predefined theme, reduced to fit the screen). In `Render as code` mode the window is wider.
 > _Use with caution on macOS before version 12 Monterey_. 
 
 
