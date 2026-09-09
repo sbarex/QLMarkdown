@@ -146,7 +146,10 @@ struct ExtensionsOptions: ParsableArguments {
 
     @Option(help: ArgumentHelp("Create anchors for the heads.", valueName: "on|off"))
     var headsAnchor: BoolArgumentEnum? = nil
-    
+
+    @Option(help: ArgumentHelp("Render definition lists.", valueName: "on|off"))
+    var definitionList: BoolArgumentEnum? = nil
+
     @Option(help: ArgumentHelp("Highlight text marked with `==`.", valueName: "on|off"))
     var highlight: BoolArgumentEnum? = nil
     
@@ -186,6 +189,9 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Format superscript characters inside `^` markers.", valueName: "on|off"))
     var sup: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Render GitHub alerts (blockquotes starting with [!NOTE], [!TIP], …).", valueName: "on|off"))
+    var alert: BoolArgumentEnum? = nil
+
     @Option(help: "Render the yaml header.")
     var yaml: YamlArgumentEnum? = nil
 }
@@ -316,6 +322,9 @@ struct QLMarkdownCLI: ParsableCommand {
         if let o = extensions.headsAnchor {
             settings.headsExtension = o == .on
         }
+        if let o = extensions.definitionList {
+            settings.definitionListExtension = o == .on
+        }
         if let o = extensions.highlight {
             settings.highlightExtension = o == .on
         }
@@ -375,6 +384,9 @@ struct QLMarkdownCLI: ParsableCommand {
         if let o = extensions.sup {
             settings.supExtension = o == .on
         }
+        if let o = extensions.alert {
+            settings.alertExtension = o == .on
+        }
         if let o = extensions.yaml {
             switch o {
             case .all:
@@ -425,6 +437,7 @@ struct QLMarkdownCLI: ParsableCommand {
         print("    --github-mentions: \(settings.mentionExtension ? "on" : "off")")
         print("    --wikilink: \(settings.wikilinkExtension ? "on" : "off")")
         print("    --heads-anchor: \(settings.headsExtension ? "on" : "off")")
+        print("    --definition-list: \(settings.definitionListExtension ? "on" : "off")")
         print("    --highlight: \(settings.highlightExtension ? "on" : "off")")
         print("    --inline-images: \(settings.inlineImageExtension ? "on" : "off")")
         switch settings.mathExtension {

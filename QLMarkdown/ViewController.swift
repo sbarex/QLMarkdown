@@ -87,6 +87,14 @@ class ViewController: NSViewController {
         }
     }
 
+
+    @objc dynamic var definitionListExtension: Bool = Settings.factorySettings.definitionListExtension {
+        didSet {
+            guard oldValue != definitionListExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var syntaxHighlightExtension: Bool = Settings.factorySettings.syntaxHighlightExtension {
         didSet {
             guard oldValue != syntaxHighlightExtension else { return }
@@ -168,6 +176,13 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var alertExtension: Bool = Settings.factorySettings.alertExtension {
+        didSet {
+            guard oldValue != alertExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension != .disabled {
         didSet {
             guard oldValue != emojiExtension else { return }
@@ -251,13 +266,13 @@ class ViewController: NSViewController {
             qlWindowSizePopupButton.selectItem(at: qlWindowSizeCustomized ? 1 : 0)
         }
     }
-    @objc dynamic var qlWindowWidth: Int = Settings.factorySettings.qlWindowWidth ?? 1000 {
+    @objc dynamic var qlWindowWidth: Int = Int(Settings.factorySettings.qlWindowSize.width) {
         didSet {
             guard oldValue != qlWindowWidth else { return }
             isDirty = true
         }
     }
-    @objc dynamic var qlWindowHeight: Int = Settings.factorySettings.qlWindowHeight ?? 800 {
+    @objc dynamic var qlWindowHeight: Int = Int(Settings.factorySettings.qlWindowSize.height) {
         didSet {
             guard oldValue != qlWindowHeight else { return }
             isDirty = true
@@ -1343,8 +1358,8 @@ document.addEventListener('scroll', function(e) {
         self.renderAsCode = settings.renderAsCode
         
         self.qlWindowSizeCustomized = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0
-        self.qlWindowWidth = settings.qlWindowWidth ?? 1000
-        self.qlWindowHeight = settings.qlWindowHeight ?? 800
+        self.qlWindowWidth = Int(settings.qlWindowSize.width)
+        self.qlWindowHeight = Int(settings.qlWindowSize.height)
         
         self.tableExtension = settings.tableExtension
         self.autoLinkExtension = settings.autoLinkExtension
@@ -1365,6 +1380,7 @@ document.addEventListener('scroll', function(e) {
         
         self.mentionExtension = settings.mentionExtension
         self.wikilinkExtension = settings.wikilinkExtension
+        self.definitionListExtension = settings.definitionListExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
         self.emojiExtension = settings.emojiExtension != .disabled
@@ -1374,6 +1390,7 @@ document.addEventListener('scroll', function(e) {
         self.highlightExtension = settings.highlightExtension
         self.inlineImageExtension = settings.inlineImageExtension
         self.subSuperScriptExtension = settings.supExtension
+        self.alertExtension = settings.alertExtension
         
         self.hardBreakOption = settings.hardBreakOption
         self.noSoftBreakOption = settings.noSoftBreakOption
@@ -1427,6 +1444,7 @@ document.addEventListener('scroll', function(e) {
         settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mentionExtension = self.mentionExtension
         settings.wikilinkExtension = self.wikilinkExtension
+        settings.definitionListExtension = self.definitionListExtension
 
         settings.emojiExtension = self.emojiExtension ? (self.emojiImageOption ? .images : .font) : .disabled
         
@@ -1435,6 +1453,7 @@ document.addEventListener('scroll', function(e) {
         settings.inlineImageExtension = self.inlineImageExtension
         settings.subExtension = self.subSuperScriptExtension
         settings.supExtension = self.subSuperScriptExtension
+        settings.alertExtension = self.alertExtension
         
         settings.strikethroughExtension = self.strikethroughExtension ? (self.strikethroughDoubleTildeOption ? .double : .single) : .disabled
         

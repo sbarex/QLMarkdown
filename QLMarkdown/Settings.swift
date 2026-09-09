@@ -242,6 +242,7 @@ class Settings: Codable {
         case autoLinkExtension
         case checkboxExtension
         case headsExtension
+        case definitionListExtension
         case hightlightExtension
         case inlineImageExtension
         case mathExtension
@@ -250,6 +251,7 @@ class Settings: Codable {
         case wikilinkExtension
         case subExtension
         case supExtension
+        case alertExtension
         case tableExtension
         case tagFilterExtension
         case taskListExtension
@@ -471,6 +473,7 @@ class Settings: Codable {
     var autoLinkExtension: Bool = true
     var checkboxExtension: Bool = false
     var headsExtension: Bool = true
+    var definitionListExtension: Bool = false
     var highlightExtension: Bool = false
     var inlineImageExtension: Bool = true
     var mathExtension: JSExtension = .link(url: nil)
@@ -479,6 +482,7 @@ class Settings: Codable {
     var wikilinkExtension: Bool = false
     var subExtension: Bool = false
     var supExtension: Bool = false
+    var alertExtension: Bool = false
     var tableExtension: Bool = true
     var tagFilterExtension: Bool = true
     var taskListExtension: Bool = true
@@ -501,6 +505,7 @@ class Settings: Codable {
     var customCSS: URL? {
         didSet {
             customCSSFetched = false
+            customCSSCode = nil
         }
     }
     var customCSSFetched: Bool = false
@@ -514,12 +519,29 @@ class Settings: Codable {
     var qlWindowWidth: Int? = nil
     /// Quick Look window height.
     var qlWindowHeight: Int? = nil
+    /// Width used when the style does not declare a content column.
+    static let defaultQLWindowWidth: CGFloat = 960
+    /// Height suggested to Quick Look. The preview scrolls if the content is longer.
+    static let defaultQLWindowHeight: CGFloat = 1000
+    /// Width used in `Render as code` mode, where the source is not laid out in a column.
+    static let defaultQLWindowWidthAsCode: CGFloat = 1400
     /// Quick Look window size.
+    /// Without a suggestion macOS opens a window as big as the screen.
     var qlWindowSize: CGSize {
         if let w = qlWindowWidth, w > 0, let h = qlWindowHeight, h > 0 {
             return CGSize(width: CGFloat(w), height: CGFloat(h))
         } else {
-            return CGSize(width: 0, height: 0)
+            return self.autoQLWindowSize
+        }
+    }
+    /// Size used when no custom size is set. Fitted to the content column of the style in use.
+    var autoQLWindowSize: CGSize {
+        if let column = self.contentColumnWidth {
+            return CGSize(width: column + 58, height: Self.defaultQLWindowHeight) // gutters and scroller
+        } else if self.renderAsCode {
+            return CGSize(width: Self.defaultQLWindowWidthAsCode, height: Self.defaultQLWindowHeight)
+        } else {
+            return CGSize(width: Self.defaultQLWindowWidth, height: Self.defaultQLWindowHeight)
         }
     }
     
@@ -553,6 +575,7 @@ class Settings: Codable {
         self.wikilinkExtension = try container.decode(Bool.self, forKey:.wikilinkExtension)
         self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
         self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
+        self.definitionListExtension = try container.decodeIfPresent(Bool.self, forKey: .definitionListExtension) ?? false
         self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
        
         self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
@@ -562,6 +585,7 @@ class Settings: Codable {
         
         self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
         self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
+        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? false
         
         self.emojiExtension = try container.decode(EmojiMode.self, forKey:.emojiExtension)
         
@@ -631,6 +655,7 @@ class Settings: Codable {
         try container.encode(self.wikilinkExtension, forKey: .wikilinkExtension)
         try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
         try container.encode(self.headsExtension, forKey: .headsExtension)
+        try container.encode(self.definitionListExtension, forKey: .definitionListExtension)
         try container.encode(self.highlightExtension, forKey: .hightlightExtension)
         
         try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
@@ -640,6 +665,7 @@ class Settings: Codable {
         
         try container.encode(self.subExtension, forKey: .subExtension)
         try container.encode(self.supExtension, forKey: .supExtension)
+        try container.encode(self.alertExtension, forKey: .alertExtension)
         
         try container.encode(self.emojiExtension, forKey: .emojiExtension)
         
@@ -724,7 +750,8 @@ class Settings: Codable {
         self.wikilinkExtension = s.wikilinkExtension
         self.checkboxExtension = s.checkboxExtension
         self.headsExtension = s.headsExtension
-        
+        self.definitionListExtension = s.definitionListExtension
+
         self.highlightExtension = s.highlightExtension
         
         self.syntaxHighlightExtension = s.syntaxHighlightExtension
@@ -734,6 +761,7 @@ class Settings: Codable {
         
         self.subExtension = s.subExtension
         self.supExtension = s.supExtension
+        self.alertExtension = s.alertExtension
         
         self.emojiExtension = s.emojiExtension
         
@@ -749,6 +777,7 @@ class Settings: Codable {
         self.baseFontSize = s.baseFontSize
         self.customCSS = s.customCSS
         self.customCSSCode = s.customCSSCode
+        self.customCSSFetched = s.customCSSFetched
         self.customCSSOverride = s.customCSSOverride
         
         self.about = s.about
@@ -808,6 +837,9 @@ class Settings: Codable {
         if let ext = defaultsDomain[Self.CodingKeys.headsExtension.rawValue] as? Bool {
             headsExtension = ext
         }
+        if let ext = defaultsDomain[Self.CodingKeys.definitionListExtension.rawValue] as? Bool {
+            definitionListExtension = ext
+        }
         
         if let ext = defaultsDomain[Self.CodingKeys.hightlightExtension.rawValue] as? Bool {
             highlightExtension = ext
@@ -832,6 +864,9 @@ class Settings: Codable {
         }
         if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
             supExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.alertExtension.rawValue] as? Bool {
+            alertExtension = ext
         }
         
         if let n = defaultsDomain[Self.CodingKeys.emojiExtension.rawValue] as? Int, let ext = EmojiMode(rawValue: n) {
@@ -965,6 +1000,38 @@ class Settings: Codable {
             return nil
         }
         return try? String(contentsOf: url, encoding: .utf8)
+    }
+    
+    /**
+     * Get the style sheets applied to the rendered document, in cascade order.
+     * The bundled `default.css` is used only in Markdown mode. The custom style is emitted last.
+     */
+    func getAppliedCSS() -> (bundled: String?, custom: String) {
+        let custom = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
+        let useBundled = !self.renderAsCode && (custom.isEmpty || !self.customCSSOverride)
+        return (useBundled ? self.getBundleContents(forResource: "default", ofType: "css") : nil, custom)
+    }
+    
+    /// Width of the column used by the style to lay out the content. `nil` if no style declares it.
+    var contentColumnWidth: CGFloat? {
+        let css = self.getAppliedCSS()
+        // The custom style is emitted after the bundled one, so its declaration wins.
+        return parseContentColumnWidth(css.custom) ?? parseContentColumnWidth(css.bundled)
+    }
+    
+    /// Read the `--content-max-width` property. As in the cascade, the last declaration wins.
+    private func parseContentColumnWidth(_ css: String?) -> CGFloat? {
+        let pattern = #"--content-max-width\s*:\s*([0-9]+(?:\.[0-9]+)?)px"#
+        guard let css, let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return nil
+        }
+        guard let match = regex.matches(in: css, options: [], range: NSRange(css.startIndex..., in: css)).last,
+              let value = Range(match.range(at: 1), in: css).flatMap({ Double(css[$0]) }),
+              value > 0
+        else {
+            return nil
+        }
+        return CGFloat(value)
     }
     
     /**

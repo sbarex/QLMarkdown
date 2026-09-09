@@ -18,10 +18,12 @@
 #include "inlineimage.h"
 #include "emoji.h"
 #include "heads.h"
+#include "defl.h"
 #include "highlight.h"
 #include "math_ext.h"
 #include "sub_ext.h"
 #include "sup_ext.h"
+#include "alert.h"
 
 static int extra_extensions_registration(cmark_plugin *plugin) {
     cmark_plugin_register_syntax_extension(plugin, create_mention_extension());
@@ -33,10 +35,12 @@ static int extra_extensions_registration(cmark_plugin *plugin) {
 
     cmark_plugin_register_syntax_extension(plugin, create_emoji_extension());
     cmark_plugin_register_syntax_extension(plugin, create_heads_extension());
+    cmark_plugin_register_syntax_extension(plugin, create_definitionlist_extension());
     cmark_plugin_register_syntax_extension(plugin, create_highlight_extension());
     cmark_plugin_register_syntax_extension(plugin, create_math_extension());
     cmark_plugin_register_syntax_extension(plugin, create_sup_extension());
     cmark_plugin_register_syntax_extension(plugin, create_sub_extension());
+    cmark_plugin_register_syntax_extension(plugin, create_alert_extension());
     return 1;
 }
 

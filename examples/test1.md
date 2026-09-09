@@ -15,7 +15,9 @@ The previous block placed at the top of the document, starting with `---` and en
 
 - [Extensions](#extensions)
   - [Autolink extension](#autolink-extension)
+  - [Definition list extension](#definition-list-extension)
   - [Emoji extension](#emoji-extension)
+  - [GitHub alerts extension](#github-alerts-extension)
   - [GitHub mentions extension](#github-mentions-extension)
   - [Heads extension](#heads-extension)
   - [Highlight extension](#highlight-extension)
@@ -39,12 +41,45 @@ The previous block placed at the top of the document, starting with `---` and en
 
 If the `autolink` extension is enabled the URL https://www.github.com is displayed as a link.
 
+## Definition list extension
+
+With the `definitionlist` extension a term followed by one or more `: description` lines is rendered as a definition list:
+
+Apple
+: Pomaceous fruit of plants of the genus *Malus*.
+
+Markdown
+: A lightweight markup language with plain-text formatting syntax.
+: Created by John Gruber in 2004.
+
+HTML
+: The standard markup language for documents designed to be displayed in a web browser. It can contain `code`, *emphasis*, and [links](https://example.com).
+
 ## Emoji extension
 
 Using the `emoji` extension you can replace the `:smile:` with :smile:. 
 
 You can choose to use the standard emoji font or the GitHub images.
 Multibyte emoji are also supported, so `:it:` equivalent to the code `\u1f1ee\u1f1f9` must be rendered as the Italian flag :it:.
+
+## GitHub alerts extension
+
+With the `alert` extension a blockquote whose first line is one of `[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]` or `[!CAUTION]` is rendered as a colored callout, matching GitHub.
+
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
 
 ## GitHub mentions extension
 

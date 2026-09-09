@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4034D2FA758A4624A85FE826 /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
+		65D0637D19484B8CAF9BA328 /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		830277F42C60B3B40066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
 		830277F52C60B3E20066EBCC /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
 		830277F72C60E48F0066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
@@ -289,6 +291,12 @@
 		83F8825A259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
 		83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
 		83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
+		B8E64117F8D84B61BC777EDF /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
+		C4C0544E70714CFDB88BD53D /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
+		DEF1000000000000000000C1 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
+		DEF1000000000000000000C2 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
+		DEF1000000000000000000C3 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
+		DEF1000000000000000000C4 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -523,6 +531,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		376A8FF7F19F47B3AD9B463D /* alert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = alert.c; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		831A8C43258ABADA00E36182 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -708,6 +717,9 @@
 		83F88258259906C7008C5071 /* heads.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = heads.c; sourceTree = "<group>"; };
 		83F8825C25991BFC008C5071 /* heads_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = heads_utils.cpp; sourceTree = "<group>"; };
 		83F8825D25991BFC008C5071 /* heads_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = heads_utils.hpp; sourceTree = "<group>"; };
+		B0A7BA4039614C61A365D9CD /* alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
+		DEF1000000000000000000AA /* defl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defl.h; sourceTree = "<group>"; };
+		DEF1000000000000000000BB /* defl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = defl.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -839,6 +851,10 @@
 				834CAB9A2593650800673002 /* emoji_utils.cpp */,
 				83F88257259906C7008C5071 /* heads.h */,
 				83F88258259906C7008C5071 /* heads.c */,
+				B0A7BA4039614C61A365D9CD /* alert.h */,
+				376A8FF7F19F47B3AD9B463D /* alert.c */,
+				DEF1000000000000000000AA /* defl.h */,
+				DEF1000000000000000000BB /* defl.c */,
 				83F8825C25991BFC008C5071 /* heads_utils.cpp */,
 				83F8825D25991BFC008C5071 /* heads_utils.hpp */,
 				83CF71C72C5FCD780066A195 /* highlight.h */,
@@ -1484,6 +1500,8 @@
 				83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				834A4F5629E8AD8E00692964 /* html.c in Sources */,
 				83F8825A259906C7008C5071 /* heads.c in Sources */,
+				B8E64117F8D84B61BC777EDF /* alert.c in Sources */,
+				DEF1000000000000000000C4 /* defl.c in Sources */,
 				834A4F5929E8AD8E00692964 /* plugin.c in Sources */,
 				834A4F3E29E8AD8D00692964 /* references.c in Sources */,
 				83720A3925B8EA6600B49FEC /* decode.c in Sources */,
@@ -1564,6 +1582,8 @@
 				8320D5C52D1C3858005868BD /* tasklist.c in Sources */,
 				8320D5DE2D1C3AA7005868BD /* emoji.c in Sources */,
 				8320D5DF2D1C3AA7005868BD /* heads.c in Sources */,
+				4034D2FA758A4624A85FE826 /* alert.c in Sources */,
+				DEF1000000000000000000C1 /* defl.c in Sources */,
 				8320D5E02D1C3AA7005868BD /* inlineimage.c in Sources */,
 				8320D5E12D1C3AA7005868BD /* highlight.c in Sources */,
 				8320D5E22D1C3AA7005868BD /* sub_ext.c in Sources */,
@@ -1655,6 +1675,8 @@
 				834A4EF329E8AD8C00692964 /* strikethrough.c in Sources */,
 				83437974271D47DF00A5D6EA /* qlmarkdown_cli.swift in Sources */,
 				8343798D271D4A1900A5D6EA /* heads.c in Sources */,
+				C4C0544E70714CFDB88BD53D /* alert.c in Sources */,
+				DEF1000000000000000000C2 /* defl.c in Sources */,
 				834A4F8429E92AE800692964 /* extra-extensions.c in Sources */,
 				834A4F1A29E8AD8D00692964 /* blocks.c in Sources */,
 				834A4F0129E8AD8C00692964 /* tagfilter.c in Sources */,
@@ -1674,6 +1696,8 @@
 				83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				83D22E642DCA659C0013EB9D /* Settings+render.swift in Sources */,
 				83F88259259906C7008C5071 /* heads.c in Sources */,
+				65D0637D19484B8CAF9BA328 /* alert.c in Sources */,
+				DEF1000000000000000000C3 /* defl.c in Sources */,
 				835886B329E960050088DF7D /* math_ext.c in Sources */,
 				836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
 				83327D202593FCEB00E76CF6 /* url.cpp in Sources */,
@@ -2181,6 +2205,7 @@
 				);
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)/QLMarkdown.app/Contents/Resources";
 				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
 					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
 					"$(inherited)",
@@ -2238,6 +2263,7 @@
 				);
 				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)/QLMarkdown.app/Contents/Resources";
 				LD_RUNPATH_SEARCH_PATHS = (
+					"@executable_path",
 					"@loader_path/../Frameworks",
 					"@executable_path/../Frameworks",
 					"$(inherited)",
