@@ -1795,6 +1795,11 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.qlWindowSizeCustomized" previousBinding="Qa1-Wb-2cE" id="2Q6-T5-X5j">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                                 <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="Qa1-Wb-2cE"/>
                                                             </connections>
                                                         </textField>
@@ -1814,6 +1819,11 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.qlWindowSizeCustomized" previousBinding="ICt-7A-oNJ" id="5mZ-HK-LKo">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                                 <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="ICt-7A-oNJ"/>
                                                                 <binding destination="XfG-lQ-9wD" name="value" keyPath="self.qlWindowWidth" id="cIl-gL-5JY"/>
                                                             </connections>
@@ -1826,6 +1836,11 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.qlWindowSizeCustomized" previousBinding="Rd3-Xf-4gH" id="Fmr-0V-eKP">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                                 <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="Rd3-Xf-4gH"/>
                                                             </connections>
                                                         </textField>
@@ -1840,6 +1855,11 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.qlWindowSizeCustomized" previousBinding="T3i-gk-t1c" id="FHV-2p-YbD">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                                 <binding destination="XfG-lQ-9wD" name="value" keyPath="self.qlWindowHeight" id="pHT-l1-scy"/>
                                                                 <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="T3i-gk-t1c"/>
                                                                 <outlet property="formatter" destination="ggW-M5-zt1" id="09n-c2-zli"/>
@@ -1853,6 +1873,11 @@
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                             <connections>
+                                                                <binding destination="XfG-lQ-9wD" name="hidden" keyPath="self.qlWindowSizeCustomized" previousBinding="Sj5-Yk-6lM" id="lD2-Pe-xUG">
+                                                                    <dictionary key="options">
+                                                                        <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                    </dictionary>
+                                                                </binding>
                                                                 <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.qlWindowSizeCustomized" id="Sj5-Yk-6lM"/>
                                                             </connections>
                                                         </textField>
