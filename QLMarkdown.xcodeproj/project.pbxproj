@@ -283,6 +283,10 @@
 		83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
 		83F88259259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
 		83F8825A259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
+		DEF1000000000000000000C1 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
+		DEF1000000000000000000C2 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
+		DEF1000000000000000000C3 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
+		DEF1000000000000000000C4 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
 		83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
 /* End PBXBuildFile section */
@@ -700,6 +704,8 @@
 		83F8822C2598A5C0008C5071 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		83F88257259906C7008C5071 /* heads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = heads.h; sourceTree = "<group>"; };
 		83F88258259906C7008C5071 /* heads.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = heads.c; sourceTree = "<group>"; };
+		DEF1000000000000000000AA /* defl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defl.h; sourceTree = "<group>"; };
+		DEF1000000000000000000BB /* defl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = defl.c; sourceTree = "<group>"; };
 		83F8825C25991BFC008C5071 /* heads_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = heads_utils.cpp; sourceTree = "<group>"; };
 		83F8825D25991BFC008C5071 /* heads_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = heads_utils.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -833,6 +839,8 @@
 				834CAB9A2593650800673002 /* emoji_utils.cpp */,
 				83F88257259906C7008C5071 /* heads.h */,
 				83F88258259906C7008C5071 /* heads.c */,
+				DEF1000000000000000000AA /* defl.h */,
+				DEF1000000000000000000BB /* defl.c */,
 				83F8825C25991BFC008C5071 /* heads_utils.cpp */,
 				83F8825D25991BFC008C5071 /* heads_utils.hpp */,
 				83CF71C72C5FCD780066A195 /* highlight.h */,
@@ -1476,6 +1484,7 @@
 				83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				834A4F5629E8AD8E00692964 /* html.c in Sources */,
 				83F8825A259906C7008C5071 /* heads.c in Sources */,
+				DEF1000000000000000000C4 /* defl.c in Sources */,
 				834A4F5929E8AD8E00692964 /* plugin.c in Sources */,
 				834A4F3E29E8AD8D00692964 /* references.c in Sources */,
 				83720A3925B8EA6600B49FEC /* decode.c in Sources */,
@@ -1555,6 +1564,7 @@
 				8320D5C52D1C3858005868BD /* tasklist.c in Sources */,
 				8320D5DE2D1C3AA7005868BD /* emoji.c in Sources */,
 				8320D5DF2D1C3AA7005868BD /* heads.c in Sources */,
+				DEF1000000000000000000C1 /* defl.c in Sources */,
 				8320D5E02D1C3AA7005868BD /* inlineimage.c in Sources */,
 				8320D5E12D1C3AA7005868BD /* highlight.c in Sources */,
 				8320D5E22D1C3AA7005868BD /* sub_ext.c in Sources */,
@@ -1644,6 +1654,7 @@
 				834A4EF329E8AD8C00692964 /* strikethrough.c in Sources */,
 				83437974271D47DF00A5D6EA /* qlmarkdown_cli.swift in Sources */,
 				8343798D271D4A1900A5D6EA /* heads.c in Sources */,
+				DEF1000000000000000000C2 /* defl.c in Sources */,
 				834A4F8429E92AE800692964 /* extra-extensions.c in Sources */,
 				834A4F1A29E8AD8D00692964 /* blocks.c in Sources */,
 				834A4F0129E8AD8C00692964 /* tagfilter.c in Sources */,
@@ -1663,6 +1674,7 @@
 				83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */,
 				83D22E642DCA659C0013EB9D /* Settings+render.swift in Sources */,
 				83F88259259906C7008C5071 /* heads.c in Sources */,
+				DEF1000000000000000000C3 /* defl.c in Sources */,
 				835886B329E960050088DF7D /* math_ext.c in Sources */,
 				836B747D259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
 				83327D202593FCEB00E76CF6 /* url.cpp in Sources */,
