@@ -4,6 +4,35 @@
         <title>QLMarkdown</title>
 
         <item>
+            <title>1.5.3</title>
+            <pubDate>ven, 11 set 2026 11:25:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.5.3/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.5.3" sparkle:version="54" 
+                       sparkle:edSignature="Sa+BTNHgPcSBz0ULj3dccIJtJrI6FrivZZ+dmmNKt2SYmXqq6hWYUZ/4Z3LfAuU8GzLsOJDxrm98CqfmsDfpCg==" length="21714643"
+                       />
+            <description><![CDATA[
+                <h2>Release 1.5.3 (54)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+
+                <p>New Features:</p>
+                <ul>
+                    <li>GitHub Alert extension (thanks to @soreavis).</li>
+                    <li>Definition list extension (thanks to @soreavis)</li>
+                    <li>Wikilink extension (thanks to @soreavis).</li>
+                    <li>Better default/auto window size (thanks to @ki7dk).</li>
+                    <li>Italian localization.</li>
+                    <li>Spanish localization (thanks to @GuilleZubikarai).</li>
+                </ul>
+                
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+
+        <item>
             <title>1.5.2</title>
             <pubDate>mar, 30 giu 2026 12:00:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
