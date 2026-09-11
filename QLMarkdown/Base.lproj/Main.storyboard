@@ -755,7 +755,7 @@
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="729" y="289"/>
+            <point key="canvasLocation" x="690" y="95"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
@@ -846,7 +846,7 @@
                                                             </button>
                                                         </gridCell>
                                                         <gridCell row="mhm-BQ-Lxb" column="h9h-fV-gFn" id="aDd-4H-NsX">
-                                                            <button key="contentView" horizontalHuggingPriority="247" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Op8-MC-pdn">
+                                                            <button key="contentView" toolTip="Hard break forces the subsequent text to start on a new line within the same paragraph." horizontalHuggingPriority="247" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Op8-MC-pdn">
                                                                 <rect key="frame" x="156" y="108" width="133" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Hard break" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tbC-K4-tEs">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -917,6 +917,7 @@
                                                         <gridCell row="b1T-4W-Sf6" column="h9h-fV-gFn" id="rb3-ZF-WGa">
                                                             <button key="contentView" horizontalHuggingPriority="247" verticalHuggingPriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="tkA-dO-Pi7">
                                                                 <rect key="frame" x="156" y="88" width="133" height="16"/>
+                                                                <string key="toolTip">If enabled, all softbreak elements (newlines inside paragraphs in the Markdown source) should be rendered as spaces.  Has no effect on HTML formatting.</string>
                                                                 <buttonCell key="cell" type="check" title="No soft break" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CHS-sX-gZb">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
@@ -999,7 +1000,7 @@
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3Y-H8-DoB">
                                                                 <rect key="frame" x="295" y="60" width="180" height="16"/>
                                                                 <subviews>
-                                                                    <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VWN-lq-eiu">
+                                                                    <button toolTip="Handle Math expressions." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VWN-lq-eiu">
                                                                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
                                                                         <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="v1t-FW-RDI">
                                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1033,7 +1034,7 @@
                                                                                     <menuItem title="Refresh the cached library from the web…" tag="10" identifier="mnu_math_download" indentationLevel="1" id="mcf-6j-ea5">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                                     </menuItem>
-                                                                                    <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_math_download" indentationLevel="1" id="dYQ-r1-7p1">
+                                                                                    <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_math_reveal" indentationLevel="1" id="dYQ-r1-7p1">
                                                                                         <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                                                                     </menuItem>
                                                                                     <menuItem isSeparatorItem="YES" id="9FJ-fL-6vs"/>
@@ -1120,6 +1121,7 @@
                                                                                                         <action selector="handleSyntaxHighlightMenu:" target="XfG-lQ-9wD" id="6mN-Ga-vY7"/>
                                                                                                     </connections>
                                                                                                 </menuItem>
+                                                                                                <menuItem isSeparatorItem="YES" id="t8Z-Vd-TNJ"/>
                                                                                                 <menuItem title="2 spaces" tag="2" identifier="mnu_highlight_tab_2" id="gnZ-Z9-ksw">
                                                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                                                     <connections>
@@ -1143,7 +1145,7 @@
                                                                                     </menuItem>
                                                                                     <menuItem title="Word wrap" identifier="mnu_highlight_ww" indentationLevel="1" id="BjP-Uw-6pc">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                        <menu key="submenu" title="Word wrap" identifier="mnu_highlight_ww" id="UnT-CQ-BpQ">
+                                                                                        <menu key="submenu" title="Word wrap" identifier="mnu_highlight_ww_submenu" id="UnT-CQ-BpQ">
                                                                                             <items>
                                                                                                 <menuItem title="Disabled" identifier="mnu_highlight_ww_0" id="FYa-qP-HYA">
                                                                                                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -1151,6 +1153,7 @@
                                                                                                         <action selector="handleSyntaxHighlightMenu:" target="XfG-lQ-9wD" id="yc9-lB-dVd"/>
                                                                                                     </connections>
                                                                                                 </menuItem>
+                                                                                                <menuItem isSeparatorItem="YES" id="npI-8r-nC4"/>
                                                                                                 <menuItem title="80 characters" tag="80" identifier="mnu_highlight_ww_80" id="CyD-NR-d5g">
                                                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                                                     <connections>
@@ -1163,6 +1166,7 @@
                                                                                                         <action selector="handleSyntaxHighlightMenu:" target="XfG-lQ-9wD" id="8KI-Mm-fHi"/>
                                                                                                     </connections>
                                                                                                 </menuItem>
+                                                                                                <menuItem isSeparatorItem="YES" id="soV-Ec-MZK"/>
                                                                                                 <menuItem title="Others…" identifier="mnu_highlight_ww_x" id="RPj-g5-33b">
                                                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                                                     <connections>
@@ -1208,64 +1212,21 @@
                                                             </stackView>
                                                         </gridCell>
                                                         <gridCell row="mRf-rL-ZFR" column="EM0-Js-ao5" id="VqE-kq-364">
-                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZV-G2-qY1">
-                                                                <rect key="frame" x="657" y="60" width="180" height="16"/>
-                                                                <subviews>
-                                                                    <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-OK-azv">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
-                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="6MU-jQ-KNG">
-                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                            <font key="font" metaFont="system"/>
-                                                                        </buttonCell>
-                                                                        <connections>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="bSv-ul-rCX">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.yamlExtension" id="bWC-ya-90g"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <popUpButton horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IeG-vS-v6c">
-                                                                        <rect key="frame" x="15" y="0.0" width="165" height="16"/>
-                                                                        <popUpButtonCell key="cell" type="roundTextured" title="YAML header" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="vHd-22-hfh">
-                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message"/>
-                                                                            <menu key="menu" id="ZCo-te-Lyb">
-                                                                                <items>
-                                                                                    <menuItem title="YAML header" state="on" hidden="YES" id="JQj-Yd-BmL"/>
-                                                                                    <menuItem title="YAML Header Extension" enabled="NO" identifier="mnu_yaml" id="lmN-Zo-LLB"/>
-                                                                                    <menuItem title="Only for Rmd and Qmd files" tag="1" identifier="mnu_yaml_rmd" indentationLevel="1" id="RCL-f2-K7U"/>
-                                                                                    <menuItem title="For all md files" tag="2" identifier="mnu_yaml_all" indentationLevel="1" id="6lL-8G-ydW"/>
-                                                                                    <menuItem isSeparatorItem="YES" id="OGX-Jd-RyL"/>
-                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_yaml_disabled" indentationLevel="1" id="1JJ-R9-DkW">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                </items>
-                                                                            </menu>
-                                                                        </popUpButtonCell>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="f9I-Jc-ViT"/>
-                                                                        </constraints>
-                                                                        <connections>
-                                                                            <action selector="handleYamlPopup:" target="XfG-lQ-9wD" id="Azo-8t-Hif"/>
-                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="Jfb-e1-Ksv">
-                                                                                <dictionary key="options">
-                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                                                                </dictionary>
-                                                                            </binding>
-                                                                        </connections>
-                                                                    </popUpButton>
-                                                                </subviews>
-                                                                <visibilityPriorities>
-                                                                    <integer value="1000"/>
-                                                                    <integer value="1000"/>
-                                                                </visibilityPriorities>
-                                                                <customSpacing>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                    <real value="3.4028234663852886e+38"/>
-                                                                </customSpacing>
-                                                            </stackView>
+                                                            <button key="contentView" toolTip="Render [[Page Name]] and [[Target|Display]] wikilinks as links." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IrH-Zo-Gds">
+                                                                <rect key="frame" x="657" y="60" width="76" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Wikilinks" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Nod-ti-n3s">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="ucT-Qw-roL">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.wikilinkExtension" id="2xz-bA-kUW"/>
+                                                                </connections>
+                                                            </button>
                                                         </gridCell>
                                                         <gridCell row="6bo-pC-VNr" column="Kw4-iz-WrK" id="GUX-b6-gSZ">
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRb-Qn-xOV">
@@ -1350,7 +1311,7 @@
                                                             <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L4D-FR-IWj">
                                                                 <rect key="frame" x="295" y="40" width="180" height="16"/>
                                                                 <subviews>
-                                                                    <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tql-Or-Mre">
+                                                                    <button toolTip="Handle Mermaid Diagrams." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tql-Or-Mre">
                                                                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
                                                                         <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="XtY-sq-l0E">
                                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -1434,7 +1395,66 @@
                                                                 </connections>
                                                             </button>
                                                         </gridCell>
-                                                        <gridCell row="6bo-pC-VNr" column="EM0-Js-ao5" id="1Aw-9q-DfA"/>
+                                                        <gridCell row="6bo-pC-VNr" column="EM0-Js-ao5" id="1Aw-9q-DfA">
+                                                            <stackView key="contentView" distribution="fill" orientation="horizontal" alignment="centerY" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZV-G2-qY1">
+                                                                <rect key="frame" x="657" y="40" width="180" height="16"/>
+                                                                <subviews>
+                                                                    <button toolTip="Handle YAML header." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NW6-OK-azv">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
+                                                                        <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="only" state="on" inset="2" id="6MU-jQ-KNG">
+                                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                            <font key="font" metaFont="system"/>
+                                                                        </buttonCell>
+                                                                        <connections>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="bSv-ul-rCX">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                            <binding destination="XfG-lQ-9wD" name="value" keyPath="self.yamlExtension" id="bWC-ya-90g"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                    <popUpButton horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IeG-vS-v6c">
+                                                                        <rect key="frame" x="15" y="0.0" width="165" height="16"/>
+                                                                        <popUpButtonCell key="cell" type="roundTextured" title="YAML header" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="vHd-22-hfh">
+                                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                            <font key="font" metaFont="message"/>
+                                                                            <menu key="menu" id="ZCo-te-Lyb">
+                                                                                <items>
+                                                                                    <menuItem title="YAML header" state="on" hidden="YES" id="JQj-Yd-BmL"/>
+                                                                                    <menuItem title="YAML Header Extension" enabled="NO" identifier="mnu_yaml" id="lmN-Zo-LLB"/>
+                                                                                    <menuItem title="Only for Rmd and Qmd files" tag="1" identifier="mnu_yaml_rmd" indentationLevel="1" id="RCL-f2-K7U"/>
+                                                                                    <menuItem title="For all md files" tag="2" identifier="mnu_yaml_all" indentationLevel="1" id="6lL-8G-ydW"/>
+                                                                                    <menuItem isSeparatorItem="YES" id="OGX-Jd-RyL"/>
+                                                                                    <menuItem title="Disabled" tag="-1" identifier="mnu_yaml_disabled" indentationLevel="1" id="1JJ-R9-DkW">
+                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                                                    </menuItem>
+                                                                                </items>
+                                                                            </menu>
+                                                                        </popUpButtonCell>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="f9I-Jc-ViT"/>
+                                                                        </constraints>
+                                                                        <connections>
+                                                                            <action selector="handleYamlPopup:" target="XfG-lQ-9wD" id="Azo-8t-Hif"/>
+                                                                            <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="Jfb-e1-Ksv">
+                                                                                <dictionary key="options">
+                                                                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                                </dictionary>
+                                                                            </binding>
+                                                                        </connections>
+                                                                    </popUpButton>
+                                                                </subviews>
+                                                                <visibilityPriorities>
+                                                                    <integer value="1000"/>
+                                                                    <integer value="1000"/>
+                                                                </visibilityPriorities>
+                                                                <customSpacing>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                    <real value="3.4028234663852886e+38"/>
+                                                                </customSpacing>
+                                                            </stackView>
+                                                        </gridCell>
                                                         <gridCell row="axC-Xg-GDO" column="Kw4-iz-WrK" id="yrz-gj-Bce">
                                                             <button key="contentView" toolTip="Render definition lists (a term line followed by `: description` lines)." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dEf-Li-st2">
                                                                 <rect key="frame" x="0.0" y="20" width="102" height="16"/>
@@ -1517,12 +1537,12 @@
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                                 <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.alertExtension" id="zAx-oT-wlK"/>
                                                                     <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="9DU-K0-nQh">
                                                                         <dictionary key="options">
                                                                             <string key="NSValueTransformerName">NSNegateBoolean</string>
                                                                         </dictionary>
                                                                     </binding>
-                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.alertExtension" id="zAx-oT-wlK"/>
                                                                 </connections>
                                                             </button>
                                                         </gridCell>
@@ -1737,16 +1757,16 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s9x-wg-UTg">
-                                                    <rect key="frame" x="386" y="8" width="102" height="16"/>
+                                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="s9x-wg-UTg">
+                                                    <rect key="frame" x="390" y="8" width="102" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Show about info" id="5IO-mU-4yw">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <switch toolTip="Save changes to settings immediately. " horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XA7-Gl-MRu">
-                                                    <rect key="frame" x="344" y="8" width="36" height="16"/>
+                                                <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" controlSize="mini" baseWritingDirection="leftToRight" alignment="left" translatesAutoresizingMaskIntoConstraints="NO" id="XA7-Gl-MRu">
+                                                    <rect key="frame" x="348" y="8" width="36" height="16"/>
                                                     <connections>
                                                         <binding destination="XfG-lQ-9wD" name="value" keyPath="self.isAboutVisible" id="yEn-7v-IXL">
                                                             <dictionary key="options">
@@ -1955,7 +1975,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <popUpButton allowsExpansionToolTips="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kFs-NW-HcF">
+                                                <popUpButton allowsExpansionToolTips="YES" horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kFs-NW-HcF">
                                                     <rect key="frame" x="188" y="318" width="212" height="24"/>
                                                     <popUpButtonCell key="cell" type="push" title="Auto" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingMiddle" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="pya-Cj-F48" id="DZu-B4-GAL">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2005,6 +2025,7 @@
                                                 <constraint firstItem="2t7-PJ-hZL" firstAttribute="centerY" secondItem="fVi-EX-Aci" secondAttribute="centerY" id="MdQ-ga-7Ec"/>
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="width" secondItem="CTX-6L-I3O" secondAttribute="width" id="Nf3-vu-yPu"/>
                                                 <constraint firstItem="g31-cS-g4Y" firstAttribute="top" secondItem="uGz-Oo-fnE" secondAttribute="bottom" constant="8" symbolic="YES" id="QeT-lh-vXb"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="iLd-SC-WJ6" secondAttribute="trailing" constant="20" symbolic="YES" id="Rd2-2V-bry"/>
                                                 <constraint firstItem="C8t-xT-dXa" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="TPT-hz-QpU"/>
                                                 <constraint firstItem="2t7-PJ-hZL" firstAttribute="leading" secondItem="fVi-EX-Aci" secondAttribute="trailing" constant="8" symbolic="YES" id="UdT-Pw-okT"/>
                                                 <constraint firstItem="gn8-wq-9v6" firstAttribute="top" secondItem="g31-cS-g4Y" secondAttribute="bottom" constant="20" symbolic="YES" id="VNY-9T-6lr"/>
@@ -2012,6 +2033,7 @@
                                                 <constraint firstItem="0el-fG-DCh" firstAttribute="leading" secondItem="Ccb-oe-cYh" secondAttribute="leading" id="WVp-Q9-ZuK"/>
                                                 <constraint firstItem="uGz-Oo-fnE" firstAttribute="firstBaseline" secondItem="C8t-xT-dXa" secondAttribute="firstBaseline" id="YAk-bk-AvO"/>
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="leading" secondItem="dOo-mR-WPE" secondAttribute="leading" id="YC3-2N-InM"/>
+                                                <constraint firstItem="iLd-SC-WJ6" firstAttribute="leading" secondItem="eHs-tN-Pey" secondAttribute="trailing" constant="8" symbolic="YES" id="Yui-k7-3iy"/>
                                                 <constraint firstItem="s9x-wg-UTg" firstAttribute="leading" secondItem="XA7-Gl-MRu" secondAttribute="trailing" constant="8" symbolic="YES" id="Zhm-St-E6U"/>
                                                 <constraint firstItem="0el-fG-DCh" firstAttribute="firstBaseline" secondItem="kFs-NW-HcF" secondAttribute="firstBaseline" id="ast-tr-qde"/>
                                                 <constraint firstItem="iLd-SC-WJ6" firstAttribute="firstBaseline" secondItem="eHs-tN-Pey" secondAttribute="firstBaseline" id="aul-Id-v0y"/>
@@ -2034,7 +2056,11 @@
                                                 <constraint firstItem="EHx-19-1D3" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="rcb-Eo-mpN"/>
                                                 <constraint firstItem="8An-Xf-Ur1" firstAttribute="firstBaseline" secondItem="CTX-6L-I3O" secondAttribute="firstBaseline" id="sfk-NJ-pPq"/>
                                                 <constraint firstItem="gn8-wq-9v6" firstAttribute="leading" secondItem="iLd-SC-WJ6" secondAttribute="leading" id="tDt-BK-nWx"/>
+                                                <constraint firstItem="XA7-Gl-MRu" firstAttribute="leading" secondItem="kiL-yb-W3n" secondAttribute="trailing" constant="8" symbolic="YES" id="tcw-qt-CqN"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2t7-PJ-hZL" secondAttribute="trailing" constant="20" symbolic="YES" id="uXh-Cz-UUb"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kFs-NW-HcF" secondAttribute="trailing" constant="20" symbolic="YES" id="v60-tx-Tdh"/>
                                                 <constraint firstItem="X7y-52-Juj" firstAttribute="leading" secondItem="Ccb-oe-cYh" secondAttribute="leading" id="vWz-ae-uZm"/>
+                                                <constraint firstItem="kFs-NW-HcF" firstAttribute="width" secondItem="CTX-6L-I3O" secondAttribute="width" id="vlY-yU-LRv"/>
                                                 <constraint firstItem="eHs-tN-Pey" firstAttribute="leading" secondItem="Ccb-oe-cYh" secondAttribute="leading" id="wZQ-hS-fG5"/>
                                                 <constraint firstItem="Ccb-oe-cYh" firstAttribute="leading" secondItem="z2a-cF-5GG" secondAttribute="leading" constant="20" symbolic="YES" id="xsE-lm-Yup"/>
                                                 <constraint firstItem="CTX-6L-I3O" firstAttribute="leading" secondItem="Ccb-oe-cYh" secondAttribute="trailing" constant="8" symbolic="YES" id="yHw-Ig-1EH"/>
