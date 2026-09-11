@@ -929,7 +929,7 @@ table.debug td {
         // wrapper has its `$...$` / `$$...$$` rewritten to the new delimiters (see
         // `swapMathDelimiters` below). Stray `$` outside math wrappers (currency, prose, code)
         // is invisible to MathJax because `$` is no longer a delimiter.
-        var processedBody = body
+        let processedBody = body
         if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
             s_header += """
 <script type="text/javascript">

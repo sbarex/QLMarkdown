@@ -217,6 +217,7 @@
 		834A4F8229E92AE800692964 /* extra-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 834A4F8129E92AE800692964 /* extra-extensions.c */; };
 		834A4F8329E92AE800692964 /* extra-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 834A4F8129E92AE800692964 /* extra-extensions.c */; };
 		834A4F8429E92AE800692964 /* extra-extensions.c in Sources */ = {isa = PBXBuildFile; fileRef = 834A4F8129E92AE800692964 /* extra-extensions.c */; };
+		834BBC343052AFFE00FECD4A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 834BBC333052AFFE00FECD4A /* Localizable.xcstrings */; };
 		834CAB9C2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 834CAB9A2593650800673002 /* emoji_utils.cpp */; };
 		834D64A9259E9DC400DCA121 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
@@ -555,6 +556,8 @@
 		83327D2E2594066300E76CF6 /* MIMEtype.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MIMEtype.c; sourceTree = "<group>"; };
 		83327D2F2594077200E76CF6 /* MIMEType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIMEType.h; sourceTree = "<group>"; };
 		83327D452595E15700E76CF6 /* Settings+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ext.swift"; sourceTree = "<group>"; };
+		833A5B723052C23900850312 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Main.xcstrings; sourceTree = "<group>"; };
+		833A5B733052DC8400850312 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		83437971271D47DF00A5D6EA /* qlmarkdown_cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = qlmarkdown_cli; sourceTree = BUILT_PRODUCTS_DIR; };
 		83437973271D47DF00A5D6EA /* qlmarkdown_cli.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qlmarkdown_cli.swift; sourceTree = "<group>"; };
 		834379B2271D4FB800A5D6EA /* qlmarkdown_cli.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = qlmarkdown_cli.entitlements; sourceTree = "<group>"; };
@@ -630,6 +633,7 @@
 		834A4EF029E8AD8C00692964 /* cmark-gfm_version.h.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cmark-gfm_version.h.in"; sourceTree = "<group>"; };
 		834A4F8029E92AE800692964 /* extra-extensions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "extra-extensions.h"; sourceTree = "<group>"; };
 		834A4F8129E92AE800692964 /* extra-extensions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "extra-extensions.c"; sourceTree = "<group>"; };
+		834BBC333052AFFE00FECD4A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		834CAB89259167B800673002 /* examples */ = {isa = PBXFileReference; lastKnownFileType = text; path = examples; sourceTree = SOURCE_ROOT; };
 		834CAB9A2593650800673002 /* emoji_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = emoji_utils.cpp; sourceTree = "<group>"; };
 		834CAB9B2593650800673002 /* emoji_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = emoji_utils.hpp; sourceTree = "<group>"; };
@@ -808,6 +812,7 @@
 				831A8C43258ABADA00E36182 /* PreviewViewController.swift */,
 				831A8C45258ABADA00E36182 /* PreviewViewController.xib */,
 				831A8C49258ABADA00E36182 /* QLExtension.entitlements */,
+				833A5B733052DC8400850312 /* Localizable.xcstrings */,
 			);
 			path = QLExtension;
 			sourceTree = "<group>";
@@ -1031,6 +1036,7 @@
 				83D82A90277C466500C9B99F /* jpcre2.hpp */,
 				83D82A91277C467A00C9B99F /* pcre2.h */,
 				834CAB89259167B800673002 /* examples */,
+				834BBC333052AFFE00FECD4A /* Localizable.xcstrings */,
 			);
 			path = QLMarkdown;
 			sourceTree = "<group>";
@@ -1410,6 +1416,7 @@
 				en,
 				Base,
 				it,
+				es,
 			);
 			mainGroup = 83598E5825818808004664D3;
 			packageReferences = (
@@ -1447,6 +1454,7 @@
 			files = (
 				830277F42C60B3B40066EBCC /* icon.png in Resources */,
 				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
+				833A5B743052DC8400850312 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1470,6 +1478,7 @@
 				830277F52C60B3E20066EBCC /* default.css in Resources */,
 				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
 				83A9C2922F1D59F9005B668D /* examples in Resources */,
+				834BBC343052AFFE00FECD4A /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1931,6 +1940,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				83598E6B2581880A004664D3 /* Base */,
+				833A5B723052C23900850312 /* mul */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1948,7 +1958,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1978,7 +1988,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2005,7 +2015,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2035,7 +2045,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2062,7 +2072,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2098,7 +2108,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.QLMarkdown.Shortcut-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2127,7 +2137,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
@@ -2162,7 +2172,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.QLMarkdown.Shortcut-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2467,7 +2477,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_APP_SANDBOX = YES;
@@ -2506,8 +2516,9 @@
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2537,7 +2548,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_APP_SANDBOX = YES;
@@ -2576,8 +2587,9 @@
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -83,10 +83,10 @@ enum EmojiOptionalEnum: String, AppEnum {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Emoji option state")
 
     static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
-        .predefined: "predefined",
-        .off: "off",
-        .useFont: "replace using font",
-        .useImage: "replace using images",
+        .predefined: DisplayRepresentation(title: "predefined"),
+        .off: DisplayRepresentation(title: "off"),
+        .useFont: DisplayRepresentation(title: "replace using font"),
+        .useImage: DisplayRepresentation(title: "replace using images"),
     ]
     
     func updateValue(state: inout EmojiMode) {
@@ -112,10 +112,10 @@ enum StrikethroughOptionalEnum: String, AppEnum {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Strikethrough option state")
 
     static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
-        .predefined: "predefined",
-        .off: "off",
-        .single: "recognize single ~",
-        .double: "recognize double ~",
+        .predefined: DisplayRepresentation(title: "predefined"),
+        .off: DisplayRepresentation(title: "off"),
+        .single: DisplayRepresentation(title: "recognize single ~"),
+        .double: DisplayRepresentation(title: "recognize double ~"),
     ]
     
     func updateValue(state: inout StrikethroughMode) {
@@ -141,10 +141,10 @@ enum YamlOptionalEnum: String, AppEnum {
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "YAML header option state")
 
     static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
-        .predefined: "predefined",
-        .off: "off",
-        .rmd: "only for .rmd and .qmd files",
-        .all: "all files",
+        .predefined: DisplayRepresentation(title: "predefined"),
+        .off: DisplayRepresentation(title: "off"),
+        .rmd: DisplayRepresentation(title: "only for .rmd and .qmd files"),
+        .all: DisplayRepresentation(title: "all files"),
     ]
     
     func updateValue(state: inout YamlMode) {
@@ -216,6 +216,7 @@ struct MdToHtmlCode_Extension: AppIntent {
     @Parameter(title: "HTML code generation", description: "Generate a complete HTML page or only the body fragment.")
     var generateFullCode: GenerateHTMLEnum
     
+    
     @Parameter(title: "Smart quotes", default: OptionalBoolEnum.predefined)
     var smartQuotes: OptionalBoolEnum
     
@@ -240,8 +241,19 @@ struct MdToHtmlCode_Extension: AppIntent {
     @Parameter(title: "Render as source code", default: OptionalBoolEnum.predefined)
     var renderAsSource: OptionalBoolEnum
     
+    
+    
     @Parameter(title: "Autolink", default: OptionalBoolEnum.predefined)
     var autolink: OptionalBoolEnum
+    
+    @Parameter(title: "Definition list", default: OptionalBoolEnum.predefined)
+    var definitionExtension: OptionalBoolEnum
+    
+    @Parameter(title: "GitHub alert", default: OptionalBoolEnum.predefined)
+    var alertExtension: OptionalBoolEnum
+    
+    @Parameter(title: "GitHub mention", default: OptionalBoolEnum.predefined)
+    var mentionExtension: OptionalBoolEnum
     
     @Parameter(title: "Emoji replacement", default: EmojiOptionalEnum.predefined)
     var emojiReplacement: EmojiOptionalEnum
@@ -261,16 +273,16 @@ struct MdToHtmlCode_Extension: AppIntent {
     @Parameter(title: "Diagram extension", default: JsLibratyOptionalEnum.predefined)
     var mermaidExtension: JsLibratyOptionalEnum
     
-    @Parameter(title: "Sub/Superscript extension", default: OptionalBoolEnum.predefined)
-    var subExtension: OptionalBoolEnum
-    
     @Parameter(title: "Strikethrough extension", default: StrikethroughOptionalEnum.predefined)
     var strikethrough: StrikethroughOptionalEnum
     
-    @Parameter(title: "Syntax highlight extension", default: OptionalBoolEnum.predefined)
+    @Parameter(title: "Sub/Superscript", default: OptionalBoolEnum.predefined)
+    var subExtension: OptionalBoolEnum
+    
+    @Parameter(title: "Syntax highlight", default: OptionalBoolEnum.predefined)
     var syntaxHighlight: OptionalBoolEnum
     
-    @Parameter(title: "Table extension", default: OptionalBoolEnum.predefined)
+    @Parameter(title: "Table", default: OptionalBoolEnum.predefined)
     var tableExtension: OptionalBoolEnum
     
     @Parameter(title: "Tag filter", default: OptionalBoolEnum.predefined)
@@ -278,6 +290,9 @@ struct MdToHtmlCode_Extension: AppIntent {
     
     @Parameter(title: "Task list", default: OptionalBoolEnum.predefined)
     var taskExtension: OptionalBoolEnum
+    
+    @Parameter(title: "Wikilinks", default: OptionalBoolEnum.predefined)
+    var wikilinkExtension: OptionalBoolEnum
     
     @Parameter(title: "YAML header", default: YamlOptionalEnum.predefined)
     var yamlExtension: YamlOptionalEnum
@@ -302,20 +317,24 @@ struct MdToHtmlCode_Extension: AppIntent {
         validateUTF8.updateValue(state: &settings.validateUTFOption)
         showDebugInfo.updateValue(state: &settings.debug)
         renderAsSource.updateValue(state: &settings.renderAsCode)
+        
         autolink.updateValue(state: &settings.autoLinkExtension)
+        definitionExtension.updateValue(state: &settings.definitionListExtension)
         emojiReplacement.updateValue(state: &settings.emojiExtension)
+        alertExtension.updateValue(state: &settings.alertExtension)
+        mentionExtension.updateValue(state: &settings.mentionExtension)
         headsAnchor.updateValue(state: &settings.headsExtension)
         highlight.updateValue(state: &settings.highlightExtension)
         inlineLocalImages.updateValue(state: &settings.inlineImageExtension)
         mathExtension.updateValue(state: &settings.mathExtension)
         mermaidExtension.updateValue(state: &settings.mermaidExtension)
         subExtension.updateValue(state: &settings.subExtension)
-        subExtension.updateValue(state: &settings.supExtension)
         strikethrough.updateValue(state: &settings.strikethroughExtension)
         syntaxHighlight.updateValue(state: &settings.syntaxHighlightExtension)
         tableExtension.updateValue(state: &settings.tableExtension)
         tagFilter.updateValue(state: &settings.tagFilterExtension)
         taskExtension.updateValue(state: &settings.taskListExtension)
+        wikilinkExtension.updateValue(state: &settings.wikilinkExtension)
         yamlExtension.updateValue(state: &settings.yamlExtension)
         
         settings.sanitize()

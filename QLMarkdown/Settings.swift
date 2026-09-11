@@ -239,46 +239,53 @@ extension NSNotification.Name {
 class Settings: Codable {
     enum CodingKeys: String, CodingKey {
         case appearance
-        case autoLinkExtension
-        case checkboxExtension
-        case headsExtension
-        case definitionListExtension
-        case hightlightExtension
-        case inlineImageExtension
-        case mathExtension
-        case mermaidExtension
-        case mentionExtension
-        case wikilinkExtension
-        case subExtension
-        case supExtension
-        case alertExtension
-        case tableExtension
-        case tagFilterExtension
-        case taskListExtension
-        case yamlExtension
-        case emojiExtension
-        case strikethroughExtension
-        case syntaxHighlightExtension
-        case syntaxWordWrapOption
-        case syntaxLineNumbersOption
-        case syntaxTabsOption
-        case footnotesOption
-        case hardBreakOption
-        case noSoftBreakOption
-        case unsafeHTMLOption
-        case smartQuotesOption
-        case validateUTFOption
+        
         case baseFontSize
         case customCSS
         case customCSSCode
         case customCSSCodeFetched
         case customCSSOverride
-        case openInlineLink
+        
+        case autoLinkExtension
+        case definitionListExtension
+        case emojiExtension
+        case alertExtension
+        case mentionExtension
+        case headsExtension
+        case hightlightExtension
+        case inlineImageExtension
+        case mathExtension
+        case mermaidExtension
+        case subExtension
+        case supExtension
+        case strikethroughExtension
+        case syntaxHighlightExtension
+        case syntaxLineNumbersOption
+        case syntaxTabsOption
+        case syntaxWordWrapOption
+        case tableExtension
+        case tagFilterExtension
+        case taskListExtension
+        case wikilinkExtension
+        case yamlExtension
+        
+        case checkboxExtension
+        
+        case smartQuotesOption
+        case footnotesOption
+        case hardBreakOption
+        case noSoftBreakOption
+        case unsafeHTMLOption
+        case validateUTFOption
+        case debug
         case renderAsCode
+        
+        case openInlineLink
+        
         case qlWindowWidth
         case qlWindowHeight
+        
         case about
-        case debug
     }
 
     // MARK: - Static properties and methods
@@ -470,36 +477,6 @@ class Settings: Codable {
     // MARK: - Instance properties and methods
     
     var appearance: Appearance = .undefined
-    var autoLinkExtension: Bool = true
-    var checkboxExtension: Bool = false
-    var headsExtension: Bool = true
-    var definitionListExtension: Bool = false
-    var highlightExtension: Bool = false
-    var inlineImageExtension: Bool = true
-    var mathExtension: JSExtension = .link(url: nil)
-    var mermaidExtension: JSExtension = .link(url: nil)
-    var mentionExtension: Bool = false
-    var wikilinkExtension: Bool = false
-    var subExtension: Bool = false
-    var supExtension: Bool = false
-    var alertExtension: Bool = false
-    var tableExtension: Bool = true
-    var tagFilterExtension: Bool = true
-    var taskListExtension: Bool = true
-    var yamlExtension: YamlMode = .onlyRmd
-    var emojiExtension: EmojiMode = .font
-    var strikethroughExtension: StrikethroughMode = .single
-    var syntaxHighlightExtension: Bool = true
-    var syntaxWordWrapOption: Int = 0
-    var syntaxLineNumbersOption: Bool = false
-    var syntaxTabsOption: Int = 4
-
-    var footnotesOption: Bool = true
-    var hardBreakOption: Bool = false
-    var noSoftBreakOption: Bool = false
-    var unsafeHTMLOption: Bool = true
-    var smartQuotesOption: Bool = true
-    var validateUTFOption: Bool = false
     
     var baseFontSize: CGFloat = 0
     var customCSS: URL? {
@@ -512,8 +489,42 @@ class Settings: Codable {
     var customCSSCode: String?
     var customCSSOverride: Bool = false
     
-    var openInlineLink: Bool = false
+    var autoLinkExtension: Bool = true
+    var definitionListExtension: Bool = false
+    var emojiExtension: EmojiMode = .font
+    var alertExtension: Bool = false
+    var mentionExtension: Bool = false
+    var headsExtension: Bool = true
+    var highlightExtension: Bool = false
+    var inlineImageExtension: Bool = true
+    var mathExtension: JSExtension = .link(url: nil)
+    var mermaidExtension: JSExtension = .link(url: nil)
+    var subExtension: Bool = false
+    var supExtension: Bool = false
+    var strikethroughExtension: StrikethroughMode = .single
+    var syntaxHighlightExtension: Bool = true
+    var syntaxLineNumbersOption: Bool = false
+    var syntaxTabsOption: Int = 4
+    var syntaxWordWrapOption: Int = 0
+    var tableExtension: Bool = true
+    var tagFilterExtension: Bool = true
+    var taskListExtension: Bool = true
+    var wikilinkExtension: Bool = false
+    var yamlExtension: YamlMode = .onlyRmd
+    
+    var checkboxExtension: Bool = false
+    
+    var smartQuotesOption: Bool = true
+    var footnotesOption: Bool = true
+    var hardBreakOption: Bool = false
+    var noSoftBreakOption: Bool = false
+    var unsafeHTMLOption: Bool = true
+    var validateUTFOption: Bool = false
+    /// Show debug infomations.
+    var debug: Bool = false
     var renderAsCode: Bool = false
+    
+    var openInlineLink: Bool = false
 
     /// Quick Look window width.
     var qlWindowWidth: Int? = nil
@@ -534,6 +545,7 @@ class Settings: Codable {
             return self.autoQLWindowSize
         }
     }
+    
     /// Size used when no custom size is set. Fitted to the content column of the style in use.
     var autoQLWindowSize: CGSize {
         if let column = self.contentColumnWidth {
@@ -548,9 +560,6 @@ class Settings: Codable {
     /// Show the informative message on the footer.
     var about: Bool = true
     
-    /// Show debug infomations.
-    var debug: Bool = false
-    
     lazy fileprivate(set) var resourceBundle: Bundle = {
         return Self.getResourceBundle()
     }()
@@ -559,44 +568,6 @@ class Settings: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self.appearance = try container.decode(Appearance.self, forKey: .appearance)
-        self.tableExtension = try container.decode(Bool.self, forKey: .tableExtension)
-        self.autoLinkExtension = try container.decode(Bool.self, forKey:.autoLinkExtension)
-        self.tagFilterExtension = try container.decode(Bool.self, forKey: .tagFilterExtension)
-        self.taskListExtension = try container.decode(Bool.self, forKey: .taskListExtension)
-        
-        self.yamlExtension = try container.decode(YamlMode.self, forKey: .yamlExtension)
-    
-        self.strikethroughExtension = try container.decode(StrikethroughMode.self, forKey:.strikethroughExtension)
-        
-        self.mathExtension = try container.decode(JSExtension.self, forKey:.mathExtension)
-        self.mermaidExtension = try container.decode(JSExtension.self, forKey:.mermaidExtension)
-        
-        self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
-        self.wikilinkExtension = try container.decode(Bool.self, forKey:.wikilinkExtension)
-        self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
-        self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
-        self.definitionListExtension = try container.decodeIfPresent(Bool.self, forKey: .definitionListExtension) ?? false
-        self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
-       
-        self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
-        self.syntaxWordWrapOption = try container.decode(Int.self, forKey: .syntaxWordWrapOption)
-        self.syntaxLineNumbersOption = try container.decode(Bool.self, forKey: .syntaxLineNumbersOption)
-        self.syntaxTabsOption = try container.decode(Int.self, forKey: .syntaxTabsOption)
-        
-        self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
-        self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
-        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? false
-        
-        self.emojiExtension = try container.decode(EmojiMode.self, forKey:.emojiExtension)
-        
-        self.inlineImageExtension = try container.decode(Bool.self, forKey:.inlineImageExtension)
-        
-        self.hardBreakOption = try container.decode(Bool.self, forKey: .hardBreakOption)
-        self.noSoftBreakOption = try container.decode(Bool.self, forKey: .noSoftBreakOption)
-        self.unsafeHTMLOption = try container.decode(Bool.self, forKey: .unsafeHTMLOption)
-        self.validateUTFOption = try container.decode(Bool.self, forKey: .validateUTFOption)
-        self.smartQuotesOption = try container.decode(Bool.self, forKey: .smartQuotesOption)
-        self.footnotesOption = try container.decode(Bool.self, forKey: .footnotesOption)
         
         self.baseFontSize = try container.decode(CGFloat.self, forKey: .baseFontSize)
         self.customCSS = try container.decode(URL?.self, forKey: .customCSS)
@@ -604,14 +575,46 @@ class Settings: Codable {
         self.customCSSCode = try container.decode(String?.self, forKey: .customCSSCode)
         self.customCSSOverride = try container.decode(Bool.self, forKey: .customCSSOverride)
         
-        self.about = try container.decode(Bool.self, forKey: .about)
+        self.autoLinkExtension = try container.decode(Bool.self, forKey:.autoLinkExtension)
+        self.definitionListExtension = try container.decodeIfPresent(Bool.self, forKey: .definitionListExtension) ?? false
+        self.emojiExtension = try container.decode(EmojiMode.self, forKey:.emojiExtension)
+        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? false
+        self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
+        self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
+        self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
+        self.inlineImageExtension = try container.decode(Bool.self, forKey:.inlineImageExtension)
+        self.mathExtension = try container.decode(JSExtension.self, forKey:.mathExtension)
+        self.mermaidExtension = try container.decode(JSExtension.self, forKey:.mermaidExtension)
+        self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
+        self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
+        self.strikethroughExtension = try container.decode(StrikethroughMode.self, forKey:.strikethroughExtension)
+        self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
+        self.syntaxLineNumbersOption = try container.decode(Bool.self, forKey: .syntaxLineNumbersOption)
+        self.syntaxTabsOption = try container.decode(Int.self, forKey: .syntaxTabsOption)
+        self.syntaxWordWrapOption = try container.decode(Int.self, forKey: .syntaxWordWrapOption)
+        self.tableExtension = try container.decode(Bool.self, forKey: .tableExtension)
+        self.tagFilterExtension = try container.decode(Bool.self, forKey: .tagFilterExtension)
+        self.taskListExtension = try container.decode(Bool.self, forKey: .taskListExtension)
+        self.wikilinkExtension = try container.decode(Bool.self, forKey:.wikilinkExtension)
+        self.yamlExtension = try container.decode(YamlMode.self, forKey: .yamlExtension)
+        
+        self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
+        
+        self.smartQuotesOption = try container.decode(Bool.self, forKey: .smartQuotesOption)
+        self.footnotesOption = try container.decode(Bool.self, forKey: .footnotesOption)
+        self.hardBreakOption = try container.decode(Bool.self, forKey: .hardBreakOption)
+        self.noSoftBreakOption = try container.decode(Bool.self, forKey: .noSoftBreakOption)
+        self.unsafeHTMLOption = try container.decode(Bool.self, forKey: .unsafeHTMLOption)
+        self.validateUTFOption = try container.decode(Bool.self, forKey: .validateUTFOption)
         self.debug = try container.decode(Bool.self, forKey: .debug)
+        self.renderAsCode = try container.decode(Bool.self, forKey: .renderAsCode)
         
         self.openInlineLink = try container.decode(Bool.self, forKey: .openInlineLink)
-        self.renderAsCode = try container.decode(Bool.self, forKey: .renderAsCode)
-
+        
         self.qlWindowWidth = try container.decode(Int?.self, forKey: .qlWindowWidth)
         self.qlWindowHeight = try container.decode(Int?.self, forKey: .qlWindowHeight)
+        
+        self.about = try container.decode(Bool.self, forKey: .about)
     }
     
     init() { }
@@ -639,44 +642,6 @@ class Settings: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         try container.encode(self.appearance, forKey: .appearance)
-        try container.encode(self.tableExtension, forKey: .tableExtension)
-        try container.encode(self.autoLinkExtension, forKey: .autoLinkExtension)
-        try container.encode(self.tagFilterExtension, forKey: .tagFilterExtension)
-        try container.encode(self.taskListExtension, forKey: .taskListExtension)
-    
-        try container.encode(self.yamlExtension, forKey: .yamlExtension)
-    
-        try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
-        
-        try container.encode(self.mathExtension, forKey: .mathExtension)
-        try container.encode(self.mermaidExtension, forKey: .mermaidExtension)
-        
-        try container.encode(self.mentionExtension, forKey: .mentionExtension)
-        try container.encode(self.wikilinkExtension, forKey: .wikilinkExtension)
-        try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
-        try container.encode(self.headsExtension, forKey: .headsExtension)
-        try container.encode(self.definitionListExtension, forKey: .definitionListExtension)
-        try container.encode(self.highlightExtension, forKey: .hightlightExtension)
-        
-        try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
-        try container.encode(self.syntaxWordWrapOption, forKey: .syntaxWordWrapOption)
-        try container.encode(self.syntaxLineNumbersOption, forKey: .syntaxLineNumbersOption)
-        try container.encode(self.syntaxTabsOption, forKey: .syntaxTabsOption)
-        
-        try container.encode(self.subExtension, forKey: .subExtension)
-        try container.encode(self.supExtension, forKey: .supExtension)
-        try container.encode(self.alertExtension, forKey: .alertExtension)
-        
-        try container.encode(self.emojiExtension, forKey: .emojiExtension)
-        
-        try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
-    
-        try container.encode(self.hardBreakOption, forKey: .hardBreakOption)
-        try container.encode(self.noSoftBreakOption, forKey: .noSoftBreakOption)
-        try container.encode(self.unsafeHTMLOption, forKey: .unsafeHTMLOption)
-        try container.encode(self.validateUTFOption, forKey: .validateUTFOption)
-        try container.encode(self.smartQuotesOption, forKey: .smartQuotesOption)
-        try container.encode(self.footnotesOption, forKey: .footnotesOption)
         
         try container.encode(self.baseFontSize, forKey: .baseFontSize)
         try container.encode(self.customCSS, forKey: .customCSS)
@@ -684,14 +649,46 @@ class Settings: Codable {
         try container.encode(self.customCSSFetched, forKey: .customCSSCodeFetched)
         try container.encode(self.customCSSOverride, forKey: .customCSSOverride)
         
-        try container.encode(self.about, forKey: .about)
-        try container.encode(self.debug, forKey: .debug)
+        try container.encode(self.autoLinkExtension, forKey: .autoLinkExtension)
+        try container.encode(self.definitionListExtension, forKey: .definitionListExtension)
+        try container.encode(self.emojiExtension, forKey: .emojiExtension)
+        try container.encode(self.alertExtension, forKey: .alertExtension)
+        try container.encode(self.mentionExtension, forKey: .mentionExtension)
+        try container.encode(self.headsExtension, forKey: .headsExtension)
+        try container.encode(self.highlightExtension, forKey: .hightlightExtension)
+        try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
+        try container.encode(self.mathExtension, forKey: .mathExtension)
+        try container.encode(self.mermaidExtension, forKey: .mermaidExtension)
+        try container.encode(self.subExtension, forKey: .subExtension)
+        try container.encode(self.supExtension, forKey: .supExtension)
+        try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
+        try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
+        try container.encode(self.syntaxLineNumbersOption, forKey: .syntaxLineNumbersOption)
+        try container.encode(self.syntaxTabsOption, forKey: .syntaxTabsOption)
+        try container.encode(self.syntaxWordWrapOption, forKey: .syntaxWordWrapOption)
+        try container.encode(self.tableExtension, forKey: .tableExtension)
+        try container.encode(self.tagFilterExtension, forKey: .tagFilterExtension)
+        try container.encode(self.taskListExtension, forKey: .taskListExtension)
+        try container.encode(self.wikilinkExtension, forKey: .wikilinkExtension)
+        try container.encode(self.yamlExtension, forKey: .yamlExtension)
     
-        try container.encode(self.openInlineLink, forKey: .openInlineLink)
+        try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
+        
+        try container.encode(self.smartQuotesOption, forKey: .smartQuotesOption)
+        try container.encode(self.footnotesOption, forKey: .footnotesOption)
+        try container.encode(self.hardBreakOption, forKey: .hardBreakOption)
+        try container.encode(self.noSoftBreakOption, forKey: .noSoftBreakOption)
+        try container.encode(self.unsafeHTMLOption, forKey: .unsafeHTMLOption)
+        try container.encode(self.validateUTFOption, forKey: .validateUTFOption)
+        try container.encode(self.debug, forKey: .debug)
         try container.encode(self.renderAsCode, forKey: .renderAsCode)
+        
+        try container.encode(self.openInlineLink, forKey: .openInlineLink)
 
         try container.encode(self.qlWindowWidth, forKey: .qlWindowWidth)
         try container.encode(self.qlWindowHeight, forKey: .qlWindowHeight)
+        
+        try container.encode(self.about, forKey: .about)
     }
     
     func initFromDefaults() {
@@ -735,60 +732,52 @@ class Settings: Codable {
     func update(from s: Settings) {
         self.appearance = s.appearance
         
-        self.tableExtension = s.tableExtension
-        self.autoLinkExtension = s.autoLinkExtension
-        self.tagFilterExtension = s.tagFilterExtension
-        self.taskListExtension = s.taskListExtension
-        
-        self.yamlExtension = s.yamlExtension
-        
-        self.strikethroughExtension = s.strikethroughExtension
-        
-        self.mathExtension = s.mathExtension
-        self.mermaidExtension = s.mermaidExtension
-        self.mentionExtension = s.mentionExtension
-        self.wikilinkExtension = s.wikilinkExtension
-        self.checkboxExtension = s.checkboxExtension
-        self.headsExtension = s.headsExtension
-        self.definitionListExtension = s.definitionListExtension
-
-        self.highlightExtension = s.highlightExtension
-        
-        self.syntaxHighlightExtension = s.syntaxHighlightExtension
-        self.syntaxWordWrapOption = s.syntaxWordWrapOption
-        self.syntaxLineNumbersOption = s.syntaxLineNumbersOption
-        self.syntaxTabsOption = s.syntaxTabsOption
-        
-        self.subExtension = s.subExtension
-        self.supExtension = s.supExtension
-        self.alertExtension = s.alertExtension
-        
-        self.emojiExtension = s.emojiExtension
-        
-        self.inlineImageExtension = s.inlineImageExtension
-        
-        self.hardBreakOption = s.hardBreakOption
-        self.noSoftBreakOption = s.noSoftBreakOption
-        self.unsafeHTMLOption = s.unsafeHTMLOption
-        self.validateUTFOption = s.validateUTFOption
-        self.smartQuotesOption = s.smartQuotesOption
-        self.footnotesOption = s.footnotesOption
-        
         self.baseFontSize = s.baseFontSize
         self.customCSS = s.customCSS
         self.customCSSCode = s.customCSSCode
         self.customCSSFetched = s.customCSSFetched
         self.customCSSOverride = s.customCSSOverride
         
-        self.about = s.about
+        self.autoLinkExtension = s.autoLinkExtension
+        self.definitionListExtension = s.definitionListExtension
+        self.emojiExtension = s.emojiExtension
+        self.alertExtension = s.alertExtension
+        self.mentionExtension = s.mentionExtension
+        self.headsExtension = s.headsExtension
+        self.highlightExtension = s.highlightExtension
+        self.inlineImageExtension = s.inlineImageExtension
+        self.mathExtension = s.mathExtension
+        self.mermaidExtension = s.mermaidExtension
+        self.subExtension = s.subExtension
+        self.supExtension = s.supExtension
+        self.strikethroughExtension = s.strikethroughExtension
+        self.syntaxHighlightExtension = s.syntaxHighlightExtension
+        self.syntaxLineNumbersOption = s.syntaxLineNumbersOption
+        self.syntaxTabsOption = s.syntaxTabsOption
+        self.syntaxWordWrapOption = s.syntaxWordWrapOption
+        self.tableExtension = s.tableExtension
+        self.tagFilterExtension = s.tagFilterExtension
+        self.taskListExtension = s.taskListExtension
+        self.wikilinkExtension = s.wikilinkExtension
+        self.yamlExtension = s.yamlExtension
+        
+        self.checkboxExtension = s.checkboxExtension
+        
+        self.smartQuotesOption = s.smartQuotesOption
+        self.footnotesOption = s.footnotesOption
+        self.hardBreakOption = s.hardBreakOption
+        self.noSoftBreakOption = s.noSoftBreakOption
+        self.unsafeHTMLOption = s.unsafeHTMLOption
+        self.validateUTFOption = s.validateUTFOption
         self.debug = s.debug
+        self.renderAsCode = s.renderAsCode
         
         self.openInlineLink = s.openInlineLink
         
-        self.renderAsCode = s.renderAsCode
-        
         self.qlWindowWidth = s.qlWindowWidth
         self.qlWindowHeight = s.qlWindowHeight
+        
+        self.about = s.about
     }
     
     /**
@@ -799,58 +788,61 @@ class Settings: Codable {
             appearance = state
         }
         
-        if let ext = defaultsDomain[Self.CodingKeys.tableExtension.rawValue] as? Bool {
-            tableExtension = ext
+        if let opt = defaultsDomain[Self.CodingKeys.baseFontSize.rawValue] as? CGFloat {
+            baseFontSize = opt
         }
+        if let opt = defaultsDomain[Self.CodingKeys.customCSS.rawValue] as? String, !opt.isEmpty {
+            if !opt.hasPrefix("/"), let path = Settings.stylesFolder{
+                customCSS = path.appendingPathComponent(opt)
+            } else {
+                customCSS = URL(fileURLWithPath: opt)
+            }
+        }
+        if let opt = defaultsDomain[Self.CodingKeys.customCSSOverride.rawValue] as? Bool {
+            customCSSOverride = opt
+        }
+        
         if let ext = defaultsDomain[Self.CodingKeys.autoLinkExtension.rawValue] as? Bool {
             autoLinkExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.tagFilterExtension.rawValue] as? Bool {
-            tagFilterExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.definitionListExtension.rawValue] as? Bool {
+            definitionListExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.taskListExtension.rawValue] as? Bool {
-            taskListExtension = ext
+        if let n = defaultsDomain[Self.CodingKeys.emojiExtension.rawValue] as? Int, let ext = EmojiMode(rawValue: n) {
+            emojiExtension = ext
         }
-        if let n = defaultsDomain[Self.CodingKeys.yamlExtension.rawValue] as? Int, let ext = YamlMode(rawValue: n) {
-            yamlExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.alertExtension.rawValue] as? Bool {
+            alertExtension = ext
         }
-        
-        if let n = defaultsDomain[Self.CodingKeys.strikethroughExtension.rawValue] as? Int, let ext = StrikethroughMode(rawValue: n) {
-            strikethroughExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.mentionExtension.rawValue] as? Bool {
+            mentionExtension = ext
         }
-        
+        if let ext = defaultsDomain[Self.CodingKeys.headsExtension.rawValue] as? Bool {
+            headsExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.hightlightExtension.rawValue] as? Bool {
+            highlightExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.inlineImageExtension.rawValue] as? Bool {
+            inlineImageExtension = ext
+        }
         if let ext = defaultsDomain[Self.CodingKeys.mathExtension.rawValue] as? [String: Any] {
             mathExtension = JSExtension(from: ext) ?? .disabled
         }
         if let ext = defaultsDomain[Self.CodingKeys.mermaidExtension.rawValue] as? [String: Any] {
             mermaidExtension = JSExtension(from: ext) ?? .disabled
         }
-        if let ext = defaultsDomain[Self.CodingKeys.mentionExtension.rawValue] as? Bool {
-            mentionExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
+            subExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.wikilinkExtension.rawValue] as? Bool {
-            wikilinkExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
+            supExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.checkboxExtension.rawValue] as? Bool {
-            checkboxExtension = ext
+        if let n = defaultsDomain[Self.CodingKeys.strikethroughExtension.rawValue] as? Int, let ext = StrikethroughMode(rawValue: n) {
+            strikethroughExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.headsExtension.rawValue] as? Bool {
-            headsExtension = ext
-        }
-        if let ext = defaultsDomain[Self.CodingKeys.definitionListExtension.rawValue] as? Bool {
-            definitionListExtension = ext
-        }
-        
-        if let ext = defaultsDomain[Self.CodingKeys.hightlightExtension.rawValue] as? Bool {
-            highlightExtension = ext
-        }
-        
         if let ext = defaultsDomain[Self.CodingKeys.syntaxHighlightExtension.rawValue] as? Bool {
             syntaxHighlightExtension = ext
-        }
-        
-        if let characters = defaultsDomain[Self.CodingKeys.syntaxWordWrapOption.rawValue] as? Int {
-            syntaxWordWrapOption = characters
         }
         if let state = defaultsDomain[Self.CodingKeys.syntaxLineNumbersOption.rawValue] as? Bool {
             syntaxLineNumbersOption = state
@@ -858,25 +850,35 @@ class Settings: Codable {
         if let n = defaultsDomain[Self.CodingKeys.syntaxTabsOption.rawValue] as? Int {
             syntaxTabsOption = n
         }
+        if let characters = defaultsDomain[Self.CodingKeys.syntaxWordWrapOption.rawValue] as? Int {
+            syntaxWordWrapOption = characters
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.tableExtension.rawValue] as? Bool {
+            tableExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.tagFilterExtension.rawValue] as? Bool {
+            tagFilterExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.taskListExtension.rawValue] as? Bool {
+            taskListExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.wikilinkExtension.rawValue] as? Bool {
+            wikilinkExtension = ext
+        }
+        if let n = defaultsDomain[Self.CodingKeys.yamlExtension.rawValue] as? Int, let ext = YamlMode(rawValue: n) {
+            yamlExtension = ext
+        }
         
-        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
-            subExtension = ext
-        }
-        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
-            supExtension = ext
-        }
-        if let ext = defaultsDomain[Self.CodingKeys.alertExtension.rawValue] as? Bool {
-            alertExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.checkboxExtension.rawValue] as? Bool {
+            checkboxExtension = ext
         }
         
-        if let n = defaultsDomain[Self.CodingKeys.emojiExtension.rawValue] as? Int, let ext = EmojiMode(rawValue: n) {
-            emojiExtension = ext
+        if let opt = defaultsDomain[Self.CodingKeys.smartQuotesOption.rawValue] as? Bool {
+            smartQuotesOption = opt
         }
-        
-        if let ext = defaultsDomain[Self.CodingKeys.inlineImageExtension.rawValue] as? Bool {
-            inlineImageExtension = ext
+        if let opt = defaultsDomain[Self.CodingKeys.footnotesOption.rawValue] as? Bool {
+            footnotesOption = opt
         }
-        
         if let opt = defaultsDomain[Self.CodingKeys.hardBreakOption.rawValue] as? Bool {
             hardBreakOption = opt
         }
@@ -889,42 +891,17 @@ class Settings: Codable {
         if let opt = defaultsDomain[Self.CodingKeys.validateUTFOption.rawValue] as? Bool {
             validateUTFOption = opt
         }
-        if let opt = defaultsDomain[Self.CodingKeys.smartQuotesOption.rawValue] as? Bool {
-            smartQuotesOption = opt
-        }
-        if let opt = defaultsDomain[Self.CodingKeys.footnotesOption.rawValue] as? Bool {
-            footnotesOption = opt
-        }
-        
-        if let opt = defaultsDomain[Self.CodingKeys.baseFontSize.rawValue] as? CGFloat {
-            baseFontSize = opt
-        }
-        
-        if let opt = defaultsDomain[Self.CodingKeys.customCSS.rawValue] as? String, !opt.isEmpty {
-            if !opt.hasPrefix("/"), let path = Settings.stylesFolder{
-                customCSS = path.appendingPathComponent(opt)
-            } else {
-                customCSS = URL(fileURLWithPath: opt)
-            }
-        }
-        if let opt = defaultsDomain[Self.CodingKeys.customCSSOverride.rawValue] as? Bool {
-            customCSSOverride = opt
-        }
-        
-        if let opt = defaultsDomain[Self.CodingKeys.about.rawValue] as? Bool {
-            about = opt
-        }
-        
         if let opt = defaultsDomain[Self.CodingKeys.debug.rawValue] as? Bool {
             debug = opt
+        }
+        if let opt = defaultsDomain[Self.CodingKeys.renderAsCode.rawValue] as? Bool {
+            renderAsCode = opt
         }
         
         if let opt = defaultsDomain[Self.CodingKeys.openInlineLink.rawValue] as? Bool {
             openInlineLink = opt
         }
-        if let opt = defaultsDomain[Self.CodingKeys.renderAsCode.rawValue] as? Bool {
-            renderAsCode = opt
-        }
+        
         if let opt = defaultsDomain[Self.CodingKeys.qlWindowWidth.rawValue] as? Int, opt > 0 {
             qlWindowWidth = opt
         } else {
@@ -934,6 +911,10 @@ class Settings: Codable {
             qlWindowHeight = opt
         } else {
             qlWindowHeight = nil
+        }
+        
+        if let opt = defaultsDomain[Self.CodingKeys.about.rawValue] as? Bool {
+            about = opt
         }
 
         sanitize()

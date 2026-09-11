@@ -3,6 +3,12 @@
   "strings" : {
     "all files" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "todos los archivos"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13,6 +19,12 @@
     },
     "Allow inline HTML (unsafe)" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permitir HTML en línea (no seguro)"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23,6 +35,12 @@
     },
     "Autolink" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autoenlace"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33,6 +51,12 @@
     },
     "Convert ${inputFile} into a HTML file." : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convertir ${inputFile} en un archivo HTML."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -43,6 +67,12 @@
     },
     "Convert a Markdown file to HTML." : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convierte un archivo Markdown a HTML."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,9 +81,43 @@
         }
       }
     },
-    "Diagram extension" : {
+    "Definition list" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definizioni"
+          }
+        }
+      }
+    },
+    "Developed by SBAREX with ❤️ | <a href=\"%@\">%@</a>" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desarrollado por SBAREX con ❤️ | <a href=\"%@\">%@</a>"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sviluppato da SBAREX con ❤️ | <a href=\"%@\">%@</a>"
+          }
+        }
+      }
+    },
+    "Diagram extension" : {
+      "comment" : "Convert Mermaid code in to html diagrams.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagramas"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -64,46 +128,76 @@
     },
     "Embed local images" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incrustar imágenes locales"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Incapsula immagini locali"
+            "value" : "Incorpora immagini locali"
           }
         }
       }
     },
     "Emoji option state" : {
       "localizations" : {
-        "it" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Emoji"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzioni per le Emoji"
           }
         }
       }
     },
     "Emoji replacement" : {
       "localizations" : {
-        "it" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Emoji"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sostituzione delle Emoji"
           }
         }
       }
     },
     "Footnotes" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notas al pie"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Note di pié pagina"
+            "value" : "Note pié di pagina"
           }
         }
       }
     },
     "Format ${inputFile} in an HTML code (${generateFullCode})." : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatear ${inputFile} como código HTML (${generateFullCode})."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -114,6 +208,12 @@
     },
     "Format a markdown file to HTML" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatear un archivo Markdown como HTML"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -124,6 +224,12 @@
     },
     "Generate a complete HTML page or only the body fragment." : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Genera una página HTML completa o solo el fragmento del cuerpo."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -132,11 +238,56 @@
         }
       }
     },
+    "GitHub alert" : {
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvisi GitHub"
+          }
+        }
+      }
+    },
+    "GitHub mention" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mención de GitHub"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menzioni GitHub"
+          }
+        }
+      }
+    },
     "Hard breaks" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saltos duros"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forza a capo"
+          }
+        }
+      }
     },
     "Heads anchor" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anclas en encabezados"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -147,6 +298,12 @@
     },
     "Highlight" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resaltado"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -155,12 +312,52 @@
         }
       }
     },
+    "Highlight extension" : {
+      "comment" : "Enable the highlight of text inside `==`.",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resaltado"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evidenziatore"
+          }
+        }
+      }
+    },
     "HTML code generation" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generación de código HTML"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Generazione del codice HTML"
+          }
+        }
+      }
+    },
+    "If you find it useful and you have the possibility, consider <a href=\"https://buymeacoffee.com/sbarex\"><b>buying me a coffee!</b></a>" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si te gusta esta app, <a href='https://www.buymeacoffee.com/sbarex'><strong>invítame a un café</strong></a>!"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se trovi utile questa applicazione e ne hai la possibilità, valuta di <a href=\"https://buymeacoffee.com/sbarex\"><b>buying me a coffee!</b></a>"
           }
         }
       }
@@ -173,6 +370,12 @@
             "value" : "Markdown file"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo Markdown"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -183,6 +386,12 @@
     },
     "linked from web" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "biblioteca js desde la web"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -193,10 +402,16 @@
     },
     "locally embedded" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "biblioteca js incrustada"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "libreria js incapsulata"
+            "value" : "libreria js incorporata"
           }
         }
       }
@@ -204,6 +419,12 @@
     "Markdown convert" : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convertir archivo Markdown"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -214,6 +435,12 @@
     },
     "Markdown format" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatear archivo Markdown"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -222,21 +449,56 @@
         }
       }
     },
-    "Math extension" : {
+    "Math expression" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extensión Math"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Formule matematiche"
+            "value" : "Espressioni matematiche"
+          }
+        }
+      }
+    },
+    "Math extension" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fórmulas matemáticas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espressioni matematiche"
           }
         }
       }
     },
     "No soft breaks" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin saltos suaves"
+          }
+        }
+      }
     },
     "off" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "desactivado"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -247,6 +509,12 @@
     },
     "on" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "activado"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +525,12 @@
     },
     "only for .rmd and .qmd files" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo para archivos .rmd y .qmd"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -267,6 +541,12 @@
     },
     "Option state" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opción"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -283,9 +563,15 @@
             "value" : "complete code"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "código completo"
+          }
+        },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "codice completo"
           }
         }
@@ -293,6 +579,12 @@
     },
     "predefined" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "predefinido"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -303,6 +595,12 @@
     },
     "recognize double ~" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "reconocer doble ~"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -313,6 +611,12 @@
     },
     "recognize single ~" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "reconocer una sola ~"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -323,6 +627,12 @@
     },
     "Render as source code" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Renderizar como código fuente"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -333,6 +643,12 @@
     },
     "replace using font" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sustituir usando la fuente"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -343,6 +659,12 @@
     },
     "replace using images" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sustituir con imágenes"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -353,6 +675,12 @@
     },
     "Show debug info" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Información de depuración"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -363,6 +691,12 @@
     },
     "Smart quotes" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comillas tipográficas"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -373,6 +707,12 @@
     },
     "snippet" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "fragmento"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -381,8 +721,30 @@
         }
       }
     },
+    "Strikethrough" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texto tachado"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Testo barrato"
+          }
+        }
+      }
+    },
     "Strikethrough extension" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texto tachado"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -393,36 +755,63 @@
     },
     "Strikethrough option state" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Texto tachado"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Testo barrato"
+            "value" : "Opzioni per il testo barrato"
           }
         }
       }
     },
-    "Sub/Superscript extension" : {
+    "Sub/Superscript" : {
+      "comment" : "Sub/Superscript option for Markdown conversion.",
+      "isCommentAutoGenerated" : true,
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superíndice/subíndice"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apice/pedice"
+            "value" : "Apice/Pedice"
           }
         }
       }
     },
-    "Syntax highlight extension" : {
+    "Syntax highlight" : {
+      "comment" : "Highlight syntax of fanced code blocks.",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resaltado de sintaxis en bloques de código"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sintassi nei blocchi di codice"
+            "value" : "Evidenzia sintassi del codice"
           }
         }
       }
     },
-    "Table extension" : {
+    "Table" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tablas"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -433,6 +822,12 @@
     },
     "Tag filter" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrar etiquetas HTML"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -442,11 +837,30 @@
       }
     },
     "Task list" : {
-
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lista de tareas"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elenco delle attività"
+          }
+        }
+      }
     },
     "The Markdown file to convert." : {
       "extractionState" : "manual",
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo Markdown que se convertirá."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -457,6 +871,12 @@
     },
     "The Markdown file to format." : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Archivo Markdown que se formateará."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -467,16 +887,50 @@
     },
     "Validate UTF8" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valida UTF-8"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Validar UTF-8"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Valida UTF8"
+            "value" : "Valida UTF-8"
+          }
+        }
+      }
+    },
+    "Wikilinks" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wikilinks"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wikilinks"
           }
         }
       }
     },
     "YAML header" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cabecera YAML"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,14 +941,20 @@
     },
     "YAML header option state" : {
       "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opción de cabecera YAML"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opzione Intestazione YAML"
+            "value" : "Opzioni per l’Intestazione YAML"
           }
         }
       }
     }
   },
-  "version" : "1.0"
+  "version" : "1.1"
 }

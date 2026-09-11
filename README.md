@@ -92,6 +92,8 @@ Support files can be deleted by removing the folder `~/Library/Group Containers/
 For maximum compatibility with the Markdown format, the [`cmark-gfm`](https://github.com/github/cmark-gfm) library is used. The library is a GitHub fork of the standard cmark tool to [process the Markdown files](https://github.github.com/gfm/). 
 
 Compared to the `cmark-gfm`, these extensions have been added:
+- `Definition list`.
+- `GitHub alert`: GitHub-style alerts.
 - [`Emoji`](#emoji): translate the emoji shortcodes like `:smile:` to :smile:.
 - [`Heads anchors`](#heads-anchors): create anchors for the heads.
 - `Highlight`: highlight the text contained between the markers `==`.
@@ -101,6 +103,7 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - [`Math`](#mathematical-expressions): format the mathematical expressions with the MathJax library.
 - [`Mermaid`](#mermaid-diagrams): render the diagrams with the Mermaid library.
 - [`Syntax highlighting`](#syntax-highlighting): highlight the code inside fenced block.
+- `Wikilinks`.
 - [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` or `qmd` files.
 
 
@@ -161,7 +164,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Smart quotes|Convert straight quotes to curly, ```---``` to _em dashes_ and ```--``` to _en dashes_.|
 |Footnotes|Parse the footnotes. **Superscript extension must be disabled.**|
 |Hard break|Render `softbreak` elements as hard line breaks.|
-|No soft break|Render `softbreak` elements as spaces.|
+|No soft break|Render `softbreak` elements as spaces. Has no visual effect on HTML formatting.|
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|
 |Validate UTF|Validate UTF-8 in the input before parsing, replacing illegal sequences with the standard replacement character (U+FFFD &#xFFFD;).|
 |Show about info|Insert a footer with info about the QLMarkdown app.|
@@ -175,6 +178,8 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |:--|:--|
 |Autolink|Automatically translate URL to link and parse email addresses.|
 |Emoji|Enable the [Emoji extension](#emoji).|
+|Definition list|Render definition lists (a term line followed by `: description` lines).|
+|GitHub alert|GitHub-style alerts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`) rendered as colored callouts.|
 |GitHub mentions|Translate mentions to link to the GitHub account.|
 |<a name="heads-anchors"></a>Heads anchors|Create anchors for the heads to use as cross internal reference. Each anchor is named with the lowercased caption, stripped of any punctuation marks (except the dash and the underscore) and each space replaced with a dash (`-`). UTF8 character encoding is supported.|
 |Highlight|Highlight the text contained between the markers `==`.|
@@ -187,6 +192,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
 |Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|
 |Task list|Parse task list as defined by the GitHub extension to the standard Markdown language.|
+|Wikilinks|Render `[[Page Name]]` and `[[Target\|Display]]` wikilinks as links.|
 |YAML header|Enable the [YAML header extension](#YAML-header).|
 
 Tou can also choose if open external link inside the Quick Look preview window or in the default browser.

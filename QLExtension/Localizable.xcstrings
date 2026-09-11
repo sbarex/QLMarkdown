@@ -1,0 +1,63 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Developed by SBAREX with ❤️ | <a href=\"%@\">%@</a>" : {
+      "comment" : "Quick Look about developer credit",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Developed by SBAREX with ❤️ | <a href=\"%1$@\">%2$@</a>"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desarrollado por SBAREX con ❤️ | <a href=“%1$@”>%2$@<(a>"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sviluppato da SBAREX con ❤️ | <a href=\"%1$@\">%2$@</a>"
+          }
+        }
+      }
+    },
+    "If you find it useful and you have the possibility, consider <a href=\"https://buymeacoffee.com/sbarex\"><b>buying me a coffee!</b></a>" : {
+      "comment" : "Quick Look about donation link",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si te resulta útil y tienes la posibilidad, considera <a href=\\\"https://buymeacoffee.com/sbarex\\\"><b>invitarme a un café</b></a>"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se trovi utile questa applicazione e ne hai la possibilità, valuta di <a href=\"https://buymeacoffee.com/sbarex\"><b>buying me a coffee!</b></a>"
+          }
+        }
+      }
+    },
+    "Thanks to this application you have viewed over <b>%d files</b>." : {
+      "comment" : "Quick Look about stats",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gracias a esta aplicación has visto más de <b>%d archivos</b>."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grazie a questa applicazione hai visualizzato oltre <b>%d file</b>."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

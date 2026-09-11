@@ -187,46 +187,6 @@ extension Settings {
         
         defaults.set(appearance.rawValue, forKey: Self.CodingKeys.appearance.rawValue)
         
-        defaults.set(tableExtension, forKey: Self.CodingKeys.tableExtension.rawValue)
-        defaults.set(autoLinkExtension, forKey: Self.CodingKeys.autoLinkExtension.rawValue)
-        defaults.set(tagFilterExtension, forKey: Self.CodingKeys.tagFilterExtension.rawValue)
-        defaults.set(taskListExtension, forKey: Self.CodingKeys.taskListExtension.rawValue)
-        defaults.set(yamlExtension.rawValue, forKey: Self.CodingKeys.yamlExtension.rawValue)
-        
-        defaults.set(strikethroughExtension.rawValue, forKey: Self.CodingKeys.strikethroughExtension.rawValue)
-        
-        // Prevent to save the url info if is the predefined value on the math/mermaid extension.
-        defaults.set(mathExtension.stripDefaultUrl(cacheUrl: self.mathJaxFileUrl, cdnUrl: Self.mathJaxWebUrl).toDict(), forKey: Self.CodingKeys.mathExtension.rawValue)
-        defaults.set(mermaidExtension.stripDefaultUrl(cacheUrl: self.mermaidFileUrl, cdnUrl: Self.mermaidWebUrl).toDict(), forKey: Self.CodingKeys.mermaidExtension.rawValue)
-        
-        defaults.set(mentionExtension, forKey: Self.CodingKeys.mentionExtension.rawValue)
-        defaults.set(wikilinkExtension, forKey: Self.CodingKeys.wikilinkExtension.rawValue)
-        defaults.set(checkboxExtension, forKey: Self.CodingKeys.checkboxExtension.rawValue)
-        defaults.set(headsExtension, forKey: Self.CodingKeys.headsExtension.rawValue)
-        
-        defaults.set(highlightExtension, forKey: Self.CodingKeys.hightlightExtension.rawValue)
-        
-        defaults.set(syntaxHighlightExtension, forKey: Self.CodingKeys.syntaxHighlightExtension.rawValue)
-        
-        defaults.set(syntaxWordWrapOption, forKey: Self.CodingKeys.syntaxWordWrapOption.rawValue)
-        defaults.set(syntaxLineNumbersOption, forKey: Self.CodingKeys.syntaxLineNumbersOption.rawValue)
-        defaults.set(syntaxTabsOption, forKey: Self.CodingKeys.syntaxTabsOption.rawValue)
-        
-        defaults.set(subExtension, forKey: Self.CodingKeys.subExtension.rawValue)
-        defaults.set(supExtension, forKey: Self.CodingKeys.supExtension.rawValue)
-        defaults.set(alertExtension, forKey: Self.CodingKeys.alertExtension.rawValue)
-        
-        defaults.set(emojiExtension.rawValue, forKey: Self.CodingKeys.emojiExtension.rawValue)
-        
-        defaults.set(inlineImageExtension, forKey: Self.CodingKeys.inlineImageExtension.rawValue)
-        
-        defaults.set(hardBreakOption, forKey: Self.CodingKeys.hardBreakOption.rawValue)
-        defaults.set(noSoftBreakOption, forKey: Self.CodingKeys.noSoftBreakOption.rawValue)
-        defaults.set(unsafeHTMLOption, forKey: Self.CodingKeys.unsafeHTMLOption.rawValue)
-        defaults.set(validateUTFOption, forKey: Self.CodingKeys.validateUTFOption.rawValue)
-        defaults.set(smartQuotesOption, forKey: Self.CodingKeys.smartQuotesOption.rawValue)
-        defaults.set(footnotesOption, forKey: Self.CodingKeys.footnotesOption.rawValue)
-        
         if baseFontSize > 0 {
             defaults.set(baseFontSize, forKey: Self.CodingKeys.baseFontSize.rawValue)
         } else {
@@ -245,15 +205,49 @@ extension Settings {
             defaults.removeObject(forKey: Self.CodingKeys.customCSS.rawValue)
         }
         defaults.set(customCSSOverride, forKey: Self.CodingKeys.customCSSOverride.rawValue)
-                
-        defaults.set(about, forKey: Self.CodingKeys.about.rawValue)
+        
+        defaults.set(autoLinkExtension, forKey: Self.CodingKeys.autoLinkExtension.rawValue)
+        defaults.set(definitionListExtension, forKey: Self.CodingKeys.definitionListExtension.rawValue)
+        defaults.set(emojiExtension.rawValue, forKey: Self.CodingKeys.emojiExtension.rawValue)
+        defaults.set(alertExtension, forKey: Self.CodingKeys.alertExtension.rawValue)
+        defaults.set(mentionExtension, forKey: Self.CodingKeys.mentionExtension.rawValue)
+        defaults.set(headsExtension, forKey: Self.CodingKeys.headsExtension.rawValue)
+        defaults.set(highlightExtension, forKey: Self.CodingKeys.hightlightExtension.rawValue)
+        defaults.set(inlineImageExtension, forKey: Self.CodingKeys.inlineImageExtension.rawValue)
+        // Prevent to save the url info if is the predefined value on the math/mermaid extension.
+        defaults.set(mathExtension.stripDefaultUrl(cacheUrl: self.mathJaxFileUrl, cdnUrl: Self.mathJaxWebUrl).toDict(), forKey: Self.CodingKeys.mathExtension.rawValue)
+        defaults.set(mermaidExtension.stripDefaultUrl(cacheUrl: self.mermaidFileUrl, cdnUrl: Self.mermaidWebUrl).toDict(), forKey: Self.CodingKeys.mermaidExtension.rawValue)
+        defaults.set(subExtension, forKey: Self.CodingKeys.subExtension.rawValue)
+        defaults.set(supExtension, forKey: Self.CodingKeys.supExtension.rawValue)
+        defaults.set(strikethroughExtension.rawValue, forKey: Self.CodingKeys.strikethroughExtension.rawValue)
+        defaults.set(syntaxHighlightExtension, forKey: Self.CodingKeys.syntaxHighlightExtension.rawValue)
+        defaults.set(syntaxLineNumbersOption, forKey: Self.CodingKeys.syntaxLineNumbersOption.rawValue)
+        defaults.set(syntaxTabsOption, forKey: Self.CodingKeys.syntaxTabsOption.rawValue)
+        defaults.set(syntaxWordWrapOption, forKey: Self.CodingKeys.syntaxWordWrapOption.rawValue)
+        defaults.set(tableExtension, forKey: Self.CodingKeys.tableExtension.rawValue)
+        defaults.set(tagFilterExtension, forKey: Self.CodingKeys.tagFilterExtension.rawValue)
+        defaults.set(taskListExtension, forKey: Self.CodingKeys.taskListExtension.rawValue)
+        defaults.set(wikilinkExtension, forKey: Self.CodingKeys.wikilinkExtension.rawValue)
+        defaults.set(yamlExtension.rawValue, forKey: Self.CodingKeys.yamlExtension.rawValue)
+        
+        defaults.set(checkboxExtension, forKey: Self.CodingKeys.checkboxExtension.rawValue)
+        
+        defaults.set(smartQuotesOption, forKey: Self.CodingKeys.smartQuotesOption.rawValue)
+        defaults.set(footnotesOption, forKey: Self.CodingKeys.footnotesOption.rawValue)
+        defaults.set(hardBreakOption, forKey: Self.CodingKeys.hardBreakOption.rawValue)
+        defaults.set(noSoftBreakOption, forKey: Self.CodingKeys.noSoftBreakOption.rawValue)
+        defaults.set(unsafeHTMLOption, forKey: Self.CodingKeys.unsafeHTMLOption.rawValue)
+        defaults.set(validateUTFOption, forKey: Self.CodingKeys.validateUTFOption.rawValue)
         defaults.set(debug, forKey: Self.CodingKeys.debug.rawValue)
-        defaults.set(openInlineLink, forKey: Self.CodingKeys.openInlineLink.rawValue)
         defaults.set(renderAsCode, forKey: Self.CodingKeys.renderAsCode.rawValue)
+        
+        defaults.set(openInlineLink, forKey: Self.CodingKeys.openInlineLink.rawValue)
         
         defaults.set(self.qlWindowWidth ?? 0, forKey: Self.CodingKeys.qlWindowWidth.rawValue)
         defaults.set(self.qlWindowHeight ?? 0, forKey: Self.CodingKeys.qlWindowHeight.rawValue)
 
+        defaults.set(about, forKey: Self.CodingKeys.about.rawValue)
+        
         defaults.synchronize()
         
         DistributedNotificationCenter.default().post(name: .QLMarkdownSettingsUpdated, object: nil)

@@ -44,7 +44,68 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         return .terminateNow
     }
     
+    func localizeMainMenu() {
+        let appKitBundle = Bundle(for: NSMenuItem.self)
+        /*guard let appKitBundle = Bundle(path: "/System/Library/Frameworks/AppKit.framework") else {
+            return
+        }*/
+        guard let mainMenu = NSApp.mainMenu else {
+            return
+        }
+        
+        let tables = ["MenuCommands", "InputManager"]
+        
+        func localize(key: String) -> String? {
+            for table in tables {
+                let localized = appKitBundle.localizedString(
+                    forKey: key,
+                    value: nil,
+                    table: table)
+                if localized != key {
+                    return localized
+                }
+            }
+            
+            return nil
+        }
+        
+        func localize(menu: NSMenu, indent: String = "") {
+            let title = menu.title
+            
+            // print("\(indent) [\(title)]")
+            if !title.isEmpty {
+                if let localized = localize(key: title) {
+                    // print("\(indent) - \(title) → \(localized)")
+                    menu.title = localized
+                }
+            }
+            
+            for item in menu.items {
+                guard !item.isSeparatorItem else {
+                    continue
+                }
+                
+                let title = item.title
+                
+                if let localized = localize(key: title) {
+                    // print("\(indent) - \(title) → \(localized)")
+                    item.title = localized
+                }
+                
+                if let submenu = item.submenu, !submenu.items.isEmpty {
+                    localize(menu: submenu, indent: indent + " ")
+                }
+            }
+        }
+        
+        localize(menu: mainMenu)
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        if let lang = Bundle.main.preferredLocalizations.first, lang != "en" {
+            localizeMainMenu()
+        }
+        
         // Insert code here to initialize your application
         let hostBundle = Bundle.main
         let applicationBundle = hostBundle;
@@ -58,9 +119,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             print("Failed to start updater with error: \(error)")
             
             let alert = NSAlert()
-            alert.messageText = "Updater Error"
-            alert.informativeText = "The Updater failed to start. For detailed error information, check the Console.app log."
-            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.messageText = NSLocalizedString("Updater Error", comment: "autoupdate message error")
+            alert.informativeText = NSLocalizedString("The Updater failed to start. For detailed error information, check the Console.app log.", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
             alert.runModal()
         }
         
@@ -156,20 +217,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         let dstApp = URL(fileURLWithPath: "/usr/local/bin/qlmarkdown_cli")
         
         let alert1 = NSAlert()
-        alert1.messageText = "The tool will be installed in \(dstApp.path) \nDo you want to continue?"
-        alert1.informativeText = "You can call the tool directly from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
+        alert1.messageText = String.localizedStringWithFormat(NSLocalizedString("The tool will be installed in %@ \nDo you want to continue?", comment: ""), dstApp.path)
+        alert1.informativeText = String.localizedStringWithFormat(NSLocalizedString("You can call the tool directly from this path: \n%@) \n\nManually install from a Terminal shell with this command: \nln -sfv \"%@\" \"%@\"", comment: ""), srcApp.path, srcApp.path, dstApp.path)
         alert1.alertStyle = .informational
-        alert1.addButton(withTitle: "OK").keyEquivalent = "\r"
-        alert1.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+        alert1.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
+        alert1.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
         guard alert1.runModal() == .alertFirstButtonReturn else {
             return
         }
         guard access(dstApp.deletingLastPathComponent().path, W_OK) == 0 else {
             let alert = NSAlert()
-            alert.messageText = "Unable to install the tool: \(dstApp.deletingLastPathComponent().path) is not writable"
-            alert.informativeText = "You can directly call the tool from this path: \n\(srcApp.path) \n\nManually install from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
+            alert.messageText = String.localizedStringWithFormat(NSLocalizedString("Unable to install the tool: %@ is not writable", comment: ""), dstApp.deletingLastPathComponent().path)
+            alert.informativeText = String.localizedStringWithFormat(NSLocalizedString("You can call the tool directly from this path: \n%@) \n\nManually install from a Terminal shell with this command: \nln -sfv \"%@\" \"%@\"", comment: ""), srcApp.path, srcApp.path, dstApp.path)
             alert.alertStyle = .warning
-            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
             alert.runModal()
             return
         }
@@ -177,12 +238,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         let alert = NSAlert()
         do {
             try FileManager.default.createSymbolicLink(at: dstApp, withDestinationURL: srcApp)
-            alert.messageText = "Command line tool installed"
-            alert.informativeText = "You can call it from this path: \(dstApp.path)"
+            alert.messageText = NSLocalizedString("Command line tool installed", comment: "")
+            alert.informativeText = String.localizedStringWithFormat(NSLocalizedString("You can call it from this path: %@", comment: ""), dstApp.path)
             alert.alertStyle = .informational
         } catch {
-            alert.messageText = "Unable to install the command line tool"
-            alert.informativeText = "(\(error.localizedDescription))\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \"\(srcApp.path)\" \"\(dstApp.path)\""
+            alert.messageText = NSLocalizedString("Unable to install the command line tool", comment: "")
+            alert.informativeText = String.localizedStringWithFormat(NSLocalizedString("(%@)\n\nYou can manually install the tool from a Terminal shell with this command: \nln -sfv \"%@\" \"%@\"", comment: ""), error.localizedDescription, srcApp.path, dstApp.path)
             alert.alertStyle = .critical
         }
         alert.runModal()
@@ -195,7 +256,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             NSWorkspace.shared.activateFileViewerSelecting([u])
         } else {
             let alert = NSAlert()
-            alert.messageText = "The command line tool is not installed."
+            alert.messageText = NSLocalizedString("The command line tool is not installed.", comment: "")
             alert.alertStyle = .warning
             
             alert.runModal()
