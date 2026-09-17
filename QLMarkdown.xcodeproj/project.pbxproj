@@ -290,12 +290,12 @@
 		83F8822E2598A5C6008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
 		83F88259259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
 		83F8825A259906C7008C5071 /* heads.c in Sources */ = {isa = PBXBuildFile; fileRef = 83F88258259906C7008C5071 /* heads.c */; };
+		83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
+		83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
 		ADD0000000000000000000C1 /* admonition.c in Sources */ = {isa = PBXBuildFile; fileRef = ADD0000000000000000000BB /* admonition.c */; };
 		ADD0000000000000000000C2 /* admonition.c in Sources */ = {isa = PBXBuildFile; fileRef = ADD0000000000000000000BB /* admonition.c */; };
 		ADD0000000000000000000C3 /* admonition.c in Sources */ = {isa = PBXBuildFile; fileRef = ADD0000000000000000000BB /* admonition.c */; };
 		ADD0000000000000000000C4 /* admonition.c in Sources */ = {isa = PBXBuildFile; fileRef = ADD0000000000000000000BB /* admonition.c */; };
-		83F8825E25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
-		83F8825F25991BFC008C5071 /* heads_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83F8825C25991BFC008C5071 /* heads_utils.cpp */; };
 		B8E64117F8D84B61BC777EDF /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		C4C0544E70714CFDB88BD53D /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		CB9185D831D741DCB49AF8D3 /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
@@ -701,7 +701,7 @@
 		83CF71DC2C60ADA60066A195 /* preview_quicklook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preview_quicklook.png; sourceTree = "<group>"; };
 		83CF71E02C60ADA60066A195 /* icon.afdesign */ = {isa = PBXFileReference; lastKnownFileType = file; path = icon.afdesign; sourceTree = "<group>"; };
 		83D22E632DCA65980013EB9D /* Settings+render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+render.swift"; sourceTree = "<group>"; };
-		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		83D4B1C3258675D0000745DB /* README.md */ = {isa = PBXFileReference; explicitFileType = text; path = README.md; sourceTree = "<group>"; };
 		83D82A5D277BCAED00C9B99F /* MakefilePCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefilePCRE; sourceTree = "<group>"; usesTabs = 1; };
 		83D82A87277BD21A00C9B99F /* MakefileJPCRE */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = MakefileJPCRE; sourceTree = "<group>"; usesTabs = 1; };
 		83D82A88277C45B500C9B99F /* libpcre2-32.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libpcre2-32.a"; path = "libpcre2/lib/libpcre2-32.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -723,11 +723,11 @@
 		83F8822C2598A5C0008C5071 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		83F88257259906C7008C5071 /* heads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = heads.h; sourceTree = "<group>"; };
 		83F88258259906C7008C5071 /* heads.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = heads.c; sourceTree = "<group>"; };
-		ADD0000000000000000000AA /* admonition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = admonition.h; sourceTree = "<group>"; };
-		ADD0000000000000000000BB /* admonition.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = admonition.c; sourceTree = "<group>"; };
 		83F8825C25991BFC008C5071 /* heads_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = heads_utils.cpp; sourceTree = "<group>"; };
 		83F8825D25991BFC008C5071 /* heads_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = heads_utils.hpp; sourceTree = "<group>"; };
 		8C0194F6D1944DC681276B11 /* wikilink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikilink.h; sourceTree = "<group>"; };
+		ADD0000000000000000000AA /* admonition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = admonition.h; sourceTree = "<group>"; };
+		ADD0000000000000000000BB /* admonition.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = admonition.c; sourceTree = "<group>"; };
 		B0A7BA4039614C61A365D9CD /* alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
 		DEF1000000000000000000AA /* defl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defl.h; sourceTree = "<group>"; };
 		DEF1000000000000000000BB /* defl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = defl.c; sourceTree = "<group>"; };
@@ -1392,7 +1392,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1620;
-				LastUpgradeCheck = 2640;
+				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					831A8C3E258ABADA00E36182 = {
 						CreatedOnToolsVersion = 12.3;
@@ -2631,7 +2631,6 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				__DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR = NO;
 			};
 			name = Debug;
 		};
@@ -2646,7 +2645,6 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				__DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR = NO;
 			};
 			name = Release;
 		};
@@ -2664,7 +2662,6 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				__DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR = NO;
 			};
 			name = Debug;
 		};
@@ -2679,7 +2676,6 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				__DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR = NO;
 			};
 			name = Release;
 		};
