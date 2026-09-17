@@ -960,10 +960,8 @@ class Settings: Codable {
      */
     @discardableResult
     func sanitize(allowLinkFile: Bool = false, messages: inout [String]) -> Bool {
-        var valid = true
-        
         messages = []
-        
+
         if baseFontSize < 0 {
             self.baseFontSize = 0
         }
@@ -981,6 +979,7 @@ class Settings: Codable {
     
     func checkValid(messages: inout [String]) -> Bool {
         var valid = true
+        
         if self.subExtension && self.strikethroughExtension == .single {
             messages.append(NSLocalizedString("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).", comment: ""))
             valid = false
