@@ -106,9 +106,6 @@ struct OptionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Parse the footnotes.", valueName: "on|off"))
     var footnotes: BoolArgumentEnum? = nil
 
-    @Option(help: ArgumentHelp("Show a table-of-contents sidebar in the preview.", valueName: "on|off"))
-    var tableOfContents: BoolArgumentEnum? = nil
-
     @Option(help: ArgumentHelp("Render soft-break elements as hard line breaks.", valueName: "on|off"))
     var hardBreak: BoolArgumentEnum? = nil
     
@@ -124,6 +121,9 @@ struct OptionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Convert straight quotes to curly.", valueName: "on|off"))
     var smartQuotes: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Show a table-of-contents sidebar in the preview.", valueName: "on|off"))
+    var tableOfContents: BoolArgumentEnum? = nil
+    
     @Option(help: ArgumentHelp("Validate UTF-8 in the input before parsing.", valueName: "on|off"))
     var validateUtf8: BoolArgumentEnum? = nil
     
@@ -135,27 +135,26 @@ struct OptionsOptions: ParsableArguments {
 }
 
 struct ExtensionsOptions: ParsableArguments {
+    @Option(help: ArgumentHelp("Render `!!! type` admonitions as callout boxes.", valueName: "on|off"))
+    var admonition: BoolArgumentEnum? = nil
+    
     @Option(help: ArgumentHelp("Automatically translate URL/email to link.", valueName: "on|off"))
     var autolink: BoolArgumentEnum? = nil
+    
+    @Option(help: ArgumentHelp("Render definition lists.", valueName: "on|off"))
+    var definitionList: BoolArgumentEnum? = nil
     
     @Option(help: ArgumentHelp("Translate the emoji shortcodes."))
     var emoji: EmojiArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Render GitHub alerts (blockquotes starting with [!NOTE], [!TIP], …).", valueName: "on|off"))
+    var alert: BoolArgumentEnum? = nil
+    
     @Option(help: ArgumentHelp("Translate mentions to link to the GitHub account", valueName: "on|off"))
     var githubMentions: BoolArgumentEnum? = nil
     
-    @Option(help: ArgumentHelp("Render [[wikilinks]] as links.", valueName: "on|off"))
-    var wikilink: BoolArgumentEnum? = nil
-
     @Option(help: ArgumentHelp("Create anchors for the heads.", valueName: "on|off"))
     var headsAnchor: BoolArgumentEnum? = nil
-
-    @Option(help: ArgumentHelp("Render definition lists.", valueName: "on|off"))
-    var definitionList: BoolArgumentEnum? = nil
-
-
-    @Option(help: ArgumentHelp("Render `!!! type` admonitions as callout boxes.", valueName: "on|off"))
-    var admonition: BoolArgumentEnum? = nil
 
     @Option(help: ArgumentHelp("Highlight text marked with `==`.", valueName: "on|off"))
     var highlight: BoolArgumentEnum? = nil
@@ -195,10 +194,11 @@ struct ExtensionsOptions: ParsableArguments {
     
     @Option(help: ArgumentHelp("Format superscript characters inside `^` markers.", valueName: "on|off"))
     var sup: BoolArgumentEnum? = nil
-    
-    @Option(help: ArgumentHelp("Render GitHub alerts (blockquotes starting with [!NOTE], [!TIP], …).", valueName: "on|off"))
-    var alert: BoolArgumentEnum? = nil
 
+    @Option(help: ArgumentHelp("Render [[wikilinks]] as links.", valueName: "on|off"))
+    var wikilink: BoolArgumentEnum? = nil
+    
+    
     @Option(help: "Render the yaml header.")
     var yaml: YamlArgumentEnum? = nil
 }
