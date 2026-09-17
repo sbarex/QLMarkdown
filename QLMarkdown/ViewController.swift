@@ -490,7 +490,8 @@ class ViewController: NSViewController {
     @IBOutlet weak var tabView: NSTabView!
     @IBOutlet weak var tabViewLeftConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var webViewContainer: NSView!
+    var webView: WKWebView!
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var stylesPopup: NSPopUpButton!
     @IBOutlet weak var appearancePopup: NSPopUpButton!
@@ -1258,6 +1259,20 @@ document.addEventListener('scroll', function(e) {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.webView = WKWebView(frame: self.webViewContainer.bounds, configuration: WKWebViewConfiguration())
+        self.webView.navigationDelegate = self
+        self.webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.webViewContainer.addSubview(self.webView, positioned: .below, relativeTo: self.progressIndicator)
+        
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: webViewContainer.leadingAnchor),
+            webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor),
+            webView.trailingAnchor.constraint(equalTo: webViewContainer.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
+        ])
+        
         pauseAutoSave += 1
         
         if let path = Settings.shared.getHighlightSupportPath() {
