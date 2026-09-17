@@ -490,9 +490,14 @@ class ViewController: NSViewController {
             if isDirty && isAutoSaving && isLoaded && pauseAutoSave == 0 {
                 self.saveAction(self)
             }
+            if oldValue != isDirty || isDirty {
+                isValid = updateSettings().sanitize()
+            }
         }
     }
     internal var isLoaded = false
+    
+    @objc dynamic var isValid = true
     
     @IBOutlet weak var tabView: NSTabView!
     @IBOutlet weak var tabViewLeftConstraint: NSLayoutConstraint!
@@ -1553,18 +1558,41 @@ document.addEventListener('scroll', function(e) {
         
         settings.about = self.isAboutVisible
         
-        var msg: [String] = []
-        settings.sanitize(allowLinkFile: false, messages: &msg)
-        if withAlert && !msg.isEmpty {
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("Configuration settings errors!", comment: "popup alert title")
-            alert.informativeText = msg.joined(separator: "\n")
-            alert.alertStyle = .warning
-            alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
-            alert.runModal()
+        let valid = settings.sanitize(allowLinkFile: false)
+        if !valid && withAlert {
+            showAlertInfo(settings: settings)
         }
+        
         return settings
     }
+    
+    @IBAction func showAlertInfo(_ sender: Any) {
+        showAlertInfo()
+    }
+    
+    func showAlertInfo(settings: Settings? = nil) {
+        let settings = settings ?? updateSettings(withAlert: false)
+        
+        var msg: [String] = []
+        let valid = settings.sanitize(allowLinkFile: false, messages: &msg)
+        
+        let alert = NSAlert()
+        if valid {
+            alert.messageText = NSLocalizedString("Configuration settings", comment: "popup alert title")
+            alert.alertStyle = .informational
+        } else {
+            alert.messageText = NSLocalizedString("Configuration settings errors!", comment: "popup alert title")
+            alert.alertStyle = .warning
+        }
+        
+        if !msg.isEmpty {
+            alert.informativeText = " - " + msg.joined(separator: "\n - ")
+        }
+        
+        alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
+        alert.runModal()
+    }
+    
     
     @IBAction func resetDependencyLibraries(_ sender: Any) {
         Settings.shared.installDependencies(override: .always)

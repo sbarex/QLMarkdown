@@ -406,10 +406,11 @@ struct QLMarkdownCLI: ParsableCommand {
         }
         
         var messages: [String] = []
-        settings.sanitize(allowLinkFile: true, messages: &messages)
-        if !messages.isEmpty {
-            print("Warning: there are some errors on the config settings: ")
-            messages.forEach({print($0)})
+        if !settings.sanitize(allowLinkFile: true, messages: &messages) {
+            print("Warning: there are some errors on the config settings")
+            if !messages.isEmpty {
+                messages.forEach({ print(" - \($0)") })
+            }
         }
         return settings
     }

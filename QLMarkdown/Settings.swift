@@ -137,7 +137,7 @@ enum JSExtension: Codable {
     }
     
     /**
-     * Sanitize the settings
+     * Sanitize the settings.
      * - parameters:
      *   - cacheUrl: Path (local file or web uRL) of the library, from the cache folder or the main bundle.
      *   - cdnUrl: Web url from download the library. Tipically from a CDN service.
@@ -936,10 +936,12 @@ class Settings: Codable {
         update(from: s)
     }
     
-    func sanitize(allowLinkFile: Bool = false) {
+    @discardableResult
+    func sanitize(allowLinkFile: Bool = false) -> Bool {
         var messages: [String] = []
-        sanitize(allowLinkFile: allowLinkFile, messages: &messages)
+        let r = sanitize(allowLinkFile: allowLinkFile, messages: &messages)
         messages.forEach({ print($0) })
+        return r
     }
     
     /**
@@ -948,7 +950,10 @@ class Settings: Codable {
      *   - allowLinkFile: allow to link local file for the JSExtension properties
      *   - messages: Filled with a list of error messages.
      */
-    func sanitize(allowLinkFile: Bool = false, messages: inout [String]) {
+    @discardableResult
+    func sanitize(allowLinkFile: Bool = false, messages: inout [String]) -> Bool {
+        var valid = true
+        
         messages = []
         
         if baseFontSize < 0 {
@@ -959,12 +964,16 @@ class Settings: Codable {
         self.mermaidExtension.sanitize(cacheUrl: mermaidFileUrl, cdnUrl: Self.mermaidWebUrl, allowLinkFile: allowLinkFile)
         
         if self.subExtension && self.strikethroughExtension == .single {
-            messages.append("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).")
+            messages.append(NSLocalizedString("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).", comment: ""))
+            valid = false
         }
         
         if self.supExtension && self.footnotesOption {
             messages.append(NSLocalizedString("The Sup extension can cause corrupted output when the Footnotes option is set.", comment: ""))
+            valid = false
         }
+        
+        return valid
     }
     
     /**
