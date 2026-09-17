@@ -427,7 +427,9 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
             if (encoded != NULL) {
                 cmark_mem *mem = cmark_get_default_mem_allocator();
                 // Replace the original url with the encoded data.
-                cmark_chunk_set_cstr(mem, &node->as.link.title, strdup(url));
+                // cmark_chunk_set_cstr copies its argument, so pass url directly
+                // (a strdup here would be copied and then leaked).
+                cmark_chunk_set_cstr(mem, &node->as.link.title, url);
                 cmark_chunk_set_cstr(mem, &node->as.link.url, encoded);
                 free(encoded);
             }

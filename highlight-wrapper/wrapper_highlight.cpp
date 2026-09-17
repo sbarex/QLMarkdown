@@ -342,8 +342,12 @@ char *highlight_format_string2(const char *code, const char *language, int *exit
     if ( suffix != lastSuffix || suffix.empty() ) {
         string langDefPath= dataDir.getLangPath ( suffix+".lang" );
 
-        if (!Platform::fileExists(langDefPath) && !getFallbackSyntax.empty()) {
-            langDefPath = dataDir.getLangPath ( getFallbackSyntax+".lang" );
+        if (!Platform::fileExists(langDefPath)) {
+            os_log_error(sLog, "Missing language %{public}s", (suffix+".lang").c_str());
+            if (!getFallbackSyntax.empty()) {
+                os_log_info(sLog, "Try fallback language %{public}s", getFallbackSyntax.c_str());
+                langDefPath = dataDir.getLangPath ( getFallbackSyntax+".lang" );
+            }
         }
 
         highlight::LoadResult loadRes= generator->loadLanguage( langDefPath );
@@ -384,6 +388,8 @@ char *highlight_format_string2(const char *code, const char *language, int *exit
             *exit_code = EXIT_FAILURE;
             return nullptr;
             //}
+        } else if ( loadRes==highlight::LOAD_OK ) {
+            os_log_info(sLog, "Syntax language loaded from %{public}s", langDefPath.c_str());
         }
 
         string encoding= "UTF-8";

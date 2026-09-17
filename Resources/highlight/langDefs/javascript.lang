@@ -41,7 +41,7 @@ Keywords={
 
 Strings={
   Delimiter=[["|'|`]],
-  Interpolation=[[ \$\{.+?\} ]],
+  Interpolation=[[ \$\{[^}]+\} ]],
   Escape = [=[ \\u\{?[[:xdigit:]]{4,6}\}?|\\\d{3}|\\x[[:xdigit:]]{2}|\\[ntvbrfa\\\?'\"] ]=]
 }
 

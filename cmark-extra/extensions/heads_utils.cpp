@@ -108,8 +108,8 @@ static char *process_title_re2(const char *title) {
     
     string text = title;
     
-    // Removes characters that are not alphanumeric or spaces or dashes.
-    RE2 re("[^\\p{L}\\p{N} -]+");
+    // Removes characters that are not alphanumeric or underscores or spaces or dashes.
+    RE2 re("[^\\p{L}\\p{N}_ -]+");
     if (!re.ok()) {
         return nullptr;
     }
@@ -154,12 +154,14 @@ class PCRE2_re
     private:
         PCRE2_re() {
             invalidChars_re
-                .setPattern(L"[^\\p{L}\\p{N} -]+") // Not letters, not numbers, not spaces, not dash.
+                .setPattern(L"[^\\p{L}\\p{N}_ -]+") // Not letters, not numbers, not underscores, not spaces, not dash.
                 .addModifier("inuS") // i: case insensitive, n: unicode support, u: utf support, S: jit compiler
                 .compile();
             
             spaces_re
-                .setPattern(L"\\s+")
+                // No quantifier: each whitespace maps to one dash, so a run of
+                // whitespace yields a run of dashes (GitHub behaviour).
+                .setPattern(L"\\s")
                 .addModifier("inuS") // i: case insensitive, n: unicode support, u: utf support, S: jit compiler
                 .compile();
         }                    // Constructor? (the {} brackets) are needed here.

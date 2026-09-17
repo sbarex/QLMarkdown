@@ -144,10 +144,11 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
         cmark_inline_parser_set_offset(inline_parser, start + (end - start) + 1);
         cmark_node_set_user_data(node, placeholder);
         cmark_node_set_user_data_free_func(node, free_user_data);
+    } else {
+        // Unknown shortcode: no node took ownership of the placeholder, so free it.
+        parser->mem->free(placeholder);
     }
-    
-    // parser->mem->free(placeholder); // Don't free the placeholder stored inside the node user_data.
-    
+
     return node;
 }
 
