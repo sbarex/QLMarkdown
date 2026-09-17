@@ -206,6 +206,7 @@ extension Settings {
         }
         defaults.set(customCSSOverride, forKey: Self.CodingKeys.customCSSOverride.rawValue)
         
+        defaults.set(admonitionExtension, forKey: Self.CodingKeys.admonitionExtension.rawValue)
         defaults.set(autoLinkExtension, forKey: Self.CodingKeys.autoLinkExtension.rawValue)
         defaults.set(definitionListExtension, forKey: Self.CodingKeys.definitionListExtension.rawValue)
         defaults.set(emojiExtension.rawValue, forKey: Self.CodingKeys.emojiExtension.rawValue)
