@@ -835,3 +835,12 @@ input[type="checkbox"] {
 .toc-l6 {
     padding-left: 3.6em;
 }
+
+@media (max-width: 1150px) {
+    .toc-sidebar {
+        display: none;
+    }
+    .toc-main {
+        padding-left: 0;
+    }
+}
