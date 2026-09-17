@@ -6,6 +6,7 @@
 New Features:
 - YAML header predegined enabled for all files (valid only for new installations; users who have already used the application must configure the setting manually).
 - Admonition extension (thanks to @soreavis).
+- Table of contents options (thanks to @soreavis).
 
 Bugfix:
 - Fix print html preview.
