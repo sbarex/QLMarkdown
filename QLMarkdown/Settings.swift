@@ -571,56 +571,56 @@ class Settings: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.appearance = try container.decode(Appearance.self, forKey: .appearance)
+        self.appearance = try container.decodeIfPresent(Appearance.self, forKey: .appearance) ?? Settings.factorySettings.appearance
         
-        self.baseFontSize = try container.decode(CGFloat.self, forKey: .baseFontSize)
-        self.customCSS = try container.decode(URL?.self, forKey: .customCSS)
-        self.customCSSFetched = try container.decode(Bool.self, forKey: .customCSSCodeFetched)
-        self.customCSSCode = try container.decode(String?.self, forKey: .customCSSCode)
-        self.customCSSOverride = try container.decode(Bool.self, forKey: .customCSSOverride)
+        self.baseFontSize = try container.decodeIfPresent(CGFloat.self, forKey: .baseFontSize) ?? Settings.factorySettings.baseFontSize
+        self.customCSS = try container.decodeIfPresent(URL?.self, forKey: .customCSS) ?? Settings.factorySettings.customCSS
+        self.customCSSFetched = try container.decodeIfPresent(Bool.self, forKey: .customCSSCodeFetched) ?? Settings.factorySettings.customCSSFetched
+        self.customCSSCode = try container.decodeIfPresent(String?.self, forKey: .customCSSCode) ?? Settings.factorySettings.customCSSCode
+        self.customCSSOverride = try container.decodeIfPresent(Bool.self, forKey: .customCSSOverride) ?? Settings.factorySettings.customCSSOverride
         
-        self.admonitionExtension = try container.decodeIfPresent(Bool.self, forKey: .admonitionExtension) ?? false
-        self.autoLinkExtension = try container.decode(Bool.self, forKey:.autoLinkExtension)
-        self.definitionListExtension = try container.decodeIfPresent(Bool.self, forKey: .definitionListExtension) ?? false
-        self.emojiExtension = try container.decode(EmojiMode.self, forKey:.emojiExtension)
-        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? false
-        self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
-        self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
-        self.tableOfContentsOption = try container.decodeIfPresent(Bool.self, forKey: .tableOfContentsOption) ?? false
-        self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
-        self.inlineImageExtension = try container.decode(Bool.self, forKey:.inlineImageExtension)
-        self.mathExtension = try container.decode(JSExtension.self, forKey:.mathExtension)
-        self.mermaidExtension = try container.decode(JSExtension.self, forKey:.mermaidExtension)
-        self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
-        self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
-        self.strikethroughExtension = try container.decode(StrikethroughMode.self, forKey:.strikethroughExtension)
-        self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
-        self.syntaxLineNumbersOption = try container.decode(Bool.self, forKey: .syntaxLineNumbersOption)
-        self.syntaxTabsOption = try container.decode(Int.self, forKey: .syntaxTabsOption)
-        self.syntaxWordWrapOption = try container.decode(Int.self, forKey: .syntaxWordWrapOption)
-        self.tableExtension = try container.decode(Bool.self, forKey: .tableExtension)
-        self.tagFilterExtension = try container.decode(Bool.self, forKey: .tagFilterExtension)
-        self.taskListExtension = try container.decode(Bool.self, forKey: .taskListExtension)
-        self.wikilinkExtension = try container.decode(Bool.self, forKey:.wikilinkExtension)
-        self.yamlExtension = try container.decode(YamlMode.self, forKey: .yamlExtension)
+        self.admonitionExtension = try container.decodeIfPresent(Bool.self, forKey: .admonitionExtension) ?? Settings.factorySettings.admonitionExtension
+        self.autoLinkExtension = try container.decodeIfPresent(Bool.self, forKey:.autoLinkExtension) ?? Settings.factorySettings.autoLinkExtension
+        self.definitionListExtension = try container.decodeIfPresent(Bool.self, forKey: .definitionListExtension) ?? Settings.factorySettings.definitionListExtension
+        self.emojiExtension = try container.decodeIfPresent(EmojiMode.self, forKey:.emojiExtension) ?? Settings.factorySettings.emojiExtension
+        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? Settings.factorySettings.alertExtension
+        self.mentionExtension = try container.decodeIfPresent(Bool.self, forKey:.mentionExtension) ?? Settings.factorySettings.mentionExtension
+        self.headsExtension = try container.decodeIfPresent(Bool.self, forKey:.headsExtension) ?? Settings.factorySettings.headsExtension
+        self.tableOfContentsOption = try container.decodeIfPresent(Bool.self, forKey: .tableOfContentsOption) ?? Settings.factorySettings.tableOfContentsOption
+        self.highlightExtension = try container.decodeIfPresent(Bool.self, forKey: .hightlightExtension) ?? Settings.factorySettings.highlightExtension
+        self.inlineImageExtension = try container.decodeIfPresent(Bool.self, forKey:.inlineImageExtension) ?? Settings.factorySettings.inlineImageExtension
+        self.mathExtension = try container.decodeIfPresent(JSExtension.self, forKey:.mathExtension) ?? Settings.factorySettings.mathExtension
+        self.mermaidExtension = try container.decodeIfPresent(JSExtension.self, forKey:.mermaidExtension) ?? Settings.factorySettings.mermaidExtension
+        self.subExtension = try container.decodeIfPresent(Bool.self, forKey:.subExtension) ?? Settings.factorySettings.subExtension
+        self.supExtension = try container.decodeIfPresent(Bool.self, forKey:.supExtension) ?? Settings.factorySettings.supExtension
+        self.strikethroughExtension = try container.decodeIfPresent(StrikethroughMode.self, forKey:.strikethroughExtension) ?? Settings.factorySettings.strikethroughExtension
+        self.syntaxHighlightExtension = try container.decodeIfPresent(Bool.self, forKey: .syntaxHighlightExtension) ?? Settings.factorySettings.syntaxHighlightExtension
+        self.syntaxLineNumbersOption = try container.decodeIfPresent(Bool.self, forKey: .syntaxLineNumbersOption) ?? Settings.factorySettings.syntaxLineNumbersOption
+        self.syntaxTabsOption = try container.decodeIfPresent(Int.self, forKey: .syntaxTabsOption) ?? Settings.factorySettings.syntaxTabsOption
+        self.syntaxWordWrapOption = try container.decodeIfPresent(Int.self, forKey: .syntaxWordWrapOption) ?? Settings.factorySettings.syntaxWordWrapOption
+        self.tableExtension = try container.decodeIfPresent(Bool.self, forKey: .tableExtension) ?? Settings.factorySettings.tableExtension
+        self.tagFilterExtension = try container.decodeIfPresent(Bool.self, forKey: .tagFilterExtension) ?? Settings.factorySettings.tagFilterExtension
+        self.taskListExtension = try container.decodeIfPresent(Bool.self, forKey: .taskListExtension) ?? Settings.factorySettings.taskListExtension
+        self.wikilinkExtension = try container.decodeIfPresent(Bool.self, forKey:.wikilinkExtension) ?? Settings.factorySettings.wikilinkExtension
+        self.yamlExtension = try container.decodeIfPresent(YamlMode.self, forKey: .yamlExtension) ?? Settings.factorySettings.yamlExtension
         
-        self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
+        self.checkboxExtension = try container.decodeIfPresent(Bool.self, forKey:.checkboxExtension) ?? Settings.factorySettings.checkboxExtension
         
-        self.smartQuotesOption = try container.decode(Bool.self, forKey: .smartQuotesOption)
-        self.footnotesOption = try container.decode(Bool.self, forKey: .footnotesOption)
-        self.hardBreakOption = try container.decode(Bool.self, forKey: .hardBreakOption)
-        self.noSoftBreakOption = try container.decode(Bool.self, forKey: .noSoftBreakOption)
-        self.unsafeHTMLOption = try container.decode(Bool.self, forKey: .unsafeHTMLOption)
-        self.validateUTFOption = try container.decode(Bool.self, forKey: .validateUTFOption)
-        self.debug = try container.decode(Bool.self, forKey: .debug)
-        self.renderAsCode = try container.decode(Bool.self, forKey: .renderAsCode)
+        self.smartQuotesOption = try container.decodeIfPresent(Bool.self, forKey: .smartQuotesOption) ?? Settings.factorySettings.smartQuotesOption
+        self.footnotesOption = try container.decodeIfPresent(Bool.self, forKey: .footnotesOption) ?? Settings.factorySettings.footnotesOption
+        self.hardBreakOption = try container.decodeIfPresent(Bool.self, forKey: .hardBreakOption) ?? Settings.factorySettings.hardBreakOption
+        self.noSoftBreakOption = try container.decodeIfPresent(Bool.self, forKey: .noSoftBreakOption) ?? Settings.factorySettings.noSoftBreakOption
+        self.unsafeHTMLOption = try container.decodeIfPresent(Bool.self, forKey: .unsafeHTMLOption) ?? Settings.factorySettings.unsafeHTMLOption
+        self.validateUTFOption = try container.decodeIfPresent(Bool.self, forKey: .validateUTFOption) ?? Settings.factorySettings.validateUTFOption
+        self.debug = try container.decodeIfPresent(Bool.self, forKey: .debug) ?? Settings.factorySettings.debug
+        self.renderAsCode = try container.decodeIfPresent(Bool.self, forKey: .renderAsCode) ?? Settings.factorySettings.renderAsCode
         
-        self.openInlineLink = try container.decode(Bool.self, forKey: .openInlineLink)
+        self.openInlineLink = try container.decodeIfPresent(Bool.self, forKey: .openInlineLink) ?? Settings.factorySettings.openInlineLink
         
-        self.qlWindowWidth = try container.decode(Int?.self, forKey: .qlWindowWidth)
-        self.qlWindowHeight = try container.decode(Int?.self, forKey: .qlWindowHeight)
+        self.qlWindowWidth = try container.decodeIfPresent(Int?.self, forKey: .qlWindowWidth) ?? Settings.factorySettings.qlWindowWidth
+        self.qlWindowHeight = try container.decodeIfPresent(Int?.self, forKey: .qlWindowHeight) ?? Settings.factorySettings.qlWindowHeight
         
-        self.about = try container.decode(Bool.self, forKey: .about)
+        self.about = try container.decodeIfPresent(Bool.self, forKey: .about) ?? Settings.factorySettings.about
     }
     
     init() { }
@@ -971,6 +971,16 @@ class Settings: Codable {
         self.mathExtension.sanitize(cacheUrl: mathJaxFileUrl, cdnUrl: Self.mathJaxWebUrl, allowLinkFile: allowLinkFile)
         self.mermaidExtension.sanitize(cacheUrl: mermaidFileUrl, cdnUrl: Self.mermaidWebUrl, allowLinkFile: allowLinkFile)
         
+        return checkValid(messages: &messages)
+    }
+    
+    func checkValid() -> Bool {
+        var messages: [String] = []
+        return checkValid(messages: &messages)
+    }
+    
+    func checkValid(messages: inout [String]) -> Bool {
+        var valid = true
         if self.subExtension && self.strikethroughExtension == .single {
             messages.append(NSLocalizedString("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).", comment: ""))
             valid = false

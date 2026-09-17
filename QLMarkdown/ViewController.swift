@@ -487,6 +487,9 @@ class ViewController: NSViewController {
             }
         }
     }
+    
+    internal var lockDirty = false
+    
     internal var isDirty = false {
         didSet {
             self.view.window?.isDocumentEdited = isDirty
@@ -496,8 +499,9 @@ class ViewController: NSViewController {
             if isDirty && isAutoSaving && isLoaded && pauseAutoSave == 0 {
                 self.saveAction(self)
             }
-            if oldValue != isDirty || isDirty {
-                isValid = updateSettings().sanitize()
+            
+            if !lockDirty && (oldValue != isDirty || isDirty) {
+                isValid = updateSettings().checkValid()
             }
         }
     }
@@ -1438,6 +1442,8 @@ document.addEventListener('scroll', function(e) {
         
         initStylesPopup()
         
+        self.lockDirty = true
+        
         self.debugMode = settings.debug
         self.isAboutVisible = settings.about
         self.renderAsCode = settings.renderAsCode
@@ -1503,6 +1509,9 @@ document.addEventListener('scroll', function(e) {
         isDirty = false
         pauseAutoRefresh -= 1
         pauseAutoSave -= 1
+        self.lockDirty = false
+        
+        isValid = settings.checkValid()
         
         doRefresh(self)
     }
@@ -1566,8 +1575,7 @@ document.addEventListener('scroll', function(e) {
         
         settings.about = self.isAboutVisible
         
-        let valid = settings.sanitize(allowLinkFile: false)
-        if !valid && withAlert {
+        if !settings.checkValid() && withAlert {
             showAlertInfo(settings: settings)
         }
         
@@ -1582,7 +1590,7 @@ document.addEventListener('scroll', function(e) {
         let settings = settings ?? updateSettings(withAlert: false)
         
         var msg: [String] = []
-        let valid = settings.sanitize(allowLinkFile: false, messages: &msg)
+        let valid = settings.checkValid(messages: &msg)
         
         let alert = NSAlert()
         if valid {
