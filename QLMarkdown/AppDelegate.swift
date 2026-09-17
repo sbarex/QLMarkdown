@@ -141,26 +141,44 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         }
         
         // Build the Examples menu
-        if let exampleURL = Bundle.main.url(forResource: "examples", withExtension: nil), let files = try? FileManager.default.contentsOfDirectory(
-                at: exampleURL,
-                    includingPropertiesForKeys: nil,
-                    options: [.skipsHiddenFiles]
-        ) {
-            self.markdownFiles.append(contentsOf: files.filter({ $0.pathExtension.lowercased() == "md" || $0.pathExtension.lowercased() == "rmd" }))
-            self.markdownFiles.sort { a, b in
-                a.lastPathComponent < b.lastPathComponent
-            }
-        }
         
         let mnu = NSMenuItem(title: "README.md", action: #selector(self.handleExample(_:)), keyEquivalent: "")
         mnu.tag = -1
         self.exampleMenu.submenu?.addItem(mnu)
         self.exampleMenu.submenu?.addItem(NSMenuItem.separator())
         
-        for (i, markdownFile) in self.markdownFiles.enumerated() {
-            let mnu = NSMenuItem(title: markdownFile.deletingPathExtension().lastPathComponent, action: #selector(self.handleExample(_:)), keyEquivalent: "")
-            mnu.tag = i
-            self.exampleMenu.submenu?.addItem(mnu)
+        if let exampleURL = Bundle.main.url(forResource: "examples", withExtension: nil) {
+            buildExampleMenu(base: exampleURL, menu: self.exampleMenu.submenu!, validExtensions: ["md", "rmd"])
+        }
+    }
+    
+    func buildExampleMenu(base: URL, menu: NSMenu, validExtensions: [String]) {
+        guard var files = try? FileManager.default.contentsOfDirectory(
+                at: base,
+                includingPropertiesForKeys: [.isDirectoryKey],
+                options: [.skipsHiddenFiles]
+        ) else {
+            return
+        }
+        
+        files.sort { a, b in
+            a.lastPathComponent < b.lastPathComponent
+        }
+        
+        for file in files {
+            let resourceValues = try? file.resourceValues(forKeys: [.isDirectoryKey])
+            if let resourceValues, let isDirectory = resourceValues.isDirectory, isDirectory {
+                let mnu = NSMenuItem(title: file.lastPathComponent, action: nil, keyEquivalent: "")
+                mnu.submenu = NSMenu()
+                menu.addItem(mnu)
+                buildExampleMenu(base: file, menu: mnu.submenu!, validExtensions: validExtensions)
+            } else if validExtensions.contains(file.pathExtension.lowercased()) {
+                self.markdownFiles.append(file)
+                
+                let mnu = NSMenuItem(title: file.deletingPathExtension().lastPathComponent, action: #selector(self.handleExample(_:)), keyEquivalent: "")
+                mnu.tag = self.markdownFiles.count - 1
+                menu.addItem(mnu)
+            }
         }
     }
     
