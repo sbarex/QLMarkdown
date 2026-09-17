@@ -3910,6 +3910,42 @@
       },
       "shouldTranslate" : false
     },
+    "Toc-Bt-n01.ibShadowedToolTip" : {
+      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Show a clickable table-of-contents sidebar in the preview when the window is wide enough.\"; ObjectID = \"Toc-Bt-n01\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show a clickable table-of-contents sidebar in the preview when the window is wide enough."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra una barra laterale con l'indice cliccabile nell'anteprima quando la finestra è sufficientemente larga."
+          }
+        }
+      }
+    },
+    "Toc-Cl-n02.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Table of contents\"; ObjectID = \"Toc-Cl-n02\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Table of contents"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sommario"
+          }
+        }
+      }
+    },
     "tql-Or-Mre.ibShadowedToolTip" : {
       "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Handle Mermaid Diagrams.\"; ObjectID = \"tql-Or-Mre\";",
       "extractionState" : "extracted_with_value",

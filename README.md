@@ -194,7 +194,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
 |Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|
 |Task list|Parse task list as defined by the GitHub extension to the standard Markdown language.|
-|Table of contents|Show a table of contents based on the markdown heads.|
+|Table of contents|Show a clickable table-of-contents sidebar in the preview when the window is wide enough.|
 |Wikilinks|Render `[[Page Name]]` and `[[Target\|Display]]` wikilinks as links.|
 |YAML header|Enable the [YAML header extension](#YAML-header).|
 
