@@ -4,7 +4,7 @@
 **This release require macOS 12.0 or later.**
 
 New Features:
-- YAML header predegined enabled for all files (valid only for new installations; users who have already used the application must configure the setting manually).
+- Default YAML header enabled for all files (valid only for new installations; users who have already used the application must configure the setting manually).
 - Admonition extension (thanks to @soreavis).
 - Table of contents options (thanks to @soreavis).
 
