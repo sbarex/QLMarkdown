@@ -510,7 +510,7 @@ class Settings: Codable {
     var tagFilterExtension: Bool = true
     var taskListExtension: Bool = true
     var wikilinkExtension: Bool = false
-    var yamlExtension: YamlMode = .onlyRmd
+    var yamlExtension: YamlMode = .allFiles
     
     var checkboxExtension: Bool = false
     
