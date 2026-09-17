@@ -833,7 +833,6 @@ class Settings: Codable {
         if let ext = defaultsDomain[Self.CodingKeys.headsExtension.rawValue] as? Bool {
             headsExtension = ext
         }
-        
         if let opt = defaultsDomain[Self.CodingKeys.tableOfContentsOption.rawValue] as? Bool {
             tableOfContentsOption = opt
         }

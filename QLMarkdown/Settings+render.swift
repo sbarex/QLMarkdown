@@ -1008,7 +1008,6 @@ securityLevel: 'strict'
         // TOC sidebar prototype (issue #161): build a clickable navigation and rewrite each
         // heading with a unique, clean anchor so duplicate / emoji headings each scroll correctly.
         let toc = (self.renderAsCode || !self.tableOfContentsOption) ? nil : buildTOC(processedBody)
-        let tocCSS = toc == nil ? "" : Self.tocSidebarCSS
 
         let article = "\(wrapper_open)\n\(toc?.body ?? processedBody)\n\(wrapper_close)"
         let bodyContent: String
@@ -1035,7 +1034,7 @@ securityLevel: 'strict'
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 <title>\(title)</title>
-\(style)\(tocCSS)
+\(style)
 \(s_header)
 </head>
 <body\(body_style)>
@@ -1139,25 +1138,6 @@ securityLevel: 'strict'
         }
         return slug
     }
-
-    private static let tocSidebarCSS = """
-<style type='text/css'>
-html { scroll-behavior: smooth; }
-.toc-layout { display: flex; align-items: flex-start; }
-.toc-sidebar { position: sticky; top: 0; align-self: flex-start; max-height: 100vh; overflow-y: auto; flex: 0 0 28%; box-sizing: border-box; padding: 0.8em 0.5em; font-size: 0.8em; line-height: 1.35; }
-.toc-sidebar ul { list-style: none; margin: 0; padding: 0; }
-.toc-sidebar a { display: block; padding: 2px 4px; color: inherit; text-decoration: none; border-radius: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.toc-sidebar a:hover { background: rgba(128, 128, 128, 0.15); }
-.toc-main { flex: 1 1 auto; min-width: 0; padding-left: 1.5em; }
-.toc-main h1, .toc-main h2, .toc-main h3, .toc-main h4, .toc-main h5, .toc-main h6 { scroll-margin-top: 15px; }
-.toc-l1 { padding-left: 0; font-weight: 600; }
-.toc-l2 { padding-left: 0.9em; }
-.toc-l3 { padding-left: 1.8em; }
-.toc-l4 { padding-left: 2.7em; }
-.toc-l5, .toc-l6 { padding-left: 3.6em; }
-@media (max-width: 1300px) { .toc-sidebar { display: none; } .toc-main { padding-left: 0; } }
-</style>
-"""
     
     internal func parseYaml(node: Yams.Node) throws -> Any {
         switch node {
