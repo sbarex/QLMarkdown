@@ -8,6 +8,7 @@
 import Cocoa
 @preconcurrency import WebKit
 import OSLog
+import UniformTypeIdentifiers
 
 class ViewController: NSViewController {
     @objc dynamic var elapsedTimeLabel: String = ""
@@ -841,7 +842,13 @@ class ViewController: NSViewController {
         panel.canChooseDirectories = false
         panel.canCreateDirectories = false
         panel.allowsMultipleSelection = false
-        panel.allowedFileTypes = ["md"]
+        if #available(macOS 27, *) {
+            panel.allowedContentTypes = [.markdown]
+        } else if #available(macOS 11, *) {
+            panel.allowedContentTypes = [UTType(filenameExtension: "md") ?? .data]
+        } else {
+            panel.allowedFileTypes = ["md"]
+        }
         panel.message = NSLocalizedString("Select a Markdown file to preview", comment: "")
         
         let result = panel.runModal()
@@ -857,7 +864,24 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        savePanel.allowedFileTypes = ["md", "rmd", "qmd"]
+        if #available(macOS 11, *) {
+            var types: [UTType] = []
+            if #available(macOS 27, *) {
+                types.append(.markdown)
+            } else {
+                types.append(UTType(filenameExtension: "md") ?? .data)
+            }
+            if let t = UTType(filenameExtension: "rmd") {
+                types.append(t)
+            }
+            if let t = UTType(filenameExtension: "qmd") {
+                types.append(t)
+            }
+            savePanel.allowedContentTypes = types
+        } else {
+            savePanel.allowedFileTypes = ["md"]
+        }
+        
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = self.markdown_file?.lastPathComponent ?? "markdown.md"
         savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
@@ -969,7 +993,11 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        savePanel.allowedFileTypes = ["html"]
+        if #available(macOS 11, *) {
+            savePanel.allowedContentTypes = [.html]
+        } else {
+            savePanel.allowedFileTypes = ["md"]
+        }
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = "markdown.html"
         savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
@@ -1146,7 +1174,15 @@ document.addEventListener('scroll', function(e) {
         panel.canChooseDirectories = false
         panel.canCreateDirectories = false
         panel.allowsMultipleSelection = false
-        panel.allowedFileTypes = ["css"]
+        if #available(macOS 11, *) {
+            if #available(macOS 15, *) {
+                panel.allowedContentTypes = [.css]
+            } else {
+                panel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
+            }
+        } else {
+            panel.allowedFileTypes = ["css"]
+        }
         panel.message = NSLocalizedString("Select a custom CSS style", comment: "")
         
         let result = panel.runModal()
@@ -1205,7 +1241,15 @@ document.addEventListener('scroll', function(e) {
                 let savePanel = NSSavePanel()
                 savePanel.canCreateDirectories = true
                 savePanel.showsTagField = false
-                savePanel.allowedFileTypes = ["css"]
+                if #available(macOS 11, *) {
+                    if #available(macOS 15, *) {
+                        savePanel.allowedContentTypes = [.css]
+                    } else {
+                        savePanel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
+                    }
+                } else {
+                    savePanel.allowedFileTypes = ["css"]
+                }
                 savePanel.isExtensionHidden = false
                 savePanel.nameFieldStringValue = "default.css"
                 savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
