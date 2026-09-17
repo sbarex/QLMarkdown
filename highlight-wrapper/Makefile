@@ -25,11 +25,11 @@ CFLAGS=-Wall -std=c++17 -D_FILE_OFFSET_BITS=64 \
 LDFLAGS=-L${BUILD_DIR}
 CXXFLAGS=-std=c++17 -stdlib=libc++
 
-CFLAGS_x86_64=-target x86_64-apple-macos10.15 -mmacosx-version-min=10.15
-CFLAGS_arm64=-target arm64-apple-macos11 -mmacosx-version-min=11
+CFLAGS_x86_64=-target x86_64-apple-macos12 -mmacosx-version-min=12
+CFLAGS_arm64=-target arm64-apple-macos12 -mmacosx-version-min=12
 
-LDFLAGS_x86_64=-target x86_64-apple-macos10.15 -mmacosx-version-min=10.15
-LDFLAGS_arm64=-target arm64-apple-macos11 -mmacosx-version-min=11
+LDFLAGS_x86_64=-target x86_64-apple-macos12 -mmacosx-version-min=12
+LDFLAGS_arm64=-target arm64-apple-macos12 -mmacosx-version-min=12
 
 ifeq ($(CONFIGURATION),Debug)
 	CFLAGS_x86_64+= -g
@@ -112,7 +112,7 @@ clean_lua:
 ${BUILD_DIR}/liblua-arm64.a:
 	@echo "${bold}Building lua for arm64 platform…${normal}"
 	${MAKE} -C ${LUA_DIR} clean
-	${MAKE} CC="gcc -std=gnu99 -target arm64-apple-macos11" MYCFLAGS="$(CFLAGS_arm64)" MYLDFLAGS="$(LDFLAGS_arm64)" -C ${LUA_DIR}
+	${MAKE} CC="gcc -std=gnu99 -target arm64-apple-macos12" MYCFLAGS="$(CFLAGS_arm64)" MYLDFLAGS="$(LDFLAGS_arm64)" -C ${LUA_DIR}
 	mv ${LUA_DIR}/src/liblua.a ${BUILD_DIR}/liblua-arm64.a
 	@echo ""
 
@@ -203,7 +203,7 @@ clean_highlight-wrapper:
 ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a wrapper_highlight.cpp
 	@echo "${bold}Compiling highlight wrapper for x86_64 platform...${normal}"
 	@echo "current dir: ${CURRENT_DIR}"
-	MACOSX_DEPLOYMENT_TARGET=10.15 ${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
+	MACOSX_DEPLOYMENT_TARGET=12 ${CXX} ${CFLAGS} ${CFLAGS_x86_64} ${LDFLAGS} ${LDFLAGS_x86_64} \
 -static \
 -c wrapper_highlight.cpp -o ${BUILD_DIR}/wrapper_highlight-x86_64.o
 	@echo ""
@@ -218,7 +218,7 @@ ${BUILD_DIR}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DI
 
 ${BUILD_DIR}/libwrapper_highlight-arm64.dylib: ${BUILD_DIR}/liblua.a ${BUILD_DIR}/libhighlight.a wrapper_highlight.cpp
 	@echo "${bold}Compiling highlight wrapper for arm64 platform...${normal}"
-	MACOSX_DEPLOYMENT_TARGET=11 ${CXX} ${CFLAGS} ${CFLAGS_arm64} \
+	MACOSX_DEPLOYMENT_TARGET=12 ${CXX} ${CFLAGS} ${CFLAGS_arm64} \
 -static \
 -c wrapper_highlight.cpp -o ${BUILD_DIR}/wrapper_highlight-arm64.o
 	@echo ""
