@@ -115,10 +115,7 @@ void cmark_syntax_extension_highlight_set_background_color(cmark_syntax_extensio
         mem->free(settings->background_color);
     }
     if (color) {
-        unsigned long len;
-        len = strlen(color);
-        settings->background_color = mem->calloc(len, sizeof(char));
-        strcpy(settings->background_color, color);
+        settings->background_color = strdup(color);
     } else {
         settings->background_color = NULL;
     }

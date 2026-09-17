@@ -8,9 +8,11 @@
 import Cocoa
 @preconcurrency import WebKit
 import OSLog
+import UniformTypeIdentifiers
 
 class ViewController: NSViewController {
     @objc dynamic var elapsedTimeLabel: String = ""
+    
     
     @objc dynamic var headsExtension: Bool = Settings.factorySettings.headsExtension {
         didSet {
@@ -21,6 +23,12 @@ class ViewController: NSViewController {
     @objc dynamic var tableExtension: Bool = Settings.factorySettings.tableExtension {
         didSet {
             guard oldValue != tableExtension else { return }
+            isDirty = true
+        }
+    }
+    @objc dynamic var admonitionExtension: Bool = Settings.factorySettings.admonitionExtension {
+        didSet {
+            guard oldValue != admonitionExtension else { return }
             isDirty = true
         }
     }
@@ -79,6 +87,21 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var wikilinkExtension: Bool = Settings.factorySettings.wikilinkExtension {
+        didSet {
+            guard oldValue != wikilinkExtension else { return }
+            isDirty = true
+        }
+    }
+
+
+    @objc dynamic var definitionListExtension: Bool = Settings.factorySettings.definitionListExtension {
+        didSet {
+            guard oldValue != definitionListExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var syntaxHighlightExtension: Bool = Settings.factorySettings.syntaxHighlightExtension {
         didSet {
             guard oldValue != syntaxHighlightExtension else { return }
@@ -160,6 +183,13 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var alertExtension: Bool = Settings.factorySettings.alertExtension {
+        didSet {
+            guard oldValue != alertExtension else { return }
+            isDirty = true
+        }
+    }
+
     @objc dynamic var emojiExtension: Bool = Settings.factorySettings.emojiExtension != .disabled {
         didSet {
             guard oldValue != emojiExtension else { return }
@@ -249,13 +279,13 @@ class ViewController: NSViewController {
             qlWindowSizePopupButton.selectItem(at: qlWindowSizeCustomized ? 1 : 0)
         }
     }
-    @objc dynamic var qlWindowWidth: Int = Settings.factorySettings.qlWindowWidth ?? 1000 {
+    @objc dynamic var qlWindowWidth: Int = Int(Settings.factorySettings.qlWindowSize.width) {
         didSet {
             guard oldValue != qlWindowWidth else { return }
             isDirty = true
         }
     }
-    @objc dynamic var qlWindowHeight: Int = Settings.factorySettings.qlWindowHeight ?? 800 {
+    @objc dynamic var qlWindowHeight: Int = Int(Settings.factorySettings.qlWindowSize.height) {
         didSet {
             guard oldValue != qlWindowHeight else { return }
             isDirty = true
@@ -329,7 +359,7 @@ class ViewController: NSViewController {
     func initStylesPopup(resetStyles: Bool = false) {
         stylesPopup.removeAllItems()
         // Standard CSS
-        stylesPopup.addItem(withTitle: "GitHub ( Default )")
+        stylesPopup.addItem(withTitle: NSLocalizedString("GitHub ( Default )", comment: "default theme"))
         stylesPopup.lastItem?.tag = -100
         
         // stylesPopup.addItem(withTitle: "None")
@@ -338,28 +368,28 @@ class ViewController: NSViewController {
         stylesPopup.menu?.addItem(NSMenuItem.separator())
         
         // Actions
-        stylesPopup.addItem(withTitle: "Open Application support themes folder")
+        stylesPopup.addItem(withTitle: NSLocalizedString("Open Application support themes folder", comment: ""))
         stylesPopup.lastItem?.tag = -4
         
-        stylesPopup.addItem(withTitle: "Reveal CSS in Finder")
+        stylesPopup.addItem(withTitle: NSLocalizedString("Reveal CSS in Finder", comment: ""))
         stylesPopup.lastItem?.tag = -6
         stylesPopup.lastItem?.isAlternate = true
         stylesPopup.lastItem?.keyEquivalentModifierMask = [.option]
         
-        stylesPopup.addItem(withTitle: "Refresh")
+        stylesPopup.addItem(withTitle: NSLocalizedString("Refresh", comment: "refresh css list"))
         stylesPopup.lastItem?.tag = -5
         
         stylesPopup.menu?.addItem(NSMenuItem.separator())
         
-        stylesPopup.addItem(withTitle: "Import…")
+        stylesPopup.addItem(withTitle: NSLocalizedString("Import…", comment: "import a css"))
         stylesPopup.lastItem?.tag = -2
-        stylesPopup.lastItem?.toolTip = "Import a CSS file into the standard themes folder."
+        stylesPopup.lastItem?.toolTip = NSLocalizedString("Import a CSS file into the standard themes folder.", comment: "tooltip")
         
-        stylesPopup.addItem(withTitle: "Browse…")
+        stylesPopup.addItem(withTitle: NSLocalizedString("Browse…", comment: "browse a css file"))
         stylesPopup.lastItem?.tag = -1
         stylesPopup.lastItem?.isAlternate = true
         stylesPopup.lastItem?.keyEquivalentModifierMask = [.option]
-        stylesPopup.lastItem?.toolTip = "Use a custom CSS file without importing into the standard themes folder."
+        stylesPopup.lastItem?.toolTip = NSLocalizedString("Use a custom CSS file without importing into the standard themes folder.", comment: "browse button tooltip")
 
         let custom_styles = Settings.getAvailableStyles(resetCache: resetStyles)
         for url in custom_styles {
@@ -466,16 +496,23 @@ class ViewController: NSViewController {
             if isDirty && isAutoSaving && isLoaded && pauseAutoSave == 0 {
                 self.saveAction(self)
             }
+            if oldValue != isDirty || isDirty {
+                isValid = updateSettings().sanitize()
+            }
         }
     }
     internal var isLoaded = false
     
+    @objc dynamic var isValid = true
+    
     @IBOutlet weak var tabView: NSTabView!
     @IBOutlet weak var tabViewLeftConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var webView: WKWebView!
+    @IBOutlet weak var webViewContainer: NSView!
+    var webView: WKWebView!
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var stylesPopup: NSPopUpButton!
+    @IBOutlet weak var appearancePopup: NSPopUpButton!
     
     @IBOutlet weak var styleExtendPopup: NSPopUpButton!
     
@@ -512,7 +549,7 @@ class ViewController: NSViewController {
                     let s = try String(contentsOf: file, encoding: .utf8)
                     self.textView.string = s
                 } catch {
-                    self.textView.string = "** Error loading file *\(file.path)*! **"
+                    self.textView.string = String.localizedStringWithFormat(NSLocalizedString("** Error loading file *%@*! **", comment: ""), file.path)
                 }
                 
                 self.startMonitorFile()
@@ -538,10 +575,14 @@ class ViewController: NSViewController {
         isDirty = true
     }
     
+    @IBAction func handleAppearancePopup(_ sender: NSPopUpButton) {
+        isDirty = true
+    }
+    
     @IBAction func handleAppearanceChange(_ sender: NSButton) {
         let dark = sender.state == .on
         self.view.window?.appearance = NSAppearance(named: dark ? NSAppearance.Name.darkAqua : NSAppearance.Name.aqua)
-        sender.toolTip = dark ? "Switch to light appearance." :  "Switch to dark appearance."
+        sender.toolTip = dark ? NSLocalizedString("Switch to light appearance.", comment: "") : NSLocalizedString("Switch to dark appearance.", comment: "")
         self.doRefresh(sender)
     }
     
@@ -563,9 +604,9 @@ class ViewController: NSViewController {
     
     func updateStrikethroughPopup() {
         if !strikethroughExtension {
-            strikethroughPopupButton.title = "Strikethrough"
+            strikethroughPopupButton.title = NSLocalizedString("Strikethrough", comment: "")
         } else {
-            strikethroughPopupButton.title = "Strikethrough (\(self.strikethroughDoubleTildeOption ? "~~" : "~"))"
+            strikethroughPopupButton.title = String.localizedStringWithFormat(NSLocalizedString("Strikethrough (%@)", comment: ""), self.strikethroughDoubleTildeOption ? "~~" : "~")
         }
     }
     
@@ -583,9 +624,11 @@ class ViewController: NSViewController {
     
     func updateEmojiPopup() {
         if !emojiExtension {
-            emojiPopupButton.title = "Emoji"
+            emojiPopupButton.title = NSLocalizedString("Emoji", comment: "emoji button caption")
+        } else if self.emojiImageOption {
+            emojiPopupButton.title = NSLocalizedString("Emoji (images)", comment: "emoji images button caption")
         } else {
-            emojiPopupButton.title = "Emoji (\(self.emojiImageOption ? "images" : "font"))"
+            emojiPopupButton.title = NSLocalizedString("Emoji (font)", comment: "emoji font button caption")
         }
     }
     
@@ -603,9 +646,11 @@ class ViewController: NSViewController {
     
     func updateYamlPopup() {
         if !yamlExtension {
-            yamlPopupButton.title = "YAML header"
+            yamlPopupButton.title = NSLocalizedString("YAML header", comment: "YAML button title")
+        } else if self.yamlExtensionAll {
+            yamlPopupButton.title = NSLocalizedString("YAML header (all files)", comment: "YAML all files button title")
         } else {
-            yamlPopupButton.title = "YAML header (\(self.yamlExtensionAll ? "all files" : ".rmd, .qmd files"))"
+            yamlPopupButton.title = NSLocalizedString("YAML header (.rmd, .qmd files)", comment: "YAML rmd button title")
         }
     }
     
@@ -621,7 +666,7 @@ class ViewController: NSViewController {
             self.syntaxWrapEnabled = true
             self.syntaxWrapCharacters = menuItem.tag
         case "mnu_highlight_ww_x":
-            if let v = getNumber(message: "Set a word wrap after this number of chars:", value: 80) {
+            if let v = getNumber(message: NSLocalizedString("Set a word wrap after this number of chars:", comment: "work wrap prompt"), value: 80) {
                 self.syntaxWrapCharacters = v
             }
         case "mnu_highlight_on":
@@ -637,8 +682,8 @@ class ViewController: NSViewController {
         let alert = NSAlert()
         alert.messageText = message
         alert.informativeText = informativeText
-        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
-        alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+        alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
         
         let input = NSTextField(frame: NSRect(x: 0, y: 0, width: 200, height: 24))
         input.integerValue = value
@@ -667,10 +712,10 @@ class ViewController: NSViewController {
             `extension` = false
         } else if tag == 10, let cacheUrl /* fetch */ {
             let alert = NSAlert()
-            alert.messageText = "Are you sure to locally cache the library from the web?"
+            alert.messageText = NSLocalizedString("Are you sure to locally cache the library from the web?", comment: "")
             alert.alertStyle = .informational
-            alert.addButton(withTitle: "OK").keyEquivalent = "\r"
-            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
+            alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
             
             let r = alert.runModal()
             if r == .alertFirstButtonReturn {
@@ -678,8 +723,9 @@ class ViewController: NSViewController {
                     DispatchQueue.main.async {
                         let alert = NSAlert()
                         alert.alertStyle = success ? .warning : .informational
-                        alert.messageText = success ? "\(name) library downloaded from web." : "Error downloading the \(name) library."
-                        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+                        alert.messageText = String.localizedStringWithFormat(success ? NSLocalizedString("%@ library downloaded from web.", comment: "") : NSLocalizedString("Error downloading the %@ library.", comment: ""), name)
+                        
+                        alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
                         alert.runModal()
                     }
                 }
@@ -687,16 +733,16 @@ class ViewController: NSViewController {
         } else if tag == 20 /* save */ {
             guard let file = fileUrl, FileManager.default.fileExists(atPath: file.path) else {
                 let alert = NSAlert()
-                alert.messageText = "No cached file do save!"
+                alert.messageText = NSLocalizedString("No cached file to save!", comment: "")
                 alert.alertStyle = .warning
-                alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
                 alert.runModal()
                 return
             }
             
             let panel = NSOpenPanel()
                 
-            panel.title = "Choose the destination folder"
+            panel.title = NSLocalizedString("Choose the destination folder", comment: "")
             panel.canChooseFiles = false
             panel.canChooseDirectories = true
             panel.allowsMultipleSelection = false
@@ -706,18 +752,18 @@ class ViewController: NSViewController {
                     let dest = url.appendingPathComponent(file.lastPathComponent)
                     if FileManager.default.fileExists(atPath: dest.path) {
                         let alert = NSAlert()
-                        alert.messageText = "A file with the same name already exists. Do you want to overwrite it?"
+                        alert.messageText = NSLocalizedString("A file with the same name already exists. Do you want to overwrite it?", comment: "")
                         alert.alertStyle = .informational
-                        alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
-                        alert.addButton(withTitle: "Yes").keyEquivalent = ""
+                        alert.addButton(withTitle: NSLocalizedString("No", comment: "No button")).keyEquivalent = "\u{1b}"
+                        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Yes button")).keyEquivalent = ""
                         if alert.runModal() == .alertSecondButtonReturn {
                             do {
                                 try FileManager.default.removeItem(at: dest)
                             } catch {
                                 let alert = NSAlert()
-                                alert.messageText = "Error deleting exists file!"
+                                alert.messageText = NSLocalizedString("Error deleting existing file!", comment: "")
                                 alert.alertStyle = .critical
-                                alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                                alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
                                 alert.runModal()
                                 return
                             }
@@ -730,9 +776,9 @@ class ViewController: NSViewController {
                         NSWorkspace.shared.activateFileViewerSelecting([dest])
                     } catch {
                         let alert = NSAlert()
-                        alert.messageText = "Unable to save the file!"
+                        alert.messageText = NSLocalizedString("Unable to save the file!", comment: "")
                         alert.alertStyle = .critical
-                        alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                        alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
                         alert.runModal()
                         return
                     }
@@ -741,9 +787,9 @@ class ViewController: NSViewController {
         } else if tag == 21 /* reveal */ {
             guard let file = fileUrl, FileManager.default.fileExists(atPath: file.path) else {
                 let alert = NSAlert()
-                alert.messageText = "No cached file do reveal!"
+                alert.messageText = NSLocalizedString("No cached file to reveal!", comment: "")
                 alert.alertStyle = .warning
-                alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
                 alert.runModal()
                 return
             }
@@ -763,9 +809,11 @@ class ViewController: NSViewController {
     
     func updateMathPopup() {
         if !mathExtension {
-            mathPopupButton.title = "Math extension"
+            mathPopupButton.title = NSLocalizedString("Math extension", comment: "Math button caption")
+        } else if self.mathExtensionEmbed {
+            mathPopupButton.title = NSLocalizedString("Math extension (embedded)", comment: "Math embedded button caption")
         } else {
-            mathPopupButton.title = "Math extension (\(self.mathExtensionEmbed ? "embedded" : "linked"))"
+            mathPopupButton.title = NSLocalizedString("Math extension (linked)", comment: "Math linked button caption")
         }
     }
     
@@ -775,9 +823,11 @@ class ViewController: NSViewController {
     
     func updateMermaidPopup() {
         if !mermaidExtension {
-            mermaidPopupButton.title = "Mermaid diagram"
+            mermaidPopupButton.title = NSLocalizedString("Mermaid diagram", comment: "Mermaid button caption")
+        } else if self.mermaidExtensionEmbed {
+            mermaidPopupButton.title = NSLocalizedString("Mermaid diagram (embedded)", comment: "Mermaid embedded button caption")
         } else {
-            mermaidPopupButton.title = "Mermaid diagram (\(self.mermaidExtensionEmbed ? "embedded" : "linked"))"
+            mermaidPopupButton.title = NSLocalizedString("Mermaid diagram (linked)", comment: "Mermaid linked button caption")
         }
     }
     
@@ -785,10 +835,10 @@ class ViewController: NSViewController {
     func openMarkdown(file: URL) -> Bool {
         if edited {
             let alert = NSAlert()
-            alert.messageText = "The current markdown file has been modified.\nAre you sure to replace it?"
+            alert.messageText = NSLocalizedString("The current markdown file has been modified.\nAre you sure to replace it?", comment: "")
             alert.alertStyle = .warning
-            alert.addButton(withTitle: "OK").keyEquivalent = "\r"
-            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
+            alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
             let r = alert.runModal()
             guard r == .alertFirstButtonReturn else {
                 return false
@@ -803,8 +853,14 @@ class ViewController: NSViewController {
         panel.canChooseDirectories = false
         panel.canCreateDirectories = false
         panel.allowsMultipleSelection = false
-        panel.allowedFileTypes = ["md"]
-        panel.message = "Select a Markdown file to preview"
+        if #available(macOS 27, *) {
+            panel.allowedContentTypes = [.markdown]
+        } else if #available(macOS 11, *) {
+            panel.allowedContentTypes = [UTType(filenameExtension: "md") ?? .data]
+        } else {
+            panel.allowedFileTypes = ["md"]
+        }
+        panel.message = NSLocalizedString("Select a Markdown file to preview", comment: "")
         
         let result = panel.runModal()
         
@@ -819,7 +875,24 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        savePanel.allowedFileTypes = ["md", "rmd", "qmd"]
+        if #available(macOS 11, *) {
+            var types: [UTType] = []
+            if #available(macOS 27, *) {
+                types.append(.markdown)
+            } else {
+                types.append(UTType(filenameExtension: "md") ?? .data)
+            }
+            if let t = UTType(filenameExtension: "rmd") {
+                types.append(t)
+            }
+            if let t = UTType(filenameExtension: "qmd") {
+                types.append(t)
+            }
+            savePanel.allowedContentTypes = types
+        } else {
+            savePanel.allowedFileTypes = ["md"]
+        }
+        
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = self.markdown_file?.lastPathComponent ?? "markdown.md"
         savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
@@ -838,8 +911,8 @@ class ViewController: NSViewController {
         } catch {
             let alert = NSAlert()
             alert.alertStyle = .critical
-            alert.messageText = "Unable to export the Markdown source!"
-            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.messageText = NSLocalizedString("Unable to export the Markdown source!", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("Close", comment: "")).keyEquivalent = "\u{1b}"
             alert.runModal()
             return false
         }
@@ -910,10 +983,10 @@ class ViewController: NSViewController {
             if me.edited {
                 let alert = NSAlert()
                 alert.alertStyle = .warning
-                alert.messageText = "The source markdown has been changed outside the app, do you want to reload it?"
-                alert.informativeText = "Changes made to the file will be lost. "
-                alert.addButton(withTitle: "Reload")
-                alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+                alert.messageText = NSLocalizedString("The source markdown has been changed outside the app, do you want to reload it?", comment: "")
+                alert.informativeText = NSLocalizedString("Changes made to the file will be lost.", comment: "")
+                alert.addButton(withTitle: NSLocalizedString("Reload", comment: "Reload button"))
+                alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
                 if alert.runModal() == .alertFirstButtonReturn {
                     me.reloadMarkdown(me)
                 } else {
@@ -931,7 +1004,11 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        savePanel.allowedFileTypes = ["html"]
+        if #available(macOS 11, *) {
+            savePanel.allowedContentTypes = [.html]
+        } else {
+            savePanel.allowedFileTypes = ["md"]
+        }
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = "markdown.html"
         savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
@@ -944,9 +1021,20 @@ class ViewController: NSViewController {
         
         let body: String
         let settings = self.updateSettings()
-        let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
+        
+        var appearanceForced = false
+        if settings.appearance == .undefined {
+            settings.appearance = self.appearanceButton.state == .off ? .light : .dark
+            appearanceForced = true
+        }
+        defer {
+            if appearanceForced {
+                settings.appearance = .undefined
+            }
+        }
+        
         do {
-            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
+            body = try settings.render(text: self.textView.string, filename: markdown_file?.lastPathComponent ?? "", baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
         } catch {
             body = "Error"
         }
@@ -957,8 +1045,8 @@ class ViewController: NSViewController {
         } catch {
             let alert = NSAlert()
             alert.alertStyle = .critical
-            alert.messageText = "Unable to export the HTML preview!"
-            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            alert.messageText = NSLocalizedString("Unable to export the HTML preview!", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
             alert.runModal()
         }
     }
@@ -975,9 +1063,9 @@ class ViewController: NSViewController {
     
     @IBAction func resetToFactory(_ sender: Any) {
         let alert = NSAlert()
-        alert.messageText = "Are you sure to reset all settings to factory default?"
-        alert.addButton(withTitle: "Yes").keyEquivalent = "\r"
-        alert.addButton(withTitle: "No").keyEquivalent = "\u{1b}"
+        alert.messageText = NSLocalizedString("Are you sure to reset all settings to factory default?", comment: "")
+        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Yes button")).keyEquivalent = "\r"
+        alert.addButton(withTitle: NSLocalizedString("No", comment: "No button")).keyEquivalent = "\u{1b}"
         let r = alert.runModal()
         if r == .alertFirstButtonReturn {
             let settings = Settings.shared
@@ -1010,9 +1098,9 @@ class ViewController: NSViewController {
             )
             
             let panel = NSAlert()
-            panel.messageText = "Error saving the settings!"
+            panel.messageText = NSLocalizedString("Error saving the settings!", comment: "")
             panel.alertStyle = .warning
-            panel.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+            panel.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
             panel.runModal()
         }
     }
@@ -1029,12 +1117,22 @@ class ViewController: NSViewController {
         
         let body: String
         let settings = self.updateSettings()
-        let appearance: Appearance = self.appearanceButton.state == .off ? .light : .dark
+
+        var appearanceForced = false
+        if settings.appearance == .undefined {
+            settings.appearance = self.appearanceButton.state == .off ? .light : .dark
+            appearanceForced = true
+        }
+        defer {
+            if appearanceForced {
+                settings.appearance = .undefined
+            }
+        }
         
         let startTime = CFAbsoluteTimeGetCurrent()
         
         do {
-            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", forAppearance: appearance, baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
+            body = try settings.render(text: self.textView.string, filename: self.markdown_file?.lastPathComponent ?? "", baseDir: markdown_file?.deletingLastPathComponent().path ?? "")
         } catch {
             body = "Error"
         }
@@ -1079,7 +1177,7 @@ document.addEventListener('scroll', function(e) {
         
         let data = html.data(using: .utf8)
         
-        elapsedTimeLabel = String(format: "Rendered in %.3f seconds | %@", timeElapsed, self.byteFormatter.string(fromByteCount: Int64(data?.count ?? 0)))
+        elapsedTimeLabel = String.localizedStringWithFormat(NSLocalizedString("Rendered in %.3f seconds | %@", comment: ""), timeElapsed, self.byteFormatter.string(fromByteCount: Int64(data?.count ?? 0)))
     }
     
     func importStyle(copyOnSharedFolder: Bool) -> URL? {
@@ -1087,8 +1185,16 @@ document.addEventListener('scroll', function(e) {
         panel.canChooseDirectories = false
         panel.canCreateDirectories = false
         panel.allowsMultipleSelection = false
-        panel.allowedFileTypes = ["css"]
-        panel.message = "Select a custom CSS style"
+        if #available(macOS 11, *) {
+            if #available(macOS 15, *) {
+                panel.allowedContentTypes = [.css]
+            } else {
+                panel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
+            }
+        } else {
+            panel.allowedFileTypes = ["css"]
+        }
+        panel.message = NSLocalizedString("Select a custom CSS style", comment: "")
         
         let result = panel.runModal()
         
@@ -1146,7 +1252,15 @@ document.addEventListener('scroll', function(e) {
                 let savePanel = NSSavePanel()
                 savePanel.canCreateDirectories = true
                 savePanel.showsTagField = false
-                savePanel.allowedFileTypes = ["css"]
+                if #available(macOS 11, *) {
+                    if #available(macOS 15, *) {
+                        savePanel.allowedContentTypes = [.css]
+                    } else {
+                        savePanel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
+                    }
+                } else {
+                    savePanel.allowedFileTypes = ["css"]
+                }
                 savePanel.isExtensionHidden = false
                 savePanel.nameFieldStringValue = "default.css"
                 savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
@@ -1162,8 +1276,8 @@ document.addEventListener('scroll', function(e) {
                 } catch {
                     let alert = NSAlert()
                     alert.alertStyle = .critical
-                    alert.messageText = "Unable to export the css style!"
-                    alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
+                    alert.messageText = NSLocalizedString("Unable to export the css style!", comment: "")
+                    alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
                     alert.runModal()
                 }
             } else {
@@ -1206,6 +1320,20 @@ document.addEventListener('scroll', function(e) {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.webView = WKWebView(frame: self.webViewContainer.bounds, configuration: WKWebViewConfiguration())
+        self.webView.navigationDelegate = self
+        self.webView.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.webViewContainer.addSubview(self.webView, positioned: .below, relativeTo: self.progressIndicator)
+        
+        NSLayoutConstraint.activate([
+            webView.leadingAnchor.constraint(equalTo: webViewContainer.leadingAnchor),
+            webView.topAnchor.constraint(equalTo: webViewContainer.topAnchor),
+            webView.trailingAnchor.constraint(equalTo: webViewContainer.trailingAnchor),
+            webView.bottomAnchor.constraint(equalTo: webViewContainer.bottomAnchor)
+        ])
+        
         pauseAutoSave += 1
         
         if let path = Settings.shared.getHighlightSupportPath() {
@@ -1216,11 +1344,9 @@ document.addEventListener('scroll', function(e) {
         self.textView.isAutomaticTextReplacementEnabled = false
         self.textView.isAutomaticDashSubstitutionEnabled = false
         textView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        
-        let type = Settings.isLightAppearance ? "Light" : "Dark"
-        
-        self.appearanceButton.state = type != "Light" ? .on : .off
-        self.appearanceButton.toolTip = self.appearanceButton.state == .on ? "Switch to light appearance." : "Switch to dark appearance."
+                
+        self.appearanceButton.state = Settings.isLightAppearance ? .off : .on
+        self.appearanceButton.toolTip = self.appearanceButton.state == .on ? NSLocalizedString("Switch to light appearance.", comment: "") : NSLocalizedString("Switch to dark appearance.", comment: "")
         self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
         let contentController = self.webView.configuration.userContentController
         contentController.add(self, name: "scrollHandler")
@@ -1273,11 +1399,11 @@ document.addEventListener('scroll', function(e) {
         
         alert.alertStyle = .warning
         alert.showsSuppressionButton = true
-        alert.messageText = "QLMarkdown Preferences"
-        alert.informativeText = "This application is not intended to be a Markdown editor, but the interface for customising the Quick Look preview."
-        alert.suppressionButton?.title = "Do not show this warning again"
+        alert.messageText = NSLocalizedString("QLMarkdown Preferences", comment: "")
+        alert.informativeText = NSLocalizedString("This application is not intended to be a Markdown editor, but the interface for customising the Quick Look preview.", comment: "")
+        alert.suppressionButton?.title = NSLocalizedString("Do not show this warning again", comment: "")
         
-        alert.addButton(withTitle: "OK").keyEquivalent = "\r"
+        alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
         alert.runModal()
         
         if let suppressionButton = alert.suppressionButton, suppressionButton.state == .on {
@@ -1317,10 +1443,11 @@ document.addEventListener('scroll', function(e) {
         self.renderAsCode = settings.renderAsCode
         
         self.qlWindowSizeCustomized = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0
-        self.qlWindowWidth = settings.qlWindowWidth ?? 1000
-        self.qlWindowHeight = settings.qlWindowHeight ?? 800
+        self.qlWindowWidth = Int(settings.qlWindowSize.width)
+        self.qlWindowHeight = Int(settings.qlWindowSize.height)
         
         self.tableExtension = settings.tableExtension
+        self.admonitionExtension = settings.admonitionExtension
         self.autoLinkExtension = settings.autoLinkExtension
         self.tagFilterExtension = settings.tagFilterExtension
         self.taskListExtension = settings.taskListExtension
@@ -1338,6 +1465,8 @@ document.addEventListener('scroll', function(e) {
         self.mermaidExtensionEmbed = settings.mermaidExtension.getMode()?.embed ?? false
         
         self.mentionExtension = settings.mentionExtension
+        self.wikilinkExtension = settings.wikilinkExtension
+        self.definitionListExtension = settings.definitionListExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
         self.emojiExtension = settings.emojiExtension != .disabled
@@ -1347,6 +1476,7 @@ document.addEventListener('scroll', function(e) {
         self.highlightExtension = settings.highlightExtension
         self.inlineImageExtension = settings.inlineImageExtension
         self.subSuperScriptExtension = settings.supExtension
+        self.alertExtension = settings.alertExtension
         
         self.hardBreakOption = settings.hardBreakOption
         self.noSoftBreakOption = settings.noSoftBreakOption
@@ -1368,6 +1498,8 @@ document.addEventListener('scroll', function(e) {
         
         inlineLinkPopup.selectItem(at: settings.openInlineLink ? 0 : 1)
         
+        appearancePopup.selectItem(withTag: settings.appearance.rawValue)
+        
         isDirty = false
         pauseAutoRefresh -= 1
         pauseAutoSave -= 1
@@ -1383,12 +1515,14 @@ document.addEventListener('scroll', function(e) {
     internal func updateSettings(withAlert: Bool = false) -> Settings {
         let settings = Settings.shared
         
+        settings.appearance = Appearance(rawValue: self.appearancePopup.selectedTag()) ?? .undefined
         settings.debug = self.debugMode
         settings.renderAsCode = self.renderAsCode
         settings.qlWindowWidth = self.qlWindowSizeCustomized ? self.qlWindowWidth : nil
         settings.qlWindowHeight = self.qlWindowSizeCustomized ? self.qlWindowHeight : nil
         
         settings.tableExtension = self.tableExtension
+        settings.admonitionExtension = self.admonitionExtension
         settings.autoLinkExtension = self.autoLinkExtension
         settings.tagFilterExtension = self.tagFilterExtension
         settings.taskListExtension = self.taskListExtension
@@ -1397,6 +1531,8 @@ document.addEventListener('scroll', function(e) {
         settings.mathExtension = self.mathExtension ? (self.mathExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
         settings.mentionExtension = self.mentionExtension
+        settings.wikilinkExtension = self.wikilinkExtension
+        settings.definitionListExtension = self.definitionListExtension
 
         settings.emojiExtension = self.emojiExtension ? (self.emojiImageOption ? .images : .font) : .disabled
         
@@ -1405,6 +1541,7 @@ document.addEventListener('scroll', function(e) {
         settings.inlineImageExtension = self.inlineImageExtension
         settings.subExtension = self.subSuperScriptExtension
         settings.supExtension = self.subSuperScriptExtension
+        settings.alertExtension = self.alertExtension
         
         settings.strikethroughExtension = self.strikethroughExtension ? (self.strikethroughDoubleTildeOption ? .double : .single) : .disabled
         
@@ -1429,21 +1566,44 @@ document.addEventListener('scroll', function(e) {
         
         settings.about = self.isAboutVisible
         
-        var msg: [String] = []
-        settings.sanitize(allowLinkFile: false, messages: &msg)
-        if withAlert && !msg.isEmpty {
-            let alert = NSAlert()
-            alert.messageText = "Configuration settings errors!"
-            alert.informativeText = msg.joined(separator: "\n")
-            alert.alertStyle = .warning
-            alert.addButton(withTitle: "Close").keyEquivalent = "\u{1b}"
-            alert.runModal()
+        let valid = settings.sanitize(allowLinkFile: false)
+        if !valid && withAlert {
+            showAlertInfo(settings: settings)
         }
+        
         return settings
     }
     
+    @IBAction func showAlertInfo(_ sender: Any) {
+        showAlertInfo()
+    }
+    
+    func showAlertInfo(settings: Settings? = nil) {
+        let settings = settings ?? updateSettings(withAlert: false)
+        
+        var msg: [String] = []
+        let valid = settings.sanitize(allowLinkFile: false, messages: &msg)
+        
+        let alert = NSAlert()
+        if valid {
+            alert.messageText = NSLocalizedString("Configuration settings", comment: "popup alert title")
+            alert.alertStyle = .informational
+        } else {
+            alert.messageText = NSLocalizedString("Configuration settings errors!", comment: "popup alert title")
+            alert.alertStyle = .warning
+        }
+        
+        if !msg.isEmpty {
+            alert.informativeText = " - " + msg.joined(separator: "\n - ")
+        }
+        
+        alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
+        alert.runModal()
+    }
+    
+    
     @IBAction func resetDependencyLibraries(_ sender: Any) {
-        Settings.shared.installDependencies(override: true)
+        Settings.shared.installDependencies(override: .always)
         
         if let path = Settings.mermaidCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
             Settings.shared.updateMemaidCache { (success) in
@@ -1480,10 +1640,10 @@ extension ViewController: NSMenuItemValidation {
             menu.toolTip = fileUrl?.path ?? ""
             if let url = fileUrl, url.isFileURL && FileManager.default.fileExists(atPath: url.path) {
                 let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
-                menu.title = "Embed (\(byteFormatter.string(fromByteCount: Int64(size))))"
+                menu.title = String.localizedStringWithFormat(NSLocalizedString("Embed (%@)", comment: ""), byteFormatter.string(fromByteCount: Int64(size)))
                 
             } else {
-                menu.title = "Embed (file missing)"
+                menu.title = NSLocalizedString("Embed (file missing)", comment: "")
                 return false
             }
         case "\(prefix)_save", "\(prefix)_reveal":
@@ -1491,7 +1651,7 @@ extension ViewController: NSMenuItemValidation {
                 return false
             }
         case "\(prefix)_download":
-            menu.toolTip = "Cache a local copy of the library from the web (\(webUrl.path))."
+            menu.toolTip = String.localizedStringWithFormat(NSLocalizedString("Cache a local copy of the library from the web (%@).", comment: ""), webUrl.path)
         case "\(prefix)_link":
             menu.state = state && !embed ? .on : .off
             menu.toolTip = webUrl.absoluteString
@@ -1622,6 +1782,15 @@ extension ViewController: WKScriptMessageHandler {
 // MARK: - PreferencesWindowController
 class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     var askToSave = true
+    
+    override func windowDidLoad() {
+        super.windowDidLoad()
+        
+        // Localize the window title and subtitle
+        // self.window?.title = NSLocalizedString("main_window_title", comment: "Title for the main application window")
+        self.window?.subtitle = NSLocalizedString("Preferences", comment: "Subtitle showing current project state")
+    }
+    
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         guard let contentViewController = self.contentViewController as? ViewController else {
             return true
@@ -1629,11 +1798,11 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         if self.askToSave && contentViewController.isDirty {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = "There are some modified settings"
-            alert.informativeText = "Do you want to save them before closing?"
-            alert.addButton(withTitle: "Save").keyEquivalent = "\r"
-            alert.addButton(withTitle: "Ignore").keyEquivalent = "d"
-            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            alert.messageText = NSLocalizedString("There are some modified settings", comment: "")
+            alert.informativeText = NSLocalizedString("Do you want to save them before closing?", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("Save", comment: "Save button")).keyEquivalent = "\r"
+            alert.addButton(withTitle: NSLocalizedString("Ignore", comment: "Ignore button")).keyEquivalent = "d"
+            alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
             
             let r = alert.runModal()
             switch r {
@@ -1651,11 +1820,11 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
         if contentViewController.edited, let file = contentViewController.markdown_file, !file.relativePath.contains(Bundle.main.bundleURL.relativePath) {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = "The markdown file is changed!"
-            alert.informativeText = "Do you want to save them before closing?"
-            alert.addButton(withTitle: "Save").keyEquivalent = "\r"
-            alert.addButton(withTitle: "Do not Save").keyEquivalent = "d"
-            alert.addButton(withTitle: "Cancel").keyEquivalent = "\u{1b}"
+            alert.messageText = NSLocalizedString("The markdown file is changed!", comment: "")
+            alert.informativeText = NSLocalizedString("Do you want to save them before closing?", comment: "")
+            alert.addButton(withTitle: NSLocalizedString("Save", comment: "Save button")).keyEquivalent = "\r"
+            alert.addButton(withTitle: NSLocalizedString("Do not Save", comment: "Do not save button")).keyEquivalent = "d"
+            alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
             
             let r = alert.runModal()
             switch r {
@@ -1682,9 +1851,9 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
 extension ViewController: NSMenuDelegate {
     func menuNeedsUpdate(_ menu: NSMenu) {
-        if menu.identifier?.rawValue == "mnu_highlight_ww" {
+        if menu.identifier?.rawValue == "mnu_highlight_ww" || menu.identifier?.rawValue == "mnu_highlight_ww_submenu" {
             if menu.items.first(where: {$0.tag == self.syntaxWrapCharacters}) == nil {
-                let item = NSMenuItem(title: "\(syntaxWrapCharacters) characters", action: #selector(self.handleSyntaxHighlightMenu(_:)), keyEquivalent: "")
+                let item = NSMenuItem(title: String.localizedStringWithFormat(NSLocalizedString("%d characters", comment: ""), syntaxWrapCharacters), action: #selector(self.handleSyntaxHighlightMenu(_:)), keyEquivalent: "")
                 item.identifier = NSUserInterfaceItemIdentifier("mnu_highlight_ww_custom")
                 item.tag = syntaxWrapCharacters
                 
@@ -1698,7 +1867,7 @@ extension ViewController: NSMenuDelegate {
         }
         
         if let item = menu.item(withTag: -6) {
-            item.title = self.customCSSFile == nil ? "Download default CSS theme" : "Reveal CSS in Finder"
+            item.title = self.customCSSFile == nil ? NSLocalizedString("Download default CSS theme", comment: "") : NSLocalizedString("Reveal CSS in Finder", comment: "")
         }
         
         // print("menuNeedsUpdate")

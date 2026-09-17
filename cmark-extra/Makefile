@@ -19,11 +19,11 @@ CXXFLAGS=-std=c++17 -stdlib=libc++
 CFLAGS=-Wall -D_FILE_OFFSET_BITS=64
 LDFLAGS=-L${BUILD_DIR}
 
-CFLAGS_x86_64=-target x86_64-apple-macos10.15 -mmacosx-version-min=10.15
-CFLAGS_arm64=-target arm64-apple-macos11 -mmacosx-version-min=11
+CFLAGS_x86_64=-target x86_64-apple-macos12 -mmacosx-version-min=12
+CFLAGS_arm64=-target arm64-apple-macos12 -mmacosx-version-min=12
 
-LDFLAGS_x86_64=-target x86_64-apple-macos10.15 -mmacosx-version-min=10.15
-LDFLAGS_arm64=-target arm64-apple-macos11 -mmacosx-version-min=11
+LDFLAGS_x86_64=-target x86_64-apple-macos12 -mmacosx-version-min=12
+LDFLAGS_arm64=-target arm64-apple-macos12 -mmacosx-version-min=12
 
 ifeq ($(CONFIGURATION),Debug)
 	CFLAGS_x86_64+= -g
@@ -108,7 +108,7 @@ ${BUILD_DIR}/libcmark-gfm-arm64.a:
 	@echo "${bold}Building cmark for arm64 platform...${normal}"
 	@rm -rf "$(PROJECT_DIR)/cmark-arm64" > /dev/null
 	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} clean
-	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} CMAKE_OSX_ARCHITECTURES=arm64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=11 BUILDDIR="cmark-arm64" CFLAGS="${CFLAGS} ${CFLAGS_arm64}" CPPFLAGS="${CFLAGS} -std=c++17 ${CFLAGS_arm64}" LDFLAGS="${LDFLAGS_arm64}" -C $(CMARK_DIR) CMAKE_POLICY_VERSION_MINIMUM=3.5 $(ACTION)
+	PATH="/opt/homebrew/bin:/usr/local/bin:${PATH}" ${MAKE} CMAKE_OSX_ARCHITECTURES=arm64 CXX="${CXX}" MACOSX_DEPLOYMENT_TARGET=12 BUILDDIR="cmark-arm64" CFLAGS="${CFLAGS} ${CFLAGS_arm64}" CPPFLAGS="${CFLAGS} -std=c++17 ${CFLAGS_arm64}" LDFLAGS="${LDFLAGS_arm64}" -C $(CMARK_DIR) CMAKE_POLICY_VERSION_MINIMUM=3.5 $(ACTION)
 	@cp cmark-arm64/src/libcmark-gfm.a ${BUILD_DIR}/libcmark-gfm-arm64.a
 	@cp cmark-arm64/src/libcmark-gfm.${SPECVERSION}.0.gfm.13.dylib ${BUILD_DIR}/libcmark-gfm-arm64.${SPECVERSION}.0.gfm.13.dylib
 	@cp cmark-arm64/src/cmark-gfm_export.h ${BUILD_DIR}/cmark-gfm_export.h

@@ -32,33 +32,41 @@ extension Settings {
      * Render a markdown file to an html fragment.
      * - parameters:
      *   - url: Url of the Markdown file to format.
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code. if not specified, it gets it from the file path.
      */
-    func render(file url: URL, forAppearance appearance: Appearance, baseDir: String?) throws -> String {
-        guard let data = FileManager.default.contents(atPath: url.path) else {
+    func render(file url: URL, baseDir: String?) throws -> String {
+        guard var data = FileManager.default.contents(atPath: url.path) else {
             os_log("Unable to read the file %{public}@", log: OSLog.rendering, type: .error, url.path)
             return ""
         }
         
-        return try self.render(data: data, forAppearance: appearance, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
+        if url.pathExtension.lowercased() == "mermaid" {
+            if var s = String(data: data, encoding: .utf8) {
+                // Inject mermaid fanced block
+                s = "```mermaid\n\(s)\n```"
+                if let d = s.data(using: .utf8) {
+                    data = d
+                }
+            }
+        }
+        
+        return try self.render(data: data, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
     }
     
     /**
      * Render a markdown file to an html fragment.
      * - parameters:
      *   - data: Data with the the Markdown code to format.
-     *   - appearance:
      *   - filename: Name of the source file.
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    func render(data: Data, forAppearance appearance: Appearance, filename: String = "file.md", baseDir: String) throws -> String {
+    func render(data: Data, filename: String = "file.md", baseDir: String) throws -> String {
         guard let markdown_string = String(data: data, encoding: .utf8) else {
             os_log("Unable to read the data %{public}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
             return ""
         }
         
-        return try self.render(text: markdown_string, filename: filename, forAppearance: appearance, baseDir: baseDir)
+        return try self.render(text: markdown_string, filename: filename, baseDir: baseDir)
     }
     
     /**
@@ -66,11 +74,10 @@ extension Settings {
      * - parameters:
      *   - text: Markdown code to format.
      *   - filename: Name of the source file.
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    func render(text: String, filename: String, forAppearance appearance: Appearance, baseDir: String) throws -> String {
-        if self.renderAsCode, let code = self.renderAsSourceCode(text: text, forAppearance: appearance, baseDir: baseDir) {
+    func render(text: String, filename: String, baseDir: String) throws -> String {
+        if self.renderAsCode, let code = self.renderAsSourceCode(text: text, baseDir: baseDir) {
             return code
         }
         
@@ -199,6 +206,15 @@ extension Settings {
             }
         }
         
+        if self.wikilinkExtension {
+            if let ext = cmark_find_syntax_extension("wikilink") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `wikilink` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `wikilink` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+
         if self.headsExtension {
             if let ext = cmark_find_syntax_extension("heads") {
                 cmark_parser_attach_syntax_extension(parser, ext)
@@ -207,7 +223,26 @@ extension Settings {
                 os_log("Could not enable markdown `heads` extension!", log: OSLog.rendering, type: .error)
             }
         }
-        
+
+        if self.definitionListExtension {
+            if let ext = cmark_find_syntax_extension("definitionlist") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `definitionlist` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `definitionlist` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+
+
+        if self.admonitionExtension {
+            if let ext = cmark_find_syntax_extension("admonition") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `admonition` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `admonition` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+
         if self.highlightExtension {
             if let ext = cmark_find_syntax_extension("highlight") {
                 cmark_parser_attach_syntax_extension(parser, ext)
@@ -231,6 +266,19 @@ extension Settings {
                     type: .debug)
             } else {
                 os_log("Could not enable markdown `sub` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+
+        if self.alertExtension {
+            if let ext = cmark_find_syntax_extension("alert") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+
+                os_log(
+                    "Enabled markdown `alert` extension.",
+                    log: OSLog.rendering,
+                    type: .debug)
+            } else {
+                os_log("Could not enable markdown `alert` extension!", log: OSLog.rendering, type: .error)
             }
         }
         
@@ -298,7 +346,6 @@ extension Settings {
                                     // Do not reprocess data: image.
                                     continue
                                 }
-                                
                                 
                                 let file = baseDir.appendingPathComponent(src).path
                                 guard FileManager.default.fileExists(atPath: file) else {
@@ -437,7 +484,7 @@ extension Settings {
         
         let about = self.about ? "<div style='font-size: 72%; margin-top: 1.5em; padding-top: .5em; -webkit-user-select: none;'><hr style='height: 0; border: none; border-top: 1px solid rgba(0,0,0,.5); box-shadow: 0 1px 1px rgba(255, 255, 255, .5)'/>\(Self.aboutInfo)</div>\n" : ""
         
-        let html_debug = self.renderDebugInfo(forAppearance: appearance, baseDir: baseDir)
+        let html_debug = self.renderDebugInfo(baseDir: baseDir)
         // Render
         if let html2 = cmark_render_html(doc, options, cmark_parser_get_syntax_extensions(parser)) {
             defer {
@@ -445,6 +492,17 @@ extension Settings {
             }
 
             var body = String(cString: html2)
+            
+            if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
+                body = swapMathDelimiters(body)
+            }
+            
+            // Mermaid diagrams support
+            if !self.renderAsCode, !self.mermaidExtension.isDisabled, body.contains("language-mermaid") {
+                // Transform mermaid code blocks to mermaid divs
+                body = transformMermaidBlocks(body)
+            }
+            
             // Only pay for the HTML parse when a task-list checkbox is actually present.
             if self.taskListExtension, body.contains("type=\"checkbox\"") {
                 body = self.addTaskListClasses(body)
@@ -459,6 +517,13 @@ extension Settings {
     /// and `task-list-item`) that cmark-gfm does not emit, so the bundled stylesheet
     /// can drop the list bullet shown next to each checkbox.
     private func addTaskListClasses(_ html: String) -> String {
+        return html.replacingOccurrences(
+            of: #"<li>(\s*<input type=\"checkbox\"[^>]*>)"#,
+            with: #"<li class='task-list-item'>$1"#,
+            options: .regularExpression
+        )
+        /*
+        // Do not use SwiftSoup.html() beacuse break some other extension like mermaid.
         do {
             let doc = try SwiftSoup.parseBodyFragment(html)
             var changed = false
@@ -479,6 +544,7 @@ extension Settings {
             os_log("Unable to tag task-list classes: %{public}@", log: OSLog.rendering, type: .error, error.localizedDescription)
         }
         return html
+        */
     }
 
     private func closestListItem(of element: Element) -> Element? {
@@ -495,10 +561,9 @@ extension Settings {
     /**
      * Get a debug info with the current settings.
      * - parameters:
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    internal func renderDebugInfo(forAppearance appearance: Appearance, baseDir: String) -> String {
+    internal func renderDebugInfo(baseDir: String) -> String {
         guard debug else {
             return ""
         }
@@ -627,6 +692,14 @@ table.debug td {
             html_debug += "off"
         }
         html_debug += "</td></tr>\n"
+
+        html_debug += "<tr><td>wikilink extension</td><td>"
+        if self.wikilinkExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("wikilink") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
         
         html_debug += "<tr><td>strikethrough extension</td><td>"
         switch self.strikethroughExtension {
@@ -665,6 +738,21 @@ table.debug td {
         html_debug += "<tr><td>sup extension</td><td>"
         if self.supExtension {
             html_debug += "on " + (cmark_find_syntax_extension("sup") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        html_debug += "<tr><td>alert extension</td><td>"
+        if self.alertExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("alert") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+        
+        html_debug += "<tr><td>admonition extension</td><td>"
+        if self.alertExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("admonition") == nil ? " (NOT AVAILABLE" : "")
         } else {
             html_debug += "off"
         }
@@ -716,17 +804,25 @@ table.debug td {
      * Render the markdown as the highlighted source code to an html fragment.
      * - parameters:
      *   - text: Markdown code to format.
-     *   - appearance:
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
-    func renderAsSourceCode(text: String, forAppearance appearance: Appearance, baseDir: String) -> String? {
+    func renderAsSourceCode(text: String, baseDir: String) -> String? {
         if let path = getHighlightSupportPath() {
             cmark_syntax_highlight_init("\(path)/".cString(using: .utf8))
         } else {
             os_log("Unable to found the `highlight` support dir!", log: OSLog.rendering, type: .error)
         }
         
-        let theme = Self.isLightAppearance ? "acid" : "zenburn" // FIXME: allow to customize the theme
+        let isLight: Bool
+        switch self.appearance {
+        case .undefined:
+            isLight = Self.isLightAppearance
+        case .light:
+            isLight = true
+        case .dark:
+            isLight = false
+        }
+        let theme = isLight ? "acid" : "zenburn" // FIXME: allow to customize the theme
         
         // Initialize a new generator and clear previous settings.
         highlight_init_generator()
@@ -794,13 +890,11 @@ table.debug td {
             return "<style type='text/css'>\(code)\n</style>\n"
         }
             
-        if !self.renderAsCode {
-            let css = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
-            css_doc_extended = formatCSS(css)
-            if css_doc_extended.isEmpty || !self.customCSSOverride {
-                css_doc += formatCSS(getBundleContents(forResource: "default", ofType: "css"))
-            }
-        }
+        // Custom Style applies in both modes; only the bundled GitHub default.css is
+        // specific to Markdown (non-source) mode.
+        let css = self.getAppliedCSS()
+        css_doc_extended = formatCSS(css.custom)
+        css_doc += formatCSS(css.bundled)
             
         var css_highlight: String = ""
         if self.renderAsCode {
@@ -843,7 +937,19 @@ table.debug td {
         }
         css_highlight = formatCSS(css_highlight)
         
-        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 || body.contains("$") {
+        // Gate MathJax injection strictly on whether cmark's math extension actually rendered
+        // a math node. The legacy `|| body.contains("$")` fallback was removed: with the
+        // pandoc-rules fix in cmark-extra/math_ext.c, `rendered_count` is now reliable for
+        // currency-only files. Re-adding the fallback re-introduces the currency-mangling bug.
+        //
+        // Mixed files (real math AND currency in the same document) are handled by configuring
+        // MathJax to use `\(...\)` / `\[...\]` as the only delimiters, and post-processing the
+        // rendered body so the inside of each `<span class='hl math'>` / `<div class='hl math'>`
+        // wrapper has its `$...$` / `$$...$$` rewritten to the new delimiters (see
+        // `swapMathDelimiters` below). Stray `$` outside math wrappers (currency, prose, code)
+        // is invisible to MathJax because `$` is no longer a delimiter.
+        let processedBody = body
+        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
             s_header += """
 <script type="text/javascript">
 MathJax = {
@@ -853,12 +959,12 @@ MathJax = {
   tex: {
     // packages: ['base'],        // extensions to use
     inlineMath: [              // start/end delimiter pairs for in-line math
-      ['$', '$']
-      // , ['\\(', '\\)']
+      // ['$', '$']              // disabled to avoid matching currency client-side
+      ['\\\\(', '\\\\)']
     ],
     displayMath: [             // start/end delimiter pairs for display math
-      ['$$', '$$']
-      //, ['\\[', '\\]']
+      // ['$$', '$$']
+      ['\\\\[', '\\\\]']
     ],
     processEscapes: true,       // use \\$ to produce a literal dollar sign
     processEnvironments: false
@@ -870,11 +976,8 @@ MathJax = {
         }
 
         // Mermaid diagrams support
-        var processedBody = body
-        if !self.renderAsCode, !self.mermaidExtension.isDisabled, body.contains("language-mermaid") {
-            // Transform mermaid code blocks to mermaid divs
-            processedBody = transformMermaidBlocks(body)
-
+        if !self.renderAsCode, !self.mermaidExtension.isDisabled, processedBody.contains("class=\"mermaid\"") {
+            
             // Inject mermaid.min.js
             s_footer += mermaidExtension.getScriptCode()
             s_footer += """
@@ -888,7 +991,16 @@ securityLevel: 'strict'
 """
         }
 
-        let style = css_doc + css_highlight + css_doc_extended
+        var style = css_doc + css_highlight + css_doc_extended
+        switch self.appearance {
+        case .undefined:
+            break
+        case .light:
+            style = style.replacingOccurrences(of: "@media (prefers-color-scheme: dark)", with: "@media not all")
+        case .dark:
+            style = style.replacingOccurrences(of: "@media (prefers-color-scheme: dark)", with: "@media all")
+        }
+        
         let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
         let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"
         let body_style = self.renderAsCode ? " class='hl'" : ""
@@ -1089,6 +1201,49 @@ html { scroll-behavior: smooth; }
     }
     
     /**
+     * Rewrite the inline/display math delimiters inside cmark-extra's `<span class='hl math'>` and
+     * `<div class='hl math'>` wrappers from `$...$` / `$$...$$` to LaTeX-canonical `\(...\)` / `\[...\]`.
+     *
+     * Why: MathJax v3 defaults to `$...$` as an inline delimiter and scans the rendered DOM
+     * client-side, independent of cmark. That re-matches currency pairs like `$1.50 ... $7.89`
+     * as math even though cmark correctly classified them as plain text. Swapping MathJax to
+     * `\(...\)` / `\[...\]` (and rewriting only the spans cmark itself emitted) makes `$`
+     * invisible to MathJax — currency and prose are left alone.
+     *
+     * The trailing `</span>` / `</div>` anchor in each pattern is unforgeable because
+     * `math_ext.c:html_render_math` entity-escapes `<` to `&lt;` inside math content. The
+     * `[^>]*>` allows for any future attributes cmark-extra might add to the open tag (e.g.
+     * `lang="math"` from `CMARK_OPT_GITHUB_PRE_LANG`).
+     */
+    private func swapMathDelimiters(_ html: String) -> String {
+        var result = html
+        // Inline: <span class='hl math'>$...$</span> → <span class='hl math'>\(...\)</span>
+        result = result.replacingOccurrences(
+            of: #"(<span class='hl math'[^>]*>)\$([\s\S]*?)\$(</span>)"#,
+            with: #"$1\\($2\\)$3"#,
+            options: .regularExpression
+        )
+        // Display: <div class='hl math'>$$...$$</div> → <div class='hl math'>\[...\]</div>
+        result = result.replacingOccurrences(
+            of: #"(<div class='hl math'[^>]*>)\$\$([\s\S]*?)\$\$(</div>)"#,
+            with: #"$1\\[$2\\]$3"#,
+            options: .regularExpression
+        )
+        // Defensive: if any math span retained `$...$` (regex miss — e.g., an unforeseen
+        // cmark-extra output variant), log loudly. Under the new MathJax config, an
+        // un-swapped span renders as literal LaTeX source text — silent UX regression.
+        // This converts that silent failure into a loud one for the cost of two
+        // String.range(of:) probes per math-bearing render.
+        if result.range(of: #"<span class='hl math'[^>]*>\$"#, options: .regularExpression) != nil {
+            os_log("math delimiter swap missed an inline span — math may render as literal text. Please report.", log: OSLog.rendering, type: .error)
+        }
+        if result.range(of: #"<div class='hl math'[^>]*>\$\$"#, options: .regularExpression) != nil {
+            os_log("math delimiter swap missed a display block — math may render as literal text. Please report.", log: OSLog.rendering, type: .error)
+        }
+        return result
+    }
+
+    /**
      * Transform mermaid code blocks from `<pre...><code class="language-mermaid">...</code></pre>` to `<div class="mermaid">...</div>`.
      */
     private func transformMermaidBlocks(_ html: String) -> String {
@@ -1124,7 +1279,7 @@ html { scroll-behavior: smooth; }
             let key: String = "<strong>\(element.key)</strong>"
             /*
             do {
-                key = try self.render(text: "**\(element.key)**", filename: "", forAppearance: .light, baseDir: "")
+                key = try self.render(text: "**\(element.key)**", filename: "", baseDir: "")
             } catch {
                 key = "<strong>\(element.key)</strong>"
             }*/
@@ -1137,7 +1292,7 @@ html { scroll-behavior: smooth; }
                     /*
                     if let t = v as? String {
                         do {
-                            s = try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
+                            s = try self.render(text: t, filename: "", baseDir: "")
                         } catch {
                             s = t
                         }
@@ -1150,7 +1305,7 @@ html { scroll-behavior: smooth; }
                 s += t
                 /*
                 do {
-                    s += try self.render(text: t, filename: "", forAppearance: .light, baseDir: "")
+                    s += try self.render(text: t, filename: "", baseDir: "")
                 } catch {
                     s += t.replacingOccurrences(of: "|", with: #"\|"#)
                 }

@@ -21,7 +21,7 @@ class AboutViewController: NSViewController {
             let build = info["CFBundleVersion"] as? String ?? ""
                 
             titleField.stringValue = info["CFBundleExecutable"] as? String ?? "QLMarkdown"
-            versionField.stringValue = "Version \(version) (\(build))"
+            versionField.stringValue = String.localizedStringWithFormat(NSLocalizedString("Version %@", comment: "Version number"), "\(version) (\(build))")
             copyrightField.stringValue = info["NSHumanReadableCopyright"] as? String ?? ""
         } else {
             versionField.stringValue = ""
@@ -32,9 +32,9 @@ class AboutViewController: NSViewController {
         let bg_color = NSColor.textBackgroundColor.css() ?? "#ffffff"
         var s = "<div style='font-family: -apple-system; text-align: center; color: \(fg_color); background-color: \(bg_color)'>"
         
-        s += "<b>Developer</b><br /><a href='https://github.com/sbarex/'>sbarex</a><br /><a href='https://github.com/sbarex/QLMarkdown'>https://github.com/sbarex/QLMarkdown</a><br /><br />"
+        s += "<b>\(NSLocalizedString("Developer", comment: ""))</b><br /><a href='https://github.com/sbarex/'>sbarex</a><br /><a href='https://github.com/sbarex/QLMarkdown'>https://github.com/sbarex/QLMarkdown</a><br /><br />"
         
-        s += "<b>Libraries</b><br />"
+        s += "<b>\(NSLocalizedString("Libraries", comment: ""))</b><br />"
         s += "cmark-gfm version \(String(cString: cmark_version_string())) (\(cmark_version())) (<a href=\"https://github.com/github/cmark-gfm\">https://github.com/github/cmark-gfm</a>)<br />\n"
         if let v = get_highlight_version() {
             defer {

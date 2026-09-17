@@ -13,10 +13,21 @@ enum CMARK_Error: Error {
     case parser_parse
 }
 
-enum Appearance: Int {
+enum Appearance: Int, Codable {
     case undefined
     case light
     case dark
+    
+    var name: String {
+        switch self {
+        case .undefined:
+            return "auto"
+        case .light:
+            return "light"
+        case .dark:
+            return "dark"
+        }
+    }
 }
 
 enum JSExtension: Codable {
@@ -126,7 +137,7 @@ enum JSExtension: Codable {
     }
     
     /**
-     * Sanitize the settings
+     * Sanitize the settings.
      * - parameters:
      *   - cacheUrl: Path (local file or web uRL) of the library, from the cache folder or the main bundle.
      *   - cdnUrl: Web url from download the library. Tipically from a CDN service.
@@ -214,6 +225,12 @@ enum StrikethroughMode: Int, Codable {
     case double = 2
 }
 
+enum OverrideMode: Int {
+    case never = 0
+    case always = 1
+    case onlyOlder = 2
+}
+
 extension NSNotification.Name {
     public static let QLMarkdownSettingsUpdated: NSNotification.Name = NSNotification.Name("org.sbarex.qlmarkdown-settings-changed")
 }
@@ -221,44 +238,56 @@ extension NSNotification.Name {
 // MARK: -
 class Settings: Codable {
     enum CodingKeys: String, CodingKey {
-        case autoLinkExtension
-        case checkboxExtension
-        case headsExtension
-        case hightlightExtension
-        case inlineImageExtension
-        case mathExtension
-        case mermaidExtension
-        case mentionExtension
-        case subExtension
-        case supExtension
-        case tableExtension
-        case tagFilterExtension
-        case taskListExtension
-        case yamlExtension
-        case emojiExtension
-        case strikethroughExtension
-        case syntaxHighlightExtension
-        case syntaxWordWrapOption
-        case syntaxLineNumbersOption
-        case syntaxTabsOption
-        case footnotesOption
-        case hardBreakOption
-        case noSoftBreakOption
-        case unsafeHTMLOption
-        case smartQuotesOption
-        case validateUTFOption
-        case tableOfContentsOption
+        case appearance
+        
         case baseFontSize
         case customCSS
         case customCSSCode
         case customCSSCodeFetched
         case customCSSOverride
-        case openInlineLink
+        
+        case admonitionExtension
+        case autoLinkExtension
+        case definitionListExtension
+        case emojiExtension
+        case alertExtension
+        case mentionExtension
+        case headsExtension
+        case tableOfContentsOption
+        case hightlightExtension
+        case inlineImageExtension
+        case mathExtension
+        case mermaidExtension
+        case subExtension
+        case supExtension
+        case strikethroughExtension
+        case syntaxHighlightExtension
+        case syntaxLineNumbersOption
+        case syntaxTabsOption
+        case syntaxWordWrapOption
+        case tableExtension
+        case tagFilterExtension
+        case taskListExtension
+        case wikilinkExtension
+        case yamlExtension
+        
+        case checkboxExtension
+        
+        case smartQuotesOption
+        case footnotesOption
+        case hardBreakOption
+        case noSoftBreakOption
+        case unsafeHTMLOption
+        case validateUTFOption
+        case debug
         case renderAsCode
+        
+        case openInlineLink
+        
         case qlWindowWidth
         case qlWindowHeight
+        
         case about
-        case debug
     }
 
     // MARK: - Static properties and methods
@@ -449,66 +478,91 @@ class Settings: Codable {
     
     // MARK: - Instance properties and methods
     
-    var autoLinkExtension: Bool = true
-    var checkboxExtension: Bool = false
-    var headsExtension: Bool = true
-    var highlightExtension: Bool = false
-    var inlineImageExtension: Bool = true
-    var mathExtension: JSExtension = .link(url: nil)
-    var mermaidExtension: JSExtension = .link(url: nil)
-    var mentionExtension: Bool = false
-    var subExtension: Bool = false
-    var supExtension: Bool = false
-    var tableExtension: Bool = true
-    var tagFilterExtension: Bool = true
-    var taskListExtension: Bool = true
-    var yamlExtension: YamlMode = .onlyRmd
-    var emojiExtension: EmojiMode = .font
-    var strikethroughExtension: StrikethroughMode = .single
-    var syntaxHighlightExtension: Bool = true
-    var syntaxWordWrapOption: Int = 0
-    var syntaxLineNumbersOption: Bool = false
-    var syntaxTabsOption: Int = 4
-
-    var footnotesOption: Bool = true
-    var hardBreakOption: Bool = false
-    var noSoftBreakOption: Bool = false
-    var unsafeHTMLOption: Bool = true
-    var smartQuotesOption: Bool = true
-    var validateUTFOption: Bool = false
-    var tableOfContentsOption: Bool = false
+    var appearance: Appearance = .undefined
     
     var baseFontSize: CGFloat = 0
     var customCSS: URL? {
         didSet {
             customCSSFetched = false
+            customCSSCode = nil
         }
     }
     var customCSSFetched: Bool = false
     var customCSSCode: String?
     var customCSSOverride: Bool = false
     
-    var openInlineLink: Bool = false
+    var admonitionExtension: Bool = false
+    var autoLinkExtension: Bool = true
+    var definitionListExtension: Bool = false
+    var emojiExtension: EmojiMode = .font
+    var alertExtension: Bool = false
+    var mentionExtension: Bool = false
+    var headsExtension: Bool = true
+    var tableOfContentsOption: Bool = false
+    var highlightExtension: Bool = false
+    var inlineImageExtension: Bool = true
+    var mathExtension: JSExtension = .link(url: nil)
+    var mermaidExtension: JSExtension = .link(url: nil)
+    var subExtension: Bool = false
+    var supExtension: Bool = false
+    var strikethroughExtension: StrikethroughMode = .single
+    var syntaxHighlightExtension: Bool = true
+    var syntaxLineNumbersOption: Bool = false
+    var syntaxTabsOption: Int = 4
+    var syntaxWordWrapOption: Int = 0
+    var tableExtension: Bool = true
+    var tagFilterExtension: Bool = true
+    var taskListExtension: Bool = true
+    var wikilinkExtension: Bool = false
+    var yamlExtension: YamlMode = .allFiles
+    
+    var checkboxExtension: Bool = false
+    
+    var smartQuotesOption: Bool = true
+    var footnotesOption: Bool = true
+    var hardBreakOption: Bool = false
+    var noSoftBreakOption: Bool = false
+    var unsafeHTMLOption: Bool = true
+    var validateUTFOption: Bool = false
+    /// Show debug infomations.
+    var debug: Bool = false
     var renderAsCode: Bool = false
+    
+    var openInlineLink: Bool = false
 
     /// Quick Look window width.
     var qlWindowWidth: Int? = nil
     /// Quick Look window height.
     var qlWindowHeight: Int? = nil
+    /// Width used when the style does not declare a content column.
+    static let defaultQLWindowWidth: CGFloat = 960
+    /// Height suggested to Quick Look. The preview scrolls if the content is longer.
+    static let defaultQLWindowHeight: CGFloat = 1000
+    /// Width used in `Render as code` mode, where the source is not laid out in a column.
+    static let defaultQLWindowWidthAsCode: CGFloat = 1400
     /// Quick Look window size.
+    /// Without a suggestion macOS opens a window as big as the screen.
     var qlWindowSize: CGSize {
         if let w = qlWindowWidth, w > 0, let h = qlWindowHeight, h > 0 {
             return CGSize(width: CGFloat(w), height: CGFloat(h))
         } else {
-            return CGSize(width: 0, height: 0)
+            return self.autoQLWindowSize
+        }
+    }
+    
+    /// Size used when no custom size is set. Fitted to the content column of the style in use.
+    var autoQLWindowSize: CGSize {
+        if let column = self.contentColumnWidth {
+            return CGSize(width: column + 58, height: Self.defaultQLWindowHeight) // gutters and scroller
+        } else if self.renderAsCode {
+            return CGSize(width: Self.defaultQLWindowWidthAsCode, height: Self.defaultQLWindowHeight)
+        } else {
+            return CGSize(width: Self.defaultQLWindowWidth, height: Self.defaultQLWindowHeight)
         }
     }
     
     /// Show the informative message on the footer.
     var about: Bool = true
-    
-    /// Show debug infomations.
-    var debug: Bool = false
     
     lazy fileprivate(set) var resourceBundle: Bundle = {
         return Self.getResourceBundle()
@@ -517,42 +571,7 @@ class Settings: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.tableExtension = try container.decode(Bool.self, forKey: .tableExtension)
-        self.autoLinkExtension = try container.decode(Bool.self, forKey:.autoLinkExtension)
-        self.tagFilterExtension = try container.decode(Bool.self, forKey: .tagFilterExtension)
-        self.taskListExtension = try container.decode(Bool.self, forKey: .taskListExtension)
-        
-        self.yamlExtension = try container.decode(YamlMode.self, forKey: .yamlExtension)
-    
-        self.strikethroughExtension = try container.decode(StrikethroughMode.self, forKey:.strikethroughExtension)
-        
-        self.mathExtension = try container.decode(JSExtension.self, forKey:.mathExtension)
-        self.mermaidExtension = try container.decode(JSExtension.self, forKey:.mermaidExtension)
-        
-        self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
-        self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
-        self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
-        self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
-       
-        self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
-        self.syntaxWordWrapOption = try container.decode(Int.self, forKey: .syntaxWordWrapOption)
-        self.syntaxLineNumbersOption = try container.decode(Bool.self, forKey: .syntaxLineNumbersOption)
-        self.syntaxTabsOption = try container.decode(Int.self, forKey: .syntaxTabsOption)
-        
-        self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
-        self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
-        
-        self.emojiExtension = try container.decode(EmojiMode.self, forKey:.emojiExtension)
-        
-        self.inlineImageExtension = try container.decode(Bool.self, forKey:.inlineImageExtension)
-        
-        self.hardBreakOption = try container.decode(Bool.self, forKey: .hardBreakOption)
-        self.noSoftBreakOption = try container.decode(Bool.self, forKey: .noSoftBreakOption)
-        self.unsafeHTMLOption = try container.decode(Bool.self, forKey: .unsafeHTMLOption)
-        self.validateUTFOption = try container.decode(Bool.self, forKey: .validateUTFOption)
-        self.smartQuotesOption = try container.decode(Bool.self, forKey: .smartQuotesOption)
-        self.footnotesOption = try container.decode(Bool.self, forKey: .footnotesOption)
-        self.tableOfContentsOption = try container.decodeIfPresent(Bool.self, forKey: .tableOfContentsOption) ?? false
+        self.appearance = try container.decode(Appearance.self, forKey: .appearance)
         
         self.baseFontSize = try container.decode(CGFloat.self, forKey: .baseFontSize)
         self.customCSS = try container.decode(URL?.self, forKey: .customCSS)
@@ -560,14 +579,48 @@ class Settings: Codable {
         self.customCSSCode = try container.decode(String?.self, forKey: .customCSSCode)
         self.customCSSOverride = try container.decode(Bool.self, forKey: .customCSSOverride)
         
-        self.about = try container.decode(Bool.self, forKey: .about)
+        self.admonitionExtension = try container.decodeIfPresent(Bool.self, forKey: .admonitionExtension) ?? false
+        self.autoLinkExtension = try container.decode(Bool.self, forKey:.autoLinkExtension)
+        self.definitionListExtension = try container.decodeIfPresent(Bool.self, forKey: .definitionListExtension) ?? false
+        self.emojiExtension = try container.decode(EmojiMode.self, forKey:.emojiExtension)
+        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? false
+        self.mentionExtension = try container.decode(Bool.self, forKey:.mentionExtension)
+        self.headsExtension = try container.decode(Bool.self, forKey:.headsExtension)
+        self.tableOfContentsOption = try container.decodeIfPresent(Bool.self, forKey: .tableOfContentsOption) ?? false
+        self.highlightExtension = try container.decode(Bool.self, forKey: .hightlightExtension)
+        self.inlineImageExtension = try container.decode(Bool.self, forKey:.inlineImageExtension)
+        self.mathExtension = try container.decode(JSExtension.self, forKey:.mathExtension)
+        self.mermaidExtension = try container.decode(JSExtension.self, forKey:.mermaidExtension)
+        self.subExtension = try container.decode(Bool.self, forKey:.subExtension)
+        self.supExtension = try container.decode(Bool.self, forKey:.supExtension)
+        self.strikethroughExtension = try container.decode(StrikethroughMode.self, forKey:.strikethroughExtension)
+        self.syntaxHighlightExtension = try container.decode(Bool.self, forKey: .syntaxHighlightExtension)
+        self.syntaxLineNumbersOption = try container.decode(Bool.self, forKey: .syntaxLineNumbersOption)
+        self.syntaxTabsOption = try container.decode(Int.self, forKey: .syntaxTabsOption)
+        self.syntaxWordWrapOption = try container.decode(Int.self, forKey: .syntaxWordWrapOption)
+        self.tableExtension = try container.decode(Bool.self, forKey: .tableExtension)
+        self.tagFilterExtension = try container.decode(Bool.self, forKey: .tagFilterExtension)
+        self.taskListExtension = try container.decode(Bool.self, forKey: .taskListExtension)
+        self.wikilinkExtension = try container.decode(Bool.self, forKey:.wikilinkExtension)
+        self.yamlExtension = try container.decode(YamlMode.self, forKey: .yamlExtension)
+        
+        self.checkboxExtension = try container.decode(Bool.self, forKey:.checkboxExtension)
+        
+        self.smartQuotesOption = try container.decode(Bool.self, forKey: .smartQuotesOption)
+        self.footnotesOption = try container.decode(Bool.self, forKey: .footnotesOption)
+        self.hardBreakOption = try container.decode(Bool.self, forKey: .hardBreakOption)
+        self.noSoftBreakOption = try container.decode(Bool.self, forKey: .noSoftBreakOption)
+        self.unsafeHTMLOption = try container.decode(Bool.self, forKey: .unsafeHTMLOption)
+        self.validateUTFOption = try container.decode(Bool.self, forKey: .validateUTFOption)
         self.debug = try container.decode(Bool.self, forKey: .debug)
+        self.renderAsCode = try container.decode(Bool.self, forKey: .renderAsCode)
         
         self.openInlineLink = try container.decode(Bool.self, forKey: .openInlineLink)
-        self.renderAsCode = try container.decode(Bool.self, forKey: .renderAsCode)
-
+        
         self.qlWindowWidth = try container.decode(Int?.self, forKey: .qlWindowWidth)
         self.qlWindowHeight = try container.decode(Int?.self, forKey: .qlWindowHeight)
+        
+        self.about = try container.decode(Bool.self, forKey: .about)
     }
     
     init() { }
@@ -594,42 +647,7 @@ class Settings: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(self.tableExtension, forKey: .tableExtension)
-        try container.encode(self.autoLinkExtension, forKey: .autoLinkExtension)
-        try container.encode(self.tagFilterExtension, forKey: .tagFilterExtension)
-        try container.encode(self.taskListExtension, forKey: .taskListExtension)
-    
-        try container.encode(self.yamlExtension, forKey: .yamlExtension)
-    
-        try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
-        
-        try container.encode(self.mathExtension, forKey: .mathExtension)
-        try container.encode(self.mermaidExtension, forKey: .mermaidExtension)
-        
-        try container.encode(self.mentionExtension, forKey: .mentionExtension)
-        try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
-        try container.encode(self.headsExtension, forKey: .headsExtension)
-        try container.encode(self.highlightExtension, forKey: .hightlightExtension)
-        
-        try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
-        try container.encode(self.syntaxWordWrapOption, forKey: .syntaxWordWrapOption)
-        try container.encode(self.syntaxLineNumbersOption, forKey: .syntaxLineNumbersOption)
-        try container.encode(self.syntaxTabsOption, forKey: .syntaxTabsOption)
-        
-        try container.encode(self.subExtension, forKey: .subExtension)
-        try container.encode(self.supExtension, forKey: .supExtension)
-        
-        try container.encode(self.emojiExtension, forKey: .emojiExtension)
-        
-        try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
-    
-        try container.encode(self.hardBreakOption, forKey: .hardBreakOption)
-        try container.encode(self.noSoftBreakOption, forKey: .noSoftBreakOption)
-        try container.encode(self.unsafeHTMLOption, forKey: .unsafeHTMLOption)
-        try container.encode(self.validateUTFOption, forKey: .validateUTFOption)
-        try container.encode(self.smartQuotesOption, forKey: .smartQuotesOption)
-        try container.encode(self.footnotesOption, forKey: .footnotesOption)
-        try container.encode(self.tableOfContentsOption, forKey: .tableOfContentsOption)
+        try container.encode(self.appearance, forKey: .appearance)
         
         try container.encode(self.baseFontSize, forKey: .baseFontSize)
         try container.encode(self.customCSS, forKey: .customCSS)
@@ -637,14 +655,48 @@ class Settings: Codable {
         try container.encode(self.customCSSFetched, forKey: .customCSSCodeFetched)
         try container.encode(self.customCSSOverride, forKey: .customCSSOverride)
         
-        try container.encode(self.about, forKey: .about)
-        try container.encode(self.debug, forKey: .debug)
+        try container.encode(self.admonitionExtension, forKey: .admonitionExtension)
+        try container.encode(self.autoLinkExtension, forKey: .autoLinkExtension)
+        try container.encode(self.definitionListExtension, forKey: .definitionListExtension)
+        try container.encode(self.emojiExtension, forKey: .emojiExtension)
+        try container.encode(self.alertExtension, forKey: .alertExtension)
+        try container.encode(self.mentionExtension, forKey: .mentionExtension)
+        try container.encode(self.headsExtension, forKey: .headsExtension)
+        try container.encode(self.tableOfContentsOption, forKey: .tableOfContentsOption)
+        try container.encode(self.highlightExtension, forKey: .hightlightExtension)
+        try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
+        try container.encode(self.mathExtension, forKey: .mathExtension)
+        try container.encode(self.mermaidExtension, forKey: .mermaidExtension)
+        try container.encode(self.subExtension, forKey: .subExtension)
+        try container.encode(self.supExtension, forKey: .supExtension)
+        try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
+        try container.encode(self.syntaxHighlightExtension, forKey: .syntaxHighlightExtension)
+        try container.encode(self.syntaxLineNumbersOption, forKey: .syntaxLineNumbersOption)
+        try container.encode(self.syntaxTabsOption, forKey: .syntaxTabsOption)
+        try container.encode(self.syntaxWordWrapOption, forKey: .syntaxWordWrapOption)
+        try container.encode(self.tableExtension, forKey: .tableExtension)
+        try container.encode(self.tagFilterExtension, forKey: .tagFilterExtension)
+        try container.encode(self.taskListExtension, forKey: .taskListExtension)
+        try container.encode(self.wikilinkExtension, forKey: .wikilinkExtension)
+        try container.encode(self.yamlExtension, forKey: .yamlExtension)
     
-        try container.encode(self.openInlineLink, forKey: .openInlineLink)
+        try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
+        
+        try container.encode(self.smartQuotesOption, forKey: .smartQuotesOption)
+        try container.encode(self.footnotesOption, forKey: .footnotesOption)
+        try container.encode(self.hardBreakOption, forKey: .hardBreakOption)
+        try container.encode(self.noSoftBreakOption, forKey: .noSoftBreakOption)
+        try container.encode(self.unsafeHTMLOption, forKey: .unsafeHTMLOption)
+        try container.encode(self.validateUTFOption, forKey: .validateUTFOption)
+        try container.encode(self.debug, forKey: .debug)
         try container.encode(self.renderAsCode, forKey: .renderAsCode)
+        
+        try container.encode(self.openInlineLink, forKey: .openInlineLink)
 
         try container.encode(self.qlWindowWidth, forKey: .qlWindowWidth)
         try container.encode(self.qlWindowHeight, forKey: .qlWindowHeight)
+        
+        try container.encode(self.about, forKey: .about)
     }
     
     func initFromDefaults() {
@@ -686,109 +738,128 @@ class Settings: Codable {
      * Update settings based on other settings provided.
      */
     func update(from s: Settings) {
-        self.tableExtension = s.tableExtension
-        self.autoLinkExtension = s.autoLinkExtension
-        self.tagFilterExtension = s.tagFilterExtension
-        self.taskListExtension = s.taskListExtension
-        
-        self.yamlExtension = s.yamlExtension
-        
-        self.strikethroughExtension = s.strikethroughExtension
-        
-        self.mathExtension = s.mathExtension
-        self.mermaidExtension = s.mermaidExtension
-        self.mentionExtension = s.mentionExtension
-        self.checkboxExtension = s.checkboxExtension
-        self.headsExtension = s.headsExtension
-        
-        self.highlightExtension = s.highlightExtension
-        
-        self.syntaxHighlightExtension = s.syntaxHighlightExtension
-        self.syntaxWordWrapOption = s.syntaxWordWrapOption
-        self.syntaxLineNumbersOption = s.syntaxLineNumbersOption
-        self.syntaxTabsOption = s.syntaxTabsOption
-        
-        self.subExtension = s.subExtension
-        self.supExtension = s.supExtension
-        
-        self.emojiExtension = s.emojiExtension
-        
-        self.inlineImageExtension = s.inlineImageExtension
-        
-        self.hardBreakOption = s.hardBreakOption
-        self.noSoftBreakOption = s.noSoftBreakOption
-        self.unsafeHTMLOption = s.unsafeHTMLOption
-        self.validateUTFOption = s.validateUTFOption
-        self.smartQuotesOption = s.smartQuotesOption
-        self.footnotesOption = s.footnotesOption
-        self.tableOfContentsOption = s.tableOfContentsOption
+        self.appearance = s.appearance
         
         self.baseFontSize = s.baseFontSize
         self.customCSS = s.customCSS
         self.customCSSCode = s.customCSSCode
+        self.customCSSFetched = s.customCSSFetched
         self.customCSSOverride = s.customCSSOverride
         
-        self.about = s.about
+        self.admonitionExtension = s.admonitionExtension
+        self.autoLinkExtension = s.autoLinkExtension
+        self.definitionListExtension = s.definitionListExtension
+        self.emojiExtension = s.emojiExtension
+        self.alertExtension = s.alertExtension
+        self.mentionExtension = s.mentionExtension
+        self.headsExtension = s.headsExtension
+        self.tableOfContentsOption = s.tableOfContentsOption
+        self.highlightExtension = s.highlightExtension
+        self.inlineImageExtension = s.inlineImageExtension
+        self.mathExtension = s.mathExtension
+        self.mermaidExtension = s.mermaidExtension
+        self.subExtension = s.subExtension
+        self.supExtension = s.supExtension
+        self.strikethroughExtension = s.strikethroughExtension
+        self.syntaxHighlightExtension = s.syntaxHighlightExtension
+        self.syntaxLineNumbersOption = s.syntaxLineNumbersOption
+        self.syntaxTabsOption = s.syntaxTabsOption
+        self.syntaxWordWrapOption = s.syntaxWordWrapOption
+        self.tableExtension = s.tableExtension
+        self.tagFilterExtension = s.tagFilterExtension
+        self.taskListExtension = s.taskListExtension
+        self.wikilinkExtension = s.wikilinkExtension
+        self.yamlExtension = s.yamlExtension
+        
+        self.checkboxExtension = s.checkboxExtension
+        
+        self.smartQuotesOption = s.smartQuotesOption
+        self.footnotesOption = s.footnotesOption
+        self.hardBreakOption = s.hardBreakOption
+        self.noSoftBreakOption = s.noSoftBreakOption
+        self.unsafeHTMLOption = s.unsafeHTMLOption
+        self.validateUTFOption = s.validateUTFOption
         self.debug = s.debug
+        self.renderAsCode = s.renderAsCode
         
         self.openInlineLink = s.openInlineLink
         
-        self.renderAsCode = s.renderAsCode
-        
         self.qlWindowWidth = s.qlWindowWidth
         self.qlWindowHeight = s.qlWindowHeight
+        
+        self.about = s.about
     }
     
     /**
      * Update settings based on other settings provided from a UserDefaults dictionary.
      */
     func update(from defaultsDomain: [String: Any]) {
-        if let ext = defaultsDomain[Self.CodingKeys.tableExtension.rawValue] as? Bool {
-            tableExtension = ext
+        if let n = defaultsDomain[Self.CodingKeys.appearance.rawValue] as? Int, let state = Appearance(rawValue: n) {
+            appearance = state
+        }
+        
+        if let opt = defaultsDomain[Self.CodingKeys.baseFontSize.rawValue] as? CGFloat {
+            baseFontSize = opt
+        }
+        if let opt = defaultsDomain[Self.CodingKeys.customCSS.rawValue] as? String, !opt.isEmpty {
+            if !opt.hasPrefix("/"), let path = Settings.stylesFolder{
+                customCSS = path.appendingPathComponent(opt)
+            } else {
+                customCSS = URL(fileURLWithPath: opt)
+            }
+        }
+        if let opt = defaultsDomain[Self.CodingKeys.customCSSOverride.rawValue] as? Bool {
+            customCSSOverride = opt
+        }
+        
+        if let ext = defaultsDomain[Self.CodingKeys.admonitionExtension.rawValue] as? Bool {
+            admonitionExtension = ext
         }
         if let ext = defaultsDomain[Self.CodingKeys.autoLinkExtension.rawValue] as? Bool {
             autoLinkExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.tagFilterExtension.rawValue] as? Bool {
-            tagFilterExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.definitionListExtension.rawValue] as? Bool {
+            definitionListExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.taskListExtension.rawValue] as? Bool {
-            taskListExtension = ext
+        if let n = defaultsDomain[Self.CodingKeys.emojiExtension.rawValue] as? Int, let ext = EmojiMode(rawValue: n) {
+            emojiExtension = ext
         }
-        if let n = defaultsDomain[Self.CodingKeys.yamlExtension.rawValue] as? Int, let ext = YamlMode(rawValue: n) {
-            yamlExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.alertExtension.rawValue] as? Bool {
+            alertExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.mentionExtension.rawValue] as? Bool {
+            mentionExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.headsExtension.rawValue] as? Bool {
+            headsExtension = ext
         }
         
-        if let n = defaultsDomain[Self.CodingKeys.strikethroughExtension.rawValue] as? Int, let ext = StrikethroughMode(rawValue: n) {
-            strikethroughExtension = ext
+        if let opt = defaultsDomain[Self.CodingKeys.tableOfContentsOption.rawValue] as? Bool {
+            tableOfContentsOption = opt
         }
-        
+        if let ext = defaultsDomain[Self.CodingKeys.hightlightExtension.rawValue] as? Bool {
+            highlightExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.inlineImageExtension.rawValue] as? Bool {
+            inlineImageExtension = ext
+        }
         if let ext = defaultsDomain[Self.CodingKeys.mathExtension.rawValue] as? [String: Any] {
             mathExtension = JSExtension(from: ext) ?? .disabled
         }
         if let ext = defaultsDomain[Self.CodingKeys.mermaidExtension.rawValue] as? [String: Any] {
             mermaidExtension = JSExtension(from: ext) ?? .disabled
         }
-        if let ext = defaultsDomain[Self.CodingKeys.mentionExtension.rawValue] as? Bool {
-            mentionExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
+            subExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.checkboxExtension.rawValue] as? Bool {
-            checkboxExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
+            supExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.headsExtension.rawValue] as? Bool {
-            headsExtension = ext
+        if let n = defaultsDomain[Self.CodingKeys.strikethroughExtension.rawValue] as? Int, let ext = StrikethroughMode(rawValue: n) {
+            strikethroughExtension = ext
         }
-        
-        if let ext = defaultsDomain[Self.CodingKeys.hightlightExtension.rawValue] as? Bool {
-            highlightExtension = ext
-        }
-        
         if let ext = defaultsDomain[Self.CodingKeys.syntaxHighlightExtension.rawValue] as? Bool {
             syntaxHighlightExtension = ext
-        }
-        
-        if let characters = defaultsDomain[Self.CodingKeys.syntaxWordWrapOption.rawValue] as? Int {
-            syntaxWordWrapOption = characters
         }
         if let state = defaultsDomain[Self.CodingKeys.syntaxLineNumbersOption.rawValue] as? Bool {
             syntaxLineNumbersOption = state
@@ -796,22 +867,35 @@ class Settings: Codable {
         if let n = defaultsDomain[Self.CodingKeys.syntaxTabsOption.rawValue] as? Int {
             syntaxTabsOption = n
         }
-        
-        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
-            subExtension = ext
+        if let characters = defaultsDomain[Self.CodingKeys.syntaxWordWrapOption.rawValue] as? Int {
+            syntaxWordWrapOption = characters
         }
-        if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
-            supExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.tableExtension.rawValue] as? Bool {
+            tableExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.tagFilterExtension.rawValue] as? Bool {
+            tagFilterExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.taskListExtension.rawValue] as? Bool {
+            taskListExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.wikilinkExtension.rawValue] as? Bool {
+            wikilinkExtension = ext
+        }
+        if let n = defaultsDomain[Self.CodingKeys.yamlExtension.rawValue] as? Int, let ext = YamlMode(rawValue: n) {
+            yamlExtension = ext
         }
         
-        if let n = defaultsDomain[Self.CodingKeys.emojiExtension.rawValue] as? Int, let ext = EmojiMode(rawValue: n) {
-            emojiExtension = ext
+        if let ext = defaultsDomain[Self.CodingKeys.checkboxExtension.rawValue] as? Bool {
+            checkboxExtension = ext
         }
         
-        if let ext = defaultsDomain[Self.CodingKeys.inlineImageExtension.rawValue] as? Bool {
-            inlineImageExtension = ext
+        if let opt = defaultsDomain[Self.CodingKeys.smartQuotesOption.rawValue] as? Bool {
+            smartQuotesOption = opt
         }
-        
+        if let opt = defaultsDomain[Self.CodingKeys.footnotesOption.rawValue] as? Bool {
+            footnotesOption = opt
+        }
         if let opt = defaultsDomain[Self.CodingKeys.hardBreakOption.rawValue] as? Bool {
             hardBreakOption = opt
         }
@@ -824,46 +908,17 @@ class Settings: Codable {
         if let opt = defaultsDomain[Self.CodingKeys.validateUTFOption.rawValue] as? Bool {
             validateUTFOption = opt
         }
-        if let opt = defaultsDomain[Self.CodingKeys.smartQuotesOption.rawValue] as? Bool {
-            smartQuotesOption = opt
-        }
-        if let opt = defaultsDomain[Self.CodingKeys.footnotesOption.rawValue] as? Bool {
-            footnotesOption = opt
-        }
-        if let opt = defaultsDomain[Self.CodingKeys.tableOfContentsOption.rawValue] as? Bool {
-            tableOfContentsOption = opt
-        }
-        
-        
-        if let opt = defaultsDomain[Self.CodingKeys.baseFontSize.rawValue] as? CGFloat {
-            baseFontSize = opt
-        }
-        
-        if let opt = defaultsDomain[Self.CodingKeys.customCSS.rawValue] as? String, !opt.isEmpty {
-            if !opt.hasPrefix("/"), let path = Settings.stylesFolder{
-                customCSS = path.appendingPathComponent(opt)
-            } else {
-                customCSS = URL(fileURLWithPath: opt)
-            }
-        }
-        if let opt = defaultsDomain[Self.CodingKeys.customCSSOverride.rawValue] as? Bool {
-            customCSSOverride = opt
-        }
-        
-        if let opt = defaultsDomain[Self.CodingKeys.about.rawValue] as? Bool {
-            about = opt
-        }
-        
         if let opt = defaultsDomain[Self.CodingKeys.debug.rawValue] as? Bool {
             debug = opt
+        }
+        if let opt = defaultsDomain[Self.CodingKeys.renderAsCode.rawValue] as? Bool {
+            renderAsCode = opt
         }
         
         if let opt = defaultsDomain[Self.CodingKeys.openInlineLink.rawValue] as? Bool {
             openInlineLink = opt
         }
-        if let opt = defaultsDomain[Self.CodingKeys.renderAsCode.rawValue] as? Bool {
-            renderAsCode = opt
-        }
+        
         if let opt = defaultsDomain[Self.CodingKeys.qlWindowWidth.rawValue] as? Int, opt > 0 {
             qlWindowWidth = opt
         } else {
@@ -873,6 +928,10 @@ class Settings: Codable {
             qlWindowHeight = opt
         } else {
             qlWindowHeight = nil
+        }
+        
+        if let opt = defaultsDomain[Self.CodingKeys.about.rawValue] as? Bool {
+            about = opt
         }
 
         sanitize()
@@ -886,10 +945,12 @@ class Settings: Codable {
         update(from: s)
     }
     
-    func sanitize(allowLinkFile: Bool = false) {
+    @discardableResult
+    func sanitize(allowLinkFile: Bool = false) -> Bool {
         var messages: [String] = []
-        sanitize(allowLinkFile: allowLinkFile, messages: &messages)
+        let r = sanitize(allowLinkFile: allowLinkFile, messages: &messages)
         messages.forEach({ print($0) })
+        return r
     }
     
     /**
@@ -898,7 +959,10 @@ class Settings: Codable {
      *   - allowLinkFile: allow to link local file for the JSExtension properties
      *   - messages: Filled with a list of error messages.
      */
-    func sanitize(allowLinkFile: Bool = false, messages: inout [String]) {
+    @discardableResult
+    func sanitize(allowLinkFile: Bool = false, messages: inout [String]) -> Bool {
+        var valid = true
+        
         messages = []
         
         if baseFontSize < 0 {
@@ -909,12 +973,16 @@ class Settings: Codable {
         self.mermaidExtension.sanitize(cacheUrl: mermaidFileUrl, cdnUrl: Self.mermaidWebUrl, allowLinkFile: allowLinkFile)
         
         if self.subExtension && self.strikethroughExtension == .single {
-            messages.append("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).")
+            messages.append(NSLocalizedString("The Sub extension is incompatibile with the Strikethrough extension when recognize a single tile (~).", comment: ""))
+            valid = false
         }
         
         if self.supExtension && self.footnotesOption {
-            messages.append("The Sup extension can cause corrupted output when the Footnotes option is set.")
+            messages.append(NSLocalizedString("The Sup extension can cause corrupted output when the Footnotes option is set.", comment: ""))
+            valid = false
         }
+        
+        return valid
     }
     
     /**
@@ -942,19 +1010,51 @@ class Settings: Codable {
     }
     
     /**
+     * Get the style sheets applied to the rendered document, in cascade order.
+     * The bundled `default.css` is used only in Markdown mode. The custom style is emitted last.
+     */
+    func getAppliedCSS() -> (bundled: String?, custom: String) {
+        let custom = (self.customCSSFetched ? self.customCSSCode : self.getCustomCSSCode()) ?? ""
+        let useBundled = !self.renderAsCode && (custom.isEmpty || !self.customCSSOverride)
+        return (useBundled ? self.getBundleContents(forResource: "default", ofType: "css") : nil, custom)
+    }
+    
+    /// Width of the column used by the style to lay out the content. `nil` if no style declares it.
+    var contentColumnWidth: CGFloat? {
+        let css = self.getAppliedCSS()
+        // The custom style is emitted after the bundled one, so its declaration wins.
+        return parseContentColumnWidth(css.custom) ?? parseContentColumnWidth(css.bundled)
+    }
+    
+    /// Read the `--content-max-width` property. As in the cascade, the last declaration wins.
+    private func parseContentColumnWidth(_ css: String?) -> CGFloat? {
+        let pattern = #"--content-max-width\s*:\s*([0-9]+(?:\.[0-9]+)?)px"#
+        guard let css, let regex = try? NSRegularExpression(pattern: pattern, options: []) else {
+            return nil
+        }
+        guard let match = regex.matches(in: css, options: [], range: NSRange(css.startIndex..., in: css)).last,
+              let value = Range(match.range(at: 1), in: css).flatMap({ Double(css[$0]) }),
+              value > 0
+        else {
+            return nil
+        }
+        return CGFloat(value)
+    }
+    
+    /**
      * Install the dependencies files.
      *
      * This function create the support folders and copy from the bundle, if available, the mermaid and mathjax libraries.
      * Then copy the support files of highlight.
      */
-    func installDependencies(override: Bool = false) {
+    func installDependencies(override: OverrideMode = .never) {
         try? installDep(forResource: "mermaid.min", withExtension: "js", to: Self.mermaidCacheFileUrl, overwrite: override)
         try? installDep(forResource: "tex-mml-chtml", withExtension: "js", to: Self.mathJaxCacheFileUrl, overwrite: override)
         
         try? installDep(forResource: "highlight", withExtension: nil, to: Settings.syntaxHighlightSupportCacheUrl, overwrite: override)
     }
     
-    private func installDep(forResource name: String, withExtension ext: String?, to destination: URL?, overwrite: Bool) throws {
+    private func installDep(forResource name: String, withExtension ext: String?, to destination: URL?, overwrite: OverrideMode) throws {
         guard let source = self.resourceBundle.url(forResource: name, withExtension: ext) else {
             os_log(
                 "Unable to store cache the file/folder %{public}s: source is missing on the app bundle!",
@@ -980,25 +1080,88 @@ class Settings: Codable {
         }
     }
     
-    private func installDep(from source: URL?, to destination: URL?, overwrite: Bool) throws {
+    private func installDep(from source: URL?, to destination: URL?, overwrite: OverrideMode) throws {
         guard let source, let destination else {
             return
         }
         let fileManager = FileManager.default
-        let exists = fileManager.fileExists(atPath: destination.path)
-        guard overwrite || !exists else {
+        var isDirectory: ObjCBool = false
+        
+        let exists = fileManager.fileExists(atPath: destination.path, isDirectory: &isDirectory)
+        guard overwrite != .never || !exists else {
             return
         }
-        if exists {
-            try fileManager.removeItem(at: destination)
-        }
-        let folder = destination.deletingLastPathComponent()
+        guard overwrite != .always else {
+            if exists {
+                // Remove original file/folder
+                try fileManager.removeItem(at: destination)
+            }
+            let folder = destination.deletingLastPathComponent()
             
-        if !fileManager.fileExists(atPath: folder.path) {
-            try fileManager.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+            if !fileManager.fileExists(atPath: folder.path) {
+                // Create the destination folder
+                try fileManager.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+            }
+            
+            try fileManager.copyItem(atPath: source.path, toPath: destination.path)
+            return
         }
         
-        try fileManager.copyItem(atPath: source.path, toPath: destination.path)
+        if isDirectory.boolValue {
+            if !fileManager.fileExists(atPath: destination.path) {
+                // Create the destination folder
+                try fileManager.createDirectory(
+                    at: destination,
+                    withIntermediateDirectories: true
+                )
+            }
+            
+            let contents = try fileManager.contentsOfDirectory(
+                at: source,
+                includingPropertiesForKeys: nil
+            )
+            
+            for item in contents {
+                let target = destination.appendingPathComponent(
+                    item.lastPathComponent
+                )
+                
+                try installDep(
+                    from: item,
+                    to: target,
+                    overwrite: overwrite
+                )
+            }
+        } else {
+            if exists && overwrite == .onlyOlder {
+                let srcValues = try source.resourceValues(
+                    forKeys: [.contentModificationDateKey]
+                )
+                
+                let dstValues = try destination.resourceValues(
+                    forKeys: [.contentModificationDateKey]
+                )
+                
+                let srcDate = srcValues.contentModificationDate ?? .distantPast
+                let dstDate = dstValues.contentModificationDate ?? .distantPast
+                
+                guard srcDate > dstDate else {
+                    // The destination file is newer than the original.
+                    return
+                }
+            }
+            
+            if exists {
+                try fileManager.removeItem(at: destination)
+            }
+            let folder = destination.deletingLastPathComponent()
+            
+            if !fileManager.fileExists(atPath: folder.path) {
+                try fileManager.createDirectory(at: folder, withIntermediateDirectories: true, attributes: nil)
+            }
+            
+            try fileManager.copyItem(atPath: source.path, toPath: destination.path)
+        }
     }
     
     /**

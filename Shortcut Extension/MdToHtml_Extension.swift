@@ -24,6 +24,7 @@ struct MdToHtml_Extension: AppIntent {
             \.$validateUTF8
             \.$showDebugInfo
             
+            \.$admonition
             \.$autolink
             \.$emojiReplacement
             \.$headsAnchor
@@ -73,8 +74,21 @@ struct MdToHtml_Extension: AppIntent {
     @Parameter(title: "Render as source code", default: OptionalBoolEnum.predefined)
     var renderAsSource: OptionalBoolEnum
     
+    
+    @Parameter(title: "Admonition", default: OptionalBoolEnum.predefined)
+    var admonition: OptionalBoolEnum
+    
     @Parameter(title: "Autolink", default: OptionalBoolEnum.predefined)
     var autolink: OptionalBoolEnum
+    
+    @Parameter(title: "Definition list", default: OptionalBoolEnum.predefined)
+    var definitionExtension: OptionalBoolEnum
+    
+    @Parameter(title: "GitHub alert", default: OptionalBoolEnum.predefined)
+    var alertExtension: OptionalBoolEnum
+    
+    @Parameter(title: "GitHub mention", default: OptionalBoolEnum.predefined)
+    var mentionExtension: OptionalBoolEnum
     
     @Parameter(title: "Emoji replacement", default: EmojiOptionalEnum.predefined)
     var emojiReplacement: EmojiOptionalEnum
@@ -82,28 +96,28 @@ struct MdToHtml_Extension: AppIntent {
     @Parameter(title: "Heads anchor", default: OptionalBoolEnum.predefined)
     var headsAnchor: OptionalBoolEnum
     
-    @Parameter(title: "Highlight", default: OptionalBoolEnum.predefined)
+    @Parameter(title: "Highlight extension", default: OptionalBoolEnum.predefined)
     var highlight: OptionalBoolEnum
     
     @Parameter(title: "Embed local images", default: OptionalBoolEnum.predefined)
     var inlineLocalImages: OptionalBoolEnum
     
-    @Parameter(title: "Math extension", default: JsLibratyOptionalEnum.predefined)
+    @Parameter(title: "Math expression", default: JsLibratyOptionalEnum.predefined)
     var mathExtension: JsLibratyOptionalEnum
     
     @Parameter(title: "Diagram extension", default: JsLibratyOptionalEnum.predefined)
     var mermaidExtension: JsLibratyOptionalEnum
     
-    @Parameter(title: "Sub/Superscript extension", default: OptionalBoolEnum.predefined)
-    var subExtension: OptionalBoolEnum
-    
-    @Parameter(title: "Strikethrough extension", default: StrikethroughOptionalEnum.predefined)
+    @Parameter(title: "Strikethrough", default: StrikethroughOptionalEnum.predefined)
     var strikethrough: StrikethroughOptionalEnum
     
-    @Parameter(title: "Syntax highlight extension", default: OptionalBoolEnum.predefined)
+    @Parameter(title: "Sub/Superscript", default: OptionalBoolEnum.predefined)
+    var subExtension: OptionalBoolEnum
+    
+    @Parameter(title: "Syntax highlight", default: OptionalBoolEnum.predefined)
     var syntaxHighlight: OptionalBoolEnum
     
-    @Parameter(title: "Table extension", default: OptionalBoolEnum.predefined)
+    @Parameter(title: "Table", default: OptionalBoolEnum.predefined)
     var tableExtension: OptionalBoolEnum
     
     @Parameter(title: "Tag filter", default: OptionalBoolEnum.predefined)
@@ -111,6 +125,9 @@ struct MdToHtml_Extension: AppIntent {
     
     @Parameter(title: "Task list", default: OptionalBoolEnum.predefined)
     var taskExtension: OptionalBoolEnum
+    
+    @Parameter(title: "Wikilinks", default: OptionalBoolEnum.predefined)
+    var wikilinkExtension: OptionalBoolEnum
     
     @Parameter(title: "YAML header", default: YamlOptionalEnum.predefined)
     var yamlExtension: YamlOptionalEnum
@@ -135,20 +152,25 @@ struct MdToHtml_Extension: AppIntent {
         validateUTF8.updateValue(state: &settings.validateUTFOption)
         showDebugInfo.updateValue(state: &settings.debug)
         renderAsSource.updateValue(state: &settings.renderAsCode)
+        
+        admonition.updateValue(state: &settings.admonitionExtension)
         autolink.updateValue(state: &settings.autoLinkExtension)
+        definitionExtension.updateValue(state: &settings.definitionListExtension)
         emojiReplacement.updateValue(state: &settings.emojiExtension)
+        alertExtension.updateValue(state: &settings.alertExtension)
+        mentionExtension.updateValue(state: &settings.mentionExtension)
         headsAnchor.updateValue(state: &settings.headsExtension)
         highlight.updateValue(state: &settings.highlightExtension)
         inlineLocalImages.updateValue(state: &settings.inlineImageExtension)
         mathExtension.updateValue(state: &settings.mathExtension)
         mermaidExtension.updateValue(state: &settings.mermaidExtension)
-        subExtension.updateValue(state: &settings.subExtension)
         subExtension.updateValue(state: &settings.supExtension)
         strikethrough.updateValue(state: &settings.strikethroughExtension)
         syntaxHighlight.updateValue(state: &settings.syntaxHighlightExtension)
         tableExtension.updateValue(state: &settings.tableExtension)
         tagFilter.updateValue(state: &settings.tagFilterExtension)
         taskExtension.updateValue(state: &settings.taskListExtension)
+        wikilinkExtension.updateValue(state: &settings.wikilinkExtension)
         yamlExtension.updateValue(state: &settings.yamlExtension)
         
         settings.sanitize()
@@ -162,8 +184,7 @@ struct MdToHtml_Extension: AppIntent {
          
         os_log("Processng file %{public}@", log: OSLog.shortcutExtension, type: .debug, markdown_url.path)
          
-        let appearance: Appearance = Settings.isLightAppearance ? .light : .dark
-        let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+        let text = try settings.render(file: markdown_url, baseDir: markdown_url.deletingLastPathComponent().path)
          
         let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
          

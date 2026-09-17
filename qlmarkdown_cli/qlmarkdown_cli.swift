@@ -30,7 +30,7 @@ enum BoolArgumentEnum: String, ExpressibleByArgument {
 }
 
 enum AppearanceEnum: String, ExpressibleByArgument {
-    case light, dark
+    case light, dark, auto
     
     static var allValueStrings: [String] {
         return ["light", "dark"]
@@ -144,9 +144,19 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Translate mentions to link to the GitHub account", valueName: "on|off"))
     var githubMentions: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Render [[wikilinks]] as links.", valueName: "on|off"))
+    var wikilink: BoolArgumentEnum? = nil
+
     @Option(help: ArgumentHelp("Create anchors for the heads.", valueName: "on|off"))
     var headsAnchor: BoolArgumentEnum? = nil
-    
+
+    @Option(help: ArgumentHelp("Render definition lists.", valueName: "on|off"))
+    var definitionList: BoolArgumentEnum? = nil
+
+
+    @Option(help: ArgumentHelp("Render `!!! type` admonitions as callout boxes.", valueName: "on|off"))
+    var admonition: BoolArgumentEnum? = nil
+
     @Option(help: ArgumentHelp("Highlight text marked with `==`.", valueName: "on|off"))
     var highlight: BoolArgumentEnum? = nil
     
@@ -186,6 +196,9 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Format superscript characters inside `^` markers.", valueName: "on|off"))
     var sup: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Render GitHub alerts (blockquotes starting with [!NOTE], [!TIP], …).", valueName: "on|off"))
+    var alert: BoolArgumentEnum? = nil
+
     @Option(help: "Render the yaml header.")
     var yaml: YamlArgumentEnum? = nil
 }
@@ -249,6 +262,17 @@ struct QLMarkdownCLI: ParsableCommand {
     func getSettings() -> Settings {
         let settings = Settings.settingsFromSharedFile() ?? Settings()
         
+        if let a = self.options.appearance {
+            switch a {
+            case .auto:
+                settings.appearance = .undefined
+            case .light:
+                settings.appearance = .light
+            case .dark:
+                settings.appearance = .dark
+            }
+        }
+        
         // options
         if let o = options.footnotes {
             settings.footnotesOption = o == .on
@@ -302,8 +326,17 @@ struct QLMarkdownCLI: ParsableCommand {
         if let o = extensions.githubMentions {
             settings.mentionExtension = o == .on
         }
+        if let o = extensions.wikilink {
+            settings.wikilinkExtension = o == .on
+        }
         if let o = extensions.headsAnchor {
             settings.headsExtension = o == .on
+        }
+        if let o = extensions.definitionList {
+            settings.definitionListExtension = o == .on
+        }
+        if let o = extensions.admonition {
+            settings.admonitionExtension = o == .on
         }
         if let o = extensions.highlight {
             settings.highlightExtension = o == .on
@@ -364,6 +397,9 @@ struct QLMarkdownCLI: ParsableCommand {
         if let o = extensions.sup {
             settings.supExtension = o == .on
         }
+        if let o = extensions.alert {
+            settings.alertExtension = o == .on
+        }
         if let o = extensions.yaml {
             switch o {
             case .all:
@@ -376,22 +412,22 @@ struct QLMarkdownCLI: ParsableCommand {
         }
         
         var messages: [String] = []
-        settings.sanitize(allowLinkFile: true, messages: &messages)
-        if !messages.isEmpty {
-            print("Warning: there are some errors on the config settings: ")
-            messages.forEach({print($0)})
+        if !settings.sanitize(allowLinkFile: true, messages: &messages) {
+            print("Warning: there are some errors on the config settings")
+            if !messages.isEmpty {
+                messages.forEach({ print(" - \($0)") })
+            }
         }
         return settings
     }
     
     func printSettings(_ settings: Settings) {
         print("\n\(cliUrl.lastPathComponent) settings")
-        let appearance = self.options.appearance != nil ? self.options.appearance!.rawValue.capitalized : (Settings.isLightAppearance ? "Light" : "Dark")
         
         print("\nMain app path: \(self.appUrl.path)")
         
         print("\nMARKDOWN OPTIONS:")
-        print("    --appearance: \(appearance)")
+        print("    --appearance: \(settings.appearance.name)")
         print("    --base-font-size: \(settings.baseFontSize > 0 ? "\(settings.baseFontSize) pt" : "auto")")
         print("    --footnotes: \(settings.footnotesOption ? "on" : "off")")
         print("    --table-of-contents: \(settings.tableOfContentsOption ? "on" : "off")")
@@ -414,7 +450,10 @@ struct QLMarkdownCLI: ParsableCommand {
             print("    --emoji: using images")
         }
         print("    --github-mentions: \(settings.mentionExtension ? "on" : "off")")
+        print("    --wikilink: \(settings.wikilinkExtension ? "on" : "off")")
         print("    --heads-anchor: \(settings.headsExtension ? "on" : "off")")
+        print("    --admonition: \(settings.admonitionExtension ? "on" : "off")")
+        print("    --definition-list: \(settings.definitionListExtension ? "on" : "off")")
         print("    --highlight: \(settings.highlightExtension ? "on" : "off")")
         print("    --inline-images: \(settings.inlineImageExtension ? "on" : "off")")
         switch settings.mathExtension {
@@ -508,18 +547,6 @@ struct QLMarkdownCLI: ParsableCommand {
             FileManager.default.fileExists(atPath: dest.path, isDirectory: &isDir)
         }
         
-        let appearance: Appearance
-        if let a = self.options.appearance {
-            switch a {
-            case .light:
-                appearance = .light
-            case .dark:
-                appearance = .dark
-            }
-        } else {
-            appearance = Settings.isLightAppearance ? .light : .dark
-        }
-        
         if verbose || showSettings {
             printSettings(settings)
             if showSettings {
@@ -557,7 +584,7 @@ struct QLMarkdownCLI: ParsableCommand {
                     print("- processing \(markdown_url.path) ...")
                 }
                 
-                let text = try settings.render(file: markdown_url, forAppearance: appearance, baseDir: markdown_url.deletingLastPathComponent().path)
+                let text = try settings.render(file: markdown_url, baseDir: markdown_url.deletingLastPathComponent().path)
                 let html = settings.getCompleteHTML(title: url.lastPathComponent, body: text)
                 
                 Settings.renderStats += 1
