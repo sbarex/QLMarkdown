@@ -194,6 +194,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
 |Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|
 |Task list|Parse task list as defined by the GitHub extension to the standard Markdown language.|
+|Table of contents|Show a table of contents based on the markdown heads.|
 |Wikilinks|Render `[[Page Name]]` and `[[Target\|Display]]` wikilinks as links.|
 |YAML header|Enable the [YAML header extension](#YAML-header).|
 
@@ -334,6 +335,7 @@ MARKDOWN OPTIONS:
   --base-font-size <number>
                           Set the base font size, in points.
   --footnotes <on|off>    Parse the footnotes. (values: on, off)
+                          Show a table-of-contents sidebar in the preview. (values: on, off)
   --hard-break <on|off>   Render soft-break elements as hard line breaks. (values: on, off)
   --no-soft-break <on|off>
                           Render soft-break elements as spaces. (values: on, off)
@@ -341,19 +343,24 @@ MARKDOWN OPTIONS:
   --render-as-code <on|off>
                           Show the plain text file (raw version) instead of the formatted output. (values: on, off)
   --smart-quotes <on|off> Convert straight quotes to curly. (values: on, off)
+  --table-of-contents <on|off>
   --validate-utf8 <on|off>
                           Validate UTF-8 in the input before parsing. (values: on, off)
   --debug <on|off>        Insert in the output some debug information. (values: on, off)
 
 MARKDOWN EXTENSIONS:
+  --admonition <on|off>   Render `!!! type` admonitions as callout boxes. (values: on, off)
   --autolink <on|off>     Automatically translate URL/email to link. (values: on, off)
+  --definition-list <on|off>
   --emoji <emoji>         Translate the emoji shortcodes.
         font              - replace with font glyphs
         images            - replace with web images
         off               - disabled
+  --alert <on|off>        Render GitHub alerts (blockquotes starting with [!NOTE], [!TIP], …). (values: on, off)
   --github-mentions <on|off>
                           Translate mentions to link to the GitHub account (values: on, off)
   --heads-anchor <on|off> Create anchors for the heads. (values: on, off)
+                          Render definition lists. (values: on, off)
   --highlight <on|off>    Highlight text marked with `==`. (values: on, off)
   --inline-images <on|off>
                           Embed local image files inside the formatted output. (values: on, off)
@@ -374,6 +381,7 @@ MARKDOWN EXTENSIONS:
                           Highlight the code inside fenced block. (values: on, off)
   --sub <on|off>          Format subscript characters inside `~` markers. (values: on, off)
   --sup <on|off>          Format superscript characters inside `^` markers. (values: on, off)
+  --wikilink <on|off>     Render [[wikilinks]] as links. (values: on, off)
   --yaml <yaml>           Render the yaml header.
         rmd               - enabled only for .rmd and .qmd files
         all               - enabled for all files
