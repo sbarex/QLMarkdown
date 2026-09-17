@@ -252,12 +252,14 @@ Supported diagram types include:
 To create a Mermaid diagram, use a fenced code block with the `mermaid` language identifier:
 
 ~~~markdown
+
 ```mermaid
 graph TD
     A[Start] --> B{Decision}
     B -->|Yes| C[Do Something]
     B -->|No| D[Do Something Else]
 ```
+
 ~~~
 
 > **Note:** The library is initialized with `securityLevel: 'strict'` for safety.
@@ -432,8 +434,8 @@ The compilation of `cmark-gfm` require `cmake` (`brew install cmake`).
 **This application does not collect any information about your system or the files it processes.**
 
 To allow the Quick Look preview of local images, the application and extension have a permission exception that only allows read access to the entire system.
+If enabled, the Math and Mermaid extensions download the JS library source files via CDN.
 
-On macOS 11 (Big Sur) there is a bug in the Quick Look engine and WebKit that cause the immediate crash of any WebView inside a Quick Look preview. To temporary fix this problem this Quick Look extension uses a `com.apple.security.temporary-exception.mach-lookup.global-name` entitlement. 
 
 
 ## FAQ
