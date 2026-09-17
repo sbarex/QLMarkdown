@@ -152,34 +152,42 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         }
     }
     
-    func buildExampleMenu(base: URL, menu: NSMenu, validExtensions: [String]) {
+    @discardableResult
+    func buildExampleMenu(base: URL, menu: NSMenu, validExtensions: [String]) -> Int {
         guard var files = try? FileManager.default.contentsOfDirectory(
                 at: base,
                 includingPropertiesForKeys: [.isDirectoryKey],
                 options: [.skipsHiddenFiles]
         ) else {
-            return
+            return 0
         }
         
         files.sort { a, b in
             a.lastPathComponent < b.lastPathComponent
         }
         
+        var n = 0
+        
         for file in files {
             let resourceValues = try? file.resourceValues(forKeys: [.isDirectoryKey])
             if let resourceValues, let isDirectory = resourceValues.isDirectory, isDirectory {
                 let mnu = NSMenuItem(title: file.lastPathComponent, action: nil, keyEquivalent: "")
                 mnu.submenu = NSMenu()
-                menu.addItem(mnu)
-                buildExampleMenu(base: file, menu: mnu.submenu!, validExtensions: validExtensions)
+                if buildExampleMenu(base: file, menu: mnu.submenu!, validExtensions: validExtensions) > 0 {
+                    menu.addItem(mnu)
+                }
             } else if validExtensions.contains(file.pathExtension.lowercased()) {
                 self.markdownFiles.append(file)
                 
                 let mnu = NSMenuItem(title: file.deletingPathExtension().lastPathComponent, action: #selector(self.handleExample(_:)), keyEquivalent: "")
                 mnu.tag = self.markdownFiles.count - 1
                 menu.addItem(mnu)
+                
+                n += 1
             }
         }
+        
+        return n
     }
     
     /**
