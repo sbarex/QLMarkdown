@@ -24,6 +24,7 @@ struct MdToHtml_Extension: AppIntent {
             \.$validateUTF8
             \.$showDebugInfo
             
+            \.$admonition
             \.$autolink
             \.$emojiReplacement
             \.$headsAnchor
@@ -73,6 +74,9 @@ struct MdToHtml_Extension: AppIntent {
     @Parameter(title: "Render as source code", default: OptionalBoolEnum.predefined)
     var renderAsSource: OptionalBoolEnum
     
+    
+    @Parameter(title: "Admonition", default: OptionalBoolEnum.predefined)
+    var admonition: OptionalBoolEnum
     
     @Parameter(title: "Autolink", default: OptionalBoolEnum.predefined)
     var autolink: OptionalBoolEnum
@@ -149,6 +153,7 @@ struct MdToHtml_Extension: AppIntent {
         showDebugInfo.updateValue(state: &settings.debug)
         renderAsSource.updateValue(state: &settings.renderAsCode)
         
+        admonition.updateValue(state: &settings.admonitionExtension)
         autolink.updateValue(state: &settings.autoLinkExtension)
         definitionExtension.updateValue(state: &settings.definitionListExtension)
         emojiReplacement.updateValue(state: &settings.emojiExtension)

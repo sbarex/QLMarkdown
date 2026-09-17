@@ -102,6 +102,7 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - `Superscript`: superscript text between the markers `^`.
 - [`Math`](#mathematical-expressions): format the mathematical expressions with the MathJax library.
 - [`Mermaid`](#mermaid-diagrams): render the diagrams with the Mermaid library.
+- `MKDocs Admonition` extension.
 - [`Syntax highlighting`](#syntax-highlighting): highlight the code inside fenced block.
 - `Wikilinks`.
 - [`YAML header`](#yaml-header): render the yaml header at the begin of `rmd` or `qmd` files.
@@ -186,6 +187,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Inline local images|Enable the [Inline local images extension](#inline-local-images).|
 |Math|Enable the [formatting of math expressions](#mathematical-expressions).|
 |Mermaid|Enable the [Mermaid diagram](#mermaid-diagrams) extension.|
+|MKDocs Admonition extension.||
 |Strikethrough|Strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.|
 |Sub/Superscript|Allow to subscript text inside `~` tag pairs, and superscript text inside `^` tag pairs. Please note that the **Strikethrough extension must be disabled or set to recognize double `~`**. Also the **Footnotes options must be disabled**.|
 |Syntax highlighting|Enable the [Syntax highlighting extension](#syntax-highlighting). |

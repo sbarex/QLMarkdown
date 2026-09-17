@@ -25,6 +25,12 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
+    @objc dynamic var admonitionExtension: Bool = Settings.factorySettings.admonitionExtension {
+        didSet {
+            guard oldValue != admonitionExtension else { return }
+            isDirty = true
+        }
+    }
     @objc dynamic var autoLinkExtension: Bool = Settings.factorySettings.autoLinkExtension {
         didSet {
             guard oldValue != autoLinkExtension else { return }
@@ -1386,6 +1392,7 @@ document.addEventListener('scroll', function(e) {
         self.qlWindowHeight = Int(settings.qlWindowSize.height)
         
         self.tableExtension = settings.tableExtension
+        self.admonitionExtension = settings.admonitionExtension
         self.autoLinkExtension = settings.autoLinkExtension
         self.tagFilterExtension = settings.tagFilterExtension
         self.taskListExtension = settings.taskListExtension
@@ -1459,6 +1466,7 @@ document.addEventListener('scroll', function(e) {
         settings.qlWindowHeight = self.qlWindowSizeCustomized ? self.qlWindowHeight : nil
         
         settings.tableExtension = self.tableExtension
+        settings.admonitionExtension = self.admonitionExtension
         settings.autoLinkExtension = self.autoLinkExtension
         settings.tagFilterExtension = self.tagFilterExtension
         settings.taskListExtension = self.taskListExtension

@@ -2446,6 +2446,24 @@
       },
       "shouldTranslate" : false
     },
+    "kRk-79-i5x.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"MKDocs Admonitions\"; ObjectID = \"kRk-79-i5x\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "MKDocs Admonitions"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ammonizioni MKDocs"
+          }
+        }
+      }
+    },
     "kx4-Df-mw2.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Examples\"; ObjectID = \"kx4-Df-mw2\";",
       "extractionState" : "extracted_with_value",
