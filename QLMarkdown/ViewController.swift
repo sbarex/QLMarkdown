@@ -1594,7 +1594,7 @@ document.addEventListener('scroll', function(e) {
         
         let alert = NSAlert()
         if valid {
-            alert.messageText = NSLocalizedString("Configuration settings", comment: "popup alert title")
+            alert.messageText = NSLocalizedString("Configuration settings valid", comment: "popup alert title")
             alert.alertStyle = .informational
         } else {
             alert.messageText = NSLocalizedString("Configuration settings errors!", comment: "popup alert title")

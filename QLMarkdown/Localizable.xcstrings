@@ -250,9 +250,6 @@
         }
       }
     },
-    "Configuration settings" : {
-      "comment" : "popup alert title"
-    },
     "Configuration settings errors!" : {
       "comment" : "popup alert title",
       "localizations" : {
@@ -272,7 +269,6 @@
     },
     "Configuration settings valid" : {
       "comment" : "popup alert title",
-      "extractionState" : "stale",
       "localizations" : {
         "it" : {
           "stringUnit" : {
