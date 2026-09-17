@@ -1,5 +1,16 @@
 # Changelog
 
+### 1.5.4 (55)
+**This release require macOS 12.0 or later.**
+
+New Features:
+- YAML header predegined enabled for all files (valid only for new installations; users who have already used the application must configure the setting manually).
+- Admonition extension (thanks to @soreavis).
+
+Bugfix:
+- Fix print html preview.
+
+
 ### 1.5.3 (54)
 New Features:
 - GitHub Alert extension (thanks to @soreavis).
