@@ -4,6 +4,36 @@
         <title>QLMarkdown</title>
 
         <item>
+            <title>1.5.4</title>
+            <pubDate>ven, 18 set 2026 11:58:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.5.4/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.5.4" sparkle:version="55" 
+                       sparkle:edSignature="8VM7TOkRf7UH6Ybm81IpROboYjd6wNU4RPD/F7mAopmF/p3D1XjMJjGJrlF0Ko9zmYPE7is681k0pQ8iBDPMCA==" length="23152434"
+                       />
+            <description><![CDATA[
+                <h2>Release 1.5.4 (55)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+
+                <p><strong>This release require macOS 12.0 or later.</strong></p>
+                
+                <p>New Features:</p>
+                <ul>
+                    <li>Default YAML header enabled for all files (valid only for new installations; users who have already used the application must configure the setting manually).</li>
+                    <li>Admonition extension (thanks to @soreavis)</li>
+                    <li>Table of contents option (thanks to @soreavis).</li>
+                    <li>Mermaid library 12.0.0 embedded.</li>
+                    <li>MathJax library 4.1.3 embedded.</li>
+                </ul>
+                
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+
+        <item>
             <title>1.5.3</title>
             <pubDate>ven, 11 set 2026 11:25:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
