@@ -1356,30 +1356,6 @@
         }
       }
     },
-    "dYQ-r1-7p1.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Reveal on Finder…\"; ObjectID = \"dYQ-r1-7p1\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Reveal on Finder…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar en Finder…"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rivela nel Finder…"
-          }
-        }
-      }
-    },
     "EGd-o7-R9l.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Disabled\"; ObjectID = \"EGd-o7-R9l\";",
       "extractionState" : "extracted_with_value",
@@ -2169,54 +2145,6 @@
         }
       }
     },
-    "Iqg-M1-Szo.ibShadowedToolTip" : {
-      "comment" : "Class = \"NSMenuItem\"; ibShadowedToolTip = \"Save a local copy of the library.\"; ObjectID = \"Iqg-M1-Szo\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Save a local copy of the library."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardar una copia local de la biblioteca."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Salva in locale una copia della libreria."
-          }
-        }
-      }
-    },
-    "Iqg-M1-Szo.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Save…\"; ObjectID = \"Iqg-M1-Szo\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Save…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardar…"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Salva…"
-          }
-        }
-      }
-    },
     "IQv-IB-iLA.title" : {
       "comment" : "Class = \"NSWindow\"; title = \"QLMarkdown\"; ObjectID = \"IQv-IB-iLA\";",
       "extractionState" : "extracted_with_value",
@@ -2671,30 +2599,6 @@
         }
       }
     },
-    "mcf-6j-ea5.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Refresh the cached library from the web…\"; ObjectID = \"mcf-6j-ea5\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Refresh the cached library from the web…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Obtener de la web…"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aggiorna la cache della libreria dal web…"
-          }
-        }
-      }
-    },
     "MIB-mW-C6G.ibShadowedToolTip" : {
       "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Handle URL and email addresses as link.\"; ObjectID = \"MIB-mW-C6G\";",
       "extractionState" : "extracted_with_value",
@@ -3061,54 +2965,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Forza un a capo alla fine di ogni riga."
-          }
-        }
-      }
-    },
-    "OT9-Oz-MMI.ibShadowedToolTip" : {
-      "comment" : "Class = \"NSMenuItem\"; ibShadowedToolTip = \"Save a local copy of the library.\"; ObjectID = \"OT9-Oz-MMI\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Save a local copy of the library."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardar una copia local de la biblioteca."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Salva in locale una copia della libreria."
-          }
-        }
-      }
-    },
-    "OT9-Oz-MMI.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Save…\"; ObjectID = \"OT9-Oz-MMI\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Save…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guardar…"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Salva…"
           }
         }
       }
@@ -4610,30 +4466,6 @@
       },
       "shouldTranslate" : false
     },
-    "xaQ-yQ-VYY.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Reveal on Finder…\"; ObjectID = \"xaQ-yQ-VYY\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Reveal on Finder…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar en Finder…"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rivela nel Finder…"
-          }
-        }
-      }
-    },
     "XfG-lQ-9wD.title" : {
       "comment" : "Class = \"NSViewController\"; title = \"Preferences\"; ObjectID = \"XfG-lQ-9wD\";",
       "extractionState" : "extracted_with_value",
@@ -4858,30 +4690,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Codice HTML in linea (non sicuro)"
-          }
-        }
-      }
-    },
-    "yqe-lS-xFa.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Refresh the cached library from the web…\"; ObjectID = \"yqe-lS-xFa\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Refresh the cached library from the web…"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Obtener de la web…"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aggiorna la cache della libraria scaricandola dal web…"
           }
         }
       }

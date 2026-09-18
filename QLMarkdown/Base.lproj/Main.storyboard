@@ -1043,15 +1043,6 @@
                                                                                     </menuItem>
                                                                                     <menuItem title="Linked from web" tag="2" identifier="mnu_math_link" indentationLevel="1" id="ja6-54-Tho"/>
                                                                                     <menuItem title="Embedded" tag="1" identifier="mnu_math_embed" indentationLevel="1" id="Ikg-xk-Q9P"/>
-                                                                                    <menuItem title="Save…" tag="20" alternate="YES" identifier="mnu_math_save" indentationLevel="1" toolTip="Save a local copy of the library." id="Iqg-M1-Szo">
-                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Refresh the cached library from the web…" tag="10" identifier="mnu_math_download" indentationLevel="1" id="mcf-6j-ea5">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_math_reveal" indentationLevel="1" id="dYQ-r1-7p1">
-                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                                                                    </menuItem>
                                                                                     <menuItem isSeparatorItem="YES" id="9FJ-fL-6vs"/>
                                                                                     <menuItem title="Disabled" tag="-1" identifier="mnu_math_disabled" indentationLevel="1" id="exl-30-5YT">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>
@@ -1272,15 +1263,6 @@
                                                                                     </menuItem>
                                                                                     <menuItem title="Linked from web" tag="2" identifier="mnu_mermaid_link" indentationLevel="1" id="r4o-4n-lvz"/>
                                                                                     <menuItem title="Embedded" tag="1" identifier="mnu_mermaid_embed" indentationLevel="1" id="ydg-Fj-IJb"/>
-                                                                                    <menuItem title="Save…" tag="20" alternate="YES" identifier="mnu_mermaid_save" indentationLevel="1" toolTip="Save a local copy of the library." id="OT9-Oz-MMI">
-                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Refresh the cached library from the web…" tag="10" identifier="mnu_mermaid_download" indentationLevel="1" id="yqe-lS-xFa">
-                                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                                    </menuItem>
-                                                                                    <menuItem title="Reveal on Finder…" tag="21" alternate="YES" identifier="mnu_mermaid_reveal" indentationLevel="1" id="xaQ-yQ-VYY">
-                                                                                        <modifierMask key="keyEquivalentModifierMask" option="YES"/>
-                                                                                    </menuItem>
                                                                                     <menuItem isSeparatorItem="YES" id="KJ9-Cr-MFQ"/>
                                                                                     <menuItem title="Disabled" tag="-1" identifier="mnu_mermaid_disabled" indentationLevel="1" id="54Q-kb-yNT">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>

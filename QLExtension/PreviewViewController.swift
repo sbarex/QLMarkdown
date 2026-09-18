@@ -81,7 +81,7 @@ class PreviewViewController: NSViewController, QLPreviewingController {
             previewRect = self.view.bounds.insetBy(dx: 2, dy: 2)
         }
 
-        let requireJS = (settings.unsafeHTMLOption && settings.inlineImageExtension) || !settings.mermaidExtension.isDisabled || !settings.mathExtension.isDisabled
+        let requireJS = (settings.unsafeHTMLOption && settings.inlineImageExtension) || settings.mermaidExtension != .disabled || settings.mathExtension != .disabled
         
         // Create a configuration for the preferences
         let configuration = WKWebViewConfiguration()

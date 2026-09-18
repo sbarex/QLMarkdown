@@ -9,31 +9,6 @@ import Foundation
 import AppKit
 
 // MARK: -
-extension JSExtension {
-    /**
-     * Strip the url info if is the predefined value.
-     */
-    func stripDefaultUrl(cacheUrl: URL?, cdnUrl: URL?) -> Self {
-        switch self {
-        case .disabled:
-            return .disabled
-        case .link(let url):
-            if url == cdnUrl {
-                return .link(url: nil)
-            } else {
-                return .link(url: url)
-            }
-        case .embed(let url):
-            if url == cacheUrl {
-                return .link(url: nil)
-            } else {
-                return .link(url: url)
-            }
-        }
-    }
-}
-
-// MARK: -
 extension Settings {
     static var styles: [URL]? = nil
     
@@ -120,24 +95,6 @@ extension Settings {
         return  (try? self.mathJaxFileUrl?.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
     }
     
-    /// Download and cache the mermaid library from web.
-    func updateMathJaxUCache(_ reply: ((Bool) -> Void)?) {
-        guard let mathJaxCacheFileUrl = Self.mathJaxCacheFileUrl else {
-            reply?(false)
-            return
-        }
-        Self.fetchCacheFile(from: Self.mathJaxWebUrl, to: mathJaxCacheFileUrl, withReply: reply)
-    }
-    
-    /// Download and cache the mermaid library from web.
-    func updateMemaidCache(_ reply: ((Bool) -> Void)?) {
-        guard let mermaidCacheFileUrl = Self.mermaidCacheFileUrl else {
-            reply?(false)
-            return
-        }
-        Self.fetchCacheFile(from: Self.mermaidWebUrl, to: mermaidCacheFileUrl, withReply: reply)
-    }
-    
     /**
      * Check if the url is of type file and if it exists.
      * - parameters:
@@ -216,9 +173,8 @@ extension Settings {
         defaults.set(tableOfContentsOption, forKey: Self.CodingKeys.tableOfContentsOption.rawValue)
         defaults.set(highlightExtension, forKey: Self.CodingKeys.hightlightExtension.rawValue)
         defaults.set(inlineImageExtension, forKey: Self.CodingKeys.inlineImageExtension.rawValue)
-        // Prevent to save the url info if is the predefined value on the math/mermaid extension.
-        defaults.set(mathExtension.stripDefaultUrl(cacheUrl: self.mathJaxFileUrl, cdnUrl: Self.mathJaxWebUrl).toDict(), forKey: Self.CodingKeys.mathExtension.rawValue)
-        defaults.set(mermaidExtension.stripDefaultUrl(cacheUrl: self.mermaidFileUrl, cdnUrl: Self.mermaidWebUrl).toDict(), forKey: Self.CodingKeys.mermaidExtension.rawValue)
+        defaults.set(mathExtension.rawValue, forKey: Self.CodingKeys.mathExtension.rawValue)
+        defaults.set(mermaidExtension.rawValue, forKey: Self.CodingKeys.mermaidExtension.rawValue)
         defaults.set(subExtension, forKey: Self.CodingKeys.subExtension.rawValue)
         defaults.set(supExtension, forKey: Self.CodingKeys.supExtension.rawValue)
         defaults.set(strikethroughExtension.rawValue, forKey: Self.CodingKeys.strikethroughExtension.rawValue)

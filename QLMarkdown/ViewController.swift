@@ -137,7 +137,7 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var mathExtension: Bool = !Settings.factorySettings.mathExtension.isDisabled {
+    @objc dynamic var mathExtension: Bool = Settings.factorySettings.mathExtension != .disabled {
         didSet {
             guard oldValue != mathExtension else { return }
             updateMathPopup()
@@ -145,7 +145,7 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var mathExtensionEmbed: Bool = false {
+    @objc dynamic var mathExtensionEmbed: Bool = Settings.factorySettings.mathExtension == .embed {
         didSet {
             guard oldValue != mathExtensionEmbed else { return }
             updateMathPopup()
@@ -153,7 +153,7 @@ class ViewController: NSViewController {
         }
     }
 
-    @objc dynamic var mermaidExtension: Bool = !Settings.factorySettings.mermaidExtension.isDisabled {
+    @objc dynamic var mermaidExtension: Bool = Settings.factorySettings.mermaidExtension != .disabled {
         didSet {
             guard oldValue != mermaidExtension else { return }
             updateMermaidPopup()
@@ -161,7 +161,7 @@ class ViewController: NSViewController {
         }
     }
     
-    @objc dynamic var mermaidExtensionEmbed: Bool = false {
+    @objc dynamic var mermaidExtensionEmbed: Bool = Settings.factorySettings.mermaidExtension == .embed {
         didSet {
             guard oldValue != mermaidExtensionEmbed else { return }
             updateMermaidPopup()
@@ -709,96 +709,11 @@ class ViewController: NSViewController {
         }
     }
     
-    func handleJSExtensionPopup(_ sender: NSPopUpButton, libraryName name: String, `extension`: inout Bool, extensionEmbedded: inout Bool, fileUrl: URL?, cacheUrl: URL?, webUrl: URL) {
+    func handleJSExtensionPopup(_ sender: NSPopUpButton, `extension`: inout Bool, extensionEmbedded: inout Bool) {
         let tag = sender.selectedTag()
         
         if tag == -1 /* disabled */ {
             `extension` = false
-        } else if tag == 10, let cacheUrl /* fetch */ {
-            let alert = NSAlert()
-            alert.messageText = NSLocalizedString("Are you sure to locally cache the library from the web?", comment: "")
-            alert.alertStyle = .informational
-            alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
-            alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button")).keyEquivalent = "\u{1b}"
-            
-            let r = alert.runModal()
-            if r == .alertFirstButtonReturn {
-                Settings.fetchCacheFile(from: webUrl, to: cacheUrl) { (success) in
-                    DispatchQueue.main.async {
-                        let alert = NSAlert()
-                        alert.alertStyle = success ? .warning : .informational
-                        alert.messageText = String.localizedStringWithFormat(success ? NSLocalizedString("%@ library downloaded from web.", comment: "") : NSLocalizedString("Error downloading the %@ library.", comment: ""), name)
-                        
-                        alert.addButton(withTitle: NSLocalizedString("OK", comment: "OK button")).keyEquivalent = "\r"
-                        alert.runModal()
-                    }
-                }
-            }
-        } else if tag == 20 /* save */ {
-            guard let file = fileUrl, FileManager.default.fileExists(atPath: file.path) else {
-                let alert = NSAlert()
-                alert.messageText = NSLocalizedString("No cached file to save!", comment: "")
-                alert.alertStyle = .warning
-                alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
-                alert.runModal()
-                return
-            }
-            
-            let panel = NSOpenPanel()
-                
-            panel.title = NSLocalizedString("Choose the destination folder", comment: "")
-            panel.canChooseFiles = false
-            panel.canChooseDirectories = true
-            panel.allowsMultipleSelection = false
-            
-            panel.begin { response in
-                if response == .OK, let url = panel.url {
-                    let dest = url.appendingPathComponent(file.lastPathComponent)
-                    if FileManager.default.fileExists(atPath: dest.path) {
-                        let alert = NSAlert()
-                        alert.messageText = NSLocalizedString("A file with the same name already exists. Do you want to overwrite it?", comment: "")
-                        alert.alertStyle = .informational
-                        alert.addButton(withTitle: NSLocalizedString("No", comment: "No button")).keyEquivalent = "\u{1b}"
-                        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Yes button")).keyEquivalent = ""
-                        if alert.runModal() == .alertSecondButtonReturn {
-                            do {
-                                try FileManager.default.removeItem(at: dest)
-                            } catch {
-                                let alert = NSAlert()
-                                alert.messageText = NSLocalizedString("Error deleting existing file!", comment: "")
-                                alert.alertStyle = .critical
-                                alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
-                                alert.runModal()
-                                return
-                            }
-                        } else {
-                            return
-                        }
-                    }
-                    do {
-                        try FileManager.default.copyItem(at: file, to: dest)
-                        NSWorkspace.shared.activateFileViewerSelecting([dest])
-                    } catch {
-                        let alert = NSAlert()
-                        alert.messageText = NSLocalizedString("Unable to save the file!", comment: "")
-                        alert.alertStyle = .critical
-                        alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
-                        alert.runModal()
-                        return
-                    }
-                }
-            }
-        } else if tag == 21 /* reveal */ {
-            guard let file = fileUrl, FileManager.default.fileExists(atPath: file.path) else {
-                let alert = NSAlert()
-                alert.messageText = NSLocalizedString("No cached file to reveal!", comment: "")
-                alert.alertStyle = .warning
-                alert.addButton(withTitle: NSLocalizedString("Close", comment: "Close button")).keyEquivalent = "\u{1b}"
-                alert.runModal()
-                return
-            }
-            
-            NSWorkspace.shared.activateFileViewerSelecting([file])
         } else {
             pauseAutoRefresh += 1
             `extension` = true
@@ -808,7 +723,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func handleMathPopup(_ sender: NSPopUpButton) {
-        handleJSExtensionPopup(sender, libraryName: "MathJax", extension: &self.mathExtension, extensionEmbedded: &self.mathExtensionEmbed, fileUrl: Settings.shared.mathJaxFileUrl, cacheUrl: Settings.mathJaxCacheFileUrl, webUrl: Settings.mathJaxWebUrl)
+        handleJSExtensionPopup(sender, extension: &self.mathExtension, extensionEmbedded: &self.mathExtensionEmbed,)
     }
     
     func updateMathPopup() {
@@ -822,7 +737,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func handleMermaidPopup(_ sender: NSPopUpButton) {
-        handleJSExtensionPopup(sender, libraryName: "Mermaid", extension: &self.mermaidExtension, extensionEmbedded: &self.mermaidExtensionEmbed, fileUrl: Settings.shared.mermaidFileUrl, cacheUrl: Settings.mermaidCacheFileUrl, webUrl: Settings.mermaidWebUrl)
+        handleJSExtensionPopup(sender, extension: &self.mermaidExtension, extensionEmbedded: &self.mermaidExtensionEmbed)
     }
     
     func updateMermaidPopup() {
@@ -1464,11 +1379,11 @@ document.addEventListener('scroll', function(e) {
         self.strikethroughExtension = settings.strikethroughExtension != .disabled
         self.strikethroughDoubleTildeOption = settings.strikethroughExtension == .double
         
-        self.mathExtension = !settings.mathExtension.isDisabled
-        self.mathExtensionEmbed = settings.mathExtension.getMode()?.embed ?? false
+        self.mathExtension = settings.mathExtension != .disabled
+        self.mathExtensionEmbed = settings.mathExtension == .embed
         
-        self.mermaidExtension = !settings.mermaidExtension.isDisabled
-        self.mermaidExtensionEmbed = settings.mermaidExtension.getMode()?.embed ?? false
+        self.mermaidExtension = settings.mermaidExtension != .disabled
+        self.mermaidExtensionEmbed = settings.mermaidExtension == .embed
         
         self.mentionExtension = settings.mentionExtension
         self.wikilinkExtension = settings.wikilinkExtension
@@ -1537,8 +1452,8 @@ document.addEventListener('scroll', function(e) {
         settings.taskListExtension = self.taskListExtension
         settings.yamlExtension = self.yamlExtension ? ( self.yamlExtensionAll ? .allFiles : .onlyRmd) : .disabled
         
-        settings.mathExtension = self.mathExtension ? (self.mathExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
-        settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed(url: nil) : .link(url: nil)) : .disabled
+        settings.mathExtension = self.mathExtension ? (self.mathExtensionEmbed ? .embed : .link) : .disabled
+        settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed : .link) : .disabled
         settings.mentionExtension = self.mentionExtension
         settings.wikilinkExtension = self.wikilinkExtension
         settings.definitionListExtension = self.definitionListExtension
@@ -1612,22 +1527,10 @@ document.addEventListener('scroll', function(e) {
     
     @IBAction func resetDependencyLibraries(_ sender: Any) {
         Settings.shared.installDependencies(override: .always)
-        
-        if let path = Settings.mermaidCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
-            Settings.shared.updateMemaidCache { (success) in
-                print("Mermaid reflesh: \(success ? "success" : "failure")")
-            }
-        }
-        if let path = Settings.mathJaxCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
-            Settings.shared.updateMathJaxUCache { (success) in
-                print("MathJax reflesh: \(success ? "success" : "failure")")
-            }
-        }
     }
     
     @IBAction func openSystemSettings(_ sender: Any) {
         NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.ExtensionsPreferences?extensionPointIdentifier=com.apple.quicklook.preview")!)
-        // NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.ExtensionsPreferences")!)
     }
 
 }
@@ -1638,38 +1541,17 @@ extension ViewController: NSMenuItemValidation {
      * Update the state of a menu item inside the context menu of a javascript library extension.
      * - Returns: `true` if the menu item must be enabled.
      */
-    private static func updateJSExtensionMenuItem(_ menu: NSMenuItem, namePrefix prefix: String, state: Bool, embed: Bool, fileUrl: URL?, webUrl: URL, byteFormatter: ByteCountFormatter) -> Bool {
-        switch menu.identifier?.rawValue {
-        case prefix:
-            // Menu item "header"
+    private static func updateJSExtensionEmbedMenuItem(_ menu: NSMenuItem, state: Bool, fileUrl: URL?, byteFormatter: ByteCountFormatter) -> Bool {
+        menu.state = state ? .on : .off
+        menu.toolTip = fileUrl?.path ?? ""
+        if let url = fileUrl, url.isFileURL && FileManager.default.fileExists(atPath: url.path) {
+            let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
+            menu.title = String.localizedStringWithFormat(NSLocalizedString("Embed (%@)", comment: ""), byteFormatter.string(fromByteCount: Int64(size)))
+            return true
+        } else {
+            menu.title = NSLocalizedString("Embed (file missing)", comment: "")
             return false
-        case "\(prefix)_embed":
-            menu.state = state && embed ? .on : .off
-            menu.toolTip = fileUrl?.path ?? ""
-            if let url = fileUrl, url.isFileURL && FileManager.default.fileExists(atPath: url.path) {
-                let size = (try? url.resourceValues(forKeys: [.fileSizeKey]))?.fileSize ?? 0
-                menu.title = String.localizedStringWithFormat(NSLocalizedString("Embed (%@)", comment: ""), byteFormatter.string(fromByteCount: Int64(size)))
-                
-            } else {
-                menu.title = NSLocalizedString("Embed (file missing)", comment: "")
-                return false
-            }
-        case "\(prefix)_save", "\(prefix)_reveal":
-            guard let url = fileUrl, url.isFileURL && FileManager.default.fileExists(atPath: url.path) else {
-                return false
-            }
-        case "\(prefix)_download":
-            menu.toolTip = String.localizedStringWithFormat(NSLocalizedString("Cache a local copy of the library from the web (%@).", comment: ""), webUrl.path)
-        case "\(prefix)_link":
-            menu.state = state && !embed ? .on : .off
-            menu.toolTip = webUrl.absoluteString
-        case "\(prefix)_disabled":
-            menu.state = state ? .off : .on
-        default:
-            break
         }
-        
-        return true
     }
     
     func validateMenuItem(_ menuItem: NSMenuItem) -> Bool
@@ -1691,12 +1573,26 @@ extension ViewController: NSMenuItemValidation {
                 menuItem.state = self.emojiExtension && self.emojiImageOption ? .on : .off
             case "mnu_emoji_off":
                 menuItem.state = self.emojiExtension ? .off : .on
+            
+            case "mnu_math":
+                menuItem.title = String.localizedStringWithFormat(NSLocalizedString("Math library %@", comment: "Math library menu title"), Settings.mathJaxVersion)
+                return false
+            case "mnu_math_link":
+                menuItem.state = mathExtension && !mathExtensionEmbed ? .on : .off
+            case "mnu_math_embed":
+                return Self.updateJSExtensionEmbedMenuItem(menuItem, state: mathExtension && mathExtensionEmbed, fileUrl: Settings.shared.mathJaxFileUrl, byteFormatter: byteFormatter)
+            case "mnu_math_disabled":
+                menuItem.state = mathExtension ? .off : .on
                 
-            case "mnu_math", "mnu_math_embed", "mnu_math_link", "mnu_math_disabled", "mnu_math_download", "mnu_math_reveal":
-                return Self.updateJSExtensionMenuItem(menuItem, namePrefix: "mnu_math", state: mathExtension, embed: mathExtensionEmbed, fileUrl: Settings.shared.mathJaxFileUrl, webUrl: Settings.mathJaxWebUrl, byteFormatter: self.byteFormatter)
-                
-            case "mnu_mermaid", "mnu_mermaid_embed", "mnu_mermaid_link", "mnu_mermaid_disabled", "mnu_mermaid_download", "mnu_mermaid_reveal":
-                return Self.updateJSExtensionMenuItem(menuItem, namePrefix: "mnu_mermaid", state: mermaidExtension, embed: mermaidExtensionEmbed, fileUrl: Settings.shared.mermaidFileUrl, webUrl: Settings.mermaidWebUrl, byteFormatter: self.byteFormatter)
+            case "mnu_mermaid":
+                menuItem.title = String.localizedStringWithFormat(NSLocalizedString("Mermaid library %@", comment: "Mermaid library menu title"), Settings.mermaidVersion)
+                return false
+            case "mnu_mermaid_link":
+                menuItem.state = mermaidExtension && !mermaidExtensionEmbed ? .on : .off
+            case "mnu_mermaid_embed":
+                return Self.updateJSExtensionEmbedMenuItem(menuItem, state: mermaidExtension && mermaidExtensionEmbed, fileUrl: Settings.shared.mermaidFileUrl, byteFormatter: byteFormatter)
+            case "mnu_mermaid_disabled":
+                menuItem.state = mermaidExtension ? .off : .on
                 
             case "mnu_yaml":
                 return false

@@ -102,11 +102,11 @@ struct MdToHtml_Extension: AppIntent {
     @Parameter(title: "Embed local images", default: OptionalBoolEnum.predefined)
     var inlineLocalImages: OptionalBoolEnum
     
-    @Parameter(title: "Math expression", default: JsLibratyOptionalEnum.predefined)
-    var mathExtension: JsLibratyOptionalEnum
+    @Parameter(title: "Math expression", default: JsLibraryOptionalEnum.predefined)
+    var mathExtension: JsLibraryOptionalEnum
     
-    @Parameter(title: "Diagram extension", default: JsLibratyOptionalEnum.predefined)
-    var mermaidExtension: JsLibratyOptionalEnum
+    @Parameter(title: "Diagram extension", default: JsLibraryOptionalEnum.predefined)
+    var mermaidExtension: JsLibraryOptionalEnum
     
     @Parameter(title: "Strikethrough", default: StrikethroughOptionalEnum.predefined)
     var strikethrough: StrikethroughOptionalEnum

@@ -7,6 +7,7 @@
 
 import Foundation
 import OSLog
+import Compression
 
 enum CMARK_Error: Error {
     case parser_create
@@ -30,181 +31,10 @@ enum Appearance: Int, Codable {
     }
 }
 
-enum JSExtension: Codable {
-    enum CodingKeys: String, CodingKey {
-        case state
-        case url
-    }
-    
-    case disabled
-    case embed(url: URL?)
-    case link(url: URL?)
-    
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        let state = try container.decode(Int.self, forKey: .state)
-        if state == 0 {
-            self = .disabled
-        } else {
-            let url = try container.decode(URL?.self, forKey: .url)
-            if state == 1 {
-                self = .embed(url: url)
-            } else {
-                self = .link(url: url)
-            }
-        }
-    }
-    
-    init?(from dict: [String: Any]) {
-        guard let state = dict[Self.CodingKeys.state.rawValue] as? Int else {
-            return nil
-        }
-        if state == 0 {
-            self = .disabled
-        } else {
-            let url: URL?
-            if dict.keys.contains(Self.CodingKeys.url.rawValue), let s = dict[Self.CodingKeys.url.rawValue] as? String, let u = URL(string: s) {
-                url = u
-            } else {
-                url = nil
-            }
-            if state == 1 {
-                self = .embed(url: url)
-            } else {
-                self = .link(url: url)
-            }
-        }
-    }
-    
-    func toDict() -> [String: Any] {
-        switch self {
-        case .disabled:
-            return [Self.CodingKeys.state.rawValue: 0]
-        case .embed(let url):
-            var r: [String: Any] = [Self.CodingKeys.state.rawValue: 1]
-            if let url {
-                r[Self.CodingKeys.url.rawValue] = url.absoluteString
-            }
-            return r
-        case .link(let url):
-            var r: [String: Any] = [Self.CodingKeys.state.rawValue: 2]
-            if let url {
-                r[Self.CodingKeys.url.rawValue] = url.absoluteString
-            }
-            return r
-        }
-    }
-    
-    func encode(to encoder: any Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        switch self {
-        case .disabled:
-            try container.encode(0, forKey: .state)
-        case .embed(let url):
-            try container.encode(1, forKey: .state)
-            try container.encode(url, forKey: .url)
-        case .link(let url):
-            try container.encode(2, forKey: .state)
-            try container.encode(url, forKey: .url)
-        }
-    }
-    
-    var isEnabled: Bool {
-        return !self.isDisabled
-    }
-    
-    var isDisabled: Bool {
-        switch self {
-        case .disabled:
-            return true
-        default:
-            return false
-        }
-    }
-    
-    func getMode() -> (embed: Bool, url: URL?)?
-    {
-        switch self {
-        case .disabled:
-            return nil
-        case .embed(let url):
-            return (embed: true, url: url)
-        case .link(let url):
-            return (embed: false, url: url)
-        }
-    }
-    
-    /**
-     * Sanitize the settings.
-     * - parameters:
-     *   - cacheUrl: Path (local file or web uRL) of the library, from the cache folder or the main bundle.
-     *   - cdnUrl: Web url from download the library. Tipically from a CDN service.
-     *   - allowLinkFile: `true` allows you to link the library even if it is a local file and not a web URL.
-     *
-     * You can embed only exists local file. 
-     */
-    public mutating func sanitize(cacheUrl: URL?, cdnUrl: URL, allowLinkFile: Bool = false) {
-        switch self {
-        case .disabled:
-            break
-        case .link(let url):
-            if let url = url ?? cacheUrl, allowLinkFile || !url.isFileURL {
-                // Without `allowLinkFile`, only web url can be linked.
-                // For link do not test if the file exists.
-                self = .link(url: url)
-            } else {
-                // Link the CDN url.
-                self = .link(url: cdnUrl)
-            }
-        case .embed(let url):
-            if let url = url ?? cacheUrl {
-                if url.isFileURL && FileManager.default.fileExists(atPath: url.path) {
-                    // Only exists file can be embed.
-                    self = .embed(url: url)
-                } else if !url.isFileURL {
-                    // Link a web url.
-                    self = .link(url: cacheUrl)
-                } else {
-                    // Link the CDN url.
-                    self = .link(url: cdnUrl)
-                }
-            } else {
-                // Link the CDN url.
-                self = .link(url: cdnUrl)
-            }
-        }
-    }
-    
-    /**
-     * Get the code to link/embed the JS library.
-     * - parameters:
-     *  - extraTagLink: Extra code to put in the `<script>` tag when the library is linked.
-     *  - extraTagEmbed: Extra code to put in the `<script>` tag when the library is embedded.
-     *
-     * **Call `sanitize` before invokint this function.**
-     */
-    func getScriptCode(extraTagLink: String = "", extraTagEmbed: String = "") -> String {
-        switch self {
-        case .disabled:
-            return ""
-        case .link(let url):
-            guard let url else {
-                return ""
-            }
-            return "<script type='text/javascript' \(extraTagLink) src='\(url.absoluteString)'></script>\n"
-        case .embed(let url):
-            guard let url else {
-                return ""
-            }
-            if let code = try? String(contentsOfFile: url.path, encoding: .utf8) {
-                // Embed the libraty inline
-                return "<script type='text/javascript' \(extraTagEmbed)>\n\(code)\n</script>\n"
-            }
-            return Self.link(url: url).getScriptCode(extraTagLink: extraTagLink, extraTagEmbed: extraTagEmbed)
-        }
-    }
+enum JSExtension: Int, Codable {
+    case disabled = 0
+    case link = 1
+    case embed = 2
 }
 
 enum YamlMode: Int, Codable {
@@ -380,15 +210,20 @@ class Settings: Codable {
             title += (info["CFBundleExecutable"] as? String ?? "QLMarkdown") + "</a>"
             if let version = info["CFBundleShortVersionString"] as? String,
                 let build = info["CFBundleVersion"] as? String {
-                title += ", version \(version) (\(build))"
+                title += ", version \(version) (\(build))."
             }
+            title += "<br />\n"
             if let copy = info["NSHumanReadableCopyright"] as? String {
-                title += ".<br />\n\(copy.trimmingCharacters(in: CharacterSet(charactersIn: ". ")) + " with <span style='font-style: normal'>❤️</span>")"
+                title += copy.trimmingCharacters(in: CharacterSet(charactersIn: ". "))
+            } else {
+                title += "Developed by SBAREX"
             }
+            
         } else {
-            title += "QLMarkdown</a>"
+            title += "QLMarkdown</a><br />\nDeveloped by SBAREX"
         }
-        title += ".<br/>\nIf you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!"
+        title += " with <span style='font-style: normal'>❤️</span>."
+        title += "<br />\nIf you like this app, <a href='https://www.buymeacoffee.com/sbarex'><strong>buy me a coffee</strong></a>!"
         return title
     }
     
@@ -403,9 +238,14 @@ class Settings: Codable {
                 let build = info["CFBundleVersion"] as? String {
                 title += ", version \(version) (\(build))"
             }
+            title += ".\n"
             if let copy = info["NSHumanReadableCopyright"] as? String {
-                title += ".\n\(copy.trimmingCharacters(in: CharacterSet(charactersIn: ". ")) + " with ❤️")"
+                title += copy.trimmingCharacters(in: CharacterSet(charactersIn: ". ")) + " with ❤️"
+            } else {
+                title += "Developed by SBAREX with ❤️"
             }
+        } else {
+            title += "\nDeveloped by SBAREX with love"
         }
         title += "\n\n-->\n"
         return title
@@ -501,8 +341,8 @@ class Settings: Codable {
     var tableOfContentsOption: Bool = false
     var highlightExtension: Bool = false
     var inlineImageExtension: Bool = true
-    var mathExtension: JSExtension = .link(url: nil)
-    var mermaidExtension: JSExtension = .link(url: nil)
+    var mathExtension: JSExtension = .link
+    var mermaidExtension: JSExtension = .link
     var subExtension: Bool = false
     var supExtension: Bool = false
     var strikethroughExtension: StrikethroughMode = .single
@@ -568,59 +408,68 @@ class Settings: Codable {
         return Self.getResourceBundle()
     }()
     
+    static func decode<T: Decodable>(from container: KeyedDecodingContainer<Settings.CodingKeys>, forKey key: Settings.CodingKeys, defaultValue: T) -> T {
+        
+        do {
+            return try container.decodeIfPresent(T.self, forKey: key) ?? defaultValue
+        } catch {
+            return defaultValue
+        }
+    }
+    
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.appearance = try container.decodeIfPresent(Appearance.self, forKey: .appearance) ?? Settings.factorySettings.appearance
+        self.appearance = Settings.decode(from: container, forKey: .appearance, defaultValue: Settings.factorySettings.appearance)
         
-        self.baseFontSize = try container.decodeIfPresent(CGFloat.self, forKey: .baseFontSize) ?? Settings.factorySettings.baseFontSize
-        self.customCSS = try container.decodeIfPresent(URL?.self, forKey: .customCSS) ?? Settings.factorySettings.customCSS
-        self.customCSSFetched = try container.decodeIfPresent(Bool.self, forKey: .customCSSCodeFetched) ?? Settings.factorySettings.customCSSFetched
-        self.customCSSCode = try container.decodeIfPresent(String?.self, forKey: .customCSSCode) ?? Settings.factorySettings.customCSSCode
-        self.customCSSOverride = try container.decodeIfPresent(Bool.self, forKey: .customCSSOverride) ?? Settings.factorySettings.customCSSOverride
+        self.baseFontSize = Settings.decode(from: container, forKey: .baseFontSize, defaultValue: Settings.factorySettings.baseFontSize)
+        self.customCSS = Settings.decode(from: container, forKey: .customCSS, defaultValue: Settings.factorySettings.customCSS)
+        self.customCSSFetched = Settings.decode(from: container, forKey: .customCSSCodeFetched, defaultValue: Settings.factorySettings.customCSSFetched)
+        self.customCSSCode = Settings.decode(from: container, forKey: .customCSSCode, defaultValue: Settings.factorySettings.customCSSCode)
+        self.customCSSOverride = Settings.decode(from: container, forKey: .customCSSOverride, defaultValue: Settings.factorySettings.customCSSOverride)
         
-        self.admonitionExtension = try container.decodeIfPresent(Bool.self, forKey: .admonitionExtension) ?? Settings.factorySettings.admonitionExtension
-        self.autoLinkExtension = try container.decodeIfPresent(Bool.self, forKey:.autoLinkExtension) ?? Settings.factorySettings.autoLinkExtension
-        self.definitionListExtension = try container.decodeIfPresent(Bool.self, forKey: .definitionListExtension) ?? Settings.factorySettings.definitionListExtension
-        self.emojiExtension = try container.decodeIfPresent(EmojiMode.self, forKey:.emojiExtension) ?? Settings.factorySettings.emojiExtension
-        self.alertExtension = try container.decodeIfPresent(Bool.self, forKey:.alertExtension) ?? Settings.factorySettings.alertExtension
-        self.mentionExtension = try container.decodeIfPresent(Bool.self, forKey:.mentionExtension) ?? Settings.factorySettings.mentionExtension
-        self.headsExtension = try container.decodeIfPresent(Bool.self, forKey:.headsExtension) ?? Settings.factorySettings.headsExtension
-        self.tableOfContentsOption = try container.decodeIfPresent(Bool.self, forKey: .tableOfContentsOption) ?? Settings.factorySettings.tableOfContentsOption
-        self.highlightExtension = try container.decodeIfPresent(Bool.self, forKey: .hightlightExtension) ?? Settings.factorySettings.highlightExtension
-        self.inlineImageExtension = try container.decodeIfPresent(Bool.self, forKey:.inlineImageExtension) ?? Settings.factorySettings.inlineImageExtension
-        self.mathExtension = try container.decodeIfPresent(JSExtension.self, forKey:.mathExtension) ?? Settings.factorySettings.mathExtension
-        self.mermaidExtension = try container.decodeIfPresent(JSExtension.self, forKey:.mermaidExtension) ?? Settings.factorySettings.mermaidExtension
-        self.subExtension = try container.decodeIfPresent(Bool.self, forKey:.subExtension) ?? Settings.factorySettings.subExtension
-        self.supExtension = try container.decodeIfPresent(Bool.self, forKey:.supExtension) ?? Settings.factorySettings.supExtension
-        self.strikethroughExtension = try container.decodeIfPresent(StrikethroughMode.self, forKey:.strikethroughExtension) ?? Settings.factorySettings.strikethroughExtension
-        self.syntaxHighlightExtension = try container.decodeIfPresent(Bool.self, forKey: .syntaxHighlightExtension) ?? Settings.factorySettings.syntaxHighlightExtension
-        self.syntaxLineNumbersOption = try container.decodeIfPresent(Bool.self, forKey: .syntaxLineNumbersOption) ?? Settings.factorySettings.syntaxLineNumbersOption
-        self.syntaxTabsOption = try container.decodeIfPresent(Int.self, forKey: .syntaxTabsOption) ?? Settings.factorySettings.syntaxTabsOption
-        self.syntaxWordWrapOption = try container.decodeIfPresent(Int.self, forKey: .syntaxWordWrapOption) ?? Settings.factorySettings.syntaxWordWrapOption
-        self.tableExtension = try container.decodeIfPresent(Bool.self, forKey: .tableExtension) ?? Settings.factorySettings.tableExtension
-        self.tagFilterExtension = try container.decodeIfPresent(Bool.self, forKey: .tagFilterExtension) ?? Settings.factorySettings.tagFilterExtension
-        self.taskListExtension = try container.decodeIfPresent(Bool.self, forKey: .taskListExtension) ?? Settings.factorySettings.taskListExtension
-        self.wikilinkExtension = try container.decodeIfPresent(Bool.self, forKey:.wikilinkExtension) ?? Settings.factorySettings.wikilinkExtension
-        self.yamlExtension = try container.decodeIfPresent(YamlMode.self, forKey: .yamlExtension) ?? Settings.factorySettings.yamlExtension
+        self.admonitionExtension = Settings.decode(from: container, forKey: .admonitionExtension, defaultValue: Settings.factorySettings.admonitionExtension)
+        self.autoLinkExtension = Settings.decode(from: container, forKey: .autoLinkExtension, defaultValue: Settings.factorySettings.autoLinkExtension)
+        self.definitionListExtension = Settings.decode(from: container, forKey: .definitionListExtension, defaultValue: Settings.factorySettings.definitionListExtension)
+        self.emojiExtension = Settings.decode(from: container, forKey:.emojiExtension, defaultValue: Settings.factorySettings.emojiExtension)
+        self.alertExtension = Settings.decode(from: container, forKey:.alertExtension, defaultValue: Settings.factorySettings.alertExtension)
+        self.mentionExtension = Settings.decode(from: container, forKey:.mentionExtension, defaultValue: Settings.factorySettings.mentionExtension)
+        self.headsExtension = Settings.decode(from: container, forKey:.headsExtension, defaultValue: Settings.factorySettings.headsExtension)
+        self.tableOfContentsOption = Settings.decode(from: container, forKey: .tableOfContentsOption, defaultValue: Settings.factorySettings.tableOfContentsOption)
+        self.highlightExtension = Settings.decode(from: container, forKey: .hightlightExtension, defaultValue: Settings.factorySettings.highlightExtension)
+        self.inlineImageExtension = Settings.decode(from: container, forKey:.inlineImageExtension, defaultValue: Settings.factorySettings.inlineImageExtension)
+        self.mathExtension = Settings.decode(from: container, forKey:.mathExtension, defaultValue: Settings.factorySettings.mathExtension)
+        self.mermaidExtension = Settings.decode(from: container, forKey:.mermaidExtension, defaultValue: Settings.factorySettings.mermaidExtension)
+        self.subExtension = Settings.decode(from: container, forKey:.subExtension, defaultValue: Settings.factorySettings.subExtension)
+        self.supExtension = Settings.decode(from: container, forKey:.supExtension, defaultValue: Settings.factorySettings.supExtension)
+        self.strikethroughExtension = Settings.decode(from: container, forKey:.strikethroughExtension, defaultValue: Settings.factorySettings.strikethroughExtension)
+        self.syntaxHighlightExtension = Settings.decode(from: container, forKey: .syntaxHighlightExtension, defaultValue: Settings.factorySettings.syntaxHighlightExtension)
+        self.syntaxLineNumbersOption = Settings.decode(from: container, forKey: .syntaxLineNumbersOption, defaultValue: Settings.factorySettings.syntaxLineNumbersOption)
+        self.syntaxTabsOption = Settings.decode(from: container, forKey: .syntaxTabsOption, defaultValue: Settings.factorySettings.syntaxTabsOption)
+        self.syntaxWordWrapOption = Settings.decode(from: container, forKey: .syntaxWordWrapOption, defaultValue: Settings.factorySettings.syntaxWordWrapOption)
+        self.tableExtension = Settings.decode(from: container, forKey: .tableExtension, defaultValue: Settings.factorySettings.tableExtension)
+        self.tagFilterExtension = Settings.decode(from: container, forKey: .tagFilterExtension, defaultValue: Settings.factorySettings.tagFilterExtension)
+        self.taskListExtension = Settings.decode(from: container, forKey: .taskListExtension, defaultValue: Settings.factorySettings.taskListExtension)
+        self.wikilinkExtension = Settings.decode(from: container, forKey:.wikilinkExtension, defaultValue: Settings.factorySettings.wikilinkExtension)
+        self.yamlExtension = Settings.decode(from: container, forKey: .yamlExtension, defaultValue: Settings.factorySettings.yamlExtension)
         
-        self.checkboxExtension = try container.decodeIfPresent(Bool.self, forKey:.checkboxExtension) ?? Settings.factorySettings.checkboxExtension
+        self.checkboxExtension = Settings.decode(from: container, forKey:.checkboxExtension, defaultValue: Settings.factorySettings.checkboxExtension)
         
-        self.smartQuotesOption = try container.decodeIfPresent(Bool.self, forKey: .smartQuotesOption) ?? Settings.factorySettings.smartQuotesOption
-        self.footnotesOption = try container.decodeIfPresent(Bool.self, forKey: .footnotesOption) ?? Settings.factorySettings.footnotesOption
-        self.hardBreakOption = try container.decodeIfPresent(Bool.self, forKey: .hardBreakOption) ?? Settings.factorySettings.hardBreakOption
-        self.noSoftBreakOption = try container.decodeIfPresent(Bool.self, forKey: .noSoftBreakOption) ?? Settings.factorySettings.noSoftBreakOption
-        self.unsafeHTMLOption = try container.decodeIfPresent(Bool.self, forKey: .unsafeHTMLOption) ?? Settings.factorySettings.unsafeHTMLOption
-        self.validateUTFOption = try container.decodeIfPresent(Bool.self, forKey: .validateUTFOption) ?? Settings.factorySettings.validateUTFOption
-        self.debug = try container.decodeIfPresent(Bool.self, forKey: .debug) ?? Settings.factorySettings.debug
-        self.renderAsCode = try container.decodeIfPresent(Bool.self, forKey: .renderAsCode) ?? Settings.factorySettings.renderAsCode
+        self.smartQuotesOption = Settings.decode(from: container, forKey: .smartQuotesOption, defaultValue: Settings.factorySettings.smartQuotesOption)
+        self.footnotesOption = Settings.decode(from: container, forKey: .footnotesOption, defaultValue: Settings.factorySettings.footnotesOption)
+        self.hardBreakOption = Settings.decode(from: container, forKey: .hardBreakOption, defaultValue: Settings.factorySettings.hardBreakOption)
+        self.noSoftBreakOption = Settings.decode(from: container, forKey: .noSoftBreakOption, defaultValue: Settings.factorySettings.noSoftBreakOption)
+        self.unsafeHTMLOption = Settings.decode(from: container, forKey: .unsafeHTMLOption, defaultValue: Settings.factorySettings.unsafeHTMLOption)
+        self.validateUTFOption = Settings.decode(from: container, forKey: .validateUTFOption, defaultValue: Settings.factorySettings.validateUTFOption)
+        self.debug = Settings.decode(from: container, forKey: .debug, defaultValue: Settings.factorySettings.debug)
+        self.renderAsCode = Settings.decode(from: container, forKey: .renderAsCode, defaultValue: Settings.factorySettings.renderAsCode)
         
-        self.openInlineLink = try container.decodeIfPresent(Bool.self, forKey: .openInlineLink) ?? Settings.factorySettings.openInlineLink
+        self.openInlineLink = Settings.decode(from: container, forKey: .openInlineLink, defaultValue: Settings.factorySettings.openInlineLink)
         
-        self.qlWindowWidth = try container.decodeIfPresent(Int?.self, forKey: .qlWindowWidth) ?? Settings.factorySettings.qlWindowWidth
-        self.qlWindowHeight = try container.decodeIfPresent(Int?.self, forKey: .qlWindowHeight) ?? Settings.factorySettings.qlWindowHeight
+        self.qlWindowWidth = Settings.decode(from: container, forKey: .qlWindowWidth, defaultValue: Settings.factorySettings.qlWindowWidth)
+        self.qlWindowHeight = Settings.decode(from: container, forKey: .qlWindowHeight, defaultValue: Settings.factorySettings.qlWindowHeight)
         
-        self.about = try container.decodeIfPresent(Bool.self, forKey: .about) ?? Settings.factorySettings.about
+        self.about = Settings.decode(from: container, forKey: .about, defaultValue: Settings.factorySettings.about)
     }
     
     init() { }
@@ -842,11 +691,11 @@ class Settings: Codable {
         if let ext = defaultsDomain[Self.CodingKeys.inlineImageExtension.rawValue] as? Bool {
             inlineImageExtension = ext
         }
-        if let ext = defaultsDomain[Self.CodingKeys.mathExtension.rawValue] as? [String: Any] {
-            mathExtension = JSExtension(from: ext) ?? .disabled
+        if let ext = defaultsDomain[Self.CodingKeys.mathExtension.rawValue] as? Int, let e = JSExtension(rawValue: ext) {
+            mathExtension = e
         }
-        if let ext = defaultsDomain[Self.CodingKeys.mermaidExtension.rawValue] as? [String: Any] {
-            mermaidExtension = JSExtension(from: ext) ?? .disabled
+        if let ext = defaultsDomain[Self.CodingKeys.mermaidExtension.rawValue] as? Int, let e = JSExtension(rawValue: ext) {
+            mermaidExtension = e
         }
         if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
             subExtension = ext
@@ -966,9 +815,6 @@ class Settings: Codable {
             self.baseFontSize = 0
         }
         
-        self.mathExtension.sanitize(cacheUrl: mathJaxFileUrl, cdnUrl: Self.mathJaxWebUrl, allowLinkFile: allowLinkFile)
-        self.mermaidExtension.sanitize(cacheUrl: mermaidFileUrl, cdnUrl: Self.mermaidWebUrl, allowLinkFile: allowLinkFile)
-        
         return checkValid(messages: &messages)
     }
     
@@ -1056,9 +902,6 @@ class Settings: Codable {
      * Then copy the support files of highlight.
      */
     func installDependencies(override: OverrideMode = .never) {
-        try? installDep(forResource: "mermaid.min", withExtension: "js", to: Self.mermaidCacheFileUrl, overwrite: override)
-        try? installDep(forResource: "tex-mml-chtml", withExtension: "js", to: Self.mathJaxCacheFileUrl, overwrite: override)
-        
         try? installDep(forResource: "highlight", withExtension: nil, to: Settings.syntaxHighlightSupportCacheUrl, overwrite: override)
     }
     
@@ -1172,93 +1015,143 @@ class Settings: Codable {
         }
     }
     
-    /**
-     * Download and cache a fiile from web.
-     * - parameters:
-     *   - source: Source url.
-     *   - destination: Destination path
-     *   - reply: Action to perform after the download.
-     */
-    static func fetchCacheFile(from source: URL, to destination: URL, withReply reply: ((Bool) -> Void)?) {
-        let cacheFolderUrl = destination.deletingLastPathComponent()
-        
-        let fileManager = FileManager.default
-        if !fileManager.fileExists(atPath: cacheFolderUrl.path) {
-            do {
-                try FileManager.default.createDirectory(at: cacheFolderUrl, withIntermediateDirectories: true, attributes: nil)
-            } catch {
-                reply?(false)
-                return
+    static func decompressFile(_ file: URL, to destination: URL, hash: String?) throws -> Bool {
+        let zData = try Data(contentsOf: file)
+        let data = try gunzip(zData)
+        if let hash {
+            let dataHash: String = sha384OfData(data)
+            guard dataHash == hash else {
+                os_log(
+                    "Decompressed data from %{public}@ has an invalid hash!",
+                    log: OSLog.quickLookExtension,
+                    type: .error,
+                    file.path
+                )
+                
+                return false
             }
         }
+        try data.write(to: destination)
         
-        let task = URLSession.shared.downloadTask(with: source) { tempURL, response, error in
-            if let error = error {
-                print("Unable to fetch \(source.absoluteString):", error)
-                os_log("Unable to fetch %{public}s", log: OSLog.rendering, type: .error, source.absoluteString)
-                reply?(false)
-                return
-            }
-            
-            guard let tempURL = tempURL else {
-                print("No file downloaded")
-                os_log("No file downloaded from %{public}s", log: OSLog.rendering, type: .error, source.absoluteString)
-                reply?(false)
-                return
-            }
-            
-            do {
-                // Rimuove se esiste già
-                if fileManager.fileExists(atPath: destination.path) {
-                    try fileManager.removeItem(at: destination)
-                }
-                
-                // Sposta il file temporaneo
-                try fileManager.moveItem(at: tempURL, to: destination)
-                
-                // print("File seved in:", mermaidCacheFileUrl)
-                reply?(true)
-            } catch {
-                print("Error storing file on \(destination.path):", error)
-                os_log("Error storing mermaid file on %{public}s: %{public}s", log: OSLog.rendering, type: .error, destination.path, error.localizedDescription)
-                reply?(false)
-            }
-        }
-        
-        task.resume()
+        os_log(
+            "File %{public}@ decompressed to %{public}@",
+            log: OSLog.quickLookExtension,
+            type: .debug,
+            file.path, destination.path
+        )
+        return true
     }
     
+    static func checkHashOfFile(_ file: URL, hash: String) -> Bool {
+        guard let data = try? Data(contentsOf: file) else {
+            return false
+        }
+        let dataHash: String = sha384OfData(data)
+        return hash == dataHash
+    }
+    
+    func getDecopressedDep(name: String, hash: String) -> URL? {
+        let tmpFile = FileManager.default.temporaryDirectory.appendingPathComponent(name)
+        
+        if FileManager.default.fileExists(atPath: tmpFile.path) {
+            if Settings.checkHashOfFile(tmpFile, hash: hash) {
+                // File exists and hash is correct.
+                os_log(
+                    "File %{public}@ already decompressed in %{public}@",
+                    log: OSLog.quickLookExtension,
+                    type: .debug,
+                    name, tmpFile.path
+                )
+                return tmpFile
+            } else {
+                // Invalid hash!
+                os_log(
+                    "Invalid hash detected for decompressed file %{public}@",
+                    log: OSLog.quickLookExtension,
+                    type: .error,
+                    tmpFile.path
+                )
+                try? FileManager.default.removeItem(at: tmpFile)
+            }
+        }
+        
+        // Try to decompress the bundled file
+        if let url = self.resourceBundle.url(forResource: name, withExtension: "gz") {
+            do {
+                if try Settings.decompressFile(url, to: tmpFile, hash: hash) {
+                    return tmpFile
+                }
+            } catch {
+                os_log(
+                    "Unable to decompress file %{public}@ to %{public}@: %{public}@",
+                    log: OSLog.quickLookExtension,
+                    type: .error,
+                    url.path, tmpFile.path, error.localizedDescription
+                )
+            }
+        }
+        
+        // Try to return the uncompressd bundled file.
+        let s = name as NSString
+        let ext = s.pathExtension
+        let name = s.deletingPathExtension
+        
+        return self.resourceBundle.url(forResource: name, withExtension: ext)
+    }
 }
 
 // MARK: - Mermaid support
 extension Settings {
+    static let mermaidVersion = "12.0.0"
     /// Url from which to download the mermaid library.
-    static let mermaidWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js")!
+    static let mermaidWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mermaid@\(Settings.mermaidVersion)/dist/mermaid.min.js")!
+    static let mermaidHash = "sha384-xzghz1GQ5u9HCpVskeDPqMsdogD1yvuMQbEK53+wi+G70+6J1AG0L2cfi9PHjDWI" // https://srihash.org/
     
-    /// Local file with the mermaid library.
-    static var mermaidCacheFileUrl: URL? {
-        return Self.jsFolder?.appendingPathComponent("mermaid.min.js")
+    /// Location of the Mermaid library file.
+    var mermaidFileUrl: URL? {
+        return self.getDecopressedDep(name: "mermaid.min.js", hash: Settings.mermaidHash)
     }
     
-    /// Location of the mermaid library. Can be from the file cache or from the bundle.
-    var mermaidFileUrl: URL? {
-        return Self.mermaidCacheFileUrl ?? self.resourceBundle.url(forResource: "mermaid.min", withExtension: "js")
+    func getMermaidScriptCode() -> String {
+        guard self.mermaidExtension != .disabled else {
+            return ""
+        }
+        let code1 = """
+<script type="text/javascript">
+mermaid.initialize({
+    startOnLoad: true,
+    theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+    securityLevel: 'strict'
+});
+</script>
+"""
+        if self.mermaidExtension == .embed, let url = self.mermaidFileUrl, let code = try? String(contentsOfFile: url.path, encoding: .utf8) {
+            return "<script>\n\(code)\n</script>\n\(code1)\n"
+        }
+        return "<script src=\"\(Settings.mermaidWebUrl)\" integrity=\"\(Settings.mermaidHash)\" crossorigin=\"anonymous\"></script>\n\(code1)\n"
     }
 }
 
 // MARK: - MathJax
 extension Settings {
+    static let mathJaxVersion = "4.1.3"
     /// Url from which to download the mermaid library.
-    static let mathJaxWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.js")!
+    static let mathJaxWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mathjax@\(Settings.mathJaxVersion)/tex-mml-chtml.js")!
+    static let mathJaxHash = "sha384-OrHfGTnIbkl0do3N76qW/uWr38o91N05sbSPuYBPLH+hG8X/dNSrjZf3AGjzrCwC"
     
-    /// Cache of the mermaid library.
-    static var mathJaxCacheFileUrl: URL? {
-        return Self.jsFolder?.appendingPathComponent("tex-mml-chtml.js")
+    /// Location of the Math library file.
+    var mathJaxFileUrl: URL? {
+        return self.getDecopressedDep(name: "tex-mml-chtml.js", hash: Settings.mathJaxHash)
     }
     
-    /// Location of the mermaid library. Can be from the file cache or from the bundle.
-    var mathJaxFileUrl: URL? {
-        return Self.mathJaxCacheFileUrl ?? self.resourceBundle.url(forResource: "tex-mml-chtml", withExtension: "js")
+    func getMathScriptCode() -> String {
+        guard self.mathExtension != .disabled else {
+            return ""
+        }
+        if self.mathExtension == .embed, let url = self.mathJaxFileUrl, let code = try? String(contentsOfFile: url.path, encoding: .utf8) {
+            return "<script id='MathJax-script'>\n\(code)\n</script>\n"
+        }
+        return "<script id='MathJax-script' src=\"\(Settings.mathJaxWebUrl)\" integrity=\"\(Settings.mathJaxHash)\" crossorigin=\"anonymous\" async></script>\n"
     }
 }
 

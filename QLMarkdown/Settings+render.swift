@@ -415,7 +415,7 @@ extension Settings {
             }
         }
         
-        if !self.mathExtension.isDisabled {
+        if self.mathExtension != .disabled {
             if let ext = cmark_find_syntax_extension("math") {
                 cmark_parser_attach_syntax_extension(parser, ext)
                 
@@ -442,12 +442,12 @@ extension Settings {
                 cmark_syntax_extension_highlight_set_tab_spaces(ext, Int32(self.syntaxTabsOption))
                 cmark_syntax_extension_highlight_set_wrap_limit(ext, Int32(self.syntaxWordWrapOption))
                 
-                if self.mermaidExtension.isEnabled {
+                if self.mermaidExtension != .disabled {
                     cmark_syntax_extension_highlight_add_skipped_languages(ext, "mermaid")
                 } else {
                     cmark_syntax_extension_highlight_remove_skipped_languages(ext, "mermaid")
                 }
-                if self.mathExtension.isEnabled {
+                if self.mathExtension != .disabled {
                     cmark_syntax_extension_highlight_add_skipped_languages(ext, "math")
                 } else {
                     cmark_syntax_extension_highlight_remove_skipped_languages(ext, "math")
@@ -493,12 +493,12 @@ extension Settings {
 
             var body = String(cString: html2)
             
-            if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
+            if !self.renderAsCode, self.mathExtension != .disabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
                 body = swapMathDelimiters(body)
             }
             
             // Mermaid diagrams support
-            if !self.renderAsCode, !self.mermaidExtension.isDisabled, body.contains("language-mermaid") {
+            if !self.renderAsCode, self.mermaidExtension != .disabled, body.contains("language-mermaid") {
                 // Transform mermaid code blocks to mermaid divs
                 body = transformMermaidBlocks(body)
             }
@@ -852,19 +852,6 @@ table.debug td {
     
     
     /**
-     * Embed a JS library.
-     * - parameters:
-     *  - mode:
-     *  - fileUrl: Path (local file or web uRL) of the library, from the cache folder or the main bundle.
-     *  - cdnUrl:Web url from download the library. Tipically from a CDN service.
-     *  - extraTagLink: Extra code to put in the `<script>` tag when the library is linked.
-     *  - extraTagEmbed: Extra code to put in the `<script>` tag when the library is embedded.
-     */
-    internal func embedJsLibrary(mode: JSExtension, fileUrl: URL?, cdnUrl: URL, extraTagLink: String = "", extraTagEmbed: String = "") -> String {
-        return mode.getScriptCode(extraTagLink: extraTagLink, extraTagEmbed: extraTagEmbed)
-    }
-    
-    /**
      * Build a complete html file.
      * - parameters:
      *  - title: Title of the page.
@@ -949,7 +936,7 @@ table.debug td {
         // `swapMathDelimiters` below). Stray `$` outside math wrappers (currency, prose, code)
         // is invisible to MathJax because `$` is no longer a delimiter.
         let processedBody = body
-        if !self.renderAsCode, !self.mathExtension.isDisabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
+        if !self.renderAsCode, self.mathExtension != .disabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
             s_header += """
 <script type="text/javascript">
 MathJax = {
@@ -972,23 +959,14 @@ MathJax = {
 };
 </script>
 """
-            s_footer += mathExtension.getScriptCode(extraTagLink: "id='MathJax-script' async", extraTagEmbed: "id='MathJax-script'")
+            s_footer += self.getMathScriptCode()
         }
 
         // Mermaid diagrams support
-        if !self.renderAsCode, !self.mermaidExtension.isDisabled, processedBody.contains("class=\"mermaid\"") {
+        if !self.renderAsCode, self.mermaidExtension != .disabled, processedBody.contains("class=\"mermaid\"") {
             
             // Inject mermaid.min.js
-            s_footer += mermaidExtension.getScriptCode()
-            s_footer += """
-<script type="text/javascript">
-mermaid.initialize({
-startOnLoad: true,
-theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
-securityLevel: 'strict'
-});
-</script>
-"""
+            s_footer += self.getMermaidScriptCode()
         }
 
         var style = css_doc + css_highlight + css_doc_extended

@@ -127,19 +127,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         
         Settings.shared.installDependencies(override: .onlyOlder)
         
-        if let path = Settings.mermaidCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
-            // Try to download Mermaid library from web.
-            Settings.shared.updateMemaidCache { (success) in
-                print("Mermaid reflesh: \(success ? "success" : "failure")")
-            }
-        }
-        if let path = Settings.mathJaxCacheFileUrl, !FileManager.default.fileExists(atPath: path.path) {
-            // Try to download MathJax library from web.
-            Settings.shared.updateMathJaxUCache { (success) in
-                print("MathJax reflesh: \(success ? "success" : "failure")")
-            }
-        }
-        
         // Build the Examples menu
         
         let mnu = NSMenuItem(title: "README.md", action: #selector(self.handleExample(_:)), keyEquivalent: "")

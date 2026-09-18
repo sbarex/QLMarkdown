@@ -94,6 +94,12 @@
 		83327D332594087100E76CF6 /* MIMEtype.c in Sources */ = {isa = PBXBuildFile; fileRef = 83327D2E2594066300E76CF6 /* MIMEtype.c */; };
 		83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83327D452595E15700E76CF6 /* Settings+ext.swift */; };
 		833A5B743052DC8400850312 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 833A5B733052DC8400850312 /* Localizable.xcstrings */; };
+		83425360305D1EDA00BC2C68 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342535F305D1ED300BC2C68 /* gunzip.swift */; };
+		83425361305D1EEB00BC2C68 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342535F305D1ED300BC2C68 /* gunzip.swift */; };
+		83425362305D1EEB00BC2C68 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342535F305D1ED300BC2C68 /* gunzip.swift */; };
+		83425363305D1EEB00BC2C68 /* gunzip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342535F305D1ED300BC2C68 /* gunzip.swift */; };
+		83425365305D20A000BC2C68 /* mermaid.min.js.gz in Resources */ = {isa = PBXBuildFile; fileRef = 83425364305D20A000BC2C68 /* mermaid.min.js.gz */; };
+		83425367305D2ACB00BC2C68 /* tex-mml-chtml.js.gz in Resources */ = {isa = PBXBuildFile; fileRef = 83425366305D2ACB00BC2C68 /* tex-mml-chtml.js.gz */; };
 		83437974271D47DF00A5D6EA /* qlmarkdown_cli.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83437973271D47DF00A5D6EA /* qlmarkdown_cli.swift */; };
 		83437978271D47E700A5D6EA /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		8343797A271D498800A5D6EA /* Yams in Frameworks */ = {isa = PBXBuildFile; productRef = 83437979271D498800A5D6EA /* Yams */; };
@@ -562,6 +568,9 @@
 		83327D452595E15700E76CF6 /* Settings+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Settings+ext.swift"; sourceTree = "<group>"; };
 		833A5B723052C23900850312 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Main.xcstrings; sourceTree = "<group>"; };
 		833A5B733052DC8400850312 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		8342535F305D1ED300BC2C68 /* gunzip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gunzip.swift; sourceTree = "<group>"; };
+		83425364305D20A000BC2C68 /* mermaid.min.js.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = mermaid.min.js.gz; sourceTree = "<group>"; };
+		83425366305D2ACB00BC2C68 /* tex-mml-chtml.js.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "tex-mml-chtml.js.gz"; sourceTree = "<group>"; };
 		83437971271D47DF00A5D6EA /* qlmarkdown_cli */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = qlmarkdown_cli; sourceTree = BUILT_PRODUCTS_DIR; };
 		83437973271D47DF00A5D6EA /* qlmarkdown_cli.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = qlmarkdown_cli.swift; sourceTree = "<group>"; };
 		834379B2271D4FB800A5D6EA /* qlmarkdown_cli.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = qlmarkdown_cli.entitlements; sourceTree = "<group>"; };
@@ -1040,6 +1049,7 @@
 				83D22E632DCA65980013EB9D /* Settings+render.swift */,
 				83327D452595E15700E76CF6 /* Settings+ext.swift */,
 				83EF951C2585367500B56FA3 /* NSColor+ext.swift */,
+				8342535F305D1ED300BC2C68 /* gunzip.swift */,
 				8376EADC27E8BD3D00AB44B8 /* Log.swift */,
 				83D82A90277C466500C9B99F /* jpcre2.hpp */,
 				83D82A91277C467A00C9B99F /* pcre2.h */,
@@ -1098,6 +1108,8 @@
 			children = (
 				83598F22258263C0004664D3 /* default.css */,
 				83E7FEF0258FBF37003ECF9B /* highlight */,
+				83425366305D2ACB00BC2C68 /* tex-mml-chtml.js.gz */,
+				83425364305D20A000BC2C68 /* mermaid.min.js.gz */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1484,8 +1496,10 @@
 				83598E6C2581880A004664D3 /* Main.storyboard in Resources */,
 				83E7FEF1258FBF37003ECF9B /* highlight in Resources */,
 				830277F52C60B3E20066EBCC /* default.css in Resources */,
+				83425365305D20A000BC2C68 /* mermaid.min.js.gz in Resources */,
 				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
 				83A9C2922F1D59F9005B668D /* examples in Resources */,
+				83425367305D2ACB00BC2C68 /* tex-mml-chtml.js.gz in Resources */,
 				834BBC343052AFFE00FECD4A /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1508,6 +1522,7 @@
 				834A4F0529E8AD8C00692964 /* tasklist.c in Sources */,
 				834A4F3329E8AD8D00692964 /* houdini_html_e.c in Sources */,
 				83327D222593FCEC00E76CF6 /* url.cpp in Sources */,
+				83425361305D1EEB00BC2C68 /* gunzip.swift in Sources */,
 				834A4F4729E8AD8E00692964 /* arena.c in Sources */,
 				83720A3625B8EA6000B49FEC /* encode.c in Sources */,
 				834A4F0B29E8AD8C00692964 /* xml.c in Sources */,
@@ -1578,6 +1593,7 @@
 				8320D5AB2D1C384C005868BD /* man.c in Sources */,
 				8320D5AC2D1C384C005868BD /* xml.c in Sources */,
 				8320D5AD2D1C384C005868BD /* linked_list.c in Sources */,
+				83425362305D1EEB00BC2C68 /* gunzip.swift in Sources */,
 				8320D5AE2D1C384C005868BD /* render.c in Sources */,
 				8320D5AF2D1C384C005868BD /* inlines.c in Sources */,
 				8320D5B02D1C384C005868BD /* references.c in Sources */,
@@ -1663,6 +1679,7 @@
 				834A4F1729E8AD8D00692964 /* buffer.c in Sources */,
 				834A4EF629E8AD8C00692964 /* autolink.c in Sources */,
 				83437980271D49EA00A5D6EA /* url.cpp in Sources */,
+				83425363305D1EEB00BC2C68 /* gunzip.swift in Sources */,
 				834A4F3F29E8AD8D00692964 /* references.c in Sources */,
 				83437992271D4A1900A5D6EA /* emoji_utils.cpp in Sources */,
 				834A4F3729E8AD8D00692964 /* plaintext.c in Sources */,
@@ -1733,6 +1750,7 @@
 				834A4EF729E8AD8C00692964 /* table.c in Sources */,
 				83CF71CE2C60023E0066A195 /* sup_ext.c in Sources */,
 				834A4F3A29E8AD8D00692964 /* utf8.c in Sources */,
+				83425360305D1EDA00BC2C68 /* gunzip.swift in Sources */,
 				834A4EF129E8AD8C00692964 /* strikethrough.c in Sources */,
 				83327D462595E15700E76CF6 /* Settings+ext.swift in Sources */,
 				834A4EFF29E8AD8C00692964 /* tagfilter.c in Sources */,

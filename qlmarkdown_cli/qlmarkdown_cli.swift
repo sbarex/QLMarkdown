@@ -29,6 +29,14 @@ enum BoolArgumentEnum: String, ExpressibleByArgument {
     }
 }
 
+enum libraryArgumentEnum: String, ExpressibleByArgument {
+    case off, link, embed
+    
+    static var allValueStrings: [String] {
+        return ["off", "link", "embed"]
+    }
+}
+
 enum AppearanceEnum: String, ExpressibleByArgument {
     case light, dark, auto
     
@@ -162,17 +170,11 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Embed local image files inside the formatted output.", valueName: "on|off"))
     var inlineImages: BoolArgumentEnum? = nil
     
-    @Option(help: ArgumentHelp("Format the mathematical expressions with MathJax. You can specify the path or url of the MathJax.js library.", valueName: "path|url"))
-    var math: String? = nil
+    @Option(help: ArgumentHelp("Format the mathematical expressions with MathJax. You can specify if link or embed the MathJax.js library.", valueName: "off|link|embed"))
+    var math: libraryArgumentEnum? = nil
     
-    @Option(help: ArgumentHelp("Embed/Link the MathJax library.", valueName: "on|off"))
-    var mathEmbed: BoolArgumentEnum? = nil
-    
-    @Option(help: ArgumentHelp("Format the mermaid diagrams. You can specify the path or url of the Mermaid.js library.", valueName: "path|url"))
-    var mermaid: String? = nil
-    
-    @Option(help: ArgumentHelp("Embed/Link the Mermaid library.", valueName: "on|off"))
-    var mermaidEmbed: BoolArgumentEnum? = nil
+    @Option(help: ArgumentHelp("Format the mermaid diagrams. You can specify if link or the Mermaid.js library.", valueName: "off|link|embed"))
+    var mermaid: libraryArgumentEnum? = nil
     
     @Option(help: ArgumentHelp("Enable table extension.", valueName: "on|off"))
     var table: BoolArgumentEnum? = nil
@@ -345,28 +347,24 @@ struct QLMarkdownCLI: ParsableCommand {
             settings.inlineImageExtension = o == .on
         }
         if let o = extensions.math {
-            if o == "off" {
+            switch o {
+            case .off:
                 settings.mathExtension = .disabled
-            } else {
-                switch extensions.mathEmbed ?? (settings.mathExtension.getMode()?.embed ?? false ? .off : .on) {
-                case .on:
-                    settings.mathExtension = .embed(url: o.isEmpty ? nil : URL(string: o))
-                case .off:
-                    settings.mathExtension = .link(url: o.isEmpty ? nil : URL(string: o))
-                }
+            case .embed:
+                settings.mathExtension = .embed
+            case .link:
+                settings.mathExtension = .link
             }
         }
         
         if let o = extensions.mermaid {
-            if o == "off" {
+            switch o {
+            case .off:
                 settings.mermaidExtension = .disabled
-            } else {
-                switch extensions.mermaidEmbed ?? (settings.mermaidExtension.getMode()?.embed ?? false ? .off : .on) {
-                case .on:
-                    settings.mermaidExtension = .embed(url: o.isEmpty ? nil : URL(string: o))
-                case .off:
-                    settings.mermaidExtension = .link(url: o.isEmpty ? nil : URL(string: o))
-                }
+            case .embed:
+                settings.mermaidExtension = .embed
+            case .link:
+                settings.mermaidExtension = .link
             }
         }
         if let o = extensions.table {
@@ -456,27 +454,25 @@ struct QLMarkdownCLI: ParsableCommand {
         print("    --definition-list: \(settings.definitionListExtension ? "on" : "off")")
         print("    --highlight: \(settings.highlightExtension ? "on" : "off")")
         print("    --inline-images: \(settings.inlineImageExtension ? "on" : "off")")
+        
         switch settings.mathExtension {
         case .disabled:
             print("    --math: off")
-        case .embed(let url):
-            let url = url ?? settings.mathJaxFileUrl ?? Settings.mathJaxWebUrl
-            print("    --math: embedded \(url.absoluteString))")
-        case .link(let url):
-            let url = url ?? settings.mathJaxFileUrl ?? Settings.mathJaxWebUrl
-            print("    --math: linked \(url.absoluteString)")
+        case .embed:
+            print("    --math: embedded (\(Settings.mathJaxVersion))")
+        case .link:
+            print("    --math: linked (\(Settings.mathJaxVersion)) from \(Settings.mathJaxWebUrl)")
         }
         
         switch settings.mermaidExtension {
         case .disabled:
             print("    --mermaid: off")
-        case .embed(let url):
-            let url = url ?? settings.mermaidFileUrl ?? Settings.mermaidWebUrl
-            print("    --mermaid: embedded \(url.absoluteString)")
-        case .link(let url):
-            let url = url ?? settings.mermaidFileUrl ?? Settings.mermaidWebUrl
-            print("    --mermaid: linked \(url.absoluteString)")
+        case .embed:
+            print("    --mermaid: embedded (\(Settings.mermaidVersion))")
+        case .link:
+            print("    --mermaid: linked (\(Settings.mermaidVersion)) from \(Settings.mermaidWebUrl)")
         }
+        
         print("    --table: \(settings.tableExtension ? "on" : "off")")
         print("    --tasklist: \(settings.taskListExtension ? "on" : "off")")
         print("    --tag-filter: \(settings.tagFilterExtension ? "on" : "off")")
@@ -511,11 +507,12 @@ struct QLMarkdownCLI: ParsableCommand {
                 QLMarkdownCLI.exit()
             } else if files.count > 1 {
                 var isDir: ObjCBool = false
+                var exists = false
                 if let dest = dest {
-                    FileManager.default.fileExists(atPath: dest, isDirectory: &isDir)
+                    exists = FileManager.default.fileExists(atPath: dest, isDirectory: &isDir)
                 }
                 
-                if !isDir.boolValue {
+                if !exists && !isDir.boolValue {
                     QLMarkdownCLI.exit(withError: QLError.destinationMustBeAFolder) // "Error: to process multiple files you must use the -o argument with a folder path!"
                 }
             }

@@ -45,13 +45,13 @@ enum OptionalBoolEnum: String, AppEnum {
     }
 }
 
-enum JsLibratyOptionalEnum: String, AppEnum {
+enum JsLibraryOptionalEnum: String, AppEnum {
     case predefined
     case off
     case link
     case embed
 
-    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Emoji option state")
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "Library option state")
 
     static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
         .predefined: "predefined",
@@ -67,9 +67,9 @@ enum JsLibratyOptionalEnum: String, AppEnum {
         case .off:
             state = .disabled
         case .link:
-            state = .link(url: nil)
+            state = .link
         case .embed:
-            state = .embed(url: nil)
+            state = .embed
         }
     }
 }
@@ -270,11 +270,11 @@ struct MdToHtmlCode_Extension: AppIntent {
     @Parameter(title: "Embed local images", default: OptionalBoolEnum.predefined)
     var inlineLocalImages: OptionalBoolEnum
     
-    @Parameter(title: "Math extension", default: JsLibratyOptionalEnum.predefined)
-    var mathExtension: JsLibratyOptionalEnum
+    @Parameter(title: "Math extension", default: JsLibraryOptionalEnum.predefined)
+    var mathExtension: JsLibraryOptionalEnum
     
-    @Parameter(title: "Diagram extension", default: JsLibratyOptionalEnum.predefined)
-    var mermaidExtension: JsLibratyOptionalEnum
+    @Parameter(title: "Diagram extension", default: JsLibraryOptionalEnum.predefined)
+    var mermaidExtension: JsLibraryOptionalEnum
     
     @Parameter(title: "Strikethrough extension", default: StrikethroughOptionalEnum.predefined)
     var strikethrough: StrikethroughOptionalEnum

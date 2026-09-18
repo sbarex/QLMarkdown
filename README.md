@@ -272,13 +272,11 @@ The diagram theme automatically adapts to the system appearance (light/dark mode
 
 #### Note about external Javascript libraries (MathJax and Mermaid)
 
-The Math and Mermaid extension requires some external javascript libraries.
+The Math and Diagram extensions requires some external javascript libraries.
 
-At the first execution of the main Application a local copy of the libraries are downloaded and cached. You can download an updated version at any time from the pop-up menu of each extension.
+You can choose to link the corresponding library from the web (internet connection required) via `cdn.jsdelivr.net`, or to embed the source code directly into the HTML output — though this increases the HTML file size.
 
-You can choose to link the corresponding library from the web (internet connection required) from `cdn.jsdelivr.net`, or embed the source code in the html output, but causing an increase in the size of the html file. 
-
-On the status bar of the Application you can view the final file size.
+On the status bar of the Main application you can view the final file size of the preview.
 
 
 #### Syntax Highlighting
@@ -364,11 +362,9 @@ MARKDOWN EXTENSIONS:
   --highlight <on|off>    Highlight text marked with `==`. (values: on, off)
   --inline-images <on|off>
                           Embed local image files inside the formatted output. (values: on, off)
-  --math <path|url>       Format the mathematical expressions with MathJax. You can specify the path or url of the MathJax.js library.
-  --math-embed <on|off>   Embed/Link the MathJax library. (values: on, off)
-  --mermaid <path|url>    Format the mermaid diagrams. You can specify the path or url of the Mermaid.js library.
-  --mermaid-embed <on|off>
-                          Embed/Link the mermaid library. (values: on, off)
+  --math <off|link|embed> Format the mathematical expressions with MathJax.
+  --mermaid <off|link|embed>
+                          Format the mermaid diagrams.
   --table <on|off>        Enable table extension. (values: on, off)
   --tag-filter <on|off>   Strip potentially dangerous HTML tags. (values: on, off)
   --tasklist <on|off>     Parse task list. (values: on, off)
