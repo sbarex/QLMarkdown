@@ -7,6 +7,8 @@ New Features:
 - Default YAML header enabled for all files (valid only for new installations; users who have already used the application must configure the setting manually).
 - Admonition extension (thanks to @soreavis).
 - Table of contents options (thanks to @soreavis).
+- Mermaid library 12.0.0 embedded.
+- MathJax library 4.1.3 embedded.
 
 Bugfix:
 - Fix print html preview.
