@@ -1,6 +1,12 @@
 # Modernized Makefile for Highlight
 # This file compiles the highlight library and binaries.
 
+BUILD_DIR ?= build
+
+OBJ_DIR := $(BUILD_DIR)/obj
+LIB_DIR := $(BUILD_DIR)/lib
+BIN_DIR := $(BUILD_DIR)/bin
+
 CXX ?= g++
 QMAKE ?= qmake
 AR ?= ar
@@ -21,17 +27,17 @@ HL_DOC_DIR ?= /usr/share/doc/highlight/
 
 # Compiler and Linker Flags
 # -MMD -MP generates dependency files automatically
-CFLAGS += -Wall -O2 ${MYCFLAGS} -DNDEBUG -std=c++17 -D_FILE_OFFSET_BITS=64 -MMD -MP -Wno-unknown-warning-option -Wno-deprecated-declarations
+override CFLAGS += -Wall -O2 -std=c++17 -D_FILE_OFFSET_BITS=64 -MMD -MP
 CFLAGS_DILU = -fno-strict-aliasing
 CXX_DIR = -DHL_DATA_DIR=\"$(HL_DATA_DIR)\" -DHL_CONFIG_DIR=\"$(HL_CONFIG_DIR)\"
-CPPFLAGS += -I $(INCLUDE_DIR)
-LDFLAGS += ${MYLDFLAGS}
+override CPPFLAGS += -I $(INCLUDE_DIR)
 
 # Lua Detection
-## Uses env to detect lua flags.
-# LUA_PKG_NAME := $(shell pkg-config --exists lua5.3 && echo lua5.3 || echo lua)
-# LUA_CFLAGS := $(shell pkg-config --cflags $(LUA_PKG_NAME))
-# LUA_LIBS := $(shell pkg-config --libs $(LUA_PKG_NAME))
+LUA_PKG_NAME := $(shell pkg-config --exists lua5.3 && echo lua5.3 || echo lua)
+LUA_CFLAGS := $(shell pkg-config --cflags $(LUA_PKG_NAME))
+LUA_LIBS := $(shell pkg-config --libs $(LUA_PKG_NAME))
+
+override LDFLAGS += ""
 
 ifneq ($(OS), Windows_NT)
 	LDFLAGS += -ldl
@@ -42,19 +48,27 @@ ifdef PIC
 endif
 
 # Object Definitions
-CORE_OBJS := stylecolour.o stringtools.o xhtmlgenerator.o latexgenerator.o \
+CORE_OBJS := $(addprefix $(OBJ_DIR)/, \
+		stylecolour.o stringtools.o xhtmlgenerator.o latexgenerator.o \
 		texgenerator.o rtfgenerator.o htmlgenerator.o ansigenerator.o \
 		svggenerator.o codegenerator.o xterm256generator.o \
 		pangogenerator.o bbcodegenerator.o odtgenerator.o \
 		syntaxreader.o elementstyle.o themereader.o keystore.o \
-		lspclient.o datadir.o preformatter.o platform_fs.o
+		lspclient.o datadir.o preformatter.o platform_fs.o \
+		)
 
-ASTYLE_OBJS := ASStreamIterator.o ASResource.o ASFormatter.o ASBeautifier.o ASEnhancer.o
+ASTYLE_OBJS := $(addprefix $(OBJ_DIR)/, \
+		ASStreamIterator.o ASResource.o ASFormatter.o ASBeautifier.o ASEnhancer.o \
+		)
 
-DILU_OBJS := InternalUtils.o LuaExceptions.o LuaFunction.o LuaState.o \
-		LuaUserData.o LuaUtils.o LuaValue.o LuaVariable.o LuaWrappers.o
+DILU_OBJS := $(addprefix $(OBJ_DIR)/, \
+		InternalUtils.o LuaExceptions.o LuaFunction.o LuaState.o \
+		LuaUserData.o LuaUtils.o LuaValue.o LuaVariable.o LuaWrappers.o \
+		)
 
-CLI_OBJS := arg_parser.o cmdlineoptions.o main.o help.o
+CLI_OBJS := $(addprefix $(OBJ_DIR)/, \
+		arg_parser.o cmdlineoptions.o main.o help.o \
+		)
 
 ALL_LIB_OBJS := $(CORE_OBJS) $(ASTYLE_OBJS) $(DILU_OBJS)
 ALL_OBJS := $(ALL_LIB_OBJS) $(CLI_OBJS)
@@ -69,46 +83,58 @@ vpath %.cc $(CLI_DIR)
 
 all: cli
 
-cli: libhighlight.a $(CLI_OBJS)
-	$(CXX) $(LDFLAGS) -o highlight $(CLI_OBJS) -L. -lhighlight $(LUA_LIBS)
+cli: $(LIB_DIR)/libhighlight.a $(CLI_OBJS)
+	@mkdir -p $(@D)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(LDFLAGS) -o $(BIN_DIR)/highlight $(CLI_OBJS) -L${LIB_DIR} -lhighlight $(LUA_LIBS)
 
-lib-static libhighlight.a: $(ALL_LIB_OBJS)
+lib-static: $(LIB_DIR)/libhighlight.a
+
+$(LIB_DIR)/libhighlight.a: $(ALL_LIB_OBJS)
+	@mkdir -p $(@D)
 	$(AR) -crs $@ $^
 
-lib-shared libhighlight.so.$(SO_VERSION): CFLAGS += -fPIC
-lib-shared libhighlight.so.$(SO_VERSION): $(ALL_LIB_OBJS)
-	$(CXX) -shared -Wl,-soname,libhighlight.so.$(SO_VERSION) -o $@ -lc $^
+lib-shared: $(LIB_DIR)/libhighlight.so.$(SO_VERSION)
 
-gui-qt: libhighlight.a
+$(LIB_DIR)/libhighlight.so.$(SO_VERSION): CFLAGS += -fPIC
+$(LIB_DIR)/libhighlight.so.$(SO_VERSION): $(ALL_LIB_OBJS)
+	@mkdir -p $(@D)
+	$(CXX) $(CFLAGS) -shared -Wl,-install_name,libhighlight.so.$(SO_VERSION) -o $@ -lc $^ $(LUA_LIBS)
+    
+	$(CXX) $(CFLAGS) -dynamiclib -Wl,-install_name,@loader_path/libhighlight.dylib ${LUA_LIBS} -o $(LIB_DIR)/libhighlight.dylib -lc $^ ${CORE_OBJECTS} ${DILU_OBJECTS} ${LDFLAGS}
+
+gui-qt: $(LIB_DIR)/libhighlight.a
 	cd $(GUI_QT_DIR) && \
 	$(QMAKE) 'DEFINES+=HL_DATA_DIR=\\\"$(HL_DATA_DIR)\\\" HL_CONFIG_DIR=\\\"$(HL_CONFIG_DIR)\\\" HL_DOC_DIR=\\\"$(HL_DOC_DIR)\\\" ' && \
 	$(MAKE)
 
 # Pattern Rules
-%.o: %.cpp
+$(OBJ_DIR)/%.o: %.cpp
+	@mkdir -p $(@D)
 	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LUA_CFLAGS) -c $< -o $@
 
-%.o: %.cc
+$(OBJ_DIR)/%.o: %.cc
+	@mkdir -p $(@D)
 	$(CXX) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 
 # Specialized rules for objects requiring directory paths
-datadir.o: datadir.cpp
+$(OBJ_DIR)/datadir.o: datadir.cpp
 	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LUA_CFLAGS) $(CXX_DIR) -c $< -o $@
 
-main.o: main.cpp
+$(OBJ_DIR)/main.o: main.cpp
 	$(CXX) $(CFLAGS) $(CPPFLAGS) $(LUA_CFLAGS) $(CXX_DIR) -c $< -o $@
 
 # Apply special Diluculum flag
-LuaValue.o: LuaValue.cpp
+$(OBJ_DIR)/LuaValue.o: LuaValue.cpp
 	$(CXX) $(CFLAGS) $(CFLAGS_DILU) $(CPPFLAGS) $(LUA_CFLAGS) -c $< -o $@
 
 # Include generated dependencies
 -include $(DEPS)
 
 clean:
-	rm -f *.o *.d highlight libhighlight.a libhighlight.so.*
+	rm -rf $(BUILD_DIR)
 	@if [ -d $(GUI_QT_DIR) ]; then $(MAKE) -C $(GUI_QT_DIR) clean || true; fi
 	rm -f $(GUI_QT_DIR)/Makefile* $(GUI_QT_DIR)/.qmake.stash
 
 clean-obj:
-	rm -f *.o *.d
+	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.d

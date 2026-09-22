@@ -95,7 +95,7 @@
 		836B3002259E222600A6A5F7 = {
 			isa = PBXGroup;
 			children = (
-				83756EA22F82A898002D7C8B /* lua-5.5.0 */,
+				83756EA22F82A898002D7C8B /* lua-5.5.1 */,
 				836B300A259E222600A6A5F7 /* highlight */,
 				836B300B259E222600A6A5F7 /* boost */,
 				836B300C259E222600A6A5F7 /* Makefile */,
@@ -193,7 +193,7 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		83756EA22F82A898002D7C8B /* lua-5.5.0 */ = {
+		83756EA22F82A898002D7C8B /* lua-5.5.1 */ = {
 			isa = PBXGroup;
 			children = (
 				83756E5F2F82A898002D7C8B /* doc */,
@@ -201,7 +201,7 @@
 				83756EA02F82A898002D7C8B /* Makefile */,
 				83756EA12F82A898002D7C8B /* README */,
 			);
-			path = "lua-5.5.0";
+			path = "lua-5.5.1";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

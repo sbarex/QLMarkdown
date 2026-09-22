@@ -718,7 +718,7 @@
 		83D82A91277C467A00C9B99F /* pcre2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pcre2.h; path = libpcre2/include/pcre2.h; sourceTree = BUILT_PRODUCTS_DIR; };
 		83E7FEED258FBE54003ECF9B /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = TODO.md; sourceTree = "<group>"; };
 		83E7FEF0258FBF37003ECF9B /* highlight */ = {isa = PBXFileReference; lastKnownFileType = folder; path = highlight; sourceTree = "<group>"; };
-		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libwrapper_highlight.dylib; path = highlight/libwrapper_highlight.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		83EF951C2585367500B56FA3 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		83EF95212585476800B56FA3 /* emoji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = emoji.h; sourceTree = "<group>"; };
 		83EF95222585476800B56FA3 /* emoji.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emoji.c; sourceTree = "<group>"; };
@@ -2016,6 +2016,7 @@
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(PROJECT_DIR)",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.5.4;
@@ -2073,6 +2074,7 @@
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(PROJECT_DIR)",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MARKETING_VERSION = 1.5.4;
@@ -2135,6 +2137,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -2199,6 +2202,7 @@
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
@@ -2256,6 +2260,7 @@
 					"$(PROJECT_DIR)",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -2314,6 +2319,7 @@
 					"$(PROJECT_DIR)",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
 					"$(BUILT_PRODUCTS_DIR)",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -2545,6 +2551,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
@@ -2616,6 +2623,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/highlight-wrapper",
 					"$(BUILT_PRODUCTS_DIR)/libpcre2/lib",
+					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
