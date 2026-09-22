@@ -353,22 +353,10 @@ extension Settings {
                                     continue // File not found.
                                 }
                                 
-                                let ext = URL(fileURLWithPath: file).pathExtension
-                                let mime: String
-                                switch ext {
-                                case "jpeg":
-                                    mime = "image/jpeg"
-                                case "tif":
-                                    mime = "image/tiff"
-                                case "svg":
-                                    mime = "image/svg+xml"
-                                default:
-                                    mime = "image/\(ext)"
-                                }
-                                
                                 guard let data = get_base64_image2(
                                     file.cString(using: .utf8),
-                                    mime.cString(using: .utf8),
+                                    nil,
+                                    baseDir.path.cString(using: .utf8),
                                     /*{ (url, _ )->UnsafeMutablePointer<Int8>? in
                                         guard let s = url else {
                                             return nil
@@ -860,6 +848,27 @@ table.debug td {
      *  - footer: Code to put at the end of the body.
      */
     func getCompleteHTML(title: String, body: String, header: String = "", footer: String = "") -> String {
+        // The body is untrusted (raw HTML is allowed by default and tagfilter does not strip event
+        // handlers), so a Content-Security-Policy restricts script execution to the scripts added
+        // here, which carry a per-render random nonce. Inline handlers, `javascript:` URLs and
+        // injected <script> tags are blocked. Any script passed in `header`/`footer` must use `nonce`
+        // too; the host app injects its scroll tracker as a WKUserScript instead.
+        let nonce = Data((0..<16).map { _ in UInt8.random(in: .min ... .max) }).base64EncodedString()
+        let csp = [
+            "default-src 'none'",
+            "script-src 'nonce-\(nonce)' https://cdn.jsdelivr.net",
+            "worker-src blob:", // MathJax
+            "style-src 'unsafe-inline' https: file:",
+            "font-src data: https: file:",
+            "img-src * data: blob: file:",
+            "media-src * data: blob: file:",
+            "frame-src https:",
+            "connect-src https://cdn.jsdelivr.net",
+            "object-src 'none'",
+            "base-uri 'none'",
+            "form-action 'none'",
+        ].joined(separator: "; ")
+        
         var css_doc = ""
         var css_doc_extended = ""
         
@@ -938,7 +947,7 @@ table.debug td {
         let processedBody = body
         if !self.renderAsCode, self.mathExtension != .disabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
             s_header += """
-<script type="text/javascript">
+<script type="text/javascript" nonce="\(nonce)">
 MathJax = {
   options: {
     enableMenu: \(self.debug ? "true" : "false"),
@@ -959,14 +968,14 @@ MathJax = {
 };
 </script>
 """
-            s_footer += self.getMathScriptCode()
+            s_footer += self.getMathScriptCode(nonce: nonce)
         }
 
         // Mermaid diagrams support
         if !self.renderAsCode, self.mermaidExtension != .disabled, processedBody.contains("class=\"mermaid\"") {
             
             // Inject mermaid.min.js
-            s_footer += self.getMermaidScriptCode()
+            s_footer += self.getMermaidScriptCode(nonce: nonce)
         }
 
         var style = css_doc + css_highlight + css_doc_extended
@@ -1009,6 +1018,7 @@ MathJax = {
 <!doctype html>
 <html>
 <head>
+<meta http-equiv='Content-Security-Policy' content="\(csp)">
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
 <title>\(title)</title>

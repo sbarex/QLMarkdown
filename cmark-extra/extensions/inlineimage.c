@@ -27,6 +27,9 @@
 
 // #include <curl/curl.h>
 #include <libgen.h>
+#include <sys/stat.h>
+#include <limits.h>
+#include <stdbool.h>
 #include <ctype.h>
 #include <curl/curl.h>
 
@@ -85,17 +88,6 @@ static void release_settings(cmark_mem *mem, void *user_data)
         
         mem->free(user_data);
     }
-}
-
-static bool startsWith(const char *pre, const char *str)
-{
-    if (pre == NULL || str == NULL) { // Saninty check.
-        return 0;
-    }
-    
-    size_t lenpre = strlen(pre),
-           lenstr = strlen(str);
-    return lenstr < lenpre ? false : memcmp(pre, str, lenpre) == 0;
 }
 
 /*
@@ -176,7 +168,127 @@ char *fetch_remote(const char *url, int *status, size_t *size) {
 }
 */
 
-char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_context, DataCallback *remote_callback, void *remote_context) {
+
+#define INLINEIMAGE_MAX_BYTES (64L * 1024 * 1024)
+
+/** True when `resolved` (a realpath) is `base_real` itself or sits inside it. */
+static bool path_is_within(const char *resolved, const char *base_real) {
+    size_t n = strlen(base_real);
+    if (n == 0) {
+        return false;
+    }
+    if (strncmp(resolved, base_real, n) != 0) {
+        return false;
+    }
+    if (base_real[n - 1] == '/') {
+        return true; // base is the root directory.
+    }
+    return resolved[n] == '/' || resolved[n] == '\0';
+}
+
+/**
+ * Detect an image from the file content (magic bytes), never from its name.
+ * A name-derived type lets any file pass as `image/...`, so it is not a check.
+ * @returns a static mime string, or NULL when the content is not a known image.
+ */
+static const char *sniff_image_mime(const unsigned char *b, size_t len) {
+    if (len >= 8 && memcmp(b, "\x89PNG\r\n\x1a\n", 8) == 0) return "image/png";
+    if (len >= 3 && memcmp(b, "\xFF\xD8\xFF", 3) == 0) return "image/jpeg";
+    if (len >= 6 && (memcmp(b, "GIF87a", 6) == 0 || memcmp(b, "GIF89a", 6) == 0)) return "image/gif";
+    if (len >= 2 && memcmp(b, "BM", 2) == 0) return "image/bmp";
+    if (len >= 4 && (memcmp(b, "II\x2a\x00", 4) == 0 || memcmp(b, "MM\x00\x2a", 4) == 0)) return "image/tiff";
+    if (len >= 12 && memcmp(b, "RIFF", 4) == 0 && memcmp(b + 8, "WEBP", 4) == 0) return "image/webp";
+    if (len >= 4 && memcmp(b, "\x00\x00\x01\x00", 4) == 0) return "image/x-icon";
+    if (len >= 12 && memcmp(b + 4, "ftyp", 4) == 0) {
+        if (memcmp(b + 8, "avif", 4) == 0 || memcmp(b + 8, "avis", 4) == 0) return "image/avif";
+        if (memcmp(b + 8, "heic", 4) == 0 || memcmp(b + 8, "heix", 4) == 0 || memcmp(b + 8, "mif1", 4) == 0 || memcmp(b + 8, "msf1", 4) == 0) return "image/heic";
+    }
+    // SVG is text: accept it only when an <svg> tag appears near the top.
+    size_t i = 0;
+    if (len >= 3 && memcmp(b, "\xEF\xBB\xBF", 3) == 0) {
+        i = 3; // skip the BOM
+    }
+    while (i < len && isspace(b[i])) {
+        i++;
+    }
+    if (len - i >= 5 && (memcmp(b + i, "<?xml", 5) == 0 || memcmp(b + i, "<svg", 4) == 0)) {
+        size_t n = len < 4096 ? len : 4096;
+        for (size_t j = i; j + 4 <= n; j++) {
+            if (memcmp(b + j, "<svg", 4) == 0) {
+                return "image/svg+xml";
+            }
+        }
+    }
+    return NULL;
+}
+
+/**
+ * Read a local image and return it as a `data:` URI.
+ * The file must resolve inside `base_dir` (the document folder) and must be a regular
+ * file whose content is a known image type. Otherwise nothing is inlined: a previewed
+ * document must not be able to pull arbitrary files into the rendered page.
+ * @returns the data URI, or NULL. **The caller must release the returned value.**
+ */
+static char *read_local_image_as_data_uri(const char *image_path, const char *base_dir) {
+    char resolved[PATH_MAX];
+    if (realpath(image_path, resolved) == NULL) {
+        os_log_error(getLogForImageExt(), "Unable to resolve file %{public}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
+        return NULL;
+    }
+    if (base_dir != NULL && base_dir[0] != '\0') {
+        char base_real[PATH_MAX];
+        if (realpath(base_dir, base_real) == NULL || !path_is_within(resolved, base_real)) {
+            os_log_error(getLogForImageExt(), "%{public}s is outside the document directory, not inlined!", resolved);
+            return NULL;
+        }
+    }
+    
+    FILE *f = fopen(resolved, "rb");
+    if (!f) {
+        os_log_error(getLogForImageExt(), "Unable to open file %{public}s: %{public}s (%{public}d)!", resolved, strerror(errno), errno);
+        return NULL;
+    }
+    struct stat st;
+    if (fstat(fileno(f), &st) != 0 || !S_ISREG(st.st_mode) || st.st_size <= 0 || st.st_size > INLINEIMAGE_MAX_BYTES) {
+        os_log_error(getLogForImageExt(), "%{public}s is not a regular file of usable size, not inlined!", resolved);
+        fclose(f);
+        return NULL;
+    }
+    size_t length = (size_t)st.st_size;
+    unsigned char *buffer = malloc(length);
+    if (!buffer) {
+        fclose(f);
+        return NULL;
+    }
+    size_t got = fread(buffer, 1, length, f);
+    fclose(f);
+    if (got != length) {
+        os_log_error(getLogForImageExt(), "Unable to read file %{public}s!", resolved);
+        free(buffer);
+        return NULL;
+    }
+    
+    const char *mime = sniff_image_mime(buffer, got);
+    if (mime == NULL) {
+        os_log_error(getLogForImageExt(), "%{public}s is not an image, not inlined!", resolved);
+        free(buffer);
+        return NULL;
+    }
+    
+    char *data = b64_encode(buffer, length);
+    free(buffer);
+    if (!data) {
+        return NULL;
+    }
+    char *encoded = (char *)calloc(strlen(mime) + strlen("data:;base64,") + strlen(data) + 1, sizeof(char));
+    if (encoded) {
+        sprintf(encoded, "data:%s;base64,%s", mime, data);
+    }
+    free(data);
+    return encoded;
+}
+
+char *get_base64_image(const char *url, const char *base_dir, MimeCheck *mime_callback, void *mime_context, DataCallback *remote_callback, void *remote_context) {
     char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
     const char *image_path;
     char *mime = NULL;
@@ -226,47 +338,9 @@ char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_con
         }
     }
     
-    if (access(image_path, F_OK | R_OK) == 0) {
-        if (mime_callback != NULL) {
-            mime = mime_callback(image_path, mime_context);
-        } else {
-            mime = get_mime(image_path, 2);
-        }
-        if (!mime || !startsWith("image/", mime)) {
-            os_log_error(getLogForImageExt(), "%{public}s (%{public}s) is not an image!", image_path, mime);
-            fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
-            goto continue_loop;
-        }
-        
-        char * buffer = 0;
-        long length = 0;
-        FILE * f = fopen((const char *)image_path, "rb");
-        if (f) {
-            fseek (f, 0, SEEK_END);
-            length = ftell(f);
-            fseek (f, 0, SEEK_SET);
-            buffer = malloc(length);
-            if (buffer) {
-                fread(buffer, 1, length, f);
-            }
-            fclose(f);
-            
-            char *data = b64_encode((const unsigned char *)buffer, length);
-            size_t encoded_length = strlen(data);
-            
-            encoded = (char *)calloc(strlen(mime) + strlen("data:;base64,") + encoded_length + 1, sizeof(char));
-            sprintf(encoded, "data:%s;base64,%s", mime, data);
-            
-            free(data);
-            free(buffer);
-        } else {
-            os_log_error(getLogForImageExt(), "Error to get magic for file %{public}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
-            fprintf(stderr, "Error to get magic for file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
-        }
-    } else {
-        os_log_error(getLogForImageExt(), "Unable to open file %{public}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
-        fprintf(stderr, "Unable to open file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
-    }
+    // Local files are validated and read by read_local_image_as_data_uri(): the mime callback
+    // cannot be used to authorise a non-image or a file outside the document folder.
+    encoded = read_local_image_as_data_uri(image_path, base_dir);
     
 continue_loop:
     free(mime);
@@ -280,7 +354,7 @@ continue_loop:
     return encoded;
 }
 
-char *get_base64_image2(const char *url, const char *mime, DataCallback *remote_callback, void *remote_context) {
+char *get_base64_image2(const char *url, const char *mime, const char *base_dir, DataCallback *remote_callback, void *remote_context) {
     char *protocol = NULL, *host = NULL, *path = NULL, *query = NULL;
     const char *image_path;
     char *encoded = NULL;
@@ -329,42 +403,11 @@ char *get_base64_image2(const char *url, const char *mime, DataCallback *remote_
         }
     }
     
-    if (access(image_path, F_OK | R_OK) == 0) {
-        if (!mime || !startsWith("image/", mime)) {
-            os_log_error(getLogForImageExt(), "%{public}s (%{public}s) is not an image!", image_path, mime);
-            fprintf(stderr, "%s (%s) is not an image!", image_path, mime);
-            goto continue_loop;
-        }
-        
-        char * buffer = 0;
-        long length = 0;
-        FILE * f = fopen((const char *)image_path, "rb");
-        if (f) {
-            fseek (f, 0, SEEK_END);
-            length = ftell(f);
-            fseek (f, 0, SEEK_SET);
-            buffer = malloc(length);
-            if (buffer) {
-                fread(buffer, 1, length, f);
-            }
-            fclose(f);
-            
-            char *data = b64_encode((const unsigned char *)buffer, length);
-            size_t encoded_length = strlen(data);
-            
-            encoded = (char *)calloc(strlen(mime) + strlen("data:;base64,") + encoded_length + 1, sizeof(char));
-            sprintf(encoded, "data:%s;base64,%s", mime, data);
-            
-            free(data);
-            free(buffer);
-        } else {
-            os_log_error(getLogForImageExt(), "Error to get magic for file %{public}s:, %{public}s (%{public}d)!", image_path, strerror(errno), errno);
-            fprintf(stderr, "Error to get magic for file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
-        }
-    } else {
-        os_log_error(getLogForImageExt(), "Unable to open file %{public}s: %{public}s (%{public}d)!", image_path, strerror(errno), errno);
-        fprintf(stderr, "Unable to open file %s: %s (#%d)!\n", image_path, strerror(errno), errno);
-    }
+    
+    // `mime` is derived from the file name by the caller and is therefore not a check;
+    // read_local_image_as_data_uri() confines the path and identifies the image by content.
+    (void)mime;
+    encoded = read_local_image_as_data_uri(image_path, base_dir);
     
 continue_loop:
     free(protocol);
@@ -417,10 +460,10 @@ static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser
             void *data_context = cmark_syntax_extension_inlineimage_get_remote_data_context(ext);
             
             if (mime_callback) {
-                encoded = get_base64_image(url, mime_callback, mime_context, data_callback, data_context);
+                encoded = get_base64_image(url, basedir, mime_callback, mime_context, data_callback, data_context);
             } else {
                 char *mime = mime_from_image_name(url);
-                encoded = get_base64_image2(url, mime, data_callback, data_context);
+                encoded = get_base64_image2(url, mime, basedir, data_callback, data_context);
                 free(mime);
             }
             

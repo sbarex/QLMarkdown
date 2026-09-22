@@ -233,11 +233,13 @@ EXPORT char *highlight_format_style2(int *exit_code, const char *background)
 void highlight_format_string(const char *code, const char *language, void *context, ResultCallback callback, int export_fragment = 1)
 {
     int exit_code = 0;
-    char *result = highlight_format_string2(code, language, &exit_code, export_fragment);
-
-    callback(context, result, exit_code);
-
-    free(result);
+    try {
+        char *result = highlight_format_string2(code, language, &exit_code, export_fragment);
+        callback(context, result, exit_code);
+        free(result);
+    } catch (std::runtime_error &error) {
+        os_log_error(sLog, "Exception during syntax highlight `%{public}s` as `%{public}s` format: %{public}s", code, language, error.what());
+    }
 }
 
 static string analyzeFile ( const string& file )

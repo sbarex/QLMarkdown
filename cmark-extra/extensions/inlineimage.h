@@ -44,6 +44,7 @@ void cmark_syntax_extension_inlineimage_set_remote_data_callback(cmark_syntax_ex
 /**
  * Get the base64 encoded data for a local image.
  * @param url image url
+ * @param base_dir Base dir
  * @param mime_callback Optional function to get the mime of the file.
  * @param mime_context Extra argument passed to the mime_callback function.
  * @param remote_callback  Callback for load remote resource
@@ -51,9 +52,9 @@ void cmark_syntax_extension_inlineimage_set_remote_data_callback(cmark_syntax_ex
  * @return The encoded data with mime info to use for the src attribute of <img> tag. ** User must release the returned data.
  *         Return NULL if error occours.
  */
-char *get_base64_image(const char *url, MimeCheck *mime_callback, void *mime_context, DataCallback *remote_callback, void *remote_context);
+char *get_base64_image(const char *url, const char *base_dir, MimeCheck *mime_callback, void *mime_context, DataCallback *remote_callback, void *remote_context);
 
-char *get_base64_image2(const char *url, const char *mime, DataCallback *remote_callback, void *remote_context);
+char *get_base64_image2(const char *url, const char *mime, const char *base_dir, DataCallback *remote_callback, void *remote_context);
 
 char *mime_from_image_name(const char *image_path);
 

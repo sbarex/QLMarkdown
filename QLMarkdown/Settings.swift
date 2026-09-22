@@ -1100,6 +1100,21 @@ class Settings: Codable {
     }
 }
 
+// MARK: - External link policy
+extension Settings {
+    /// Schemes a previewed document may hand to the system without asking. Everything else
+    /// (smb://, ssh://, vnc://, third-party app schemes) can act on the user's behalf in another
+    /// application, so it needs explicit confirmation.
+    static let allowedExternalSchemes: Set<String> = ["http", "https", "mailto"]
+
+    static func isExternalSchemeAllowed(_ url: URL) -> Bool {
+        guard let scheme = url.scheme?.lowercased() else {
+            return false
+        }
+        return allowedExternalSchemes.contains(scheme)
+    }
+}
+
 // MARK: - Mermaid support
 extension Settings {
     static let mermaidVersion = "12.0.0"
@@ -1112,12 +1127,14 @@ extension Settings {
         return self.getDecopressedDep(name: "mermaid.min.js", hash: Settings.mermaidHash)
     }
     
-    func getMermaidScriptCode() -> String {
+    /// - parameters:
+    ///   - nonce: CSP nonce of the page (see `getCompleteHTML`); scripts without it are blocked.
+    func getMermaidScriptCode(nonce: String) -> String {
         guard self.mermaidExtension != .disabled else {
             return ""
         }
         let code1 = """
-<script type="text/javascript">
+<script type="text/javascript" nonce="\(nonce)">
 mermaid.initialize({
     startOnLoad: true,
     theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
@@ -1126,9 +1143,9 @@ mermaid.initialize({
 </script>
 """
         if self.mermaidExtension == .embed, let url = self.mermaidFileUrl, let code = try? String(contentsOfFile: url.path, encoding: .utf8) {
-            return "<script>\n\(code)\n</script>\n\(code1)\n"
+            return "<script nonce=\"\(nonce)\">\n\(code)\n</script>\n\(code1)\n"
         }
-        return "<script src=\"\(Settings.mermaidWebUrl)\" integrity=\"\(Settings.mermaidHash)\" crossorigin=\"anonymous\"></script>\n\(code1)\n"
+        return "<script  nonce=\"\(nonce)\" src=\"\(Settings.mermaidWebUrl)\" integrity=\"\(Settings.mermaidHash)\" crossorigin=\"anonymous\"></script>\n\(code1)\n"
     }
 }
 
@@ -1144,14 +1161,16 @@ extension Settings {
         return self.getDecopressedDep(name: "tex-mml-chtml.js", hash: Settings.mathJaxHash)
     }
     
-    func getMathScriptCode() -> String {
+    /// - parameters:
+    ///   - nonce: CSP nonce of the page (see `getCompleteHTML`); scripts without it are blocked.
+    func getMathScriptCode(nonce: String) -> String {
         guard self.mathExtension != .disabled else {
             return ""
         }
         if self.mathExtension == .embed, let url = self.mathJaxFileUrl, let code = try? String(contentsOfFile: url.path, encoding: .utf8) {
-            return "<script id='MathJax-script'>\n\(code)\n</script>\n"
+            return "<script id='MathJax-script' nonce=\"\(nonce)\">\n\(code)\n</script>\n"
         }
-        return "<script id='MathJax-script' src=\"\(Settings.mathJaxWebUrl)\" integrity=\"\(Settings.mathJaxHash)\" crossorigin=\"anonymous\" async></script>\n"
+        return "<script id='MathJax-script' nonce=\"\(nonce)\" src=\"\(Settings.mathJaxWebUrl)\" integrity=\"\(Settings.mathJaxHash)\" crossorigin=\"anonymous\" async></script>\n"
     }
 }
 

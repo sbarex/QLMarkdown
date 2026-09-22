@@ -94,7 +94,6 @@ class ViewController: NSViewController {
         }
     }
 
-
     @objc dynamic var definitionListExtension: Bool = Settings.factorySettings.definitionListExtension {
         didSet {
             guard oldValue != definitionListExtension else { return }
@@ -1056,8 +1055,18 @@ class ViewController: NSViewController {
             body = "Error"
         }
         
-        let header = """
-<script type="text/javascript">
+        let html = settings.getCompleteHTML(title: ".md", body: body)
+        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+        webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
+        
+        let data = html.data(using: .utf8)
+        
+        elapsedTimeLabel = String.localizedStringWithFormat(NSLocalizedString("Rendered in %.3f seconds | %@", comment: ""), timeElapsed, self.byteFormatter.string(fromByteCount: Int64(data?.count ?? 0)))
+    }
+    
+    /// Reports the preview scroll position to `scrollHandler`. Injected as a user script because the
+    /// rendered page's Content-Security-Policy blocks inline scripts without its nonce.
+    private static let scrollTrackerScript = """
 // Reference: http://www.html5rocks.com/en/tutorials/speed/animations/
 
 let last_known_scroll_position = 0;
@@ -1087,17 +1096,7 @@ document.addEventListener('scroll', function(e) {
     ticking = true;
   }
 });
-</script>
 """
-        
-        let html = settings.getCompleteHTML(title: ".md", body: body, header: header)
-        let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
-        webView.loadHTMLString(html, baseURL: markdown_file?.deletingLastPathComponent())
-        
-        let data = html.data(using: .utf8)
-        
-        elapsedTimeLabel = String.localizedStringWithFormat(NSLocalizedString("Rendered in %.3f seconds | %@", comment: ""), timeElapsed, self.byteFormatter.string(fromByteCount: Int64(data?.count ?? 0)))
-    }
     
     func importStyle(copyOnSharedFolder: Bool) -> URL? {
         let panel = NSOpenPanel()
@@ -1240,7 +1239,12 @@ document.addEventListener('scroll', function(e) {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.webView = WKWebView(frame: self.webViewContainer.bounds, configuration: WKWebViewConfiguration())
+        let configuration = WKWebViewConfiguration()
+        configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
+        configuration.userContentController.add(self, name: "scrollHandler")
+        configuration.userContentController.addUserScript(WKUserScript(source: Self.scrollTrackerScript, injectionTime: .atDocumentEnd, forMainFrameOnly: true))
+        
+        self.webView = WKWebView(frame: self.webViewContainer.bounds, configuration: configuration)
         self.webView.navigationDelegate = self
         self.webView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -1266,9 +1270,6 @@ document.addEventListener('scroll', function(e) {
                 
         self.appearanceButton.state = Settings.isLightAppearance ? .off : .on
         self.appearanceButton.toolTip = self.appearanceButton.state == .on ? NSLocalizedString("Switch to light appearance.", comment: "") : NSLocalizedString("Switch to dark appearance.", comment: "")
-        self.webView.configuration.preferences.setValue(true, forKey: "developerExtrasEnabled")
-        let contentController = self.webView.configuration.userContentController
-        contentController.add(self, name: "scrollHandler")
         
         let settings = Settings.shared
         
@@ -1663,14 +1664,32 @@ extension ViewController: WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if !Settings.shared.openInlineLink, navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
-            let r = NSWorkspace.shared.open(url)
-            // print(r, url.absoluteString)
-            if r {
-                decisionHandler(.cancel)
-                return
+            // The document is untrusted, and WebKit reports a script-synthesized click as
+            // .linkActivated too, so a link activation is not proof of a user gesture. Hand only
+            // allowlisted schemes straight to the system and confirm anything else.
+            if Settings.isExternalSchemeAllowed(url) {
+                if NSWorkspace.shared.open(url) {
+                    decisionHandler(.cancel)
+                    return
+                }
+            } else if Self.confirmOpenExternalURL(url) {
+                NSWorkspace.shared.open(url)
             }
+            decisionHandler(.cancel)
+            return
         }
         decisionHandler(.allow)
+    }
+    
+    /// Ask before letting a previewed document open a non-allowlisted scheme in another app.
+    static func confirmOpenExternalURL(_ url: URL) -> Bool {
+        let alert = NSAlert()
+        alert.alertStyle = .warning
+        alert.messageText = NSLocalizedString("Open this link in another application?", comment: "")
+        alert.informativeText = url.absoluteString
+        alert.addButton(withTitle: NSLocalizedString("Open", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
+        return alert.runModal() == .alertFirstButtonReturn
     }
 }
 

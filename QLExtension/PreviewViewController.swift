@@ -227,6 +227,14 @@ extension PreviewViewController: WKNavigationDelegate {
 
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if !Settings.shared.openInlineLink, navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
+            // A script-synthesized click also arrives as .linkActivated, so only allowlisted
+            // schemes may reach the system from a previewed document. The preview has no window
+            // to host a confirmation dialog, so everything else is refused.
+            guard Settings.isExternalSchemeAllowed(url) else {
+                os_log("Blocked external link with scheme %{public}@ from a preview.", log: OSLog.quickLookExtension, type: .error, url.scheme ?? "?")
+                decisionHandler(.cancel)
+                return
+            }
             if #available(macOS 11, *) {
                 // On Big Sur NSWorkspace.shared.open fail with this error on Console:
                 // Launch Services generated an error at +[_LSRemoteOpenCall(PrivateCSUIAInterface) invokeWithXPCConnection:object:]:455, converting to OSStatus -54: Error Domain=NSOSStatusErrorDomain Code=-54 "The sandbox profile of this process is missing "(allow lsopen)", so it cannot invoke Launch Services' open API." UserInfo={NSDebugDescription=The sandbox profile of this process is missing "(allow lsopen)", so it cannot invoke Launch Services' open API., _LSLine=455, _LSFunction=+[_LSRemoteOpenCall(PrivateCSUIAInterface) invokeWithXPCConnection:object:]}
