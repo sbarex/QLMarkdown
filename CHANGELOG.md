@@ -1,12 +1,28 @@
 # Changelog
 
+### 1.5.5 (56)
+
+New Features:
+- **Security fix**: prevent of loading/execute unauthorized code (thanks to @ryangravette-bsd)
+    - Prevent the execution of injected scripts or custom events.
+    - Image files are identified by their magic code, not by their extension.
+    - Validation for opening external links on the main App.
+    - YAML header is now sanitized before rendering.
+    - Fixed `markdown` fenced blocks.
+- Highlight updated to release 4.2.1.
+- Lua updated to release 5.5.1.
+- Sparkle updated to release 2.10.0.
+- SwiftSoup updated to release 2.13.9.
+- Dropped pre macOS 12.0 legacy code.
+
+
 ### 1.5.4 (55)
 **This release require macOS 12.0 or later.**
 
 New Features:
 - Default YAML header enabled for all files (valid only for new installations; users who have already used the application must configure the setting manually).
 - Admonition extension (thanks to @soreavis).
-- Table of contents options (thanks to @soreavis).
+- Table of contents option (thanks to @soreavis).
 - Mermaid library 12.0.0 embedded.
 - MathJax library 4.1.3 embedded.
 
