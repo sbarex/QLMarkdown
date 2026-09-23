@@ -440,7 +440,6 @@ extension Settings {
                 } else {
                     cmark_syntax_extension_highlight_remove_skipped_languages(ext, "math")
                 }
-                cmark_syntax_extension_highlight_add_skipped_languages(ext, "markdown")
                 
                 /*
                 if !self.syntaxFontFamily.isEmpty {
