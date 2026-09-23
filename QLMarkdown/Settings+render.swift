@@ -1157,7 +1157,7 @@ MathJax = {
                     return renderYaml(yaml)
                 }
             } catch {
-                // print(error)
+                os_log("Unable to parse the YAML header: %{public}s", log: OSLog.rendering, type: .error, error.localizedDescription)
             }
         }
         // Embed the header inside a yaml block.
