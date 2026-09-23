@@ -109,6 +109,9 @@ endif
 
 build_dir:
 	$(shell mkdir build 2> /dev/null)
+	
+$(BUILD_DIR_ESCAPED):
+	@mkdir -p BUILD_DIR_ESCAPED
 
 # ################################
 # LUA library
@@ -139,7 +142,7 @@ ${BUILD_DIR_ESCAPED}/liblua-x86_64.a: | $(BUILD_DIR_ESCAPED)
 	mv "${LUA_DIR}/src/liblua.a" "$@"
 	@echo ""
 
-${BUILD_DIR_ESCAPED}/liblua.a: $(BUILD_DIR_ESCAPED) ${lua_libraries}
+${BUILD_DIR_ESCAPED}/liblua.a: ${lua_libraries} | $(BUILD_DIR_ESCAPED)
 ifeq ($(ONLY_ACTIVE_ARCH),NO)
 		@echo "\n${bold}CREATING lua UNIVERSAL LIBRARY...${normal}"
 		lipo \
@@ -188,7 +191,7 @@ ${BUILD_DIR_ESCAPED}/libhighlight-x86_64.a:
 	fi
 	
 	${MAKE} \
-		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_arm64-$(CONFIGURATION) \
+		BUILD_DIR=${BUILD_DIR_ESCAPED}/build_x86_64-$(CONFIGURATION) \
 		LUA_CFLAGS="-I$(CURRENT_DIR)/$(LUA_DIR)/src" \
 		LUA_LIBS="-L$(BUILD_DIR_ESCAPED) -llua -lm" \
 		CFLAGS="${CFLAGS} ${CFLAGS_x86_64}" \

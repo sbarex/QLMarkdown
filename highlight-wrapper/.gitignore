@@ -8,3 +8,6 @@ build/*
 **/.deps/*
 **/*.o
 **/*.d
+
+lua-5.5.1/src/lua
+lua-5.5.1/src/luac
