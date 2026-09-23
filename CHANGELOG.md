@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.5.5 (57)
+Bugfix:
+- Fix a regression on the Quick Look preview.
+
+
 ### 1.5.5 (56)
 
 New Features:
@@ -9,10 +14,10 @@ New Features:
     - Validation for opening external links on the main App.
     - YAML header is now sanitized before rendering.
     - Fixed `markdown` fenced blocks.
-- Highlight updated to release 4.2.1.
-- Lua updated to release 5.5.1.
-- Sparkle updated to release 2.10.0.
-- SwiftSoup updated to release 2.13.9.
+- `Highlight` updated to release 4.2.1.
+- `Lua` updated to release 5.5.1.
+- `Sparkle` updated to release 2.10.0.
+- `SwiftSoup` updated to release 2.13.9.
 - Dropped pre macOS 12.0 legacy code.
 
 
