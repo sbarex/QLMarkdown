@@ -10,7 +10,7 @@ import Quartz
 import OSLog
 
 
-class PreviewViewController: QLPreviewProvider, QLPreviewingController {
+class PreviewProvider: QLPreviewProvider, QLPreviewingController {
     /// Size suggested to Quick Look. Reduced to fit the screen.
     static var previewContentSize: CGSize {
         let size = Settings.shared.qlWindowSize
