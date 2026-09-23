@@ -759,6 +759,34 @@ input[type="checkbox"] {
     height: auto;
 }
 
+.markdown-body table.yaml-header {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.markdown-body table.yaml-header tr.yaml-field {
+    
+}
+
+.markdown-body table.yaml-header tr.yaml-field {
+    background-color: var(--background);
+    border-top: 1px solid var(--tr-border); /* unused variable */
+}
+
+.markdown-body table.yaml-header tr.yaml-field1:nth-child(2n) {
+    background-color: var(--tr-alt-background);
+}
+
+.markdown-body table.yaml-header tr.yaml-field td.yaml-key {
+    font-weight: bold;
+    text-align: right;
+    min-width: 10em;
+}
+
+.markdown-body table.yaml-header tr.yaml-field td.yaml-value {
+    width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
     .mermaid {
         background-color: transparent;

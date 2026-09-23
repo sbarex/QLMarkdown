@@ -1242,48 +1242,37 @@ MathJax = {
             return ""
         }
         
-        var s = "<table>"
+        let whiteList = try! Whitelist.relaxed()
+        
+        var s = "<table class='yaml-header'>\n"
         for element in yaml {
-            let key: String = "<strong>\(element.key)</strong>"
-            /*
-            do {
-                key = try self.render(text: "**\(element.key)**", filename: "", baseDir: "")
-            } catch {
-                key = "<strong>\(element.key)</strong>"
-            }*/
-            s += "<tr><td align='right'>\(key)</td><td>"
+            s += "<tr class='yaml-field'>\n\t<td class='yaml-key'>"
+            if let k = element.key as? String, let key = try? SwiftSoup.clean(k, whiteList) {
+                s += key
+            } else {
+                
+            }
+            s += "</td>\n\t<td class='yaml-value'>"
+            
             if let t = element.value as? [(key: AnyHashable, value: Any)] {
                 s += renderYaml(t)
             } else if let t = element.value as? [Any] {
                 s += "<ul>\n" + t.map({ v in
-                    let s: String = "\(v)"
-                    /*
-                    if let t = v as? String {
-                        do {
-                            s = try self.render(text: t, filename: "", baseDir: "")
-                        } catch {
-                            s = t
-                        }
+                    if let v1 = v as? String, let s = try? SwiftSoup.clean(v1, whiteList), !s.isEmpty {
+                        return "<li>\(s)</li>\n"
                     } else {
-                        s = "\(v)"
-                    }*/
-                    return "<li>\(s)</li>"
-                }).joined(separator: "\n")
-            } else if let t = element.value as? String {
+                        return ""
+                    }
+                }).joined()
+                s += "</ul>\n"
+            } else if let v = element.value as? String, let t = try? SwiftSoup.clean(v, whiteList) {
                 s += t
-                /*
-                do {
-                    s += try self.render(text: t, filename: "", baseDir: "")
-                } catch {
-                    s += t.replacingOccurrences(of: "|", with: #"\|"#)
-                }
-                */
-            } else {
-                s += "\(element.value)"
+            } else if let v = try? SwiftSoup.clean("\(element.value)", whiteList) {
+                s += v
             }
-            s += "</td></tr>\n"
+            s += "</td>\n</tr>\n"
         }
-        s += "</table>"
+        s += "</table>\n"
         return s
     }
 }
