@@ -112,8 +112,6 @@ class Settings: Codable {
         case debug
         case renderAsCode
         
-        case openInlineLink
-        
         case qlWindowWidth
         case qlWindowHeight
         
@@ -368,8 +366,6 @@ class Settings: Codable {
     var debug: Bool = false
     var renderAsCode: Bool = false
     
-    var openInlineLink: Bool = false
-
     /// Quick Look window width.
     var qlWindowWidth: Int? = nil
     /// Quick Look window height.
@@ -463,9 +459,7 @@ class Settings: Codable {
         self.validateUTFOption = Settings.decode(from: container, forKey: .validateUTFOption, defaultValue: Settings.factorySettings.validateUTFOption)
         self.debug = Settings.decode(from: container, forKey: .debug, defaultValue: Settings.factorySettings.debug)
         self.renderAsCode = Settings.decode(from: container, forKey: .renderAsCode, defaultValue: Settings.factorySettings.renderAsCode)
-        
-        self.openInlineLink = Settings.decode(from: container, forKey: .openInlineLink, defaultValue: Settings.factorySettings.openInlineLink)
-        
+                
         self.qlWindowWidth = Settings.decode(from: container, forKey: .qlWindowWidth, defaultValue: Settings.factorySettings.qlWindowWidth)
         self.qlWindowHeight = Settings.decode(from: container, forKey: .qlWindowHeight, defaultValue: Settings.factorySettings.qlWindowHeight)
         
@@ -540,8 +534,6 @@ class Settings: Codable {
         try container.encode(self.debug, forKey: .debug)
         try container.encode(self.renderAsCode, forKey: .renderAsCode)
         
-        try container.encode(self.openInlineLink, forKey: .openInlineLink)
-
         try container.encode(self.qlWindowWidth, forKey: .qlWindowWidth)
         try container.encode(self.qlWindowHeight, forKey: .qlWindowHeight)
         
@@ -630,9 +622,7 @@ class Settings: Codable {
         self.validateUTFOption = s.validateUTFOption
         self.debug = s.debug
         self.renderAsCode = s.renderAsCode
-        
-        self.openInlineLink = s.openInlineLink
-        
+                
         self.qlWindowWidth = s.qlWindowWidth
         self.qlWindowHeight = s.qlWindowHeight
         
@@ -761,10 +751,6 @@ class Settings: Codable {
         }
         if let opt = defaultsDomain[Self.CodingKeys.renderAsCode.rawValue] as? Bool {
             renderAsCode = opt
-        }
-        
-        if let opt = defaultsDomain[Self.CodingKeys.openInlineLink.rawValue] as? Bool {
-            openInlineLink = opt
         }
         
         if let opt = defaultsDomain[Self.CodingKeys.qlWindowWidth.rawValue] as? Int, opt > 0 {

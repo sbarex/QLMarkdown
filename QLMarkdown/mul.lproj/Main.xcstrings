@@ -1269,30 +1269,6 @@
         }
       }
     },
-    "DHz-Hl-maQ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"External link:\"; ObjectID = \"DHz-Hl-maQ\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "External link:"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enlace externo:"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Link esterni:"
-          }
-        }
-      }
-    },
     "dMs-cI-mzQ.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"File\"; ObjectID = \"dMs-cI-mzQ\";",
       "extractionState" : "extracted_with_value",
@@ -3468,30 +3444,6 @@
       },
       "shouldTranslate" : false
     },
-    "rt9-6q-gO1.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Open in default browser\"; ObjectID = \"rt9-6q-gO1\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Open in default browser"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir en navegador predeterminado"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apri nel browser predefinito"
-          }
-        }
-      }
-    },
     "Ruw-6m-B2m.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Select All\"; ObjectID = \"Ruw-6m-B2m\";",
       "extractionState" : "extracted_with_value",
@@ -4738,30 +4690,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Controlla adesso…"
-          }
-        }
-      }
-    },
-    "yzH-Mt-sgy.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"View in Quick Look window\"; ObjectID = \"yzH-Mt-sgy\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "View in Quick Look window"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ver en ventana de Quick Look"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visualizza nella finestra di anteprima Quick Look"
           }
         }
       }

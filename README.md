@@ -198,7 +198,6 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Wikilinks|Render `[[Page Name]]` and `[[Target\|Display]]` wikilinks as links.|
 |YAML header|Enable the [YAML header extension](#YAML-header).|
 
-Tou can also choose if open external link inside the Quick Look preview window or in the default browser.
 
 The `Quick Look window` option allow you to suggest a custom size for the content area of the Quick Look window. macOS does not always honor this setting. With `Auto` the size is derived from the [content column](#themes) of the theme in use (960 x 1000 points with the predefined theme, reduced to fit the screen). In `Render as code` mode the window is wider.
 > _Use with caution on macOS before version 12 Monterey_. 

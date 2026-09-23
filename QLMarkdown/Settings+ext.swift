@@ -199,8 +199,6 @@ extension Settings {
         defaults.set(debug, forKey: Self.CodingKeys.debug.rawValue)
         defaults.set(renderAsCode, forKey: Self.CodingKeys.renderAsCode.rawValue)
         
-        defaults.set(openInlineLink, forKey: Self.CodingKeys.openInlineLink.rawValue)
-        
         defaults.set(self.qlWindowWidth ?? 0, forKey: Self.CodingKeys.qlWindowWidth.rawValue)
         defaults.set(self.qlWindowHeight ?? 0, forKey: Self.CodingKeys.qlWindowHeight.rawValue)
 

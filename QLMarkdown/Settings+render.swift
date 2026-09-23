@@ -781,8 +781,6 @@ table.debug td {
         }
         html_debug += "</td></tr>\n"
         
-        html_debug += "<tr><td>link</td><td>" + (self.openInlineLink ? "open inline" : "open in standard browser") + "</td></tr>\n"
-        
         html_debug += "</table>\n"
         
         return html_debug

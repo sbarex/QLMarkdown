@@ -54,7 +54,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.quicklook.preview</string>
 		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).PreviewViewController</string>
+		<string>$(PRODUCT_MODULE_NAME).PreviewProvider</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Developed by SBAREX 2020 - 2026.</string>

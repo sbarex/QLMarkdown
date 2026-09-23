@@ -530,7 +530,6 @@ class ViewController: NSViewController {
     @IBOutlet weak var unsafeButton: NSButton!
     
     @IBOutlet weak var progressIndicator: NSProgressIndicator!
-    @IBOutlet weak var inlineLinkPopup: NSPopUpButton!
     
     @IBOutlet weak var appearanceButton: NSButton!
     
@@ -773,10 +772,8 @@ class ViewController: NSViewController {
         panel.allowsMultipleSelection = false
         if #available(macOS 27, *) {
             panel.allowedContentTypes = [.markdown]
-        } else if #available(macOS 11, *) {
-            panel.allowedContentTypes = [UTType(filenameExtension: "md") ?? .data]
         } else {
-            panel.allowedFileTypes = ["md"]
+            panel.allowedContentTypes = [UTType(filenameExtension: "md") ?? .data]
         }
         panel.message = NSLocalizedString("Select a Markdown file to preview", comment: "")
         
@@ -793,23 +790,19 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        if #available(macOS 11, *) {
-            var types: [UTType] = []
-            if #available(macOS 27, *) {
-                types.append(.markdown)
-            } else {
-                types.append(UTType(filenameExtension: "md") ?? .data)
-            }
-            if let t = UTType(filenameExtension: "rmd") {
-                types.append(t)
-            }
-            if let t = UTType(filenameExtension: "qmd") {
-                types.append(t)
-            }
-            savePanel.allowedContentTypes = types
+        var types: [UTType] = []
+        if #available(macOS 27, *) {
+            types.append(.markdown)
         } else {
-            savePanel.allowedFileTypes = ["md"]
+            types.append(UTType(filenameExtension: "md") ?? .data)
         }
+        if let t = UTType(filenameExtension: "rmd") {
+            types.append(t)
+        }
+        if let t = UTType(filenameExtension: "qmd") {
+            types.append(t)
+        }
+        savePanel.allowedContentTypes = types
         
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = self.markdown_file?.lastPathComponent ?? "markdown.md"
@@ -922,11 +915,7 @@ class ViewController: NSViewController {
         let savePanel = NSSavePanel()
         savePanel.canCreateDirectories = true
         savePanel.showsTagField = false
-        if #available(macOS 11, *) {
-            savePanel.allowedContentTypes = [.html]
-        } else {
-            savePanel.allowedFileTypes = ["md"]
-        }
+        savePanel.allowedContentTypes = [.html]
         savePanel.isExtensionHidden = false
         savePanel.nameFieldStringValue = "markdown.html"
         savePanel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.modalPanelWindow)))
@@ -1103,14 +1092,10 @@ document.addEventListener('scroll', function(e) {
         panel.canChooseDirectories = false
         panel.canCreateDirectories = false
         panel.allowsMultipleSelection = false
-        if #available(macOS 11, *) {
-            if #available(macOS 15, *) {
-                panel.allowedContentTypes = [.css]
-            } else {
-                panel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
-            }
+        if #available(macOS 15, *) {
+            panel.allowedContentTypes = [.css]
         } else {
-            panel.allowedFileTypes = ["css"]
+            panel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
         }
         panel.message = NSLocalizedString("Select a custom CSS style", comment: "")
         
@@ -1170,14 +1155,10 @@ document.addEventListener('scroll', function(e) {
                 let savePanel = NSSavePanel()
                 savePanel.canCreateDirectories = true
                 savePanel.showsTagField = false
-                if #available(macOS 11, *) {
-                    if #available(macOS 15, *) {
-                        savePanel.allowedContentTypes = [.css]
-                    } else {
-                        savePanel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
-                    }
+                if #available(macOS 15, *) {
+                    savePanel.allowedContentTypes = [.css]
                 } else {
-                    savePanel.allowedFileTypes = ["css"]
+                    savePanel.allowedContentTypes = [UTType(filenameExtension: "css") ?? .data]
                 }
                 savePanel.isExtensionHidden = false
                 savePanel.nameFieldStringValue = "default.css"
@@ -1418,8 +1399,6 @@ document.addEventListener('scroll', function(e) {
         
         self.isAboutVisible = settings.about
         
-        inlineLinkPopup.selectItem(at: settings.openInlineLink ? 0 : 1)
-        
         appearancePopup.selectItem(withTag: settings.appearance.rawValue)
         
         isDirty = false
@@ -1486,8 +1465,6 @@ document.addEventListener('scroll', function(e) {
         settings.baseFontSize = self.useBaseFontSize ? self.baseFontSize : 0
         settings.customCSSOverride = self.customCSSOverride
         settings.customCSS = self.customCSSFile
-        
-        settings.openInlineLink = inlineLinkPopup.indexOfSelectedItem == 0
         
         settings.about = self.isAboutVisible
         
@@ -1663,7 +1640,7 @@ extension ViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if !Settings.shared.openInlineLink, navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
+        if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url, url.scheme != "file" {
             // The document is untrusted, and WebKit reports a script-synthesized click as
             // .linkActivated too, so a link activation is not proof of a user gesture. Hand only
             // allowlisted schemes straight to the system and confirm anything else.

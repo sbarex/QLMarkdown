@@ -20,8 +20,7 @@
 		830B5B40272D68FB00378FFE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 830B5B3F272D68FB00378FFE /* SwiftSoup */; };
 		831834E6277E10150044ECDA /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 831834E5277E10150044ECDA /* Sparkle */; };
 		831A8C41258ABADA00E36182 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831A8C40258ABADA00E36182 /* Quartz.framework */; };
-		831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewViewController.swift */; };
-		831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 831A8C45258ABADA00E36182 /* PreviewViewController.xib */; };
+		831A8C44258ABADA00E36182 /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831A8C43258ABADA00E36182 /* PreviewProvider.swift */; };
 		831A8C4D258ABADA00E36182 /* Markdown QL Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		831A8C6B258ABD8900E36182 /* syntaxhighlight.c in Sources */ = {isa = PBXBuildFile; fileRef = 83598EF525818BCB004664D3 /* syntaxhighlight.c */; };
 		831A8C6E258ABD8D00E36182 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
@@ -285,11 +284,6 @@
 		83EDB9652F84262400436A14 /* libwrapper_highlight.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 83E7FEF7258FBF9F003ECF9B /* libwrapper_highlight.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		83EF951D2585367500B56FA3 /* NSColor+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83EF951C2585367500B56FA3 /* NSColor+ext.swift */; };
 		83EF95232585476800B56FA3 /* emoji.c in Sources */ = {isa = PBXBuildFile; fileRef = 83EF95222585476800B56FA3 /* emoji.c */; };
-		83F1FE53259CEEC900257DAC /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE52259CEEC900257DAC /* main.swift */; };
-		83F1FE57259CEF0100257DAC /* external_launcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE56259CEF0100257DAC /* external_launcherProtocol.swift */; };
-		83F1FE5B259CEF4300257DAC /* external_launcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE5A259CEF4300257DAC /* external_launcher.swift */; };
-		83F1FE5F259CEF6C00257DAC /* external_launcher_delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F1FE5E259CEF6C00257DAC /* external_launcher_delegate.swift */; };
-		83F1FE6F259CF03B00257DAC /* external-launcher.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		83F4B99225868A7400FC58A7 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F4B99125868A7400FC58A7 /* Settings.swift */; };
 		83F4B9962586AB9700FC58A7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 83D4B1C3258675D0000745DB /* README.md */; };
 		83F8822D2598A5C0008C5071 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F8822C2598A5C0008C5071 /* WebKit.framework */; };
@@ -466,13 +460,6 @@
 			remoteGlobalIDString = 83D9CCA027A12F3100E86BC9;
 			remoteInfo = libpcre2;
 		};
-		83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83598E5925818808004664D3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 83F1FE40259CEE7400257DAC;
-			remoteInfo = "external-launcher";
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -529,17 +516,6 @@
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83F1FE6E259CF03000257DAC /* Embed XPC Services */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
-			dstSubfolderSpec = 16;
-			files = (
-				83F1FE6F259CF03B00257DAC /* external-launcher.xpc in Embed XPC Services */,
-			);
-			name = "Embed XPC Services";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -547,8 +523,7 @@
 		376A8FF7F19F47B3AD9B463D /* alert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = alert.c; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
-		831A8C43258ABADA00E36182 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
-		831A8C46258ABADA00E36182 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PreviewViewController.xib; sourceTree = "<group>"; };
+		831A8C43258ABADA00E36182 /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
 		831A8C48258ABADA00E36182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		831A8C49258ABADA00E36182 /* QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QLExtension.entitlements; sourceTree = "<group>"; };
 		8320D58A2D1C25B1005868BD /* QLMarkdown Shortcut Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = "QLMarkdown Shortcut Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -722,12 +697,6 @@
 		83EF951C2585367500B56FA3 /* NSColor+ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSColor+ext.swift"; sourceTree = "<group>"; };
 		83EF95212585476800B56FA3 /* emoji.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = emoji.h; sourceTree = "<group>"; };
 		83EF95222585476800B56FA3 /* emoji.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = emoji.c; sourceTree = "<group>"; };
-		83F1FE41259CEE7400257DAC /* external-launcher.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = "external-launcher.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
-		83F1FE49259CEE7400257DAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83F1FE52259CEEC900257DAC /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		83F1FE56259CEF0100257DAC /* external_launcherProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcherProtocol.swift; sourceTree = "<group>"; };
-		83F1FE5A259CEF4300257DAC /* external_launcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcher.swift; sourceTree = "<group>"; };
-		83F1FE5E259CEF6C00257DAC /* external_launcher_delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = external_launcher_delegate.swift; sourceTree = "<group>"; };
 		83F4B99125868A7400FC58A7 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		83F8822C2598A5C0008C5071 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		83F88257259906C7008C5071 /* heads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = heads.h; sourceTree = "<group>"; };
@@ -810,13 +779,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83F1FE3E259CEE7400257DAC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -824,8 +786,7 @@
 			isa = PBXGroup;
 			children = (
 				831A8C48258ABADA00E36182 /* Info.plist */,
-				831A8C43258ABADA00E36182 /* PreviewViewController.swift */,
-				831A8C45258ABADA00E36182 /* PreviewViewController.xib */,
+				831A8C43258ABADA00E36182 /* PreviewProvider.swift */,
 				831A8C49258ABADA00E36182 /* QLExtension.entitlements */,
 				833A5B733052DC8400850312 /* Localizable.xcstrings */,
 			);
@@ -1015,7 +976,6 @@
 				831A8C42258ABADA00E36182 /* QLExtension */,
 				837F29172597A01F00A5F7DE /* Resources */,
 				83437972271D47DF00A5D6EA /* qlmarkdown_cli */,
-				83F1FE42259CEE7400257DAC /* external-launcher */,
 				8320D58B2D1C25B1005868BD /* Shortcut Extension */,
 				83598F0525825B8D004664D3 /* Frameworks */,
 				83598E6225818808004664D3 /* Products */,
@@ -1027,7 +987,6 @@
 			children = (
 				83598E6125818808004664D3 /* QLMarkdown.app */,
 				831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */,
-				83F1FE41259CEE7400257DAC /* external-launcher.xpc */,
 				83437971271D47DF00A5D6EA /* qlmarkdown_cli */,
 				8320D58A2D1C25B1005868BD /* QLMarkdown Shortcut Extension.appex */,
 			);
@@ -1194,18 +1153,6 @@
 			path = dependencies;
 			sourceTree = "<group>";
 		};
-		83F1FE42259CEE7400257DAC /* external-launcher */ = {
-			isa = PBXGroup;
-			children = (
-				83F1FE56259CEF0100257DAC /* external_launcherProtocol.swift */,
-				83F1FE5A259CEF4300257DAC /* external_launcher.swift */,
-				83F1FE5E259CEF6C00257DAC /* external_launcher_delegate.swift */,
-				83F1FE49259CEE7400257DAC /* Info.plist */,
-				83F1FE52259CEEC900257DAC /* main.swift */,
-			);
-			path = "external-launcher";
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
@@ -1263,7 +1210,6 @@
 				831A8C3B258ABADA00E36182 /* Sources */,
 				831A8C3C258ABADA00E36182 /* Frameworks */,
 				831A8C3D258ABADA00E36182 /* Resources */,
-				83F1FE6E259CF03000257DAC /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
@@ -1274,7 +1220,6 @@
 				830B5B44272D6D9200378FFE /* PBXTargetDependency */,
 				830B5B2F272D5B8C00378FFE /* PBXTargetDependency */,
 				836B7479259E2BA400A6A5F7 /* PBXTargetDependency */,
-				83F1FE6D259CF02900257DAC /* PBXTargetDependency */,
 				830B160C2D274F180042D876 /* PBXTargetDependency */,
 			);
 			name = "Markdown QL Extension";
@@ -1379,23 +1324,6 @@
 			productReference = 83598E6125818808004664D3 /* QLMarkdown.app */;
 			productType = "com.apple.product-type.application";
 		};
-		83F1FE40259CEE7400257DAC /* external-launcher */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 83F1FE4F259CEE7400257DAC /* Build configuration list for PBXNativeTarget "external-launcher" */;
-			buildPhases = (
-				83F1FE3D259CEE7400257DAC /* Sources */,
-				83F1FE3E259CEE7400257DAC /* Frameworks */,
-				83F1FE3F259CEE7400257DAC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "external-launcher";
-			productName = "external-launcher";
-			productReference = 83F1FE41259CEE7400257DAC /* external-launcher.xpc */;
-			productType = "com.apple.product-type.xpc-service";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1421,10 +1349,6 @@
 					};
 					83D9CCA027A12F3100E86BC9 = {
 						CreatedOnToolsVersion = 13.2;
-					};
-					83F1FE40259CEE7400257DAC = {
-						CreatedOnToolsVersion = 12.3;
-						LastSwiftMigration = 1230;
 					};
 				};
 			};
@@ -1459,7 +1383,6 @@
 				831A8C3E258ABADA00E36182 /* Markdown QL Extension */,
 				8320D5892D1C25B1005868BD /* QLMarkdown Shortcut Extension */,
 				83437970271D47DF00A5D6EA /* qlmarkdown_cli */,
-				83F1FE40259CEE7400257DAC /* external-launcher */,
 				83D9CCA027A12F3100E86BC9 /* libpcre2 */,
 				83D9CF0F27A1334800E86BC9 /* libjpcre2 */,
 				834A4F7429E9250800692964 /* cmark-headers */,
@@ -1473,7 +1396,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				830277F42C60B3B40066EBCC /* icon.png in Resources */,
-				831A8C47258ABADA00E36182 /* PreviewViewController.xib in Resources */,
 				833A5B743052DC8400850312 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1501,13 +1423,6 @@
 				83A9C2922F1D59F9005B668D /* examples in Resources */,
 				83425367305D2ACB00BC2C68 /* tex-mml-chtml.js.gz in Resources */,
 				834BBC343052AFFE00FECD4A /* Localizable.xcstrings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		83F1FE3F259CEE7400257DAC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1570,7 +1485,7 @@
 				834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */,
 				834A4F1C29E8AD8D00692964 /* cmark_ctype.c in Sources */,
 				834A4F1F29E8AD8D00692964 /* inlines.c in Sources */,
-				831A8C44258ABADA00E36182 /* PreviewViewController.swift in Sources */,
+				831A8C44258ABADA00E36182 /* PreviewProvider.swift in Sources */,
 				8376EADE27E8BD3D00AB44B8 /* Log.swift in Sources */,
 				834A4F3629E8AD8D00692964 /* plaintext.c in Sources */,
 				83327D332594087100E76CF6 /* MIMEtype.c in Sources */,
@@ -1795,17 +1710,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		83F1FE3D259CEE7400257DAC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				83F1FE5F259CEF6C00257DAC /* external_launcher_delegate.swift in Sources */,
-				83F1FE5B259CEF4300257DAC /* external_launcher.swift in Sources */,
-				83F1FE57259CEF0100257DAC /* external_launcherProtocol.swift in Sources */,
-				83F1FE53259CEEC900257DAC /* main.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1950,22 +1854,9 @@
 			target = 83D9CCA027A12F3100E86BC9 /* libpcre2 */;
 			targetProxy = 83D9CF1727A1336E00E86BC9 /* PBXContainerItemProxy */;
 		};
-		83F1FE6D259CF02900257DAC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 83F1FE40259CEE7400257DAC /* external-launcher */;
-			targetProxy = 83F1FE6C259CF02900257DAC /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		831A8C45258ABADA00E36182 /* PreviewViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				831A8C46258ABADA00E36182 /* Base */,
-			);
-			name = PreviewViewController.xib;
-			sourceTree = "<group>";
-		};
 		83598E6A2581880A004664D3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1988,7 +1879,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2019,7 +1910,7 @@
 					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2046,7 +1937,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2077,7 +1968,7 @@
 					"$(BUILT_PRODUCTS_DIR)/highlight",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2104,7 +1995,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2141,7 +2032,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.QLMarkdown.Shortcut-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2170,7 +2061,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = NO;
@@ -2206,7 +2097,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.2;
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.QLMarkdown.Shortcut-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2513,7 +2404,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_APP_SANDBOX = YES;
@@ -2555,7 +2446,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2585,7 +2476,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 55;
+				CURRENT_PROJECT_VERSION = 56;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = D5VMCLD3ZK;
 				ENABLE_APP_SANDBOX = YES;
@@ -2627,7 +2518,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = org.sbarex.QLMarkdown;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2705,67 +2596,6 @@
 			};
 			name = Release;
 		};
-		83F1FE4D259CEE7400257DAC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = D5VMCLD3ZK;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "external-launcher/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-					"@loader_path/../../../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.qlmarkdown.external-launcher";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		83F1FE4E259CEE7400257DAC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = D5VMCLD3ZK;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "external-launcher/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-					"@loader_path/../../../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.sbarex.qlmarkdown.external-launcher";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_INTERFACE_HEADER_NAME = "";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2837,15 +2667,6 @@
 			buildConfigurations = (
 				83D9CF1127A1334800E86BC9 /* Debug */,
 				83D9CF1227A1334800E86BC9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		83F1FE4F259CEE7400257DAC /* Build configuration list for PBXNativeTarget "external-launcher" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				83F1FE4D259CEE7400257DAC /* Debug */,
-				83F1FE4E259CEE7400257DAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
