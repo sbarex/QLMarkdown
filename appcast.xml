@@ -4,6 +4,45 @@
         <title>QLMarkdown</title>
 
         <item>
+            <title>1.5.5</title>
+            <pubDate>mer, 23 set 2026 13:06:00 +0100</pubDate>
+            <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/sbarex/QLMarkdown/releases/download/1.5.5/QLMarkdown.zip" 
+                       sparkle:shortVersionString="1.5.5" sparkle:version="56" 
+                       sparkle:edSignature="U4WbLjsoe1DgtxGH+WDJmCBQUDY081yaGGu4Nailq0ln9COeGFe2oN05HTr69MqVFb6FE/nYOFrbmg1ppfLhCA==" length="24478600"
+                       />
+            <description><![CDATA[
+                <h2>Release 1.5.5 (56)</h2>
+                <p align="center">If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+
+                <p><strong>This release require macOS 12.0 or later.</strong></p>
+                
+                <p>New Features:</p>
+                <ul>
+                    <li><strong>Security fix</strong>: prevent of loading/execute unauthorized code (thanks to @ryangravette-bsd):
+                        <ul>
+                            <li>Prevent the execution of injected scripts or custom events.</li>
+                            <li>Image files are identified by their magic code, not by their extension.</li>
+                            <li>Validation for opening external links on the main App.</li>
+                            <li>YAML header is now sanitized before rendering.</li>
+                            <li>Fixed <code>markdown</code> fenced blocks.</li>
+                        </ul>
+                    </li>
+                    <li><code>Highlight</code> updated to release 4.2.1.</li>
+                    <li><code>Lua</code> updated to release 5.5.1.</li>
+                    <li><code>Sparkle</code> updated to release 2.10.0.</li>
+                    <li><code>SwiftSoup</code> updated to release 2.13.9.</li>
+                    <li>Dropped pre macOS 12.0 legacy code.</li>
+                </ul>
+                
+                <p>If you like this app, <a href="https://www.buymeacoffee.com/sbarex">buy me a coffee!</a></p>
+                
+                <p><a href="https://github.com/sbarex/QLMarkdown/blob/master/CHANGELOG.md">See the complete changelog.</a></p>
+            ]]>
+            </description>
+        </item>
+
+        <item>
             <title>1.5.4</title>
             <pubDate>ven, 18 set 2026 11:58:00 +0100</pubDate>
             <sparkle:minimumSystemVersion>12.0</sparkle:minimumSystemVersion>
