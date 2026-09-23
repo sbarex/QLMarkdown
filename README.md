@@ -439,7 +439,10 @@ The compilation of `cmark-gfm` require `cmake` (`brew install cmake`).
 **This application does not collect any information about your system or the files it processes.**
 
 To allow the Quick Look preview of local images, the application and extension have a permission exception that only allows read access to the entire system.
-If enabled, the Math and Mermaid extensions download the JS library source files via CDN.
+
+If enabled, the Math and Mermaid extensions can link the JS library source files via CDN, if you want you can embed the bundled code.
+
+The generated HTML code has a Content Security Policy (CSP) that prevent to execute any untrusted javascript code.
 
 
 
