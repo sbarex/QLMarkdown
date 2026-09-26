@@ -93,6 +93,13 @@ class ViewController: NSViewController {
             isDirty = true
         }
     }
+    
+    @objc dynamic var hashtagExtension: Bool = Settings.factorySettings.hashtagExtension {
+        didSet {
+            guard oldValue != hashtagExtension else { return }
+            isDirty = true
+        }
+    }
 
     @objc dynamic var definitionListExtension: Bool = Settings.factorySettings.definitionListExtension {
         didSet {
@@ -1369,6 +1376,7 @@ document.addEventListener('scroll', function(e) {
         
         self.mentionExtension = settings.mentionExtension
         self.wikilinkExtension = settings.wikilinkExtension
+        self.hashtagExtension = settings.hashtagExtension
         self.definitionListExtension = settings.definitionListExtension
         self.syntaxHighlightExtension = settings.syntaxHighlightExtension
         
@@ -1436,6 +1444,7 @@ document.addEventListener('scroll', function(e) {
         settings.mermaidExtension = self.mermaidExtension ? (self.mermaidExtensionEmbed ? .embed : .link) : .disabled
         settings.mentionExtension = self.mentionExtension
         settings.wikilinkExtension = self.wikilinkExtension
+        settings.hashtagExtension = self.hashtagExtension
         settings.definitionListExtension = self.definitionListExtension
 
         settings.emojiExtension = self.emojiExtension ? (self.emojiImageOption ? .images : .font) : .disabled

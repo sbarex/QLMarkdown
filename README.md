@@ -95,6 +95,7 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - `Definition list`.
 - `GitHub alert`: GitHub-style alerts.
 - [`Emoji`](#emoji): translate the emoji shortcodes like `:smile:` to :smile:.
+- `Hashtags`.
 - [`Heads anchors`](#heads-anchors): create anchors for the heads.
 - `Highlight`: highlight the text contained between the markers `==`.
 - [`Inline local images`](#inline-local-images): embed the image files inside the formatted output (required for the Quick Look preview).
@@ -182,6 +183,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Definition list|Render definition lists (a term line followed by `: description` lines).|
 |GitHub alert|GitHub-style alerts (`[!NOTE]`, `[!TIP]`, `[!IMPORTANT]`, `[!WARNING]`, `[!CAUTION]`) rendered as colored callouts.|
 |GitHub mentions|Translate mentions to link to the GitHub account.|
+|Hashtags|Render `#tag` and nested `#area/topic` hashtags as tags. A tag needs a character that is not a digit, so `#123` stays plain text.|
 |<a name="heads-anchors"></a>Heads anchors|Create anchors for the heads to use as cross internal reference. Each anchor is named with the lowercased caption, stripped of any punctuation marks (except the dash and the underscore) and each space replaced with a dash (`-`). UTF8 character encoding is supported.|
 |Highlight|Highlight the text contained between the markers `==`.|
 |Inline local images|Enable the [Inline local images extension](#inline-local-images).|
@@ -377,6 +379,7 @@ MARKDOWN EXTENSIONS:
   --sub <on|off>          Format subscript characters inside `~` markers. (values: on, off)
   --sup <on|off>          Format superscript characters inside `^` markers. (values: on, off)
   --wikilink <on|off>     Render [[wikilinks]] as links. (values: on, off)
+  --hashtag <on|off>      Render #hashtags as tags. (values: on, off)
   --yaml <yaml>           Render the yaml header.
         rmd               - enabled only for .rmd and .qmd files
         all               - enabled for all files

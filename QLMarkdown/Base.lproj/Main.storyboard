@@ -1655,7 +1655,23 @@
                                                                 </connections>
                                                             </button>
                                                         </gridCell>
-                                                        <gridCell row="dEf-Li-st0" column="EM0-Js-ao5" id="dEf-Li-st9"/>
+                                                        <gridCell row="dEf-Li-st0" column="EM0-Js-ao5" id="dEf-Li-st9">
+                                                            <button key="contentView" toolTip="Render #tag and nested #area/topic hashtags as tags." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hSt-Ag-bt1">
+                                                                <rect key="frame" x="657" y="0.0" width="81" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Hashtags" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="hSt-Ag-bc1">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="hSt-Ag-bn1">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.hashtagExtension" id="hSt-Ag-bv1"/>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
                                                     </gridCells>
                                                 </gridView>
                                                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ccb-oe-cYh">
