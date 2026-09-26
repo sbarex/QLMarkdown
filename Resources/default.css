@@ -23,6 +23,8 @@
   --frame-color: #242528;
   --mention-color: #242528;
   --wikilink-color: #8250df;
+  --hashtag-color: #0969da;
+  --hashtag-background: #ddf4ff;
   --email-toggle-color: #4b4d58; /* unused variable */
   --email-toggle-background: #e3e4e8; /* unused variable */
   --email-quoted-color: #6a6d7c; /* unused variable */
@@ -83,6 +85,8 @@
   --frame-color: #242528;
   --mention-color: #242528;
   --wikilink-color: #ab7df8;
+  --hashtag-color: #58a6ff;
+  --hashtag-background: rgba(56, 139, 253, 0.15);
   --email-toggle-color: #4b4d58;
   --email-toggle-background: #e3e4e8;
   --email-quoted-color: #6a6d7c;
@@ -195,6 +199,13 @@ a:hover {
 
 .wikilink {
   color: var(--wikilink-color);
+}
+
+.hashtag {
+  color: var(--hashtag-color);
+  background-color: var(--hashtag-background);
+  border-radius: 0.5em;
+  padding: 0 0.4em;
 }
 
 details summary {

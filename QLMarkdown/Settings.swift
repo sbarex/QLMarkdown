@@ -99,6 +99,7 @@ class Settings: Codable {
         case tagFilterExtension
         case taskListExtension
         case wikilinkExtension
+        case hashtagExtension
         case yamlExtension
         
         case checkboxExtension
@@ -352,6 +353,7 @@ class Settings: Codable {
     var tagFilterExtension: Bool = true
     var taskListExtension: Bool = true
     var wikilinkExtension: Bool = false
+    var hashtagExtension: Bool = false
     var yamlExtension: YamlMode = .allFiles
     
     var checkboxExtension: Bool = false
@@ -447,6 +449,7 @@ class Settings: Codable {
         self.tagFilterExtension = Settings.decode(from: container, forKey: .tagFilterExtension, defaultValue: Settings.factorySettings.tagFilterExtension)
         self.taskListExtension = Settings.decode(from: container, forKey: .taskListExtension, defaultValue: Settings.factorySettings.taskListExtension)
         self.wikilinkExtension = Settings.decode(from: container, forKey:.wikilinkExtension, defaultValue: Settings.factorySettings.wikilinkExtension)
+        self.hashtagExtension = Settings.decode(from: container, forKey: .hashtagExtension, defaultValue: Settings.factorySettings.hashtagExtension)
         self.yamlExtension = Settings.decode(from: container, forKey: .yamlExtension, defaultValue: Settings.factorySettings.yamlExtension)
         
         self.checkboxExtension = Settings.decode(from: container, forKey:.checkboxExtension, defaultValue: Settings.factorySettings.checkboxExtension)
@@ -521,6 +524,7 @@ class Settings: Codable {
         try container.encode(self.tagFilterExtension, forKey: .tagFilterExtension)
         try container.encode(self.taskListExtension, forKey: .taskListExtension)
         try container.encode(self.wikilinkExtension, forKey: .wikilinkExtension)
+        try container.encode(self.hashtagExtension, forKey: .hashtagExtension)
         try container.encode(self.yamlExtension, forKey: .yamlExtension)
     
         try container.encode(self.checkboxExtension, forKey: .checkboxExtension)
@@ -610,6 +614,7 @@ class Settings: Codable {
         self.tagFilterExtension = s.tagFilterExtension
         self.taskListExtension = s.taskListExtension
         self.wikilinkExtension = s.wikilinkExtension
+        self.hashtagExtension = s.hashtagExtension
         self.yamlExtension = s.yamlExtension
         
         self.checkboxExtension = s.checkboxExtension
@@ -719,6 +724,9 @@ class Settings: Codable {
         }
         if let ext = defaultsDomain[Self.CodingKeys.wikilinkExtension.rawValue] as? Bool {
             wikilinkExtension = ext
+        }
+        if let ext = defaultsDomain[Self.CodingKeys.hashtagExtension.rawValue] as? Bool {
+            hashtagExtension = ext
         }
         if let n = defaultsDomain[Self.CodingKeys.yamlExtension.rawValue] as? Int, let ext = YamlMode(rawValue: n) {
             yamlExtension = ext

@@ -215,6 +215,15 @@ extension Settings {
             }
         }
 
+        if self.hashtagExtension {
+            if let ext = cmark_find_syntax_extension("hashtag") {
+                cmark_parser_attach_syntax_extension(parser, ext)
+                os_log("Enabled markdown `hashtag` extension.", log: OSLog.rendering, type: .debug)
+            } else {
+                os_log("Could not enable markdown `hashtag` extension!", log: OSLog.rendering, type: .error)
+            }
+        }
+
         if self.headsExtension {
             if let ext = cmark_find_syntax_extension("heads") {
                 cmark_parser_attach_syntax_extension(parser, ext)
@@ -683,6 +692,14 @@ table.debug td {
         html_debug += "<tr><td>wikilink extension</td><td>"
         if self.wikilinkExtension {
             html_debug += "on " + (cmark_find_syntax_extension("wikilink") == nil ? " (NOT AVAILABLE" : "")
+        } else {
+            html_debug += "off"
+        }
+        html_debug += "</td></tr>\n"
+
+        html_debug += "<tr><td>hashtag extension</td><td>"
+        if self.hashtagExtension {
+            html_debug += "on " + (cmark_find_syntax_extension("hashtag") == nil ? " (NOT AVAILABLE" : "")
         } else {
             html_debug += "off"
         }

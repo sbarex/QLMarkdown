@@ -129,6 +129,9 @@ struct MdToHtml_Extension: AppIntent {
     @Parameter(title: "Wikilinks", default: OptionalBoolEnum.predefined)
     var wikilinkExtension: OptionalBoolEnum
     
+    @Parameter(title: "Hashtags", default: OptionalBoolEnum.predefined)
+    var hashtagExtension: OptionalBoolEnum
+    
     @Parameter(title: "YAML header", default: YamlOptionalEnum.predefined)
     var yamlExtension: YamlOptionalEnum
     
@@ -171,6 +174,7 @@ struct MdToHtml_Extension: AppIntent {
         tagFilter.updateValue(state: &settings.tagFilterExtension)
         taskExtension.updateValue(state: &settings.taskListExtension)
         wikilinkExtension.updateValue(state: &settings.wikilinkExtension)
+        hashtagExtension.updateValue(state: &settings.hashtagExtension)
         yamlExtension.updateValue(state: &settings.yamlExtension)
         
         settings.sanitize()
