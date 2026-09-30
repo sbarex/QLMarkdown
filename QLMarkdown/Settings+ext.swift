@@ -186,6 +186,7 @@ extension Settings {
         defaults.set(tagFilterExtension, forKey: Self.CodingKeys.tagFilterExtension.rawValue)
         defaults.set(taskListExtension, forKey: Self.CodingKeys.taskListExtension.rawValue)
         defaults.set(wikilinkExtension, forKey: Self.CodingKeys.wikilinkExtension.rawValue)
+        defaults.set(hashtagExtension, forKey: Self.CodingKeys.hashtagExtension.rawValue)
         defaults.set(yamlExtension.rawValue, forKey: Self.CodingKeys.yamlExtension.rawValue)
         
         defaults.set(checkboxExtension, forKey: Self.CodingKeys.checkboxExtension.rawValue)

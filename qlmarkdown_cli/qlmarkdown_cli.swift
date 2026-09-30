@@ -200,6 +200,9 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Render [[wikilinks]] as links.", valueName: "on|off"))
     var wikilink: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Render #hashtags as tags.", valueName: "on|off"))
+    var hashtag: BoolArgumentEnum? = nil
+    
     
     @Option(help: "Render the yaml header.")
     var yaml: YamlArgumentEnum? = nil
@@ -331,6 +334,9 @@ struct QLMarkdownCLI: ParsableCommand {
         if let o = extensions.wikilink {
             settings.wikilinkExtension = o == .on
         }
+        if let o = extensions.hashtag {
+            settings.hashtagExtension = o == .on
+        }
         if let o = extensions.headsAnchor {
             settings.headsExtension = o == .on
         }
@@ -449,6 +455,7 @@ struct QLMarkdownCLI: ParsableCommand {
         }
         print("    --github-mentions: \(settings.mentionExtension ? "on" : "off")")
         print("    --wikilink: \(settings.wikilinkExtension ? "on" : "off")")
+        print("    --hashtag: \(settings.hashtagExtension ? "on" : "off")")
         print("    --heads-anchor: \(settings.headsExtension ? "on" : "off")")
         print("    --admonition: \(settings.admonitionExtension ? "on" : "off")")
         print("    --definition-list: \(settings.definitionListExtension ? "on" : "off")")

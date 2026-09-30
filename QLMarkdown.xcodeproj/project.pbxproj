@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0342FC81767440D68CFDD7B4 /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
+		C4D527C5C4B7C8ABC56B80E0 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		138DFA4523EA4D8DA48F233D /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
+		E698C0D39AE7F2ACC2EA37C7 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		4034D2FA758A4624A85FE826 /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		65D0637D19484B8CAF9BA328 /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		7273677933E44FAD8B3EEA1D /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
+		DDC62ADAA448F849BDF4C108 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		830277F42C60B3B40066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
 		830277F52C60B3E20066EBCC /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
 		830277F72C60E48F0066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
@@ -299,6 +302,7 @@
 		B8E64117F8D84B61BC777EDF /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		C4C0544E70714CFDB88BD53D /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		CB9185D831D741DCB49AF8D3 /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
+		395D747533D961405F225806 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		DEF1000000000000000000C1 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		DEF1000000000000000000C2 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		DEF1000000000000000000C3 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
@@ -520,6 +524,7 @@
 
 /* Begin PBXFileReference section */
 		1DDD0092C9DF487BBB99BB1D /* wikilink.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wikilink.c; sourceTree = "<group>"; };
+		90F0AF38EA81F6BDFEFD4736 /* hashtag.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hashtag.c; sourceTree = "<group>"; };
 		376A8FF7F19F47B3AD9B463D /* alert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = alert.c; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -704,6 +709,7 @@
 		83F8825C25991BFC008C5071 /* heads_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = heads_utils.cpp; sourceTree = "<group>"; };
 		83F8825D25991BFC008C5071 /* heads_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = heads_utils.hpp; sourceTree = "<group>"; };
 		8C0194F6D1944DC681276B11 /* wikilink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikilink.h; sourceTree = "<group>"; };
+		9DF303267F91BA199358B93D /* hashtag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hashtag.h; sourceTree = "<group>"; };
 		ADD0000000000000000000AA /* admonition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = admonition.h; sourceTree = "<group>"; };
 		ADD0000000000000000000BB /* admonition.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = admonition.c; sourceTree = "<group>"; };
 		B0A7BA4039614C61A365D9CD /* alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
@@ -850,7 +856,9 @@
 				838109C1258403CA000AFE3C /* mention.h */,
 				838109C2258403CA000AFE3C /* mention.c */,
 				8C0194F6D1944DC681276B11 /* wikilink.h */,
+				9DF303267F91BA199358B93D /* hashtag.h */,
 				1DDD0092C9DF487BBB99BB1D /* wikilink.c */,
+				90F0AF38EA81F6BDFEFD4736 /* hashtag.c */,
 				83CF71CC2C60023E0066A195 /* sup_ext.h */,
 				83CF71CD2C60023E0066A195 /* sup_ext.c */,
 				83CF71D12C6005370066A195 /* sub_ext.h */,
@@ -1480,6 +1488,7 @@
 				834A4F1929E8AD8D00692964 /* blocks.c in Sources */,
 				831A8C71258ABD9300E36182 /* mention.c in Sources */,
 				7273677933E44FAD8B3EEA1D /* wikilink.c in Sources */,
+				DDC62ADAA448F849BDF4C108 /* hashtag.c in Sources */,
 				836B747E259E2D7B00A6A5F7 /* AboutViewController.swift in Sources */,
 				835886B429E960050088DF7D /* math_ext.c in Sources */,
 				834CAB9D2593650900673002 /* emoji_utils.cpp in Sources */,
@@ -1542,6 +1551,7 @@
 				8320D5E42D1C3AA7005868BD /* syntaxhighlight.c in Sources */,
 				8320D5E52D1C3AA7005868BD /* mention.c in Sources */,
 				138DFA4523EA4D8DA48F233D /* wikilink.c in Sources */,
+				E698C0D39AE7F2ACC2EA37C7 /* hashtag.c in Sources */,
 				8320D5E62D1C3AA7005868BD /* checkbox.c in Sources */,
 				8320D5E72D1C3AA7005868BD /* math_ext.c in Sources */,
 				8320D5E82D1C3AA7005868BD /* extra-extensions.c in Sources */,
@@ -1605,6 +1615,7 @@
 				834A4EF929E8AD8C00692964 /* table.c in Sources */,
 				83437987271D4A1900A5D6EA /* mention.c in Sources */,
 				CB9185D831D741DCB49AF8D3 /* wikilink.c in Sources */,
+				395D747533D961405F225806 /* hashtag.c in Sources */,
 				834A4F1429E8AD8C00692964 /* man.c in Sources */,
 				834A4F6529E8AD8E00692964 /* houdini_html_u.c in Sources */,
 				834A4F0C29E8AD8C00692964 /* xml.c in Sources */,
@@ -1706,6 +1717,7 @@
 				834A4F8229E92AE800692964 /* extra-extensions.c in Sources */,
 				838109C3258403CA000AFE3C /* mention.c in Sources */,
 				0342FC81767440D68CFDD7B4 /* wikilink.c in Sources */,
+				C4D527C5C4B7C8ABC56B80E0 /* hashtag.c in Sources */,
 				834A4F6629E8AD8E00692964 /* registry.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

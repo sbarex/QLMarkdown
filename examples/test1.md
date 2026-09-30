@@ -19,6 +19,7 @@ The previous block placed at the top of the document, starting with `---` and en
   - [Emoji extension](#emoji-extension)
   - [GitHub alerts extension](#github-alerts-extension)
   - [GitHub mentions extension](#github-mentions-extension)
+  - [Hashtag extension](#hashtag-extension)
   - [Heads extension](#heads-extension)
   - [Highlight extension](#highlight-extension)
   - [Inline images extension](#inline-images-extension)
@@ -84,6 +85,10 @@ With the `alert` extension a blockquote whose first line is one of `[!NOTE]`, `[
 ## GitHub mentions extension
 
 With the `mentions` extension @sbarex is rendered as a link to the GitHub account.
+
+## Hashtag extension
+
+With the `hashtag` extension #tags and nested #area/topic tags are rendered as tags, matching Obsidian and similar tools. Numbers like #123 stay plain text.
 
 ## Heads extension
 
