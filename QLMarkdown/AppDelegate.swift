@@ -155,10 +155,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
         
         var n = 0
         
+        let format_name: ((String)->String) = { name in
+            var s = name
+            if s.hasPrefix("test-") {
+                s.removeFirst(5)
+            }
+            s = s.replacingOccurrences(of: "-", with: " ")
+            
+            return s.prefix(1).uppercased() + s.dropFirst()
+        }
+        
         for file in files {
             let resourceValues = try? file.resourceValues(forKeys: [.isDirectoryKey])
             if let resourceValues, let isDirectory = resourceValues.isDirectory, isDirectory {
-                let mnu = NSMenuItem(title: file.lastPathComponent, action: nil, keyEquivalent: "")
+                let mnu = NSMenuItem(title: format_name(file.lastPathComponent), action: nil, keyEquivalent: "")
                 mnu.submenu = NSMenu()
                 if buildExampleMenu(base: file, menu: mnu.submenu!, validExtensions: validExtensions) > 0 {
                     menu.addItem(mnu)
@@ -166,7 +176,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuItemValidation {
             } else if validExtensions.contains(file.pathExtension.lowercased()) {
                 self.markdownFiles.append(file)
                 
-                let mnu = NSMenuItem(title: file.deletingPathExtension().lastPathComponent, action: #selector(self.handleExample(_:)), keyEquivalent: "")
+                let mnu = NSMenuItem(title: format_name(file.deletingPathExtension().lastPathComponent), action: #selector(self.handleExample(_:)), keyEquivalent: "")
                 mnu.tag = self.markdownFiles.count - 1
                 menu.addItem(mnu)
                 
