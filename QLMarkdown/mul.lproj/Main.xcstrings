@@ -1995,6 +1995,42 @@
       },
       "shouldTranslate" : false
     },
+    "hSt-Ag-bc1.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Hashtags\"; ObjectID = \"hSt-Ag-bc1\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Hashtags"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hashtag"
+          }
+        }
+      }
+    },
+    "hSt-Ag-bt1.ibShadowedToolTip" : {
+      "comment" : "Class = \"NSButton\"; ibShadowedToolTip = \"Render #tag and nested #area/topic hashtags as tags.\"; ObjectID = \"hSt-Ag-bt1\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Render #tag and nested #area/topic hashtags as tags."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Formatta gli hashtag del tipo #tag o #area/topic come tag."
+          }
+        }
+      }
+    },
     "HyV-fh-RgO.title" : {
       "comment" : "Class = \"NSMenu\"; title = \"View\"; ObjectID = \"HyV-fh-RgO\";",
       "extractionState" : "extracted_with_value",
