@@ -266,7 +266,6 @@ ${BUILD_DIR_ESCAPED}/libwrapper_highlight-x86_64.dylib: ${BUILD_DIR_ESCAPED}/lib
 	@echo "current dir: ${CURRENT_DIR}"
 	${CXX} \
 		${CFLAGS} ${CFLAGS_x86_64} ${CXXFLAGS} \
-		${LDFLAGS} ${LDFLAGS_x86_64} \
 		-static \
 		-c wrapper_highlight.cpp \
 		-o ${BUILD_DIR_ESCAPED}/wrapper_highlight-x86_64.o
