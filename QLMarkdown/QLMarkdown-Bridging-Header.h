@@ -11,5 +11,7 @@
 #import "../cmark-extra/extensions/inlineimage.h"
 #import "../cmark-extra/extensions/math_ext.h"
 #import "../cmark-extra/extensions/extra-extensions.h"
+#import "../cmark-extra/extensions/heads.h"
+#import "../cmark-extra/extensions/heads_utils.hpp"
 
 #import "wrapper_highlight.h"

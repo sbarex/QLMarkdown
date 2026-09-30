@@ -20,6 +20,39 @@
 
 #include <locale.h>
 
+typedef struct {
+    SlugCounter *slugs;
+} heads_settings;
+
+
+// MARK: -
+
+static heads_settings *init_settings(void ) {
+    cmark_mem *mem = cmark_get_default_mem_allocator();
+    heads_settings *settings = mem->calloc(1, sizeof(heads_settings));
+    settings->slugs = slugcounter_create();
+    
+    return settings;
+}
+
+static heads_settings *cmark_syntax_extension_heads_get_settings(cmark_syntax_extension *extension) {
+    return (heads_settings *)cmark_syntax_extension_get_private(extension);
+}
+
+static void heads_settings_release(cmark_mem *mem, void *user_data)
+{
+    if (user_data) {
+        heads_settings *settings = user_data;
+        cmark_mem *mem = cmark_get_default_mem_allocator();
+        if (settings->slugs) {
+            slugcounter_free(settings->slugs);
+            mem->free(settings->slugs);
+            settings->slugs = NULL;
+        }
+        mem->free(user_data);
+    }
+}
+
 static cmark_node *postprocess(cmark_syntax_extension *ext, cmark_parser *parser, cmark_node *root) {
     cmark_iter *iter;
     cmark_event_type ev;
@@ -67,18 +100,26 @@ static void html_render(cmark_syntax_extension *extension,
     
     cmark_strbuf *html = renderer->html;
     
+    heads_settings *settings =cmark_syntax_extension_heads_get_settings(extension);
+    
     if (ev_type == CMARK_EVENT_ENTER) {
         cmark_html_render_cr(html);
         start_heading[2] = (char)('0' + node->as.heading.level);
         cmark_strbuf_puts(html, start_heading);
         // cmark_html_render_sourcepos(node, html, options);
-        char *s = process_title((const char *)node->content.ptr);
+        char *s = slug_title((const char *)node->content.ptr);
+        
         if (s != NULL) {
-            cmark_strbuf_puts(html, " id=\"");
-            cmark_strbuf_puts(html, s);
-            cmark_strbuf_puts(html, "\"");
+            char *anchor = slugcounter_unique(settings->slugs, s);
             free(s);
+            if (anchor) {
+                cmark_strbuf_puts(html, " id=\"");
+                cmark_strbuf_puts(html, anchor);
+                cmark_strbuf_puts(html, "\"");
+                free(anchor);
+            }
         }
+        
         cmark_strbuf_putc(html, '>');
         
     } else {
@@ -92,8 +133,17 @@ static void html_render(cmark_syntax_extension *extension,
 cmark_syntax_extension *create_heads_extension(void) {
     cmark_syntax_extension *ext = cmark_syntax_extension_new("heads");
     
+    heads_settings *settings = init_settings();
+    cmark_syntax_extension_set_private(ext, settings, heads_settings_release);
+    
     cmark_syntax_extension_set_postprocess_func(ext, postprocess);
     cmark_syntax_extension_set_html_render_func(ext, html_render);
     
     return ext;
+}
+
+
+void heads_reset_slut_counter(cmark_syntax_extension *extension) {
+    heads_settings *settings =cmark_syntax_extension_heads_get_settings(extension);
+    slugcounter_free(settings->slugs);
 }

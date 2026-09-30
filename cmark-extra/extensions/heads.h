@@ -12,5 +12,7 @@
 
 cmark_syntax_extension *create_heads_extension(void);
 
+void heads_reset_slut_counter(cmark_syntax_extension *extension);
+
 
 #endif /* heads_h */

@@ -13,7 +13,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-char *process_title(const char *title);
+
+typedef struct SlugCounter SlugCounter;
+
+SlugCounter *slugcounter_create(void);
+void slugcounter_free(SlugCounter *c);
+char *slugcounter_unique(SlugCounter *c, const char *base);
+
+char *slug_title(const char *title);
+
 #ifdef __cplusplus
 }
 #endif

@@ -227,6 +227,7 @@ extension Settings {
         if self.headsExtension {
             if let ext = cmark_find_syntax_extension("heads") {
                 cmark_parser_attach_syntax_extension(parser, ext)
+                heads_reset_slut_counter(ext)
                 os_log("Enabled markdown `heads` extension.", log: OSLog.rendering, type: .debug)
             } else {
                 os_log("Could not enable markdown `heads` extension!", log: OSLog.rendering, type: .error)
@@ -1008,7 +1009,7 @@ MathJax = {
 
         // TOC sidebar prototype (issue #161): build a clickable navigation and rewrite each
         // heading with a unique, clean anchor so duplicate / emoji headings each scroll correctly.
-        let toc = (self.renderAsCode || !self.tableOfContentsOption) ? nil : buildTOC(processedBody)
+        let toc = (self.renderAsCode || !self.tableOfContentsOption) ? nil : try? buildTOC(processedBody)
 
         let article = "\(wrapper_open)\n\(toc?.body ?? processedBody)\n\(wrapper_close)"
         let bodyContent: String
@@ -1053,7 +1054,71 @@ MathJax = {
     /// unique, clean anchor id, so duplicate headings and emoji-containing headings each scroll
     /// to the right place (the `heads` extension neither de-dupes slugs nor cleans emoji titles).
     /// Returns the rewritten body + the TOC markup, or nil when there are fewer than two headings.
-    private func buildTOC(_ body: String) -> (body: String, toc: String)? {
+    private func buildTOC(_ body: String) throws -> (body: String, toc: String)? {
+        let doc: Document = try SwiftSoup.parseBodyFragment(body)
+        let body: Element = doc.body()!
+        
+        var items = ""
+        var used: [String: Int] = [:]
+        
+        // Seleziona tutti gli h1, h2, h3, h4, h5, h6
+        let headings: Elements = try body.select("h1, h2, h3, h4, h5, h6")
+        
+        let slugs = slugcounter_create()
+        defer {
+            slugcounter_free(slugs)
+        }
+        
+        for (_, heading) in headings.enumerated() {
+            let tagName = heading.tagName() // es. "h1", "h2"...
+            
+            let level: Int
+            switch tagName {
+            case "h1": level = 1
+            case "h2": level = 2
+            case "h3": level = 3
+            case "h4": level = 4
+            case "h5": level = 5
+            case "h6": level = 6
+            default: level = 0
+            }
+            
+            let text = try heading.text()
+            
+            var slug: String = ""
+            if heading.hasAttr("id") {
+                // Preserve original ID
+                slug = (try? heading.attr("id")) ?? ""
+            }
+            
+            if slug.isEmpty {
+                slug = Self.slugify(text, slugs: slugs)
+                if slug.isEmpty {
+                    slug = "section"
+                }
+                
+                if let n = used[slug] {
+                    used[slug] = n + 1
+                    slug = "\(slug)-\(n + 1)"
+                } else {
+                    used[slug] = 1
+                }
+                
+                try heading.attr("id", slug)
+            }
+            
+            let tooltip = text.replacingOccurrences(of: "\"", with: "&quot;")
+            items += "<li class='toc-l\(level)'><a href='#\(slug)' title=\"\(tooltip)\">\(text)</a></li>\n"
+        }
+        
+        guard !items.isEmpty else {
+            return nil
+        }
+        
+        return (try body.html(), "<ul>\n\(items)</ul>")
+        /*
+        
+        
         let pattern = "<h([1-6])([^>]*)>(.*?)</h[1-6]>"
         guard let re = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive, .dotMatchesLineSeparators]) else {
             return nil
@@ -1115,30 +1180,34 @@ MathJax = {
             let tooltip = text.replacingOccurrences(of: "\"", with: "&quot;")
             items += "<li class='toc-l\(level)'><a href='#\(slug)' title=\"\(tooltip)\">\(text)</a></li>\n"
         }
+        
         newBody += ns.substring(with: NSRange(location: lastEnd, length: ns.length - lastEnd))
 
         guard !items.isEmpty else {
             return nil
         }
         return (newBody, "<ul>\n\(items)</ul>")
+         */
     }
 
-    /// Lowercase slug: keep unicode letters/digits, collapse every other run to a single dash.
-    private static func slugify(_ text: String) -> String {
-        var slug = ""
-        var pendingDash = false
-        for ch in text.lowercased() {
-            if ch.isLetter || ch.isNumber {
-                if pendingDash && !slug.isEmpty {
-                    slug.append("-")
-                }
-                slug.append(ch)
-                pendingDash = false
-            } else {
-                pendingDash = true
-            }
+    /// Lowercase slug: uses the same code of the header extension.
+    private static func slugify(_ text: String, slugs: OpaquePointer?) -> String {
+        guard let s = slug_title(text.cString(using: .utf8)) else {
+            os_log("Unable to slug the text %{public}s", log: OSLog.rendering, type: .error, text)
+            return ""
         }
-        return slug
+        defer {
+            free(s)
+        }
+        
+        guard let s2 = slugcounter_unique(slugs, s) else {
+            return ""
+        }
+        defer {
+            free(s2)
+        }
+        
+        return String(cString: s2, encoding: .utf8) ?? ""
     }
     
     internal func parseYaml(node: Yams.Node) throws -> Any {

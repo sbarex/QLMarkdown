@@ -8,13 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		0342FC81767440D68CFDD7B4 /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
-		C4D527C5C4B7C8ABC56B80E0 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		138DFA4523EA4D8DA48F233D /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
-		E698C0D39AE7F2ACC2EA37C7 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
+		395D747533D961405F225806 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		4034D2FA758A4624A85FE826 /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		65D0637D19484B8CAF9BA328 /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		7273677933E44FAD8B3EEA1D /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
-		DDC62ADAA448F849BDF4C108 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		830277F42C60B3B40066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
 		830277F52C60B3E20066EBCC /* default.css in Resources */ = {isa = PBXBuildFile; fileRef = 83598F22258263C0004664D3 /* default.css */; };
 		830277F72C60E48F0066EBCC /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 83CF71D82C60ADA60066A195 /* icon.png */; };
@@ -301,12 +299,14 @@
 		ADD0000000000000000000C4 /* admonition.c in Sources */ = {isa = PBXBuildFile; fileRef = ADD0000000000000000000BB /* admonition.c */; };
 		B8E64117F8D84B61BC777EDF /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
 		C4C0544E70714CFDB88BD53D /* alert.c in Sources */ = {isa = PBXBuildFile; fileRef = 376A8FF7F19F47B3AD9B463D /* alert.c */; };
+		C4D527C5C4B7C8ABC56B80E0 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		CB9185D831D741DCB49AF8D3 /* wikilink.c in Sources */ = {isa = PBXBuildFile; fileRef = 1DDD0092C9DF487BBB99BB1D /* wikilink.c */; };
-		395D747533D961405F225806 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
+		DDC62ADAA448F849BDF4C108 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 		DEF1000000000000000000C1 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		DEF1000000000000000000C2 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		DEF1000000000000000000C3 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		DEF1000000000000000000C4 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
+		E698C0D39AE7F2ACC2EA37C7 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -524,7 +524,6 @@
 
 /* Begin PBXFileReference section */
 		1DDD0092C9DF487BBB99BB1D /* wikilink.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wikilink.c; sourceTree = "<group>"; };
-		90F0AF38EA81F6BDFEFD4736 /* hashtag.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hashtag.c; sourceTree = "<group>"; };
 		376A8FF7F19F47B3AD9B463D /* alert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = alert.c; sourceTree = "<group>"; };
 		831A8C3F258ABADA00E36182 /* Markdown QL Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Markdown QL Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		831A8C40258ABADA00E36182 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -709,6 +708,7 @@
 		83F8825C25991BFC008C5071 /* heads_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = heads_utils.cpp; sourceTree = "<group>"; };
 		83F8825D25991BFC008C5071 /* heads_utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = heads_utils.hpp; sourceTree = "<group>"; };
 		8C0194F6D1944DC681276B11 /* wikilink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wikilink.h; sourceTree = "<group>"; };
+		90F0AF38EA81F6BDFEFD4736 /* hashtag.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hashtag.c; sourceTree = "<group>"; };
 		9DF303267F91BA199358B93D /* hashtag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hashtag.h; sourceTree = "<group>"; };
 		ADD0000000000000000000AA /* admonition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = admonition.h; sourceTree = "<group>"; };
 		ADD0000000000000000000BB /* admonition.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = admonition.c; sourceTree = "<group>"; };
@@ -845,8 +845,8 @@
 				376A8FF7F19F47B3AD9B463D /* alert.c */,
 				DEF1000000000000000000AA /* defl.h */,
 				DEF1000000000000000000BB /* defl.c */,
-				83F8825C25991BFC008C5071 /* heads_utils.cpp */,
 				83F8825D25991BFC008C5071 /* heads_utils.hpp */,
+				83F8825C25991BFC008C5071 /* heads_utils.cpp */,
 				83CF71C72C5FCD780066A195 /* highlight.h */,
 				83CF71C82C5FCD780066A195 /* highlight.c */,
 				83598EF425818B8B004664D3 /* syntaxhighlight.h */,
