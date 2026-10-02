@@ -250,7 +250,7 @@ struct QLMarkdownCLI: ParsableCommand {
     @Flag(help: ArgumentHelp("Show the customized settings and exit."))
     var showSettings: Bool = false
     
-    @Flag(help: ArgumentHelp("Show the version number and exit.", visibility: .hidden))
+    @Flag(help: ArgumentHelp("Show the version number and exit."))
     var version: Bool = false
     
     var appUrl: URL {
@@ -508,6 +508,21 @@ struct QLMarkdownCLI: ParsableCommand {
         
         settings = self.getSettings()
         
+        Settings.appBundleUrl = appUrl
+        
+        if let v = Settings.getResourceBundle().object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
+            Self.configuration.version = v // Change the version at runtime do not reflect in the usage screen :(
+        } else {
+            Self.configuration.version = "N/D"
+        }
+        
+        if version {
+            // Print the version number and exit.
+            
+            print("Version \(Self.configuration.version)")
+            QLMarkdownCLI.exit()
+        }
+        
         if !showSettings {
             if files.isEmpty {
                 print(QLMarkdownCLI.helpMessage(for: QLMarkdownCLI.self))
@@ -524,22 +539,6 @@ struct QLMarkdownCLI: ParsableCommand {
                 }
             }
         }
-        
-        Settings.appBundleUrl = appUrl
-        
-        if let v = Settings.getResourceBundle().object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String {
-            Self.configuration.version = v // Change the version at runtime do not reflect in the usage screen :(
-        } else {
-            Self.configuration.version = "N/D"
-        }
-        
-        if version {
-            // Print the version number and exit.
-            
-            // print(Self.usageString() + "\n")
-            print("Version \(Self.configuration.version)")
-            QLMarkdownCLI.exit()
-        }
     }
     
     mutating func run() throws {
@@ -555,6 +554,12 @@ struct QLMarkdownCLI: ParsableCommand {
             printSettings(settings)
             if showSettings {
                 QLMarkdownCLI.exit()
+            }
+            var messages: [String] = []
+            if (!settings.checkValid(messages: &messages)) {
+                for msg in messages {
+                    os_log("Warning: %{public}@", log: OSLog.cli, type: .error, msg)
+                }
             }
         }
 

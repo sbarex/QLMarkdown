@@ -330,11 +330,10 @@ ARGUMENTS:
 
 MARKDOWN OPTIONS:
   --appearance <appearance>
-                          (values: auto, light, dark)
+                          (values: light, dark)
   --base-font-size <number>
                           Set the base font size, in points.
   --footnotes <on|off>    Parse the footnotes. (values: on, off)
-                          Show a table-of-contents sidebar in the preview. (values: on, off)
   --hard-break <on|off>   Render soft-break elements as hard line breaks. (values: on, off)
   --no-soft-break <on|off>
                           Render soft-break elements as spaces. (values: on, off)
@@ -343,6 +342,7 @@ MARKDOWN OPTIONS:
                           Show the plain text file (raw version) instead of the formatted output. (values: on, off)
   --smart-quotes <on|off> Convert straight quotes to curly. (values: on, off)
   --table-of-contents <on|off>
+                          Show a table-of-contents sidebar in the preview. (values: on, off)
   --validate-utf8 <on|off>
                           Validate UTF-8 in the input before parsing. (values: on, off)
   --debug <on|off>        Insert in the output some debug information. (values: on, off)
@@ -351,6 +351,7 @@ MARKDOWN EXTENSIONS:
   --admonition <on|off>   Render `!!! type` admonitions as callout boxes. (values: on, off)
   --autolink <on|off>     Automatically translate URL/email to link. (values: on, off)
   --definition-list <on|off>
+                          Render definition lists. (values: on, off)
   --emoji <emoji>         Translate the emoji shortcodes.
         font              - replace with font glyphs
         images            - replace with web images
@@ -359,13 +360,12 @@ MARKDOWN EXTENSIONS:
   --github-mentions <on|off>
                           Translate mentions to link to the GitHub account (values: on, off)
   --heads-anchor <on|off> Create anchors for the heads. (values: on, off)
-                          Render definition lists. (values: on, off)
   --highlight <on|off>    Highlight text marked with `==`. (values: on, off)
   --inline-images <on|off>
                           Embed local image files inside the formatted output. (values: on, off)
-  --math <off|link|embed> Format the mathematical expressions with MathJax.
+  --math <off|link|embed> Format the mathematical expressions with MathJax. You can specify if link or embed the MathJax.js library. (values: off, link, embed)
   --mermaid <off|link|embed>
-                          Format the mermaid diagrams.
+                          Format the mermaid diagrams. You can specify if link or the Mermaid.js library. (values: off, link, embed)
   --table <on|off>        Enable table extension. (values: on, off)
   --tag-filter <on|off>   Strip potentially dangerous HTML tags. (values: on, off)
   --tasklist <on|off>     Parse task list. (values: on, off)
