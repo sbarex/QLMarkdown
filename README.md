@@ -164,7 +164,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Option|Description|
 |:--|:--|
 |Smart quotes|Convert straight quotes to curly, ```---``` to _em dashes_ and ```--``` to _en dashes_.|
-|Footnotes|Parse the footnotes. **Superscript extension must be disabled.**|
+|Footnotes|Parse the footnotes. |
 |Hard break|Render `softbreak` elements as hard line breaks.|
 |No soft break|Render `softbreak` elements as spaces. Has no visual effect on HTML formatting.|
 |Inline HTML (unsafe)|Render raw HTML and unsafe links (`javascript:`, `vbscript:`,  `file:` and `data:`, except for `image/png`, `image/gif`,  `image/jpeg`, or `image/webp` mime types) present in the Markdown file. By default, HTML tags are stripped and unsafe links are replaced by empty strings. _This option is required for preview SVG images_.|
@@ -191,7 +191,7 @@ It is possibile to set a custom base font size. This size (in points) will be us
 |Mermaid|Enable the [Mermaid diagram](#mermaid-diagrams) extension.|
 |MKDocs Admonition extension.||
 |Strikethrough|Strikethrough text inside tildes. You can choose to detect single or double tilde delimiters.|
-|Sub/Superscript|Allow to subscript text inside `~` tag pairs, and superscript text inside `^` tag pairs. Please note that the **Strikethrough extension must be disabled or set to recognize double `~`**. Also the **Footnotes options must be disabled**.|
+|Sub/Superscript|Allow to subscript text inside `~` tag pairs, and superscript text inside `^` tag pairs. Please note that the **Strikethrough extension must be disabled or set to recognize double `~`**. |
 |Syntax highlighting|Enable the [Syntax highlighting extension](#syntax-highlighting). |
 |Table|Parse table as defined by the GitHub extension to the standard Markdown language.|
 |Tag filter|Strip potentially dangerous HTML tags (`<title>`,   `<textarea>`, `<style>`,  `<xmp>`, `<iframe>`, `<noembed>`, `<noframes>`, `<script>`, `<plaintext>`). It only takes effect if the option to include HTML code is enabled.|

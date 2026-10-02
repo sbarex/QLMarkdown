@@ -825,11 +825,6 @@ class Settings: Codable {
             valid = false
         }
         
-        if self.supExtension && self.footnotesOption {
-            messages.append(NSLocalizedString("The Sup extension can cause corrupted output when the Footnotes option is set.", comment: ""))
-            valid = false
-        }
-        
         return valid
     }
     
