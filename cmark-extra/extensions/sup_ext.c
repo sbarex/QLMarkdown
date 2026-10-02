@@ -34,11 +34,9 @@ static cmark_node *match(cmark_syntax_extension *self, cmark_parser *parser,
     return NULL;
   }
 
-  memset(buffer, '^', delims);
-  buffer[delims] = 0;
-
   res = cmark_node_new_with_mem(CMARK_NODE_TEXT, parser->mem);
-  cmark_node_set_literal(res, buffer);
+  // Point into the input like core delimiters: `[^1]` footnote handling reads past this text.
+  res->as.literal = cmark_chunk_dup(cmark_inline_parser_get_chunk(inline_parser), pos, delims);
   res->start_line = res->end_line = cmark_inline_parser_get_line(inline_parser);
   res->start_column = cmark_inline_parser_get_column(inline_parser) - delims;
 
