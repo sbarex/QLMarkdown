@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.5.7 (59)
+
+Bugfix:
+- Footnote with superscript extension bug fixed (thanks to @soreavis).
+- Render sub, sup, highlight and math inside table cells (thanks to @soreavis).
+
+
 ### 1.5.6 (58)
 
 New Features:
