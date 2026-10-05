@@ -126,6 +126,9 @@ struct OptionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Show the plain text file (raw version) instead of the formatted output.", valueName: "on|off"))
     var renderAsCode: BoolArgumentEnum? = nil
     
+    @Option(help: ArgumentHelp("Expand the markdown content to fill the full width of the window.", valueName: "on|off"))
+    var fullWidth: BoolArgumentEnum? = nil
+    
     @Option(help: ArgumentHelp("Convert straight quotes to curly.", valueName: "on|off"))
     var smartQuotes: BoolArgumentEnum? = nil
     
@@ -303,6 +306,9 @@ struct QLMarkdownCLI: ParsableCommand {
         if let o = options.renderAsCode {
             settings.renderAsCode = o == .on
         }
+        if let o = options.fullWidth {
+            settings.fullWidthContent = o == .on
+        }
         if let size = options.baseFontSize {
             settings.baseFontSize = CGFloat(size)
         }
@@ -441,6 +447,7 @@ struct QLMarkdownCLI: ParsableCommand {
         print("    --smart-quotes: \(settings.smartQuotesOption ? "on" : "off")")
         print("    --validate-utf8: \(settings.validateUTFOption ? "on" : "off")")
         print("    --render-as-code: \(settings.renderAsCode ? "on" : "off")")
+        print("    --full-width: \(settings.fullWidthContent ? "on" : "off")")
         print("    --debug: \(settings.debug ? "on" : "off")")
         
         print("\nMARKDOWN EXTENSIONS:")

@@ -113,6 +113,7 @@ class Settings: Codable {
         case debug
         case renderAsCode
         
+        case fullWidthContent
         case qlWindowWidth
         case qlWindowHeight
         
@@ -367,6 +368,7 @@ class Settings: Codable {
     /// Show debug infomations.
     var debug: Bool = false
     var renderAsCode: Bool = false
+    var fullWidthContent: Bool = false
     
     /// Quick Look window width.
     var qlWindowWidth: Int? = nil
@@ -390,9 +392,9 @@ class Settings: Codable {
     
     /// Size used when no custom size is set. Fitted to the content column of the style in use.
     var autoQLWindowSize: CGSize {
-        if let column = self.contentColumnWidth {
+        if let column = self.contentColumnWidth, !self.fullWidthContent {
             return CGSize(width: column + 58, height: Self.defaultQLWindowHeight) // gutters and scroller
-        } else if self.renderAsCode {
+        } else if self.renderAsCode || self.fullWidthContent {
             return CGSize(width: Self.defaultQLWindowWidthAsCode, height: Self.defaultQLWindowHeight)
         } else {
             return CGSize(width: Self.defaultQLWindowWidth, height: Self.defaultQLWindowHeight)
@@ -462,6 +464,7 @@ class Settings: Codable {
         self.validateUTFOption = Settings.decode(from: container, forKey: .validateUTFOption, defaultValue: Settings.factorySettings.validateUTFOption)
         self.debug = Settings.decode(from: container, forKey: .debug, defaultValue: Settings.factorySettings.debug)
         self.renderAsCode = Settings.decode(from: container, forKey: .renderAsCode, defaultValue: Settings.factorySettings.renderAsCode)
+        self.fullWidthContent = Settings.decode(from: container, forKey: .fullWidthContent, defaultValue: Settings.factorySettings.fullWidthContent)
                 
         self.qlWindowWidth = Settings.decode(from: container, forKey: .qlWindowWidth, defaultValue: Settings.factorySettings.qlWindowWidth)
         self.qlWindowHeight = Settings.decode(from: container, forKey: .qlWindowHeight, defaultValue: Settings.factorySettings.qlWindowHeight)
@@ -476,7 +479,8 @@ class Settings: Codable {
     }
     
     convenience init(fromUserDefaults defaults: UserDefaults) {
-        self.init()
+        // Prevent recursion: do not re-invoke initFromDefaults() during initialization from a specific UserDefaults instance
+        self.init(noInitFromDefault: true)
         update(from: defaults.dictionaryRepresentation())
     }
     
@@ -537,6 +541,7 @@ class Settings: Codable {
         try container.encode(self.validateUTFOption, forKey: .validateUTFOption)
         try container.encode(self.debug, forKey: .debug)
         try container.encode(self.renderAsCode, forKey: .renderAsCode)
+        try container.encode(self.fullWidthContent, forKey: .fullWidthContent)
         
         try container.encode(self.qlWindowWidth, forKey: .qlWindowWidth)
         try container.encode(self.qlWindowHeight, forKey: .qlWindowHeight)
@@ -627,6 +632,7 @@ class Settings: Codable {
         self.validateUTFOption = s.validateUTFOption
         self.debug = s.debug
         self.renderAsCode = s.renderAsCode
+        self.fullWidthContent = s.fullWidthContent
                 
         self.qlWindowWidth = s.qlWindowWidth
         self.qlWindowHeight = s.qlWindowHeight
@@ -759,6 +765,9 @@ class Settings: Codable {
         }
         if let opt = defaultsDomain[Self.CodingKeys.renderAsCode.rawValue] as? Bool {
             renderAsCode = opt
+        }
+        if let opt = defaultsDomain[Self.CodingKeys.fullWidthContent.rawValue] as? Bool {
+            fullWidthContent = opt
         }
         
         if let opt = defaultsDomain[Self.CodingKeys.qlWindowWidth.rawValue] as? Int, opt > 0 {

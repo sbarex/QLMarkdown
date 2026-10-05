@@ -1003,6 +1003,33 @@ MathJax = {
             style = style.replacingOccurrences(of: "@media (prefers-color-scheme: dark)", with: "@media all")
         }
         
+        if self.fullWidthContent && !self.renderAsCode {
+            style += """
+<style type='text/css'>
+:root {
+  --content-max-width: none !important;
+}
+article,
+article.markdown-body {
+  max-width: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+@media (min-width: 902px) {
+  article,
+  article.markdown-body {
+    border-width: 0 !important;
+    border-style: none !important;
+    border-radius: 0 !important;
+  }
+}
+</style>
+
+"""
+        }
+        
         let wrapper_open = self.renderAsCode ? "<pre class='hl'>" : "<article class='markdown-body'>"
         let wrapper_close = self.renderAsCode ? "</pre>" : "</article>"
         let body_style = self.renderAsCode ? " class='hl'" : ""
