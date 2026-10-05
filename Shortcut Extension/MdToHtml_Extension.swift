@@ -41,6 +41,7 @@ struct MdToHtml_Extension: AppIntent {
             \.$yamlExtension
             
             \.$renderAsSource
+            \.$fullWidthContent
         }
     }
     
@@ -73,6 +74,9 @@ struct MdToHtml_Extension: AppIntent {
     
     @Parameter(title: "Render as source code", default: OptionalBoolEnum.predefined)
     var renderAsSource: OptionalBoolEnum
+    
+    @Parameter(title: "Full width content", default: OptionalBoolEnum.predefined)
+    var fullWidthContent: OptionalBoolEnum
     
     
     @Parameter(title: "Admonition", default: OptionalBoolEnum.predefined)
@@ -155,6 +159,7 @@ struct MdToHtml_Extension: AppIntent {
         validateUTF8.updateValue(state: &settings.validateUTFOption)
         showDebugInfo.updateValue(state: &settings.debug)
         renderAsSource.updateValue(state: &settings.renderAsCode)
+        fullWidthContent.updateValue(state: &settings.fullWidthContent)
         
         admonition.updateValue(state: &settings.admonitionExtension)
         autolink.updateValue(state: &settings.autoLinkExtension)

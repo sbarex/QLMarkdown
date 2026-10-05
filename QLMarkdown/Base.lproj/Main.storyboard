@@ -976,7 +976,23 @@
                                                                 </connections>
                                                             </button>
                                                         </gridCell>
-                                                        <gridCell row="b1T-4W-Sf6" column="EM0-Js-ao5" id="Xpw-Ld-DuY"/>
+                                                        <gridCell row="b1T-4W-Sf6" column="EM0-Js-ao5" id="Xpw-Ld-DuY">
+                                                            <button key="contentView" toolTip="Expand the markdown content to fill the full width of the window when resized." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fWc-9A-001">
+                                                                <rect key="frame" x="641" y="88" width="180" height="16"/>
+                                                                <buttonCell key="cell" type="check" title="Full width content" bezelStyle="regularSquare" imagePosition="left" inset="2" id="fWc-9A-002">
+                                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.fullWidthContent" id="fWc-9A-003"/>
+                                                                    <binding destination="XfG-lQ-9wD" name="enabled" keyPath="self.renderAsCode" id="fWc-9A-004">
+                                                                        <dictionary key="options">
+                                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                                        </dictionary>
+                                                                    </binding>
+                                                                </connections>
+                                                            </button>
+                                                        </gridCell>
                                                         <gridCell row="mRf-rL-ZFR" column="Kw4-iz-WrK" id="ZwB-5j-pmJ">
                                                             <button key="contentView" toolTip="Handle URL and email addresses as link." horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MIB-mW-C6G">
                                                                 <rect key="frame" x="0.0" y="60" width="71" height="16"/>

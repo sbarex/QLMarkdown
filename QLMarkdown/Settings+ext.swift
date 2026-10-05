@@ -199,6 +199,7 @@ extension Settings {
         defaults.set(validateUTFOption, forKey: Self.CodingKeys.validateUTFOption.rawValue)
         defaults.set(debug, forKey: Self.CodingKeys.debug.rawValue)
         defaults.set(renderAsCode, forKey: Self.CodingKeys.renderAsCode.rawValue)
+        defaults.set(fullWidthContent, forKey: Self.CodingKeys.fullWidthContent.rawValue)
         
         defaults.set(self.qlWindowWidth ?? 0, forKey: Self.CodingKeys.qlWindowWidth.rawValue)
         defaults.set(self.qlWindowHeight ?? 0, forKey: Self.CodingKeys.qlWindowHeight.rawValue)

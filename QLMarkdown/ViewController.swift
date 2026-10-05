@@ -278,6 +278,13 @@ class ViewController: NSViewController {
         }
     }
     
+    @objc dynamic var fullWidthContent: Bool = Settings.factorySettings.fullWidthContent {
+        didSet {
+            guard oldValue != fullWidthContent else { return }
+            isDirty = true
+        }
+    }
+    
     @objc dynamic var qlWindowSizeCustomized: Bool = false {
         didSet {
             guard oldValue != qlWindowSizeCustomized else { return }
@@ -1351,6 +1358,7 @@ document.addEventListener('scroll', function(e) {
         self.debugMode = settings.debug
         self.isAboutVisible = settings.about
         self.renderAsCode = settings.renderAsCode
+        self.fullWidthContent = settings.fullWidthContent
         
         self.qlWindowSizeCustomized = settings.qlWindowWidth ?? 0 > 0 && settings.qlWindowHeight ?? 0 > 0
         self.qlWindowWidth = Int(settings.qlWindowSize.width)
@@ -1430,6 +1438,7 @@ document.addEventListener('scroll', function(e) {
         settings.appearance = Appearance(rawValue: self.appearancePopup.selectedTag()) ?? .undefined
         settings.debug = self.debugMode
         settings.renderAsCode = self.renderAsCode
+        settings.fullWidthContent = self.fullWidthContent
         settings.qlWindowWidth = self.qlWindowSizeCustomized ? self.qlWindowWidth : nil
         settings.qlWindowHeight = self.qlWindowSizeCustomized ? self.qlWindowHeight : nil
         
