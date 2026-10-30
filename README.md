@@ -101,8 +101,8 @@ Compared to the `cmark-gfm`, these extensions have been added:
 - [`Inline local images`](#inline-local-images): embed the image files inside the formatted output (required for the Quick Look preview).
 - `Subscript`: subscript text between the markers `~`.
 - `Superscript`: superscript text between the markers `^`.
-- [`Math`](#mathematical-expressions): format the mathematical expressions with the MathJax library.
-- [`Mermaid`](#mermaid-diagrams): render the diagrams with the Mermaid library.
+- [`Math`](#mathematical-expressions): format mathematical expressions with Temml (default) or MathJax.
+- [`Mermaid`](#mermaid-diagrams): render diagrams with Pele or native Mermaid.
 - `MKDocs Admonition` extension.
 - [`Syntax highlighting`](#syntax-highlighting): highlight the code inside fenced block.
 - `Wikilinks`.
@@ -228,21 +228,33 @@ The extension process both images defined in the Markdown syntax and also with H
 
 #### Mathematical expressions
 
-This extension allow to format the mathematical expressions using the LaTeX syntax like [GitHub](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions).
-Math rendering capability uses [MathJax](https://www.mathjax.org/) display engine.
+The Math extension renders LaTeX expressions in the app, Quick Look, Shortcuts, and exported HTML. Choose **Temml** (default) or **MathJax** in the Math extension menu, then save the settings to apply them to Quick Look and Shortcuts. Existing settings without a renderer preference use Temml.
 
-Inline math expressions are delimited with a dollar symbol `$`. Block expressions are delimited with a double dollar symbols `$$`.
+[Temml](https://temml.org/) converts TeX to MathML for native browser rendering. Select [MathJax](https://www.mathjax.org/) when a document needs its TeX extensions or typesetting. In the CLI, choose the library mode with `--math off|link|embed` and the renderer separately with `--math-renderer temml|mathjax`. For example:
+
+```sh
+qlmarkdown_cli --math embed --math-renderer mathjax example.md
+```
+
+Temml errors preserve the original formula and show an error message; other formulas continue rendering. There is no automatic fallback to MathJax. The bundled Temml supports document macros and equation references, but does not include its optional chemistry or physics extensions.
+
+Inline expressions use `$...$` and block expressions use `$$...$$`, as in [GitHub's math syntax](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions).
 
 Alternatively, you can use the ` ```math ` code block syntax to display a math expression as a block.
 
-The [MathJax](https://www.mathjax.org/) library is loaded if the markdown code contains ` ```math ` code blocks or one or more dollar sign.
-
-![shortcut interface](./assets/img/mathjax_menu.png)
-
+The selected math library is loaded when the Markdown parser recognizes a mathematical expression or a ` ```math ` code block.
 
 #### Mermaid diagrams
 
-This extension renders [Mermaid](https://mermaid.js.org/) diagrams directly in the Quick Look preview. Mermaid is a JavaScript-based diagramming and charting tool that uses Markdown-inspired text definitions.
+This extension renders [Mermaid](https://mermaid.js.org/) diagrams in the app, Quick Look, and exported HTML.
+
+Choose **Pele** or **Native Mermaid** in the diagram menu. [Pele](https://pele.run/) 1.12.0 is the default, including for existing settings without a renderer preference. Save the settings to apply the selection to Quick Look and Shortcuts. The CLI also accepts `--mermaid-renderer pele|mermaid`.
+
+Pele uses its own layout and CSS theme and supports a subset of Mermaid's configuration and label formatting. Select **Native Mermaid** if a document depends on Mermaid-specific behavior. Pele errors are displayed directly; it does not automatically switch to Mermaid.
+
+Like the [Pele Playground](https://pele.run/playground), Pele uses Temml to render diagram math and maps common Font Awesome/MDI names to a bundled subset of Lucide icons. Unknown icons are omitted. Diagram math is independent of the body math switch and renderer selection.
+
+As with native Mermaid, diagram images are loaded by the preview. **Inline local images** applies to Markdown and HTML images, not diagram image references; local images inside diagrams remain subject to Quick Look's file access restrictions.
 
 Supported diagram types include:
 - Flowcharts
@@ -266,16 +278,19 @@ graph TD
 
 ~~~
 
-> **Note:** The library is initialized with `securityLevel: 'strict'` for safety.
+> **Note:** Native Mermaid uses `securityLevel: 'strict'`. Pele disables links, escapes diagram text, and allows images using its default URL policy (relative paths, HTTP and HTTPS). Remote images require a connection. If Pele rendering fails, the original source and its error message remain visible; other diagrams continue rendering.
 
-The diagram theme automatically adapts to the system appearance (light/dark mode).
+The diagram theme follows the selected appearance (or system light/dark mode when automatic). Pele colors use the document's CSS variables and can be customized with `--pele-*` properties.
+The base Pele palette is included even when custom CSS replaces the default stylesheet; use rules such as `.mermaid { --pele-line: #ff0000; }` to override it.
 
 
-#### Note about external Javascript libraries (MathJax and Mermaid)
+#### Note about external JavaScript libraries
 
-The Math and Diagram extensions requires some external javascript libraries.
+The Math and Diagram extensions use JavaScript libraries. Each extension can be configured separately.
 
-You can choose to link the corresponding library from the web (internet connection required) via `cdn.jsdelivr.net`, or to embed the source code directly into the HTML output — though this increases the HTML file size.
+Choose **Linked from web** to load a library from `cdn.jsdelivr.net` when needed, or **Embedded** to include its source in the HTML. Embedded HTML is larger. Embedded MathJax may still fetch fonts from the network; remote images in a diagram also require a connection.
+
+For Pele, embedded mode includes Pele and Temml. In linked mode, Pele is loaded from the web and Temml is fetched only when a diagram contains `$$`. Body formulas and Pele share one Temml load and its bundled stylesheet and supplementary font. If either active extension uses embedded mode, their shared Temml is embedded. Diagrams without math do not wait for Temml. Native Mermaid also supports linked and embedded modes.
 
 On the status bar of the Main application you can view the final file size of the preview.
 
@@ -363,9 +378,12 @@ MARKDOWN EXTENSIONS:
   --highlight <on|off>    Highlight text marked with `==`. (values: on, off)
   --inline-images <on|off>
                           Embed local image files inside the formatted output. (values: on, off)
-  --math <off|link|embed> Format the mathematical expressions with MathJax. You can specify if link or embed the MathJax.js library. (values: off, link, embed)
+  --math <off|link|embed> Format mathematical expressions. Link or embed the selected math library.
+  --math-renderer <temml|mathjax> Use Temml (default) or MathJax for mathematical expressions.
   --mermaid <off|link|embed>
-                          Format the mermaid diagrams. You can specify if link or the Mermaid.js library. (values: off, link, embed)
+                          Format Mermaid diagrams. Link or embed the diagram libraries. (values: off, link, embed)
+  --mermaid-renderer <pele|mermaid>
+                          Use Pele (default) or native Mermaid.
   --table <on|off>        Enable table extension. (values: on, off)
   --tag-filter <on|off>   Strip potentially dangerous HTML tags. (values: on, off)
   --tasklist <on|off>     Parse task list. (values: on, off)
@@ -427,6 +445,8 @@ The app uses the following libraries:
 - [`PCRE2`](https://github.com/PhilipHazel/pcre2) and [`JPCRE2`](https://github.com/jpcre2/jpcre2) used by the heads extension.
 - [MathJax](https://www.mathjax.org/) for mathematical expressions rendering.
 - [Mermaid](https://mermaid.js.org/) for diagrams rendering.
+- [Pele](https://pele.run/) for the default diagram renderer (MIT license; bundled as `pele.global.js.gz` with `pele-LICENSE.txt`).
+- [Temml](https://temml.org/) 0.14.0 for math in Pele diagrams (MIT license; `temml-LICENSE.txt`). The icon resolver and Lucide subset in `pele-icons.js` are adapted from the Pele 1.12.0 Playground, with their license notices retained.
 
 `libpcre2` requires the `autoconf`, `automake`, and `libtool` utilities to be built. You can install them with [`homebrew`](https://brew.sh/):
 

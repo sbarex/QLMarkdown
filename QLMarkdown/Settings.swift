@@ -37,6 +37,16 @@ enum JSExtension: Int, Codable {
     case embed = 2
 }
 
+enum MermaidRenderer: String, Codable {
+    case pele
+    case mermaid
+}
+
+enum MathRenderer: String, Codable {
+    case temml
+    case mathjax
+}
+
 enum YamlMode: Int, Codable {
     case disabled = 0
     case allFiles = 1
@@ -87,7 +97,9 @@ class Settings: Codable {
         case hightlightExtension
         case inlineImageExtension
         case mathExtension
+        case mathRenderer
         case mermaidExtension
+        case mermaidRenderer
         case subExtension
         case supExtension
         case strikethroughExtension
@@ -341,7 +353,9 @@ class Settings: Codable {
     var highlightExtension: Bool = false
     var inlineImageExtension: Bool = true
     var mathExtension: JSExtension = .link
+    var mathRenderer: MathRenderer = .temml
     var mermaidExtension: JSExtension = .link
+    var mermaidRenderer: MermaidRenderer = .pele
     var subExtension: Bool = false
     var supExtension: Bool = false
     var strikethroughExtension: StrikethroughMode = .single
@@ -437,7 +451,9 @@ class Settings: Codable {
         self.highlightExtension = Settings.decode(from: container, forKey: .hightlightExtension, defaultValue: Settings.factorySettings.highlightExtension)
         self.inlineImageExtension = Settings.decode(from: container, forKey:.inlineImageExtension, defaultValue: Settings.factorySettings.inlineImageExtension)
         self.mathExtension = Settings.decode(from: container, forKey:.mathExtension, defaultValue: Settings.factorySettings.mathExtension)
+        self.mathRenderer = Settings.decode(from: container, forKey: .mathRenderer, defaultValue: Settings.factorySettings.mathRenderer)
         self.mermaidExtension = Settings.decode(from: container, forKey:.mermaidExtension, defaultValue: Settings.factorySettings.mermaidExtension)
+        self.mermaidRenderer = Settings.decode(from: container, forKey: .mermaidRenderer, defaultValue: Settings.factorySettings.mermaidRenderer)
         self.subExtension = Settings.decode(from: container, forKey:.subExtension, defaultValue: Settings.factorySettings.subExtension)
         self.supExtension = Settings.decode(from: container, forKey:.supExtension, defaultValue: Settings.factorySettings.supExtension)
         self.strikethroughExtension = Settings.decode(from: container, forKey:.strikethroughExtension, defaultValue: Settings.factorySettings.strikethroughExtension)
@@ -512,7 +528,9 @@ class Settings: Codable {
         try container.encode(self.highlightExtension, forKey: .hightlightExtension)
         try container.encode(self.inlineImageExtension, forKey: .inlineImageExtension)
         try container.encode(self.mathExtension, forKey: .mathExtension)
+        try container.encode(self.mathRenderer, forKey: .mathRenderer)
         try container.encode(self.mermaidExtension, forKey: .mermaidExtension)
+        try container.encode(self.mermaidRenderer, forKey: .mermaidRenderer)
         try container.encode(self.subExtension, forKey: .subExtension)
         try container.encode(self.supExtension, forKey: .supExtension)
         try container.encode(self.strikethroughExtension, forKey: .strikethroughExtension)
@@ -602,7 +620,9 @@ class Settings: Codable {
         self.highlightExtension = s.highlightExtension
         self.inlineImageExtension = s.inlineImageExtension
         self.mathExtension = s.mathExtension
+        self.mathRenderer = s.mathRenderer
         self.mermaidExtension = s.mermaidExtension
+        self.mermaidRenderer = s.mermaidRenderer
         self.subExtension = s.subExtension
         self.supExtension = s.supExtension
         self.strikethroughExtension = s.strikethroughExtension
@@ -689,8 +709,14 @@ class Settings: Codable {
         if let ext = defaultsDomain[Self.CodingKeys.mathExtension.rawValue] as? Int, let e = JSExtension(rawValue: ext) {
             mathExtension = e
         }
+        if let renderer = defaultsDomain[Self.CodingKeys.mathRenderer.rawValue] as? String, let value = MathRenderer(rawValue: renderer) {
+            mathRenderer = value
+        }
         if let ext = defaultsDomain[Self.CodingKeys.mermaidExtension.rawValue] as? Int, let e = JSExtension(rawValue: ext) {
             mermaidExtension = e
+        }
+        if let renderer = defaultsDomain[Self.CodingKeys.mermaidRenderer.rawValue] as? String, let value = MermaidRenderer(rawValue: renderer) {
+            mermaidRenderer = value
         }
         if let ext = defaultsDomain[Self.CodingKeys.subExtension.rawValue] as? Bool {
             subExtension = ext
@@ -1106,6 +1132,22 @@ extension Settings {
 
 // MARK: - Mermaid support
 extension Settings {
+    static let peleVersion = "1.12.0"
+    static let peleWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/pele@\(Settings.peleVersion)/dist/pele.global.js")!
+    static let peleHash = "sha384-c+QpxCAcAD72seekPP6lAUNHjqe/wUv+S2pk2yBo4ECNKMxym7WFtKKoR5xMtyhz"
+
+    var peleFileUrl: URL? {
+        return self.getDecopressedDep(name: "pele.global.js", hash: Settings.peleHash)
+    }
+
+    static let temmlVersion = "0.14.0"
+    static let temmlWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/temml@\(Settings.temmlVersion)/dist/temml.min.js")!
+    static let temmlHash = "sha384-qJQ7P+DRhXNyeli+ZThz25Ds5LRfplio0XuymYx3/9Nbv/tDev8QyVPrCYQONe+r"
+
+    var temmlFileUrl: URL? {
+        return self.getDecopressedDep(name: "temml.min.js", hash: Settings.temmlHash)
+    }
+
     static let mermaidVersion = "12.0.0"
     /// Url from which to download the mermaid library.
     static let mermaidWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mermaid@\(Settings.mermaidVersion)/dist/mermaid.min.js")!
@@ -1122,11 +1164,40 @@ extension Settings {
         guard self.mermaidExtension != .disabled else {
             return ""
         }
+        if self.mermaidRenderer == .pele,
+           let renderer = self.getBundleContents(forResource: "mermaid-renderer", ofType: "js"),
+           let icons = self.getBundleContents(forResource: "pele-icons", ofType: "js") {
+            let initialization = """
+<script nonce="\(nonce)">
+\(icons)
+\(renderer)
+renderMermaidDiagrams();
+</script>
+"""
+            if self.mermaidExtension == .embed {
+                if let url = self.peleFileUrl, let code = try? String(contentsOf: url, encoding: .utf8) {
+                    return "<script nonce=\"\(nonce)\">\n\(code)\n</script>\n\(initialization)\n"
+                }
+                return initialization
+            }
+            return "<script nonce=\"\(nonce)\" src=\"\(Settings.peleWebUrl)\" integrity=\"\(Settings.peleHash)\" crossorigin=\"anonymous\"></script>\n\(initialization)\n"
+        }
+
+        if self.mermaidRenderer == .pele {
+            return """
+<script nonce="\(nonce)">
+document.querySelectorAll('.mermaid').forEach(node => {
+    node.textContent += '\\n\\nUnable to render diagram: Pele is unavailable';
+    node.style.whiteSpace = 'pre-wrap';
+});
+</script>
+"""
+        }
         let code1 = """
 <script type="text/javascript" nonce="\(nonce)">
 mermaid.initialize({
     startOnLoad: true,
-    theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+    theme: \(mermaidTheme),
     securityLevel: 'strict'
 });
 </script>
@@ -1136,10 +1207,53 @@ mermaid.initialize({
         }
         return "<script  nonce=\"\(nonce)\" src=\"\(Settings.mermaidWebUrl)\" integrity=\"\(Settings.mermaidHash)\" crossorigin=\"anonymous\"></script>\n\(code1)\n"
     }
+
+    private var mermaidTheme: String {
+        switch self.appearance {
+        case .light: return "'default'"
+        case .dark: return "'dark'"
+        case .undefined: return "window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'"
+        }
+    }
 }
 
-// MARK: - MathJax
+// MARK: - Math rendering
 extension Settings {
+    var mathVersion: String { mathRenderer == .temml ? Self.temmlVersion : Self.mathJaxVersion }
+    var mathWebUrl: URL { mathRenderer == .temml ? Self.temmlWebUrl : Self.mathJaxWebUrl }
+    var mathFileUrl: URL? { mathRenderer == .temml ? temmlFileUrl : mathJaxFileUrl }
+
+    func getTemmlScriptCode(nonce: String, embedded: Bool, renderMath: Bool) -> String {
+        guard let renderer = self.getBundleContents(forResource: "math-renderer", ofType: "js") else {
+            return """
+<script nonce="\(nonce)">
+function loadTemml() { return Promise.reject(new Error('Temml is unavailable')); }
+\(renderMath ? "document.querySelectorAll('span.hl.math, div.hl.math').forEach(node => { node.textContent += '\\nUnable to render formula: Temml is unavailable'; });" : "")
+</script>
+"""
+        }
+        var options: [String: Any] = [
+            "nonce": nonce,
+            "mathURL": Self.temmlWebUrl.absoluteString,
+            "mathIntegrity": Self.temmlHash,
+            "mathCSS": self.getBundleContents(forResource: "Temml-Local", ofType: "css") ?? ""
+        ]
+        if embedded, let url = self.temmlFileUrl, let code = try? String(contentsOf: url, encoding: .utf8) {
+            options["mathCode"] = code
+        }
+        guard let data = try? JSONSerialization.data(withJSONObject: options),
+              let json = String(data: data, encoding: .utf8) else { return "" }
+        // Embedded library text must not be able to close the script element.
+        let safeJSON = json.replacingOccurrences(of: "<", with: "\\u003c", options: .literal)
+        return """
+<script nonce="\(nonce)">
+const qlmarkdownMathOptions = \(safeJSON);
+\(renderer)
+\(renderMath ? "renderTemmlMath();" : "")
+</script>
+"""
+    }
+
     static let mathJaxVersion = "4.1.3"
     /// Url from which to download the mermaid library.
     static let mathJaxWebUrl = URL(string: "https://cdn.jsdelivr.net/npm/mathjax@\(Settings.mathJaxVersion)/tex-mml-chtml.js")!
@@ -1153,7 +1267,7 @@ extension Settings {
     /// - parameters:
     ///   - nonce: CSP nonce of the page (see `getCompleteHTML`); scripts without it are blocked.
     func getMathScriptCode(nonce: String) -> String {
-        guard self.mathExtension != .disabled else {
+        guard self.mathExtension != .disabled, self.mathRenderer == .mathjax else {
             return ""
         }
         if self.mathExtension == .embed, let url = self.mathJaxFileUrl, let code = try? String(contentsOfFile: url.path, encoding: .utf8) {

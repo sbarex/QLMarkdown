@@ -490,7 +490,7 @@ extension Settings {
 
             var body = String(cString: html2)
             
-            if !self.renderAsCode, self.mathExtension != .disabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
+            if !self.renderAsCode, self.mathExtension != .disabled, self.mathRenderer == .mathjax, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
                 body = swapMathDelimiters(body)
             }
             
@@ -640,13 +640,13 @@ table.debug td {
         }
         html_debug += "</td></tr>\n"
         
-        html_debug += "<tr><td>math extension</td><td>"
+        html_debug += "<tr><td>math extension</td><td>renderer: \(self.mathRenderer.rawValue); "
         switch self.mathExtension {
             case .disabled:
                 html_debug += "off"
             case .embed:
                 html_debug += "embedded"
-                if let file = self.mathJaxFileUrl {
+                if let file = self.mathFileUrl {
                     html_debug += " (\(file.path)"
                     
                     if file.isFileURL && !FileManager.default.fileExists(atPath: file.path) {
@@ -654,20 +654,22 @@ table.debug td {
                     }
                     html_debug += ")"
                 } else {
-                    html_debug += " (fallback: \(Self.mathJaxWebUrl.absoluteString))"
+                    html_debug += " (fallback: \(self.mathWebUrl.absoluteString))"
                 }
             case .link:
-                html_debug += "linked (\(Self.mathJaxWebUrl.absoluteString))"
+                html_debug += "linked (\(self.mathWebUrl.absoluteString))"
         }
         html_debug += "</td></tr>\n"
 
         html_debug += "<tr><td>mermaid extension</td><td>"
+        html_debug += "renderer: \(self.mermaidRenderer.rawValue); "
         switch self.mermaidExtension {
         case .disabled:
             html_debug += "off"
         case .embed:
             html_debug += "embedded"
-            if let file = self.mermaidFileUrl {
+            let fileUrl = self.mermaidRenderer == .pele ? self.peleFileUrl : self.mermaidFileUrl
+            if let file = fileUrl {
                 html_debug += " (\(file.path)"
                 
                 if file.isFileURL && !FileManager.default.fileExists(atPath: file.path) {
@@ -675,10 +677,11 @@ table.debug td {
                 }
                 html_debug += ")"
             } else {
-                html_debug += " (fallback: \(Self.mermaidWebUrl.absoluteString))"
+                html_debug += self.mermaidRenderer == .pele ? " (Pele unavailable)" : " (fallback: \(Self.mermaidWebUrl.absoluteString))"
             }
         case .link:
-            html_debug += "linked (\(Self.mermaidWebUrl.absoluteString))"
+            let url = self.mermaidRenderer == .pele ? Self.peleWebUrl : Self.mermaidWebUrl
+            html_debug += "linked (\(url.absoluteString))"
         }
         html_debug += "</td></tr>\n"
 
@@ -948,22 +951,25 @@ table.debug td {
         }
         css_highlight = formatCSS(css_highlight)
         
-        // Gate MathJax injection strictly on whether cmark's math extension actually rendered
-        // a math node. The legacy `|| body.contains("$")` fallback was removed: with the
-        // pandoc-rules fix in cmark-extra/math_ext.c, `rendered_count` is now reliable for
-        // currency-only files. Re-adding the fallback re-introduces the currency-mangling bug.
-        //
-        // Mixed files (real math AND currency in the same document) are handled by configuring
-        // MathJax to use `\(...\)` / `\[...\]` as the only delimiters, and post-processing the
-        // rendered body so the inside of each `<span class='hl math'>` / `<div class='hl math'>`
-        // wrapper has its `$...$` / `$$...$$` rewritten to the new delimiters (see
-        // `swapMathDelimiters` below). Stray `$` outside math wrappers (currency, prose, code)
-        // is invisible to MathJax because `$` is no longer a delimiter.
         let processedBody = body
-        if !self.renderAsCode, self.mathExtension != .disabled, let ext = cmark_find_syntax_extension("math"), cmark_syntax_extension_math_get_rendered_count(ext) > 0 {
+        let hasMath = !self.renderAsCode && self.mathExtension != .disabled &&
+            cmark_find_syntax_extension("math").map { cmark_syntax_extension_math_get_rendered_count($0) > 0 } == true
+        let hasDiagrams = !self.renderAsCode && self.mermaidExtension != .disabled && processedBody.contains("class=\"mermaid\"")
+        let temmlMath = hasMath && self.mathRenderer == .temml
+        let peleDiagrams = hasDiagrams && self.mermaidRenderer == .pele
+        if temmlMath || peleDiagrams {
+            // Either embedded consumer must keep working offline; share one Temml instance.
+            let embedded = (temmlMath && self.mathExtension == .embed) || (peleDiagrams && self.mermaidExtension == .embed)
+            s_footer += self.getTemmlScriptCode(nonce: nonce, embedded: embedded, renderMath: temmlMath)
+        }
+        if hasMath && self.mathRenderer == .mathjax {
             s_header += """
 <script type="text/javascript" nonce="\(nonce)">
 MathJax = {
+  startup: {
+    // Keep document order for macros, and exclude Pele's MathML from typesetting.
+    elements: ['span.hl.math, div.hl.math']
+  },
   options: {
     enableMenu: \(self.debug ? "true" : "false"),
   },
@@ -987,9 +993,12 @@ MathJax = {
         }
 
         // Mermaid diagrams support
-        if !self.renderAsCode, self.mermaidExtension != .disabled, processedBody.contains("class=\"mermaid\"") {
-            
-            // Inject mermaid.min.js
+        if hasDiagrams {
+            if self.mermaidRenderer == .pele {
+                // Keep the diagram theme when custom CSS replaces default.css; custom rules still win.
+                css_doc += formatCSS(self.getBundleContents(forResource: "pele", ofType: "css"))
+            }
+            // Inject the selected diagram renderer.
             s_footer += self.getMermaidScriptCode(nonce: nonce)
         }
 
@@ -1010,6 +1019,9 @@ MathJax = {
         // TOC sidebar prototype (issue #161): build a clickable navigation and rewrite each
         // heading with a unique, clean anchor so duplicate / emoji headings each scroll correctly.
         let toc = (self.renderAsCode || !self.tableOfContentsOption) ? nil : try? buildTOC(processedBody)
+        if toc != nil, hasMath, let script = self.getBundleContents(forResource: "toc-math", ofType: "js") {
+            s_footer += "<script nonce=\"\(nonce)\">\n\(script)\n</script>\n"
+        }
 
         let article = "\(wrapper_open)\n\(toc?.body ?? processedBody)\n\(wrapper_close)"
         let bodyContent: String
@@ -1056,6 +1068,8 @@ MathJax = {
     /// Returns the rewritten body + the TOC markup, or nil when there are fewer than two headings.
     private func buildTOC(_ body: String) throws -> (body: String, toc: String)? {
         let doc: Document = try SwiftSoup.parseBodyFragment(body)
+        // Keep TeX delimiters and Mermaid line breaks intact when adding TOC anchors.
+        doc.outputSettings().prettyPrint(pretty: false)
         let body: Element = doc.body()!
         
         var items = ""
@@ -1107,8 +1121,10 @@ MathJax = {
                 try heading.attr("id", slug)
             }
             
-            let tooltip = text.replacingOccurrences(of: "\"", with: "&quot;")
-            items += "<li class='toc-l\(level)'><a href='#\(slug)' title=\"\(tooltip)\">\(text)</a></li>\n"
+            let label = Entities.escape(text)
+            let tooltip = label.replacingOccurrences(of: "\"", with: "&quot;")
+            let target = Entities.escape(slug).replacingOccurrences(of: "\"", with: "&quot;")
+            items += "<li class='toc-l\(level)'><a href=\"#\(target)\" title=\"\(tooltip)\">\(label)</a></li>\n"
         }
         
         guard !items.isEmpty else {
@@ -1309,7 +1325,7 @@ MathJax = {
 
         let range = NSRange(html.startIndex..., in: html)
 
-        // Replace with <div class="mermaid">$1</div>, but we need to decode HTML entities in the content
+        // Keep entities escaped so the browser exposes the original source through textContent.
         let result = regex.stringByReplacingMatches(
             in: html,
             options: [],

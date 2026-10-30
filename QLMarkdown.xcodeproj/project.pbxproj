@@ -308,6 +308,16 @@
 		DEF1000000000000000000C3 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		DEF1000000000000000000C4 /* defl.c in Sources */ = {isa = PBXBuildFile; fileRef = DEF1000000000000000000BB /* defl.c */; };
 		E698C0D39AE7F2ACC2EA37C7 /* hashtag.c in Sources */ = {isa = PBXBuildFile; fileRef = 90F0AF38EA81F6BDFEFD4736 /* hashtag.c */; };
+		BE1E00000000000000000001 /* pele.global.js.gz in Resources */ = {isa = PBXBuildFile; fileRef = BE1E00000000000000000000 /* pele.global.js.gz */; };
+		BE1E00000000000000000003 /* mermaid-renderer.js in Resources */ = {isa = PBXBuildFile; fileRef = BE1E00000000000000000002 /* mermaid-renderer.js */; };
+		BE1E00000000000000000011 /* math-renderer.js in Resources */ = {isa = PBXBuildFile; fileRef = BE1E00000000000000000010 /* math-renderer.js */; };
+		BE1E00000000000000000013 /* toc-math.js in Resources */ = {isa = PBXBuildFile; fileRef = BE1E00000000000000000012 /* toc-math.js */; };
+		BE1E00000000000000000005 /* pele-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE1E00000000000000000004 /* pele-LICENSE.txt */; };
+		BE1E00000000000000000007 /* pele.css in Resources */ = {isa = PBXBuildFile; fileRef = BE1E00000000000000000006 /* pele.css */; };
+		BE1E00000000000000000009 /* pele-icons.js in Resources */ = {isa = PBXBuildFile; fileRef = BE1E00000000000000000008 /* pele-icons.js */; };
+		BE1E0000000000000000000B /* temml.min.js.gz in Resources */ = {isa = PBXBuildFile; fileRef = BE1E0000000000000000000A /* temml.min.js.gz */; };
+		BE1E0000000000000000000D /* Temml-Local.css in Resources */ = {isa = PBXBuildFile; fileRef = BE1E0000000000000000000C /* Temml-Local.css */; };
+		BE1E0000000000000000000F /* temml-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE1E0000000000000000000E /* temml-LICENSE.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -718,6 +728,16 @@
 		B0A7BA4039614C61A365D9CD /* alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = alert.h; sourceTree = "<group>"; };
 		DEF1000000000000000000AA /* defl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = defl.h; sourceTree = "<group>"; };
 		DEF1000000000000000000BB /* defl.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = defl.c; sourceTree = "<group>"; };
+		BE1E00000000000000000000 /* pele.global.js.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "pele.global.js.gz"; sourceTree = "<group>"; };
+		BE1E00000000000000000002 /* mermaid-renderer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "mermaid-renderer.js"; sourceTree = "<group>"; };
+		BE1E00000000000000000010 /* math-renderer.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "math-renderer.js"; sourceTree = "<group>"; };
+		BE1E00000000000000000012 /* toc-math.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "toc-math.js"; sourceTree = "<group>"; };
+		BE1E00000000000000000004 /* pele-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pele-LICENSE.txt"; sourceTree = "<group>"; };
+		BE1E00000000000000000006 /* pele.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = pele.css; sourceTree = "<group>"; };
+		BE1E00000000000000000008 /* pele-icons.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "pele-icons.js"; sourceTree = "<group>"; };
+		BE1E0000000000000000000A /* temml.min.js.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "temml.min.js.gz"; sourceTree = "<group>"; };
+		BE1E0000000000000000000C /* Temml-Local.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = "Temml-Local.css"; sourceTree = "<group>"; };
+		BE1E0000000000000000000E /* temml-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "temml-LICENSE.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1081,6 +1101,16 @@
 				83E7FEF0258FBF37003ECF9B /* highlight */,
 				83425366305D2ACB00BC2C68 /* tex-mml-chtml.js.gz */,
 				83425364305D20A000BC2C68 /* mermaid.min.js.gz */,
+				BE1E00000000000000000004 /* pele-LICENSE.txt */,
+				BE1E00000000000000000002 /* mermaid-renderer.js */,
+				BE1E00000000000000000010 /* math-renderer.js */,
+				BE1E00000000000000000012 /* toc-math.js */,
+				BE1E00000000000000000000 /* pele.global.js.gz */,
+				BE1E00000000000000000008 /* pele-icons.js */,
+				BE1E0000000000000000000A /* temml.min.js.gz */,
+				BE1E0000000000000000000C /* Temml-Local.css */,
+				BE1E0000000000000000000E /* temml-LICENSE.txt */,
+				BE1E00000000000000000006 /* pele.css */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1433,6 +1463,16 @@
 				83CF302D306D3E8400DC36E5 /* icon.icon in Resources */,
 				830277F52C60B3E20066EBCC /* default.css in Resources */,
 				83425365305D20A000BC2C68 /* mermaid.min.js.gz in Resources */,
+				BE1E00000000000000000005 /* pele-LICENSE.txt in Resources */,
+				BE1E00000000000000000003 /* mermaid-renderer.js in Resources */,
+				BE1E00000000000000000011 /* math-renderer.js in Resources */,
+				BE1E00000000000000000013 /* toc-math.js in Resources */,
+				BE1E00000000000000000001 /* pele.global.js.gz in Resources */,
+				BE1E00000000000000000009 /* pele-icons.js in Resources */,
+				BE1E0000000000000000000B /* temml.min.js.gz in Resources */,
+				BE1E0000000000000000000D /* Temml-Local.css in Resources */,
+				BE1E0000000000000000000F /* temml-LICENSE.txt in Resources */,
+				BE1E00000000000000000007 /* pele.css in Resources */,
 				837F97D6271EA12A009F4605 /* qlmarkdown_cli in Resources */,
 				83A9C2922F1D59F9005B668D /* examples in Resources */,
 				83425367305D2ACB00BC2C68 /* tex-mml-chtml.js.gz in Resources */,

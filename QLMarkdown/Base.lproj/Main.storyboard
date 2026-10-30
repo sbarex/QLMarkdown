@@ -1176,6 +1176,9 @@
                                                                                     <menuItem title="MathJax Library" enabled="NO" identifier="mnu_math" id="gXy-Ln-bja">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                                     </menuItem>
+                                                                                    <menuItem title="Temml" tag="3" identifier="mnu_math_temml" indentationLevel="1" id="TML-rd-001"/>
+                                                                                    <menuItem title="MathJax" tag="4" identifier="mnu_math_mathjax" indentationLevel="1" id="MJX-rd-001"/>
+                                                                                    <menuItem isSeparatorItem="YES" id="SEP-mt-001"/>
                                                                                     <menuItem title="Linked from web" tag="2" identifier="mnu_math_link" indentationLevel="1" id="ja6-54-Tho"/>
                                                                                     <menuItem title="Embedded" tag="1" identifier="mnu_math_embed" indentationLevel="1" id="Ikg-xk-Q9P"/>
                                                                                     <menuItem isSeparatorItem="YES" id="9FJ-fL-6vs"/>
@@ -1351,6 +1354,9 @@
                                                                                     <menuItem title="Mermaid Library" enabled="NO" identifier="mnu_mermaid" id="cCi-Mu-ec5">
                                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                                     </menuItem>
+                                                                                    <menuItem title="Pele" tag="3" identifier="mnu_mermaid_pele" indentationLevel="1" id="PLe-rd-001"/>
+                                                                                    <menuItem title="Native Mermaid" tag="4" identifier="mnu_mermaid_native" indentationLevel="1" id="MRm-rd-001"/>
+                                                                                    <menuItem isSeparatorItem="YES" id="SEP-rd-001"/>
                                                                                     <menuItem title="Linked from web" tag="2" identifier="mnu_mermaid_link" indentationLevel="1" id="r4o-4n-lvz"/>
                                                                                     <menuItem title="Embedded" tag="1" identifier="mnu_mermaid_embed" indentationLevel="1" id="ydg-Fj-IJb"/>
                                                                                     <menuItem isSeparatorItem="YES" id="KJ9-Cr-MFQ"/>

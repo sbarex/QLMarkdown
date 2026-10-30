@@ -1,0 +1,23 @@
+.mermaid {
+    --pele-bg: var(--background, #ffffff);
+    --pele-fg: var(--textPrimary, #24292e);
+    --pele-muted: var(--blockquote-color, #6a6d7c);
+    --pele-line: var(--textPrimary, #24292e);
+    --pele-surface: var(--code-background, #f7f7f9);
+    --pele-surface-alt: var(--tr-alt-background, #f7f7f9);
+    --pele-border: var(--body-border-color, #dfdfdf);
+    --pele-accent: var(--link, #0366d6);
+}
+
+@media (prefers-color-scheme: dark) {
+    .mermaid {
+        --pele-bg: var(--background, #0d1117);
+        --pele-fg: var(--textPrimary, #c9d1d9);
+        --pele-muted: var(--blockquote-color, #8b949e);
+        --pele-line: var(--textPrimary, #c9d1d9);
+        --pele-surface: var(--code-background, #2f3438);
+        --pele-surface-alt: var(--tr-alt-background, #161c23);
+        --pele-border: var(--body-border-color, #31363c);
+        --pele-accent: var(--link, #58a6ff);
+    }
+}

@@ -387,7 +387,12 @@ static void html_render(cmark_syntax_extension *extension,
     }
     
     if (exit_code == EXIT_SUCCESS && formatted != NULL) {
-        cmark_strbuf_puts(renderer->html, formatted);
+        if (skip && strcmp(language, "mermaid") == 0) {
+            // Preserve labels as source text until the diagram renderer reads textContent.
+            houdini_escape_html0(renderer->html, node->as.code.literal.data, node->as.code.literal.len, 0);
+        } else {
+            cmark_strbuf_puts(renderer->html, formatted);
+        }
     }
     // cmark_strbuf_put(renderer->html, node->as.code.literal.data, node->as.code.literal.len);
     

@@ -37,6 +37,14 @@ enum libraryArgumentEnum: String, ExpressibleByArgument {
     }
 }
 
+extension MermaidRenderer: ExpressibleByArgument {
+    static var allValueStrings: [String] { return ["pele", "mermaid"] }
+}
+
+extension MathRenderer: ExpressibleByArgument {
+    static var allValueStrings: [String] { return ["temml", "mathjax"] }
+}
+
 enum AppearanceEnum: String, ExpressibleByArgument {
     case light, dark, auto
     
@@ -170,11 +178,17 @@ struct ExtensionsOptions: ParsableArguments {
     @Option(help: ArgumentHelp("Embed local image files inside the formatted output.", valueName: "on|off"))
     var inlineImages: BoolArgumentEnum? = nil
     
-    @Option(help: ArgumentHelp("Format the mathematical expressions with MathJax. You can specify if link or embed the MathJax.js library.", valueName: "off|link|embed"))
+    @Option(help: ArgumentHelp("Format mathematical expressions. Link or embed the selected math library.", valueName: "off|link|embed"))
     var math: libraryArgumentEnum? = nil
+
+    @Option(help: ArgumentHelp("Use Temml (default) or MathJax for mathematical expressions.", valueName: "temml|mathjax"))
+    var mathRenderer: MathRenderer? = nil
     
-    @Option(help: ArgumentHelp("Format the mermaid diagrams. You can specify if link or the Mermaid.js library.", valueName: "off|link|embed"))
+    @Option(help: ArgumentHelp("Format Mermaid diagrams. Link or embed the diagram libraries.", valueName: "off|link|embed"))
     var mermaid: libraryArgumentEnum? = nil
+
+    @Option(help: ArgumentHelp("Use Pele (default) or native Mermaid.", valueName: "pele|mermaid"))
+    var mermaidRenderer: MermaidRenderer? = nil
     
     @Option(help: ArgumentHelp("Enable table extension.", valueName: "on|off"))
     var table: BoolArgumentEnum? = nil
@@ -363,6 +377,9 @@ struct QLMarkdownCLI: ParsableCommand {
             }
         }
         
+        if let renderer = extensions.mathRenderer {
+            settings.mathRenderer = renderer
+        }
         if let o = extensions.mermaid {
             switch o {
             case .off:
@@ -372,6 +389,9 @@ struct QLMarkdownCLI: ParsableCommand {
             case .link:
                 settings.mermaidExtension = .link
             }
+        }
+        if let renderer = extensions.mermaidRenderer {
+            settings.mermaidRenderer = renderer
         }
         if let o = extensions.table {
             settings.tableExtension = o == .on
@@ -466,19 +486,23 @@ struct QLMarkdownCLI: ParsableCommand {
         case .disabled:
             print("    --math: off")
         case .embed:
-            print("    --math: embedded (\(Settings.mathJaxVersion))")
+            print("    --math: embedded (\(settings.mathVersion))")
         case .link:
-            print("    --math: linked (\(Settings.mathJaxVersion)) from \(Settings.mathJaxWebUrl)")
+            print("    --math: linked (\(settings.mathVersion)) from \(settings.mathWebUrl)")
         }
+        print("    --math-renderer: \(settings.mathRenderer.rawValue)")
         
+        let diagramVersion = settings.mermaidRenderer == .pele ? Settings.peleVersion : Settings.mermaidVersion
+        let diagramURL = settings.mermaidRenderer == .pele ? Settings.peleWebUrl : Settings.mermaidWebUrl
         switch settings.mermaidExtension {
         case .disabled:
             print("    --mermaid: off")
         case .embed:
-            print("    --mermaid: embedded (\(Settings.mermaidVersion))")
+            print("    --mermaid: embedded (\(diagramVersion))")
         case .link:
-            print("    --mermaid: linked (\(Settings.mermaidVersion)) from \(Settings.mermaidWebUrl)")
+            print("    --mermaid: linked (\(diagramVersion)) from \(diagramURL)")
         }
+        print("    --mermaid-renderer: \(settings.mermaidRenderer.rawValue)")
         
         print("    --table: \(settings.tableExtension ? "on" : "off")")
         print("    --tasklist: \(settings.taskListExtension ? "on" : "off")")

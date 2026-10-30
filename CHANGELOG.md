@@ -1,5 +1,20 @@
 # Changelog
 
+### Unreleased
+
+New Features:
+- Use Temml as the default renderer for body formulas, with MathJax available in the app and through `--math-renderer` in the CLI. Existing settings without a renderer preference use Temml.
+- Share Temml between body formulas and Pele diagrams, and support linked and embedded library modes.
+- Use Pele as the default Mermaid diagram renderer, with an option to select native Mermaid in the app or CLI.
+- Render Pele diagram formulas with Temml and provide a bundled subset of icons.
+- Support linked and embedded libraries for both diagram renderers. Pele errors are displayed without automatically switching to Mermaid.
+
+Bugfix:
+- Preserve rendered formulas in the table of contents without repeating their macros or equation numbering.
+- Keep other formulas rendering when a Temml formula fails or an equation reference cannot be resolved; no automatic MathJax fallback is performed.
+- Preserve HTML-like text and escaped characters in Mermaid code blocks when syntax highlighting is enabled.
+
+
 ### 1.5.7 (59)
 
 Bugfix:
