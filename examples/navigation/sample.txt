@@ -1,0 +1,1 @@
+A local non-Markdown target. Clicking this link must not replace the preview or launch an app.

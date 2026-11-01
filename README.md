@@ -31,6 +31,7 @@ You can download the last compiled release from [this link](https://github.com/s
   - [Uninstall](#uninstall)
   - [Markdown processing](#markdown-processing)
   - [Differences with GitHub's Markdown engine](#differences-with-githubs-markdown-engine)
+  - [Local Markdown links](#local-markdown-links)
   - [Quick Look Settings](#quick-look-settings)
     - [Themes](#themes)
     - [Options](#options)
@@ -117,6 +118,14 @@ GitHub uses a number of libraries in Ruby for parsing and formatting source code
 The main difference between this application and GitHub is the formatting of the source code.
 Syntax highlighting uses a different library, so the formatting, colors scheme, and language token recognition are potentially different.
 
+
+## Local Markdown links
+
+The Quick Look preview follows links to local Markdown documents in the same folder, subfolders, or parent folders. Back and Forward navigate previously visited documents. Encoded filenames and heading fragments are supported; enable Heads anchors or Table of contents for generated heading links.
+
+Missing or unreadable documents leave the current preview visible and show an error. HTTP, HTTPS, and email links open in the system handler; other application schemes and local non-Markdown targets are ignored. Finder's title and Open With action continue to refer to the originally selected file; the filename inside the preview identifies the current document.
+
+See [navigation testing](TESTING.md) and the [sample documentation](examples/navigation/README.md).
 
 ## Quick Look Settings
 
