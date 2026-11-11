@@ -1281,10 +1281,6 @@ document.addEventListener('scroll', function(e) {
         
         isLoaded = true
         
-        if baseFontSize <= 0 {
-            baseFontSize = 12
-        }
-        
         doRefresh(self)
         
         isDirty = false
@@ -1397,6 +1393,8 @@ document.addEventListener('scroll', function(e) {
         self.tableOfContentsOption = settings.tableOfContentsOption
         self.footnotesOption = settings.footnotesOption
         
+        self.useBaseFontSize = settings.baseFontSize > 0
+        self.baseFontSize = settings.baseFontSize > 0 ? settings.baseFontSize : 12
         self.customCSSFile = settings.customCSS
         self.customCSSOverride = settings.customCSSOverride
                 
