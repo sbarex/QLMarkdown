@@ -145,6 +145,10 @@ class Settings: Codable {
             return appBundle
         } else if Bundle.main.bundlePath.hasSuffix(".appex") {
             // this is an app extension
+            let appUrl = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
+            if let appBundle = Bundle(url: appUrl) {
+                return appBundle
+            }
             let url = Bundle.main.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
 
             if let appBundle = Bundle(url: url) {
@@ -1173,7 +1177,11 @@ extension Settings {
     /// Get the path of folder with `highlight` support files.
     func getHighlightSupportPath() -> String? {
         if let cache = Self.syntaxHighlightSupportCacheUrl, FileManager.default.fileExists(atPath: cache.path) {
-            return cache.path
+            let testFile = cache.appendingPathComponent("filetypes.conf").path
+            if let file = fopen(testFile, "r") {
+                fclose(file)
+                return cache.path
+            }
         }
         
         return self.resourceBundle.url(forResource: "highlight", withExtension: "")?.path

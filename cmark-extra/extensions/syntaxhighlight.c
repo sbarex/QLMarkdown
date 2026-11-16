@@ -388,14 +388,17 @@ static void html_render(cmark_syntax_extension *extension,
     
     if (exit_code == EXIT_SUCCESS && formatted != NULL) {
         cmark_strbuf_puts(renderer->html, formatted);
+        if (!skip) {
+            cmark_syntax_extension_highlight_increment_rendered_count(extension, 1);
+        }
+    } else {
+        houdini_escape_html0(renderer->html, node->as.code.literal.data, node->as.code.literal.len, 0);
     }
-    // cmark_strbuf_put(renderer->html, node->as.code.literal.data, node->as.code.literal.len);
     
     cmark_strbuf_puts(renderer->html, "</code></pre>\n");
     
     if (!skip) {
         free(formatted);
-        cmark_syntax_extension_highlight_increment_rendered_count(extension, 1);
     }
 }
 
