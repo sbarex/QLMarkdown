@@ -9,7 +9,7 @@ import Cocoa
 import OSLog
 import ArgumentParser
 
-let cliUrl = URL(fileURLWithPath: CommandLine.arguments[0])
+let cliUrl = Bundle.main.executableURL ?? URL(fileURLWithPath: CommandLine.arguments[0])
 
 var standardError = FileHandle.standardError
 
@@ -257,8 +257,11 @@ struct QLMarkdownCLI: ParsableCommand {
         if let app {
             return URL(fileURLWithPath: app)
         } else {
-            // Resolve symlinks so resources load when invoked via a Homebrew/`ln -s` link. (#144)
-            return cliUrl.resolvingSymlinksInPath().deletingLastPathComponent().deletingLastPathComponent()
+            // Resolve Homebrew and manual symlinks before ascending from Contents/Resources to the app bundle. (#144)
+            return cliUrl.resolvingSymlinksInPath()
+                .deletingLastPathComponent()
+                .deletingLastPathComponent()
+                .deletingLastPathComponent()
         }
     }
     
