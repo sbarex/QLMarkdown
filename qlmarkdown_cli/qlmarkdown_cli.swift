@@ -212,6 +212,7 @@ struct ExtensionsOptions: ParsableArguments {
 struct QLMarkdownCLI: ParsableCommand {
     enum QLError: LocalizedError, CustomStringConvertible {
         case destinationMustBeAFolder
+        case duplicateOutput(path: String, firstSource: String, secondSource: String)
         case unableToReadSource(path: String)
         case processError(path: String, error: Error?)
         
@@ -219,6 +220,8 @@ struct QLMarkdownCLI: ParsableCommand {
             switch self {
             case .processError(let path, let error): return "Error processing the source file \(path)\(error != nil ? ": \(error!.localizedDescription)" : "")"
             case .destinationMustBeAFolder: return "Destination path must be a folder!"
+            case .duplicateOutput(let path, let firstSource, let secondSource):
+                return "Both '\(firstSource)' and '\(secondSource)' would write to '\(path)'. Use distinct input names or convert them separately."
             case .unableToReadSource(let path): return "Unable to read the source file (\(path))!"
             }
         }
@@ -563,6 +566,29 @@ struct QLMarkdownCLI: ParsableCommand {
             }
         }
 
+        let outputs = files.map { url in
+            dest.map { destination in
+                isDir.boolValue
+                    ? destination.appendingPathComponent(url.deletingPathExtension().lastPathComponent).appendingPathExtension("html")
+                    : destination
+            }
+        }
+        if isDir.boolValue, files.count > 1, let dest {
+            let directory = URL(fileURLWithPath: dest.path, isDirectory: true).resolvingSymlinksInPath()
+            let caseSensitive = (try? directory
+                .resourceValues(forKeys: [.volumeSupportsCaseSensitiveNamesKey])
+                .volumeSupportsCaseSensitiveNames) == true
+            var sourcesByOutputName: [String: URL] = [:]
+            for (source, output) in zip(files, outputs) {
+                guard let output else { continue }
+                let name = output.lastPathComponent
+                let key = caseSensitive ? name : name.folding(options: .caseInsensitive, locale: nil)
+                if let first = sourcesByOutputName.updateValue(source, forKey: key) {
+                    throw QLError.duplicateOutput(path: output.path, firstSource: first.path, secondSource: source.path)
+                }
+            }
+        }
+
         var show_stats = false
         var n = 0
         defer {
@@ -580,7 +606,7 @@ struct QLMarkdownCLI: ParsableCommand {
             }
         }
         
-        for url in files {
+        for (url, output) in zip(files, outputs) {
             let markdown_url = Settings.getMarkdownFile(from: url)
             
             do {
@@ -599,15 +625,6 @@ struct QLMarkdownCLI: ParsableCommand {
                 Settings.renderStats += 1
                 if !show_stats && Settings.renderStats > 0 && Settings.renderStats % 100 == 0 {
                     show_stats = true
-                }
-                
-                var output: URL?
-                if let dest {
-                    if isDir.boolValue {
-                        output = dest.appendingPathComponent(url.deletingPathExtension().lastPathComponent).appendingPathExtension("html")
-                    } else {
-                        output = dest
-                    }
                 }
                 
                 if let output {
