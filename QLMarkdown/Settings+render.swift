@@ -35,19 +35,9 @@ extension Settings {
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code. if not specified, it gets it from the file path.
      */
     func render(file url: URL, baseDir: String?) throws -> String {
-        guard var data = FileManager.default.contents(atPath: url.path) else {
+        guard let data = FileManager.default.contents(atPath: url.path) else {
             os_log("Unable to read the file %{public}@", log: OSLog.rendering, type: .error, url.path)
             return ""
-        }
-        
-        if url.pathExtension.lowercased() == "mermaid" {
-            if var s = String(data: data, encoding: .utf8) {
-                // Inject mermaid fanced block
-                s = "```mermaid\n\(s)\n```"
-                if let d = s.data(using: .utf8) {
-                    data = d
-                }
-            }
         }
         
         return try self.render(data: data, filename: url.lastPathComponent, baseDir: baseDir ?? url.deletingLastPathComponent().path)
@@ -61,12 +51,33 @@ extension Settings {
      *   - baseDir: Path to the folder containing the source file. Used to manage relative paths within the code.
      */
     func render(data: Data, filename: String = "file.md", baseDir: String) throws -> String {
-        guard let markdown_string = String(data: data, encoding: .utf8) else {
-            os_log("Unable to read the data %{public}@", log: OSLog.rendering, type: .error, data.base64EncodedString())
+        // UTF-32 little-endian and UTF-16 little-endian share the same first two BOM bytes.
+        let encoding: String.Encoding
+        if data.starts(with: [0xFF, 0xFE, 0x00, 0x00]) || data.starts(with: [0x00, 0x00, 0xFE, 0xFF]) {
+            encoding = .utf32
+        } else if data.starts(with: [0xFF, 0xFE]) || data.starts(with: [0xFE, 0xFF]) {
+            encoding = .utf16
+        } else {
+            encoding = .utf8
+        }
+
+        var decoded = String(data: data, encoding: encoding)
+        if decoded == nil, encoding == .utf8, validateUTFOption {
+            // Match Foundation's treatment of a leading BOM when UTF-8 decoding succeeds.
+            let bytes = data.starts(with: [0xEF, 0xBB, 0xBF]) ? data.dropFirst(3) : data
+            decoded = String(decoding: bytes, as: UTF8.self)
+        }
+
+        guard var markdown = decoded else {
+            os_log("Unable to decode %{public}@", log: OSLog.rendering, type: .error, filename)
             return ""
         }
-        
-        return try self.render(text: markdown_string, filename: filename, baseDir: baseDir)
+
+        if (filename as NSString).pathExtension.lowercased() == "mermaid" {
+            markdown = "```mermaid\n\(markdown)\n```"
+        }
+
+        return try self.render(text: markdown, filename: filename, baseDir: baseDir)
     }
     
     /**
