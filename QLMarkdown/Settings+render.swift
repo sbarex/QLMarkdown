@@ -61,7 +61,14 @@ extension Settings {
             encoding = .utf8
         }
 
-        guard var markdown = String(data: data, encoding: encoding) else {
+        var decoded = String(data: data, encoding: encoding)
+        if decoded == nil, encoding == .utf8, validateUTFOption {
+            // Match Foundation's treatment of a leading BOM when UTF-8 decoding succeeds.
+            let bytes = data.starts(with: [0xEF, 0xBB, 0xBF]) ? data.dropFirst(3) : data
+            decoded = String(decoding: bytes, as: UTF8.self)
+        }
+
+        guard var markdown = decoded else {
             os_log("Unable to decode %{public}@", log: OSLog.rendering, type: .error, filename)
             return ""
         }
