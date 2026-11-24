@@ -523,31 +523,22 @@ struct QLMarkdownCLI: ParsableCommand {
             QLMarkdownCLI.exit()
         }
         
-        if !showSettings {
-            if files.isEmpty {
-                print(QLMarkdownCLI.helpMessage(for: QLMarkdownCLI.self))
-                QLMarkdownCLI.exit()
-            } else if files.count > 1 {
-                var isDir: ObjCBool = false
-                var exists = false
-                if let dest = dest {
-                    exists = FileManager.default.fileExists(atPath: dest, isDirectory: &isDir)
-                }
-                
-                if !exists && !isDir.boolValue {
-                    QLMarkdownCLI.exit(withError: QLError.destinationMustBeAFolder) // "Error: to process multiple files you must use the -o argument with a folder path!"
-                }
-            }
+        if !showSettings && files.isEmpty {
+            print(QLMarkdownCLI.helpMessage(for: QLMarkdownCLI.self))
+            QLMarkdownCLI.exit()
         }
     }
     
     mutating func run() throws {
         let files: [URL] = self.files.map { URL(fileURLWithPath: $0) }
-        let dest: URL? = self.dest != nil ? URL(string: self.dest!) : nil
+        let dest = self.dest.map { URL(fileURLWithPath: $0) }
         
         var isDir: ObjCBool = false
         if let dest {
             FileManager.default.fileExists(atPath: dest.path, isDirectory: &isDir)
+        }
+        if !showSettings && files.count > 1 && !isDir.boolValue {
+            throw QLError.destinationMustBeAFolder
         }
         
         if verbose || showSettings {
